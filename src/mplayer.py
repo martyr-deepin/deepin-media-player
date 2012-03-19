@@ -39,6 +39,10 @@ class  Mplayer(gobject.GObject):
         "get-time-length":(gobject.SIGNAL_RUN_LAST,
                         gobject.TYPE_NONE,(gobject.TYPE_INT,)),
         "volume":(gobject.SIGNAL_RUN_LAST,
+                        gobject.TYPE_NONE,(gobject.TYPE_INT,)),
+        "play-start":(gobject.SIGNAL_RUN_LAST,
+                        gobject.TYPE_NONE,(gobject.TYPE_INT,)),
+        "play-end":(gobject.SIGNAL_RUN_LAST,
                         gobject.TYPE_NONE,(gobject.TYPE_INT,))
         }
     def __init__(self, xid = None):
@@ -65,7 +69,8 @@ class  Mplayer(gobject.GObject):
         # random player num.
         self.random_num = 0;
         
-        self.volume_bool = False
+        
+        self.volumebool = False
         # player state.
         # 0: single playing.      
         # 1: order playing.     
@@ -73,7 +78,7 @@ class  Mplayer(gobject.GObject):
         # 3: single cycle player. 
         # 4: list recycle play. 
         self.playListState = 0 
-        self.volume = 100        
+
         
     def play(self, path):
     
@@ -83,6 +88,8 @@ class  Mplayer(gobject.GObject):
             
             if self.xid:
                 CMD = ['mplayer',
+                       '-osdlevel',
+                       '0',
                        '-double',
                        '-slave',
                        '-quiet',
@@ -99,6 +106,7 @@ class  Mplayer(gobject.GObject):
                                          stdout = subprocess.PIPE,
                                          stderr = subprocess.PIPE,
                                          shell  = False)
+            self.emit("play-start",False)
             (self.mplayerIn, self.mplayerOut) = (self.mpID.stdin, self.mpID.stdout)
             fcntl.fcntl(self.mplayerOut, 
                         fcntl.F_SETFL, 
@@ -109,14 +117,10 @@ class  Mplayer(gobject.GObject):
                     
             # IO_HUP[Monitor the pipeline is disconnected].
             self.eofID = gobject.io_add_watch(self.mplayerOut, gobject.IO_HUP, self.mplayerEOF)
-            self.state = 1
-            # fill Volume.
-            if not self.volume_bool:
-                self.addvolume(self.volume)
-                self.volume_bool = True
-                
+            self.state = 1                
             self.get_time_length()
-        
+            
+          
     ## Cmd control ##    
     def cmd(self, cmdStr):
         '''Mplayer command'''
@@ -178,7 +182,7 @@ class  Mplayer(gobject.GObject):
                     self.timeSec  = 0
                     self.time(self.posNum)  
                     # Test time output.
-                    print '%s:%s:%s' % (self.timeHour,self.timeMin,self.timeSec) 
+                    #print '%s:%s:%s' % (self.timeHour,self.timeMin,self.timeSec) 
                     self.emit("get-time-pos",int(self.posNum))
                     
         return True
@@ -198,23 +202,20 @@ class  Mplayer(gobject.GObject):
     ## Volume Control ##
     def addvolume(self, volumeNum):
         '''Add volume'''
-        self.volume += volumeNum
+        self.volume = volumeNum
         if self.volume > 100:
             self.volume = 100
-        self.emit("volume", self.volume)
-            
+
         if self.state:
-            self.cmd('volume +%s\n' % (volumeNum))
+            self.cmd('volume +%s 1\n' % str(self.volume))
         
     def decvolume(self, volumeNum):
         '''Decrease volume'''
-        self.volume -= volumeNum
+        self.volume = volumeNum
         if self.volume < 0:
-            self.volume = 0
-        self.emit("volume", self.volume)
-            
+            self.volume = 0            
         if self.state:
-            self.cmd('volume -%s\n' % (volumeNum))
+            self.cmd('volume -%s 1\n' % str(self.volume))
     
     def leftchannel(self):
         '''The left channel'''
@@ -292,7 +293,7 @@ class  Mplayer(gobject.GObject):
     def fseek(self, seekNum):
         '''Fast forward'''
         if self.state:
-            self.cmd('seek +%s\n' % (seekNum))   
+            self.cmd('seek +%d\n' % (seekNum))   
     
     def bseek(self, seekNum):
         '''backward'''
@@ -309,6 +310,8 @@ class  Mplayer(gobject.GObject):
             
             self.stopGetPosID()
             self.stopEofID()
+            # Send play end signal.
+            self.emit("play-end", True)
             self.cmd('quit \n')
             self.state = 0
             try:
@@ -337,6 +340,8 @@ class  Mplayer(gobject.GObject):
         self.stopGetPosID()
         self.state = 0 
         self.mplayerIn, self.mplayerOut = None, None
+        # Send play end signal.
+        self.emit("play-end", True)
         if self.playListState == 0: 
             self.quit()
             return False
@@ -354,6 +359,7 @@ class  Mplayer(gobject.GObject):
         self.playListNum = self.playListNum % self.playListSum
         
         self.next_or_pre_state()    
+        
         return False
                 
     # player state.
@@ -411,7 +417,9 @@ class  Mplayer(gobject.GObject):
         if self.timeSec >= 60:
             self.timeMin  = self.timeSec / 60
             self.timeSec -= (self.timeMin * 60)         
- 
+            
+        return self.timeHour, self.timeMin, self.timeSec    
+    
     def scrot(self, scrotSec, scrotPath="/home/long/.mplayer"):
         if self.state and os.path.exists(scrotPath):
             os.system("mplayer -ss %s -noframedrop -nosound -vo png -frames 1 '%s'" % (scrotSec, self.path))
