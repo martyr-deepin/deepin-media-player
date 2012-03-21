@@ -50,21 +50,24 @@ class ToolBar(object):
         self.mode = True # 默认为普通模式
         
         self.panel.connect_after("expose-event", self.expose_panel)
-        
+                
         w,h = self.app.window.get_size_request()
+        # Init panel width.
         self.panel.resize(w - 4, 10)
         self.app.window.connect("configure-event", self.modify_panel)
         self.app.window.connect("motion-notify-event", self.show_panel)
+        
         self.panel.add_events(gtk.gdk.ALL_EVENTS_MASK)
         self.panel.connect("enter-notify-event", lambda w,e:self.enter_notify_callback())
         self.panel.connect("leave-notify-event", lambda w,e:self.leave_notify_callback())
         self.toolbar_full_hframe = HorizontalFrame(7)
         self.toolbar_full = ToggleHoverButton(
-            app_theme.get_pixbuf("全屏.png"),
             app_theme.get_pixbuf("全屏1.png"),
             app_theme.get_pixbuf("全屏.png"),
-            app_theme.get_pixbuf("全屏1.png")
+            app_theme.get_pixbuf("恢复1.png"),
+            app_theme.get_pixbuf("恢复.png")
             )
+        self.toolbar_full.connect("clicked", self.toolbar_full_clicked)
         self.toolbar_full_hframe.add(self.toolbar_full)
         
         self.mutualbutton = MutualButton()
@@ -92,12 +95,24 @@ class ToolBar(object):
         
         self.panel.show_all()
         
+    def toolbar_full_clicked(self, widget):
+        '''单击全屏'''
+        if not self.toolbar_full.flags:
+            self.app.window.fullscreen()
+        else:
+            self.app.window.unfullscreen()
+            
+    def window_state_event(self, widget, event):    
+        '''app screen max'''
+        self.show_panel(widget, event)
+
     def toolbar_concise_clicked(self, widget):
         '''普通模式'''
         self.mode = True
         self.app.show_titlebar()
         x,y = self.app.window.window.get_root_origin()
         self.panel.move(x+2, y+28)
+                
         
     def toolbar_simple_clicked(self, widget):    
         '''简洁模式'''
@@ -105,12 +120,11 @@ class ToolBar(object):
         self.app.hide_titlebar()
         x,y = self.app.window.window.get_root_origin()
         self.panel.move(x+2, y+5)
-        
+            
     def modify_panel(self, widget, event):    
         self.panel.hide()
         self.panel.resize(widget.allocation.width - 4, 10)
-        
-        
+                
     def set_app_keep_above(self, widget):    
         self.keep_above_bool = not self.keep_above_bool
         self.app.window.set_keep_above(self.keep_above_bool)
@@ -135,13 +149,13 @@ class ToolBar(object):
     def enter_notify_callback(self):
         if self.test_hide_id:
             gobject.source_remove(self.test_hide_id)
-            self.test_hide_id = None
-            
+            self.test_hide_id = None            
         self.panel.start_show()    
         
     def leave_notify_callback(self):
         self.test_hide_id = gtk.timeout_add(5000, self.panel.start_hide)  
                
+        
     def expose_panel(self, widget, event):
         # Clear color to transparent window.
         cr,x,y,w,h = allocation(widget)

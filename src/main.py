@@ -70,7 +70,8 @@ class MediaMplayer(object):
         self.app.window.set_size_request(540, 400)
         self.app.window.change_background(app_theme.get_pixbuf("my_bg2.jpg"))
         self.app.window.connect("destroy", self.quit)
-
+        
+        
         #self.app.window.stick()
         self.hbox   = gtk.HBox()
         self.v_frame = VerticalFrame(padding=5)
@@ -90,25 +91,57 @@ class MediaMplayer(object):
         self.screen.screen.add_events(gtk.gdk.ALL_EVENTS_MASK)
         self.screen.screen.connect("expose-event", self.screen_expose_event)
         self.screen.screen.connect("get-xid", self.show_video)
+        
         # player scalebar event.
         self.screen.scalebar.add_events(gtk.gdk.ALL_EVENTS_MASK)
         self.screen.scalebar.connect("button-press-event", self.scalebar_press_event)
         self.screen.scalebar.connect("button-release-event", self.scalebar_release_event)
         self.screen.scalebar.connect("motion-notify-event", self.scalebar_motion_notify_event)
         self.screen.scalebar.connect("enter-notify-event", self.scalebar_enter_notify_event)
-        # player list.
+        # Player list.
         self.hbox.pack_start(self.screen.vbox, True, True)
-        self.hbox.pack_start(self.list.vbox, True)
+        #self.hbox.pack_start(self.list.vbox, True)
         
-        # Test.
-        self.control.button.connect("clicked", self.test)
-        self.control.button2.connect("clicked", self.test2)
+        # Control panel.
+        self.control.stop_btn.connect("clicked", self.stop_play)
+        self.control.pre_btn.connect("clicked", self.pre_play)
+        self.control.start_btn.connect("clicked", self.start_play)
+        self.control.next_btn.connect("clicked", self.next_play)
+        self.control.open_btn.connect("clicked", self.open_play)
+        self.control.play_list_btn.connect("clicked", self.open_play_list_play)
+        # volume.
         self.control.volume.connect("get-value-event", self.set_media_volume_value)
         
         self.app.main_box.pack_start(self.v_frame)
         self.app.main_box.pack_start(self.control.hbox, False)
         self.app.window.show_all()     
+                
         
+    def stop_play(self, widget):
+        '''stop_btn connect->stop_play.'''
+        self.mp.quit()
+        
+    def pre_play(self, widget):    
+        self.mp.pre()
+        
+    def start_play(self, widget):
+        '''start_btn connect->start_play.'''
+        if self.mp.state != 1:
+            self.mp.findCurrentDir("/home/long/视频")
+            self.mp.play(self.mp.playList[self.mp.playListNum]) #憨豆特工2.rmvb 老男孩.mp3
+        else:
+            self.mp.pause()
+            
+    def next_play(self, widget):    
+        self.mp.next()
+        
+    def open_play(self, widget):    
+        pass
+    
+    def open_play_list_play(self, widget):
+        '''open play list.'''
+        pass
+    
     def set_media_volume_value(self, widget, value, volume_bool):                
         print value
         if self.mp.state == 1:
@@ -151,7 +184,7 @@ class MediaMplayer(object):
                         
     def screen_expose_event(self, widget, event):
         if self.state:
-
+            
             cr = widget.window.cairo_create()
             rect = widget.allocation
             x,y,w,h = rect.x, rect.y, rect.width, rect.height
@@ -178,16 +211,7 @@ class MediaMplayer(object):
             #cr.line_to(x + w - 2, y - 26)
             #cr.stroke()
             return True
-        
-    def test2(self, widget):
-        #self.state = True
-        #self.screen.screen.queue_draw()
-        #self.mp.quit()
-        
-        self.mp.addvolume(10)
-        
-    def test(self, widget):
-        self.mp.play("/home/long/音乐/憨豆特工2.rmvb") #憨豆特工2.rmvb 老男孩.mp3
+                          
         
     def quit(self, widget):
         self.mp.quit()
@@ -218,6 +242,9 @@ class MediaMplayer(object):
         self.screen.screen.queue_draw()
         self.screen.scalebar.set_value(self.length)
         self.control.show_time_label.set_label(" 0 : 0 : 0 / 0 : 0: 0")
+        # stop play.
+        self.control.start_btn.start_bool = True
+        self.control.start_btn.queue_draw()
         
     def get_time_pos(self, widget, value):
         self.pos = value

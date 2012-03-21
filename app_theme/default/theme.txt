@@ -23,6 +23,8 @@
 	 "scrollbarBackground" : ("#FFFFFF", 0.5),
 	 "menuMask" : ("#FFFFFF", 0.9),
 	 "progressbarFrame" : ("#EF12AB", 1.0),
+	 "volumebutton_bg" :("#abadaa", 1.0),
+	 "volumebutton_fg" :("#98e219", 1.0)
  },
  "shadow_colors" : {
      "linearBackground" : [
