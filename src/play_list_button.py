@@ -20,23 +20,17 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from dtk.ui.theme import *
 
-app_theme = Theme(os.path.join(
-        (os.path.dirname(os.path.realpath(__file__))),"../app_theme"))
+from dtk.ui.frame import *
 
+from utils import *
+from ImageButton import *
 
-def allocation(widget):
-    cr = widget.window.cairo_create()
-    rect = widget.get_allocation()
-    return cr, rect.x, rect.y, rect.width, rect.height
-
-media_player = {"app":None, 
-                "mp":None, 
-                "screen":None,
-                "panel":None,
-                "play_state":0,
-                "common_state":True,
-                "fullscreen_state":False}
-
-
+class PlayListButton(object):
+    def __init__(self):
+        self.hframe = HorizontalFrame(padding = 14)
+        self.button = ImageButton(app_theme.get_pixbuf("大按钮背景.png"),
+                                  app_theme.get_pixbuf("播放列表.png"))
+        self.hframe.add(self.button)
+        
+        

@@ -20,7 +20,20 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# APP : media player window.
+APP_WIDTH  = 540 # media player width.
+APP_HEIGHT = 400 # media player height.
+DRAW_PIXBUF_Y = 27 # media player titlebar.
+DRAW_PIXBUF_HEIGHT = 2 # media player height.
+PANEL_HEIGHT = 20 # panel height.
+TOOLBAR_WIDTH = 1 # toolbar width.
+TOOLBAR_HEIGHT = 25 # toolbar height.
+PROGRESSBAR_WIDTH = -1 # progressbar width.
+PROGRESSBAR_HEIGHT = 5 # progressbar height.
+DRAW_PROGRESSBAR_X_PADDING = 1
+DRAW_PROGRESSBAR_Y_PADDING = 1
+DRAW_PROGRESSBAR_WIDTH_PADDING = 2 
+DRAW_PROGRESSBAR_LINE_WIDTH_PADDING = 4
 
 
 
-    

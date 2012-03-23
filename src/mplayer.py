@@ -1,6 +1,5 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
-
 # Copyright (C) 2012 Deepin, Inc.
 #               2012 Hailong Qiu
 #
@@ -20,6 +19,17 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+########################################################
+#   Python Mplayer API(PMA).
+#   .play(path)    .decvolume()
+#   .pause()       .offmute()
+#   .quit()        .nomute()
+#   .next()        ... ...
+#   .pre()
+#   .fseek()
+#   .bseek()
+#   .addvolume()
+########################################################
 
 import random
 import gtk
@@ -459,12 +469,16 @@ class  Mplayer(gobject.GObject):
         '''Del a File'''
         self.playList.remove(path)
         self.playListSum -= 1
-
+        
     def addPlayList(self, index, path):
         '''Add a File'''
         self.playList.intert(index, path)
         self.playListSum += 1
-            
+        
+    def addPlayFile(self, path):    
+        self.playList.append(path)
+        self.playListSum += 1
+        
     def loadPlayList(self, listFileName):
         f = open(listFileName)
         for i in f:
