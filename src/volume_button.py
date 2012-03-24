@@ -148,7 +148,7 @@ class VolumeButton(gtk.HBox,gobject.GObject):
         if event.button == 1:
             self.mute_bool = not self.mute_bool               
             self.set_value(self.volume_value)
-                
+
             
     def set_value(self, value):
         if value > 100:
@@ -158,6 +158,11 @@ class VolumeButton(gtk.HBox,gobject.GObject):
         
         self.emit("get-value-event", value, 1)    
         self.volume_value = value
+        
+        # Set media player volume.
+        if media_player["play_state"] == 1:
+            media_player["mp"].setvolume(self.volume_value)
+            
         if not self.mute_bool:
             if self.volume_value == 0:
                 image = self.mute_pixbuf.get_pixbuf()

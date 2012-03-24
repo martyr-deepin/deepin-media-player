@@ -65,6 +65,7 @@ class PlayControlPanel(object):
         if media_player["play_state"] == 1:
             self.media_player_stop(widget)
 
+        
     def media_player_next(self, widget):    
         if media_player["play_state"] == 1:
             media_player["mp"].next()
@@ -80,7 +81,7 @@ class PlayControlPanel(object):
         
     def media_player_start(self, widget):
         if media_player["play_state"] == 0:
-            media_player["mp"].play("/home/long/视频/[无极电影-www.wujidy.com]圣诞颂歌.rmvb")
+            media_player["mp"].play("/home/long/视频/test.mkv")
             media_player["play_state"] = 1
         else:
             media_player["mp"].pause()
@@ -134,7 +135,48 @@ class StartButton(gtk.Button):
         draw_pixbuf(cr, pixbuf, widget.allocation.x, widget.allocation.y)    
         propagate_expose(widget, event)
         return True
-
-
         
- 
+class StartButton(gtk.Button):
+    def __init__(self,
+                 bg_pixbuf=app_theme.get_pixbuf("大按钮背景.png"),
+                 button_pixbuf=app_theme.get_pixbuf("播放.png"),
+                 press_pixbuf=app_theme.get_pixbuf("暂停.png")):
+        gtk.Button.__init__(self)
+        self.start_bool = True
+        self.bg_pixbuf = bg_pixbuf
+        self.button_pixbuf = button_pixbuf
+        self.press_pixbuf = press_pixbuf
+        
+        self.connect("expose-event", self.expose_button)
+        self.connect("clicked", self.clicked_button)
+        
+    def clicked_button(self, widget):
+        self.start_bool = not self.start_bool
+        self.queue_draw()
+        
+    def expose_button(self, widget, event):
+        cr = widget.window.cairo_create()
+        rect = widget.allocation
+        x,y,w,h = rect.x, rect.y, rect.width, rect.height
+        
+        if self.start_bool:
+            image = self.button_pixbuf.get_pixbuf()
+        else:
+            image = self.press_pixbuf.get_pixbuf()
+            
+        if widget.state == gtk.STATE_PRELIGHT:
+            bg_image = self.bg_pixbuf.get_pixbuf()
+            pixbuf = bg_image.scale_simple(image.get_width(),
+                                           image.get_height(),
+                                           gtk.gdk.INTERP_BILINEAR)
+            
+            draw_pixbuf(cr, pixbuf, x, y)
+            
+        widget.set_size_request(image.get_width(), image.get_height())        
+        pixbuf = image.scale_simple(image.get_width(),
+                                    image.get_height(),
+                                    gtk.gdk.INTERP_BILINEAR)        
+        
+        draw_pixbuf(cr, pixbuf, widget.allocation.x, widget.allocation.y)    
+        propagate_expose(widget, event)
+        return True    

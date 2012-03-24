@@ -52,11 +52,4 @@ class BottomHbox(object):
         
         self.hbox.pack_start(PlayControlPanel().hbox_hframe, True, True)
         self.hbox.pack_start(volume_hframe, False, False)
-        self.hbox.pack_start(play_list_vframe, False, False)
-        
-
-
-
-
-        
-        
+        self.hbox.pack_start(play_list_vframe, False, False)        

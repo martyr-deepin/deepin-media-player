@@ -56,7 +56,10 @@ class Screen(object):
         self.screen_event.connect("button-press-event", self.button_press_screen)
         
         self.vbox.pack_start(self.screen_event)
-        self.vbox.pack_start(ProgressBar().hbox, False, False)
+        # Init progressbar.
+        self.progressbar = ProgressBar()
+        media_player["progressbar"] = self.progressbar
+        self.vbox.pack_start(self.progressbar.hbox, False, False)
         
     def button_press_screen(self, widget, event):
         # full screen window.
@@ -85,6 +88,7 @@ class Screen(object):
         self.panel.resize(1, PANEL_HEIGHT)
         self.panel.fullscreen()
         self.panel.hide_all()
+        media_player["progressbar"].pb.queue_draw()
         
     def quit_full_screen(self):    
         self.panel = media_player["panel"].panel
@@ -128,6 +132,7 @@ class Screen(object):
                 w, h + DRAW_PIXBUF_HEIGHT + 30, gtk.gdk.INTERP_BILINEAR)
             
             draw_pixbuf(cr, image, x-2 , y - DRAW_PIXBUF_Y)                            
+            
         if media_player["play_state"] == 1:
             # Close double buffer.
             self.unset_flags()
@@ -140,16 +145,19 @@ class Screen(object):
     
     def get_time_length(self, mplayer, length):
         print "长度:%d" % length
+        self.progressbar.max = length
         
     def get_time_pos(self, mplayer, pos):
         print "进度:%d" % pos
+        self.progressbar.set_pos(pos)
         
     def play_start(self, mplayer, data):
         print "开始播放"
+        media_player["progressbar"].set_pos(0)
         
     def play_ned(self, mplayer, data):
         print "播放结束"
-        
+
     def unset_flags(self):
         '''Set double buffer.'''
         self.screen.unset_flags(gtk.DOUBLE_BUFFERED)

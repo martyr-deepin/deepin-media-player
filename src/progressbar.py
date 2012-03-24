@@ -34,21 +34,22 @@ class ProgressBar(object):
 	
     def __init__(self,
                  max = 100,
-                 bg_color=app_theme.get_alpha_color("progressbar_bg"),
-                 fg_color=app_theme.get_alpha_color("progressbar_fg"),
+                 bg_pixbuf=app_theme.get_pixbuf("progressbar_bg.png"),
+                 fg_pixbuf=app_theme.get_pixbuf("progressbar_fg.png"),
                  hight_pixbuf=app_theme.get_pixbuf("进度条高光.png"),
                  drag_pixbuf=app_theme.get_pixbuf("滑块.png")):
         '''Init progressbar.'''
-        # Init.
-
-        
-        self.bg_color = bg_color
-        self.fg_color = fg_color
+        # Init pixbuf.
+        self.bg_pixbuf = bg_pixbuf
+        self.fg_pixbuf = fg_pixbuf
         self.hight_pixbuf = hight_pixbuf
         self.drag_pixbuf = drag_pixbuf
         
-        self.max = max
+        self.max = 3000
         self.pos = 0
+        self.save_pos = 0
+
+        self.drag_pixbuf_bool = False
         self.drag_bool = False
         
         self.hbox = gtk.HBox()
@@ -63,54 +64,87 @@ class ProgressBar(object):
         self.pb.connect("expose-event", self.expose_progressbar)
         # progressbar click signal.
         self.pb.connect("button-press-event", self.press_progressbar)
+        self.pb.connect("button-release-event", self.release_progressbar)
+        self.pb.connect("motion-notify-event", self.motion_notify_progressbar)
+        
+    def set_pos(self, pos):
+        self.pos = float(pos)
+        self.pb.queue_draw()
         
     def press_progressbar(self, widget, event):
-        '''Click show point'''
-        pass
-    
+        '''Click show point.'''
+        self.save_pos = self.pos
+        self.pos = (float(int(event.x))/widget.allocation.width*self.max)  # Get pos.
+        self.drag_bool = True
+        self.drag_pixbuf_bool = True
+        if media_player["mp"].state == 1:
+            if self.pos >= self.save_pos:
+                media_player["mp"].fseek(self.pos - self.save_pos)
+            else:
+                media_player["mp"].bseek(self.save_pos - self.pos)
+                
+        widget.queue_draw()        
+        
+    def release_progressbar(self, widget, event):
+        ''''''
+        self.drag_bool = False
+        
+    def motion_notify_progressbar(self, widget, event):
+        '''drag progressbar.'''
+        if self.drag_bool:
+            if 0 <= event.x <= widget.allocation.width:
+                self.save_pos = self.pos
+                self.pos = (float(event.x)/widget.allocation.width*self.max)
+                
+                if media_player["mp"].state == 1:
+                    if self.pos >= self.save_pos:
+                        media_player["mp"].fseek(self.pos - self.save_pos)
+                    else:
+                        media_player["mp"].bseek(self.save_pos - self.pos)
+        else:        
+            if 2 <= event.y <= 7:
+                self.drag_pixbuf_bool = True
+            else:
+                self.drag_pixbuf_bool = False
+                
+        widget.queue_draw()
+        
     def expose_progressbar(self, widget, event):
         cr, x, y, w, h = allocation(widget)
         
-        hight_pixbuf = self.hight_pixbuf
-        drag_pixbuf = self.drag_pixbuf
+        bg_pixbuf = self.bg_pixbuf.get_pixbuf()
+        fg_pixbuf = self.fg_pixbuf.get_pixbuf()
+        hight_pixbuf = self.hight_pixbuf.get_pixbuf()
+        drag_pixbuf = self.drag_pixbuf.get_pixbuf()
         
         # Draw bg.
-        cr.set_line_width(DRAW_PROGRESSBAR_LINE_WIDTH_PADDING)
-        cr.set_source_rgba(*alpha_color_hex_to_cairo(self.bg_color.get_color_info()))
-        for i in range(0, w+1):
-            cr.move_to(x , 
-                       y + 1 + h/2)
-            cr.line_to(x + i , 
-                       y + 1 + h/2)
-            cr.stroke()
-            
+        for i in range(0, w):
+            draw_pixbuf(cr, 
+                        bg_pixbuf, 
+                        x + i, 
+                        y + 2)
+
         # Draw fg.
-        cr.set_source_rgba(*alpha_color_hex_to_cairo(self.fg_color.get_color_info()))
-        self.pos = 50
-        for i in range(0, self.pos):    
-            cr.move_to(x , 
-                       y + 1 + h/2)
-            cr.line_to(x , 
-                       y + 1 + h/2)
-            cr.stroke()
+        pos = int(float(self.pos)/self.max * w)    
+        for i in range(0, pos):    
+            draw_pixbuf(cr, 
+                        fg_pixbuf,
+                        x + i, 
+                        y + 2)
             
         # Draw hight point.    
-        image = hight_pixbuf.get_pixbuf()            
-        draw_pixbuf(cr, 
-                    image, 
-                    x + self.pos - image.get_width(), 
-                    y + 2)
-        # Draw mouse point.    
-        # Test drag point.
-        self.drag_bool = True
-        if self.drag_bool:
-            image = drag_pixbuf.get_pixbuf()
+        if pos > hight_pixbuf.get_width():    
             draw_pixbuf(cr, 
-                    image, 
-                    x + DRAW_PROGRESSBAR_WIDTH_PADDING + self.pos - image.get_width(), 
-                    y + 1)
+                        hight_pixbuf, 
+                        x + pos - hight_pixbuf.get_width(), 
+                        y + 2)
         
-        
+        # Draw mouse point.    
+        if self.drag_pixbuf_bool:
+            draw_pixbuf(cr, 
+                        drag_pixbuf, 
+                        x + DRAW_PROGRESSBAR_WIDTH_PADDING + pos - drag_pixbuf.get_width()/2, 
+                        y)
         return True
        
     def show_progressbar(self):

@@ -226,7 +226,16 @@ class  Mplayer(gobject.GObject):
             self.volume = 0            
         if self.state:
             self.cmd('volume -%s 1\n' % str(self.volume))
-    
+            
+    def setvolume(self, volumeNum):
+        '''Add volume'''
+        self.volume = volumeNum
+        if self.volume > 100:
+            self.volume = 100
+
+        if self.state:
+            self.cmd('volume %s 1\n' % str(self.volume))
+            
     def leftchannel(self):
         '''The left channel'''
         if self.state:
