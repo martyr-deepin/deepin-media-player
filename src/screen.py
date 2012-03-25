@@ -111,7 +111,9 @@ class Screen(object):
         mp = Mplayer(xid)
         # Save mp.
         media_player["mp"] = mp
-        # Test play.
+        if media_player["play_file_path"] != None:
+            media_player["mp"].play(media_player["play_file_path"])
+            media_player["play_state"] = 1
         # Set media player signal.
         mp.connect("get-time-length", self.get_time_length)
         mp.connect("get-time-pos", self.get_time_pos)
@@ -157,7 +159,8 @@ class Screen(object):
         
     def play_ned(self, mplayer, data):
         print "播放结束"
-
+        media_player["play_state"] = 0
+        
     def unset_flags(self):
         '''Set double buffer.'''
         self.screen.unset_flags(gtk.DOUBLE_BUFFERED)

@@ -38,6 +38,7 @@ media_player = {"app":None,
                 "progressbar":None,
                 "play_state":0,
                 "common_state":True,
-                "fullscreen_state":False}
+                "fullscreen_state":False,
+                "play_file_path":None}
 
 

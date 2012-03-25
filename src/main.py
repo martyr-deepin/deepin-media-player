@@ -34,6 +34,7 @@ from mplayer import *
 from tophbox import *
 from bottomhbox import*
 from toolbar import *
+import sys
 
 class MediaPlayer(object):
     '''Deepin media player.'''
@@ -43,6 +44,11 @@ class MediaPlayer(object):
         self.app = Application("mediaplayer", False)
         # Save app.
         media_player["app"] = self.app
+        # Save play file path.
+        try:
+            media_player["play_file_path"] = sys.argv[1]
+        except:
+            print "Error!read play file path."
         # Set app icon.
         #self.app.set_icon(app_theme.get_pixbuf(""))
         # Set app titlbar.
