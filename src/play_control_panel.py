@@ -36,15 +36,15 @@ class PlayControlPanel(object):
         media_player["screen"].screen.connect("configure-event", 
                                            self.modify_play_control_panel)
         
-        self.stop_btn = ImageButton(app_theme.get_pixbuf("大按钮背景.png"),
-                                    app_theme.get_pixbuf("停止.png"))
-        self.pre_btn = ImageButton(app_theme.get_pixbuf("大按钮背景.png"),
-                                   app_theme.get_pixbuf("上一首.png"))
+        self.stop_btn = ImageButton(app_theme.get_pixbuf("big_button_background.png"),
+                                    app_theme.get_pixbuf("stop.png"))
+        self.pre_btn = ImageButton(app_theme.get_pixbuf("big_button_background.png"),
+                                   app_theme.get_pixbuf("pre_button.png"))
         self.start_btn = StartButton()
-        self.next_btn = ImageButton(app_theme.get_pixbuf("大按钮背景.png"),
-                                     app_theme.get_pixbuf("下一首.png"))
-        self.open_btn = ImageButton(app_theme.get_pixbuf("大按钮背景.png"),
-                                    app_theme.get_pixbuf("打开.png"))
+        self.next_btn = ImageButton(app_theme.get_pixbuf("big_button_background.png"),
+                                     app_theme.get_pixbuf("next_button.png"))
+        self.open_btn = ImageButton(app_theme.get_pixbuf("big_button_background.png"),
+                                    app_theme.get_pixbuf("open.png"))
         
         # Set btn siganl.
         self.stop_btn.connect("clicked", self.media_player_stop)
@@ -80,8 +80,7 @@ class PlayControlPanel(object):
         
     def media_player_start(self, widget):
         if media_player["play_state"] == 0:
-            media_player["mp"].play("/home/long/视频/[无极电影-www.wujidy.com]圣诞颂歌.rmvb")
-            media_player["play_state"] = 1
+            media_player["mp"].next()
         else:
             media_player["mp"].pause()
             
@@ -92,9 +91,9 @@ class PlayControlPanel(object):
         
 class StartButton(gtk.Button):
     def __init__(self,
-                 bg_pixbuf=app_theme.get_pixbuf("大按钮背景.png"),
-                 button_pixbuf=app_theme.get_pixbuf("播放.png"),
-                 press_pixbuf=app_theme.get_pixbuf("暂停.png")):
+                 bg_pixbuf=app_theme.get_pixbuf("big_button_background.png"),
+                 button_pixbuf=app_theme.get_pixbuf("play_button.png"),
+                 press_pixbuf=app_theme.get_pixbuf("pause_button.png")):
         gtk.Button.__init__(self)
         self.start_bool = True
         self.bg_pixbuf = bg_pixbuf

@@ -29,8 +29,8 @@ from ImageButton import *
 class PlayListButton(object):
     def __init__(self):
         self.hframe = HorizontalFrame(padding = 14)
-        self.button = ImageButton(app_theme.get_pixbuf("大按钮背景.png"),
-                                  app_theme.get_pixbuf("播放列表.png"))
+        self.button = ImageButton(app_theme.get_pixbuf("big_button_background.png"),
+                                  app_theme.get_pixbuf("play_list_button.png"))
         self.hframe.add(self.button)
         
         

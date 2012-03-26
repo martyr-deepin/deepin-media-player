@@ -46,9 +46,10 @@ class MediaPlayer(object):
         media_player["app"] = self.app
         # Save play file path.
         try:
-            media_player["play_file_path"] = sys.argv[1]
+            media_player["play_file_path"] = sys.argv
         except:
             print "Error!read play file path."
+            
         # Set app icon.
         #self.app.set_icon(app_theme.get_pixbuf(""))
         # Set app titlbar.

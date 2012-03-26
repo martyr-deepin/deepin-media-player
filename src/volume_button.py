@@ -41,10 +41,10 @@ class VolumeButton(gtk.HBox,gobject.GObject):
                  volume_value = 100,
                  bg_color = app_theme.get_alpha_color("volumebutton_bg"),
                  fg_color = app_theme.get_alpha_color("volumebutton_fg"),
-                 min_volume_pixbuf = app_theme.get_pixbuf("小音量.png"),
-                 mid_volume_pixbuf = app_theme.get_pixbuf("中音量.png"),
-                 max_volume_pixbuf = app_theme.get_pixbuf("大音量.png"),
-                 mute_pixbuf = app_theme.get_pixbuf("静音.png"),
+                 min_volume_pixbuf = app_theme.get_pixbuf("min_volume.png"),
+                 mid_volume_pixbuf = app_theme.get_pixbuf("mid_volume.png"),
+                 max_volume_pixbuf = app_theme.get_pixbuf("max_volume.png"),
+                 mute_pixbuf = app_theme.get_pixbuf("mute.png"),
                  volume_button_pixbuf = app_theme.get_pixbuf("音量调节按钮.png")
                  ):
         

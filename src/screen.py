@@ -28,7 +28,7 @@ from utils import *
 from mplayer import *
 from constant import *
 from progressbar import *
-
+import sys
 
 class Screen(object):
     def __init__(self):
@@ -112,8 +112,11 @@ class Screen(object):
         # Save mp.
         media_player["mp"] = mp
         if media_player["play_file_path"] != None:
-            media_player["mp"].play(media_player["play_file_path"])
-            media_player["play_state"] = 1
+            # Play list add file path.
+            for path in media_player["play_file_path"]:
+                if path != sys.argv[0]:
+                    media_player["mp"].addPlayFile(path)
+                    
         # Set media player signal.
         mp.connect("get-time-length", self.get_time_length)
         mp.connect("get-time-pos", self.get_time_pos)
@@ -155,6 +158,7 @@ class Screen(object):
         
     def play_start(self, mplayer, data):
         print "开始播放"
+        media_player["play_state"] = 1
         media_player["progressbar"].set_pos(0)
         
     def play_ned(self, mplayer, data):
