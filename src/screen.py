@@ -30,6 +30,7 @@ from constant import *
 from progressbar import *
 import sys
 
+
 class Screen(object):
     def __init__(self):
         self.vbox = gtk.VBox()
@@ -155,9 +156,14 @@ class Screen(object):
         
     def get_time_pos(self, mplayer, pos):
         print "进度:%d" % pos
+        time1 = media_player["mp"].time(self.progressbar.max)
+        time2 = media_player["mp"].time(pos)
+        media_player["show_time"].set_time_font("%s : %s : %s /" % (time1[0], time1[1], time1[2]),
+            " %s : %s : %s" % (time2[0], time2[1], time2[2]))
+        
         if not self.progressbar.drag_bool:
             self.progressbar.set_pos(pos)
-        
+            
     def play_start(self, mplayer, data):
         print "开始播放"
         media_player["play_state"] = 1

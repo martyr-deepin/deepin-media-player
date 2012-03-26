@@ -51,6 +51,7 @@ media_player = {"app":None,
                 "play_state":0,
                 "common_state":True,
                 "fullscreen_state":False,
-                "play_file_path":None}
+                "play_file_path":None,
+                "show_time":None}
 
 

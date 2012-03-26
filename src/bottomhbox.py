@@ -32,9 +32,9 @@ from dtk.ui.frame import *
 
 from utils import *
 from show_time import *
-from volume_button import *
 from play_list_button import *
 from play_control_panel import *
+from volume_button import *
 
 class BottomHbox(object):
     def __init__(self):
@@ -49,7 +49,12 @@ class BottomHbox(object):
         play_list_button = PlayListButton()
         play_list_vframe =  VerticalFrame(8)
         play_list_vframe.add(play_list_button.hframe)
-        
+        # Media palyer show time.
+        show_time = ShowTime()
+        # Save show time.
+        media_player["show_time"] = show_time
+        print media_player["show_time"]
+        self.hbox.pack_start(show_time.time_box, False, False)
         self.hbox.pack_start(PlayControlPanel().hbox_hframe, True, True)
         self.hbox.pack_start(volume_hframe, False, False)
         self.hbox.pack_start(play_list_vframe, False, False)        
