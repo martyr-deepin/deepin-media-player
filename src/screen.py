@@ -127,7 +127,6 @@ class Screen(object):
     def draw_screen_background(self, widget, event):
         cr, x, y, w, h = allocation(widget)
         
-        
         if media_player["play_state"] == 0:
             # Open double buffer.
             self.set_flags()
@@ -145,9 +144,6 @@ class Screen(object):
 
         return True
     
-    def quit_media_player(self, widget):
-        '''Quit media player.'''
-        media_player["mp"].quit()
     
     def get_time_length(self, mplayer, length):
         print "长度:%d" % length
