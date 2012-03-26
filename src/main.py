@@ -36,10 +36,9 @@ from bottomhbox import*
 from toolbar import *
 import sys
 
-class MediaPlayer(object):
+class MediaPlayer(object): 
     '''Deepin media player.'''
     def __init__(self):
-        
         # Media player window init.
         self.app = Application("mediaplayer", False)
         # Save app.

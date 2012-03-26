@@ -115,6 +115,7 @@ class Screen(object):
             # Play list add file path.
             for path in media_player["play_file_path"]:
                 if path != sys.argv[0]:
+                    print get_length(path)
                     media_player["mp"].addPlayFile(path)
                     
         # Set media player signal.
@@ -154,7 +155,8 @@ class Screen(object):
         
     def get_time_pos(self, mplayer, pos):
         print "进度:%d" % pos
-        self.progressbar.set_pos(pos)
+        if not self.progressbar.drag_bool:
+            self.progressbar.set_pos(pos)
         
     def play_start(self, mplayer, data):
         print "开始播放"

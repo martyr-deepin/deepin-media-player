@@ -36,8 +36,8 @@ class ProgressBar(object):
                  max = 100,
                  bg_pixbuf=app_theme.get_pixbuf("progressbar_bg.png"),
                  fg_pixbuf=app_theme.get_pixbuf("progressbar_fg.png"),
-                 hight_pixbuf=app_theme.get_pixbuf("进度条高光.png"),
-                 drag_pixbuf=app_theme.get_pixbuf("滑块.png")):
+                 hight_pixbuf=app_theme.get_pixbuf("progressbar_hight.png"),
+                 drag_pixbuf=app_theme.get_pixbuf("slide_block.png")):
         '''Init progressbar.'''
         # Init pixbuf.
         self.bg_pixbuf = bg_pixbuf
@@ -45,7 +45,7 @@ class ProgressBar(object):
         self.hight_pixbuf = hight_pixbuf
         self.drag_pixbuf = drag_pixbuf
         
-        self.max = 3000
+        self.max = max
         self.pos = 0
         self.save_pos = 0
 
@@ -66,10 +66,13 @@ class ProgressBar(object):
         self.pb.connect("button-press-event", self.press_progressbar)
         self.pb.connect("button-release-event", self.release_progressbar)
         self.pb.connect("motion-notify-event", self.motion_notify_progressbar)
+        self.pb.connect("leave-notify-event", self.leave_notify_progressbar)
+        self.pb.connect("enter-notify-event", self.enter_notify_progressbar)
         
     def set_pos(self, pos):
         self.pos = float(pos)
         self.pb.queue_draw()
+        
         
     def press_progressbar(self, widget, event):
         '''Click show point.'''
@@ -86,27 +89,32 @@ class ProgressBar(object):
         widget.queue_draw()        
         
     def release_progressbar(self, widget, event):
-        ''''''
         self.drag_bool = False
         
+    def enter_notify_progressbar(self, widget, event):
+        self.drag_pixbuf_bool = True
+        widget.queue_draw()
+        
+    def leave_notify_progressbar(self, widget, event):
+        if not self.drag_bool:
+            self.drag_pixbuf_bool = False
+        widget.queue_draw()
+            
     def motion_notify_progressbar(self, widget, event):
-        '''drag progressbar.'''
+        '''drag progressbar'''
         if self.drag_bool:
             if 0 <= event.x <= widget.allocation.width:
                 self.save_pos = self.pos
-                self.pos = (float(event.x)/widget.allocation.width*self.max)
                 
+                self.pos = (float(int(event.x))/widget.allocation.width*self.max)
                 if media_player["mp"].state == 1:
                     if self.pos >= self.save_pos:
+                        print "原来的值:%d" %(self.save_pos)
+                        print "改变的值:%d" %(self.pos)
+                        
                         media_player["mp"].fseek(self.pos - self.save_pos)
                     else:
-                        media_player["mp"].bseek(self.save_pos - self.pos)
-        else:        
-            if 2 <= event.y <= 7:
-                self.drag_pixbuf_bool = True
-            else:
-                self.drag_pixbuf_bool = False
-                
+                        media_player["mp"].bseek(self.save_pos - self.pos)         
         widget.queue_draw()
         
     def expose_progressbar(self, widget, event):
@@ -141,10 +149,23 @@ class ProgressBar(object):
         
         # Draw mouse point.    
         if self.drag_pixbuf_bool:
-            draw_pixbuf(cr, 
-                        drag_pixbuf, 
-                        x + DRAW_PROGRESSBAR_WIDTH_PADDING + pos - drag_pixbuf.get_width()/2, 
-                        y)
+            if 0 <= pos <= drag_pixbuf.get_width():
+                draw_pixbuf(cr,
+                            drag_pixbuf,
+                            x-1, 
+                            y)
+                
+            if w - drag_pixbuf.get_width() <= pos <= w:
+                draw_pixbuf(cr,
+                            drag_pixbuf,
+                            x + DRAW_PROGRESSBAR_WIDTH_PADDING + pos - drag_pixbuf.get_width(), 
+                            y)
+                
+            if drag_pixbuf.get_width() < pos <  w - drag_pixbuf.get_width():    
+                draw_pixbuf(cr, 
+                            drag_pixbuf, 
+                            x + DRAW_PROGRESSBAR_WIDTH_PADDING + pos - drag_pixbuf.get_width()/2, 
+                            y)
         return True
        
     def show_progressbar(self):
