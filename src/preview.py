@@ -35,30 +35,36 @@ class PreView(object):
         self.i = 0
         self.mp   = None
         
-        self.pv = Application("preview_window", True)
-        # Set preview window.
-        self.pv.window.set_size_request(120,80)
-        self.pv.window.set_keep_above(True)
-        self.pv.window.add_events(gtk.gdk.ALL_EVENTS_MASK)
-        
+        self.pv = gtk.Window(gtk.WINDOW_TOPLEVEL)
+
+        # Set preview window.        
+        self.pv.set_size_request(120,80)
+        self.pv.set_decorated(False)
+        self.pv.set_keep_above(True)
+        self.pv.add_events(gtk.gdk.ALL_EVENTS_MASK)
+        self.pv.connect("destroy", self.quit_mplayer)
      
+    def quit_mplayer(self, widget):
+        if self.mp:
+            self.mp.quit()
+            
     def create_mplayer(self):            
-        self.mp = Mplayer(self.pv.window.window.xid)
+        self.mp = Mplayer(self.pv.window.xid)
         self.mp.connect("get-time-pos", self.get_time_pos)
         self.mp.play(self.path)
         self.mp.fseek(self.pos)    
         self.mp.nomute()
         
     def move_preview(self, x, y):        
-        self.pv.window.move(int(x), int(y))
+        self.pv.move(int(x), int(y))
         
     def show_preview(self):        
-        self.pv.window.show_all()
+        self.pv.show_all()
         # Init mplayer.
         self.create_mplayer()
         
     def hide_preview(self):
-        self.pv.window.destroy()
+        self.pv.destroy()
         
     def get_time_pos(self, mplayer, pos):    
         print pos
@@ -112,8 +118,8 @@ class Test(object):
         self.preview.show_preview()        
         
 if __name__ == "__main__":        
-    # pv = PreView("/home/long/视频/1.rmvb", 500)
-    # pv.show_preview()
+    #pv = PreView("/home/long/视频/1.rmvb", 500)
+    #pv.show_preview()
     test = Test()
     #Test()
     gtk.main()

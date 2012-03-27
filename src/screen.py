@@ -151,11 +151,9 @@ class Screen(object):
         media_player["mp"].quit()
     
     def get_time_length(self, mplayer, length):
-        print "长度:%d" % length
         self.progressbar.max = length
         
     def get_time_pos(self, mplayer, pos):
-        print "进度:%d" % pos
         time1 = media_player["mp"].time(self.progressbar.max)
         time2 = media_player["mp"].time(pos)
         media_player["show_time"].set_time_font("%s : %s : %s /" % (time1[0], time1[1], time1[2]),
