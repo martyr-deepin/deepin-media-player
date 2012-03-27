@@ -45,6 +45,7 @@ class TopHbox(object):
         
         self.screen = Screen()
         screen_hframe.add(self.screen.vbox)
+        # Save screen.
         media_player["screen"] = self.screen
         self.screen_progressbar_vbox.pack_start(screen_hframe, True, True)
         # screen_progressbar_vbox add progressbar.

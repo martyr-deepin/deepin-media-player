@@ -50,9 +50,11 @@ class ProgressBar(object):
         self.max = max
         self.pos = 0
         self.save_pos = 0
-
+        self.show_bool = False
         self.drag_pixbuf_bool = False
         self.drag_bool = False
+        
+        self.preview = None
         
         self.hbox = gtk.HBox()
         self.pb = gtk.Button()
@@ -98,22 +100,36 @@ class ProgressBar(object):
         widget.queue_draw()
         
     def leave_notify_progressbar(self, widget, event):
+        if self.show_bool: # Show preview.
+            if media_player["mp"].state == 1:
+                self.preview = PreView(media_player["mp"].path, self.pos, int(event.x_root), int(event.y_root) + 80)
+                #self.show_preview(event.x_root, event.y_root - self.pv.window.allocation.height)
+                self.show_bool = False
+        
         if not self.drag_bool:
             self.drag_pixbuf_bool = False
         widget.queue_draw()
             
     def motion_notify_progressbar(self, widget, event):
         '''drag progressbar'''
-        if self.drag_bool:
+        if not self.show_bool: # Show preview.
+            try:
+                self.preview.hide_preview()
+            except:    
+                print "hide preview Error!!"
+        
+        if 0 <= event.y <= widget.allocation.height:    
+            self.show_bool = True
+        else:
+            self.show_bool = False
+            
+        if self.drag_bool: 
             if 0 <= event.x <= widget.allocation.width:
                 self.save_pos = self.pos
                 
                 self.pos = (float(int(event.x))/widget.allocation.width*self.max)
                 if media_player["mp"].state == 1:
                     if self.pos >= self.save_pos:
-                        print "原来的值:%d" %(self.save_pos)
-                        print "改变的值:%d" %(self.pos)
-                        
                         media_player["mp"].fseek(self.pos - self.save_pos)
                     else:
                         media_player["mp"].bseek(self.save_pos - self.pos)         
