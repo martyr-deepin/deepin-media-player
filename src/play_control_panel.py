@@ -61,16 +61,15 @@ class PlayControlPanel(object):
         
     def media_player_open(self, widget):    
         '''Open a play file.'''
-        
         if media_player["play_state"] == 1:
             self.media_player_stop(widget)
 
     def media_player_next(self, widget):    
-        if media_player["play_state"] == 1:
+        if media_player["mp"].playList != []:
             media_player["mp"].next()
         
     def media_player_pre(self, widget):
-        if media_player["play_state"] == 1:
+        if media_player["mp"].playList != []:
             media_player["mp"].pre()
         
     def media_player_stop(self, widget):
@@ -80,7 +79,10 @@ class PlayControlPanel(object):
         
     def media_player_start(self, widget):
         if media_player["play_state"] == 0:
-            media_player["mp"].next()
+            if media_player["mp"].playList != []:
+                media_player["mp"].next()
+            else:
+                self.start_btn.start_bool = True
         else:
             media_player["mp"].pause()
             

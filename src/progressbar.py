@@ -28,6 +28,7 @@ from dtk.ui.draw import *
 
 from utils import *
 from constant import *
+from preview import *
 
 class ProgressBar(object):
     '''Media player progressbar.'''
@@ -39,6 +40,7 @@ class ProgressBar(object):
                  hight_pixbuf=app_theme.get_pixbuf("progressbar_hight.png"),
                  drag_pixbuf=app_theme.get_pixbuf("slide_block.png")):
         '''Init progressbar.'''
+        self.pv = None
         # Init pixbuf.
         self.bg_pixbuf = bg_pixbuf
         self.fg_pixbuf = fg_pixbuf
