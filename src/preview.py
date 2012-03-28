@@ -22,6 +22,7 @@
 from dtk.ui.application import Application
 from dtk.ui.mplayer_view import *
 from dtk.ui.box import *
+from dtk.ui.draw import *
 
 from mplayer import *
 from constant import *
@@ -34,16 +35,62 @@ class PreView(object):
         self.pos  = pos  # play pos.
         self.i = 0
         self.mp   = None
-        
+        # Preview background window.
+        self.bg = gtk.Window(gtk.WINDOW_TOPLEVEL)
+        self.bg.set_colormap(gtk.gdk.Screen().get_rgba_colormap())
+        self.bg.set_decorated(False)
+        self.bg.set_keep_above(True)
+        self.bg.set_size_request(124, 60 + 15 + 4)
+        # Set background window.
+        self.bg.add_events(gtk.gdk.ALL_EVENTS_MASK)
+        self.bg.connect("expose-event", self.draw_background)
+        self.bg.connect("size-allocate", self.draw_shape_mask)        
+        # Preview window.
         self.pv = gtk.Window(gtk.WINDOW_TOPLEVEL)
-
         # Set preview window.        
-        self.pv.set_size_request(120,80)
+        self.pv.set_size_request(120, 60)
         self.pv.set_decorated(False)
         self.pv.set_keep_above(True)
         self.pv.add_events(gtk.gdk.ALL_EVENTS_MASK)
         self.pv.connect("destroy", self.quit_mplayer)
-     
+        
+       
+    # Background window.    
+    def draw_background(self, widget, event):    
+        cr = widget.window.cairo_create()
+        rect = widget.allocation
+        x, y, w, h = rect.x, rect.y, rect.width, rect.height
+        
+        cr.set_source_rgb(0, 0, 0)
+        cr.rectangle(x, y, w, h)
+        cr.fill()  
+
+        
+        return True
+    
+    def draw_shape_mask(self, widget, rect):    
+        # Init.
+        x, y, w, h = rect.x, rect.y, rect.width, rect.height
+        bitmap = gtk.gdk.Pixmap(None, w, h, 1)
+        cr = bitmap.cairo_create()
+        
+        # Clear the bitmap
+        cr.set_source_rgb(1.0, 1.0, 1.0)
+        cr.set_operator(cairo.OPERATOR_CLEAR)
+        cr.paint()
+        
+        cr.set_source_rgb(1.0, 1.0, 1.0)
+        cr.set_operator(cairo.OPERATOR_OVER)
+        # cr.arc(x + w / 2, y + h / 2, 50, 0, 2 * pi)
+        cr.rectangle(x, y, w, h)
+        #cr.set_source_pixbuf(self.pixbuf, x, y)
+        cr.paint()
+
+        # Shape with given mask.
+        widget.shape_combine_mask(bitmap, 0, 0)
+        
+        
+    # Preview window.
     def quit_mplayer(self, widget):
         if self.mp:
             self.mp.quit()
@@ -56,14 +103,20 @@ class PreView(object):
         self.mp.nomute()
         
     def move_preview(self, x, y):        
-        self.pv.move(int(x), int(y))
+        self.bg.move(int(x), int(y))
+        self.pv.move(int(x + 2), int(y+2))
         
     def show_preview(self):        
+        self.bg.show_all()
         self.pv.show_all()
+        self.pv.set_keep_above(True)
         # Init mplayer.
         self.create_mplayer()
+        region = gtk.gdk.Region()
+        self.bg.window.input_shape_combine_region(region, 0, 0)
         
     def hide_preview(self):
+        self.bg.destroy()
         self.pv.destroy()
         
     def get_time_pos(self, mplayer, pos):    
@@ -93,8 +146,7 @@ class Test(object):
         if self.show_bool:
             print "显示预览窗口"
             print "现实预览窗口了...."
-            self.test(event.x, event.y)
-            print "鼠标的X坐标:%f" % event.x_root
+            self.test(event.x + 50, event.y + 100)
             self.show_bool = False
             
     def motion_notify_event(self, widget, event):  
