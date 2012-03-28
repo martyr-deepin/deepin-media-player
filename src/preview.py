@@ -40,7 +40,8 @@ class PreView(object):
         self.bg.set_colormap(gtk.gdk.Screen().get_rgba_colormap())
         self.bg.set_decorated(False)
         self.bg.set_keep_above(True)
-        self.bg.set_size_request(124, 60 + 15 + 4)
+        self.bg.set_size_request(124, 60 + 25 + 4)
+        self.bg.set_opacity(0.8)
         # Set background window.
         self.bg.add_events(gtk.gdk.ALL_EVENTS_MASK)
         self.bg.connect("expose-event", self.draw_background)
@@ -64,8 +65,7 @@ class PreView(object):
         cr.set_source_rgb(0, 0, 0)
         cr.rectangle(x, y, w, h)
         cr.fill()  
-
-        
+                
         return True
     
     def draw_shape_mask(self, widget, rect):    
@@ -81,11 +81,14 @@ class PreView(object):
         
         cr.set_source_rgb(1.0, 1.0, 1.0)
         cr.set_operator(cairo.OPERATOR_OVER)
-        # cr.arc(x + w / 2, y + h / 2, 50, 0, 2 * pi)
-        cr.rectangle(x, y, w, h)
-        #cr.set_source_pixbuf(self.pixbuf, x, y)
-        cr.paint()
-
+        cr.rectangle(x, y, w, h-10)
+        cr.fill()
+         
+        cr.move_to(x + w/2 +5-15, y+h-10)
+        cr.line_to(x + w/2 + 5-5, y+h)
+        cr.line_to(x + w/2 + 5+5, y+h-10)
+        cr.fill()
+        
         # Shape with given mask.
         widget.shape_combine_mask(bitmap, 0, 0)
         
@@ -114,6 +117,7 @@ class PreView(object):
         self.create_mplayer()
         region = gtk.gdk.Region()
         self.bg.window.input_shape_combine_region(region, 0, 0)
+        self.pv.show_all()
         
     def hide_preview(self):
         self.bg.destroy()
@@ -130,7 +134,7 @@ class Test(object):
     def __init__(self):
         self.show_bool = False
         self.move_bool = False
-        
+        self.preview = None
         self.win = gtk.Window(gtk.WINDOW_TOPLEVEL)
         self.win.set_title("影音测试窗口")
         self.win.add_events(gtk.gdk.ALL_EVENTS_MASK)
@@ -146,7 +150,7 @@ class Test(object):
         if self.show_bool:
             print "显示预览窗口"
             print "现实预览窗口了...."
-            self.test(event.x + 50, event.y + 100)
+            self.test(event.x_root - 62, event.y_root - 90)
             self.show_bool = False
             
     def motion_notify_event(self, widget, event):  

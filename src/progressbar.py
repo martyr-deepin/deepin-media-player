@@ -104,7 +104,7 @@ class ProgressBar(object):
             if media_player["mp"].state == 1:        
                 preview_pos = (float(int(event.x))/widget.allocation.width*self.max)
                 self.preview = PreView(media_player["mp"].path, preview_pos)
-                self.preview.move_preview(int(event.x_root), int(event.y_root - 100))
+                self.preview.move_preview(int(event.x_root - 62), int(event.y_root - 95))
                 self.preview.show_preview()
                 self.show_bool = False
         
