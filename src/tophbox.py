@@ -20,13 +20,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#             --- playlist
-#      --vbox -
-#      -      --- add_del_list_button
-# hbox -
-#      -      --- screen
-#      --vbox -
-#             --- progressbar
+#                     --- playlist
+#              --vbox -
+#              -      --- add_del_list_button
+# hbox(HPaned) -
+#              -      --- screen
+#              --vbox -
+#                     --- progressbar
 #
 
 from dtk.ui.frame import *
