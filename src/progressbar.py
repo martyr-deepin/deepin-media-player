@@ -102,11 +102,12 @@ class ProgressBar(object):
     def leave_notify_progressbar(self, widget, event):
         if self.show_bool: # Show preview.
             if media_player["mp"].state == 1:        
-                preview_pos = (float(int(event.x))/widget.allocation.width*self.max)
-                self.preview = PreView(media_player["mp"].path, preview_pos)
-                self.preview.move_preview(int(event.x_root - 62), int(event.y_root - 95))
-                self.preview.show_preview()
-                self.show_bool = False
+                if 2 <= event.y <= widget.allocation.height-2:
+                    preview_pos = (float(int(event.x))/widget.allocation.width*self.max)
+                    self.preview = PreView(media_player["mp"].path, preview_pos)
+                    self.preview.move_preview(int(event.x_root - 62), int(event.y_root - 95))
+                    self.preview.show_preview()
+                    self.show_bool = False
         
         if not self.drag_bool:
             self.drag_pixbuf_bool = False
@@ -120,7 +121,7 @@ class ProgressBar(object):
             except:    
                 print "hide preview Error!!"
         
-        if 2 <= event.y <= widget.allocation.height-2:    
+        if (2 <= event.y <= widget.allocation.height-2) and (0 < event.x < widget.allocation.width):    
             self.show_bool = True
         else:
             self.show_bool = False

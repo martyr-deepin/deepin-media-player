@@ -29,19 +29,22 @@ from constant import *
 from utils import *
 import gtk
 
+
 class PreView(object): 
     def __init__(self, path, pos):
         self.path = path # play path.
         self.pos  = pos  # play pos.
         self.i = 0
         self.mp   = None
+        
         # Preview background window.
         self.bg = gtk.Window(gtk.WINDOW_TOPLEVEL)
         self.bg.set_colormap(gtk.gdk.Screen().get_rgba_colormap())
         self.bg.set_decorated(False)
-        self.bg.set_keep_above(True)
+        #self.bg.set_keep_above(True)
         self.bg.set_size_request(124, 60 + 25 + 4)
         self.bg.set_opacity(0.8)
+        self.bg.set_type_hint(gtk.gdk.WINDOW_TYPE_HINT_MENU)
         # Set background window.
         self.bg.add_events(gtk.gdk.ALL_EVENTS_MASK)
         self.bg.connect("expose-event", self.draw_background)
@@ -52,20 +55,32 @@ class PreView(object):
         self.pv.set_size_request(120, 60)
         self.pv.set_decorated(False)
         self.pv.set_keep_above(True)
+        self.pv.set_type_hint(gtk.gdk.WINDOW_TYPE_HINT_MENU) 
         self.pv.add_events(gtk.gdk.ALL_EVENTS_MASK)
         self.pv.connect("destroy", self.quit_mplayer)
-        
-       
+        self.pv.connect("expose-event", self.draw_preview_background)
     # Background window.    
     def draw_background(self, widget, event):    
         cr = widget.window.cairo_create()
         rect = widget.allocation
         x, y, w, h = rect.x, rect.y, rect.width, rect.height
-        
+
         cr.set_source_rgb(0, 0, 0)
         cr.rectangle(x, y, w, h)
         cr.fill()  
-                
+        
+        pos = self.mp.time(self.pos)
+        cr.select_font_face("Courier",
+                            cairo.FONT_SLANT_NORMAL,
+                            cairo.FONT_WEIGHT_BOLD)
+        cr.set_font_size(12)
+        cr.set_source_rgb(1, 1, 1)
+        cr.move_to(w/2-15, h-16)
+
+        cr.show_text("%d:%d:%d" % (self.mp.time(self.pos)[0], 
+                                   self.mp.time(self.pos)[1],
+                                   self.mp.time(self.pos)[2]))
+        
         return True
     
     def draw_shape_mask(self, widget, rect):    
@@ -92,8 +107,15 @@ class PreView(object):
         # Shape with given mask.
         widget.shape_combine_mask(bitmap, 0, 0)
         
-        
     # Preview window.
+    def draw_preview_background(self, widget, event):    
+        cr, x, y, w, h = allocation(widget)
+        if self.mp:
+            cr.set_source_rgb(0, 0, 0)
+            cr.rectangle(x,y,w,h)
+            cr.fill()
+            return True
+    
     def quit_mplayer(self, widget):
         if self.mp:
             self.mp.quit()
@@ -112,6 +134,7 @@ class PreView(object):
     def show_preview(self):        
         self.bg.show_all()
         self.pv.show_all()
+        
         self.pv.set_keep_above(True)
         # Init mplayer.
         self.create_mplayer()
@@ -124,7 +147,7 @@ class PreView(object):
         self.pv.destroy()
         
     def get_time_pos(self, mplayer, pos):    
-        print pos
+        self.hour, self.min, self.sec = self.mp.time(pos)
         self.i += 1
         self.i = self.i % PREVIEW_TIME_POS
         if not self.i:

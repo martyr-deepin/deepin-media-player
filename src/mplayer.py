@@ -427,15 +427,20 @@ class  Mplayer(gobject.GObject):
                 
     ## time Control ##
     def time(self, sec):
-        self.timeSec = sec
+        # Clear.
+        self.timeSec = 0
+        self.timeHour = 0
+        self.timeMin = 0
+        
+        self.timeSec = int(sec)
         
         if self.timeSec >= 3600:
-            self.timeHour = self.timeSec / 3600
-            self.timeSec -= (self.timeHour * 3600)
+            self.timeHour = int(self.timeSec / 3600)
+            self.timeSec -= int(self.timeHour * 3600)
         
         if self.timeSec >= 60:
-            self.timeMin  = self.timeSec / 60
-            self.timeSec -= (self.timeMin * 60)         
+            self.timeMin  = int(self.timeSec / 60)
+            self.timeSec -= int(self.timeMin * 60)         
             
         return self.timeHour, self.timeMin, self.timeSec    
     

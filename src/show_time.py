@@ -31,7 +31,7 @@ class ShowTime(object):
                  #font_color=app_theme.get_color("show_time")):
                  ):     
         #self.font_color = font_color
-        self.time_font1 = "Deepin media player"
+        self.time_font1 = ""
         self.time_font2 = ""
         self.time_box = EventBox()       
         self.time_box.connect("expose-event", self.draw_play_time)
@@ -39,27 +39,23 @@ class ShowTime(object):
     def set_time_font(self, time_font1, time_font2):    
         self.time_font1 = str(time_font1)
         self.time_font2 = str(time_font2)
-        self.time_box.queue_draw()
+        hbox = self.time_box.get_parent()
+        hbox.queue_draw()
         
     def draw_play_time(self, widget, event):
         '''Draw media player time.'''
         cr, x, y, w, h = allocation(widget)
-        cr.set_source_rgb(1, 1, 1)
-        cr.select_font_face("Purisa",
-                            cairo.FONT_SLANT_NORMAL,
-                            cairo.FONT_WEIGHT_BOLD)
         
-        cr.set_font_size(12)
-        # Get first show time font width.
-        font_width = cr.text_extents(self.time_font1)
-        # first show time.
-        cr.move_to(20, y + h/2)
-        cr.show_text(self.time_font1)
-        #draw_font(cr, self.time_font,12, self.font_color.get_color(),x,y,w,h)
+        draw_font(cr, self.time_font1, DEFAULT_FONT_SIZE, "#FFFFFF", 
+                  x + 50, y, w, h)
         
-        # Second show time.
-        cr.set_source_rgb(0.6, 0.6, 0.6)
-        cr.move_to(x + 20 + font_width[2], y + h/2)
-        cr.show_text(self.time_font2)        
+        (font1_width, font1_height) = get_content_size(self.time_font1, DEFAULT_FONT_SIZE)
+        
+        draw_font(cr, self.time_font2, DEFAULT_FONT_SIZE, "#000000", 
+                  x + 50 + font1_width, y, w, h)
+        
+        # Propagate expose.
+        propagate_expose(widget, event)
+        
         return True
     

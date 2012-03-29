@@ -123,7 +123,7 @@ class Screen(object):
         mp.connect("get-time-length", self.get_time_length)
         mp.connect("get-time-pos", self.get_time_pos)
         mp.connect("play-start", self.play_start)
-        mp.connect("play-end", self.play_ned)
+        mp.connect("play-end", self.play_end)
     
     def draw_screen_background(self, widget, event):
         cr, x, y, w, h = allocation(widget)
@@ -156,18 +156,18 @@ class Screen(object):
     def get_time_pos(self, mplayer, pos):
         time1 = media_player["mp"].time(self.progressbar.max)
         time2 = media_player["mp"].time(pos)
-        media_player["show_time"].set_time_font("%s : %s : %s /" % (time1[0], time1[1], time1[2]),
-            " %s : %s : %s" % (time2[0], time2[1], time2[2]))
+        media_player["show_time"].set_time_font("%d : %d : %d /" % (time1[0], time1[1], time1[2]),
+            " %d : %d : %d" % (time2[0], time2[1], time2[2]))
         
         if not self.progressbar.drag_bool:
             self.progressbar.set_pos(pos)
-            
+
     def play_start(self, mplayer, data):
         print "开始播放"
         media_player["play_state"] = 1
         media_player["progressbar"].set_pos(0)
         
-    def play_ned(self, mplayer, data):
+    def play_end(self, mplayer, data):
         print "播放结束"
         media_player["play_state"] = 0
         
