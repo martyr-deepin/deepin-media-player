@@ -62,7 +62,7 @@ class MediaPlayer(object):
         
         # Add child widget.
         # hbox add : playlist, add_del panel, screen, progressbar.
-        self.app.main_box.pack_start(TopHbox().hbox, True, True)
+        self.app.main_box.pack_start(TopHbox().tophbox_hframe, True, True)
         # Add control panel.
         self.app.main_box.pack_start(BottomHbox().hbox_vframe, False, False)
         

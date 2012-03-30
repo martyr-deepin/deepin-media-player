@@ -53,7 +53,7 @@ class BottomHbox(object):
         show_time = ShowTime()
         # Save show time.
         media_player["show_time"] = show_time
-        self.hbox.pack_start(show_time.time_box, False, False)
+        self.hbox.pack_start(show_time.time_box, True, True) 
         self.hbox.pack_start(PlayControlPanel().hbox_hframe, True, True)
         self.hbox.pack_start(volume_hframe, False, False)
         self.hbox.pack_start(play_list_vframe, False, False)        

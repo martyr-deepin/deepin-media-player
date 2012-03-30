@@ -27,7 +27,7 @@ from constant import *
 from ImageButton import *
 
 
-class PlayControlPanel(object):
+class PlayControlPanel(object):    
     def __init__(self):
         self.hbox_hframe = HorizontalFrame()
         self.hbox = gtk.HBox()

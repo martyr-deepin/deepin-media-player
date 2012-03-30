@@ -30,7 +30,7 @@ app_theme = Theme(os.path.join(
 
 def get_length(file_path):
     '''Get media player length.'''
-    cmd = "mplayer -vo null -ao null -frames 0 -identify %s 2>&1" % (file_path)
+    cmd = "mplayer -vo null -ao null -frames 0 -identify '%s' 2>&1" % (file_path)
     fp = Popen(cmd, shell=True, stdout=PIPE)
     cmd_str = fp.communicate()[0]
     length_compile = re.compile(r"ID_LENGTH=([\d|\.]+)")

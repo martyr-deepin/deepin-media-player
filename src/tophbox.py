@@ -30,31 +30,41 @@
 #
 
 from dtk.ui.frame import *
+from dtk.ui.paned import *
 
 from utils import *
 from screen import * 
+from playlist import*
 
 class TopHbox(object):
     def __init__(self):
         
         self.hbox = gtk.HBox()
-        screen_hframe = HorizontalFrame(padding = 2)
+        self.paned = HPaned(480, 1)
+        
+        self.tophbox_hframe = HorizontalFrame(padding = 2)
+        self.tophbox_hframe.add(self.hbox)
         # vbox->screen and progressbar
         self.screen_progressbar_vbox = gtk.VBox() 
         # screen_progressbar_vbox add screen.
         
         self.screen = Screen()
-        screen_hframe.add(self.screen.vbox)
+        #screen_hframe.add(self.screen.vbox)
         # Save screen.
         media_player["screen"] = self.screen
-        self.screen_progressbar_vbox.pack_start(screen_hframe, True, True)
+        #self.screen_progressbar_vbox.pack_start(screen_hframe, True, True)
+        self.screen_progressbar_vbox.pack_start(self.screen.vbox, True, True)
         # screen_progressbar_vbox add progressbar.
         #self.screen_progressbar_vbox.pack_start(self.
         
         # vbox->playlist and add_del_list_button
-        # gtk.VBox()
-        #self.hbox.pack_start
-        self.hbox.pack_start(self.screen_progressbar_vbox)
+        self.playlist = PlayList()
+        #self.paned.add1(self.screen_progressbar_vbox)
+        #self.paned.add2(self.playlist.scrolled_window)
+        #self.hbox.pack_start(self.paned)
+        self.hbox.pack_start(self.screen_progressbar_vbox, True, True)
+        self.hbox.pack_start(self.playlist.scrolled_window,False, False)
+        
         
         
         

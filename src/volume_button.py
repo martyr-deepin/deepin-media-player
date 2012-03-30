@@ -32,7 +32,7 @@ import gtk
 import gobject
 
 
-class VolumeButton(gtk.HBox,gobject.GObject):
+class VolumeButton(gtk.HBox, gobject.GObject):
     __gsignals__ = {
         "get-value-event":(gobject.SIGNAL_RUN_LAST,
                            gobject.TYPE_NONE,(gobject.TYPE_INT,gobject.TYPE_INT,))
