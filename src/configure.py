@@ -25,29 +25,33 @@ from  pyinotify import  WatchManager, Notifier, ProcessEvent, IN_DELETE, IN_CREA
 import ConfigParser
 import string, os, sys
 import gobject
-import pyinotify
 
 class MediaConfig(gobject.GObject):
     __gsignals__ = {
-        "get-items":(gobject.SIGNAL_RUN_LAST,
-                        gobject.TYPE_NONE,(gobject.TYPE_INT,)),
-        "get-option":(gobject.SIGNAL_RUN_LAST,
-                        gobject.TYPE_NONE,(gobject.TYPE_INT,)),
-        
+        "media-config":(gobject.SIGNAL_RUN_LAST,
+                        gobject.TYPE_NONE,()),
+        "media-modify":(gobject.SIGNAL_RUN_LAST,
+                        gobject.TYPE_NONE,())
         }
     def __init__(self):
-        
+        gobject.GObject.__init__(self)
         self.config_path = ""        
         self.cf = ConfigParser.ConfigParser()
+        self.emit("media-config")
         
     def init_read(self, config_path):    
         self.config_path = config_path
         self.cf.read(config_path)    
+        self.emit("media-config")        
+        
+    def get(self, section, option):    
+        return self.cf.get(section, option)
         
     def get_options(self, section):
         return self.cf.options(section)
     
     def get_items(self, section):
+        
         return self.cf.items(section)
         
     def get_sections(self):
@@ -59,55 +63,50 @@ class MediaConfig(gobject.GObject):
     def set_value(self, section, option, value):    
         self.cf.set(section, option , value)
         
-    def quit(self):    
+    def write(self):    
         fp = open(self.config_path, "w")
         self.cf.write(fp)
         fp.close()
         
-        
-class EventHandler(ProcessEvent):
-    def process_IN_CREATE(self, event):
-        print   "Create file: %s "  %   os.path.join(event.path,
-event.name)
-
-    def process_IN_DELETE(self, event):
-        print   "Delete file: %s "  %   os.path.join(event.path,
-event.name)
+    def FSMonitor(self):
+        if "" != self.config_path:
+            wm = WatchManager() 
+            mask = IN_MODIFY
+            notifier = Notifier(wm, self.process_IN_MODIFY)
+            wm.add_watch(self.config_path, mask, rec=True)
+            print 'now starting monitor %s'%(self.config_path)
+            while True:
+                try:
+                    notifier.process_events()
+                    if notifier.check_events():
+                        notifier.read_events()
+                except KeyboardInterrupt:
+                    notifier.stop()
+                    break
     
     def process_IN_MODIFY(self, event):
-            print   "Modify file: %s "  %   os.path.join(event.path,
-event.name)
-    
-
-def FSMonitor(path='/home/long/.config/deepin-media-player'):
-        wm = WatchManager() 
-        mask = IN_DELETE | IN_CREATE |IN_MODIFY
-        notifier = Notifier(wm, EventHandler())
-        wm.add_watch(path, mask,rec=True)
-        print 'now starting monitor %s'%(path)
-        while True:
-                try:
-                        notifier.process_events()
-                        if notifier.check_events():
-                                notifier.read_events()
-                except KeyboardInterrupt:
-                        notifier.stop()
-                        break
-
-
-            
-Test = 1    
+        '''File modify emit signal.'''
+        print   "Modify file: %s "  %   os.path.join(event.path, event.name)
+        self.emit("media-modify")
+        
+def Test(config):
+    print "fdsf"
+        
 if __name__ == "__main__":
-    if Test == 1:
-        FSMonitor()
-    if Test == 3:    
-        mc = MediaConfig()        
-        mc.init_read("/home/long/project/deepin-media-player/src/test.ini")
-        print mc.get_sections()
-        print mc.get_items("db")
-        print mc.get_options("db")
+    mc = MediaConfig()        
+    mc.connect("media-config", Test)
+    mc.init_read("/home/long/.config/deepin-media-player/config.ini")
+    # mc.add_section("window_mode")
+    # mc.set_value("window_mode", "ss", "50")
+    # mc.set_value("window_mode", "vv", "150")
+    print mc.get_options("window_mode")
+    print mc.get_items("window_mode")
+    print mc.get_sections()
+    
+    print mc.get_items("window_mode")
+    print mc.get("window_mode", "ss")
+    #mc.write()
+    #mc.FSMonitor()
 
-        mc.add_section("playlist")
-        mc.set_value("playlist", "video1", "/home/long/meida/dfdf")
-        mc.set_value("playlist", "video2", "/home/fdsfdsfsdf")
-        mc.quit()
+
+   

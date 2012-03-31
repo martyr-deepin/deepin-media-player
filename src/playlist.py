@@ -125,7 +125,7 @@ class MediaItem(gobject.GObject):
 # Test funcation.    #######################
 ############################################    
 def clicked_button(widget, list_view, mp):    
-    mp.findCurrentDir("/home/long/视频")
+    mp.findCurrentDir(get_home_path() + "/视频")
     item_array = []
     for i in range(0, mp.playListSum):
         item_array.append((mp.playList[i], ""))

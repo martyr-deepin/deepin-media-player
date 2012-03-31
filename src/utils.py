@@ -24,10 +24,16 @@ from dtk.ui.theme import *
 from subprocess import *
 import re
 
+from configure import *
+
+media_config = MediaConfig()
 
 app_theme = Theme(os.path.join(
         (os.path.dirname(os.path.realpath(__file__))),"../app_theme"))
 
+def get_home_path():
+    return os.path.expanduser("~")
+    
 def get_length(file_path):
     '''Get media player length.'''
     cmd = "mplayer -vo null -ao null -frames 0 -identify '%s' 2>&1" % (file_path)
