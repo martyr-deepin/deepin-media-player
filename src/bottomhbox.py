@@ -38,6 +38,7 @@ from volume_button import *
 
 class BottomHbox(object):
     def __init__(self):
+        self.vbox = gtk.VBox()
         self.hbox_vframe = VerticalFrame(padding = 4)
         self.hbox = gtk.HBox()
         self.hbox_vframe.add(self.hbox)
@@ -57,3 +58,13 @@ class BottomHbox(object):
         self.hbox.pack_start(PlayControlPanel().hbox_hframe, True, True)
         self.hbox.pack_start(volume_hframe, False, False)
         self.hbox.pack_start(play_list_vframe, False, False)        
+
+        self.vbox.pack_start(self.hbox_vframe)
+        
+    def show_bottomhbox(self):
+        if self.vbox.get_children() == [] and self.hbox_vframe != None:
+            self.vbox.pack_start(self.hbox_vframe)
+        
+    def hide_bottomhbox(self):
+        container_remove_all(self.vbox)    
+        

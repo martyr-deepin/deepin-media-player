@@ -24,10 +24,6 @@ from dtk.ui.theme import *
 from subprocess import *
 import re
 
-from configure import *
-
-media_config = MediaConfig()
-
 app_theme = Theme(os.path.join(
         (os.path.dirname(os.path.realpath(__file__))),"../app_theme"))
 
@@ -54,6 +50,7 @@ media_player = {"app":None,
                 "screen":None,
                 "panel":None,
                 "progressbar":None,
+                "bottomhbox":None,
                 "play_state":0,
                 "common_state":True,
                 "fullscreen_state":False,

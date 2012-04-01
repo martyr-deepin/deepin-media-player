@@ -64,7 +64,8 @@ class MediaPlayer(object):
         # hbox add : playlist, add_del panel, screen, progressbar.
         self.app.main_box.pack_start(TopHbox().tophbox_hframe, True, True)
         # Add control panel.
-        self.app.main_box.pack_start(BottomHbox().hbox_vframe, False, False)
+        media_player["bottomhbox"] = BottomHbox()
+        self.app.main_box.pack_start(media_player["bottomhbox"].vbox, False, False)
         
         self.app.window.show_all()
         # Show toolbar.

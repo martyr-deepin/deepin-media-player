@@ -103,9 +103,13 @@ class Screen(object):
                     
     def common_mode(self):
         self.app.show_titlebar()
-            
+        media_player["progressbar"].show_progressbar()
+        media_player["bottomhbox"].show_bottomhbox()
+        
     def simple_mode(self):
         self.app.hide_titlebar()
+        media_player["progressbar"].hide_progressbar()
+        media_player["bottomhbox"].hide_bottomhbox()
         
     def init_media_player(self, widget, xid):
         '''init media player xid.'''

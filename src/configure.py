@@ -26,7 +26,6 @@ import ConfigParser
 import string, os, sys
 import gobject
 
-from utils import *
 
 
 class MediaConfig(gobject.GObject):
@@ -103,6 +102,8 @@ class MediaConfig(gobject.GObject):
     #     print   "Modify file: %s "  %   os.path.join(event.path, event.name)
     #     self.emit("media-modify")
         
+media_config = MediaConfig()        
+
 def Test(config):
     print "fdsf"
         
