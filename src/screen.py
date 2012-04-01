@@ -28,6 +28,7 @@ from utils import *
 from mplayer import *
 from constant import *
 from progressbar import *
+from toolbar2 import *
 import sys
 
 
@@ -125,12 +126,19 @@ class Screen(object):
                     print get_length(path)
                     media_player["mp"].addPlayFile(path)
                     
+        # Init ToolBar2.            
+        media_player["panel2"] = ToolBar2()
+        media_player["panel2"].show_toolbar2()
+        print media_player["panel2"]            
         # Set media player signal.
-        mp.connect("get-time-length", self.get_time_length)
-        mp.connect("get-time-pos", self.get_time_pos)
         mp.connect("play-start", self.play_start)
         mp.connect("play-end", self.play_end)
-    
+        mp.connect("get-time-length", media_player["progressbar"].get_time_length)
+        mp.connect("get-time-pos", media_player["progressbar"].get_time_pos)    
+        
+        mp.connect("get-time-length", media_player["panel2"].progressbar.get_time_length)
+        mp.connect("get-time-pos", media_player["panel2"].progressbar.get_time_pos)
+               
     def draw_screen_background(self, widget, event):
         cr, x, y, w, h = allocation(widget)
         
@@ -156,18 +164,7 @@ class Screen(object):
         '''Quit media player.'''
         media_player["mp"].quit()
     
-    def get_time_length(self, mplayer, length):
-        self.progressbar.max = length
-        
-    def get_time_pos(self, mplayer, pos):
-        time1 = media_player["mp"].time(self.progressbar.max)
-        time2 = media_player["mp"].time(pos)
-        media_player["show_time"].set_time_font("%d : %d : %d /" % (time1[0], time1[1], time1[2]),
-            " %d : %d : %d" % (time2[0], time2[1], time2[2]))
-        
-        if not self.progressbar.drag_bool:
-            self.progressbar.set_pos(pos)
-
+    
     def play_start(self, mplayer, data):
         print "开始播放"
         media_player["play_state"] = 1

@@ -72,12 +72,24 @@ class ProgressBar(object):
         self.pb.connect("motion-notify-event", self.motion_notify_progressbar)
         self.pb.connect("leave-notify-event", self.leave_notify_progressbar)
         self.pb.connect("enter-notify-event", self.enter_notify_progressbar)
+                
         
     def set_pos(self, pos):
         self.pos = float(pos)
         self.pb.queue_draw()
         
+    def get_time_length(self, mplayer, length):
+        self.max = length
         
+    def get_time_pos(self, mplayer, pos):
+        time1 = media_player["mp"].time(self.max)
+        time2 = media_player["mp"].time(pos)
+        media_player["show_time"].set_time_font("%d : %d : %d /" % (time1[0], time1[1], time1[2]),
+            " %d : %d : %d" % (time2[0], time2[1], time2[2]))
+        
+        if not self.drag_bool:
+            self.set_pos(pos)
+
     def press_progressbar(self, widget, event):
         '''Click show point.'''
         self.save_pos = self.pos
@@ -192,6 +204,7 @@ class ProgressBar(object):
     def show_progressbar(self):
         if self.hbox.get_children() == [] and self.pb != None:
             self.hbox.pack_start(self.pb)
+        
         
     def hide_progressbar(self):
         container_remove_all(self.hbox) 
