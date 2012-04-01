@@ -63,8 +63,15 @@ class TopHbox(object):
         #self.paned.add2(self.playlist.scrolled_window)
         #self.hbox.pack_start(self.paned)
         self.hbox.pack_start(self.screen_progressbar_vbox, True, True)
-        self.hbox.pack_start(self.playlist.scrolled_window,False, False)
+        media_player["playlist"] = self.playlist
+        self.hbox.pack_start(media_player["playlist"].vbox,False, False)
         
+    def show_bottomhbox(self):
+        if self.vbox.get_children() == [] and self.hbox_vframe != None:
+            self.vbox.pack_start(self.hbox_vframe)
         
+    def hide_bottomhbox(self):
+        container_remove_all(self.vbox)    
+            
         
         

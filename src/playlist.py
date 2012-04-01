@@ -32,12 +32,14 @@ import time
 class PlayList(object):
     
     def __init__(self):
+        self.vbox = gtk.VBox()
         self.scrolled_window = ScrolledWindow(hscrollbar_policy=gtk.POLICY_NEVER)    
         self.list_view = ListView()
         self.item_array = []
         self.list_view.connect("configure-event", self.init_playlist_path)
         self.list_view.connect("double-click-item", self.double_click_item)
         self.scrolled_window.add_child(self.list_view)
+        self.vbox.pack_start(self.scrolled_window)
         
     def double_click_item(self, list_view, list_item, colume, offset_x, offset_y):    
         if media_player["mp"].playList != []:
@@ -58,6 +60,13 @@ class PlayList(object):
             self.list_view.add_items(items)    
             media_player["mp"].savePlayList("/home/long/media_player.dmp")
         
+    def show_playlist(self):
+        if self.vbox.get_children() == [] and self.scrolled_window != None:
+            self.vbox.pack_start(self.scrolled_window)
+        
+    def hide_playlist(self):
+        container_remove_all(self.vbox)    
+    
 class MediaItem(gobject.GObject):
     '''List item.'''
     
