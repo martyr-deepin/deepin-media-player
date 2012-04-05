@@ -131,7 +131,7 @@ class ProgressBar(object):
             try:
                 self.preview.hide_preview()
             except:    
-                print "hide preview Error!!"
+                print "media player message:hide preview Error!!"
         
         if (2 <= event.y <= widget.allocation.height-2) and (0 < event.x < widget.allocation.width):    
             self.show_bool = True

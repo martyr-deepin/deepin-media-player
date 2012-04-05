@@ -66,7 +66,6 @@ class Screen(object):
     def button_press_screen(self, widget, event):
         # full screen window.
         if event.type == gtk.gdk._2BUTTON_PRESS and event.button == 1:
-            
             if media_player["fullscreen_state"]: # True-> quit full.
                 self.quit_full_screen()
             else:    # False-> full.
@@ -126,20 +125,17 @@ class Screen(object):
                     print get_length(path)
                     media_player["mp"].addPlayFile(path)
                     
-        # Init ToolBar2.            
-        media_player["panel2"] = ToolBar2()
-        media_player["panel2"].show_toolbar2()
-        print media_player["panel2"]            
+        
         # Set media player signal.
         mp.connect("play-start", self.play_start)
         mp.connect("play-end", self.play_end)
         
         mp.connect("get-time-length", media_player["progressbar"].get_time_length)
         mp.connect("get-time-pos", media_player["progressbar"].get_time_pos)    
-        
-        #mp.connect("get-time-length", media_player["panel2"].progressbar.get_time_length)
-        #mp.connect("get-time-pos", media_player["panel2"].progressbar.get_time_pos)
                
+        media_player["mp"].connect("get-time-length", self.progressbar.get_time_length)
+        media_player["mp"].connect("get-time-pos", self.progressbar.get_time_pos)
+        
     def draw_screen_background(self, widget, event):
         cr, x, y, w, h = allocation(widget)
         
@@ -167,12 +163,13 @@ class Screen(object):
     
     
     def play_start(self, mplayer, data):
-        print "开始播放"
+        print "start play..."
         media_player["play_state"] = 1
         media_player["progressbar"].set_pos(0)
+        media_player["panel2"].progressbar.set_pos(0)
         
     def play_end(self, mplayer, data):
-        print "播放结束"
+        print "play end..."
         media_player["play_state"] = 0
         
     def unset_flags(self):

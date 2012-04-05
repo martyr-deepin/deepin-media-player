@@ -68,8 +68,13 @@ class MediaPlayer(object):
         self.app.main_box.pack_start(media_player["bottomhbox"].vbox, False, False)
         
         self.app.window.show_all()
-        # Show toolbar.
+        # Init toolbar.
         media_player["panel"] = ToolBar()
+        # Init ToolBar2.            
+        media_player["panel2"] = ToolBar2()
+        media_player["panel2"].show_toolbar2()
+        media_player["panel2"].hide_toolbar2()
+        
         
 MediaPlayer()      
 gtk.main()
