@@ -33,8 +33,6 @@ class PlayControlPanel(object):
         self.hbox = gtk.HBox()
         self.hbox_hframe.add(self.hbox)
         
-        media_player["screen"].screen.connect("configure-event", 
-                                           self.modify_play_control_panel)
         
         self.stop_btn = ImageButton(app_theme.get_pixbuf("big_button_background.png"),
                                     app_theme.get_pixbuf("stop.png"))
@@ -86,10 +84,7 @@ class PlayControlPanel(object):
         else:
             media_player["mp"].pause()
             
-    def modify_play_control_panel(self, widget, event):
-        width = widget.allocation.width/2-100
-        self.hbox_hframe.set_padding(0, 0,
-                                     width,width)
+    
         
 class StartButton(gtk.Button):
     def __init__(self,

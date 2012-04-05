@@ -133,11 +133,12 @@ class Screen(object):
         # Set media player signal.
         mp.connect("play-start", self.play_start)
         mp.connect("play-end", self.play_end)
+        
         mp.connect("get-time-length", media_player["progressbar"].get_time_length)
         mp.connect("get-time-pos", media_player["progressbar"].get_time_pos)    
         
-        mp.connect("get-time-length", media_player["panel2"].progressbar.get_time_length)
-        mp.connect("get-time-pos", media_player["panel2"].progressbar.get_time_pos)
+        #mp.connect("get-time-length", media_player["panel2"].progressbar.get_time_length)
+        #mp.connect("get-time-pos", media_player["panel2"].progressbar.get_time_pos)
                
     def draw_screen_background(self, widget, event):
         cr, x, y, w, h = allocation(widget)

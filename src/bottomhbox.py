@@ -42,6 +42,12 @@ class BottomHbox(object):
         self.hbox_vframe = VerticalFrame(padding = 4)
         self.hbox = gtk.HBox()
         self.hbox_vframe.add(self.hbox)
+        
+        media_player["screen"].screen.connect("configure-event", 
+                                           self.modify_play_control_panel)
+        
+        # play control_panel
+        self.play_control_panel = PlayControlPanel()
         # VolumeButton Init.
         volume_hframe = HorizontalFrame()
         volume_button = VolumeButton()
@@ -55,7 +61,7 @@ class BottomHbox(object):
         # Save show time.
         media_player["show_time"] = show_time
         self.hbox.pack_start(show_time.time_box, True, True) 
-        self.hbox.pack_start(PlayControlPanel().hbox_hframe, True, True)
+        self.hbox.pack_start(self.play_control_panel.hbox_hframe, True, True)
         self.hbox.pack_start(volume_hframe, False, False)
         self.hbox.pack_start(play_list_vframe, False, False)        
 
@@ -68,3 +74,8 @@ class BottomHbox(object):
     def hide_bottomhbox(self):
         container_remove_all(self.vbox)    
         
+        
+    def modify_play_control_panel(self, widget, event):
+        width = widget.allocation.width/2-100
+        self.play_control_panel.hbox_hframe.set_padding(0, 0,
+                                     width,width)

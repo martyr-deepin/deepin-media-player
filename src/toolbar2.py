@@ -34,23 +34,51 @@ from volume_button import *
 
 
 class ToolBar2(object):            
-    def __init__(self):
-        self.panel = Panel(APP_WIDTH - 4, PANEL_HEIGHT)
+    def __init__(self, background_pixbuf = app_theme.get_pixbuf("bg.png")):
+        self.background_pixbuf = background_pixbuf
+        self.panel = Panel(-1, 42)
         self.vbox = gtk.VBox()
         self.progressbar = ProgressBar()        
-        #self.hbox = gtk.HBox()
-        self.vbox.pack_start(self.progressbar.hbox, False, False)
+        # panel signal.
+        self.panel.connect("expose-event", self.panel_expose)
         
-        #self.vbox.pack_start(self.hbox, False, False)
+        self.hbox = gtk.HBox()
+        # hbox add child widget.
+        self.show_time = ShowTime()
+        self.play_control_panel = PlayControlPanel()
+        volume_hframe = HorizontalFrame()
+        self.volume_button = VolumeButton()
+        volume_hframe.add(self.volume_button)
+        
+        self.hbox.pack_start(self.show_time.time_box)
+                
+        self.hbox.pack_start(self.play_control_panel.hbox_hframe)
+        self.hbox.pack_start(volume_hframe, True, True)
+   
+        
+        self.vbox.pack_start(self.progressbar.hbox, False, False)
+        self.vbox.pack_start(self.hbox, True, True)
+        
         self.panel.add(self.vbox)        
         
+    def panel_expose(self, widget, event):    
+        cr = widget.window.cairo_create()
+        rect = widget.allocation
+        x, y, w, h = rect.x, rect.y, rect.width, rect.height
+        # Draw background.
+        background_pixbuf = self.background_pixbuf.get_pixbuf()
+        image = background_pixbuf.scale_simple(w, h, gtk.gdk.INTERP_BILINEAR)
+        cr.set_source_pixbuf(image, x, y)
+        cr.paint_with_alpha(1)
+        widget.propagate_expose(widget.get_child(), event)
+        return True
+    
     def show_toolbar2(self):    
         self.panel.show_all()
         
     def hide_toolbar2(self):    
         self.panel.hide_all()
-        
-        
+                
 if __name__ == "__main__":    
     tb = ToolBar2()
     tb.show_all()
