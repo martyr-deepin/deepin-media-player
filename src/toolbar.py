@@ -47,10 +47,10 @@ class ToolBar(object):
         self.panel.connect("expose-event", self.draw_panel_background)
         self.toolbar_full_hframe = HorizontalFrame(7)
         self.toolbar_full = ToggleHoverButton(
-            app_theme.get_pixbuf("全屏1.png"),
-            app_theme.get_pixbuf("全屏.png"),
-            app_theme.get_pixbuf("恢复1.png"),
-            app_theme.get_pixbuf("恢复.png")
+            app_theme.get_pixbuf("full1.png"),
+            app_theme.get_pixbuf("full.png"),
+            app_theme.get_pixbuf("Recovery1.png"),
+            app_theme.get_pixbuf("Recovery.png")
             )
         self.toolbar_full.connect("clicked", self.toolbar_full_screen)
         self.toolbar_full_hframe.add(self.toolbar_full)

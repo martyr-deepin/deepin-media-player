@@ -28,10 +28,10 @@ from utils import *
 
 class MutualButton(object):
     def __init__(self,
-                 button1_pixbuf_1 = app_theme.get_pixbuf("普通模式.png"), 
-                 button1_pixbuf_2 = app_theme.get_pixbuf("普通模式1.png"), 
-                 button2_pixbuf_1 = app_theme.get_pixbuf("简洁模式.png"), 
-                 button2_pixbuf_2 = app_theme.get_pixbuf("简洁模式1.png")):
+                 button1_pixbuf_1 = app_theme.get_pixbuf("OrdinaryMode.png"), 
+                 button1_pixbuf_2 = app_theme.get_pixbuf("OrdinaryMode1.png"), 
+                 button2_pixbuf_1 = app_theme.get_pixbuf("ConciseMode.png"), 
+                 button2_pixbuf_2 = app_theme.get_pixbuf("ConciseMode1.png")):
         
         self.mutual_bool = True
         self.button1 = gtk.Button()
