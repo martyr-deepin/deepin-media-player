@@ -59,7 +59,7 @@ class TopHbox(object):
         
         # vbox->playlist and add_del_list_button
         self.playlist = PlayList()
-        #self.playlist.hide_playlist()
+        self.playlist.hide_playlist()
         #self.paned.add1(self.screen_progressbar_vbox)
         #self.paned.add2(self.playlist.scrolled_window)
         #self.hbox.pack_start(self.paned)
