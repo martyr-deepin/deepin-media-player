@@ -66,7 +66,7 @@ class PlayList(object):
         
     def hide_playlist(self):
         container_remove_all(self.vbox)    
-    
+        
 class MediaItem(gobject.GObject):
     '''List item.'''
     
