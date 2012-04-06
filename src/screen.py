@@ -163,6 +163,7 @@ class Screen(object):
     
     def quit_media_player(self, widget):
         '''Quit media player.'''
+        media_player["mp"].savePlayList(get_home_path() + "/media_player.dmp")
         media_player["mp"].quit()
     
     

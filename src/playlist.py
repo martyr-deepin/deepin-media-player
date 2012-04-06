@@ -66,7 +66,7 @@ class PlayList(object):
         
             items = map(lambda (title, length): MediaItem(title, length), self.item_array)
             self.list_view.add_items(items)    
-            media_player["mp"].savePlayList(get_home_path() + "/media_player.dmp")
+            
             
                 
     def show_playlist(self):
