@@ -45,7 +45,7 @@ class VolumeButton(gtk.HBox, gobject.GObject):
                  mid_volume_pixbuf = app_theme.get_pixbuf("mid_volume.png"),
                  max_volume_pixbuf = app_theme.get_pixbuf("max_volume.png"),
                  mute_pixbuf = app_theme.get_pixbuf("mute.png"),
-                 volume_button_pixbuf = app_theme.get_pixbuf("音量调节按钮.png")
+                 volume_button_pixbuf = app_theme.get_pixbuf("volume_button.png")
                  ):
         
 
