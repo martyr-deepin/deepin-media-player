@@ -97,24 +97,24 @@ class ToolBar(object):
         
         
     def show_panel(self, widget, event):
-        if media_player["mp"].state == 1:
-            if 1 <= event.y <= 25:                
-                if not self.show_bool:
-                    self.panel.resize(widget.allocation.width , 
-                                      PANEL_HEIGHT)
-                    x,y = media_player["app"].window.window.get_root_origin()
-                    if media_player["fullscreen_state"] or not media_player["common_state"]:
-                        self.panel.move(x+2, y)
-                    else:    
-                        self.panel.move(x+2, y + TOOLBAR_HEIGHT)                   
+        # if media_player["mp"].state == 1:
+        #     if 1 <= event.y <= 25:                
+        #         if not self.show_bool:
+        #             self.panel.resize(widget.allocation.width , 
+        #                               PANEL_HEIGHT)
+        #             x,y = media_player["app"].window.window.get_root_origin()
+        #             if media_player["fullscreen_state"] or not media_player["common_state"]:
+        #                 self.panel.move(x+2, y)
+        #             else:    
+        #                 self.panel.move(x+2, y + TOOLBAR_HEIGHT)                   
                     
-                    self.panel.show_all()
-                    self.show_bool = True
-            else:
-                self.panel.hide_all()
-                self.panel.resize(widget.allocation.width , 
-                                  PANEL_HEIGHT)
-                self.show_bool = False
+        #             self.panel.show_all()
+        #             self.show_bool = True
+        #     else:
+        #         self.panel.hide_all()
+        #         self.panel.resize(widget.allocation.width , 
+        #                           PANEL_HEIGHT)
+        #         self.show_bool = False
         return False    
             
     def modify_panel(self, widget, event):    

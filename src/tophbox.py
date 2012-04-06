@@ -58,14 +58,14 @@ class TopHbox(object):
         #self.screen_progressbar_vbox.pack_start(self.
         
         # vbox->playlist and add_del_list_button
-        self.playlist = PlayList()
+        #self.playlist = PlayList()
         #self.playlist.hide_playlist()
         #self.paned.add1(self.screen_progressbar_vbox)
         #self.paned.add2(self.playlist.scrolled_window)
         #self.hbox.pack_start(self.paned)
         self.hbox.pack_start(self.screen_progressbar_vbox, True, True)
-        media_player["playlist"] = self.playlist
-        self.hbox.pack_start(media_player["playlist"].vbox,False, False)
+        #media_player["playlist"] = self.playlist
+        #self.hbox.pack_start(media_player["playlist"].vbox,False, False)
         
     def show_bottomhbox(self):
         if self.vbox.get_children() == [] and self.hbox_vframe != None:

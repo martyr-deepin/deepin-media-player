@@ -83,7 +83,7 @@ class PlayControlPanel(object):
                 self.start_btn.start_bool = True
         else:
             media_player["mp"].pause()
-            
+            media_player["screen"].set_flags()
     
         
 class StartButton(gtk.Button):
