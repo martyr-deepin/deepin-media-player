@@ -25,46 +25,34 @@ import os
 import re
 import urllib
 from utils import *
+from mplayer import *
 
 pygtk.require('2.0')
 
+
 def drag_motion(wid, context, x, y, time):
-    #print "drag_motion:" + ('\n'.join([str(t) for t in context.targets]))
     context.drag_status(gtk.gdk.ACTION_COPY, time)
     return True
 
 def drag_drop(wid, context, x, y, time):
-    #print context.targets
     wid.drag_get_data(context, context.targets[-1], time)
     return True
 
 def drag_data_received(wid, context, x, y, data, info, time):
-    #print "drag_data_received-1:" + data.get_data_type()
-    #print "drag_data_received-2:" + data.target
-    #print data.get_uris()
     for f in data.get_uris():
         path = urllib.unquote(f)[7:]
-        if os.path.isdir(path):
-            print "目录:" + path
-        else:
-            if os.path.exists(path):
-                print "文件:" + path
         
-        # if os.path.isdir(path):
-    #     print "这是目录"
-    # else:
-    #     print "不是目录"
-    # if data.target in ["text/uri-list", "text/plain", "text/media-player"]:
-    #     if data.target == "text/uri-list":
-    #         print data.get_uris()
-    #     elif data.target == "text/plain":    
-    #         if os.path.isdir(data.data):
-    #             print "是目录"
-    #         if os.path.exists(data.data):
-    #             print "是文件"
-    #     elif data.target == "text/media-player" and data.data:    
-    #         pass # Add play list.
-
+        # Add Dir.
+        if os.path.isdir(path):            
+            media_player["mp"].findCurrentDir(path)
+        else:    
+            # Add File.    
+            if os.path.exists(path):
+                fp = open(path, "r")
+                for file in fp:
+                    media_player["mp"].addPlayFile(file.strip())
+                    
+    print media_player["mp"].playList
     context.finish(True, False, time)
     return True
 
@@ -73,30 +61,16 @@ def drag_connect(wid):
                ("text/uri-list", 0, 0),
                ("text/plain", 0, 3)]
     
-    win.drag_dest_set(gtk.DEST_DEFAULT_ALL, targets, gtk.gdk.ACTION_COPY)
+    wid.drag_dest_set(gtk.DEST_DEFAULT_ALL, targets, gtk.gdk.ACTION_COPY)
     wid.connect('drag_motion', drag_motion)
     wid.connect('drag_drop', drag_drop)
     wid.connect('drag_data_received', drag_data_received)    
     
 if __name__ == "__main__":
+    media_player["mp"] = Mplayer()
     win = gtk.Window(gtk.WINDOW_TOPLEVEL)
     win.connect("destroy", gtk.main_quit)    
     
     drag_connect(win)
     win.show_all()
     gtk.main()
-
-
-# drag_begin    
-# drag_motion
-# drag_data_received
-# drag_data_get
-# drag_data_delete
-# drag_drop
-# drag_end
-
-# gtk_drag_dest_set(GtkWidget *widget,
-#                   GtkDestDefaults flags,
-#                   const GtkTargetEntry *targets,
-#                   gint n_targets,
-#                   )

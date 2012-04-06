@@ -21,7 +21,7 @@
 
 from dtk.ui.listview import *
 from dtk.ui.scrolled_window import*
-
+from dtk.ui.frame import *
 from mplayer import *
 from constant import *
 from utils import *
@@ -33,13 +33,20 @@ class PlayList(object):
     
     def __init__(self):
         self.vbox = gtk.VBox()
+        self.playlist_vbox = gtk.VBox()
+        self.vbox_vframe = VerticalFrame(padding = 0)
+        
         self.scrolled_window = ScrolledWindow(hscrollbar_policy=gtk.POLICY_NEVER)    
         self.list_view = ListView()
         self.item_array = []
         self.list_view.connect("configure-event", self.init_playlist_path)
         self.list_view.connect("double-click-item", self.double_click_item)
         self.scrolled_window.add_child(self.list_view)
-        self.vbox.pack_start(self.scrolled_window)
+        
+
+        self.playlist_vbox.pack_start(self.scrolled_window)
+        self.vbox_vframe.add(self.playlist_vbox)
+        self.vbox.pack_start(self.vbox_vframe)
         
     def double_click_item(self, list_view, list_item, colume, offset_x, offset_y):    
         if media_player["mp"].playList != []:
@@ -51,19 +58,21 @@ class PlayList(object):
         
     def init_playlist_path(self, widget, event):                     
         if [] == self.item_array:
-            media_player["mp"].findCurrentDir("/home/long/视频")
+            media_player["mp"].findCurrentDir(get_home_path() + "/视频")
+            
             self.item_array = []
             for i in range(0, media_player["mp"].playListSum):
                 self.item_array.append((media_player["mp"].playList[i], ""))
         
             items = map(lambda (title, length): MediaItem(title, length), self.item_array)
             self.list_view.add_items(items)    
-            media_player["mp"].savePlayList("/home/long/media_player.dmp")
-        
+            media_player["mp"].savePlayList(get_home_path() + "/media_player.dmp")
+            
+                
     def show_playlist(self):
-        if self.vbox.get_children() == [] and self.scrolled_window != None:
-            self.vbox.pack_start(self.scrolled_window)
-        
+        if self.vbox.get_children() == [] and self.vbox_vframe != None:
+           self.vbox.add(self.vbox_vframe)
+            
     def hide_playlist(self):
         container_remove_all(self.vbox)    
         

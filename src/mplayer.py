@@ -490,8 +490,9 @@ class  Mplayer(gobject.GObject):
         self.playListSum += 1
         
     def addPlayFile(self, path):    
-        self.playList.append(path)
-        self.playListSum += 1
+        if self.findFile(path):
+            self.playList.append(path)
+            self.playListSum += 1
         
     def loadPlayList(self, listFileName):
         f = open(listFileName)

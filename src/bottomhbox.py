@@ -73,8 +73,7 @@ class BottomHbox(object):
         
     def hide_bottomhbox(self):
         container_remove_all(self.vbox)    
-        
-        
+                
     def modify_play_control_panel(self, widget, event):
         width = widget.allocation.width/2-100
         self.play_control_panel.hbox_hframe.set_padding(0, 0,

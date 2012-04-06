@@ -46,13 +46,13 @@ class ShowTime(object):
         '''Draw media player time.'''
         cr, x, y, w, h = allocation(widget)
         
-        draw_font(cr, self.time_font1, DEFAULT_FONT_SIZE, "#FFFFFF", 
-                  x + 50, y, w, h)
+        draw_font(cr, self.time_font1, 8, "#FFFFFF", 
+                  x + 20, y, w, h)
         
-        (font1_width, font1_height) = get_content_size(self.time_font1, DEFAULT_FONT_SIZE)
+        (font1_width, font1_height) = get_content_size(self.time_font1, 8)
         
-        draw_font(cr, self.time_font2, DEFAULT_FONT_SIZE, "#000000", 
-                  x + 50 + font1_width, y, w, h)
+        draw_font(cr, self.time_font2, 8 , "#000000", 
+                  x + 20 + font1_width, y, w, h)
         
         # Propagate expose.
         propagate_expose(widget, event)

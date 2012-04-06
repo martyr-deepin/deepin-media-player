@@ -29,6 +29,7 @@ from mplayer import *
 from constant import *
 from progressbar import *
 from toolbar2 import *
+from drag import *
 import sys
 
 
@@ -135,6 +136,9 @@ class Screen(object):
                
         media_player["mp"].connect("get-time-length", self.progressbar.get_time_length)
         media_player["mp"].connect("get-time-pos", self.progressbar.get_time_pos)
+        
+        # connect drag signal.
+        drag_connect(self.screen)
         
     def draw_screen_background(self, widget, event):
         cr, x, y, w, h = allocation(widget)
