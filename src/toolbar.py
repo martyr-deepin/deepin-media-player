@@ -134,7 +134,7 @@ class ToolBar(object):
         else:    # False-> full.
             media_player["screen"].full_screen()
             self.panel.move(0, 0)
-            self.panel.resize(-1, 25)
+            self.panel.resize(0, 25)
             self.panel.fullscreen()
             self.panel.hide_all()
         # Set fullscreen bit. 

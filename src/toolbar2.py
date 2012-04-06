@@ -36,7 +36,7 @@ from volume_button import *
 class ToolBar2(object):            
     def __init__(self, background_pixbuf = app_theme.get_pixbuf("bg.png")):
         self.background_pixbuf = background_pixbuf
-        self.panel = Panel(-1, 42)
+        self.panel = Panel(0, 42)
         self.vbox = gtk.VBox()
         self.progressbar = ProgressBar()        
         media_player["app"].window.connect("configure-event",
@@ -67,7 +67,7 @@ class ToolBar2(object):
         
     def show_panel(self, widget, event):
         if media_player["mp"].state == 1:
-            if 1 <= event.y <= 25 or widget.allocation.height - 42 <= event.y <= widget.allocation.height:                
+            if widget.allocation.height - 42 <= event.y <= widget.allocation.height:                
                 if media_player["fullscreen_state"] or not media_player["common_state"]:
                     self.panel.resize(widget.allocation.width , 
                                       PANEL_HEIGHT)
