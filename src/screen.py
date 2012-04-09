@@ -151,7 +151,7 @@ class Screen(object):
             screen_background = self.screen_background.get_pixbuf()   
             # Draw screen background.
             image = screen_background.scale_simple(
-                w, h + DRAW_PIXBUF_HEIGHT + 30, gtk.gdk.INTERP_BILINEAR)
+               w, h + DRAW_PIXBUF_HEIGHT + 30, gtk.gdk.INTERP_BILINEAR)
             
             draw_pixbuf(cr, image, x-2 , y - DRAW_PIXBUF_Y)                            
             

@@ -69,11 +69,11 @@ class MediaPlayer(object):
         
         self.app.window.show_all()
         # Init toolbar.
-        media_player["panel"] = ToolBar()
+        #media_player["panel"] = ToolBar()
         # Init ToolBar2.            
-        media_player["panel2"] = ToolBar2()
-        media_player["panel2"].show_toolbar2()
-        media_player["panel2"].hide_toolbar2()
+        #media_player["panel2"] = ToolBar2()
+        #media_player["panel2"].show_toolbar2()
+        #media_player["panel2"].hide_toolbar2()
         
         
 MediaPlayer()      

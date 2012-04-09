@@ -59,6 +59,7 @@ class PreView(object):
         self.pv.add_events(gtk.gdk.ALL_EVENTS_MASK)
         self.pv.connect("destroy", self.quit_mplayer)
         self.pv.connect("expose-event", self.draw_preview_background)
+        
     # Background window.    
     def draw_background(self, widget, event):    
         cr = widget.window.cairo_create()
