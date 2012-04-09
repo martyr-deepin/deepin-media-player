@@ -40,7 +40,56 @@ import glib
 import gobject
 import shutil
 import subprocess
+from utils import *
+    
 
+# Get play widow ID.
+def get_window_xid(widget):
+    return widget.window.xid  
+
+# Get ~ to play file path.
+def get_home_path():
+    return os.path.expanduser("~")
+
+# Get play file length.
+def get_length(file_path):
+    '''Get media player length.'''
+    cmd = "mplayer -vo null -ao null -frames 0 -identify '%s' 2>&1" % (file_path)
+    fp = Popen(cmd, shell=True, stdout=PIPE)
+    cmd_str = fp.communicate()[0]
+    length_compile = re.compile(r"ID_LENGTH=([\d|\.]+)")
+    length = length_compile.findall(cmd_str)[0]
+    return float(length)
+
+def init_mplayer_config():
+        # create .config.
+        path = get_home_path() + "/.config"
+        if not os.path.exists(path):
+            os.mkdir(path)
+        
+        # create deepin-me...    
+        path += "/deepin-media-player"    
+        if not os.path.exists(path):
+            os.mkdir(path)
+        
+        # create config.ini.    
+        if not os.path.exists(path + "/config.ini"):    
+            fp = open(path + "/config.ini", "a")
+            fp.close()
+    
+        # create save image.    
+        if not os.path.exists(path + "/image"):
+            os.mkdir(path + "/image")
+            
+            
+def get_vide_flags(path):
+        file1, file2 = os.path.splitext(path)
+        if file2 in ['.mkv','.rmvb','.avi','.wmv','.3gp','rm']:
+            return True
+        else:
+            return False
+            
+        
 class  Mplayer(gobject.GObject):
     '''deepin media player control layer'''
     __gsignals__ = {
@@ -61,6 +110,7 @@ class  Mplayer(gobject.GObject):
         
         self.xid         = xid 
         self.state       = 0
+        self.vide_bool   = False
         self.lenState    = 0
         
         self.timeHour    = 0
@@ -95,9 +145,12 @@ class  Mplayer(gobject.GObject):
         self.path = path
         if not self.state:
             self.lenState = 1 
-            
+            # -input fil.. streme player.
             if self.xid:
                 CMD = ['mplayer',
+                       # '-input',
+                       # 'file=/tmp/cmd',
+                       '-fs',
                        '-osdlevel',
                        '0',
                        '-double',
@@ -129,7 +182,7 @@ class  Mplayer(gobject.GObject):
             self.eofID = gobject.io_add_watch(self.mplayerOut, gobject.IO_HUP, self.mplayerEOF)
             self.state = 1                
             self.get_time_length()
-            
+            self.vide_bool = get_vide_flags(self.path)
           
     ## Cmd control ##    
     def cmd(self, cmdStr):
@@ -322,7 +375,9 @@ class  Mplayer(gobject.GObject):
     def pause(self):
         if self.state: 
             self.cmd('pause\n')
-      
+            # Set pause.
+            self.pause_state = not self.pause_state
+            
     def quit(self):
         '''quit deepin media player.'''
         if self.state:
@@ -444,7 +499,14 @@ class  Mplayer(gobject.GObject):
             
         return self.timeHour, self.timeMin, self.timeSec    
     
-    def scrot(self, scrotSec, scrotPath="/home/long/.mplayer"):
+    # Puase show image.
+    scrotPath = get_home_path() + "/.config/deepin-media-player/image/media_player.png"
+    def scrot(self, scrotSec, scrotPath = scrotPath):
+        init_mplayer_config()
+        # Create copy file.
+        fp = open(scrotPath, "a")
+        fp.close()
+        #########################
         if self.state and os.path.exists(scrotPath):
             os.system("mplayer -ss %s -noframedrop -nosound -vo png -frames 1 '%s'" % (scrotSec, self.path))
             # copy image file to The specified directory.
@@ -513,21 +575,3 @@ class  Mplayer(gobject.GObject):
         for i in self.playList:
             self.playList.remove(i)
         
-# Get play widow ID.
-def get_window_xid(widget):
-    return widget.window.xid  
-
-# Get ~ to play file path.
-def get_home_path():
-    return os.path.expanduser("~")
-
-# Get play file length.
-def get_length(file_path):
-    '''Get media player length.'''
-    cmd = "mplayer -vo null -ao null -frames 0 -identify '%s' 2>&1" % (file_path)
-    fp = Popen(cmd, shell=True, stdout=PIPE)
-    cmd_str = fp.communicate()[0]
-    length_compile = re.compile(r"ID_LENGTH=([\d|\.]+)")
-    length = length_compile.findall(cmd_str)[0]
-    return float(length)
-

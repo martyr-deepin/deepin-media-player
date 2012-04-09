@@ -23,13 +23,16 @@ from dtk.ui.application import Application
 
 from utils import *
 from constant import *
-from topbox import *
+from player_box import *
+from mplayer import *
 import gtk
 
+gtk.gdk.threads_init()
 class MediaPlayer(object):
     def __init__ (self):
+        # Init emdia player config.
+        init_mplayer_config()
         self.app = Application("mediaplayer", False)
-        
         # Set app size.
         self.app.window.set_size_request(APP_WIDTH, APP_HEIGHT) 
                
@@ -41,14 +44,14 @@ class MediaPlayer(object):
                               "深度影音", " ", add_separator = True)
         
         # Topbox init.
-        self.topbox = TopBox(self.app)
+        self.player_box = PlayerBox(self.app)
         # # Add child widget to app. 
-        self.app.main_box.pack_start(self.topbox.hbox)
-        
-        # test_box = gtk.Button("Test")
-        # self.app.main_box.pack_start(test_box)
+        self.app.main_box.pack_start(self.player_box.main_vbox_hframe)
         
         self.app.window.show_all()
+
         
 MediaPlayer()        
+gtk.gdk.threads_enter()
 gtk.main()
+gtk.gdk.threads_leave()
