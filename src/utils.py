@@ -33,18 +33,5 @@ def allocation(widget):
     rect = widget.get_allocation()
     return cr, rect.x, rect.y, rect.width, rect.height
 
-media_player = {"app":None, 
-                "mp":None, 
-                "screen":None,
-                "panel":None,
-                "panel2":None,
-                "progressbar":None,
-                "bottomhbox":None,
-                "playlist":None,
-                "play_state":0,
-                "common_state":True,
-                "fullscreen_state":False,
-                "play_file_path":None,
-                "show_time":None}
 
 
