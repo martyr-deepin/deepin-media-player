@@ -33,13 +33,8 @@ from mutualbutton import *
 class ToolBar(object):
     def __init__(self):
         
-        self.show_bool = False
-        self.keep_above_bool = False
-        media_player["app"].window.connect("configure-event",
-                                           self.modify_panel)
-        media_player["app"].window.connect("realize", self.modify_panel)
-        media_player["screen"].screen.connect("motion-notify-event",
-                                       self.show_panel)
+        
+        
         self.hbox = gtk.HBox()
         
         self.panel = Panel(APP_WIDTH - 4, PANEL_HEIGHT)        
@@ -52,23 +47,21 @@ class ToolBar(object):
             app_theme.get_pixbuf("Recovery1.png"),
             app_theme.get_pixbuf("Recovery.png")
             )
-        self.toolbar_full.connect("clicked", self.toolbar_full_screen)
+        
         self.toolbar_full_hframe.add(self.toolbar_full)
         
         self.mutualbutton = MutualButton()
         self.toolbar_common_hframe = HorizontalFrame(9)
         self.toolbar_common = self.mutualbutton.button1
-        self.toolbar_common.connect("clicked", self.toolbar_common_mode)
         self.toolbar_common_hframe.add(self.toolbar_common)
         
         self.toolbar_simple_hframe = HorizontalFrame(6)
         self.toolbar_simple = self.mutualbutton.button2
-        self.toolbar_simple.connect("clicked", self.toolbar_simple_mode)
+    
         self.toolbar_simple_hframe.add(self.toolbar_simple)
         
         self.toolbar_sticky_hframe = HorizontalFrame(7) 
         self.toolbar_sticky = ToggleHoverButton()
-        self.toolbar_sticky.connect("clicked", self.set_app_keep_above)
         self.toolbar_sticky_hframe.add(self.toolbar_sticky)
         
         self.hbox.pack_start(self.toolbar_full_hframe, False)
@@ -81,79 +74,41 @@ class ToolBar(object):
         self.panel.add(self.hbox_hframe)
         
     def draw_panel_background(self, widget, event):
-        if media_player["mp"].state == 1:
-            cr,x,y,w,h = allocation(widget)
-
-            cr.set_source_rgba(0.0, 0.0, 0.0, 0.0)
-            cr.set_operator(cairo.OPERATOR_SOURCE)
-            cr.paint()
+        cr,x,y,w,h = allocation(widget)
         
-            cr.set_source_rgba(0, 0, 0, 0.7)
-            cr.rectangle(x,y,w,h)
-            cr.fill()
+        cr.set_source_rgba(0.0, 0.0, 0.0, 0.0)
+        cr.set_operator(cairo.OPERATOR_SOURCE)
+        cr.paint()
         
-            propagate_expose(widget, event)
-            return True
+        cr.set_source_rgba(0, 0, 0, 0.7)
+        cr.rectangle(x,y,w,h)
+        cr.fill()
         
+        propagate_expose(widget, event)
+        return True
         
-    def show_panel(self, widget, event):
-        if media_player["mp"].state == 1:
-            if 1 <= event.y <= 25:                
-                if not self.show_bool:
-                    self.panel.resize(widget.allocation.width , 
-                                      PANEL_HEIGHT)
-                    x,y = media_player["app"].window.window.get_root_origin()
-                    if media_player["fullscreen_state"] or not media_player["common_state"]:
-                        self.panel.move(x+2, y)
-                    else:    
-                        self.panel.move(x+2, y + TOOLBAR_HEIGHT)                   
-                    
-                    self.panel.show_all()
-                    self.show_bool = True
-            else:
-                self.panel.hide_all()
-                self.panel.resize(widget.allocation.width , 
-                                  PANEL_HEIGHT)
-                self.show_bool = False
-        return False    
-            
-    def modify_panel(self, widget, event):    
-        self.panel.hide_all()
-                        
-            
-    def set_app_keep_above(self, widget):    
-        self.keep_above_bool = not self.keep_above_bool
-        media_player["app"].window.set_keep_above(self.keep_above_bool)
+    def show_toolbar(self):    
+        self.panel.show_all()
         
-    def toolbar_full_screen(self, widget):    
-        widget.hide_all()
-        if media_player["fullscreen_state"]: # True-> quit full.
-            self.panel.hide_all()
-            self.panel.unfullscreen()
-            media_player["screen"].quit_full_screen()            
-        else:    # False-> full.
-            media_player["screen"].full_screen()
-            self.panel.move(0, 0)
-            self.panel.resize(1, 25)
-            self.panel.fullscreen()
-            self.panel.hide_all()
-        # Set fullscreen bit. 
-        media_player["fullscreen_state"] = not media_player["fullscreen_state"]
-            
-    def toolbar_common_mode(self, widget):
-        if not media_player["fullscreen_state"]:
-            media_player["common_state"] = True
-            media_player["screen"].common_mode()
-            self.panel.hide()
-
-    def toolbar_simple_mode(self, widget):
-        if media_player["common_state"]:
-            media_player["common_state"] = False
-            media_player["screen"].simple_mode()
-            self.panel.hide()
+    def hide_toolbar(self):    
+        self.panel.hide_all() 
+                                                           
         
 if __name__ == "__main__":
-    ToolBar()
+    
+    def show_toolbar(widget, event):
+        tb.show_toolbar()
+        
+    def hide_toolbar(widget, event):    
+        tb.hide_toolbar()
+        
+    win = gtk.Window(gtk.WINDOW_TOPLEVEL)
+    tb = ToolBar()
+    win.connect("destroy", gtk.main_quit)
+    win.connect("enter-notify-event", show_toolbar)
+    win.connect("leave-notify-event", hide_toolbar)
+    
+    win.show_all()
     gtk.main()
 
 

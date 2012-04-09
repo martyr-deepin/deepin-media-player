@@ -76,11 +76,13 @@ class VolumeButton(gtk.HBox, gobject.GObject):
         # volume button progressbar
         self.volume_progressbar = gtk.Button()
         self.volume_progressbar.set_size_request(60,4)
+        
         self.volume_progressbar.add_events(gtk.gdk.ALL_EVENTS_MASK)
         self.volume_progressbar.connect("expose-event", self.volume_progressbar_expose)
         self.volume_progressbar.connect("button-press-event", self.volume_progressbar_press_event)
         self.volume_progressbar.connect("button-release-event", self.volume_progressbar_release_event)
         self.volume_progressbar.connect("motion-notify-event", self.volume_progressbar_motion_notify)
+        
         self.volume_progressbar.connect("clicked", self.volume_progressbar_clicked)
         self.pack_start(self.button_event,False,False)
         self.pack_start(self.volume_progressbar,True,True)
@@ -140,7 +142,7 @@ class VolumeButton(gtk.HBox, gobject.GObject):
         if self.volume_value == 100:
             draw_pixbuf(cr, self.volume_button_pixbuf.get_pixbuf(), x + 53, y + h/2 - 5) 
         if 0 < self.volume_value < 100:   
-            draw_pixbuf(cr, self.volume_button_pixbuf.get_pixbuf(), x  + self.volume_value*0.57, y + h/2 - 5)
+            draw_pixbuf(cr, self.volume_button_pixbuf.get_pixbuf(), x  + self.volume_value*0.50, y + h/2 - 5)
             
         return True
         
@@ -158,10 +160,6 @@ class VolumeButton(gtk.HBox, gobject.GObject):
         
         self.emit("get-value-event", value, 1)    
         self.volume_value = value
-        
-        # Set media player volume.
-        if media_player["play_state"] == 1:
-            media_player["mp"].setvolume(self.volume_value)
             
         if not self.mute_bool:
             if self.volume_value == 0:

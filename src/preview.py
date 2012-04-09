@@ -76,7 +76,7 @@ class PreView(object):
                             cairo.FONT_WEIGHT_BOLD)
         cr.set_font_size(12)
         cr.set_source_rgb(1, 1, 1)
-        cr.move_to(w/2-15, h-16)
+        cr.move_to(w/2-18, h-16)
 
         cr.show_text("%d:%d:%d" % (self.mp.time(self.pos)[0], 
                                    self.mp.time(self.pos)[1],
@@ -154,8 +154,11 @@ class PreView(object):
         if not self.i:
             self.mp.bseek(1)
             
+'''Test preview player'''            
+from progressbar import *            
 class Test(object):
     def __init__(self):
+        
         self.show_bool = False
         self.move_bool = False
         self.preview = None
@@ -165,6 +168,8 @@ class Test(object):
         self.win.connect("destroy", gtk.main_quit)
         self.win.connect("motion-notify-event", self.motion_notify_event)
         self.win.connect("leave-notify-event", self.leave_notify_event)
+        self.pb = ProgressBar()
+        self.win.add(self.pb.hbox)
         
         self.win.show_all()
         
@@ -185,7 +190,7 @@ class Test(object):
             except:   
                 print "Error preview."
         
-        if 10 <= event.y <= 20:
+        if 0 <= event.y <= 10:
             print "鼠标进入,等待一段时间..."
             self.show_bool = True
         else:

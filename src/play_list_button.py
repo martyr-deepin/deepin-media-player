@@ -28,18 +28,9 @@ from ImageButton import *
 
 class PlayListButton(object):
     def __init__(self):
-        self.show_play_list_bool = True
         self.hframe = HorizontalFrame(padding = 14)
         self.button = ImageButton(app_theme.get_pixbuf("big_button_background.png"),
                                   app_theme.get_pixbuf("play_list_button.png"))
-        self.button.connect("clicked", self.show_play_list)
         self.hframe.add(self.button)
         
-    def show_play_list(self, widget):    
-        if self.show_play_list_bool:
-            media_player["playlist"].hide_playlist()    
-        else:    
-            media_player["playlist"].show_playlist()
-            
-        self.show_play_list_bool = not self.show_play_list_bool    
-        print self.show_play_list_bool
+    

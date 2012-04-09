@@ -54,7 +54,6 @@ class ProgressBar(object):
         self.drag_pixbuf_bool = False
         self.drag_bool = False
         
-        self.preview = None
         
         self.hbox = gtk.HBox()
         self.pb = gtk.Button()
@@ -148,22 +147,25 @@ class ProgressBar(object):
                         hight_pixbuf, 
                         x + pos - hight_pixbuf.get_width(), 
                         y + 2)
-        
+            
         # Draw mouse point.    
         if self.drag_pixbuf_bool:
+            # Progressbar start point.
             if 0 <= pos <= drag_pixbuf.get_width():
                 draw_pixbuf(cr,
                             drag_pixbuf,
                             x-1, 
                             y)
                 
-            if w - drag_pixbuf.get_width() <= pos <= w:
+            # Progressbar end point.   
+            if w - drag_pixbuf.get_width()/2 <= pos <= w:
                 draw_pixbuf(cr,
                             drag_pixbuf,
-                            x + DRAW_PROGRESSBAR_WIDTH_PADDING + pos - drag_pixbuf.get_width(), 
+                            x + 1 + w - drag_pixbuf.get_width(),
                             y)
                 
-            if drag_pixbuf.get_width() < pos <  w - drag_pixbuf.get_width():    
+            # Progressbar mid all point.    
+            if drag_pixbuf.get_width() < pos <  w - drag_pixbuf.get_width()/2:    
                 draw_pixbuf(cr, 
                             drag_pixbuf, 
                             x + DRAW_PROGRESSBAR_WIDTH_PADDING + pos - drag_pixbuf.get_width()/2, 

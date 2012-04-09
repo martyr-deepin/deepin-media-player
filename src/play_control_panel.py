@@ -43,47 +43,13 @@ class PlayControlPanel(object):
                                      app_theme.get_pixbuf("next_button.png"))
         self.open_btn = ImageButton(app_theme.get_pixbuf("big_button_background.png"),
                                     app_theme.get_pixbuf("open.png"))
-        
-        # Set btn siganl.
-        self.stop_btn.connect("clicked", self.media_player_stop)
-        self.pre_btn.connect("clicked", self.media_player_pre)
-        self.start_btn.connect("clicked", self.media_player_start)
-        self.next_btn.connect("clicked", self.media_player_next)
-        self.open_btn.connect("clicked", self.media_player_open)
-        
+                
         self.hbox.pack_start(self.stop_btn, False, False)
         self.hbox.pack_start(self.pre_btn, False, False)
         self.hbox.pack_start(self.start_btn, False, False)
         self.hbox.pack_start(self.next_btn, False, False)
         self.hbox.pack_start(self.open_btn, False, False)
-        
-    def media_player_open(self, widget):    
-        '''Open a play file.'''
-        if media_player["play_state"] == 1:
-            self.media_player_stop(widget)
-
-    def media_player_next(self, widget):    
-        if media_player["mp"].playList != []:
-            media_player["mp"].next()
-        
-    def media_player_pre(self, widget):
-        if media_player["mp"].playList != []:
-            media_player["mp"].pre()
-        
-    def media_player_stop(self, widget):
-        media_player["mp"].quit()
-        media_player["play_state"] = 0
-        self.start_btn.start_bool = True
-        
-    def media_player_start(self, widget):
-        if media_player["play_state"] == 0:
-            if media_player["mp"].playList != []:
-                media_player["mp"].next()
-            else:
-                self.start_btn.start_bool = True
-        else:
-            media_player["mp"].pause()
-    
+            
         
 class StartButton(gtk.Button):
     def __init__(self,

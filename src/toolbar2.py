@@ -36,16 +36,13 @@ from volume_button import *
 class ToolBar2(object):            
     def __init__(self, background_pixbuf = app_theme.get_pixbuf("bg.png")):
         self.background_pixbuf = background_pixbuf
-        self.panel = Panel(0, 42)
+        self.panel = Panel(APP_WIDTH, 42)
         self.vbox = gtk.VBox()
         self.progressbar = ProgressBar()        
-        media_player["app"].window.connect("configure-event",
-                                           self.modify_panel)
 
         # panel signal.
         self.panel.connect("expose-event", self.panel_expose)
-        media_player["screen"].screen.connect("motion-notify-event",
-                                       self.show_panel)
+        
         self.hbox = gtk.HBox()
         # hbox add child widget.
         self.show_time = ShowTime()
@@ -65,27 +62,6 @@ class ToolBar2(object):
         
         self.panel.add(self.vbox)        
         
-    def show_panel(self, widget, event):
-        if media_player["mp"].state == 1:
-            if widget.allocation.height - 42 <= event.y <= widget.allocation.height:                
-                if media_player["fullscreen_state"] or not media_player["common_state"]:
-                    self.panel.resize(widget.allocation.width , 
-                                      PANEL_HEIGHT)
-                    x,y = media_player["app"].window.window.get_root_origin()
-                    if not media_player["common_state"]:
-                        self.panel.move(x+2, y + widget.allocation.height - 43)
-                    else:    
-                        self.panel.move(x+2, y + widget.allocation.height)    
-                    self.panel.show_all()
-            else:
-                self.panel.hide_all()
-                self.panel.resize(widget.allocation.width , 
-                                  PANEL_HEIGHT)
-        return False
-        
-    def modify_panel(self, widget, event):    
-        self.hide_toolbar2()
-        
     def panel_expose(self, widget, event):    
         cr = widget.window.cairo_create()
         rect = widget.allocation
@@ -95,6 +71,7 @@ class ToolBar2(object):
         image = background_pixbuf.scale_simple(w, h, gtk.gdk.INTERP_BILINEAR)
         cr.set_source_pixbuf(image, x, y)
         cr.paint_with_alpha(1)
+        
         widget.propagate_expose(widget.get_child(), event)
         return True
                     
@@ -105,6 +82,17 @@ class ToolBar2(object):
         self.panel.hide_all()
                 
 if __name__ == "__main__":    
+    def show_toolbar(widget, event):
+        tb.show_toolbar2()
+        
+    def hide_toolbar(widget, event):    
+        tb.hide_toolbar2()
+        
+    win = gtk.Window(gtk.WINDOW_TOPLEVEL)
     tb = ToolBar2()
-    tb.show_all()
+    win.connect("destroy", gtk.main_quit)
+    win.connect("enter-notify-event", show_toolbar)
+    win.connect("leave-notify-event", hide_toolbar)
+    
+    win.show_all()
     gtk.main()
