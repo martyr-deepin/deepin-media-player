@@ -513,7 +513,21 @@ class  Mplayer(gobject.GObject):
         for i in self.playList:
             self.playList.remove(i)
         
-# get play widow ID.
+# Get play widow ID.
 def get_window_xid(widget):
     return widget.window.xid  
+
+# Get ~ to play file path.
+def get_home_path():
+    return os.path.expanduser("~")
+
+# Get play file length.
+def get_length(file_path):
+    '''Get media player length.'''
+    cmd = "mplayer -vo null -ao null -frames 0 -identify '%s' 2>&1" % (file_path)
+    fp = Popen(cmd, shell=True, stdout=PIPE)
+    cmd_str = fp.communicate()[0]
+    length_compile = re.compile(r"ID_LENGTH=([\d|\.]+)")
+    length = length_compile.findall(cmd_str)[0]
+    return float(length)
 

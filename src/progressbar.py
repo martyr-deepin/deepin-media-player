@@ -95,13 +95,7 @@ class ProgressBar(object):
         self.save_pos = self.pos
         self.pos = (float(int(event.x))/widget.allocation.width*self.max)  # Get pos.
         self.drag_bool = True
-        self.drag_pixbuf_bool = True
-        if media_player["mp"].state == 1:
-            if self.pos >= self.save_pos:
-                media_player["mp"].fseek(self.pos - self.save_pos)
-            else:
-                media_player["mp"].bseek(self.save_pos - self.pos)
-                
+        self.drag_pixbuf_bool = True        
         widget.queue_draw()        
         
     def release_progressbar(self, widget, event):
@@ -111,43 +105,18 @@ class ProgressBar(object):
         self.drag_pixbuf_bool = True
         widget.queue_draw()
         
-    def leave_notify_progressbar(self, widget, event):
-        if self.show_bool: # Show preview.
-            if media_player["mp"].state == 1:        
-                if 2 <= event.y <= widget.allocation.height-2:
-                    preview_pos = (float(int(event.x))/widget.allocation.width*self.max)
-                    self.preview = PreView(media_player["mp"].path, preview_pos)
-                    self.preview.move_preview(int(event.x_root - 62), int(event.y_root - 95))
-                    self.preview.show_preview()
-                    self.show_bool = False
-        
+    def leave_notify_progressbar(self, widget, event):        
         if not self.drag_bool:
             self.drag_pixbuf_bool = False
         widget.queue_draw()
             
     def motion_notify_progressbar(self, widget, event):
-        '''drag progressbar'''
-        if not self.show_bool: # Show preview.
-            try:
-                self.preview.hide_preview()
-            except:    
-                print "media player message:hide preview Error!!"
-        
-        if (2 <= event.y <= widget.allocation.height-2) and (0 < event.x < widget.allocation.width):    
-            self.show_bool = True
-        else:
-            self.show_bool = False
-            
+        '''drag progressbar'''    
         if self.drag_bool: 
             if 0 <= event.x <= widget.allocation.width:
                 self.save_pos = self.pos
                 
                 self.pos = (float(int(event.x))/widget.allocation.width*self.max)
-                if media_player["mp"].state == 1:
-                    if self.pos >= self.save_pos:
-                        media_player["mp"].fseek(self.pos - self.save_pos)
-                    else:
-                        media_player["mp"].bseek(self.save_pos - self.pos)         
         widget.queue_draw()
         
     def expose_progressbar(self, widget, event):
@@ -213,3 +182,9 @@ class ProgressBar(object):
 
 
 
+if __name__ == "__main__":
+    win = gtk.Window(gtk.WINDOW_TOPLEVEL)
+    win.connect("destroy", gtk.main_quit)
+    win.add(ProgressBar().hbox)
+    win.show_all()
+    gtk.main()

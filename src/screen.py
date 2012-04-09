@@ -85,22 +85,22 @@ class Screen(object):
     def full_screen(self):
         self.app.window.fullscreen()
         self.simple_mode()
-        self.panel = media_player["panel"].panel
-        self.panel.move(0, 0)
-        self.panel.resize(1, PANEL_HEIGHT)
-        self.panel.fullscreen()
-        self.panel.hide_all()
-        media_player["progressbar"].pb.queue_draw()
+        # self.panel = media_player["panel"].panel
+        # self.panel.move(0, 0)
+        # self.panel.resize(1, PANEL_HEIGHT)
+        # self.panel.fullscreen()
+        # self.panel.hide_all()
+        #media_player["progressbar"].pb.queue_draw()
         
     def quit_full_screen(self):    
-        self.panel = media_player["panel"].panel
-        self.panel.hide_all()
+        # self.panel = media_player["panel"].panel
+        # self.panel.hide_all()
         self.app.window.unfullscreen()
-        self.panel.unfullscreen()
-        if not media_player["common_state"]:
-            self.simple_mode()
-        else:
-            self.common_mode()
+        #self.panel.unfullscreen()
+        # if not media_player["common_state"]:
+        #     self.simple_mode()
+        # else:
+        #     self.common_mode()
                     
     def common_mode(self):
         self.app.show_titlebar()

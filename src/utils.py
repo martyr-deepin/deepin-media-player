@@ -27,18 +27,6 @@ import re
 app_theme = Theme(os.path.join(
         (os.path.dirname(os.path.realpath(__file__))),"../app_theme"))
 
-def get_home_path():
-    return os.path.expanduser("~")
-    
-def get_length(file_path):
-    '''Get media player length.'''
-    cmd = "mplayer -vo null -ao null -frames 0 -identify '%s' 2>&1" % (file_path)
-    fp = Popen(cmd, shell=True, stdout=PIPE)
-    cmd_str = fp.communicate()[0]
-    length_compile = re.compile(r"ID_LENGTH=([\d|\.]+)")
-    length = length_compile.findall(cmd_str)[0]
-    return float(length)
-
 
 def allocation(widget):
     cr = widget.window.cairo_create()
