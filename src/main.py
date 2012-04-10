@@ -27,7 +27,9 @@ from player_box import *
 from mplayer import *
 import gtk
 
+# Thread init. 
 gtk.gdk.threads_init()
+
 class MediaPlayer(object):
     def __init__ (self):
         # Init emdia player config.
@@ -52,6 +54,7 @@ class MediaPlayer(object):
 
         
 MediaPlayer()        
+
 gtk.gdk.threads_enter()
 gtk.main()
 gtk.gdk.threads_leave()

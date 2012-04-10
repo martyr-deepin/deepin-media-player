@@ -44,10 +44,11 @@ def drag_data_received(wid, context, x, y, data, info, time):
         
         # Add Dir.
         if os.path.isdir(path):            
-            media_player["mp"].findCurrentDir(path)
+            mp = Mplayer()
+            mp.findCurrentDir(path)
         else:    
             # Add File.    
-            if os.path.exists(path):
+            if os.path.isfile(path):
                 fp = open(path, "r")
                 for file in fp:
                     media_player["mp"].addPlayFile(file.strip())

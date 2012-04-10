@@ -51,7 +51,11 @@ class PlayerBox(object):
         self.screen.add_events(gtk.gdk.ALL_EVENTS_MASK)
         self.screen.connect_after("expose-event", self.draw_background)
         self.screen.connect("get-xid", self.init_media_player)
+        
+        # Progressbar Init.
         self.progressbar = ProgressBar()
+        # Progressbar signal init.
+        self.progressbar.connect("motion-notify-event", self.)
         
         # Child widget add to vbox.
         self.vbox.pack_start(self.screen, True, True)
@@ -68,29 +72,21 @@ class PlayerBox(object):
         
     def init_media_player(self, mplayer, xid):    
         '''Init deepin media player.'''
-        self.mp = Mplayer(xid)
+        self.screen.queue_draw()
         self.unset_flags()
+        self.mp = Mplayer(xid)
+        self.mp.connect("get-time-pos", self.get_time_pos)
+        self.mp.connect("get-time-length", self.get_time_length)
+        
         
         self.mp.play("/home/long/视频/1.rmvb")
         
     def draw_background(self, widget, event):
         '''Draw screen mplayer view background.'''
         cr, x, y, w, h = allocation(widget)
-        print "宽%d,高%d" % (w, h)        
+        
         if self.mp:
-            if 1 == self.mp.state and self.mp.vide_bool:                 
-                #if 窗口 < 视频:
-                '''上下黑边'''
-                
-                #if 窗口 > 视频:
-                '''左右黑边'''
-                
-                #if 窗口 == 视频:
-                '''无黑边'''
-                
-                #if 
-                '''四周黑边'''
-            else:    
+            if not (1 == self.mp.state and self.mp.vide_bool):                 
                 # No player ->Draw background.
                 cr.set_source_rgb(0, 0, 0)
                 cr.rectangle(0, 0, w, h)
@@ -102,7 +98,16 @@ class PlayerBox(object):
         if self.mp:
             # Quit deepin-media-player.
             self.mp.quit()
-
+            
+    # Mplayer event of player control.         
+    def get_time_length(self, mplayer, length):        
+        self.progressbar.max = length
+        self.mp.fseek(500)
+        
+    def get_time_pos(self, mplayer, pos):    
+        self.progressbar.set_pos(pos)
+        print self.progressbar.pos
+        
     # Double buffer set.
     def unset_flags(self):
         '''Set double buffer.'''
