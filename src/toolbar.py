@@ -43,20 +43,21 @@ class ToolBar(object):
         self.panel.set_opacity(0.7)
         self.panel.add_events(gtk.gdk.ALL_EVENTS_MASK)
         self.panel.connect("expose-event", self.draw_panel_background)
+        
         self.toolbar_full_hframe = HorizontalFrame(7)
-        self.toolbar_full = ToggleHoverButton(
+        self.toolbar_full_button = ToggleHoverButton(
             app_theme.get_pixbuf("full1.png"),
             app_theme.get_pixbuf("full.png"),
             app_theme.get_pixbuf("Recovery1.png"),
             app_theme.get_pixbuf("Recovery.png")
             )
         
-        self.toolbar_full_hframe.add(self.toolbar_full)
+        self.toolbar_full_hframe.add(self.toolbar_full_button)
         
         self.mutualbutton = MutualButton()
         self.toolbar_common_hframe = HorizontalFrame(9)
-        self.toolbar_common = self.mutualbutton.button1
-        self.toolbar_common_hframe.add(self.toolbar_common)
+        self.toolbar_common_button = self.mutualbutton.button1
+        self.toolbar_common_hframe.add(self.toolbar_common_button)
         
         self.toolbar_simple_hframe = HorizontalFrame(6)
         self.toolbar_simple = self.mutualbutton.button2
@@ -108,6 +109,7 @@ class ToolBar(object):
             self.panel.set_opacity(0)
             gtk.timeout_add(50, self.show_time)
             self.show = 1
+            self.panel.set_keep_above(True)
             
     def hide_toolbar(self):    
         if 1 == self.show:

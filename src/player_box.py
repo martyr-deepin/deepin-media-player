@@ -43,7 +43,7 @@ class PlayerBox(object):
         # Save app(main.py)[init app].
         self.app = app
         self.app.window.connect("destroy", self.quit_player_window)
-        
+        self.app.window.connect("configure-event", self.configure_hide_tool)
         # Screen window init.
         self.screen = MplayerView()
         # Screen signal init.
@@ -65,7 +65,11 @@ class PlayerBox(object):
         
         # Toolbar Init.
         self.toolbar = ToolBar()        
-
+        self.toolbar.toolbar_full_button.connect("clicked", self.full_play_window)
+        self.toolbar.mutualbutton.button1.connect("clicked", self.show_window_widget)
+        self.toolbar.mutualbutton.button2.connect("clicked", self.hide_window_widget)
+        self.toolbar.toolbar_common_button.connect("clicked", self.test)
+        
         # Child widget add to vbox.
         self.vbox.pack_start(self.screen, True, True)
         self.vbox.pack_start(self.progressbar.hbox,False, False)
@@ -74,6 +78,7 @@ class PlayerBox(object):
         
         self.play_control_panel = PlayControlPanel()
         self.main_vbox.pack_start(self.play_control_panel.hbox_hframe, False, False)
+        
         
     def init_media_player(self, mplayer, xid):    
         '''Init deepin media player.'''
@@ -104,6 +109,50 @@ class PlayerBox(object):
             # Quit deepin-media-player.
             self.mp.quit()
             
+            
+    # ToolBar control function.        
+    def configure_hide_tool(self, widget, event):        
+        self.app.hide_titlebar()
+        titlebar_height = self.app.titlebar.box.allocation[3]
+        print titlebar_height
+        self.toolbar.panel.move(event.x, event.y + titlebar_height)
+        self.toolbar.panel.resize(widget.allocation[2],
+                                  widget.allocation[3])
+        self.toolbar.panel.hide_all()
+        
+    def full_window_function(self):        
+        self.app.hide_titlebar()
+        self.app.window.fullscreen()
+        self.app.window.set_keep_above(True)
+        self.toolbar.panel.fullscreen()
+        self.toolbar.panel.hide_all()
+            
+    def full_play_window(self, widget):        
+        '''Full player window.'''
+        self.full_window_function()
+        
+        
+    def show_window_widget(self, widget):        
+        '''Show window titlebar of window and play control panel.
+           Show progressbar.
+           Show playlist.
+           Show window border.
+        '''
+        pass
+    
+    def hide_window_widget(self, widget):    
+        '''Hide widnow titlebar and play control panel.
+           Hide progressbar.
+           Hide playlist.
+           Hide border of window.
+        '''
+        pass
+    
+    def test(self, widget):    
+        print "fsfdf"
+        
+            
+        
     # Control mplayer window.        
     def move_media_player_window(self, widget, event):         
         '''Move window.'''
@@ -126,6 +175,7 @@ class PlayerBox(object):
 
             
         
+            
     # Mplayer event of player control.         
     def progressbar_set_point_bool(self, widget, event):
         self.point_bool = True
@@ -156,6 +206,7 @@ class PlayerBox(object):
             if not self.point_bool:
                 self.progressbar.set_pos(pos)
             
+                
     # Double buffer set.
     def unset_flags(self):
         '''Set double buffer.'''
