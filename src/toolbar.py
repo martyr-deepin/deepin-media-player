@@ -40,6 +40,8 @@ class ToolBar(object):
         self.panel = Panel(APP_WIDTH - 2, PANEL_HEIGHT)        
         self.panel.connect("enter-notify-event", self.show_panel_toolbar)
         self.panel.connect("leave-notify-event", self.hide_panel_toolbar)
+        self.panel.connect("focus-out-event", self.focus_hide_toolbar)
+        
         self.panel.set_opacity(0.7)
         self.panel.add_events(gtk.gdk.ALL_EVENTS_MASK)
         self.panel.connect("expose-event", self.draw_panel_background)
@@ -59,19 +61,18 @@ class ToolBar(object):
         self.toolbar_common_button = self.mutualbutton.button1
         self.toolbar_common_hframe.add(self.toolbar_common_button)
         
-        self.toolbar_simple_hframe = HorizontalFrame(6)
-        self.toolbar_simple = self.mutualbutton.button2
-    
-        self.toolbar_simple_hframe.add(self.toolbar_simple)
+        self.toolbar_concise_hframe = HorizontalFrame(6)
+        self.toolbar_concise_button = self.mutualbutton.button2
+        self.toolbar_concise_hframe.add(self.toolbar_concise_button)
         
-        self.toolbar_sticky_hframe = HorizontalFrame(7) 
-        self.toolbar_sticky = ToggleHoverButton()
-        self.toolbar_sticky_hframe.add(self.toolbar_sticky)
+        self.toolbar_above_hframe = HorizontalFrame(7) 
+        self.toolbar_above_button = ToggleHoverButton()
+        self.toolbar_above_hframe.add(self.toolbar_above_button)
         
-        self.hbox.pack_start(self.toolbar_full_hframe, False)
-        self.hbox.pack_start(self.toolbar_common_hframe, False)
-        self.hbox.pack_start(self.toolbar_simple_hframe, False)
-        self.hbox.pack_start(self.toolbar_sticky_hframe, False)
+        self.hbox.pack_start(self.toolbar_full_hframe, False)    # full_button
+        self.hbox.pack_start(self.toolbar_common_hframe, False)  # common_button
+        self.hbox.pack_start(self.toolbar_concise_hframe, False) # concise_button
+        self.hbox.pack_start(self.toolbar_above_hframe, False)   # above_button
         
         self.hbox_hframe = VerticalFrame(padding=4)
         self.hbox_hframe.add(self.hbox)
@@ -94,6 +95,9 @@ class ToolBar(object):
         propagate_expose(widget, event)
         return True
     
+    def focus_hide_toolbar(self, widget, event):
+        self.panel.hide_all()
+        
     def show_time(self):        
         self.panel.set_opacity(0.7)
         
