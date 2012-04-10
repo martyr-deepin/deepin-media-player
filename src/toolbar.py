@@ -29,17 +29,18 @@ from constant import *
 from togglehoverbutton import *
 from mutualbutton import *
 
+import os
 
 class ToolBar(object):
     def __init__(self):
         
-        
-        
         self.hbox = gtk.HBox()
         
-        self.panel = Panel(APP_WIDTH - 4, PANEL_HEIGHT)        
+        self.panel = Panel(APP_WIDTH - 2, PANEL_HEIGHT)        
+        self.panel.set_opacity(0.7)
         self.panel.add_events(gtk.gdk.ALL_EVENTS_MASK)
         self.panel.connect("expose-event", self.draw_panel_background)
+        
         self.toolbar_full_hframe = HorizontalFrame(7)
         self.toolbar_full = ToggleHoverButton(
             app_theme.get_pixbuf("full1.png"),
@@ -71,12 +72,11 @@ class ToolBar(object):
         
         self.hbox_hframe = VerticalFrame(padding=4)
         self.hbox_hframe.add(self.hbox)
-        self.panel.add(self.hbox_hframe)
-        
+        self.panel.add(self.hbox_hframe)        
+               
     def draw_panel_background(self, widget, event):
         cr,x,y,w,h = allocation(widget)
-        
-        cr.set_source_rgba(0.0, 0.0, 0.0, 0.0)
+        cr.set_source_rgb(0.0, 0.0, 0.0)
         cr.set_operator(cairo.OPERATOR_SOURCE)
         cr.paint()
         
@@ -93,7 +93,8 @@ class ToolBar(object):
     def hide_toolbar(self):    
         self.panel.hide_all() 
                                                            
-        
+toolbar = ToolBar()        
+
 if __name__ == "__main__":
     
     def show_toolbar(widget, event):

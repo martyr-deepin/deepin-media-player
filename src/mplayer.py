@@ -362,21 +362,25 @@ class  Mplayer(gobject.GObject):
         if self.state:
             self.cmd('vo_fullscreen\n')
             
+    def seek(self, seekNum):        
+        '''Set rate of progress'''
+        if self.state:
+            self.cmd('seek %d 2\n' % (seekNum))   
+        
     def fseek(self, seekNum):
         '''Fast forward'''
         if self.state:
-            self.cmd('seek +%d\n' % (seekNum))   
+            self.cmd('seek +%d 2\n' % (seekNum))   
     
     def bseek(self, seekNum):
         '''backward'''
         if self.state:
-            self.cmd('seek -%d\n' % (seekNum))
+            self.cmd('seek -%d 2\n' % (seekNum))
              
     def pause(self):
         if self.state: 
             self.cmd('pause\n')
-            # Set pause.
-            self.pause_state = not self.pause_state
+
             
     def quit(self):
         '''quit deepin media player.'''

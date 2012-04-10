@@ -33,6 +33,7 @@ from toolbar2 import *
 class PlayerBox(object):
     def __init__ (self, app):
         self.mp = None
+        self.point_bool = False
         
         self.main_vbox = gtk.VBox()
         self.vbox = gtk.VBox()
@@ -50,12 +51,19 @@ class PlayerBox(object):
         # Screen signal init.
         self.screen.add_events(gtk.gdk.ALL_EVENTS_MASK)
         self.screen.connect_after("expose-event", self.draw_background)
+        self.screen.connect("button-press-event", self.move_media_player_window)
+        self.screen.connect("enter-notify-event", self.show_and_hide_toolbar)
+        self.screen.connect("leave-notify-event", self.hide_media_player_tool)
         self.screen.connect("get-xid", self.init_media_player)
+        
         
         # Progressbar Init.
         self.progressbar = ProgressBar()
         # Progressbar signal init.
-        self.progressbar.connect("motion-notify-event", self.)
+        self.progressbar.pb.connect("motion-notify-event", self.progressbar_player_drag_pos_modify)
+        self.progressbar.pb.connect("button-press-event", self.progressbar_player_point_pos_modify)
+        self.progressbar.pb.connect("button-release-event", self.progressbar_set_point_bool)
+        
         
         # Child widget add to vbox.
         self.vbox.pack_start(self.screen, True, True)
@@ -66,10 +74,6 @@ class PlayerBox(object):
         self.play_control_panel = PlayControlPanel()
         self.main_vbox.pack_start(self.play_control_panel.hbox_hframe, False, False)
         
-    def pause(self, widget):    
-        self.mp.quit()
-        self.screen.queue_draw()
-        
     def init_media_player(self, mplayer, xid):    
         '''Init deepin media player.'''
         self.screen.queue_draw()
@@ -77,7 +81,6 @@ class PlayerBox(object):
         self.mp = Mplayer(xid)
         self.mp.connect("get-time-pos", self.get_time_pos)
         self.mp.connect("get-time-length", self.get_time_length)
-        
         
         self.mp.play("/home/long/视频/1.rmvb")
         
@@ -99,15 +102,53 @@ class PlayerBox(object):
             # Quit deepin-media-player.
             self.mp.quit()
             
+    # Control mplayer window.        
+    def move_media_player_window(self, widget, event):         
+        '''Move window.'''
+        self.app.window.begin_move_drag(event.button,
+                                        int(event.x_root),
+                                        int(event.y_root),
+                                        event.time)
+        
+    def hide_media_player_tool(self, widget, event):
+        '''Hide tool on the window '''
+        toolbar.hide_toolbar()
+        
+    def show_and_hide_toolbar(self, widget, event):    
+        '''Show and hide toolbar.'''
+        toolbar.show_toolbar()
+            
+            
     # Mplayer event of player control.         
+    def progressbar_set_point_bool(self, widget, event):
+        self.point_bool = True
+            
+    def progressbar_player_point_pos_modify(self, widget, event):        
+        '''Mouse left click rate of progress'''
+        if self.mp:
+            if 1 == self.mp.state:
+                self.mp.seek(int(self.progressbar.pos))
+                self.progressbar.set_pos(self.progressbar.pos)
+                self.progressbar.drag_bool = True
+                
+    def progressbar_player_drag_pos_modify(self, widget, event):        
+        '''Set player rate of progress.'''
+        if self.progressbar.drag_bool: # Mouse left.
+            if self.mp:
+                if 1 == self.mp.state:
+                    self.mp.seek(int(self.progressbar.pos))
+                    
     def get_time_length(self, mplayer, length):        
+        '''Get mplayer length to max of progressbar.'''
         self.progressbar.max = length
         self.mp.fseek(500)
         
     def get_time_pos(self, mplayer, pos):    
-        self.progressbar.set_pos(pos)
-        print self.progressbar.pos
-        
+        '''Get mplayer pos to pos of progressbar.'''
+        if not self.progressbar.drag_bool: # 
+            if not self.point_bool:
+                self.progressbar.set_pos(pos)
+            
     # Double buffer set.
     def unset_flags(self):
         '''Set double buffer.'''
