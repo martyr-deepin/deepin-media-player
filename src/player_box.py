@@ -40,8 +40,6 @@ class PlayerBox(object):
         self.main_vbox_hframe = HorizontalFrame(1)
         self.main_vbox_hframe.add(self.main_vbox)
         
-        # Init toolbar.
-        self.toolbar = ToolBar()
         # Save app(main.py)[init app].
         self.app = app
         self.app.window.connect("destroy", self.quit_player_window)
@@ -52,8 +50,8 @@ class PlayerBox(object):
         self.screen.add_events(gtk.gdk.ALL_EVENTS_MASK)
         self.screen.connect_after("expose-event", self.draw_background)
         self.screen.connect("button-press-event", self.move_media_player_window)
-        self.screen.connect("enter-notify-event", self.show_and_hide_toolbar)
-        self.screen.connect("leave-notify-event", self.hide_media_player_tool)
+        self.screen.connect("motion-notify-event", self.show_and_hide_toolbar)
+        # self.screen.connect("leave-notify-event", self.hide_window_tool)
         self.screen.connect("get-xid", self.init_media_player)
         
         
@@ -65,6 +63,9 @@ class PlayerBox(object):
         self.progressbar.pb.connect("button-release-event", self.progressbar_set_point_bool)
         
         
+        # Toolbar Init.
+        self.toolbar = ToolBar()        
+
         # Child widget add to vbox.
         self.vbox.pack_start(self.screen, True, True)
         self.vbox.pack_start(self.progressbar.hbox,False, False)
@@ -98,6 +99,7 @@ class PlayerBox(object):
     
     def quit_player_window(self, widget):
         '''Quit player window.'''
+        self.app.window.set_opacity(0)
         if self.mp:
             # Quit deepin-media-player.
             self.mp.quit()
@@ -110,15 +112,20 @@ class PlayerBox(object):
                                         int(event.y_root),
                                         event.time)
         
-    def hide_media_player_tool(self, widget, event):
-        '''Hide tool on the window '''
-        toolbar.hide_toolbar()
+    # def hide_window_tool(self, widget, event):    
+    #     '''Hide all tool widget '''
+    #     pass
+    #     #self.toolbar.hide_toolbar()
         
     def show_and_hide_toolbar(self, widget, event):    
         '''Show and hide toolbar.'''
-        toolbar.show_toolbar()
+        if 0 <= event.y <= 20:
+            self.toolbar.show_toolbar()    
+        else:
+            self.toolbar.hide_toolbar()
+
             
-            
+        
     # Mplayer event of player control.         
     def progressbar_set_point_bool(self, widget, event):
         self.point_bool = True

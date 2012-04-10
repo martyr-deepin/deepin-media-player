@@ -211,7 +211,7 @@ class  Mplayer(gobject.GObject):
                 if lenNum > 0:
                     self.lenNum = lenNum               
                     self.emit("get-time-length",self.lenNum)
-                    print self.lenNum
+                    print "mplayer:" + str(self.lenNum)
                     
         return True
                                
