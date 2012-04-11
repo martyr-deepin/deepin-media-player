@@ -22,7 +22,6 @@
 
 from dtk.ui.box import *
 from dtk.ui.frame import *
-from dtk.ui.utils import *
 
 from utils import *
 from constant import *
@@ -85,13 +84,11 @@ class PlayerBox(object):
         
         
         # Play control panel.
-        self.bottom_play_control_hbox = gtk.HBox()
         self.play_control_panel = PlayControlPanel()
         self.play_control_panel.start_btn.connect("clicked", self.start_button_clicked)
         
         
-        self.bottom_play_control_hbox.pack_start(self.play_control_panel.hbox_hframe)
-        self.main_vbox.pack_start(self.bottom_play_control_hbox, False, False)
+        self.main_vbox.pack_start(self.play_control_panel.hbox_hframe, False, False)
    
         
         
@@ -167,7 +164,8 @@ class PlayerBox(object):
                                       widget.allocation[3])
             self.toolbar.panel.hide_all()
             
-            # if widget.window.get_state() == gtk.gdk.WINDOW_STATE_MAXIMIZED:
+            if widget.window.get_state() == gtk.gdk.WINDOW_STATE_MAXIMIZED:
+                print "fsfsdfdsf最大化了"
             
     '''Toolbar button.''' 
     def common_window_function(self):
@@ -186,8 +184,6 @@ class PlayerBox(object):
     def set_window_full(self):    
         self.concise_window_function()
         self.toolbar.panel.fullscreen()  # Toolbar hide.
-        self.app.window.set_keep_above(True)
-        self.toolbar.panel.set_keep_above(True)
         self.app.window.fullscreen()        
         self.full_bool = True            
         
@@ -245,7 +241,8 @@ class PlayerBox(object):
         if not self.mode_state_bool:
             self.concise_window_function()
             self.app.window.set_window_shape(False)
-            #self.app.window.set_window_shape(True)
+            self.app.window.set_window_shape(True)
+            print "fsfsdf"
             self.mode_state_bool = True
             
             
@@ -256,18 +253,13 @@ class PlayerBox(object):
             
         
     # Control mplayer window.        
-    def move_media_player_window(self, widget, event): # screen: button-press-event         
+    def move_media_player_window(self, widget, event):         
         '''Move window.'''
         self.app.window.begin_move_drag(event.button,
                                         int(event.x_root),
                                         int(event.y_root),
                                         event.time)
-        # Double clicked full.    
-        if is_double_click(event):
-            self.full_play_window(widget)    
-            self.toolbar.toolbar_full_button.flags = False
-            
-            
+                
     # Toolbar hide and show.    
     def show_and_hide_toolbar(self, widget, event): # screen:motion_notify_event   
         '''Show and hide toolbar.'''    
@@ -275,7 +267,7 @@ class PlayerBox(object):
             self.toolbar.show_toolbar()
         else:
             self.toolbar.hide_toolbar()            
-                                
+                    
             
     # Mplayer event of player control.         
     def set_point_bool_time(self):        
