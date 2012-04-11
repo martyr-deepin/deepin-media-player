@@ -29,7 +29,9 @@ from constant import *
 from progressbar import *
 from toolbar import *
 from toolbar2 import *
-
+from play_control_panel import *
+from play_list_button import *
+from volume_button import *
 
 class PlayerBox(object):
     def __init__ (self, app):
@@ -43,15 +45,17 @@ class PlayerBox(object):
         self.panel_y = 0
         
         self.main_vbox = gtk.VBox()
+        self.hbox = gtk.HBox()
         self.vbox = gtk.VBox()
         self.main_vbox_hframe = HorizontalFrame(1)
         self.main_vbox_hframe.add(self.main_vbox)
-        
-        # Save app(main.py)[init app].
+
+        '''Save app(main.py)[init app].'''
         self.app = app
         self.app.window.connect("destroy", self.quit_player_window)
         self.app.window.connect("configure-event", self.app_configure_hide_tool)
-        # Screen window init.
+        
+        '''Screen window init.'''
         self.screen = MplayerView()
         # Screen signal init.
         self.screen.add_events(gtk.gdk.ALL_EVENTS_MASK)
@@ -62,7 +66,7 @@ class PlayerBox(object):
         self.screen.connect("get-xid", self.init_media_player)
         
         
-        # Progressbar Init.
+        '''Progressbar Init.'''
         self.progressbar = ProgressBar()
         # Progressbar signal init.
         self.progressbar.pb.connect("motion-notify-event", self.progressbar_player_drag_pos_modify)
@@ -70,7 +74,7 @@ class PlayerBox(object):
         self.progressbar.pb.connect("button-release-event", self.progressbar_set_point_bool)
         
         
-        # Toolbar Init.
+        '''Toolbar Init.'''
         self.toolbar = ToolBar()        
         self.toolbar.toolbar_full_button.connect("clicked", self.full_play_window)
         self.toolbar.toolbar_common_button.connect("clicked", self.show_window_widget)
@@ -80,17 +84,31 @@ class PlayerBox(object):
         # Child widget add to vbox.
         self.vbox.pack_start(self.screen, True, True)
         self.vbox.pack_start(self.progressbar.hbox,False, False)
-        # vbox add to main_hbox
-        self.main_vbox.pack_start(self.vbox, True, True)
         
+        self.hbox.pack_start(self.vbox)
+
+        #self.hbox.pack_start(btn, False, False)
+        '''Bottom control.'''
+        # Show time widget.
         
-        # Play control panel.
+        # Play control panel. stop,next,start(pause),pre button.
         self.bottom_play_control_hbox = gtk.HBox()
         self.play_control_panel = PlayControlPanel()
         self.play_control_panel.start_btn.connect("clicked", self.start_button_clicked)
         
+        # play list button.
+        self.play_list_button = PlayListButton()
+        #self.play_con
+        # Volume button.
+        self.volume_button = VolumeButton()
         
-        self.bottom_play_control_hbox.pack_start(self.play_control_panel.hbox_hframe)
+        self.bottom_play_control_hbox.pack_start(self.play_control_panel.hbox_hframe, True, True)
+        self.bottom_play_control_hbox.pack_start(self.volume_button)
+        self.bottom_play_control_hbox.pack_start(self.play_list_button.button)
+
+        
+        # vbox add to main_hbox
+        self.main_vbox.pack_start(self.hbox, True, True) # screen and progressbar
         self.main_vbox.pack_start(self.bottom_play_control_hbox, False, False)
    
         
