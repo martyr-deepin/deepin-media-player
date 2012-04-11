@@ -36,6 +36,8 @@ class PlayerBox(object):
         self.point_bool = False
         self.above_bool = False # Set window above bool.
         self.full_bool = False  # Set window full bool.
+        self.mode_state_bool = False # Concise mode(True) and common mode(False).
+        
         self.main_vbox = gtk.VBox()
         self.vbox = gtk.VBox()
         self.main_vbox_hframe = HorizontalFrame(1)
@@ -84,7 +86,11 @@ class PlayerBox(object):
         
         
         self.main_vbox.pack_start(self.play_control_panel.hbox_hframe, False, False)
-    # play control panel.    
+        
+        
+        
+        
+    '''play control panel.'''    
     def start_button_clicked(self, widget):    
         self.mp.pause() # Test pause.
         
@@ -100,8 +106,7 @@ class PlayerBox(object):
         #self.mp.seek(500)
         #self.mp.scrot(10)
 
-        
-        
+ 
     def draw_background(self, widget, event):
         '''Draw screen mplayer view background.'''
         cr, x, y, w, h = allocation(widget)
@@ -140,7 +145,7 @@ class PlayerBox(object):
         #self.app.hide_titlebar() # Test hide titlebar.
         # Toolbar position.
         if self.mp.pause_bool and self.mp.vide_bool:
-            gtk.timeout_add(100, self.time_vide_pause_draw_background)
+            gtk.time6out_add(100, self.time_vide_pause_draw_background)
             
         self.titlebar_height = self.app.titlebar.box.allocation[3]
         self.toolbar.panel.move(int(event.x + 1), int(event.y + self.titlebar_height))
@@ -149,18 +154,32 @@ class PlayerBox(object):
                                   widget.allocation[3])
         self.toolbar.panel.hide_all()
         
-    def full_window_function(self):        
-        self.app.hide_titlebar()
-        self.app.window.fullscreen()
+    '''Toolbar button.''' 
+    def common_window_function(self):
+        '''quit fll window and common window'''
+        self.app.show_titlebar() # show titlebar.
+        self.main_vbox_hframe.set_padding(0, 0, 1, 1)
+        self.toolbar.panel.hide_all()
+        
+    def concise_window_function(self):        
+        '''full window and concise mode'''
+        self.app.hide_titlebar() # hide titlbar.       
         self.app.window.set_keep_above(True) # Window above.
         self.main_vbox_hframe.set_padding(0, 0, 0, 0) # Set window border.
-        self.toolbar.panel.fullscreen()  # Toolbar hide.
-        self.toolbar.panel.hide_all()
+        self.toolbar.panel.hide_all() # hide toolbar.
                 
     def full_play_window(self, widget): #full_button       
         '''Full player window.'''
-        self.full_window_function()
-        
+        if not self.full_bool: # Full player window.
+            self.concise_window_function()
+            self.toolbar.panel.fullscreen()  # Toolbar hide.
+            self.app.window.fullscreen()        
+            self.full_bool = True
+        else:    
+            self.toolbar.panel.unfullscreen()
+            self.app.window.unfullscreen()
+            self.common_window_function()
+            self.full_bool = False
         
     def show_window_widget(self, widget): #common_button         
         '''Show window titlebar of window and play control panel.
@@ -169,9 +188,11 @@ class PlayerBox(object):
            Show window border.
            [common mode:]
         '''
-        
-        print "普通模式"
-    
+        if self.mode_state_bool:
+            self.common_window_function()
+            self.mode_state_bool = False
+            
+            
     def hide_window_widget(self, widget): #concise_button    
         '''Hide widnow titlebar and play control panel.
            Hide progressbar.
@@ -179,7 +200,9 @@ class PlayerBox(object):
            Hide border of window.
            [concise mode:]
         '''
-        print "简洁模式"
+        if not self.mode_state_bool:
+            self.concise_window_function()
+            self.mode_state_bool = True
     
     
     def set_window_above(self, widget): #above_button   
