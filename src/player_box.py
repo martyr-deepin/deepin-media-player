@@ -96,7 +96,7 @@ class PlayerBox(object):
         self.mp.connect("get-time-pos", self.get_time_pos)
         self.mp.connect("get-time-length", self.get_time_length)
         
-        self.mp.play("/home/long/视频/123.mp3")
+        self.mp.play("/home/long/视频/1.rmvb")
         #self.mp.seek(500)
         #self.mp.scrot(10)
 
@@ -107,17 +107,12 @@ class PlayerBox(object):
         cr, x, y, w, h = allocation(widget)
         
         if self.mp:
-            # print "vide_bool:" + str(self.mp.vide_bool)
-            # print "pause_bool:" + str(self.mp.pause_bool)
-            # print "state:" + str(self.mp.state)
             if (self.mp.state) and (self.mp.vide_bool): # vide file.
                 if self.mp.pause_bool: # vide pause.
                     # Draw pause background.
-                    # print "draw_background: pause"                 
                     return False                
                 else:
                     return False
-        # print "draw_background:mp3 or no playr"    
         # if no player vide file or no player.    
         cr.set_source_rgb(0, 0, 0)
         cr.rectangle(0, 0, w, h)
@@ -136,7 +131,7 @@ class PlayerBox(object):
     # ToolBar control function.        
     def time_vide_pause_draw_background(self):        
         self.mp.pause()
-        self.mp.seek(int(self.progressbar.pos - 1))
+        #self.mp.seek(int(self.progressbar.pos - 2))
         self.mp.pause()
         return False
     
