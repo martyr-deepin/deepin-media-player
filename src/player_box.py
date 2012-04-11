@@ -43,6 +43,7 @@ class PlayerBox(object):
         
         # Save app(main.py)[init app].
         self.app = app
+        self.titlebar_height = self.app.titlebar.box.allocation[3]
         self.app.window.connect("destroy", self.quit_player_window)
         self.app.window.connect("configure-event", self.configure_hide_tool)
         # Screen window init.
@@ -98,6 +99,7 @@ class PlayerBox(object):
         #self.mp.scrot(10)
         self.mp.pause() # Test pause.
         
+        
     def draw_background(self, widget, event):
         '''Draw screen mplayer view background.'''
         cr, x, y, w, h = allocation(widget)
@@ -113,6 +115,11 @@ class PlayerBox(object):
                     # cr.set_source_rgb(0, 0, 0)
                     # cr.rectangle(0, 0, w, h)
                     # cr.fill()                                                
+                    
+                    # save_path = get_home_path() + '/.config/deepin-media-player/image/pause.png'
+                    # pixbuf = gtk.gdk.pixbuf_new_from_file(save_path)
+                    # image = pixbuf.scale_simple(w, h, gtk.gdk.INTERP_BILINEAR)
+                    # draw_pixbuf(cr, image, 0, 0)
                     return False
                 else: # vide no pause.[start player vide file]
                     print "draw_background:vide start player..."
@@ -136,11 +143,22 @@ class PlayerBox(object):
             
             
     # ToolBar control function.        
-    def configure_hide_tool(self, widget, event):        
+    def test_pause(self):        
+        self.mp.pause()
+        self.mp.seek(int(self.progressbar.pos - 1))
+        self.mp.pause()
+        return False
+    
+    def configure_hide_tool(self, widget, event): # app: configure-event       
         panel_width = 2
         #self.app.hide_titlebar() # Test hide titlebar.
-        titlebar_height = self.app.titlebar.box.allocation[3]
-        self.toolbar.panel.move(event.x + 1, event.y + titlebar_height)
+        # Toolbar position.
+        if self.mp.pause_bool:
+            gtk.timeout_add(100, self.test_pause)
+            
+        self.titlebar_height = self.app.titlebar.box.allocation[3]
+        self.toolbar.panel.move(int(event.x + 1), int(event.y + self.titlebar_height))
+        # Toolbar width and height.
         self.toolbar.panel.resize(widget.allocation[2] - panel_width,
                                   widget.allocation[3])
         self.toolbar.panel.hide_all()
@@ -192,8 +210,10 @@ class PlayerBox(object):
                                         int(event.y_root),
                                         event.time)
                 
-    def show_and_hide_toolbar(self, widget, event):    
+    # Toolbar hide and show.    
+    def show_and_hide_toolbar(self, widget, event): # screen:motion_notify_event   
         '''Show and hide toolbar.'''
+        
         if 0 <= event.y <= 20:
             self.toolbar.show_toolbar()
         else:
@@ -223,6 +243,7 @@ class PlayerBox(object):
             if self.mp:
                 if 1 == self.mp.state:
                     self.mp.seek(int(self.progressbar.pos))
+                    
                     
     def get_time_length(self, mplayer, length):        
         '''Get mplayer length to max of progressbar.'''

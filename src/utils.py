@@ -22,6 +22,7 @@
 
 from dtk.ui.theme import *
 from subprocess import *
+from mplayer import *
 import re
 
 app_theme = Theme(os.path.join(
@@ -34,4 +35,12 @@ def allocation(widget):
     return cr, rect.x, rect.y, rect.width, rect.height
 
 
-    
+def pause_scrot(widget):
+    x, y, w, h = widget.get_allocation()
+    screenshot = gtk.gdk.Pixbuf.get_from_drawable(  
+    gtk.gdk.Pixbuf(gtk.gdk.COLORSPACE_RGB, True, 8, w, h),
+            widget.window,
+            gtk.gdk.colormap_get_system(),
+            0, 0, 0, 0, w, h)
+    save_path = get_home_path() + '/.config/deepin-media-player/image/pause.png'
+    screenshot.save(save_path, 'png')    
