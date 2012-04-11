@@ -145,7 +145,7 @@ class PlayerBox(object):
         #self.app.hide_titlebar() # Test hide titlebar.
         # Toolbar position.
         if self.mp.pause_bool and self.mp.vide_bool:
-            gtk.time6out_add(100, self.time_vide_pause_draw_background)
+            gtk.timeout_add(100, self.time_vide_pause_draw_background)
             
         self.titlebar_height = self.app.titlebar.box.allocation[3]
         self.toolbar.panel.move(int(event.x + 1), int(event.y + self.titlebar_height))
