@@ -80,11 +80,13 @@ class PlayerBox(object):
         
         # Play control panel.
         self.play_control_panel = PlayControlPanel()
-        
+        self.play_control_panel.start_btn.connect("clicked", self.start_button_clicked)
         
         
         self.main_vbox.pack_start(self.play_control_panel.hbox_hframe, False, False)
-        
+    # play control panel.    
+    def start_button_clicked(self, widget):    
+        self.mp.pause() # Test pause.
         
     def init_media_player(self, mplayer, xid):    
         '''Init deepin media player.'''
@@ -95,9 +97,9 @@ class PlayerBox(object):
         self.mp.connect("get-time-length", self.get_time_length)
         
         self.mp.play("/home/long/视频/1.rmvb")
-        self.mp.seek(10)
+        self.mp.seek(500)
         #self.mp.scrot(10)
-        self.mp.pause() # Test pause.
+
         
         
     def draw_background(self, widget, event):
@@ -111,20 +113,10 @@ class PlayerBox(object):
             if (self.mp.state) and (self.mp.vide_bool): # vide file.
                 if self.mp.pause_bool: # vide pause.
                     # Draw pause background.
-                    print "draw_background: pause"
-                    # cr.set_source_rgb(0, 0, 0)
-                    # cr.rectangle(0, 0, w, h)
-                    # cr.fill()                                                
-                    
-                    # save_path = get_home_path() + '/.config/deepin-media-player/image/pause.png'
-                    # pixbuf = gtk.gdk.pixbuf_new_from_file(save_path)
-                    # image = pixbuf.scale_simple(w, h, gtk.gdk.INTERP_BILINEAR)
-                    # draw_pixbuf(cr, image, 0, 0)
+                    print "draw_background: pause"                 
+                    return False                
+                else:
                     return False
-                else: # vide no pause.[start player vide file]
-                    print "draw_background:vide start player..."
-                    return False
-                    
         print "draw_background:mp3 or no playr"    
         # if no player vide file or no player.    
         cr.set_source_rgb(0, 0, 0)
@@ -133,7 +125,6 @@ class PlayerBox(object):
         return True
             
         
-    
     def quit_player_window(self, widget):
         '''Quit player window.'''
         self.app.window.set_opacity(0)
@@ -212,8 +203,7 @@ class PlayerBox(object):
                 
     # Toolbar hide and show.    
     def show_and_hide_toolbar(self, widget, event): # screen:motion_notify_event   
-        '''Show and hide toolbar.'''
-        
+        '''Show and hide toolbar.'''    
         if 0 <= event.y <= 20:
             self.toolbar.show_toolbar()
         else:
