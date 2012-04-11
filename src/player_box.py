@@ -38,6 +38,9 @@ class PlayerBox(object):
         self.full_bool = False  # Set window full bool.
         self.mode_state_bool = False # Concise mode(True) and common mode(False).
         
+        self.panel_x = 0
+        self.panel_y = 0
+        
         self.main_vbox = gtk.VBox()
         self.vbox = gtk.VBox()
         self.main_vbox_hframe = HorizontalFrame(1)
@@ -45,9 +48,8 @@ class PlayerBox(object):
         
         # Save app(main.py)[init app].
         self.app = app
-        self.titlebar_height = self.app.titlebar.box.allocation[3]
         self.app.window.connect("destroy", self.quit_player_window)
-        self.app.window.connect("configure-event", self.configure_hide_tool)
+        self.app.window.connect("configure-event", self.app_configure_hide_tool)
         # Screen window init.
         self.screen = MplayerView()
         # Screen signal init.
@@ -55,6 +57,7 @@ class PlayerBox(object):
         self.screen.connect_after("expose-event", self.draw_background)
         self.screen.connect("button-press-event", self.move_media_player_window)
         self.screen.connect("motion-notify-event", self.show_and_hide_toolbar)
+        self.screen.connect("configure-event", self.configure_hide_tool)
         self.screen.connect("get-xid", self.init_media_player)
         
         
@@ -86,7 +89,7 @@ class PlayerBox(object):
         
         
         self.main_vbox.pack_start(self.play_control_panel.hbox_hframe, False, False)
-        
+   
         
         
         
@@ -140,20 +143,30 @@ class PlayerBox(object):
         self.mp.pause()
         return False
     
-    def configure_hide_tool(self, widget, event): # app: configure-event       
-        panel_width = 2
-        #self.app.hide_titlebar() # Test hide titlebar.
-        # Toolbar position.
-        if self.mp.pause_bool and self.mp.vide_bool:
-            gtk.timeout_add(100, self.time_vide_pause_draw_background)
-            
-        self.titlebar_height = self.app.titlebar.box.allocation[3]
-        self.toolbar.panel.move(int(event.x + 1), int(event.y + self.titlebar_height))
-        # Toolbar width and height.
-        self.toolbar.panel.resize(widget.allocation[2] - panel_width,
-                                  widget.allocation[3])
+    def app_configure_hide_tool(self, widget, event):    
         self.toolbar.panel.hide_all()
+        self.panel_x, self.panel_y = self.screen.window.get_root_origin()
+        if self.mode_state_bool: # Concise mode.
+            self.toolbar.panel.move(self.panel_x, self.panel_y)
+        else:    # common mode.
+            self.toolbar.panel.move(self.panel_x + 1, self.panel_y + self.app.titlebar.box.allocation[3])
         
+    def configure_hide_tool(self, widget, event): # app: configure-event       
+        if self.mp:
+            #self.app.hide_titlebar() # Test hide titlebar.
+            # Toolbar position.
+            if self.mp.pause_bool and self.mp.vide_bool:
+                gtk.timeout_add(100, self.time_vide_pause_draw_background)
+                
+            #self.toolbar.panel.move(self.panel_x, self.panel_y)
+            # Toolbar width and height.
+            self.toolbar.panel.resize(widget.allocation[2],
+                                      widget.allocation[3])
+            self.toolbar.panel.hide_all()
+            
+            if widget.window.get_state() == gtk.gdk.WINDOW_STATE_MAXIMIZED:
+                print "fsfsdfdsf最大化了"
+            
     '''Toolbar button.''' 
     def common_window_function(self):
         '''quit fll window and common window'''
@@ -167,20 +180,37 @@ class PlayerBox(object):
         self.app.window.set_keep_above(True) # Window above.
         self.main_vbox_hframe.set_padding(0, 0, 0, 0) # Set window border.
         self.toolbar.panel.hide_all() # hide toolbar.
-                
+        
+    def set_window_full(self):    
+        self.concise_window_function()
+        self.toolbar.panel.fullscreen()  # Toolbar hide.
+        self.app.window.fullscreen()        
+        self.full_bool = True            
+        
+    def set_window_quit_full(self):    
+        self.toolbar.panel.unfullscreen()
+        self.app.window.unfullscreen()
+        self.common_window_function()
+        self.full_bool = False
+        
     def full_play_window(self, widget): #full_button       
         '''Full player window.'''
         if not self.full_bool: # Full player window.
-            self.concise_window_function()
-            self.toolbar.panel.fullscreen()  # Toolbar hide.
-            self.app.window.fullscreen()        
-            self.full_bool = True
+            self.set_window_full()
         else:    
-            self.toolbar.panel.unfullscreen()
-            self.app.window.unfullscreen()
-            self.common_window_function()
-            self.full_bool = False
-        
+            self.set_window_quit_full()
+            if self.mode_state_bool:
+                self.concise_window_function()
+            else:    
+                self.common_window_function()
+            
+            
+    def show_hide_set(self):    
+        '''show_window_widget and hide_window_widget'''
+        self.app.window.unfullscreen()
+        self.toolbar.panel.unfullscreen()  # Toolbar hide.
+        self.full_bool = False
+            
     def show_window_widget(self, widget): #common_button         
         '''Show window titlebar of window and play control panel.
            Show progressbar.
@@ -188,10 +218,14 @@ class PlayerBox(object):
            Show window border.
            [common mode:]
         '''
+        
         if self.mode_state_bool:
             self.common_window_function()
             self.mode_state_bool = False
             
+        if self.full_bool: # qiut full.   
+            self.app.show_titlebar()
+            self.show_hide_set()
             
     def hide_window_widget(self, widget): #concise_button    
         '''Hide widnow titlebar and play control panel.
@@ -200,11 +234,14 @@ class PlayerBox(object):
            Hide border of window.
            [concise mode:]
         '''
+        if self.full_bool:
+            self.show_hide_set()
+        
         if not self.mode_state_bool:
             self.concise_window_function()
             self.mode_state_bool = True
-    
-    
+            
+            
     def set_window_above(self, widget): #above_button   
         self.above_bool = not self.above_bool
         self.app.window.set_keep_above(self.above_bool)
