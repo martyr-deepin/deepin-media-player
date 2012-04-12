@@ -47,12 +47,12 @@ class ShowTime(object):
         cr, x, y, w, h = allocation(widget)
         
         draw_font(cr, self.time_font1, 8, "#FFFFFF", 
-                  x + 20, y, w, h)
+                  x , y, w, h)
         
         (font1_width, font1_height) = get_content_size(self.time_font1, 8)
         
         draw_font(cr, self.time_font2, 8 , "#000000", 
-                  x + 20 + font1_width, y, w, h)
+                  x  + font1_width, y, w, h)
         
         # Propagate expose.
         propagate_expose(widget, event)

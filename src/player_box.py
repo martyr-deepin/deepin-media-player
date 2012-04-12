@@ -97,39 +97,49 @@ class PlayerBox(object):
         # Hide Bottom and show Bottom.
         self.bottom_main_vbox = gtk.VBox()
         # Play control panel. stop,next,start(pause),pre button.
-        self.bottom_play_control_hbox_vframe = VerticalFrame(12)
+        bottom_padding = 2
+        self.bottom_play_control_hbox_vframe = VerticalFrame(bottom_padding)
         self.bottom_play_control_hbox = gtk.HBox()
         self.bottom_play_control_hbox_vframe.add(self.bottom_play_control_hbox)
         
         # Show time widget.
+        # padding=0, xalign=1, yalign=0.0, xscale=0.0, yscale=0.0
         self.show_time_label_hframe = HorizontalFrame()
         self.show_time_label = ShowTime()
         self.show_time_label.time_box.set_size_request(110, -1)
         self.show_time_label.time_font1 = "00 : 00 : 00 "
         self.show_time_label.time_font2 = " / 00 : 00 : 00"
         self.show_time_label_hframe.add(self.show_time_label.time_box)
+        self.show_time_label_hframe.set(0, 0.5, 0, 0)
         
         self.play_control_panel = PlayControlPanel()
         self.play_control_panel_hframe = self.play_control_panel.hbox_hframe
         self.play_control_panel.start_btn.connect("clicked", self.start_button_clicked)
         
-        # play list button.
-        self.play_list_button_hframe = HorizontalFrame()
-        self.play_list_button = PlayListButton()
-        self.play_list_button_hframe.add(self.play_list_button.button)
-
         
         # Volume button.
         self.volume_button_hframe = HorizontalFrame()
         self.volume_button = VolumeButton()
         self.volume_button_hframe.add(self.volume_button)
+        self.volume_button_hframe.set(1, 0.5, 0, 0)
+        self.volume_button_hframe.set_padding(0, 0, 0, 10)
+        
         self.volume_button.button_event.connect("button-press-event", self.volume_button_set_mute)
         self.volume_button.connect("get-value-event", self.volume_button_set_volume)
         
         
-        self.bottom_play_control_hbox.pack_start(self.show_time_label_hframe, False, False)
+        # play list button.
+        self.play_list_button_hframe = HorizontalFrame()
+        self.play_list_button = PlayListButton()
+        self.play_list_button_hframe.add(self.play_list_button.button)
+        self.play_list_button_hframe.set(1, 0, 0, 0)
+        self.play_list_button_hframe.set_padding(0, 0, 0, 10)
+        
+        
+        
+        self.bottom_play_control_hbox.pack_start(self.show_time_label_hframe, True, True)
         self.bottom_play_control_hbox.pack_start(self.play_control_panel_hframe, False, False)
-        self.bottom_play_control_hbox.pack_start(self.volume_button_hframe, False, False)
+        self.bottom_play_control_hbox.pack_start(self.volume_button_hframe, True, True)
         self.bottom_play_control_hbox.pack_start(self.play_list_button_hframe, False, False)
         
 
