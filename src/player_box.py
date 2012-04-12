@@ -115,7 +115,7 @@ class PlayerBox(object):
         self.play_control_panel = PlayControlPanel()
         self.play_control_panel_hframe = self.play_control_panel.hbox_hframe
         self.play_control_panel.start_btn.connect("clicked", self.start_button_clicked)
-        
+        self.play_control_panel_hframe.set(1, 0.5, 0, 0)
         
         # Volume button.
         self.volume_button_hframe = HorizontalFrame()
@@ -136,9 +136,8 @@ class PlayerBox(object):
         self.play_list_button_hframe.set_padding(0, 0, 0, 10)
         
         
-        
-        self.bottom_play_control_hbox.pack_start(self.show_time_label_hframe, True, True)
-        self.bottom_play_control_hbox.pack_start(self.play_control_panel_hframe, False, False)
+        self.bottom_play_control_hbox.pack_start(self.show_time_label_hframe, False, False)
+        self.bottom_play_control_hbox.pack_start(self.play_control_panel_hframe, True, True)
         self.bottom_play_control_hbox.pack_start(self.volume_button_hframe, True, True)
         self.bottom_play_control_hbox.pack_start(self.play_list_button_hframe, False, False)
         
