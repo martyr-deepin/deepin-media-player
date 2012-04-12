@@ -158,11 +158,6 @@ class PlayerBox(object):
             
             
     # ToolBar control function.        
-    def time_vide_pause_draw_background(self):        
-        self.mp.pause()
-        #self.mp.seek(int(self.progressbar.pos - 2))
-        self.mp.pause()
-        return False
     
     def app_configure_hide_tool(self, widget, event):    
         self.toolbar.panel.hide_all()
@@ -172,12 +167,21 @@ class PlayerBox(object):
         else:    # common mode.
             self.toolbar.panel.move(self.panel_x + 1, self.panel_y + self.app.titlebar.box.allocation[3])
         
+    def time_vide_pause_draw_background(self):        
+        '''configure_hide_tool call, pause time.'''
+        self.mp.pause()
+        #self.mp.seek(int(self.progressbar.pos - 2))
+        self.mp.pause()
+        return False        
+    
     def configure_hide_tool(self, widget, event): # app: configure-event       
         if self.mp:
             #self.app.hide_titlebar() # Test hide titlebar.
             # Toolbar position.
             if self.mp.pause_bool and self.mp.vide_bool:
-                gtk.timeout_add(100, self.time_vide_pause_draw_background)
+                self.mp.pause()
+                self.mp.pause()
+                #gtk.timeout_add(500, self.time_vide_pause_draw_background)
                 
             #self.toolbar.panel.move(self.panel_x, self.panel_y)
             # Toolbar width and height.
@@ -327,6 +331,8 @@ class PlayerBox(object):
         
     def get_time_pos(self, mplayer, pos):    
         '''Get mplayer pos to pos of progressbar.'''
+        # Test media player pos.
+        print pos
         if not self.progressbar.drag_bool: # 
             if not self.point_bool:
                 self.progressbar.set_pos(pos)
