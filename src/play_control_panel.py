@@ -30,7 +30,7 @@ from ImageButton import *
 class PlayControlPanel(object):    
     def __init__(self):
         self.input_string = "play_control_panel: " 
-        self.hbox_hframe = HorizontalFrame(0)
+        self.hbox_hframe = HorizontalFrame()
         self.hbox = gtk.HBox()
         self.hbox_hframe.add(self.hbox)
         

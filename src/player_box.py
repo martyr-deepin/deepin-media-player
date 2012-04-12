@@ -23,6 +23,7 @@
 from dtk.ui.box import *
 from dtk.ui.frame import *
 from dtk.ui.utils import *
+from dtk.ui.label import *
 
 from utils import *
 from constant import *
@@ -54,6 +55,8 @@ class PlayerBox(object):
 
         '''Save app(main.py)[init app].'''
         self.app = app
+        self.app_width = 0
+        self.app_height = 0
         self.app.window.connect("destroy", self.quit_player_window)
         self.app.window.connect("configure-event", self.app_configure_hide_tool)
         
@@ -86,38 +89,54 @@ class PlayerBox(object):
         # Child widget add to vbox.
         self.vbox.pack_start(self.screen, True, True)
         self.vbox.pack_start(self.progressbar.hbox,False, False)
-        
+        # Hide playlist and show playlist widget hbox.
         self.hbox.pack_start(self.vbox)
 
-        #self.hbox.pack_start(btn, False, False)
+
         '''Bottom control.'''
-        # Show time widget.
-        
+        # Hide Bottom and show Bottom.
+        self.bottom_main_vbox = gtk.VBox()
         # Play control panel. stop,next,start(pause),pre button.
+        self.bottom_play_control_hbox_vframe = VerticalFrame(12)
         self.bottom_play_control_hbox = gtk.HBox()
+        self.bottom_play_control_hbox_vframe.add(self.bottom_play_control_hbox)
+        
+        # Show time widget.
+        self.show_time_label_hframe = HorizontalFrame()
+        self.show_time_label = ShowTime()
+        self.show_time_label.time_box.set_size_request(110, -1)
+        self.show_time_label.time_font1 = "00 : 00 : 00 "
+        self.show_time_label.time_font2 = " / 00 : 00 : 00"
+        self.show_time_label_hframe.add(self.show_time_label.time_box)
+        
         self.play_control_panel = PlayControlPanel()
+        self.play_control_panel_hframe = self.play_control_panel.hbox_hframe
         self.play_control_panel.start_btn.connect("clicked", self.start_button_clicked)
         
         # play list button.
+        self.play_list_button_hframe = HorizontalFrame()
         self.play_list_button = PlayListButton()
-        #self.play_con
+        self.play_list_button_hframe.add(self.play_list_button.button)
+
+        
         # Volume button.
+        self.volume_button_hframe = HorizontalFrame()
         self.volume_button = VolumeButton()
+        self.volume_button_hframe.add(self.volume_button)
         self.volume_button.button_event.connect("button-press-event", self.volume_button_set_mute)
         self.volume_button.connect("get-value-event", self.volume_button_set_volume)
         
-        btn = gtk.Button("sdfsdf")
-        self.bottom_play_control_hbox.pack_start(btn, False, False)
-        self.bottom_play_control_hbox.pack_start(self.play_control_panel.hbox_hframe, False, False)
-        self.bottom_play_control_hbox.pack_start(self.volume_button, False, False)
-        self.bottom_play_control_hbox.pack_start(self.play_list_button.button, False, False)
+        
+        self.bottom_play_control_hbox.pack_start(self.show_time_label_hframe, False, False)
+        self.bottom_play_control_hbox.pack_start(self.play_control_panel_hframe, False, False)
+        self.bottom_play_control_hbox.pack_start(self.volume_button_hframe, False, False)
+        self.bottom_play_control_hbox.pack_start(self.play_list_button_hframe, False, False)
+        
 
-        
+        self.bottom_main_vbox.pack_start(self.bottom_play_control_hbox_vframe)
         # vbox add to main_hbox
-        self.main_vbox.pack_start(self.hbox, True, True) # screen and progressbar
-        self.main_vbox.pack_start(self.bottom_play_control_hbox, False, False)
-   
-        
+        self.main_vbox.pack_start(self.hbox, True, True) # screen and progressbar        
+        self.main_vbox.pack_start(self.bottom_main_vbox, False, False)
         
         
     '''play control panel.'''    
@@ -140,8 +159,16 @@ class PlayerBox(object):
         if self.mp:
             self.mp.setvolume(value)
 
+                
+    def show_bottom(self):        
+        if [] == self.fixed_vbox.get_children():
+            self.fixed_vbox.add(self.fixed_vframe)
         
-            
+    def hide_bottom(self):   
+        if [] != self.fixed_vbox.get_children():
+            self.fixed_vbox.foreach(self.fixed_vbox.remove(self.fixed_vframe))
+        
+        
     '''Init media player.'''        
     def init_media_player(self, mplayer, xid):    
         '''Init deepin media player.'''
@@ -184,13 +211,14 @@ class PlayerBox(object):
             
     # ToolBar control function.        
     
-    def app_configure_hide_tool(self, widget, event):    
+    def app_configure_hide_tool(self, widget, event): #app: configure-event.    
         self.toolbar.panel.hide_all()
         self.panel_x, self.panel_y = self.screen.window.get_root_origin()
         if self.mode_state_bool: # Concise mode.
             self.toolbar.panel.move(self.panel_x, self.panel_y)
         else:    # common mode.
             self.toolbar.panel.move(self.panel_x + 1, self.panel_y + self.app.titlebar.box.allocation[3])
+        
         
     def time_vide_pause_draw_background(self):        
         '''configure_hide_tool call, pause time.'''
@@ -199,7 +227,7 @@ class PlayerBox(object):
         self.mp.pause()
         return False        
     
-    def configure_hide_tool(self, widget, event): # app: configure-event       
+    def configure_hide_tool(self, widget, event):       
         if self.mp:
             #self.app.hide_titlebar() # Test hide titlebar.
             # Toolbar position.
@@ -220,20 +248,28 @@ class PlayerBox(object):
     def common_window_function(self):
         '''quit fll window and common window'''
         self.app.show_titlebar() # show titlebar.
+        self.progressbar.show_progressbar()
+        
+        
         self.main_vbox_hframe.set_padding(0, 0, 1, 1)
         self.toolbar.panel.hide_all()
+        self.show_bottom()
+        self.app.window.show_all()
         
     def concise_window_function(self):        
         '''full window and concise mode'''
         self.app.hide_titlebar() # hide titlbar.       
-        self.app.window.set_keep_above(True) # Window above.
+        self.progressbar.hide_progressbar()
+        self.hide_bottom()
+        
+        #self.app.window.set_keep_above(True) # Window above.
         self.main_vbox_hframe.set_padding(0, 0, 0, 0) # Set window border.
         self.toolbar.panel.hide_all() # hide toolbar.
         
     def set_window_full(self):    
         self.concise_window_function()
         self.toolbar.panel.fullscreen()  # Toolbar hide.
-        self.app.window.set_keep_above(True)
+        #self.app.window.set_keep_above(True)
         self.toolbar.panel.set_keep_above(True)
         self.app.window.fullscreen()        
         self.full_bool = True            
@@ -269,13 +305,14 @@ class PlayerBox(object):
            Show window border.
            [common mode:]
         '''
-        
         if self.mode_state_bool:
             self.common_window_function()
             self.mode_state_bool = False
             
             
         if self.full_bool: # qiut full.   
+            self.show_bottom()
+            self.progressbar.show_progressbar()
             self.app.show_titlebar()
             self.show_hide_set()
             
@@ -305,14 +342,15 @@ class PlayerBox(object):
     # Control mplayer window.        
     def move_media_player_window(self, widget, event): # screen: button-press-event         
         '''Move window.'''
-        self.app.window.begin_move_drag(event.button,
-                                        int(event.x_root),
-                                        int(event.y_root),
-                                        event.time)
+        if 1 == event.button:
+            self.app.window.begin_move_drag(event.button,
+                                            int(event.x_root),
+                                            int(event.y_root),
+                                            event.time)
         # Double clicked full.    
         if is_double_click(event):
             self.full_play_window(widget)    
-            self.toolbar.toolbar_full_button.flags = False
+            self.toolbar.toolbar_full_button.flags = not self.toolbar.toolbar_full_button.flags
             
             
     # Toolbar hide and show.    

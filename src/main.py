@@ -52,7 +52,7 @@ class MediaPlayer(object):
         self.app.main_box.pack_start(self.player_box.main_vbox_hframe)
         
         self.app.window.show_all()
-
+        
         
 MediaPlayer()        
 

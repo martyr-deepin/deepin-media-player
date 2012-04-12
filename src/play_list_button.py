@@ -53,8 +53,8 @@ class ImageButton(gtk.Button):
         x,y,w,h = rect.x, rect.y, rect.width, rect.height
         
         # Draw background image.
+        bg_image = self.bg_pixbuf.get_pixbuf()
         if self.flags:
-            bg_image = self.bg_pixbuf.get_pixbuf()
             bg_border_height = bg_image.get_height()/2 - 5
             bg_border_width  = 2
             pixbuf = bg_image.scale_simple(bg_image.get_width(),
@@ -73,7 +73,7 @@ class ImageButton(gtk.Button):
         draw_pixbuf(cr, pixbuf, x, y + button_border)    
         
         # Set button size.    
-        widget.set_size_request(button_image.get_width(), button_image.get_height())        
+        widget.set_size_request(button_image.get_width(), bg_image.get_height())        
         
         propagate_expose(widget, event)
         return True        
