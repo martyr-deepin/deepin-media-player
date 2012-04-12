@@ -148,8 +148,9 @@ class VolumeButton(gtk.HBox, gobject.GObject):
         
     def button_press_event(self, widget, event):
         if event.button == 1:
-            self.mute_bool = not self.mute_bool               
-            self.set_value(self.volume_value)
+            if self.volume_value > 0:
+                self.mute_bool = not self.mute_bool               
+                self.set_value(self.volume_value)
 
             
     def set_value(self, value):
@@ -158,7 +159,7 @@ class VolumeButton(gtk.HBox, gobject.GObject):
         if value < 6:
             value = 0
         
-        self.emit("get-value-event", value, 1)    
+        self.emit("get-value-event", value, self.mute_bool)    
         self.volume_value = value
             
         if not self.mute_bool:

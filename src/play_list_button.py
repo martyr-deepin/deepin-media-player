@@ -27,9 +27,7 @@ from utils import *
 
 class PlayListButton(object):
     def __init__(self):
-        
-        self.button = ImageButton()
-        
+        self.button = ImageButton()        
     
 class ImageButton(gtk.Button):
     def __init__(self, 
@@ -46,6 +44,8 @@ class ImageButton(gtk.Button):
         
     def show_play_list(self, widget):    
         self.flags = not self.flags
+        # True show background.
+        # False hide background.
         
     def expose_button(self, widget, event):
         cr = widget.window.cairo_create()
@@ -74,7 +74,6 @@ class ImageButton(gtk.Button):
         
         # Set button size.    
         widget.set_size_request(button_image.get_width(), button_image.get_height())        
-        
         
         propagate_expose(widget, event)
         return True        

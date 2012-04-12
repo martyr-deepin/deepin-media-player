@@ -386,7 +386,7 @@ class  Mplayer(gobject.GObject):
             else:
                 self.pause_bool = True
             #self.pause_bool = not self.pause_bool
-            print self.pause_bool    
+            #;print self.pause_bool    
             
     def quit(self):
         '''quit deepin media player.'''

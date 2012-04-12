@@ -33,8 +33,10 @@ from play_control_panel import *
 from play_list_button import *
 from volume_button import *
 
+
 class PlayerBox(object):
     def __init__ (self, app):
+        self.input_string = "player_box: " # Test input string(message).
         self.mp = None
         self.point_bool = False
         self.above_bool = False # Set window above bool.
@@ -101,10 +103,14 @@ class PlayerBox(object):
         #self.play_con
         # Volume button.
         self.volume_button = VolumeButton()
+        self.volume_button.button_event.connect("button-press-event", self.volume_button_set_mute)
+        self.volume_button.connect("get-value-event", self.volume_button_set_volume)
         
-        self.bottom_play_control_hbox.pack_start(self.play_control_panel.hbox_hframe, True, True)
-        self.bottom_play_control_hbox.pack_start(self.volume_button)
-        self.bottom_play_control_hbox.pack_start(self.play_list_button.button)
+        btn = gtk.Button("sdfsdf")
+        self.bottom_play_control_hbox.pack_start(btn, False, False)
+        self.bottom_play_control_hbox.pack_start(self.play_control_panel.hbox_hframe, False, False)
+        self.bottom_play_control_hbox.pack_start(self.volume_button, False, False)
+        self.bottom_play_control_hbox.pack_start(self.play_list_button.button, False, False)
 
         
         # vbox add to main_hbox
@@ -116,8 +122,27 @@ class PlayerBox(object):
         
     '''play control panel.'''    
     def start_button_clicked(self, widget):    
+        '''start or pause'''
         self.mp.pause() # Test pause.
         
+        
+    def volume_button_set_mute(self, widget, event):    
+        '''Set mute.'''
+        if 1 == event.button:
+            if self.mp:
+                if self.volume_button.mute_bool:
+                    self.mp.nomute()
+                else:
+                    self.mp.offmute()
+
+            
+    def volume_button_set_volume(self, volume_button, value, mute_bool):
+        if self.mp:
+            self.mp.setvolume(value)
+
+        
+            
+    '''Init media player.'''        
     def init_media_player(self, mplayer, xid):    
         '''Init deepin media player.'''
         #self.screen.queue_draw()
@@ -332,7 +357,7 @@ class PlayerBox(object):
     def get_time_pos(self, mplayer, pos):    
         '''Get mplayer pos to pos of progressbar.'''
         # Test media player pos.
-        print pos
+        #print pos
         if not self.progressbar.drag_bool: # 
             if not self.point_bool:
                 self.progressbar.set_pos(pos)
