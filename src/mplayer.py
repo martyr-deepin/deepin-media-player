@@ -130,6 +130,7 @@ class  Mplayer(gobject.GObject):
         # random player num.
         self.random_num = 0;
         
+        self.play_file_mode = ['.mkv','.mp3','.mp4','.rmvb','.avi','.wmv','.3gp','rm', 'asf']
         
         self.volumebool = False
         # player state.
@@ -170,7 +171,7 @@ class  Mplayer(gobject.GObject):
                                          stdout = subprocess.PIPE,
                                          stderr = subprocess.PIPE,
                                          shell  = False)
-            self.emit("play-start",False)
+            self.emit("play-start", False)
             (self.mplayerIn, self.mplayerOut) = (self.mpID.stdin, self.mpID.stdout)
             fcntl.fcntl(self.mplayerOut, 
                         fcntl.F_SETFL, 
@@ -543,10 +544,11 @@ class  Mplayer(gobject.GObject):
                 if self.findFile(pathfile2):
                     self.playListSum += 1
                     self.playList.append(pathfile2)
+                    
                                     
     def findFile(self, pathfile2):
         file1, file2 = os.path.splitext(pathfile2)
-        if file2 in ['.mkv','.mp3','.mp4','.rmvb','.avi','.wmv','.3gp','rm']:
+        if file2 in self.play_file_mode:
             return True
         else:
             return False
@@ -562,7 +564,7 @@ class  Mplayer(gobject.GObject):
         self.playListSum += 1
         
     def addPlayFile(self, path):    
-        if self.findFile(path):
+        if self.findFile(path): # play file.
             self.playList.append(path)
             self.playListSum += 1
         

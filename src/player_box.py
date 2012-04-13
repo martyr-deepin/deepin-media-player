@@ -36,7 +36,7 @@ from volume_button import *
 
 
 class PlayerBox(object):
-    def __init__ (self, app):
+    def __init__ (self, app, argv_path_list):
         self.input_string = "player_box: " # Test input string(message).
         self.mp = None
         self.point_bool = False
@@ -54,9 +54,10 @@ class PlayerBox(object):
         self.main_vbox_hframe.add(self.main_vbox)
 
         '''Save app(main.py)[init app].'''
-        self.app = app
-        self.app_width = 0
-        self.app_height = 0
+        self.app = app  
+        self.app_width = 0  # Save media player window width.
+        self.app_height = 0 # Save media player window height.
+        self.argv_path_list = argv_path_list # command argv.
         self.app.window.connect("destroy", self.quit_player_window)
         self.app.window.connect("configure-event", self.app_configure_hide_tool)
         
@@ -114,8 +115,13 @@ class PlayerBox(object):
         
         self.play_control_panel = PlayControlPanel()
         self.play_control_panel_hframe = self.play_control_panel.hbox_hframe
-        self.play_control_panel.start_btn.connect("clicked", self.start_button_clicked)
         self.play_control_panel_hframe.set(1, 0.5, 0, 0)
+        
+        self.play_control_panel.stop_btn.connect("clicked", self.stop_button_clicked) # stop play.
+        self.play_control_panel.pre_btn.connect("clicked", self.pre_button_clicked) # pre play.
+        self.play_control_panel.start_btn.connect("clicked", self.start_button_clicked) # start play or pause play.
+        self.play_control_panel.next_btn.connect("clicked", self.next_button_clicked) # next play.
+        
         
         # Volume button.
         self.volume_button_hframe = HorizontalFrame()
@@ -149,10 +155,24 @@ class PlayerBox(object):
         
         
     '''play control panel.'''    
+    def stop_button_clicked(self, widget):
+        self.mp.quit()
+        
+    def pre_button_clicked(self, widget):
+        '''prev.'''
+        self.mp.pre()
+        
     def start_button_clicked(self, widget):    
         '''start or pause'''
-        self.mp.pause() # Test pause.
+        if self.mp.pause_bool or not self.mp.pause_bool:
+            self.mp.pause()
+            
+        if 0 == self.mp.state:    
+            self.mp.next() # Test pause.
         
+    def next_button_clicked(self, widget):    
+        '''next'''
+        self.mp.next()
         
     def volume_button_set_mute(self, widget, event):    
         '''Set mute.'''
@@ -181,17 +201,25 @@ class PlayerBox(object):
     '''Init media player.'''        
     def init_media_player(self, mplayer, xid):    
         '''Init deepin media player.'''
-        #self.screen.queue_draw()
+        self.screen.queue_draw()
         #self.unset_flags()
         self.mp = Mplayer(xid)
         self.mp.connect("get-time-pos", self.get_time_pos)
         self.mp.connect("get-time-length", self.get_time_length)
+        self.mp.connect("play-start", self.media_player_start)
+        self.mp.connect("play-end", self.media_player_end)
         
-        self.mp.play("/home/long/视频/1.rmvb")
+        #self.mp.play("/home/long/视频/1.rmvb")
         #self.mp.seek(500)
         #self.mp.scrot(10)
-
- 
+        
+        self.mp.playListState = 2
+        print self.argv_path_list
+        try:
+            path_threads(self.argv_path_list[1], self.mp)
+        except:
+            print "没有测试用的文件夹:测试命令: python main.py /home/long/视频"
+        
     def draw_background(self, widget, event):
         '''Draw screen mplayer view background.'''
         cr, x, y, w, h = allocation(widget)
@@ -213,13 +241,13 @@ class PlayerBox(object):
     def quit_player_window(self, widget):
         '''Quit player window.'''
         self.app.window.set_opacity(0)
+        self.app.window.set_visible(True)
         if self.mp:
             # Quit deepin-media-player.
             self.mp.quit()
             
             
     # ToolBar control function.        
-    
     def app_configure_hide_tool(self, widget, event): #app: configure-event.    
         self.toolbar.panel.hide_all()
         self.panel_x, self.panel_y = self.screen.window.get_root_origin()
@@ -409,7 +437,15 @@ class PlayerBox(object):
             if not self.point_bool:
                 self.progressbar.set_pos(pos)
             
-                
+    def media_player_start(self, mplayer, play_bool):
+        '''media player start play.'''
+        self.progressbar.set_pos(0)
+    
+    def media_player_end(self, mplayer, play_bool):
+        '''player end.'''
+        self.progressbar.set_pos(0)
+        self.screen.queue_draw()
+        
     # Double buffer set.
     def unset_flags(self):
         '''Set double buffer.'''

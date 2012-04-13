@@ -25,6 +25,8 @@ from utils import *
 from constant import *
 from player_box import *
 from mplayer import *
+import os
+import sys
 import gtk
 
 # Thread init. 
@@ -32,6 +34,7 @@ gtk.gdk.threads_init()
 
 class MediaPlayer(object):
     def __init__ (self):
+        argv_path_list = sys.argv
         # Init emdia player config.
         init_mplayer_config()
         self.app = Application("mediaplayer", False)
@@ -47,7 +50,7 @@ class MediaPlayer(object):
                               "深度影音", " ", add_separator = True)
         
         # Topbox init.
-        self.player_box = PlayerBox(self.app)
+        self.player_box = PlayerBox(self.app, argv_path_list)
         # # Add child widget to app. 
         self.app.main_box.pack_start(self.player_box.main_vbox_hframe)
         
