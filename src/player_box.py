@@ -224,8 +224,8 @@ class PlayerBox(object):
         self.mp.playListState = 2
         print self.argv_path_list
         try:
-            
-            path_threads(self.argv_path_list[1], self.mp)
+            self.mp.addPlayFile(self.argv_path_list[1])
+            #path_threads(self.argv_path_list[1], self.mp)
         except:
             print "没有测试用的文件夹:Test command: python main.py /home/long/视频"
         
