@@ -482,20 +482,22 @@ class  Mplayer(gobject.GObject):
             self.list_recycle_paly() 
             
     def next(self):
-        if self.playListSum >= 0:
+        if self.playListSum > 0:
             self.playListNum += 1
             # Start.
             self.playListNum = self.playListNum % self.playListSum
             self.next_or_pre_state()
-            self.emit("play-end", 1)
+            self.emit("play-next", 1)
+        else:    
+            self.emit("play-next", 0)
             
     def pre(self):
-        if self.playListSum >= 0:
+        if self.playListSum > 0:
             self.playListNum -= 1
             if self.playListNum < 0:
                 self.playListNum = self.playListSum - 1
             self.next_or_pre_state()
-            self.emit("play-start", 1)
+            self.emit("play-pre", 1)
                 
     ## time Control ##
     def time(self, sec):

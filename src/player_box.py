@@ -177,8 +177,11 @@ class PlayerBox(object):
             self.mp.next() # Test pause.
             self.play_control_panel.start_btn.start_bool = False
             self.play_control_panel.start_btn.queue_draw()
+            if 0 == self.mp.state: # NO player file.
+                self.play_control_panel.start_btn.start_bool = True # start_btn modify play state.
+                self.play_control_panel.start_btn.queue_draw()
         else:    
-            gtk.timeout_add(100, self.start_button_time_pause)            
+            gtk.timeout_add(300, self.start_button_time_pause)            
             
     def start_button_time_pause(self):        
         if self.mp.pause_bool:    
@@ -488,8 +491,9 @@ class PlayerBox(object):
         self.media_player_midfy_start_bool()
 
     def media_player_next(self, mplayer, play_bool):    
-        self.media_player_midfy_start_bool()
-        
+        if 1 == play_bool:
+            self.media_player_midfy_start_bool()
+            
     def media_player_pre(self, mplayer, play_bool):    
         self.media_player_midfy_start_bool()
 
