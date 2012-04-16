@@ -40,6 +40,7 @@ class PlayControlPanel(object):
         self.pre_btn = ImageButton(app_theme.get_pixbuf("big_button_background.png"),
                                    app_theme.get_pixbuf("pre_button.png"))
         self.start_btn = StartButton()
+        
         self.next_btn = ImageButton(app_theme.get_pixbuf("big_button_background.png"),
                                      app_theme.get_pixbuf("next_button.png"))
         self.open_btn = ImageButton(app_theme.get_pixbuf("big_button_background.png"),

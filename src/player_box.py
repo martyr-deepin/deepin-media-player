@@ -163,13 +163,19 @@ class PlayerBox(object):
         self.mp.pre()
         
     def start_button_clicked(self, widget):    
-        '''start or pause'''
-        if self.mp.pause_bool or not self.mp.pause_bool:
-            self.mp.pause()
-            
+        '''start or pause'''            
         if 0 == self.mp.state:    
             self.mp.next() # Test pause.
-        
+            self.play_control_panel.start_btn.start_bool = False
+            self.play_control_panel.start_btn.queue_draw()
+        else:    
+            if self.mp.pause_bool:    
+                # Puase play ->seek +1.
+                self.mp.seek(self.progressbar.pos+1)
+                self.mp.start_play()
+            else:    
+                self.mp.pause()
+            
     def next_button_clicked(self, widget):    
         '''next'''
         self.mp.next()
@@ -208,6 +214,8 @@ class PlayerBox(object):
         self.mp.connect("get-time-length", self.get_time_length)
         self.mp.connect("play-start", self.media_player_start)
         self.mp.connect("play-end", self.media_player_end)
+        self.mp.connect("play-next", self.media_player_next)
+        self.mp.connect("play-pre", self.media_player_pre)
         
         #self.mp.play("/home/long/视频/1.rmvb")
         #self.mp.seek(500)
@@ -216,9 +224,10 @@ class PlayerBox(object):
         self.mp.playListState = 2
         print self.argv_path_list
         try:
+            
             path_threads(self.argv_path_list[1], self.mp)
         except:
-            print "没有测试用的文件夹:测试命令: python main.py /home/long/视频"
+            print "没有测试用的文件夹:Test command: python main.py /home/long/视频"
         
     def draw_background(self, widget, event):
         '''Draw screen mplayer view background.'''
@@ -443,8 +452,21 @@ class PlayerBox(object):
     
     def media_player_end(self, mplayer, play_bool):
         '''player end.'''
+        print self.input_string + "Linux Deepin Media player...end"        
+       # Play file modify start_btn.
+        self.media_player_midfy_start_bool()
+
+    def media_player_next(self, mplayer, play_bool):    
+        self.media_player_midfy_start_bool()
+        
+    def media_player_pre(self, mplayer, play_bool):    
+        self.media_player_midfy_start_bool()
+
+    def media_player_midfy_start_bool(self):    
         self.progressbar.set_pos(0)
-        self.screen.queue_draw()
+        self.screen.queue_draw()        
+        self.play_control_panel.start_btn.start_bool = True
+        self.play_control_panel.start_btn.queue_draw()
         
     # Double buffer set.
     def unset_flags(self):

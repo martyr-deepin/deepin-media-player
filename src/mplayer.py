@@ -102,6 +102,10 @@ class  Mplayer(gobject.GObject):
         "play-start":(gobject.SIGNAL_RUN_LAST,
                         gobject.TYPE_NONE,(gobject.TYPE_INT,)),
         "play-end":(gobject.SIGNAL_RUN_LAST,
+                        gobject.TYPE_NONE,(gobject.TYPE_INT,)),
+        "play-next":(gobject.SIGNAL_RUN_LAST,
+                        gobject.TYPE_NONE,(gobject.TYPE_INT,)),
+        "play-pre":(gobject.SIGNAL_RUN_LAST,
                         gobject.TYPE_NONE,(gobject.TYPE_INT,))
         }
     def __init__(self, xid = None):
@@ -380,15 +384,15 @@ class  Mplayer(gobject.GObject):
             self.cmd('seek -%d 2\n' % (seekNum))
              
     def pause(self):
-        if self.state: 
-            self.cmd('pause\n')
-            if self.pause_bool:
-                self.pause_bool = False
-            else:
-                self.pause_bool = True
-            #self.pause_bool = not self.pause_bool
-            #;print self.pause_bool    
-            
+        if self.state  and not self.pause_bool:             
+            self.pause_bool = True
+            self.cmd('pause \n')
+
+    def start_play(self):        
+        if self.state and self.pause_bool:
+            self.pause_bool = False
+            self.cmd('pause \n')        
+                    
     def quit(self):
         '''quit deepin media player.'''
         if self.state:
@@ -483,6 +487,7 @@ class  Mplayer(gobject.GObject):
             # Start.
             self.playListNum = self.playListNum % self.playListSum
             self.next_or_pre_state()
+            self.emit("play-end", 1)
             
     def pre(self):
         if self.playListSum >= 0:
@@ -490,6 +495,7 @@ class  Mplayer(gobject.GObject):
             if self.playListNum < 0:
                 self.playListNum = self.playListSum - 1
             self.next_or_pre_state()
+            self.emit("play-start", 1)
                 
     ## time Control ##
     def time(self, sec):
