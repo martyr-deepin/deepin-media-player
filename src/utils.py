@@ -20,9 +20,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from dtk.ui.theme import *
-from subprocess import *
-from mplayer import *
+from dtk.ui.theme import Theme
+# from subprocess import *
+# from mplayer import *
 import threading
 import os
 import re
