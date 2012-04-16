@@ -465,19 +465,25 @@ class PlayerBox(object):
                 if 1 == self.mp.state:
                     self.mp.seek(int(self.progressbar.pos))
                     
-                    
+    def set_time_string(self, num):                
+        if 0 <= num <= 9:
+            return "0" + str(num)
+        return str(num)
+    
     def get_time_length(self, mplayer, length):        
         '''Get mplayer length to max of progressbar.'''
         self.progressbar.max = length
-        
+        Hour, Min, Sec = self.mp.time(length)            
+        self.show_time_label.time_font1 = self.set_time_string(Hour) + " : " + self.set_time_string(Min) + " : "+ self.set_time_string(Sec) + "  /"
         
     def get_time_pos(self, mplayer, pos):    
         '''Get mplayer pos to pos of progressbar.'''
         # Test media player pos.
-        #print pos
-        if not self.progressbar.drag_bool: # 
+        if not self.progressbar.drag_bool: 
             if not self.point_bool:
                 self.progressbar.set_pos(pos)
+                self.show_time_label.time_font2 = self.set_time_string(self.mp.timeHour) + ":" + self.set_time_string(self.mp.timeMin) + ":" + self.set_time_string(self.mp.timeSec)
+                self.app.window.queue_draw()
             
                 
     def media_player_start(self, mplayer, play_bool):
@@ -497,7 +503,7 @@ class PlayerBox(object):
     def media_player_pre(self, mplayer, play_bool):    
         self.media_player_midfy_start_bool()
 
-    def media_player_midfy_start_bool(self):    
+    def media_player_midfy_start_bool(self):  # media_player_end and media_player_next and media_player_pre.  
         self.progressbar.set_pos(0)
         self.screen.queue_draw()        
         self.play_control_panel.start_btn.start_bool = True

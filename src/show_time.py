@@ -51,7 +51,7 @@ class ShowTime(object):
         
         (font1_width, font1_height) = get_content_size(self.time_font1, 8)
         
-        draw_font(cr, self.time_font2, 8 , "#000000", 
+        draw_font(cr, self.time_font2, 9 , "#000000", 
                   x  - 15 + font1_width, y, w, h)
         
         # Propagate expose.
