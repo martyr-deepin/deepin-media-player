@@ -44,6 +44,14 @@ class PlayerBox(object):
         self.full_bool = False  # Set window full bool.
         self.mode_state_bool = False # Concise mode(True) and common mode(False).
         
+        # Screen move window.
+        self.event_button = None
+        self.event_x_root = None
+        self.event_y_root = None
+        self.event_time = None
+        self.screen_move_bool = False
+        self.screen_pause_bool = False
+        
         self.panel_x = 0
         self.panel_y = 0
         
@@ -67,6 +75,7 @@ class PlayerBox(object):
         self.screen.add_events(gtk.gdk.ALL_EVENTS_MASK)
         self.screen.connect_after("expose-event", self.draw_background)
         self.screen.connect("button-press-event", self.move_media_player_window)
+        self.screen.connect("button-release-event", self.screen_media_player_clear)
         self.screen.connect("motion-notify-event", self.show_and_hide_toolbar)
         self.screen.connect("configure-event", self.configure_hide_tool)
         self.screen.connect("get-xid", self.init_media_player)
@@ -169,13 +178,15 @@ class PlayerBox(object):
             self.play_control_panel.start_btn.start_bool = False
             self.play_control_panel.start_btn.queue_draw()
         else:    
-            if self.mp.pause_bool:    
-                # Puase play ->seek +1.
-                self.mp.seek(self.progressbar.pos+1)
-                self.mp.start_play()
-            else:    
-                self.mp.pause()
+            gtk.timeout_add(100, self.start_button_time_pause)            
             
+    def start_button_time_pause(self):        
+        if self.mp.pause_bool:    
+            self.mp.start_play()
+        else:    
+            self.mp.pause()
+        return  False        
+    
     def next_button_clicked(self, widget):    
         '''next'''
         self.mp.next()
@@ -264,38 +275,28 @@ class PlayerBox(object):
             self.toolbar.panel.move(self.panel_x, self.panel_y)
         else:    # common mode.
             self.toolbar.panel.move(self.panel_x + 1, self.panel_y + self.app.titlebar.box.allocation[3])
-        
-        
-    def time_vide_pause_draw_background(self):        
-        '''configure_hide_tool call, pause time.'''
-        self.mp.pause()
-        #self.mp.seek(int(self.progressbar.pos - 2))
-        self.mp.pause()
-        return False        
-    
-    def configure_hide_tool(self, widget, event):       
+                
+            
+    def configure_hide_tool(self, widget, event): # screen: configure-event.       
         if self.mp:
             #self.app.hide_titlebar() # Test hide titlebar.
             # Toolbar position.
             if self.mp.pause_bool and self.mp.vide_bool:
                 self.mp.pause()
                 self.mp.pause()
-                #gtk.timeout_add(500, self.time_vide_pause_draw_background)
                 
             #self.toolbar.panel.move(self.panel_x, self.panel_y)
             # Toolbar width and height.
             self.toolbar.panel.resize(widget.allocation[2],
                                       widget.allocation[3])
             self.toolbar.panel.hide_all()
-            
-            # if widget.window.get_state() == gtk.gdk.WINDOW_STATE_MAXIMIZED:
+            # if widget.window.get_state() == gtk.gdk.WINDOW_STATE_MAXIMIZED:            
             
     '''Toolbar button.''' 
     def common_window_function(self):
         '''quit fll window and common window'''
         self.app.show_titlebar() # show titlebar.
-        self.progressbar.show_progressbar()
-        
+        self.progressbar.show_progressbar()        
         
         self.main_vbox_hframe.set_padding(0, 0, 1, 1)
         self.toolbar.panel.hide_all()
@@ -376,29 +377,31 @@ class PlayerBox(object):
             self.concise_window_function()
             self.app.window.set_window_shape(False)
             #self.app.window.set_window_shape(True)
-            self.mode_state_bool = True
-            
+            self.mode_state_bool = True            
             
     def set_window_above(self, widget): #above_button   
         self.above_bool = not self.above_bool
-        self.app.window.set_keep_above(self.above_bool)
+        self.app.window.set_keep_above(self.above_bool)                    
         
-            
         
     # Control mplayer window.        
     def move_media_player_window(self, widget, event): # screen: button-press-event         
-        '''Move window.'''
-        if 1 == event.button:
-            self.app.window.begin_move_drag(event.button,
-                                            int(event.x_root),
-                                            int(event.y_root),
-                                            event.time)
+        '''Move window.'''                    
+        if 1 == event.button:                
+            self.screen_move_bool = True            
+            self.screen_pause_bool = True
+            # Save screen event state.
+            self.event_button = event.button
+            self.event_x_root = event.x_root
+            self.event_y_root = event.y_root
+            self.event_time = event.time            
+                            
         # Double clicked full.    
         if is_double_click(event):
             self.full_play_window(widget)    
             self.toolbar.toolbar_full_button.flags = not self.toolbar.toolbar_full_button.flags
-            
-            
+                        
+                    
     # Toolbar hide and show.    
     def show_and_hide_toolbar(self, widget, event): # screen:motion_notify_event   
         '''Show and hide toolbar.'''    
@@ -406,8 +409,34 @@ class PlayerBox(object):
             self.toolbar.show_toolbar()
         else:
             self.toolbar.hide_toolbar()            
-                                
             
+        if self.screen_move_bool:    
+            self.screen_pause_bool = False
+            self.app.window.begin_move_drag(self.event_button,
+                                            int(self.event_x_root),
+                                            int(self.event_y_root),
+                                            self.event_time)           
+        
+    def screen_time_pause(self):        
+        if self.mp.pause_bool:    
+            self.play_control_panel.start_btn.start_bool = False
+            self.play_control_panel.start_btn.queue_draw()
+            self.mp.start_play()
+        else:    
+            self.play_control_panel.start_btn.start_bool = True
+            self.play_control_panel.start_btn.queue_draw()
+            self.mp.pause()
+        return  False            
+    
+    def screen_media_player_clear(self, widget, event): # screen: button-release-event        
+        self.screen_move_bool = False
+        # playing file.
+        if 1 == self.mp.state: 
+            if self.screen_pause_bool:
+                # Pause play.
+                gtk.timeout_add(300, self.screen_time_pause)
+                self.screen_pause_bool = False
+        
     # Mplayer event of player control.         
     def set_point_bool_time(self):        
         self.point_bool = False
@@ -424,6 +453,7 @@ class PlayerBox(object):
                 self.progressbar.set_pos(self.progressbar.pos)
                 self.progressbar.drag_bool = True
                 self.point_bool = True
+                
                 
     def progressbar_player_drag_pos_modify(self, widget, event):        
         '''Set player rate of progress.'''
@@ -446,6 +476,7 @@ class PlayerBox(object):
             if not self.point_bool:
                 self.progressbar.set_pos(pos)
             
+                
     def media_player_start(self, mplayer, play_bool):
         '''media player start play.'''
         self.progressbar.set_pos(0)
