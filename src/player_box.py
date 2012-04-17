@@ -346,6 +346,7 @@ class PlayerBox(object):
             self.toolbar.panel.hide_all()
             # if widget.window.get_state() == gtk.gdk.WINDOW_STATE_MAXIMIZED:            
             self.toolbar2.panel.resize(widget.allocation[2], 1)
+            self.toolbar2.panel.move(self.panel_x, self.panel_y + (widget.allocation[3] - self.toolbar2.panel.allocation[3]))
             self.toolbar2.panel.hide_all()
 
             
