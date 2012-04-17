@@ -436,12 +436,15 @@ class PlayerBox(object):
             self.show_hide_set()
         
         if not self.mode_state_bool:
-            self.toolbar2.panel.move(self.panel_x, 
-                                     self.panel_y + (widget.allocation[3] - self.toolbar2.panel.allocation[3]) - self.app.titlebar.box.allocation[3])
             self.concise_window_function()
             self.app.window.set_window_shape(False)
             #self.app.window.set_window_shape(True)
             self.mode_state_bool = True            
+            self.toolbar2.panel.show_all()
+            self.toolbar2.panel.move(self.panel_x, 
+                                     self.panel_y + (widget.allocation[3] - self.toolbar2.panel.allocation[3]) - self.app.titlebar.box.allocation[3])
+            self.toolbar2.panel.hide_all()
+            
             
     def set_window_above(self, widget): #above_button   
         self.above_bool = not self.above_bool
