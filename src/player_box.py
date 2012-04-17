@@ -108,6 +108,13 @@ class PlayerBox(object):
         self.toolbar2.progressbar.pb.connect("button-release-event", 
                                              self.progressbar_set_point_bool,
                                              self.toolbar2.progressbar)
+        # play_control_panel.
+        self.toolbar2.play_control_panel.stop_btn.connect("clicked", self.stop_button_clicked)
+        self.toolbar2.play_control_panel.pre_btn.connect("clicked", self.pre_button_clicked)
+        self.toolbar2.play_control_panel.start_btn.connect("clicked", self.start_button_clicked, 2)
+        self.toolbar2.play_control_panel.next_btn.connect("clicked", self.next_button_clicked)
+        
+        
         # Toolbar2 volume button.
         self.toolbar2.volume_button.button_event.connect("button-press-event", 
                                                          self.volume_button_set_mute, 
@@ -146,7 +153,7 @@ class PlayerBox(object):
         
         self.play_control_panel.stop_btn.connect("clicked", self.stop_button_clicked) # stop play.
         self.play_control_panel.pre_btn.connect("clicked", self.pre_button_clicked) # pre play.
-        self.play_control_panel.start_btn.connect("clicked", self.start_button_clicked) # start play or pause play.
+        self.play_control_panel.start_btn.connect("clicked", self.start_button_clicked, 1) # start play or pause play.
         self.play_control_panel.next_btn.connect("clicked", self.next_button_clicked) # next play.
         
         
@@ -193,16 +200,27 @@ class PlayerBox(object):
         '''prev.'''
         self.mp.pre()
         
-    def start_button_clicked(self, widget):    
+    def start_button_clicked(self, widget, start_bit):    
         '''start or pause'''            
         if 0 == self.mp.state:    
             self.mp.next() # Test pause.
-            self.play_control_panel.start_btn.start_bool = False
+            self.play_control_panel.start_btn.start_bool = False            
             self.play_control_panel.start_btn.queue_draw()
+            self.toolbar2.play_control_panel.start_btn.start_bool = False
+            self.toolbar2.play_control_panel.start_btn.queue_draw()
             if 0 == self.mp.state: # NO player file.
                 self.play_control_panel.start_btn.start_bool = True # start_btn modify play state.
                 self.play_control_panel.start_btn.queue_draw()
+                self.toolbar2.play_control_panel.start_btn.start_bool = True
+                self.toolbar2.play_control_panel.start_btn.queue_draw()
         else:    
+            if 1 == start_bit:
+                self.toolbar2.play_control_panel.start_btn.start_bool = self.play_control_panel.start_btn.start_bool
+                self.toolbar2.play_control_panel.start_btn.queue_draw()
+            if 2 == start_bit:    
+                self.play_control_panel.start_btn.start_bool = self.toolbar2.play_control_panel.start_btn.start_bool
+                self.play_control_panel.start_btn.queue_draw()
+                
             gtk.timeout_add(300, self.start_button_time_pause)            
             
     def start_button_time_pause(self): # start_button_clicked.
