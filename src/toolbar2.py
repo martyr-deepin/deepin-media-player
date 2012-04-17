@@ -45,15 +45,16 @@ class ToolBar2(object):
         
         self.hbox = gtk.HBox()
         # hbox add child widget.
+        self.show_time_hframe = HorizontalFrame()
         self.show_time = ShowTime()
+        self.show_time.time_box.set_size_request(110, -1)
         self.play_control_panel = PlayControlPanel()
         volume_hframe = HorizontalFrame()
         self.volume_button = VolumeButton()
         volume_hframe.add(self.volume_button)
         
-        self.hbox.pack_start(self.show_time.time_box)
-                
-        self.hbox.pack_start(self.play_control_panel.hbox_hframe)
+        self.hbox.pack_start(self.show_time.time_box)                
+        self.hbox.pack_start(self.play_control_panel.hbox_hframe, False, False)
         self.hbox.pack_start(volume_hframe, True, True)
    
         
@@ -75,10 +76,18 @@ class ToolBar2(object):
         widget.propagate_expose(widget.get_child(), event)
         return True
                     
+    def show_time_toolbar2(self):
+        self.panel.set_opacity(1)
+        return False
+    
     def show_toolbar2(self):    
         self.panel.show_all()
-        
+        self.panel.set_opacity(0)        
+        gtk.timeout_add(50, self.show_time_toolbar2)
+        self.panel.set_keep_above(True)
+                
     def hide_toolbar2(self):    
+        self.panel.set_opacity(0)
         self.panel.hide_all()
                 
 if __name__ == "__main__":    

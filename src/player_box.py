@@ -98,7 +98,7 @@ class PlayerBox(object):
         
         '''Toolbar2 Init.'''
         self.toolbar2 = ToolBar2()
-        self.toolbar2.show_toolbar2()
+        #self.toolbar2.show_toolbar2() Test function.
         self.toolbar2.progressbar.pb.connect("motion-notify-event", 
                                              self.progressbar_player_drag_pos_modify, 
                                              self.toolbar2.progressbar, 2)
@@ -456,9 +456,11 @@ class PlayerBox(object):
         '''Show and hide toolbar.'''    
         if 0 <= event.y <= 20:
             self.toolbar.show_toolbar()
+            #self.toolbar2.show_toolbar2() #测试
         else:
             self.toolbar.hide_toolbar()            
-            
+            #self.toolbar2.hide_toolbar2() #测试
+             
         if self.screen_move_bool:    
             self.screen_pause_bool = False
             self.app.window.begin_move_drag(self.event_button,
