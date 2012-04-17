@@ -84,9 +84,9 @@ class PlayerBox(object):
         '''Progressbar Init.'''
         self.progressbar = ProgressBar()
         # Progressbar signal init.
-        self.progressbar.pb.connect("motion-notify-event", self.progressbar_player_drag_pos_modify)
-        self.progressbar.pb.connect("button-press-event", self.progressbar_player_point_pos_modify)
-        self.progressbar.pb.connect("button-release-event", self.progressbar_set_point_bool)
+        self.progressbar.pb.connect("motion-notify-event", self.progressbar_player_drag_pos_modify, self.progressbar, 1)
+        self.progressbar.pb.connect("button-press-event", self.progressbar_player_point_pos_modify, self.progressbar, 1)
+        self.progressbar.pb.connect("button-release-event", self.progressbar_set_point_bool, self.progressbar)
         
         
         '''Toolbar Init.'''
@@ -96,6 +96,24 @@ class PlayerBox(object):
         self.toolbar.toolbar_concise_button.connect("clicked", self.hide_window_widget)
         self.toolbar.toolbar_above_button.connect("clicked", self.set_window_above)
         
+        '''Toolbar2 Init.'''
+        self.toolbar2 = ToolBar2()
+        self.toolbar2.show_toolbar2()
+        self.toolbar2.progressbar.pb.connect("motion-notify-event", 
+                                             self.progressbar_player_drag_pos_modify, 
+                                             self.toolbar2.progressbar, 2)
+        self.toolbar2.progressbar.pb.connect("button-press-event", 
+                                             self.progressbar_player_point_pos_modify,
+                                             self.toolbar2.progressbar, 2)
+        self.toolbar2.progressbar.pb.connect("button-release-event", 
+                                             self.progressbar_set_point_bool,
+                                             self.toolbar2.progressbar)
+        # Toolbar2 volume button.
+        self.toolbar2.volume_button.button_event.connect("button-press-event", 
+                                                         self.volume_button_set_mute, 
+                                                         self.toolbar2.volume_button)
+        self.toolbar2.volume_button.volume_progressbar.connect("motion-notify-event", 
+                                                               self.volume_set_toolbar2_and_volume_button, 2)        
         # Child widget add to vbox.
         self.vbox.pack_start(self.screen, True, True)
         self.vbox.pack_start(self.progressbar.hbox,False, False)
@@ -139,7 +157,9 @@ class PlayerBox(object):
         self.volume_button_hframe.set(1, 0.5, 0, 0)
         self.volume_button_hframe.set_padding(0, 0, 0, 10)
         
-        self.volume_button.button_event.connect("button-press-event", self.volume_button_set_mute)
+        self.volume_button.button_event.connect("button-press-event", self.volume_button_set_mute, self.volume_button)
+        #self.volume_button.volume_progressbar.connect("button-press-event", self.volume_set_toolbar2_and_volume_button, 1)
+        self.volume_button.volume_progressbar.connect("motion-notify-event", self.volume_set_toolbar2_and_volume_button, 1)
         self.volume_button.connect("get-value-event", self.volume_button_set_volume)
         
         
@@ -161,7 +181,9 @@ class PlayerBox(object):
         # vbox add to main_hbox
         self.main_vbox.pack_start(self.hbox, True, True) # screen and progressbar        
         self.main_vbox.pack_start(self.bottom_main_vbox, False, False)
-        
+
+
+            
         
     '''play control panel.'''    
     def stop_button_clicked(self, widget):
@@ -183,8 +205,9 @@ class PlayerBox(object):
         else:    
             gtk.timeout_add(300, self.start_button_time_pause)            
             
-    def start_button_time_pause(self):        
+    def start_button_time_pause(self): # start_button_clicked.
         if self.mp.pause_bool:    
+            self.mp.seek(int(self.progressbar.pos))
             self.mp.start_play()
         else:    
             self.mp.pause()
@@ -194,15 +217,20 @@ class PlayerBox(object):
         '''next'''
         self.mp.next()
         
-    def volume_button_set_mute(self, widget, event):    
+    def volume_button_set_mute(self, widget, event, volume_button): # volume and volume of toolbar2: button-press-event.
         '''Set mute.'''
         if 1 == event.button:
-            if self.mp:
-                if self.volume_button.mute_bool:
+            if 1 == self.mp.state:                    
+                if volume_button.mute_bool:
                     self.mp.nomute()
                 else:
                     self.mp.offmute()
 
+    def volume_set_toolbar2_and_volume_button(self, widget, event, volume_bit):        
+        if 1 == volume_bit:
+            self.toolbar2.volume_button.set_value(self.volume_button.volume_value)
+        if 2 == volume_bit:    
+            self.volume_button.set_value(self.toolbar2.volume_button.volume_value)
             
     def volume_button_set_volume(self, volume_button, value, mute_bool):
         if self.mp:
@@ -424,6 +452,7 @@ class PlayerBox(object):
         if self.mp.pause_bool:    
             self.play_control_panel.start_btn.start_bool = False
             self.play_control_panel.start_btn.queue_draw()
+            self.mp.seek(int(self.progressbar.pos))
             self.mp.start_play()
         else:    
             self.play_control_panel.start_btn.start_bool = True
@@ -445,25 +474,30 @@ class PlayerBox(object):
         self.point_bool = False
         return False
     
-    def progressbar_set_point_bool(self, widget, event):
+    def progressbar_set_point_bool(self, widget, event, progressbar):
         gtk.timeout_add(20, self.set_point_bool_time)
             
-    def progressbar_player_point_pos_modify(self, widget, event):        
+    def progressbar_player_point_pos_modify(self, widget, event, progressbar, pb_bit):        
         '''Mouse left click rate of progress'''
         if self.mp:
             if 1 == self.mp.state:
-                self.mp.seek(int(self.progressbar.pos))
-                self.progressbar.set_pos(self.progressbar.pos)
-                self.progressbar.drag_bool = True
-                self.point_bool = True
+                self.mp.seek(int(progressbar.pos))
+                progressbar.set_pos(progressbar.pos)
+                progressbar.drag_bool = True
+                self.point_bool = True                
                 
-                
-    def progressbar_player_drag_pos_modify(self, widget, event):        
+    def progressbar_player_drag_pos_modify(self, widget, event, progressbar, pb_bit):        
         '''Set player rate of progress.'''
-        if self.progressbar.drag_bool: # Mouse left.
+        if progressbar.drag_bool: # Mouse left.
+            if 1 == pb_bit:
+                self.toolbar2.progressbar.set_pos(progressbar.pos)
+                
+            if 2 == pb_bit:    
+                self.progressbar.set_pos(progressbar.pos)
+            
             if self.mp:
                 if 1 == self.mp.state:
-                    self.mp.seek(int(self.progressbar.pos))
+                    self.mp.seek(int(progressbar.pos))
                     
     def set_time_string(self, num):                
         if 0 <= num <= 9:
@@ -473,6 +507,7 @@ class PlayerBox(object):
     def get_time_length(self, mplayer, length):        
         '''Get mplayer length to max of progressbar.'''
         self.progressbar.max = length
+        self.toolbar2.progressbar.max = length # toolbar2 max value.
         Hour, Min, Sec = self.mp.time(length)            
         self.show_time_label.time_font1 = self.set_time_string(Hour) + " : " + self.set_time_string(Min) + " : "+ self.set_time_string(Sec) + "  /"
         
@@ -482,6 +517,7 @@ class PlayerBox(object):
         if not self.progressbar.drag_bool: 
             if not self.point_bool:
                 self.progressbar.set_pos(pos)
+                self.toolbar2.progressbar.set_pos(pos)
                 self.show_time_label.time_font2 = self.set_time_string(self.mp.timeHour) + ":" + self.set_time_string(self.mp.timeMin) + ":" + self.set_time_string(self.mp.timeSec)
                 self.app.window.queue_draw()
             
@@ -489,7 +525,8 @@ class PlayerBox(object):
     def media_player_start(self, mplayer, play_bool):
         '''media player start play.'''
         self.progressbar.set_pos(0)
-    
+        self.toolbar2.progressbar.set_pos(0)
+        
     def media_player_end(self, mplayer, play_bool):
         '''player end.'''
         print self.input_string + "Linux Deepin Media player...end"        
@@ -505,6 +542,7 @@ class PlayerBox(object):
 
     def media_player_midfy_start_bool(self):  # media_player_end and media_player_next and media_player_pre.  
         self.progressbar.set_pos(0)
+        self.toolbar2.progressbar.set_pos(0)
         self.screen.queue_draw()        
         self.play_control_panel.start_btn.start_bool = True
         self.play_control_panel.start_btn.queue_draw()
