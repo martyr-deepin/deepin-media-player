@@ -47,15 +47,26 @@ class ToolBar2(object):
         # hbox add child widget.
         self.show_time_hframe = HorizontalFrame()
         self.show_time = ShowTime()
+        self.show_time.time_font1 = "00 : 00 : 00 / "
+        self.show_time.time_font2 = "00 : 00 : 00"
+        self.show_time_hframe.add(self.show_time.time_box)
         self.show_time.time_box.set_size_request(110, -1)
-        self.play_control_panel = PlayControlPanel()
-        volume_hframe = HorizontalFrame()
-        self.volume_button = VolumeButton()
-        volume_hframe.add(self.volume_button)
+        self.show_time_hframe.set(0, 0.5, 0, 0)
         
-        self.hbox.pack_start(self.show_time.time_box)                
+        self.play_control_panel = PlayControlPanel()        
+        self.play_control_panel_hframe = self.play_control_panel.hbox_hframe
+        self.play_control_panel_hframe.set(1, 0.5, 0, 0)
+        
+        self.volume_hframe = HorizontalFrame()
+        self.volume_button = VolumeButton()
+        self.volume_hframe.add(self.volume_button)
+        self.volume_hframe.set(0, 0.5, 0.5, 0)
+        self.volume_hframe.set_padding(0, 0, 20, 0)
+        
+        
+        self.hbox.pack_start(self.show_time_hframe, True, True)                
         self.hbox.pack_start(self.play_control_panel.hbox_hframe, False, False)
-        self.hbox.pack_start(volume_hframe, True, True)
+        self.hbox.pack_start(self.volume_hframe, True, True)
    
         
         self.vbox.pack_start(self.progressbar.hbox, False, False)
@@ -92,16 +103,16 @@ class ToolBar2(object):
                 
 if __name__ == "__main__":    
     def show_toolbar(widget, event):
-        tb.show_toolbar2()
-        
-    def hide_toolbar(widget, event):    
-        tb.hide_toolbar2()
-        
+        if 0 <= event.y <= 30:
+            tb.show_toolbar2()
+        else:    
+            tb.hide_toolbar2()
+            
     win = gtk.Window(gtk.WINDOW_TOPLEVEL)
     tb = ToolBar2()
     win.connect("destroy", gtk.main_quit)
-    win.connect("enter-notify-event", show_toolbar)
-    win.connect("leave-notify-event", hide_toolbar)
+    win.add_events(gtk.gdk.ALL_EVENTS_MASK)
+    win.connect("motion-notify-event", show_toolbar)
     
     win.show_all()
     gtk.main()
