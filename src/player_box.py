@@ -117,10 +117,9 @@ class PlayerBox(object):
         
         # Toolbar2 volume button.
         self.toolbar2.volume_button.button_event.connect("button-press-event", 
-                                                         self.volume_button_set_mute, 
-                                                         self.toolbar2.volume_button)
-        self.toolbar2.volume_button.volume_progressbar.connect("motion-notify-event", 
-                                                               self.volume_set_toolbar2_and_volume_button, 2)        
+                                                         self.toolbar2_volume_button_set_mute)
+        self.toolbar2.volume_button.connect("get-value-event", 
+                                            self.toolbar2_volume_button_set_volume)
         # Child widget add to vbox.
         self.vbox.pack_start(self.screen, True, True)
         self.vbox.pack_start(self.progressbar.hbox,False, False)
@@ -164,11 +163,8 @@ class PlayerBox(object):
         self.volume_button_hframe.set(1, 0.5, 0, 0)
         self.volume_button_hframe.set_padding(0, 0, 0, 10)
         
-        self.volume_button.button_event.connect("button-press-event", self.volume_button_set_mute, self.volume_button)
-        #self.volume_button.volume_progressbar.connect("button-press-event", self.volume_set_toolbar2_and_volume_button, 1)
-        self.volume_button.volume_progressbar.connect("motion-notify-event", self.volume_set_toolbar2_and_volume_button, 1)
+        self.volume_button.button_event.connect("button-press-event", self.volume_button_set_mute)
         self.volume_button.connect("get-value-event", self.volume_button_set_volume)
-        
         
         # play list button.
         self.play_list_button_hframe = HorizontalFrame()
@@ -235,25 +231,32 @@ class PlayerBox(object):
         '''next'''
         self.mp.next()
         
-    def volume_button_set_mute(self, widget, event, volume_button): # volume and volume of toolbar2: button-press-event.
+    def volume_button_set_mute(self, widget, event): 
         '''Set mute.'''
         if 1 == event.button:
             if 1 == self.mp.state:                    
-                if volume_button.mute_bool:
+                if self.volume_button.mute_bool:
                     self.mp.nomute()
                 else:
                     self.mp.offmute()
-
-    def volume_set_toolbar2_and_volume_button(self, widget, event, volume_bit):        
-        if 1 == volume_bit:
-            self.toolbar2.volume_button.set_value(self.volume_button.volume_value)
-        if 2 == volume_bit:    
-            self.volume_button.set_value(self.toolbar2.volume_button.volume_value)
-            
+                    
     def volume_button_set_volume(self, volume_button, value, mute_bool):
         if self.mp:
             self.mp.setvolume(value)
-
+                    
+    def toolbar2_volume_button_set_mute(self, widget, event): 
+        '''Set mute.'''
+        if 1 == event.button:
+            if 1 == self.mp.state:                    
+                if self.toolbar2.volume_button.mute_bool:
+                    self.mp.nomute()
+                else:
+                    self.mp.offmute()
+            
+    def toolbar2_volume_button_set_volume(self, volume_button, value, mute_bool):
+        if self.mp:
+            self.mp.setvolume(value)
+                    
                 
     def show_bottom(self):        
         if [] == self.bottom_main_vbox.get_children():
@@ -322,8 +325,10 @@ class PlayerBox(object):
         self.panel_x, self.panel_y = self.screen.window.get_root_origin()
         if self.mode_state_bool: # Concise mode.
             self.toolbar.panel.move(self.panel_x, self.panel_y)
+            self.toolbar2.panel.move(self.panel_x, self.panel_y + (widget.allocation[3] - self.toolbar2.panel.allocation[3]))
         else:    # common mode.
             self.toolbar.panel.move(self.panel_x + 1, self.panel_y + self.app.titlebar.box.allocation[3])
+
                 
             
     def configure_hide_tool(self, widget, event): # screen: configure-event.       
@@ -340,6 +345,9 @@ class PlayerBox(object):
                                       widget.allocation[3])
             self.toolbar.panel.hide_all()
             # if widget.window.get_state() == gtk.gdk.WINDOW_STATE_MAXIMIZED:            
+            self.toolbar2.panel.resize(widget.allocation[2], 1)
+            self.toolbar2.panel.hide_all()
+
             
     '''Toolbar button.''' 
     def common_window_function(self):
@@ -349,6 +357,7 @@ class PlayerBox(object):
         
         self.main_vbox_hframe.set_padding(0, 0, 1, 1)
         self.toolbar.panel.hide_all()
+        self.toolbar2.panel.hide_all()
         self.show_bottom()
         self.app.window.show_all()
         
@@ -361,17 +370,21 @@ class PlayerBox(object):
         #self.app.window.set_keep_above(True) # Window above.
         self.main_vbox_hframe.set_padding(0, 0, 0, 0) # Set window border.
         self.toolbar.panel.hide_all() # hide toolbar.
+        self.toolbar2.panel.hide_all()
         
     def set_window_full(self):    
         self.concise_window_function()
         self.toolbar.panel.fullscreen()  # Toolbar hide.
+        #self.toolbar2.panel.fullscreen()
         #self.app.window.set_keep_above(True)
         self.toolbar.panel.set_keep_above(True)
+        self.toolbar2.panel.set_keep_above(True)
         self.app.window.fullscreen()        
         self.full_bool = True            
         
     def set_window_quit_full(self):    
         self.toolbar.panel.unfullscreen()
+        #self.toolbar2.panel.unfullscreen()
         self.app.window.unfullscreen()
         self.common_window_function()
         self.full_bool = False
@@ -423,6 +436,8 @@ class PlayerBox(object):
             self.show_hide_set()
         
         if not self.mode_state_bool:
+            self.toolbar2.panel.move(self.panel_x, 
+                                     self.panel_y + (widget.allocation[3] - self.toolbar2.panel.allocation[3]) - self.app.titlebar.box.allocation[3])
             self.concise_window_function()
             self.app.window.set_window_shape(False)
             #self.app.window.set_window_shape(True)
@@ -454,13 +469,29 @@ class PlayerBox(object):
     # Toolbar hide and show.    
     def show_and_hide_toolbar(self, widget, event): # screen:motion_notify_event   
         '''Show and hide toolbar.'''    
+        # Show toolbar.
         if 0 <= event.y <= 20:
+            self.app.window.set_keep_above(True)
             self.toolbar.show_toolbar()
-            #self.toolbar2.show_toolbar2() #测试
+            self.toolbar.panel.set_keep_above(True)
         else:
+            if not self.above_bool:
+                self.app.window.set_keep_above(False)
+                self.toolbar2.panel.set_keep_above(False)
             self.toolbar.hide_toolbar()            
-            #self.toolbar2.hide_toolbar2() #测试
-             
+            
+        # Show toolbar2.     
+        if self.mode_state_bool or self.full_bool: # concise mode.
+            if widget.allocation[3]-20 <= event.y < widget.allocation[3]:   
+                self.app.window.set_keep_above(True)
+                self.toolbar2.show_toolbar2()
+                self.toolbar2.panel.set_keep_above(True)                
+            else:    
+                if not self.above_bool:
+                    self.app.window.set_keep_above(False)
+                    self.toolbar2.panel.set_keep_above(False)
+                self.toolbar2.hide_toolbar2()            
+            
         if self.screen_move_bool:    
             self.screen_pause_bool = False
             self.app.window.begin_move_drag(self.event_button,
@@ -566,6 +597,9 @@ class PlayerBox(object):
         self.screen.queue_draw()        
         self.play_control_panel.start_btn.start_bool = True
         self.play_control_panel.start_btn.queue_draw()
+        self.toolbar2.play_control_panel.start_btn.start_bool = True
+        self.toolbar2.play_control_panel.start_btn.queue_draw()
+
         
     # Double buffer set.
     def unset_flags(self):
