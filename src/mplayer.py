@@ -548,15 +548,20 @@ class  Mplayer(gobject.GObject):
         for pathfile in pathdir:
             pathfile2 = path + '/' + pathfile
             if os.path.isfile(pathfile2):
-                
                 if self.findFile(pathfile2):
                     self.playListSum += 1
                     self.playList.append(pathfile2)
                     
-                                    
+    def findDmp(self, pathfile2):                                
+        file1, file2 = os.path.splitext(pathfile2)
+        if file2.lower() in ['.dmp']:
+            return True
+        else:
+            return False
+        
     def findFile(self, pathfile2):
         file1, file2 = os.path.splitext(pathfile2)
-        if file2 in self.play_file_mode:
+        if file2.lower() in self.play_file_mode:
             return True
         else:
             return False

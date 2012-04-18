@@ -46,26 +46,20 @@ def path_threads(path, mp):
             if os.path.isdir(new_path):
                 path_thread_id = threading.Thread(target=path_threads, args=(new_path, mp))
                 path_thread_id.start()
-                path_threads(new_path, mp)
+                #path_threads(new_path, mp)
                 
             if os.path.isfile(new_path):    
-                new_file = new_path
-                #print mp
-                mp.addPlayFile(new_file)
-                #mp.addPlayFlie(new_file)
-                
+                new_file = new_path                
+                # .dmp add play file..
+                if(mp.findDmp(new_file)):
+                    fp = open(new_file, "r")
+                    for dmp_fp in fp:
+                        if(mp.findFile(dmp_fp.strip("\n"))):
+                            mp.addPlayFile(dmp_fp.strip("\n"))
+                # play file[.rmvb, .avi...].    
+                if(mp.findFile(new_file)):
+                    mp.addPlayFile(new_file)                
                 
                 # gtk.gdk.threads_enter()
                 # text.set_text(new_path)
                 # gtk.gdk.threads_leave()
-
-    
-# def pause_scrot(widget):
-#     x, y, w, h = widget.get_allocation()
-#     screenshot = gtk.gdk.Pixbuf.get_from_drawable(  
-#     gtk.gdk.Pixbuf(gtk.gdk.COLORSPACE_RGB, True, 8, w, h),
-#             widget.window,
-#             gtk.gdk.colormap_get_system(),
-#             0, 0, 0, 0, w, h)
-#     save_path = get_home_path() + '/.config/deepin-media-player/image/pause.png'
-#     screenshot.save(save_path, 'png')    

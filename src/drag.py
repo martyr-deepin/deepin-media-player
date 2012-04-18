@@ -38,26 +38,25 @@ def drag_drop(wid, context, x, y, time):
     wid.drag_get_data(context, context.targets[-1], time)
     return True
 
-def drag_data_received(wid, context, x, y, data, info, time):
+def drag_data_received(wid, context, x, y, data, info, time, mp):
     for f in data.get_uris():
         path = urllib.unquote(f)[7:]
         
         # Add Dir.
         if os.path.isdir(path):            
-            mp = Mplayer()
             mp.findCurrentDir(path)
-        else:    
-            # Add File.    
-            if os.path.isfile(path):
-                fp = open(path, "r")
-                for file in fp:
-                    media_player["mp"].addPlayFile(file.strip())
-                    
-    print media_player["mp"].playList
+
+        # Add File.    
+        if os.path.isfile(path):
+            
+            fp = open(path, "r")
+            for file in fp:
+                mp.addPlayFile(file.strip())
+    print mp.playList
     context.finish(True, False, time)
     return True
 
-def drag_connect(wid):    
+def drag_connect(wid, mp):    
     targets = [("text/media-player", gtk.TARGET_SAME_APP, 1),
                ("text/uri-list", 0, 0),
                ("text/plain", 0, 3)]
@@ -65,13 +64,12 @@ def drag_connect(wid):
     wid.drag_dest_set(gtk.DEST_DEFAULT_ALL, targets, gtk.gdk.ACTION_COPY)
     wid.connect('drag_motion', drag_motion)
     wid.connect('drag_drop', drag_drop)
-    wid.connect('drag_data_received', drag_data_received)    
+    wid.connect('drag_data_received', drag_data_received, mp)    
     
 if __name__ == "__main__":
-    media_player["mp"] = Mplayer()
+    mp = Mplayer()
     win = gtk.Window(gtk.WINDOW_TOPLEVEL)
-    win.connect("destroy", gtk.main_quit)    
-    
-    drag_connect(win)
+    win.connect("destroy", gtk.main_quit)        
+    drag_connect(win, mp)
     win.show_all()
     gtk.main()
