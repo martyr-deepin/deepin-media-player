@@ -44,15 +44,17 @@ def drag_data_received(wid, context, x, y, data, info, time, mp):
         
         # Add Dir.
         if os.path.isdir(path):            
-            mp.findCurrentDir(path)
+            path_threads(path, mp)
 
-        # Add File.    
-        if os.path.isfile(path):
+        # Add .Dmp.    
+        if mp.findDmp(path):
+            mp.loadPlayList(path)
             
-            fp = open(path, "r")
-            for file in fp:
-                mp.addPlayFile(file.strip())
-    print mp.playList
+        # Add play file.    
+        if os.path.isdir(path):    
+            mp.addPlayFile(path)
+            
+    print mp.playList        
     context.finish(True, False, time)
     return True
 
@@ -66,10 +68,15 @@ def drag_connect(wid, mp):
     wid.connect('drag_drop', drag_drop)
     wid.connect('drag_data_received', drag_data_received, mp)    
     
-if __name__ == "__main__":
+def click_get_playlist(widget, event, mp):    
+    print mp.playList
+    
+    
+if __name__ == "__main__":    
     mp = Mplayer()
     win = gtk.Window(gtk.WINDOW_TOPLEVEL)
     win.connect("destroy", gtk.main_quit)        
     drag_connect(win, mp)
+    win.connect("button-press-event", click_get_playlist, mp)
     win.show_all()
     gtk.main()

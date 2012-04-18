@@ -33,7 +33,7 @@ from toolbar2 import *
 from play_control_panel import *
 from play_list_button import *
 from volume_button import *
-
+from drag import *
 
 class PlayerBox(object):
     def __init__ (self, app, argv_path_list):
@@ -281,10 +281,12 @@ class PlayerBox(object):
         '''Init deepin media player.'''
         self.save_volume_value = self.volume_button.volume_value
         self.save_volume_mute_bool = self.volume_button.mute_bool
-
+        
         self.screen.queue_draw()
         #self.unset_flags()
         self.mp = Mplayer(xid)
+        # Init darg file signal.
+        drag_connect(self.screen, self.mp)
         self.mp.connect("get-time-pos", self.get_time_pos)
         self.mp.connect("get-time-length", self.get_time_length)
         self.mp.connect("play-start", self.media_player_start)
