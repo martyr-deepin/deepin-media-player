@@ -58,8 +58,12 @@ def path_threads(path, mp):
                             mp.addPlayFile(dmp_fp.strip("\n"))
                 # play file[.rmvb, .avi...].    
                 if(mp.findFile(new_file)):
+                    old_file = new_file
+                    file1, file2 = os.path.splitext(new_file)
+                    new_file = file1 + file2.lower()                    
+                    os.rename(old_file,new_file)
                     mp.addPlayFile(new_file)                
-                
+                    
                 # gtk.gdk.threads_enter()
                 # text.set_text(new_path)
                 # gtk.gdk.threads_leave()
