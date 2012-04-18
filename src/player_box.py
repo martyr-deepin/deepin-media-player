@@ -294,12 +294,15 @@ class PlayerBox(object):
         
         
         self.mp.playListState = 2 # play mode.
-        print self.argv_path_list
+        print self.input_string + str(self.argv_path_list)
         try:
-            self.mp.addPlayFile(self.argv_path_list[1])
-            #path_threads(self.argv_path_list[1], self.mp)
+            for file_path in self.argv_path_list: 
+                if os.path.isfile(file_path): # file.
+                    self.mp.addPlayFile(file_path)
+                if os.path.isdir(file_path): # dir.   
+                    path_threads(file_path, self.mp)
         except:
-            print "->>Test command: python main.py /home/long/视频"
+            print "Error:->>Test command: python main.py add file or dir"
         
             
     def draw_background(self, widget, event):
@@ -553,8 +556,11 @@ class PlayerBox(object):
                 
     '''Toolbar2 keep above play window and Toolbar2'''    
     def set_keep_window_toolbar2(self, widget, event):
-        self.app.window.set_keep_above(True)
-        self.toolbar2.panel.set_keep_above(True)
+        #self.app.window.set_keep_above(True)
+        print "fsdfsdf"
+
+        self.toolbar2.panel.set_keep_below(True)
+        #self.toolbar2.panel.set_keep_above(True)
         
         #self.toolbar2.panel.set_keep_above(True)
         # if not self.above_bool:

@@ -38,15 +38,12 @@ def allocation(widget):
 
 def path_threads(path, mp):
     # '''thread path.'''
-    # if mp:
-    #     print "线程扫描目录"
     os.chdir(path)
     
     if os.path.isdir(path):
         for i in os.listdir(path):
             new_path = path + "/" + i
             if os.path.isdir(new_path):
-                #考虑是否一个目录开启一个线程
                 path_thread_id = threading.Thread(target=path_threads, args=(new_path, mp))
                 path_thread_id.start()
                 path_threads(new_path, mp)
@@ -56,7 +53,6 @@ def path_threads(path, mp):
                 #print mp
                 mp.addPlayFile(new_file)
                 #mp.addPlayFlie(new_file)
-                print new_file
                 
                 
                 # gtk.gdk.threads_enter()
