@@ -378,7 +378,6 @@ class PlayerBox(object):
         self.app.window.show_all()
         
         self.volume_button.mute_bool = True if 1 == self.save_volume_mute_bool else False
-        print self.volume_button.mute_bool
         self.volume_button.set_value(self.save_volume_value)
         
     def concise_window_function(self):        
@@ -393,7 +392,6 @@ class PlayerBox(object):
         self.toolbar2.panel.hide_all()
         
         self.toolbar2.volume_button.mute_bool = True if 1 == self.save_volume_mute_bool else False
-        print self.toolbar2.volume_button.mute_bool
         self.toolbar2.volume_button.set_value(self.save_volume_value)
         
     def set_window_full(self):    
@@ -589,6 +587,10 @@ class PlayerBox(object):
     
     def get_time_length(self, mplayer, length):        
         '''Get mplayer length to max of progressbar.'''
+        self.mp.setvolume(self.save_volume_value)    
+        if 1 == self.save_volume_mute_bool:
+            self.mp.nomute()
+        
         self.progressbar.max = length
         self.toolbar2.progressbar.max = length # toolbar2 max value.
         Hour, Min, Sec = self.mp.time(length)            
@@ -609,6 +611,7 @@ class PlayerBox(object):
         '''media player start play.'''
         self.progressbar.set_pos(0)
         self.toolbar2.progressbar.set_pos(0)
+        
         
     def media_player_end(self, mplayer, play_bool):
         '''player end.'''
