@@ -217,7 +217,7 @@ class  Mplayer(gobject.GObject):
                 if lenNum > 0:
                     self.lenNum = lenNum               
                     self.emit("get-time-length",self.lenNum)
-                    print "mplayer:" + str(self.lenNum)
+                    # print "mplayer:" + str(self.lenNum)
                     
         return True
                                
@@ -583,9 +583,10 @@ class  Mplayer(gobject.GObject):
         
     def loadPlayList(self, listFileName):
         f = open(listFileName)
-        for i in f:
-            self.playListSum += 1
-            self.playList.append(i.strip("\n"))
+        for i in f:            
+            if self.findFile(i.strip("\n")):
+                self.playListSum += 1
+                self.playList.append(i.strip("\n"))
         f.close()
        
     def savePlayList(self, listFileName):

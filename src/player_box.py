@@ -294,12 +294,13 @@ class PlayerBox(object):
         
         
         self.mp.playListState = 2 # play mode.
-        print self.input_string + str(self.argv_path_list)
         try:
             for file_path in self.argv_path_list: 
-                if os.path.isfile(file_path): # file.
+                if self.mp.findDmp(file_path): # .dmp add play file.    
+                    self.mp.loadPlayList(file_path)
+                elif os.path.isfile(file_path): # add play file.
                     self.mp.addPlayFile(file_path)
-                if os.path.isdir(file_path): # dir.   
+                elif os.path.isdir(file_path): # add dir.   
                     path_threads(file_path, self.mp)
         except:
             print "Error:->>Test command: python main.py add file or dir"
@@ -631,8 +632,8 @@ class PlayerBox(object):
         
     def media_player_end(self, mplayer, play_bool):
         '''player end.'''
-        print self.input_string + "Linux Deepin Media player...end"        
-       # Play file modify start_btn.
+        #print self.input_string + "Linux Deepin Media player...end"        
+        # Play file modify start_btn.
         self.media_player_midfy_start_bool()
 
     def media_player_next(self, mplayer, play_bool):    

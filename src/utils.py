@@ -52,10 +52,7 @@ def path_threads(path, mp):
                 new_file = new_path                
                 # .dmp add play file..
                 if(mp.findDmp(new_file)):
-                    fp = open(new_file, "r")
-                    for dmp_fp in fp:
-                        if(mp.findFile(dmp_fp.strip("\n"))):
-                            mp.addPlayFile(dmp_fp.strip("\n"))
+                    mp.loadPlayList(new_file)
                 # play file[.rmvb, .avi...].    
                 if(mp.findFile(new_file)):
                     old_file = new_file
