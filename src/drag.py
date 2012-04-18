@@ -41,7 +41,7 @@ def drag_drop(wid, context, x, y, time):
 def drag_data_received(wid, context, x, y, data, info, time, mp):
     for f in data.get_uris():
         path = urllib.unquote(f)[7:]
-        
+        print path
         # Add Dir.
         if os.path.isdir(path):            
             path_threads(path, mp)
@@ -51,7 +51,7 @@ def drag_data_received(wid, context, x, y, data, info, time, mp):
             mp.loadPlayList(path)
             
         # Add play file.    
-        if os.path.isdir(path):    
+        if os.path.isfile(path):    
             mp.addPlayFile(path)
             
     print mp.playList        
