@@ -334,11 +334,14 @@ class PlayerBox(object):
             
     # ToolBar control function.        
     def app_configure_hide_tool(self, widget, event): #app: configure-event.    
-        # Set mute and value.
-        self.toolbar2.volume_button.mute_bool = self.save_volume_mute_bool
-        self.toolbar2.volume_button.set_value(self.save_volume_value)
-        self.volume_button.mute_bool = self.save_volume_mute_bool
-        self.volume_button.set_value(self.save_volume_value)
+        #Set mute and value.
+        if self.toolbar2.volume_button.mute_bool != self.save_volume_mute_bool:
+            self.toolbar2.volume_button.mute_bool = self.save_volume_mute_bool
+            self.toolbar2.volume_button.set_value(self.save_volume_value)
+        if self.volume_button.mute_bool != self.save_volume_mute_bool:
+            self.volume_button.mute_bool = self.save_volume_mute_bool
+            self.volume_button.set_value(self.save_volume_value)
+        
         if self.save_volume_mute_bool: self.mp.nomute()        
         
         self.toolbar.panel.hide_all()
@@ -556,17 +559,7 @@ class PlayerBox(object):
                 
     '''Toolbar2 keep above play window and Toolbar2'''    
     def set_keep_window_toolbar2(self, widget, event):
-        #self.app.window.set_keep_above(True)
-        print "fsdfsdf"
-
-        self.toolbar2.panel.set_keep_below(True)
-        #self.toolbar2.panel.set_keep_above(True)
-        
-        #self.toolbar2.panel.set_keep_above(True)
-        # if not self.above_bool:
-        #     self.app.window.set_keep_above(False)
-        #     self.toolbar2.panel.set_keep_above(False)
-            
+        pass
             
         
     # Mplayer event of player control.         
@@ -577,6 +570,7 @@ class PlayerBox(object):
     def progressbar_set_point_bool(self, widget, event, progressbar):
         gtk.timeout_add(20, self.set_point_bool_time)
             
+        
     def progressbar_player_point_pos_modify(self, widget, event, progressbar, pb_bit):        
         '''Mouse left click rate of progress'''
         if self.mp:
