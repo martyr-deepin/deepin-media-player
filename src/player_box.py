@@ -44,6 +44,9 @@ class PlayerBox(object):
         self.full_bool = False  # Set window full bool.
         self.mode_state_bool = False # Concise mode(True) and common mode(False).
         
+        self.save_volume_mute_bool = False
+        self.save_volume_value = 0
+        
         # Screen move window.
         self.event_button = None
         self.event_x_root = None
@@ -244,6 +247,9 @@ class PlayerBox(object):
         if self.mp:
             self.mp.setvolume(value)
                     
+            self.save_volume_mute_bool = mute_bool
+            self.save_volume_value = value
+                        
     def toolbar2_volume_button_set_mute(self, widget, event): 
         '''Set mute.'''
         if 1 == event.button:
@@ -256,8 +262,10 @@ class PlayerBox(object):
     def toolbar2_volume_button_set_volume(self, volume_button, value, mute_bool):
         if self.mp:
             self.mp.setvolume(value)
-                    
-                
+            
+            self.save_volume_mute_bool = mute_bool
+            self.save_volume_value = value
+                                    
     def show_bottom(self):        
         if [] == self.bottom_main_vbox.get_children():
             self.bottom_main_vbox.add(self.bottom_play_control_hbox_vframe)
@@ -270,6 +278,9 @@ class PlayerBox(object):
     '''Init media player.'''        
     def init_media_player(self, mplayer, xid):    
         '''Init deepin media player.'''
+        self.save_volume_value = self.volume_button.volume_value
+        self.save_volume_mute_bool = self.volume_button.mute_bool
+
         self.screen.queue_draw()
         #self.unset_flags()
         self.mp = Mplayer(xid)
@@ -280,18 +291,16 @@ class PlayerBox(object):
         self.mp.connect("play-next", self.media_player_next)
         self.mp.connect("play-pre", self.media_player_pre)
         
-        #self.mp.play("/home/long/视频/1.rmvb")
-        #self.mp.seek(500)
-        #self.mp.scrot(10)
         
-        self.mp.playListState = 2
+        self.mp.playListState = 2 # play mode.
         print self.argv_path_list
         try:
             self.mp.addPlayFile(self.argv_path_list[1])
             #path_threads(self.argv_path_list[1], self.mp)
         except:
-            print "没有测试用的文件夹:Test command: python main.py /home/long/视频"
+            print "->>Test command: python main.py /home/long/视频"
         
+            
     def draw_background(self, widget, event):
         '''Draw screen mplayer view background.'''
         cr, x, y, w, h = allocation(widget)
@@ -321,6 +330,13 @@ class PlayerBox(object):
             
     # ToolBar control function.        
     def app_configure_hide_tool(self, widget, event): #app: configure-event.    
+        # Set mute and value.
+        self.toolbar2.volume_button.mute_bool = self.save_volume_mute_bool
+        self.toolbar2.volume_button.set_value(self.save_volume_value)
+        self.volume_button.mute_bool = self.save_volume_mute_bool
+        self.volume_button.set_value(self.save_volume_value)
+        if self.save_volume_mute_bool: self.mp.nomute()        
+        
         self.toolbar.panel.hide_all()
         self.panel_x, self.panel_y = self.screen.window.get_root_origin()
         if self.mode_state_bool: # Concise mode.
@@ -329,8 +345,7 @@ class PlayerBox(object):
         else:    # common mode.
             self.toolbar.panel.move(self.panel_x + 1, self.panel_y + self.app.titlebar.box.allocation[3])
 
-                
-            
+                            
     def configure_hide_tool(self, widget, event): # screen: configure-event.       
         if self.mp:
             #self.app.hide_titlebar() # Test hide titlebar.
@@ -362,6 +377,10 @@ class PlayerBox(object):
         self.show_bottom()
         self.app.window.show_all()
         
+        self.volume_button.mute_bool = True if 1 == self.save_volume_mute_bool else False
+        print self.volume_button.mute_bool
+        self.volume_button.set_value(self.save_volume_value)
+        
     def concise_window_function(self):        
         '''full window and concise mode'''
         self.app.hide_titlebar() # hide titlbar.       
@@ -373,6 +392,10 @@ class PlayerBox(object):
         self.toolbar.panel.hide_all() # hide toolbar.
         self.toolbar2.panel.hide_all()
         
+        self.toolbar2.volume_button.mute_bool = True if 1 == self.save_volume_mute_bool else False
+        print self.toolbar2.volume_button.mute_bool
+        self.toolbar2.volume_button.set_value(self.save_volume_value)
+        
     def set_window_full(self):    
         self.concise_window_function()
         self.toolbar.panel.fullscreen()  # Toolbar hide.
@@ -382,6 +405,7 @@ class PlayerBox(object):
         self.toolbar2.panel.set_keep_above(True)
         self.app.window.fullscreen()        
         self.full_bool = True            
+
         
     def set_window_quit_full(self):    
         self.toolbar.panel.unfullscreen()
@@ -389,6 +413,7 @@ class PlayerBox(object):
         self.app.window.unfullscreen()
         self.common_window_function()
         self.full_bool = False
+
         
     def full_play_window(self, widget): #full_button       
         '''Full player window.'''
@@ -426,6 +451,7 @@ class PlayerBox(object):
             self.app.show_titlebar()
             self.show_hide_set()
             
+
     def hide_window_widget(self, widget): #concise_button    
         '''Hide widnow titlebar and play control panel.
            Hide progressbar.
@@ -442,9 +468,11 @@ class PlayerBox(object):
             #self.app.window.set_window_shape(True)
             self.mode_state_bool = True            
             self.toolbar2.panel.show_all()
+            # Set toolbar2 panel position.    
             self.toolbar2.panel.move(self.panel_x, 
                                      self.panel_y + (widget.allocation[3] - self.toolbar2.panel.allocation[3]) - self.app.titlebar.box.allocation[3])
-            self.toolbar2.panel.hide_all()
+            
+            self.toolbar2.panel.hide_all()                        
             
             
     def set_window_above(self, widget): #above_button   
