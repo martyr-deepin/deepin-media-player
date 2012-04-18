@@ -101,6 +101,7 @@ class PlayerBox(object):
         
         '''Toolbar2 Init.'''
         self.toolbar2 = ToolBar2()
+        self.toolbar2.panel.connect("motion-notify-event", self.set_keep_window_toolbar2)
         #self.toolbar2.show_toolbar2() Test function.
         self.toolbar2.progressbar.pb.connect("motion-notify-event", 
                                              self.progressbar_player_drag_pos_modify, 
@@ -549,6 +550,18 @@ class PlayerBox(object):
                 # Pause play.
                 gtk.timeout_add(300, self.screen_time_pause)
                 self.screen_pause_bool = False
+                
+    '''Toolbar2 keep above play window and Toolbar2'''    
+    def set_keep_window_toolbar2(self, widget, event):
+        self.app.window.set_keep_above(True)
+        self.toolbar2.panel.set_keep_above(True)
+        
+        #self.toolbar2.panel.set_keep_above(True)
+        # if not self.above_bool:
+        #     self.app.window.set_keep_above(False)
+        #     self.toolbar2.panel.set_keep_above(False)
+            
+            
         
     # Mplayer event of player control.         
     def set_point_bool_time(self):        
@@ -594,8 +607,9 @@ class PlayerBox(object):
         self.progressbar.max = length
         self.toolbar2.progressbar.max = length # toolbar2 max value.
         Hour, Min, Sec = self.mp.time(length)            
-        self.show_time_label.time_font1 = self.set_time_string(Hour) + " : " + self.set_time_string(Min) + " : "+ self.set_time_string(Sec) + "  /"
-        
+        self.show_time_label.time_font1 = self.set_time_string(Hour) + " : " + self.set_time_string(Min) + " : "+ self.set_time_string(Sec) + "  /"        
+        self.toolbar2.show_time.time_font1 = self.set_time_string(Hour) + " : " + self.set_time_string(Min) + " : "+ self.set_time_string(Sec) + "  /"
+
     def get_time_pos(self, mplayer, pos):    
         '''Get mplayer pos to pos of progressbar.'''
         # Test media player pos.
@@ -604,6 +618,8 @@ class PlayerBox(object):
                 self.progressbar.set_pos(pos)
                 self.toolbar2.progressbar.set_pos(pos)
                 self.show_time_label.time_font2 = self.set_time_string(self.mp.timeHour) + ":" + self.set_time_string(self.mp.timeMin) + ":" + self.set_time_string(self.mp.timeSec)
+                self.toolbar2.show_time.time_font2 = self.set_time_string(self.mp.timeHour) + ":" + self.set_time_string(self.mp.timeMin) + ":" + self.set_time_string(self.mp.timeSec)
+                self.toolbar2.panel.queue_draw()
                 self.app.window.queue_draw()
             
                 
