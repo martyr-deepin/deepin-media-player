@@ -26,8 +26,17 @@ class INI(object):
     def __init__(self, ini_path):
         self.ini_fp = open(ini_path, "r")
         self.ch = ''
+        self.root_name = ""
+        self.child_name = ""
+        self.value_name = ""
+        self.root_bool = False
+        self.child_bool = False        
+        self.root = [] #保存节点
+        self.save_root = None
         self.line_num = 0  # 行号
         self.column_num = 0 # 列号
+        
+        
         
         while True:            
             self.ch = self.ini_fp.read(1)                
@@ -42,16 +51,22 @@ class INI(object):
                     if self.unicode_bool():
                         self.error_input("多余的中文字符..请检查配置文件")
                         sys.exit(0)
-                    elif self.number_bool():    
-                        print "这是数字"
-                    elif self.letter_bool():    
-                        print "这是字母"
+                    elif self.number_bool(): #判断数字    
+                        self.number_func()
+                    elif self.letter_bool(): #判断字母    
+                        self.letter_func()
                     else:
                         self.symbol_func()
                 
         self.ini_fp.close()    
-        self.line_num += 1
+        # self.line_num += 1
         print "提示:共有%d行ini配置代码." % (self.line_num)       
+        for i in self.root:
+            print i.root_name
+            print i.child_addr
+        
+        
+        
         
     def error_input(self, error_mesagbox):    
         print "%d行%d列ini配置错误提示(%s)" % (self.line_num, self.column_num, error_mesagbox)
@@ -64,7 +79,7 @@ class INI(object):
     def letter_bool(self):
         '''判断是否为字母'''
         ord_ch = ord(self.ch)
-        return True if ((65 <= ord_ch <= 90) and (97 <= ord_ch <= 122))  else False
+        return True if ((65 <= ord_ch <= 90) or (97 <= ord_ch <= 122))  else False
     
     def unicode_bool(self):
         '''判断是否为unicode'''
@@ -73,7 +88,7 @@ class INI(object):
     
     '''符号处理 注释: # /**/ , 赋值: = , []'''
     def symbol_func(self):
-        if '#' == self.ch: #过滤 '#'(注释)
+        if '#' == self.ch or ';' == self.ch: #过滤 '#' ';'(注释)
             while '\n' != self.ch:
                 self.ch = self.ini_fp.read(1)
                 # print self.ch
@@ -100,13 +115,94 @@ class INI(object):
                             self.column_num = save_column_num
                             self.error_input("缺少'*'或者'/'")
                             sys.exit(0)
-        # elif '[' == self.ch: #处理关键字   
+        elif '[' == self.ch: #处理关键字   
+            self.root_bool = False
+            self.child_bool = False
+            self.ch = self.ini_fp.read(1)
+            
+            while ']' != self.ch:
+                if ']' != self.ch or ' ' != self.ch:    
+                    self.root_name += self.ch    
+                self.ch = self.ini_fp.read(1)
+                if '\n' == self.ch:
+                    self.line_num += 1
+                    self.error_input("缺少']',请检查配置文件")                    
+                    sys.exit(0)
+           #如果正确,开始处理关键字,比如: [window],就继续读下面的值. width = 34,要过滤掉空格.         
+            self.save_root = ROOT()        
+            self.save_root.root_name = self.root_name                     
+            print self.save_root.root_name
+            self.root.append(self.save_root)                                
+            
+            self.ini_fp.seek(-1, 1)        
+            self.root_name = ""
+            self.root_bool = True
+           
             
     '''字母处理 import:导入模块处理'''        
     def letter_func(self):        
-        print self.ch
-        pass
+        self.child_bool = False
+        if not self.root_bool: #处理无节点的乱值
+            self.error_input("缺少[...]的节,错误的参数值")
+            sys.exit(0)
+        else:# 处理节点的参数值.
+            while True:
+                if ' ' != self.ch:
+                    self.child_name += self.ch    
+                self.ch = self.ini_fp.read(1)                                
+                
+                
+                if '=' == self.ch:
+                    break
+                if '\n' == self.ch:
+                    self.line_num += 1                    
+                    self.error_input("缺少'='")
+                    sys.exit(0)
+                
+                
+            save_i = 0
+            for i in range(0, len(self.root)):
+                if self.root[i].root_name == self.save_root.root_name:
+                    save_i = i
+                    break
+                
+            self.child_bool = True
+            
+                
+    def number_func(self):            
+        if self.root_bool and self.child_bool: #处理参数值
+            save_i = 0
+            for i in range(0, len(self.root)):
+                if self.root[i].root_name == self.save_root.root_name:
+                    save_i = i
+                    break
+                
+            while True:    
+                if ' ' != self.ch:
+                    self.value_name += self.ch
+                self.ch = self.ini_fp.read(1)                
+                
+                if '\n' == self.ch:
+                    break
+                
+            self.root[i].child_addr[self.child_name] = (self.value_name)            
+            self.value_name = ""
+            self.child_name = ""
+        else:    
+            if self.root_bool:
+                self.error_input("缺少参数值")
+                sys.exit(0)
+                
+            self.error_input("缺少节点和参数值")
         
+class ROOT(object):
+    def __init__(self):
+        self.root_name = ""
+        self.child_addr = {}
+        
+    
 INI("config.ini")            
 
+
+        
 
