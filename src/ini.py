@@ -43,6 +43,7 @@ import sys
 
 class INI(object):
     def __init__(self, ini_path):
+        self.ini_path = ini_path
         self.ini_fp = open(ini_path, "r")
         self.ch = ''
         self.root_name = ""
@@ -264,14 +265,113 @@ class INI(object):
                 
             self.error_input("缺少节点和参数值")
         
+    def get_section(self, root_name):        
+        save_i = 0
+        for i in range(0, len(self.root)):
+            if self.root[i] == root_name:
+                save_i = i
+                break
+        return self.root[i]
+    
+    def get_section_value(self, root_name, child_name):
+        save_i = 0
+        for i in range(0, len(self.root)):
+            if self.root[i].root_name == root_name:
+                save_i = i
+                break
+        return self.root[save_i].child_addr[child_name]    
+        
+    def get_section_childs(self, root_name):    
+        save_i = 0
+        for i in range(0, len(self.root)):
+            if self.root[i].root_name == root_name:
+                save_i = i
+                break
+            
+        return  self.root[save_i].child_addr       
+        
+    def set_section_value(self, root_name, child_name, value):
+        save_i = 0
+        for i in range(0, len(self.root)):
+            if self.root[i].root_name == root_name:
+                save_i = i
+                break
+        self.root[save_i].child_addr[child_name] = value   
+        return 0
+    
+    
+    def set_section_child_name(self, 
+                               root_name, 
+                               child_name, 
+                               modify_name):
+        # 改变字典的键 名.
+        #我唯一的办法就是拷贝一份.
+        save_i = 0
+        save_dict = {}
+
+        for i in range(0, len(self.root)):
+            if self.root[i].root_name == root_name:
+                save_i = i
+                break
+            
+        for i in self.root[i].child_addr.keys():    
+            print type(i)
+            if i == child_name:
+                save_dict[modify_name] = self.root[save_i].child_addr[i]    
+            else:    
+                save_dict[i] = self.root[save_i].child_addr[i]    
+            
+        self.root[save_i].child_addr = save_dict.copy()    
+        return 0
+        
+        
+    def ini_save(self):    
+        ini_fp = open(self.ini_path, "w")
+        for root in self.root:
+            ini_fp.write("[" + root.root_name +  "]\n")
+            for child in root.child_addr: 
+                ini_fp.write(child + " = " + root.child_addr[child] + "\n")
+        ini_fp.close()
+        
 class ROOT(object):
     def __init__(self):
         self.root_name = ""
         self.child_addr = {}
         
+        
+if __name__ == "__main__":    
+    ini = INI("config.ini")            
+    rooo = ini.get_section("java")
+    print "=============="
+    print rooo.root_name
+    print rooo.child_addr
+    print "============="
+    print ini.get_section_value("java", "x")
+    print "============="
+    print ini.get_section_childs("java")
+    ini.set_section_value("java", "with", '\"/home/long/视频\"')
+    print ini.get_section_childs("java")
+    #print rooo.child_addr["i"]
+    print "============================="
+    ini.set_section_child_name("java", "with", "width")
+    print "============================="
+    print ini.get_section_value("java", "width")
+    ini.ini_save()
     
-INI("config.ini")            
+'''
+INI 类 (ini_path) : ini_path 是传入.ini文件的路径
+.get_section(root_name) : root_name 是 父节点的名字 [window], window就是父亲节点.
+返回的是是一个父亲节点的地址. 返回值: root_name. child_addr.
+.get_section_value(root_name, child_name): 得到的是一个父节点下的 孩子节点的值
+.get_section_childs(root_name): 返回父亲节点下的所有孩子.
+比如: 
+[window]
+width = 34
+height = 34
+width 和 height 就会被返回.
+========================================
+.set_section_value(root_name, child_name, value): 设置一个父亲节点下的孩子节点的值.
 
-
+'''
         
 
