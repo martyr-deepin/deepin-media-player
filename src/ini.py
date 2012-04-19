@@ -19,6 +19,25 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+'''
+语法规则: 注释: /**/ , #, ;
+[字母|中文字符|数字(组合)]->节点 
+字母:(a~z|A~Z)
+中文字符: (unicode*)
+数字: (0-9)
+[中123F]
+节点下面的参数: 注意:不能使用数字开始,可以使用英文和中文,但是不能组合使用.
+width = 34
+宽度 = 34
+
+例子:
+[窗口] 或 [window] 或[窗win123]
+width = 34
+height = 34
+[播放器]  或 [player]
+图片截图路径 = 34
+path = '/home/long...'
+'''
 import os
 import sys
 
@@ -42,6 +61,11 @@ class INI(object):
             self.ch = self.ini_fp.read(1)                
             self.column_num += 1 #计算列号
             if '\n' == self.ch:
+                if self.root_bool and self.child_bool:
+                    self.line_num += 1
+                    self.column_num = 1
+                    self.error_input("=后面缺少值")
+                    sys.exit(0)
                 self.line_num += 1  #计算行号
                 self.column_num = 0 #清空列计数器
             if ' ' !=self.ch: #过滤空格
@@ -49,6 +73,10 @@ class INI(object):
                     break
                 else: #开始处理 字符.
                     if self.unicode_bool():
+                        # if self.root_bool:
+                        #     print "处理中文字符"
+                        # else:    
+                        self.line_num += 1
                         self.error_input("多余的中文字符..请检查配置文件")
                         sys.exit(0)
                     elif self.number_bool(): #判断数字    
@@ -88,6 +116,7 @@ class INI(object):
     
     '''符号处理 注释: # /**/ , 赋值: = , []'''
     def symbol_func(self):
+        '''符号处理函数'''
         if '#' == self.ch or ';' == self.ch: #过滤 '#' ';'(注释)
             while '\n' != self.ch:
                 self.ch = self.ini_fp.read(1)
@@ -138,38 +167,74 @@ class INI(object):
             self.root_name = ""
             self.root_bool = True
            
-            
+        elif "'" == self.ch or '"' == self.ch:    
+            if self.root_bool and self.child_bool:
+                save_i = 0
+                for i in range(0, len(self.root)):
+                    if self.root[i].root_name == self.save_root.root_name:
+                        save_i = i
+                        break
+                # 连续的读取字符串,参数值的赋值
+                print self.column_num    
+                while True:
+                    self.ch = self.ini_fp.read(1)
+                    if '"' == self.ch or "'" == self.ch:
+                        break
+                    else:
+                        self.value_name += self.ch
+                    if not self.ch:    
+                        self.line_num += 1
+                        self.error_input("字符串缺少结束符")
+                        sys.exit(0)                                                        
+                        
+                self.root[i].child_addr[self.child_name] = (self.value_name)            
+                self.value_name = ""
+                self.child_name = ""
+                self.child_bool = False        
+            else:
+                self.line_num += 1
+                self.error_input("无效的字符串类型")
+                sys.exit(0)
+                
+                
     '''字母处理 import:导入模块处理'''        
     def letter_func(self):        
-        self.child_bool = False
-        if not self.root_bool: #处理无节点的乱值
-            self.error_input("缺少[...]的节,错误的参数值")
+        if self.root_bool and self.child_bool:    
+            self.error_input("=后面无参数")
             sys.exit(0)
-        else:# 处理节点的参数值.
-            while True:
-                if ' ' != self.ch:
-                    self.child_name += self.ch    
-                self.ch = self.ini_fp.read(1)                                
+        else:    
+            self.child_bool = False
+            if not self.root_bool: #处理无节点的乱值
+                self.error_input("缺少[...]的节,错误的参数值")
+                sys.exit(0)
+            else:# 处理节点的参数值.
+                while True:
+                    if ' ' != self.ch:
+                        self.child_name += self.ch    
+                    self.ch = self.ini_fp.read(1)                                
+                    self.column_num += 1            
+                    if '=' == self.ch:
+                        break
                 
+                    if '\n' == self.ch:
+                        self.line_num += 1                    
+                        self.error_input("缺少'='")
+                        sys.exit(0)                            
                 
-                if '=' == self.ch:
-                    break
-                if '\n' == self.ch:
-                    self.line_num += 1                    
-                    self.error_input("缺少'='")
-                    sys.exit(0)
+                save_i = 0
+                for i in range(0, len(self.root)):
+                    if self.root[i].root_name == self.save_root.root_name:
+                        save_i = i
+                        break
                 
-                
-            save_i = 0
-            for i in range(0, len(self.root)):
-                if self.root[i].root_name == self.save_root.root_name:
-                    save_i = i
-                    break
-                
-            self.child_bool = True
+                self.child_bool = True
             
-                
+    def unicode_func(self):            
+        '''中文字符处理'''
+        pass
+        
     def number_func(self):            
+        '''数字处理函数'''
         if self.root_bool and self.child_bool: #处理参数值
             save_i = 0
             for i in range(0, len(self.root)):
@@ -183,13 +248,17 @@ class INI(object):
                 self.ch = self.ini_fp.read(1)                
                 
                 if '\n' == self.ch:
+                    self.line_num += 1
+                    self.column_num = 0
                     break
                 
             self.root[i].child_addr[self.child_name] = (self.value_name)            
             self.value_name = ""
             self.child_name = ""
+            self.child_bool = False
         else:    
             if self.root_bool:
+                self.line_num += 1
                 self.error_input("缺少参数值")
                 sys.exit(0)
                 

@@ -1,12 +1,22 @@
-# 测试
-
+# ini 标志语言
+/*开头*/
 ;imort oper.ini
+/*声明变量*/
+[window]
 [mplayer]
-width = 45
-height = 600
-[vier]
-w = 500
-h = 600
-x = 34.5
-y = 34.5
+[窗口]
+[java]
+
+
+
+[window]
+width = 34
+height = 34
+[窗口]
+x = 34
+y = 44
+[mplayer]
+path1 = "/home/long/社评/1.rmvb"
+path1 = "/home/long/时评/test.mkv"
+path2 = "(/home/long/时评/1.avi, 34, 34)"
 
