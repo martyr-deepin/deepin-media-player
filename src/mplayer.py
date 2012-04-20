@@ -519,15 +519,15 @@ class  Mplayer(gobject.GObject):
         return self.timeHour, self.timeMin, self.timeSec    
     
     # Puase show image.
-    scrotPath = get_home_path() + "/.config/deepin-media-player/image/media_player.png"
-    def scrot(self, scrotSec, scrotPath = scrotPath):
+    save_scrotPath = get_home_path() + "/.config/deepin-media-player/image/media_player.png"
+    def scrot(self, scrotSec, scrotPath = save_scrotPath):
         init_mplayer_config()
         # Create copy file.
         fp = open(scrotPath, "a")
         fp.close()
         #########################
         if self.state and os.path.exists(scrotPath):
-            os.system("mplayer -ss %s -noframedrop -nosound -vo png -frames 1 '%s'" % (scrotSec, self.path))
+            os.system("cd ~/.config/deepin-media-player/image/ && mplayer -ss %s -noframedrop -nosound -vo png -frames 1 '%s'" % (scrotSec, self.path))
             # copy image file to The specified directory.
             file_list = os.listdir(".")
             for file in file_list:

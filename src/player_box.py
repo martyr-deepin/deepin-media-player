@@ -634,13 +634,14 @@ class PlayerBox(object):
         print '保存图片到目录...'
         if self.preview.mp:                                   
             self.preview.mp.path = self.mp.path            
-            self.preview.mp.scrot(save_pos, "/home/long/1.png")
+            self.preview.mp.scrot(save_pos,
+                                  get_home_path() + "/.config/deepin-media-player/image/00000001.png")
             self.show_id = None
         return False
     
     def read_image_time(self):    
         print "读取图片到预览窗口..."        
-        self.preview.set_pixbuf("/home/long/1.png")
+        self.preview.set_pixbuf(get_home_path() + "/.config/deepin-media-player/image/00000001.png")
         self.preview.pv.queue_draw()
         self.read_id = None
         return False
