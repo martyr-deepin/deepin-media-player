@@ -49,9 +49,11 @@ class PlayerBox(object):
         # Preview window.
         self.x_root = 0
         self.y_root = 0
-        self.preview_x = 0
+        self.show_bool = False
+        self.preview_pos = 0 
         self.show_id = None
-
+        self.read_id = None
+        
         self.save_volume_mute_bool = False
         self.save_volume_value = 0
 
@@ -74,7 +76,7 @@ class PlayerBox(object):
 
         '''Preview window'''
         self.preview = PreView()
-
+        
         '''Save app(main.py)[init app].'''
         self.app = app
         self.app_width = 0  # Save media player window width.
@@ -103,6 +105,7 @@ class PlayerBox(object):
         self.progressbar.pb.connect("button-release-event", self.progressbar_set_point_bool, self.progressbar)
         self.progressbar.pb.connect("enter-notify-event", self.show_preview_enter)
         self.progressbar.pb.connect("leave-notify-event", self.hide_preview_leave)
+        
 
 
         '''Toolbar Init.'''
@@ -306,7 +309,7 @@ class PlayerBox(object):
         self.mp.connect("play-end", self.media_player_end)
         self.mp.connect("play-next", self.media_player_next)
         self.mp.connect("play-pre", self.media_player_pre)
-
+                
         self.mp.playListState = 2 # play mode.
         try:
             for file_path in self.argv_path_list:
@@ -367,7 +370,8 @@ class PlayerBox(object):
         else:    # common mode.
             self.toolbar.panel.move(self.panel_x + 1, self.panel_y + self.app.titlebar.box.allocation[3])
 
-
+        self.set_toolbar_show_opsition()    
+            
     def configure_hide_tool(self, widget, event): # screen: configure-event.
         if self.mp:
             #self.app.hide_titlebar() # Test hide titlebar.
@@ -607,43 +611,67 @@ class PlayerBox(object):
             if self.mp:
                 if 1 == self.mp.state:
                     self.mp.seek(int(progressbar.pos))
+                            
+        # Show preview window.            
+        if self.show_bool:            
+            self.x_root = event.x_root            
+            self.y_root = event.y_root
+            self.preview.show_preview()
+            self.preview.move_preview(self.x_root - self.preview.bg.get_allocation()[2]/2,
+                                      self.y_root - self.preview.bg.get_allocation()[3])        
 
-
-        if self.show_id:
-            self.preview.hide_preview()
-            gtk.timeout_remove(self.show_id)
+        
+            if self.show_id == None and self.read_id == None:                                    
+                self.start_time_function(event.x)
+            
+            
+    def start_time_function(self, pos):          
+        self.show_id = gtk.timeout_add(150, self.save_image_time, pos)
+        self.read_id = gtk.timeout_add(180, self.read_image_time)
+        
+    def save_image_time(self, pos):    
+        save_pos = (float(float(pos))/self.progressbar.pb.allocation.width*self.mp.lenNum)
+        print '保存图片到目录...'
+        if self.preview.mp:                                   
+            self.preview.mp.path = self.mp.path            
+            self.preview.mp.scrot(save_pos, "/home/long/1.png")
             self.show_id = None
-
+        return False
+    
+    def read_image_time(self):    
+        print "读取图片到预览窗口..."        
+        self.preview.set_pixbuf("/home/long/1.png")
+        self.preview.pv.queue_draw()
+        self.read_id = None
+        return False
+        
     '''Show preview window'''
-    def show_preview_enter(self, widget, event):
-        self.x_root = event.x_root
-        self.y_root = event.y_root
-        self.preview_x = event.x
-        self.preview.set_pos((float(int(self.preview_x))/self.progressbar.pb.allocation.width*self.progressbar.max))
-        if 1 == self.mp.state:
-            if self.show_id == None:
-                self.show_id = gtk.timeout_add(1800, self.time_preview_show)
-
-
     def time_preview_show(self):        
         self.preview.show_preview()
-        self.preview.move_preview(self.x_root - self.preview.bg.get_allocation()[2]/2,
-                                  self.y_root - self.preview.bg.get_allocation()[3])
         return False
 
-
+    def show_preview_enter(self, widget, event):
+        if self.mp:
+            if 1 == self.mp.state:
+                self.show_bool = True
+        
     def hide_preview_leave(self, widget, event):
         if self.show_id:
+            self.show_bool = False
             self.preview.hide_preview()
             gtk.timeout_remove(self.show_id)
+            if self.read_id:
+                gtk.timeout_remove(self.read_id)
             self.show_id = None
+            self.read_id = None
 
-
+            
     def set_time_string(self, num):
         if 0 <= num <= 9:
             return "0" + str(num)
         return str(num)
 
+    
     def get_time_length(self, mplayer, length):
         '''Get mplayer length to max of progressbar.'''
         self.mp.setvolume(self.save_volume_value)
@@ -673,14 +701,15 @@ class PlayerBox(object):
         '''media player start play.'''
         self.progressbar.set_pos(0)
         self.toolbar2.progressbar.set_pos(0)
-        self.preview.set_path(mplayer.path) # Set preview window play path.
-
+        # self.preview.set_path(mplayer.path) # Set preview window play path.
+        
     def media_player_end(self, mplayer, play_bool):
         '''player end.'''
         #print self.input_string + "Linux Deepin Media player...end"
         # Play file modify start_btn.
         self.media_player_midfy_start_bool()
 
+        
     def media_player_next(self, mplayer, play_bool):
         if 1 == play_bool:
             self.media_player_midfy_start_bool()
@@ -707,5 +736,9 @@ class PlayerBox(object):
         '''Set double buffer.'''
         self.screen.set_flags(gtk.DOUBLE_BUFFERED)
 
-
-
+    '''Set toolbar on window show positon.'''
+    def set_toolbar_show_opsition(self):
+        x, y = self.app.window.get_position()
+        # print x
+        # print y
+        

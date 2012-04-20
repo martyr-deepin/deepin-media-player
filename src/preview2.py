@@ -37,8 +37,8 @@ class PreView(object):
         self.pos  = pos  # play pos.
         self.i = 0
         self.mp   = None
-        self.pixbuf = None        
-        
+                
+        self.show_bool = False
         # Preview background window.
         self.bg = gtk.Window(gtk.WINDOW_TOPLEVEL)
         self.bg.set_colormap(gtk.gdk.Screen().get_rgba_colormap())
@@ -58,22 +58,18 @@ class PreView(object):
         
         # Preview window.
         self.pv = gtk.Window(gtk.WINDOW_TOPLEVEL)
-        # self.image = gtk.image_new_from_file("/home/long/1.png")
         # Set preview window.        
         self.pv.set_size_request(120, 60)
         self.pv.set_decorated(False)
         self.pv.set_keep_above(True)
         self.pv.set_type_hint(gtk.gdk.WINDOW_TYPE_HINT_MENU) 
         self.pv.add_events(gtk.gdk.ALL_EVENTS_MASK)
-        
-        # self.pv.add(self.image)
-        
         self.pv.connect("destroy", self.quit_mplayer)
         self.pv.connect("expose-event", self.draw_preview_background)
         # Hide preview window.
         self.pv.connect("motion-notify-event", self.motion_hide_preview)
         self.pv.connect("enter-notify-event", self.motion_hide_preview)
-        self.pv.connect("window-state-event", self.init_mplayer_window)
+        
         
     # Background window.    
     def draw_background(self, widget, event):    
@@ -134,28 +130,23 @@ class PreView(object):
     # Preview window.
     def draw_preview_background(self, widget, event):    
         cr, x, y, w, h = allocation(widget)
-        if self.mp:            
-            if not self.pixbuf:
-                cr.set_source_rgb(0, 0, 0)
-                cr.rectangle(x,y,w,h)
-                cr.fill()
-            else:    
-                image = self.pixbuf.scale_simple(widget.allocation.width,
-                                                 widget.allocation.height,
-                                                 gtk.gdk.INTERP_BILINEAR)        
-                cr = widget.window.cairo_create()
-                draw_pixbuf(cr, image, widget.allocation.x, widget.allocation.y)            
+        if self.mp:
+            cr.set_source_rgb(0, 0, 0)
+            cr.rectangle(x,y,w,h)
+            cr.fill()
             return True
     
     def quit_mplayer(self, widget):
         if self.mp:
             self.mp.quit()
             
-            
-    def init_mplayer_window(self, widget, event):        
+    def create_mplayer(self):            
+      if not self.show_bool:  
         self.mp = Mplayer(self.pv.window.xid)
-        self.mp.state = 1
-    
+        self.mp.connect("get-time-pos", self.get_time_pos)
+        self.mp.play(self.path)
+        self.mp.fseek(self.pos)    
+        self.mp.nomute()
         
     def move_preview(self, x, y):        
         self.bg.move(int(x), int(y))
@@ -164,7 +155,10 @@ class PreView(object):
     def show_preview(self):        
         self.bg.show_all()
         self.pv.show_all()
-                
+        
+        self.create_mplayer()
+        self.show_bool = True
+        
         # self.bg.set_keep_above(True)
         # self.pv.set_keep_above(True)
         # Init mplayer.
@@ -176,23 +170,30 @@ class PreView(object):
     def hide_preview(self):
         self.bg.hide_all()
         self.pv.hide_all()
-                    
+        
+    def get_time_pos(self, mplayer, pos):    
+        self.i += 1
+        self.i = self.i % PREVIEW_TIME_POS
+        if not self.i:
+            self.mp.seek(self.pos)
+        
+        self.bg.queue_draw()    
+            
     def time_to_string(self, time_pos):        
         if 0<= time_pos <= 9:
             return "0" + str(time_pos)        
         return str(time_pos)
     
     def set_pos(self, pos):
-        self.pos = pos        
+        self.pos = pos
+        if self.mp:
+            self.mp.seek(pos)
         
     def set_path(self, path):    
-        self.mp.path = path
+        self.path = path
         
     def motion_hide_preview(self, widget, event):    
         self.hide_preview()
-        
-    def set_pixbuf(self, pixbuf_path):    
-        self.pixbuf = gtk.gdk.pixbuf_new_from_file(pixbuf_path)        
         
         
 '''Test preview player'''            

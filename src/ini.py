@@ -97,8 +97,7 @@ class INI(object):
             print i.child_addr
         
         
-        
-        
+                
     def error_input(self, error_mesagbox):    
         print "%d行%d列ini配置错误提示(%s)" % (self.line_num, self.column_num, error_mesagbox)
         
