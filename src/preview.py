@@ -27,16 +27,18 @@ from dtk.ui.draw import *
 from mplayer import *
 from constant import *
 from utils import *
+import random
 import gtk
 
 
 class PreView(object): 
-    def __init__(self, path, pos):
+    def __init__(self, path = "", pos = 0):
         self.path = path # play path.
         self.pos  = pos  # play pos.
         self.i = 0
         self.mp   = None
-        
+                
+        self.show_bool = False
         # Preview background window.
         self.bg = gtk.Window(gtk.WINDOW_TOPLEVEL)
         self.bg.set_colormap(gtk.gdk.Screen().get_rgba_colormap())
@@ -49,6 +51,11 @@ class PreView(object):
         self.bg.add_events(gtk.gdk.ALL_EVENTS_MASK)
         self.bg.connect("expose-event", self.draw_background)
         self.bg.connect("size-allocate", self.draw_shape_mask)        
+        # Hide preview window.
+        self.bg.connect("motion-notify-event", self.motion_hide_preview)
+        self.bg.connect("enter-notify-event", self.motion_hide_preview)
+        
+        
         # Preview window.
         self.pv = gtk.Window(gtk.WINDOW_TOPLEVEL)
         # Set preview window.        
@@ -59,6 +66,10 @@ class PreView(object):
         self.pv.add_events(gtk.gdk.ALL_EVENTS_MASK)
         self.pv.connect("destroy", self.quit_mplayer)
         self.pv.connect("expose-event", self.draw_preview_background)
+        # Hide preview window.
+        self.pv.connect("motion-notify-event", self.motion_hide_preview)
+        self.pv.connect("enter-notify-event", self.motion_hide_preview)
+        
         
     # Background window.    
     def draw_background(self, widget, event):    
@@ -70,17 +81,25 @@ class PreView(object):
         cr.rectangle(x, y, w, h)
         cr.fill()  
         
-        pos = self.mp.time(self.pos)
+
         cr.select_font_face("Courier",
                             cairo.FONT_SLANT_NORMAL,
                             cairo.FONT_WEIGHT_BOLD)
-        cr.set_font_size(12)
+        font_size = 12
+        cr.set_font_size(font_size)
         cr.set_source_rgb(1, 1, 1)
-        cr.move_to(w/2-18, h-16)
-
-        cr.show_text("%d:%d:%d" % (self.mp.time(self.pos)[0], 
-                                   self.mp.time(self.pos)[1],
-                                   self.mp.time(self.pos)[2]))
+        font_width_padding = 25
+        font_height_padding = 16
+        cr.move_to(w/2 - font_width_padding, h - font_height_padding)
+        pos = self.mp.posNum
+        
+        time_hour = self.mp.time(pos)[0]
+        time_min = self.mp.time(pos)[1]
+        time_sec = self.mp.time(pos)[2]
+        
+        cr.show_text("%s:%s:%s" % (self.time_to_string(time_hour), 
+                                   self.time_to_string(time_min),
+                                   self.time_to_string(time_sec)))
         
         return True
     
@@ -122,6 +141,7 @@ class PreView(object):
             self.mp.quit()
             
     def create_mplayer(self):            
+      if not self.show_bool:  
         self.mp = Mplayer(self.pv.window.xid)
         self.mp.connect("get-time-pos", self.get_time_pos)
         self.mp.play(self.path)
@@ -136,28 +156,51 @@ class PreView(object):
         self.bg.show_all()
         self.pv.show_all()
         
-        self.pv.set_keep_above(True)
-        # Init mplayer.
         self.create_mplayer()
+        self.show_bool = True
+        
+        # self.bg.set_keep_above(True)
+        # self.pv.set_keep_above(True)
+        # Init mplayer.
         region = gtk.gdk.Region()
         self.bg.window.input_shape_combine_region(region, 0, 0)
         self.pv.show_all()
+        self.pv.set_keep_above(True)
         
     def hide_preview(self):
-        self.bg.destroy()
-        self.pv.destroy()
+        self.bg.hide_all()
+        self.pv.hide_all()
         
     def get_time_pos(self, mplayer, pos):    
-        self.hour, self.min, self.sec = self.mp.time(pos)
         self.i += 1
         self.i = self.i % PREVIEW_TIME_POS
         if not self.i:
-            self.mp.bseek(1)
+            self.mp.seek(self.pos)
+                    
+        self.bg.queue_draw()    
             
+    def time_to_string(self, time_pos):        
+        if 0<= time_pos <= 9:
+            return "0" + str(time_pos)        
+        return str(time_pos)
+    
+    def set_pos(self, pos):
+        self.pos = pos
+        
+    def set_path(self, path):    
+        self.path = path
+        
+    def motion_hide_preview(self, widget, event):    
+        self.hide_preview()
+        
+        
 '''Test preview player'''            
 from progressbar import *            
 class Test(object):
     def __init__(self):
+        self.x_root = 0
+        self.y_root = 0
+        self.show_id = None
         
         self.show_bool = False
         self.move_bool = False
@@ -167,38 +210,47 @@ class Test(object):
         self.win.add_events(gtk.gdk.ALL_EVENTS_MASK)
         self.win.connect("destroy", gtk.main_quit)
         self.win.connect("motion-notify-event", self.motion_notify_event)
+        self.win.connect("enter-notify-event", self.enter_notify_event)
         self.win.connect("leave-notify-event", self.leave_notify_event)
         self.pb = ProgressBar()
+        self.preview = PreView()
+        self.preview.set_path("/home/long/视频/1.rmvb")
         self.win.add(self.pb.hbox)
         
         self.win.show_all()
         
+    def enter_notify_event(self, widget, event):    
+        self.x_root = event.x_root
+        self.y_root = event.y_root
+        if self.show_id == None:
+            print "开始视频啦!!"
+            print self.preview
+            self.show_id = gtk.timeout_add(1500, self.time_preview_show)
+            print self.show_id
+            
+    def time_preview_show(self):    
+        self.preview.set_pos(500)        
+        self.preview.show_preview()
+        self.preview.move_preview(self.x_root, self.y_root)
+        return False
+    
     def leave_notify_event(self, widget, event):    
-        print "鼠标离开了"
-        #现实预览窗口
-        if self.show_bool:
-            print "显示预览窗口"
-            print "现实预览窗口了...."
-            self.test(event.x_root - 62, event.y_root - 90)
-            self.show_bool = False
+        if self.show_id:
+            print "关闭视频啦..."
+            self.preview.hide_preview()
+            gtk.timeout_remove(self.show_id)
+            self.show_id = None    
             
     def motion_notify_event(self, widget, event):  
-        #如果在制定区域为真后,如果移动了,就改为假                            
-        if not self.show_bool:    
-            try:
-                self.preview.hide_preview()
-            except:   
-                print "Error preview."
-        
-        if 0 <= event.y <= 10:
-            print "鼠标进入,等待一段时间..."
-            self.show_bool = True
-        else:
-            print "鼠标离开了制定范围"
-            self.show_bool = False
-                                  
+        #self.leave_notify_event(widget, event)
+        pass
+    
     def test(self, x, y):    
-        self.preview = PreView("/home/long/视频/1.rmvb", 500)
+        self.preview = PreView()
+        
+        self.preview.set_path("/home/long/视频/1.rmvb")
+        
+        self.preview.set_pos(500)        
         self.preview.move_preview(x, y)
         self.preview.show_preview()        
         

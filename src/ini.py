@@ -20,13 +20,15 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-语法规则: 注释: /**/ , #, ;
+语法规则:
+import *.ini 导入其它.ini模块(暂时无)
+ 注释: /**/ , #, ;
 [字母|中文字符|数字(组合)]->节点 
 字母:(a~z|A~Z)
 中文字符: (unicode*)
 数字: (0-9)
 [中123F]
-节点下面的参数: 注意:不能使用数字开始,可以使用英文和中文,但是不能组合使用.
+节点下面的参数: 注意:不能使用数字开始,可以使用英文和中文.
 width = 34
 宽度 = 34
 
@@ -341,22 +343,22 @@ class ROOT(object):
         
 if __name__ == "__main__":    
     ini = INI("config.ini")            
-    rooo = ini.get_section("java")
-    print "=============="
-    print rooo.root_name
-    print rooo.child_addr
-    print "============="
-    print ini.get_section_value("java", "x")
-    print "============="
-    print ini.get_section_childs("java")
-    ini.set_section_value("java", "with", '\"/home/long/视频\"')
-    print ini.get_section_childs("java")
-    #print rooo.child_addr["i"]
-    print "============================="
-    ini.set_section_child_name("java", "with", "width")
-    print "============================="
-    print ini.get_section_value("java", "width")
-    ini.ini_save()
+    #rooo = ini.get_section("java")
+    # print "=============="
+    # print rooo.root_name
+    # print rooo.child_addr
+    # print "============="
+    # print ini.get_section_value("java", "x")
+    # print "============="
+    # print ini.get_section_childs("java")
+    # ini.set_section_value("java", "with", '\"/home/long/视频\"')
+    # print ini.get_section_childs("java")
+    # #print rooo.child_addr["i"]
+    # print "============================="
+    # ini.set_section_child_name("java", "with", "width")
+    # print "============================="
+    # print ini.get_section_value("java", "width")
+    # ini.ini_save()
     
 '''
 INI 类 (ini_path) : ini_path 是传入.ini文件的路径
