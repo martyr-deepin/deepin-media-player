@@ -53,6 +53,8 @@ class PlayerBox(object):
         self.preview_pos = 0 
         self.show_id = None
         self.read_id = None
+        self.save_pos = 0
+        
         
         self.save_volume_mute_bool = False
         self.save_volume_value = 0
@@ -626,24 +628,37 @@ class PlayerBox(object):
             
             
     def start_time_function(self, pos):          
-        self.show_id = gtk.timeout_add(150, self.save_image_time, pos)
-        self.read_id = gtk.timeout_add(180, self.read_image_time)        
+        self.show_id = gtk.timeout_add(10, self.save_image_time, pos)
+        self.read_id = gtk.timeout_add(15, self.read_image_time)        
         
             
     def save_image_time(self, pos):    
-        save_pos = (float(float(pos))/self.progressbar.pb.allocation.width*self.mp.lenNum)
+        self.save_pos = (float(float(pos))/self.progressbar.pb.allocation.width*self.mp.lenNum)
         if self.preview.mp:                                   
             print "save image to /home/long/..../image/"
             self.preview.mp.path = self.mp.path            
-            self.preview.mp.scrot(save_pos,
-                                  get_home_path() + "/.config/deepin-media-player/image/00000001.png")
-            self.show_id = None
+            if not os.path.exists(get_home_path() + "/.config/deepin-media-player/image/preview/" + str(int(self.save_pos)) + ".png"):
+                
+                scrot_thread_id = threading.Thread(target = self.scrot_thread)
+                scrot_thread_id.start()
+            self.show_id = None    
         return False
     
+    def scrot_thread(self): # scrot use thread function.
+            self.preview.mp.scrot(self.save_pos,
+                                  get_home_path() + "/.config/deepin-media-player/image/preview/" + str(int(self.save_pos)) + ".png")
+            
+                
     def read_image_time(self):    
         print "read image to preview window."
-        self.preview.set_pixbuf(get_home_path() + "/.config/deepin-media-player/image/00000001.png")
-        self.preview.pv.queue_draw()
+        if os.path.exists(get_home_path() + "/.config/deepin-media-player/image/preview/" + str(int(self.save_pos)) + ".png"):
+        
+            
+            try:
+                self.preview.set_pixbuf(get_home_path() + "/.config/deepin-media-player/image/preview/" + str(int(self.save_pos)) + ".png")
+                self.preview.pv.queue_draw()
+            except:   
+                print ""
         self.read_id = None
         return False
         

@@ -77,9 +77,17 @@ def init_mplayer_config():
             fp = open(path + "/config.ini", "a")
             fp.close()
     
+        # create buffer file.
+        if not os.path.exists(path + "/buffer"):
+            os.mkdir(path + "/buffer")
+            
         # create save image.    
         if not os.path.exists(path + "/image"):
             os.mkdir(path + "/image")
+            
+        # create save preview window image.    
+        if not os.path.exists(path + "/image/preview"):
+            os.mkdir(path + "/image/preview")
             
             
 def get_vide_flags(path):
@@ -519,24 +527,29 @@ class  Mplayer(gobject.GObject):
         return self.timeHour, self.timeMin, self.timeSec    
     
     # Puase show image.
-    save_scrotPath = get_home_path() + "/.config/deepin-media-player/image/media_player.png"
-    def scrot(self, scrotSec, scrotPath = save_scrotPath):
+    def scrot(self, 
+              scrot_pos, 
+              scrot_save_path = get_home_path() + "/.config/deepin-media-player/image/scrot.png"):
+        
+        # ini config path.
         init_mplayer_config()
-        # Create copy file.
-        fp = open(scrotPath, "a")
-        fp.close()
         #########################
-        if self.state and os.path.exists(scrotPath):
-            os.system("cd ~/.config/deepin-media-player/image/ && mplayer -ss %s -noframedrop -nosound -vo png -frames 1 '%s'" % (scrotSec, self.path))
-            # copy image file to The specified directory.
-            file_list = os.listdir(".")
-            for file in file_list:
-                if os.path.isfile(file):
-                    fp = open(file, "r")
-                    f = fp.read(4)
-                    if f[1:] == "PNG":
-                        os.system("cp %s %s" % (file, scrotPath))
-                    fp.close()                    
+        
+        if self.state:
+            # scrot image.
+            os.system("cd ~/.config/deepin-media-player/buffer/ && mplayer -ss %s -noframedrop -nosound -vo png -frames 1 '%s'" % (scrot_pos, self.path))
+            # modify image name or get image file.
+            save_image_path = get_home_path() + "/.config/deepin-media-player/buffer/"        # save image buffer dir.    
+            image_list = os.listdir(get_home_path() + "/.config/deepin-media-player/buffer/") # get dir all image.
+            print image_list
+            for image_name in image_list:
+                if "png" == image_name[-3:]:
+                    # preview window show image.
+                    os.system("cp '%s' '%s'" % (save_image_path + image_name, 
+                                                scrot_save_path))
+                    
+                    break
+                
             return True
         else:
             return False
