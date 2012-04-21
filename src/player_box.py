@@ -627,12 +627,13 @@ class PlayerBox(object):
             
     def start_time_function(self, pos):          
         self.show_id = gtk.timeout_add(150, self.save_image_time, pos)
-        self.read_id = gtk.timeout_add(180, self.read_image_time)
+        self.read_id = gtk.timeout_add(180, self.read_image_time)        
         
+            
     def save_image_time(self, pos):    
         save_pos = (float(float(pos))/self.progressbar.pb.allocation.width*self.mp.lenNum)
-        print '保存图片到目录...'
         if self.preview.mp:                                   
+            print "save image to /home/long/..../image/"
             self.preview.mp.path = self.mp.path            
             self.preview.mp.scrot(save_pos,
                                   get_home_path() + "/.config/deepin-media-player/image/00000001.png")
@@ -640,7 +641,7 @@ class PlayerBox(object):
         return False
     
     def read_image_time(self):    
-        print "读取图片到预览窗口..."        
+        print "read image to preview window."
         self.preview.set_pixbuf(get_home_path() + "/.config/deepin-media-player/image/00000001.png")
         self.preview.pv.queue_draw()
         self.read_id = None
@@ -648,6 +649,7 @@ class PlayerBox(object):
         
     '''Show preview window'''
     def time_preview_show(self):        
+        '''Show preview window'''
         self.preview.show_preview()
         return False
 
@@ -657,6 +659,7 @@ class PlayerBox(object):
                 self.show_bool = True
         
     def hide_preview_leave(self, widget, event):
+        '''Hide preview window and remove show,read_id'''
         if self.show_id:
             self.show_bool = False
             self.preview.hide_preview()
