@@ -615,16 +615,17 @@ class PlayerBox(object):
                     self.mp.seek(int(progressbar.pos))
                             
         # Show preview window.            
-        if self.show_bool:            
-            self.x_root = event.x_root            
-            self.y_root = event.y_root
-            self.preview.show_preview()
-            self.preview.move_preview(self.x_root - self.preview.bg.get_allocation()[2]/2,
-                                      self.y_root - self.preview.bg.get_allocation()[3])        
-
+        if 1 == self.mp.state:            
+            if self.play_video_file_bool(self.mp.path):           
+                if self.show_bool:            
+                    self.x_root = event.x_root            
+                    self.y_root = event.y_root
+                    self.preview.show_preview()
+                    self.preview.move_preview(self.x_root - self.preview.bg.get_allocation()[2]/2,
+                                              self.y_root - self.preview.bg.get_allocation()[3])        
         
-            if self.show_id == None and self.read_id == None:                                    
-                self.start_time_function(event.x)
+                if self.show_id == None and self.read_id == None:                                    
+                    self.start_time_function(event.x)
             
             
     def start_time_function(self, pos):          
@@ -761,3 +762,9 @@ class PlayerBox(object):
         # print x
         # print y
         
+    def play_video_file_bool(self, vide_path):    
+        file1, file2 = os.path.splitext(vide_path)
+        if file2.lower() in ['.mkv', '.rmvb','.avi','.wmv','.3gp','rm', 'asf']:
+            return True
+        else:
+            return False
