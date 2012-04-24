@@ -85,11 +85,16 @@ def init_mplayer_config():
         if not os.path.exists(path + "/image"):
             os.mkdir(path + "/image")
             
+        '''preview scrot image'''    
+        # create preview image buffer.    
+        if not os.path.exists("/tmp/buffer"):
+            os.mkdir("/tmp/buffer")    
+            
         # create save preview window image.    
-        if not os.path.exists(path + "/image/preview"):
-            os.mkdir(path + "/image/preview")
-            
-            
+        if not os.path.exists("/tmp/preview"):
+            os.mkdir("/tmp/preview")            
+
+        
 def get_vide_flags(path):
         file1, file2 = os.path.splitext(path)
         if file2 in ['.mkv','.rmvb','.avi','.wmv','.3gp','rm']:
@@ -553,7 +558,36 @@ class  Mplayer(gobject.GObject):
             return True
         else:
             return False
-                          
+        
+        
+    def preview_scrot(self, 
+                      scrot_pos, 
+                      scrot_save_path = "/tmp/preview/preview.jpeg"):                      
+        # ini config path.
+        init_mplayer_config()
+        #########################
+        
+        if self.state:
+            # scrot image.
+            os.system("cd /tmp/buffer/ && mplayer -ss %s -noframedrop -nosound -vo png -frames 1 '%s'" % (scrot_pos, self.path))
+            # modify image name or get image file.
+            save_image_path = "/tmp/buffer/"        # save preview image buffer dir.    
+            image_list = os.listdir(save_image_path) # get dir all image.
+            print image_list
+            for image_name in image_list:
+                if "png" == image_name[-3:]:
+                    # preview window show image.
+                    pixbuf = gtk.gdk.pixbuf_new_from_file(save_image_path + image_name)
+                    image = pixbuf.scale_simple(120, 60, gtk.gdk.INTERP_BILINEAR)
+                    image.save(scrot_save_path, "jpeg")
+                    break
+                
+            return True
+        else:
+            return False
+        
+        
+        
     def findCurrentDir(self, path):
         '''Get all the files in the folder'''
         pathdir = os.listdir(path)

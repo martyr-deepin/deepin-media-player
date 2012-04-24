@@ -60,7 +60,7 @@ class PreView(object):
         self.pv = gtk.Window(gtk.WINDOW_TOPLEVEL)
         # self.image = gtk.image_new_from_file("/home/long/1.png")
         # Set preview window.        
-        self.pv.set_size_request(120, 60)
+        self.pv.set_size_request(PREVIEW_PV_WIDTH, PREVIEW_PV_HEIGHT)
         self.pv.set_decorated(False)
         self.pv.set_keep_above(True)
         self.pv.set_type_hint(gtk.gdk.WINDOW_TYPE_HINT_MENU) 

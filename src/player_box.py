@@ -636,10 +636,8 @@ class PlayerBox(object):
     def save_image_time(self, pos):    
         self.save_pos = (float(float(pos))/self.progressbar.pb.allocation.width*self.mp.lenNum)
         if self.preview.mp:                                   
-            print "save image to /home/long/..../image/"
             self.preview.mp.path = self.mp.path            
-            if not os.path.exists(get_home_path() + "/.config/deepin-media-player/image/preview/" + str(int(self.save_pos)) + ".png"):
-                
+            if not os.path.exists("/tmp/preview/" + str(int(self.save_pos)) + ".jpeg"):                
                 scrot_thread_id = threading.Thread(target = self.scrot_thread)
                 scrot_thread_id.start()
             self.show_id = None    
@@ -647,16 +645,16 @@ class PlayerBox(object):
     
     def scrot_thread(self): # scrot use thread function.
             self.preview.mp.scrot(self.save_pos,
-                                  get_home_path() + "/.config/deepin-media-player/image/preview/" + str(int(self.save_pos)) + ".png")
+                                  "/tmp/preview/"+ str(int(self.save_pos)) + ".jpeg")
             
                 
     def read_image_time(self):    
         print "read image to preview window."
-        if os.path.exists(get_home_path() + "/.config/deepin-media-player/image/preview/" + str(int(self.save_pos)) + ".png"):
+        if os.path.exists("/tmp/preview/" + str(int(self.save_pos)) + ".jpeg"):
         
             
             try:
-                self.preview.set_pixbuf(get_home_path() + "/.config/deepin-media-player/image/preview/" + str(int(self.save_pos)) + ".png")
+                self.preview.set_pixbuf("/tmp/preview/" + str(int(self.save_pos)) + ".jpeg")
                 self.preview.pv.queue_draw()
             except:   
                 print ""
