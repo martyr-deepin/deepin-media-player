@@ -60,8 +60,7 @@ class PreView(object):
         
         # Preview window.
         self.pv = gtk.Window(gtk.WINDOW_TOPLEVEL)
-        self.image = gtk.image_new_from_file("")
-        # self.image = gtk.image_new_from_file("/home/long/1.png")
+        self.image = gtk.image_new_from_file("../app_theme/default/image/bg.png")
         # Set preview window.        
         self.pv.set_size_request(PREVIEW_PV_WIDTH, PREVIEW_PV_HEIGHT)
         self.pv.set_decorated(False)
@@ -101,7 +100,7 @@ class PreView(object):
         font_width_padding = 25
         font_height_padding = 16
         cr.move_to(w/2 - font_width_padding, h - font_height_padding)
-        pos = self.mp.posNum
+        pos = self.pos
         
         time_hour = self.mp.time(pos)[0]
         time_min = self.mp.time(pos)[1]

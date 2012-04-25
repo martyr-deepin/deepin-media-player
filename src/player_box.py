@@ -619,7 +619,7 @@ class PlayerBox(object):
                     self.y_root = event.y_root                   
                     self.preview.show_preview()
                     self.preview.move_preview(self.x_root - self.preview.bg.get_allocation()[2]/2,
-                                              self.app.window.get_allocation()[3] - self.preview.bg.get_allocation()[3])        
+                                              self.y_root - self.preview.bg.get_allocation()[3])        
         
                 # if self.show_id == None and self.read_id == None:                                    
                 if self.read_id == None:    
@@ -639,6 +639,9 @@ class PlayerBox(object):
             try:                
                 # Read preview image.
                 self.preview.set_image("/tmp/preview/" + self.get_player_file_name(self.mp.path) + "/" + str(int(save_pos)) + ".jpeg")
+                # preview background window show time.
+                self.preview.set_pos(int(save_pos))
+                self.preview.bg.queue_draw()
             except:   
                 print ""
                 
