@@ -577,9 +577,12 @@ class  Mplayer(gobject.GObject):
             for image_name in image_list:
                 if "png" == image_name[-3:]:
                     # preview window show image.
-                    pixbuf = gtk.gdk.pixbuf_new_from_file(save_image_path + image_name)
-                    image = pixbuf.scale_simple(120, 60, gtk.gdk.INTERP_BILINEAR)
-                    image.save(scrot_save_path, "jpeg")
+                    try:
+                        pixbuf = gtk.gdk.pixbuf_new_from_file(save_image_path + image_name)
+                        image = pixbuf.scale_simple(120, 60, gtk.gdk.INTERP_BILINEAR)
+                        image.save(scrot_save_path, "jpeg")
+                    except:    
+                        break
                     break
                 
             return True
