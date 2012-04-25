@@ -567,13 +567,16 @@ class  Mplayer(gobject.GObject):
         init_mplayer_config()
         #########################
         
+        if not os.path.exists(os.path.split(scrot_save_path)[0]):
+            os.mkdir(os.path.split(scrot_save_path)[0])
+            
         if self.state:
             # scrot image.
             os.system("cd /tmp/buffer/ && mplayer -ss %s -noframedrop -nosound -vo png -frames 1 '%s'" % (scrot_pos, self.path))
             # modify image name or get image file.
             save_image_path = "/tmp/buffer/"        # save preview image buffer dir.    
             image_list = os.listdir(save_image_path) # get dir all image.
-            print image_list
+            
             for image_name in image_list:
                 if "png" == image_name[-3:]:
                     # preview window show image.

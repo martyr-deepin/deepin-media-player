@@ -628,17 +628,17 @@ class PlayerBox(object):
                         
     '''Read preview image.'''        
     def start_time_function(self, pos):                  
-        self.show_id = gtk.timeout_add(10, self.save_image_thread, pos)
+        self.show_id = gtk.timeout_add(10, self.save_scrot_image, pos)
         self.read_id = gtk.timeout_add(15, self.read_image_time, pos)                            
 
         
     def read_image_time(self, pos):    
         print "start read preview image... ..."
         save_pos = (float(int(pos))/self.progressbar.pb.allocation.width*self.progressbar.max)        
-        if os.path.exists("/tmp/preview/" + str(int(save_pos)) + ".jpeg"):                    
+        if os.path.exists("/tmp/preview/" + self.get_player_file_name(self.mp.path) + "/" + str(int(save_pos)) + ".jpeg"):                    
             try:                
                 # Read preview image.
-                self.preview.set_image("/tmp/preview/" + str(int(save_pos)) + ".jpeg")
+                self.preview.set_image("/tmp/preview/" + self.get_player_file_name(self.mp.path) + "/" + str(int(save_pos)) + ".jpeg")
             except:   
                 print ""
                 
@@ -647,18 +647,12 @@ class PlayerBox(object):
         
     
     '''Save media player scrot image.'''
-    def save_image_thread(self, pos):            
-        # scrot_thread_id = threading.Thread(target = self.scrot_thread, args=(pos,))
-        # scrot_thread_id.start()            
-        self.scrot_thread(pos)
-        
-        
-    def scrot_thread(self, pos): # scrot use thread function.
+    def save_scrot_image(self, pos): # scrot use thread function.
         save_pos = (float(int(pos))/self.progressbar.pb.allocation.width*self.progressbar.max)                
-        if not os.path.exists("/tmp/preview/" + str(int(save_pos)) + ".jpeg"):            
+        if not os.path.exists("/tmp/preview/" + self.get_player_file_name(self.mp.path) + "/" + str(int(save_pos)) + ".jpeg"):            
             # Save preview image.
             self.preview.mp.preview_scrot(int(save_pos),
-                                          "/tmp/preview/"+ str(int(save_pos)) + ".jpeg")            
+                                          "/tmp/preview/"+ self.get_player_file_name(self.mp.path) + "/" + str(int(save_pos)) + ".jpeg")            
 
         self.show_id = None    
         
@@ -703,8 +697,8 @@ class PlayerBox(object):
         Hour, Min, Sec = self.mp.time(length)
         self.show_time_label.time_font1 = self.set_time_string(Hour) + " : " + self.set_time_string(Min) + " : "+ self.set_time_string(Sec) + "  /"
         self.toolbar2.show_time.time_font1 = self.set_time_string(Hour) + " : " + self.set_time_string(Min) + " : "+ self.set_time_string(Sec) + "  /"
-        
-                        
+        self.preview.set_path(mplayer.path)
+        print self.preview.mp.path
         
     def get_time_pos(self, mplayer, pos):
         '''Get mplayer pos to pos of progressbar.'''
@@ -723,8 +717,9 @@ class PlayerBox(object):
         '''media player start play.'''
         self.progressbar.set_pos(0)
         self.toolbar2.progressbar.set_pos(0)
+        
         self.preview.set_path(mplayer.path) # Set preview window play path.        
-                
+        
         
     def media_player_end(self, mplayer, play_bool):
         '''player end.'''
@@ -769,3 +764,9 @@ class PlayerBox(object):
             return True
         else:
             return False
+
+        
+    def get_player_file_name(self, pathfile2):     
+        file1, file2 = os.path.split(pathfile2)
+        return os.path.splitext(file2)[0]
+   
