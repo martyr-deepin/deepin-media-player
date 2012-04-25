@@ -186,7 +186,8 @@ class PreView(object):
         self.pos = pos        
         
     def set_path(self, path):    
-        self.mp.path = path
+        if self.mp:
+            self.mp.path = path
         
     def motion_hide_preview(self, widget, event):    
         self.hide_preview()

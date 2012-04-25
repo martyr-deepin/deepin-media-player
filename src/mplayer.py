@@ -97,7 +97,7 @@ def init_mplayer_config():
         
 def get_vide_flags(path):
         file1, file2 = os.path.splitext(path)
-        if file2 in ['.mkv','.rmvb','.avi','.wmv','.3gp','rm']:
+        if file2 in ['.mkv','.rmvb','.avi','.wmv','.3gp','.rm','.mp4']:
             return True
         else:
             return False

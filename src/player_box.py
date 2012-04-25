@@ -650,9 +650,7 @@ class PlayerBox(object):
                 
     def read_image_time(self):    
         print "read image to preview window."
-        if os.path.exists("/tmp/preview/" + str(int(self.save_pos)) + ".jpeg"):
-        
-            
+        if os.path.exists("/tmp/preview/" + str(int(self.save_pos)) + ".jpeg"):                    
             try:
                 self.preview.set_pixbuf("/tmp/preview/" + str(int(self.save_pos)) + ".jpeg")
                 self.preview.pv.queue_draw()
@@ -719,7 +717,7 @@ class PlayerBox(object):
         '''media player start play.'''
         self.progressbar.set_pos(0)
         self.toolbar2.progressbar.set_pos(0)
-        # self.preview.set_path(mplayer.path) # Set preview window play path.
+        self.preview.set_path(mplayer.path) # Set preview window play path.
         
     def media_player_end(self, mplayer, play_bool):
         '''player end.'''
@@ -762,7 +760,7 @@ class PlayerBox(object):
         
     def play_video_file_bool(self, vide_path):    
         file1, file2 = os.path.splitext(vide_path)
-        if file2.lower() in ['.mkv', '.rmvb','.avi','.wmv','.3gp','rm', 'asf']:
+        if file2.lower() in ['.mkv', '.rmvb','.avi','.wmv','.3gp','.rm', '.asf', '.mp4']:
             return True
         else:
             return False
