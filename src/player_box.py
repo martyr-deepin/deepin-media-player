@@ -644,7 +644,7 @@ class PlayerBox(object):
         return False
     
     def scrot_thread(self): # scrot use thread function.
-            self.preview.mp.scrot(self.save_pos,
+            self.preview.mp.preview_scrot(self.save_pos,
                                   "/tmp/preview/"+ str(int(self.save_pos)) + ".jpeg")
             
                 
