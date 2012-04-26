@@ -115,6 +115,7 @@ class PlayerBox(object):
 
         '''Toolbar2 Init.'''
         self.toolbar2 = ToolBar2()
+        self.toolbar2.panel.set_size_request(1, 40) # Set toolbar2 height.
         self.toolbar2.panel.connect("motion-notify-event", self.set_keep_window_toolbar2)
         #self.toolbar2.show_toolbar2() Test function.
         self.toolbar2.progressbar.pb.connect("motion-notify-event",
@@ -383,11 +384,12 @@ class PlayerBox(object):
         self.toolbar.panel.hide_all()
         self.panel_x, self.panel_y = self.screen.window.get_root_origin()
         if self.mode_state_bool: # Concise mode.
-            self.toolbar.panel.move(self.panel_x, self.panel_y)
-            self.toolbar2.panel.move(self.panel_x, self.panel_y + (widget.allocation[3] - self.toolbar2.panel.allocation[3]))
-        else:    # common mode.
+            self.toolbar.panel.move(self.panel_x, self.panel_y)            
+            self.toolbar2.panel.move(self.panel_x, self.panel_y + (widget.allocation[3] - self.toolbar2.panel.allocation[3]))            
+        else:    # common mode.            
             self.toolbar.panel.move(self.panel_x + 1, self.panel_y + self.app.titlebar.box.allocation[3])
-
+            self.toolbar2.panel.move(self.panel_x + 1, self.panel_y + self.screen.allocation.height - 40)
+            
         self.set_toolbar_show_opsition()    
             
         # Hide preview window.
@@ -487,7 +489,7 @@ class PlayerBox(object):
         Show playlist.
         Show window border.
         [common mode:]
-        '''
+        '''        
         if self.mode_state_bool:
             self.common_window_function()
             self.mode_state_bool = False
@@ -553,6 +555,13 @@ class PlayerBox(object):
         if 0 <= event.y <= 20:
             self.app.window.set_keep_above(True)
             self.toolbar.show_toolbar()
+            
+            self.panel_x, self.panel_y = self.screen.window.get_root_origin()
+            if self.mode_state_bool: # Concise mode.
+                self.toolbar.panel.move(self.panel_x, self.panel_y)            
+            else:    # common mode.            
+                self.toolbar.panel.move(self.panel_x + 1, self.panel_y + self.app.titlebar.box.allocation[3])
+            
             self.toolbar.panel.set_keep_above(True)
         else:
             if not self.above_bool:
