@@ -25,6 +25,7 @@ from dtk.ui.utils import *
 from constant import *
 from utils import *
 import gtk
+import gobject
 
 class ToggleHoverButton(gtk.Button):
     def __init__(self, 

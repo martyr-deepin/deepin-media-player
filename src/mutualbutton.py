@@ -26,6 +26,7 @@ from dtk.ui.utils import *
 from constant import *
 from utils import *
 
+
 class MutualButton(object):
     def __init__(self,
                  button1_pixbuf_1 = app_theme.get_pixbuf("OrdinaryMode.png"), 

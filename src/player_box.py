@@ -623,10 +623,7 @@ class PlayerBox(object):
                     # previwe window show position.
                     self.preview.move_preview(self.x_root - self.preview.bg.get_allocation()[2]/2,
                                               preview_y_padding)        
-                    
-                   
-  
-  
+                                           
                 # if self.show_id == None and self.read_id == None:                                    
                 if self.read_id == None:    
                     self.start_time_function(event.x)
