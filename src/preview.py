@@ -42,7 +42,7 @@ class PreView(object):
         self.mp.state = 1    
         
         # Preview background window.
-        self.bg = gtk.Window(gtk.WINDOW_TOPLEVEL)
+        self.bg = gtk.Window(gtk.WINDOW_POPUP)
         self.bg.set_colormap(gtk.gdk.Screen().get_rgba_colormap())
         self.bg.set_decorated(False)
         #self.bg.set_keep_above(True)
@@ -59,7 +59,7 @@ class PreView(object):
         # self.bg.connect("focus-in-event", self.motion_hide_preview)
         
         # Preview window.
-        self.pv = gtk.Window(gtk.WINDOW_TOPLEVEL)
+        self.pv = gtk.Window(gtk.WINDOW_POPUP)
         self.image = gtk.image_new_from_file("../app_theme/default/image/bg.png")
         # Set preview window.        
         self.pv.set_size_request(PREVIEW_PV_WIDTH, PREVIEW_PV_HEIGHT)

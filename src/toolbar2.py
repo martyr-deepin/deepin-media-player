@@ -39,10 +39,12 @@ class ToolBar2(object):
         self.panel = Panel(APP_WIDTH, 42)
         self.vbox = gtk.VBox()
         self.progressbar = ProgressBar()        
-
-        # panel signal.
-        self.panel.connect("expose-event", self.panel_expose)
         
+        # panel signal.
+        self.panel.connect("expose-event", self.panel_expose)        
+        
+        # self.panel.set_type_hint(gtk.gdk.WINDOW_TYPE_HINT_TOOLBAR)
+        # self.panel.set_type_hint(gtk.gdk.WINDOW_TYPE_HINT_POPUP_MENU)
         self.hbox = gtk.HBox()
         # hbox add child widget.
         self.show_time_hframe = HorizontalFrame()
