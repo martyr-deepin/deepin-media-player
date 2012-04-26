@@ -420,7 +420,7 @@ class PlayerBox(object):
         self.toolbar2.volume_button.set_value(self.save_volume_value)
 
     def set_window_full(self):
-        self.screen.queue_draw()
+        # self.screen.queue_draw()
         self.concise_window_function()
         self.toolbar.panel.fullscreen()  # Toolbar hide.
         #self.toolbar2.panel.fullscreen()
@@ -432,7 +432,7 @@ class PlayerBox(object):
 
 
     def set_window_quit_full(self):
-        self.screen.queue_draw()
+        # self.screen.queue_draw()
         self.toolbar.panel.unfullscreen()
         #self.toolbar2.panel.unfullscreen()
         self.app.window.unfullscreen()
