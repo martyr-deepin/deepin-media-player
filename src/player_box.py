@@ -144,7 +144,7 @@ class PlayerBox(object):
         # Hide playlist and show playlist widget hbox.
         self.hbox.pack_start(self.vbox)
 
-
+        
         '''Bottom control.'''
         # Hide Bottom and show Bottom.
         self.bottom_main_vbox = gtk.VBox()
@@ -172,7 +172,7 @@ class PlayerBox(object):
         self.play_control_panel.pre_btn.connect("clicked", self.pre_button_clicked) # pre play.
         self.play_control_panel.start_btn.connect("clicked", self.start_button_clicked, 1) # start play or pause play.
         self.play_control_panel.next_btn.connect("clicked", self.next_button_clicked) # next play.
-
+        
 
         # Volume button.
         self.volume_button_hframe = HorizontalFrame()
@@ -202,8 +202,30 @@ class PlayerBox(object):
         # vbox add to main_hbox
         self.main_vbox.pack_start(self.hbox, True, True) # screen and progressbar
         self.main_vbox.pack_start(self.bottom_main_vbox, False, False)
-
-
+        
+        '''Hide preview window.'''                        
+        self.play_control_panel.stop_btn.add_events(gtk.gdk.ALL_EVENTS_MASK)
+        self.play_control_panel.stop_btn.connect("motion-notify-event", self.hide_preview_function)
+        self.play_control_panel.pre_btn.add_events(gtk.gdk.ALL_EVENTS_MASK)
+        self.play_control_panel.pre_btn.connect("motion_notify_event", self.hide_preview_function)
+        self.play_control_panel.start_btn.add_events(gtk.gdk.ALL_EVENTS_MASK)
+        self.play_control_panel.start_btn.connect("motion-notify-event", self.hide_preview_function)        
+        self.play_control_panel.next_btn.add_events(gtk.gdk.ALL_EVENTS_MASK)
+        self.play_control_panel.next_btn.connect("motion-notify-event", self.hide_preview_function)
+        self.play_control_panel.open_btn.add_events(gtk.gdk.ALL_EVENTS_MASK)
+        self.play_control_panel.open_btn.connect("motion-notify-event", self.hide_preview_function)
+        
+        self.volume_button.button_event.add_events(gtk.gdk.ALL_EVENTS_MASK)
+        self.volume_button.button_event.connect("motion_notify_event", self.hide_preview_function)
+        self.volume_button.volume_progressbar.add_events(gtk.gdk.ALL_EVENTS_MASK)
+        self.volume_button.volume_progressbar.connect("motion-notify-event", self.hide_preview_function)        
+        
+        
+        
+    def hide_preview_function(self, widget, event):    
+        self.preview.hide_preview()
+        self.hide_preview_leave(widget, event)
+        
     '''play control panel.'''
     def stop_button_clicked(self, widget):
         self.mp.quit()
@@ -368,6 +390,10 @@ class PlayerBox(object):
 
         self.set_toolbar_show_opsition()    
             
+        # Hide preview window.
+        self.hide_preview_function(widget, event)
+        
+        
     def configure_hide_tool(self, widget, event): # screen: configure-event.
         if self.mp:
             #self.app.hide_titlebar() # Test hide titlebar.
