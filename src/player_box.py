@@ -614,13 +614,19 @@ class PlayerBox(object):
         # Show preview window.            
         if 1 == self.mp.state:            
             if self.play_video_file_bool(self.mp.path):           
-                if self.show_bool:            
+                if self.show_bool:                                
                     self.x_root = event.x_root                                
                     self.y_root = event.y_root                   
+                    preview_y_padding = self.app.window.get_position()[1] + self.screen.allocation.height + self.app.titlebar.box.allocation.height - self.preview.bg.get_allocation()[3]
+                    # preview window show.
                     self.preview.show_preview()
+                    # previwe window show position.
                     self.preview.move_preview(self.x_root - self.preview.bg.get_allocation()[2]/2,
-                                              self.y_root - self.preview.bg.get_allocation()[3])        
-        
+                                              preview_y_padding)        
+                    
+                   
+  
+  
                 # if self.show_id == None and self.read_id == None:                                    
                 if self.read_id == None:    
                     self.start_time_function(event.x)
@@ -720,7 +726,7 @@ class PlayerBox(object):
     def media_player_start(self, mplayer, play_bool):
         '''media player start play.'''
         self.progressbar.set_pos(0)
-        self.toolbar2.progressbar.set_pos(0)
+        self.toolbar2.progressbar.set_pos(0)        
         
         self.preview.set_path(mplayer.path) # Set preview window play path.        
         
