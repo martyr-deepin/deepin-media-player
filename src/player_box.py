@@ -722,6 +722,8 @@ class PlayerBox(object):
 
     def media_player_start(self, mplayer, play_bool):
         '''media player start play.'''
+        self.set_flags()
+        
         self.progressbar.set_pos(0)
         self.toolbar2.progressbar.set_pos(0)        
         
