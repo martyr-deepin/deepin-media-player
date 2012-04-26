@@ -295,11 +295,11 @@ class PlayerBox(object):
 
     def show_bottom(self):
         if [] == self.bottom_main_vbox.get_children():
-            self.bottom_main_vbox.add(self.bottom_play_control_hbox_vframe)
+            self.bottom_main_vbox.add(self.bottom_play_control_hbox_vframe_event_box)
 
     def hide_bottom(self):
         if [] != self.bottom_main_vbox.get_children():
-            self.bottom_main_vbox.foreach(self.bottom_main_vbox.remove(self.bottom_play_control_hbox_vframe))
+            self.bottom_main_vbox.foreach(self.bottom_main_vbox.remove(self.bottom_play_control_hbox_vframe_event_box))
 
 
     '''Init media player.'''
