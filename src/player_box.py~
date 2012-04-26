@@ -654,7 +654,6 @@ class PlayerBox(object):
         save_pos = (float(int(pos))/self.progressbar.pb.allocation.width*self.progressbar.max)                
         if not os.path.exists("/tmp/preview/" + self.get_player_file_name(self.mp.path) + "/" + str(int(save_pos)) + ".jpeg"):            
             # Save preview image.
-            print "截图视频路径:" + self.preview.mp.path
             self.preview.mp.preview_scrot(int(save_pos),
                                           "/tmp/preview/"+ self.get_player_file_name(self.mp.path) + "/" + str(int(save_pos)) + ".jpeg")            
 
