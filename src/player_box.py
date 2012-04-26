@@ -20,7 +20,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#from dtk.ui.box import Box
+from dtk.ui.box import EventBox
 from dtk.ui.frame import *
 from dtk.ui.utils import *
 from dtk.ui.label import *
@@ -157,18 +157,18 @@ class PlayerBox(object):
 
         # Show time widget.
         # padding=0, xalign=1, yalign=0.0, xscale=0.0, yscale=0.0
-        self.show_time_label_hframe = HorizontalFrame()
+        self.show_time_label_hframe = HorizontalFrame()        
         self.show_time_label = ShowTime()
         self.show_time_label.time_box.set_size_request(110, -1)
         self.show_time_label.time_font1 = "00 : 00 : 00 "
         self.show_time_label.time_font2 = " / 00 : 00 : 00"
         self.show_time_label_hframe.add(self.show_time_label.time_box)
         self.show_time_label_hframe.set(0, 0.5, 0, 0)
-
+        
         self.play_control_panel = PlayControlPanel()
         self.play_control_panel_hframe = self.play_control_panel.hbox_hframe
         self.play_control_panel_hframe.set(1, 0.5, 0, 0)
-
+        
         self.play_control_panel.stop_btn.connect("clicked", self.stop_button_clicked) # stop play.
         self.play_control_panel.pre_btn.connect("clicked", self.pre_button_clicked) # pre play.
         self.play_control_panel.start_btn.connect("clicked", self.start_button_clicked, 1) # start play or pause play.
@@ -198,32 +198,23 @@ class PlayerBox(object):
         self.bottom_play_control_hbox.pack_start(self.volume_button_hframe, True, True)
         self.bottom_play_control_hbox.pack_start(self.play_list_button_hframe, False, False)
                 
+        self.bottom_play_control_hbox_vframe_event_box = EventBox()
+        self.bottom_play_control_hbox_vframe_event_box.add_events(gtk.gdk.ALL_EVENTS_MASK)
+        self.bottom_play_control_hbox_vframe_event_box.add(self.bottom_play_control_hbox_vframe)
         
-        self.bottom_main_vbox.pack_start(self.bottom_play_control_hbox_vframe)
+        self.bottom_main_vbox.pack_start(self.bottom_play_control_hbox_vframe_event_box)
         # vbox add to main_hbox
         self.main_vbox.pack_start(self.hbox, True, True) # screen and progressbar
         self.main_vbox.pack_start(self.bottom_main_vbox, False, False)
         
         '''Hide preview window.'''                        
-        self.play_control_panel.stop_btn.add_events(gtk.gdk.ALL_EVENTS_MASK)
-        self.play_control_panel.stop_btn.connect("motion-notify-event", self.hide_preview_function)
-        self.play_control_panel.pre_btn.add_events(gtk.gdk.ALL_EVENTS_MASK)
-        self.play_control_panel.pre_btn.connect("motion_notify_event", self.hide_preview_function)
-        self.play_control_panel.start_btn.add_events(gtk.gdk.ALL_EVENTS_MASK)
-        self.play_control_panel.start_btn.connect("motion-notify-event", self.hide_preview_function)        
-        self.play_control_panel.next_btn.add_events(gtk.gdk.ALL_EVENTS_MASK)
-        self.play_control_panel.next_btn.connect("motion-notify-event", self.hide_preview_function)
-        self.play_control_panel.open_btn.add_events(gtk.gdk.ALL_EVENTS_MASK)
-        self.play_control_panel.open_btn.connect("motion-notify-event", self.hide_preview_function)
+        self.bottom_play_control_hbox_vframe_event_box.connect("motion-notify-event", self.hide_preview_function)
         
-        self.volume_button.button_event.add_events(gtk.gdk.ALL_EVENTS_MASK)
-        self.volume_button.button_event.connect("motion_notify_event", self.hide_preview_function)
-        self.volume_button.volume_progressbar.add_events(gtk.gdk.ALL_EVENTS_MASK)
-        self.volume_button.volume_progressbar.connect("motion-notify-event", self.hide_preview_function)        
         
         
         
     def hide_preview_function(self, widget, event):    
+        '''Hide preview window.'''
         self.preview.hide_preview()
         self.hide_preview_leave(widget, event)
         

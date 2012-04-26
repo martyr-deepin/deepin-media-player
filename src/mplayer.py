@@ -546,7 +546,7 @@ class  Mplayer(gobject.GObject):
             # modify image name or get image file.
             save_image_path = get_home_path() + "/.config/deepin-media-player/buffer/"        # save image buffer dir.    
             image_list = os.listdir(get_home_path() + "/.config/deepin-media-player/buffer/") # get dir all image.
-            print image_list
+            # print image_list
             for image_name in image_list:
                 if "png" == image_name[-3:]:
                     # preview window show image.
