@@ -102,11 +102,10 @@ class PlayerBox(object):
         self.progressbar.pb.connect("motion-notify-event", self.progressbar_player_drag_pos_modify, self.progressbar, 1)
         self.progressbar.pb.connect("button-press-event", self.progressbar_player_point_pos_modify, self.progressbar, 1)
         self.progressbar.pb.connect("button-release-event", self.progressbar_set_point_bool, self.progressbar)
-        self.progressbar.pb.connect("enter-notify-event", self.show_preview_enter)
-        self.progressbar.pb.connect("leave-notify-event", self.hide_preview_leave)
         
-
-
+        self.progressbar.pb.connect("enter-notify-event", self.show_preview_enter)
+        self.progressbar.pb.connect("leave-notify-event", self.hide_preview_leave)        
+        
         '''Toolbar Init.'''
         self.toolbar = ToolBar()
         self.toolbar.toolbar_full_button.connect("clicked", self.full_play_window)
@@ -197,14 +196,12 @@ class PlayerBox(object):
         self.bottom_play_control_hbox.pack_start(self.play_control_panel_hframe, True, True)
         self.bottom_play_control_hbox.pack_start(self.volume_button_hframe, True, True)
         self.bottom_play_control_hbox.pack_start(self.play_list_button_hframe, False, False)
-
-
+                
+        
         self.bottom_main_vbox.pack_start(self.bottom_play_control_hbox_vframe)
         # vbox add to main_hbox
         self.main_vbox.pack_start(self.hbox, True, True) # screen and progressbar
         self.main_vbox.pack_start(self.bottom_main_vbox, False, False)
-
-
 
 
     '''play control panel.'''
@@ -438,7 +435,7 @@ class PlayerBox(object):
         self.app.window.unfullscreen()
         self.common_window_function()
         self.full_bool = False
-
+        
 
     def full_play_window(self, widget): #full_button
         '''Full player window.'''
@@ -555,7 +552,12 @@ class PlayerBox(object):
                                             int(self.event_x_root),
                                             int(self.event_y_root),
                                             self.event_time)
-
+            
+        # hide preview window.    
+        self.preview.hide_preview()    
+        self.hide_preview_leave(widget, event)    
+            
+            
     def screen_time_pause(self):
         if self.mp.pause_bool:
             self.play_control_panel.start_btn.start_bool = False
@@ -612,7 +614,7 @@ class PlayerBox(object):
             if self.mp:
                 if 1 == self.mp.state:
                     self.mp.seek(int(progressbar.pos))
-                            
+            
         # Show preview window.            
         if 1 == self.mp.state:            
             if self.play_video_file_bool(self.mp.path):           
@@ -638,7 +640,7 @@ class PlayerBox(object):
 
         
     def read_image_time(self, pos):    
-        print "start read preview image... ..."
+        # print "start read preview image... ..."
         save_pos = (float(int(pos))/self.progressbar.pb.allocation.width*self.progressbar.max)        
         if os.path.exists("/tmp/preview/" + self.get_player_file_name(self.mp.path) + "/" + str(int(save_pos)) + ".jpeg"):                    
             try:                
@@ -652,20 +654,18 @@ class PlayerBox(object):
                 
         self.read_id = None
         return False
-        
-    
+            
     '''Save media player scrot image.'''
     def save_scrot_image(self, pos): # scrot use thread function.
         save_pos = (float(int(pos))/self.progressbar.pb.allocation.width*self.progressbar.max)                
         if not os.path.exists("/tmp/preview/" + self.get_player_file_name(self.mp.path) + "/" + str(int(save_pos)) + ".jpeg"):            
             # Save preview image.
-            print "截图视频路径:" + self.preview.mp.path
+            # print "截图视频路径:" + self.preview.mp.path
             self.preview.mp.preview_scrot(int(save_pos),
                                           "/tmp/preview/"+ self.get_player_file_name(self.mp.path) + "/" + str(int(save_pos)) + ".jpeg")            
 
         self.show_id = None    
-        
-        
+                
     '''Show preview window'''
     def time_preview_show(self):        
         '''Show preview window'''
@@ -687,13 +687,11 @@ class PlayerBox(object):
                 gtk.timeout_remove(self.read_id)
             self.show_id = None
             self.read_id = None
-
             
     def set_time_string(self, num):
         if 0 <= num <= 9:
             return "0" + str(num)
         return str(num)
-
     
     def get_time_length(self, mplayer, length):
         '''Get mplayer length to max of progressbar.'''
@@ -707,7 +705,7 @@ class PlayerBox(object):
         self.show_time_label.time_font1 = self.set_time_string(Hour) + " : " + self.set_time_string(Min) + " : "+ self.set_time_string(Sec) + "  /"
         self.toolbar2.show_time.time_font1 = self.set_time_string(Hour) + " : " + self.set_time_string(Min) + " : "+ self.set_time_string(Sec) + "  /"
         self.preview.set_path(mplayer.path)
-        print self.preview.mp.path
+        # print self.preview.mp.path
         
     def get_time_pos(self, mplayer, pos):
         '''Get mplayer pos to pos of progressbar.'''
@@ -721,21 +719,18 @@ class PlayerBox(object):
                 self.toolbar2.panel.queue_draw()
                 self.app.window.queue_draw()
 
-
     def media_player_start(self, mplayer, play_bool):
         '''media player start play.'''
         self.progressbar.set_pos(0)
         self.toolbar2.progressbar.set_pos(0)        
         
         self.preview.set_path(mplayer.path) # Set preview window play path.        
-        
-        
+                
     def media_player_end(self, mplayer, play_bool):
         '''player end.'''
         #print self.input_string + "Linux Deepin Media player...end"
         # Play file modify start_btn.
         self.media_player_midfy_start_bool()
-
         
     def media_player_next(self, mplayer, play_bool):
         if 1 == play_bool:
@@ -752,7 +747,6 @@ class PlayerBox(object):
         self.play_control_panel.start_btn.queue_draw()
         self.toolbar2.play_control_panel.start_btn.start_bool = True
         self.toolbar2.play_control_panel.start_btn.queue_draw()
-
 
     # Double buffer set.
     def unset_flags(self):
@@ -773,7 +767,6 @@ class PlayerBox(object):
             return True
         else:
             return False
-
         
     def get_player_file_name(self, pathfile2):     
         file1, file2 = os.path.split(pathfile2)

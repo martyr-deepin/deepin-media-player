@@ -56,7 +56,7 @@ class PreView(object):
         # Hide preview window.
         self.bg.connect("motion-notify-event", self.motion_hide_preview)
         self.bg.connect("enter-notify-event", self.motion_hide_preview)
-        
+        # self.bg.connect("focus-in-event", self.motion_hide_preview)
         
         # Preview window.
         self.pv = gtk.Window(gtk.WINDOW_TOPLEVEL)
@@ -200,72 +200,4 @@ class PreView(object):
         
     def set_image(self, image_path):    
         self.image.set_from_file(image_path)
-        
-'''Test preview player'''            
-from progressbar import *            
-class Test(object):
-    def __init__(self):
-        self.x_root = 0
-        self.y_root = 0
-        self.show_id = None
-        
-        self.show_bool = False
-        self.move_bool = False
-        self.preview = None
-        self.win = gtk.Window(gtk.WINDOW_TOPLEVEL)
-        self.win.set_title("影音测试窗口")
-        self.win.add_events(gtk.gdk.ALL_EVENTS_MASK)
-        self.win.connect("destroy", gtk.main_quit)
-        self.win.connect("motion-notify-event", self.motion_notify_event)
-        self.win.connect("enter-notify-event", self.enter_notify_event)
-        self.win.connect("leave-notify-event", self.leave_notify_event)
-        self.pb = ProgressBar()
-        self.preview = PreView()
-        self.preview.set_path("/home/long/视频/1.rmvb")
-        self.win.add(self.pb.hbox)
-        
-        self.win.show_all()
-        
-    def enter_notify_event(self, widget, event):    
-        self.x_root = event.x_root
-        self.y_root = event.y_root
-        if self.show_id == None:
-            print "开始视频啦!!"
-            print self.preview
-            #self.show_id = gtk.timeout_add(10, self.time_preview_show)
-            #print self.show_id
-            self.time_preview_show()
             
-    def time_preview_show(self):    
-        self.preview.set_pos(500)        
-        self.preview.show_preview()
-        self.preview.move_preview(self.x_root, self.y_root)
-        return False
-    
-    def leave_notify_event(self, widget, event):    
-        if self.show_id:
-            print "关闭视频啦..."
-            self.preview.hide_preview()
-            gtk.timeout_remove(self.show_id)
-            self.show_id = None    
-            
-    def motion_notify_event(self, widget, event):  
-        #self.leave_notify_event(widget, event)
-        pass
-    
-    def test(self, x, y):    
-        self.preview = PreView()
-        
-        self.preview.set_path("/home/long/视频/1.rmvb")
-        
-        self.preview.set_pos(500)        
-        self.preview.move_preview(x, y)
-        self.preview.show_preview()        
-        
-if __name__ == "__main__":        
-    #pv = PreView("/home/long/视频/1.rmvb", 500)
-    #pv.show_preview()
-    test = Test()
-    #Test()
-    gtk.main()
-    
