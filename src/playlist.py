@@ -36,7 +36,7 @@ class PlayList(object):
         self.playlist_vbox = gtk.VBox()
         self.vbox_vframe = VerticalFrame(padding = 0)
         
-        self.scrolled_window = ScrolledWindow(hscrollbar_policy=gtk.POLICY_NEVER)    
+        self.scrolled_window = ScrolledWindow()    
         self.list_view = ListView()
         self.item_array = []
         self.list_view.connect("configure-event", self.init_playlist_path)
@@ -49,24 +49,25 @@ class PlayList(object):
         self.vbox.pack_start(self.vbox_vframe)
         
     def double_click_item(self, list_view, list_item, colume, offset_x, offset_y):    
-        if media_player["mp"].playList != []:
-            if media_player["mp"].state == 0:
-                media_player["mp"].play(list_item.title)
-            else:
-                media_player["mp"].quit()
-                media_player["mp"].play(list_item.title)
-        
+        # if media_player["mp"].playList != []:
+        #     if media_player["mp"].state == 0:
+        #         media_player["mp"].play(list_item.title)
+        #     else:
+        #         media_player["mp"].quit()
+        #         media_player["mp"].play(list_item.title)
+        pass
+    
     def init_playlist_path(self, widget, event):                     
-        if [] == self.item_array:
-            media_player["mp"].findCurrentDir(get_home_path() + "/视频")
+        # if [] == self.item_array:
+        #     media_player["mp"].findCurrentDir(get_home_path() + "/视频")
             
-            self.item_array = []
-            for i in range(0, media_player["mp"].playListSum):
-                self.item_array.append((media_player["mp"].playList[i], ""))
+            # self.item_array = []
+            # for i in range(0, media_player["mp"].playListSum):
+            #     self.item_array.append((media_player["mp"].playList[i], ""))
         
-            items = map(lambda (title, length): MediaItem(title, length), self.item_array)
-            self.list_view.add_items(items)    
-            
+            # items = map(lambda (title, length): MediaItem(title, length), self.item_array)
+            # self.list_view.add_items(items)    
+        pass
             
                 
     def show_playlist(self):
@@ -143,13 +144,7 @@ class MediaItem(gobject.GObject):
 # Test funcation.    #######################
 ############################################    
 def clicked_button(widget, list_view, mp):    
-    mp.findCurrentDir(get_home_path() + "/视频")
-    item_array = []
-    for i in range(0, mp.playListSum):
-        item_array.append((mp.playList[i], ""))
-        
-    items = map(lambda (title, length): MediaItem(title, length), item_array)
-    list_view.add_items(items)    
+    print list_view
     
 def double_click_item(list_view, list_item, colume, offset_x, offset_y):    
     print "* Button press: %s" % (str((list_item.title, list_item.length)))
@@ -160,7 +155,7 @@ if __name__ == "__main__":
     win.connect("destroy", gtk.main_quit)
     vbox = gtk.VBox()
     
-    scrolled_window = ScrolledWindow(hscrollbar_policy=gtk.POLICY_NEVER)
+    scrolled_window = ScrolledWindow()
     mp = Mplayer()
     list_view = ListView()
     list_view.connect("double-click-item", double_click_item)

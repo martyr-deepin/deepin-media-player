@@ -35,7 +35,7 @@ from play_list_button import *
 from volume_button import *
 from drag import *
 from preview import *
-
+from playlist import *
 
 class PlayerBox(object):
     def __init__ (self, app, argv_path_list):
@@ -73,6 +73,7 @@ class PlayerBox(object):
         self.main_vbox_hframe = HorizontalFrame(1)
         self.main_vbox_hframe.add(self.main_vbox)
 
+        
         '''Preview window'''
         self.preview = PreView()
         
@@ -148,6 +149,9 @@ class PlayerBox(object):
         # Hide playlist and show playlist widget hbox.
         self.hbox.pack_start(self.vbox)
 
+        '''playlist'''
+        self.playlist = PlayList()
+        # self.hbox.pack_start(self.playlist.vbox)
         
         '''Bottom control.'''
         # Hide Bottom and show Bottom.
@@ -177,7 +181,6 @@ class PlayerBox(object):
         self.play_control_panel.start_btn.connect("clicked", self.start_button_clicked, 1) # start play or pause play.
         self.play_control_panel.next_btn.connect("clicked", self.next_button_clicked) # next play.
         
-
         # Volume button.
         self.volume_button_hframe = HorizontalFrame()
         self.volume_button = VolumeButton()
@@ -213,7 +216,7 @@ class PlayerBox(object):
         '''Hide preview window.'''                        
         self.bottom_play_control_hbox_vframe_event_box.connect("motion-notify-event", self.hide_preview_function)
         
-        
+                
         
         
     def hide_preview_function(self, widget, event):    
@@ -485,6 +488,8 @@ class PlayerBox(object):
         [common mode:]
         '''        
         if self.mode_state_bool:
+            # window Angle.
+            self.app.window.set_window_shape(True)
             self.common_window_function()
             self.mode_state_bool = False
 
@@ -508,8 +513,8 @@ class PlayerBox(object):
 
         if not self.mode_state_bool:
             self.concise_window_function()
+            # window Angle.
             self.app.window.set_window_shape(False)
-            #self.app.window.set_window_shape(True)
             self.mode_state_bool = True
             self.toolbar2.panel.show_all()
             # Set toolbar2 panel position.
