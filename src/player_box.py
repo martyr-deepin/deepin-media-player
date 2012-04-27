@@ -626,6 +626,9 @@ class PlayerBox(object):
         '''Mouse left click rate of progress'''
         if self.mp:
             if 1 == self.mp.state:
+                # Hide preview window.
+                self.hide_preview_function(widget, event)
+                
                 self.mp.seek(int(progressbar.pos))
                 progressbar.set_pos(progressbar.pos)
                 progressbar.drag_bool = True
@@ -634,6 +637,9 @@ class PlayerBox(object):
     def progressbar_player_drag_pos_modify(self, widget, event, progressbar, pb_bit):
         '''Set player rate of progress.'''
         if progressbar.drag_bool: # Mouse left.
+            # Hide preview window.
+            self.hide_preview_function(widget, event)
+            
             if 1 == pb_bit:
                 self.toolbar2.progressbar.set_pos(progressbar.pos)
                 
@@ -674,13 +680,13 @@ class PlayerBox(object):
     def read_image_time(self, pos, progressbar):    
         # print "start read preview image... ..."
         save_pos = int((float(int(pos)) / progressbar.pb.allocation.width * progressbar.max)        )
-        print "读取图片:" + str(save_pos)
+        # print "读取图片:" + str(save_pos)
         
         if os.path.exists("/tmp/preview/" + self.get_player_file_name(self.mp.path) + "/" + str(int(save_pos)) + ".jpeg"):                    
             try:                
                 # Read preview image.
                 self.preview.set_image("/tmp/preview/" + self.get_player_file_name(self.mp.path) + "/" + str(int(save_pos)) + ".jpeg")
-                print "set preview image...."
+                # print "set preview image...."
                 # preview background window show time.
                 self.preview.set_pos(int(save_pos))
                 self.preview.bg.queue_draw()                
@@ -693,7 +699,7 @@ class PlayerBox(object):
     '''Save media player scrot image.'''
     def save_scrot_image(self, pos, progressbar): # scrot use thread function.
         save_pos = int((float(int(pos)) / progressbar.pb.allocation.width * progressbar.max))
-        print "保存图片:" + str(save_pos)
+        # print "保存图片:" + str(save_pos)
         
         if not os.path.exists("/tmp/preview/" + self.get_player_file_name(self.mp.path) + "/" + str(int(save_pos)) + ".jpeg"):            
             # Save preview image.
