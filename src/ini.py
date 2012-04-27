@@ -410,5 +410,5 @@ if __name__ == "__main__":
     print ini.get_section_value("window", "w")
     print ini.get_section_value("window", "h")
     ini.ini_save()
-    
+    #这是一个简单的测试,不懂
 
