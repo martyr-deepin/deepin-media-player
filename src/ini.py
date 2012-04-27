@@ -19,32 +19,19 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-'''
-语法规则:
-import *.ini 导入其它.ini模块(暂时无)
- 注释: /**/ , #, ;
-[字母|中文字符|数字(组合)]->节点 
-字母:(a~z|A~Z)
-中文字符: (unicode*)
-数字: (0-9)
-[中123F]
-节点下面的参数: 注意:不能使用数字开始,可以使用英文和中文.
-width = 34
-宽度 = 34
-
-例子:
-[窗口] 或 [window] 或[窗win123]
-width = 34
-height = 34
-[播放器]  或 [player]
-图片截图路径 = 34
-path = '/home/long...'
-'''
 import os
 import sys
+import gobject
 
-class INI(object):
+
+class INI(gobject.GObject):
+    __gsignals__ = {
+        "send-error":(gobject.SIGNAL_RUN_LAST,
+                        gobject.TYPE_NONE,(gobject.TYPE_STRING,))
+        }
     def __init__(self, ini_path):
+        gobject.GObject.__init__(self)
+        
         self.ini_path = ini_path
         self.ini_fp = open(ini_path, "r")
         self.ch = ''
@@ -57,9 +44,9 @@ class INI(object):
         self.save_root = None
         self.line_num = 0  # 行号
         self.column_num = 0 # 列号
+        self.end = False
         
-        
-        
+    def start(self):            
         while True:            
             self.ch = self.ini_fp.read(1)                
             self.column_num += 1 #计算列号
@@ -68,7 +55,9 @@ class INI(object):
                     self.line_num += 1
                     self.column_num = 1
                     self.error_input("=后面缺少值")
-                    sys.exit(0)
+                    # sys.exit(0)
+                    
+                    
                 self.line_num += 1  #计算行号
                 self.column_num = 0 #清空列计数器
             if ' ' !=self.ch: #过滤空格
@@ -81,7 +70,7 @@ class INI(object):
                         # else:    
                         self.line_num += 1
                         self.error_input("多余的中文字符..请检查配置文件")
-                        sys.exit(0)
+                        # sys.exit(0)
                     elif self.number_bool(): #判断数字    
                         self.number_func()
                     elif self.letter_bool(): #判断字母    
@@ -90,16 +79,23 @@ class INI(object):
                         self.symbol_func()
                 
         self.ini_fp.close()    
-        # self.line_num += 1
-        print "提示:共有%d行ini配置代码." % (self.line_num)       
-        for i in self.root:
-            print i.root_name
-            print i.child_addr
+                        
+        if self.end:
+            self.ini_fp = None
+            self.root = None
+        else:    
+            # self.line_num += 1
+            print "提示:共有%d行ini配置代码." % (self.line_num)       
+            for i in self.root:
+                print i.root_name
+                print i.child_addr
         
-        
-                
+            
     def error_input(self, error_mesagbox):    
-        print "%d行%d列ini配置错误提示(%s)" % (self.line_num, self.column_num, error_mesagbox)
+        self.emit("send-error", "%d行%d列ini配置错误提示(%s)" % (self.line_num, self.column_num, error_mesagbox))
+        self.ini_fp.seek(0, 2)
+        self.end = True
+        # print "%d行%d列ini配置错误提示(%s)" % (self.line_num, self.column_num, error_mesagbox)
         
     def number_bool(self):    
         '''判断是否为数字'''
@@ -145,7 +141,9 @@ class INI(object):
                             self.line_num = save_line_num + 1
                             self.column_num = save_column_num
                             self.error_input("缺少'*'或者'/'")
-                            sys.exit(0)
+                            # sys.exit(0)
+                            
+                            
         elif '[' == self.ch: #处理关键字   
             self.root_bool = False
             self.child_bool = False
@@ -158,7 +156,10 @@ class INI(object):
                 if '\n' == self.ch:
                     self.line_num += 1
                     self.error_input("缺少']',请检查配置文件")                    
-                    sys.exit(0)
+                    # sys.exit(0)
+                    
+                    
+                    
            #如果正确,开始处理关键字,比如: [window],就继续读下面的值. width = 34,要过滤掉空格.         
             self.save_root = ROOT()        
             self.save_root.root_name = self.root_name                     
@@ -187,7 +188,9 @@ class INI(object):
                     if not self.ch:    
                         self.line_num += 1
                         self.error_input("字符串缺少结束符")
-                        sys.exit(0)                                                        
+                        # sys.exit(0)                                                        
+                        
+                        
                         
                 self.root[i].child_addr[self.child_name] = (self.value_name)            
                 self.value_name = ""
@@ -196,19 +199,25 @@ class INI(object):
             else:
                 self.line_num += 1
                 self.error_input("无效的字符串类型")
-                sys.exit(0)
+                # sys.exit(0)
+                
+                
                 
                 
     '''字母处理 import:导入模块处理'''        
     def letter_func(self):        
         if self.root_bool and self.child_bool:    
             self.error_input("=后面无参数")
-            sys.exit(0)
+            # sys.exit(0)
+            
+            
         else:    
             self.child_bool = False
             if not self.root_bool: #处理无节点的乱值
                 self.error_input("缺少[...]的节,错误的参数值")
-                sys.exit(0)
+                # sys.exit(0)
+                
+                
             else:# 处理节点的参数值.
                 while True:
                     if ' ' != self.ch:
@@ -221,7 +230,9 @@ class INI(object):
                     if '\n' == self.ch:
                         self.line_num += 1                    
                         self.error_input("缺少'='")
-                        sys.exit(0)                            
+                        # sys.exit(0)                            
+                        
+                        
                 
                 save_i = 0
                 for i in range(0, len(self.root)):
@@ -254,6 +265,10 @@ class INI(object):
                     self.column_num = 0
                     break
                 
+                if not self.number_bool():
+                    self.ini_fp.seek(-1, 1)
+                    break
+                    
             self.root[i].child_addr[self.child_name] = (self.value_name)            
             self.value_name = ""
             self.child_name = ""
@@ -262,117 +277,138 @@ class INI(object):
             if self.root_bool:
                 self.line_num += 1
                 self.error_input("缺少参数值")
-                sys.exit(0)
+                # sys.exit(0)
+                
+                
                 
             self.error_input("缺少节点和参数值")
         
     def get_section(self, root_name):        
-        save_i = 0
-        for i in range(0, len(self.root)):
-            if self.root[i] == root_name:
-                save_i = i
-                break
-        return self.root[i]
-    
-    def get_section_value(self, root_name, child_name):
-        save_i = 0
-        for i in range(0, len(self.root)):
-            if self.root[i].root_name == root_name:
-                save_i = i
-                break
-        return self.root[save_i].child_addr[child_name]    
-        
-    def get_section_childs(self, root_name):    
-        save_i = 0
-        for i in range(0, len(self.root)):
-            if self.root[i].root_name == root_name:
-                save_i = i
-                break
+        try:
+            save_i = 0
+            for i in range(0, len(self.root)):
+                if self.root[i] == root_name:
+                    save_i = i
+                    break
+            return self.root[i]
+        except:
+            print "由于前面出现错误..."
             
-        return  self.root[save_i].child_addr       
+    def get_section_value(self, root_name, child_name):
+        try:
+            save_i = 0
+            for i in range(0, len(self.root)):
+                if self.root[i].root_name == root_name:
+                    save_i = i
+                    break
+            return self.root[save_i].child_addr[child_name]    
+        except:
+            print "由于前面出现错误..."
+        
+            
+    def get_section_childs(self, root_name):    
+        try:
+            save_i = 0
+            for i in range(0, len(self.root)):
+                if self.root[i].root_name == root_name:
+                    save_i = i
+                    break
+            
+            return  self.root[save_i].child_addr       
+        except:
+            print "由于前面出现错误"
+            
         
     def set_section_value(self, root_name, child_name, value):
-        save_i = 0
-        for i in range(0, len(self.root)):
-            if self.root[i].root_name == root_name:
-                save_i = i
-                break
-        self.root[save_i].child_addr[child_name] = value   
-        return 0
+        try:
+            save_i = 0
+            for i in range(0, len(self.root)):
+                if self.root[i].root_name == root_name:
+                    save_i = i
+                    break
+            self.root[save_i].child_addr[child_name] = value   
+        except:    
+            print "由于前面出现错误"
+
     
     
     def set_section_child_name(self, 
                                root_name, 
                                child_name, 
                                modify_name):
-        # 改变字典的键 名.
-        #我唯一的办法就是拷贝一份.
-        save_i = 0
-        save_dict = {}
+        try:
+            # 改变字典的键 名.
+            #我唯一的办法就是拷贝一份.
+            save_i = 0
+            save_dict = {}
 
-        for i in range(0, len(self.root)):
-            if self.root[i].root_name == root_name:
-                save_i = i
-                break
+            for i in range(0, len(self.root)):
+                if self.root[i].root_name == root_name:
+                    save_i = i
+                    break
             
-        for i in self.root[i].child_addr.keys():    
-            print type(i)
-            if i == child_name:
-                save_dict[modify_name] = self.root[save_i].child_addr[i]    
+            for i in self.root[i].child_addr.keys():    
+                if i == child_name:
+                    save_dict[modify_name] = self.root[save_i].child_addr[i]    
+                else:    
+                    save_dict[i] = self.root[save_i].child_addr[i]    
+            
+            self.root[save_i].child_addr = save_dict.copy()    
+        
+        except:    
+            print "由于前面出现错误"
+        
+        
+    def ini_save(self):            
+        try:
+            if self.root:
+                ini_fp = open(self.ini_path, "w")
+                for root in self.root:
+                    ini_fp.write("[" + root.root_name +  "]\n")
+                    for child in root.child_addr: 
+                        ini_fp.write(child + " = " + root.child_addr[child] + "\n")
+                ini_fp.close()
             else:    
-                save_dict[i] = self.root[save_i].child_addr[i]    
+                print "无法保存root为空"
+        except:
+            print "由于前面出现错误"
             
-        self.root[save_i].child_addr = save_dict.copy()    
-        return 0
+            
+    def set_path(self, path):    
+        self.ini_path = path
         
-        
-    def ini_save(self):    
-        ini_fp = open(self.ini_path, "w")
-        for root in self.root:
-            ini_fp.write("[" + root.root_name +  "]\n")
-            for child in root.child_addr: 
-                ini_fp.write(child + " = " + root.child_addr[child] + "\n")
-        ini_fp.close()
-        
+            
 class ROOT(object):
     def __init__(self):
         self.root_name = ""
         self.child_addr = {}
         
         
-if __name__ == "__main__":    
-    ini = INI("config.ini")            
-    #rooo = ini.get_section("java")
-    # print "=============="
-    # print rooo.root_name
-    # print rooo.child_addr
-    # print "============="
-    # print ini.get_section_value("java", "x")
-    # print "============="
-    # print ini.get_section_childs("java")
-    # ini.set_section_value("java", "with", '\"/home/long/视频\"')
-    # print ini.get_section_childs("java")
-    # #print rooo.child_addr["i"]
-    # print "============================="
-    # ini.set_section_child_name("java", "with", "width")
-    # print "============================="
-    # print ini.get_section_value("java", "width")
-    # ini.ini_save()
+def test(INI, STRING):        
+    print STRING
     
-'''
-INI 类 (ini_path) : ini_path 是传入.ini文件的路径
-.get_section(root_name) : root_name 是 父节点的名字 [window], window就是父亲节点.
-返回的是是一个父亲节点的地址. 返回值: root_name. child_addr.
-.get_section_value(root_name, child_name): 得到的是一个父节点下的 孩子节点的值
-.get_section_childs(root_name): 返回父亲节点下的所有孩子.
-比如: 
-[window]
-width = 34
-height = 34
-width 和 height 就会被返回.
-========================================
-.set_section_value(root_name, child_name, value): 设置一个父亲节点下的孩子节点的值.
-
-'''
-        
+if __name__ == "__main__":        
+    ini = INI(os.path.expanduser("~") + "/.config/deepin-media-player/config.ini")            
+    ini.connect("send-error", test)
+    ini.start()
+    
+    rooo = ini.get_section("window")
+    print "=============="
+    # print rooo.root_name
+    # # print rooo.child_addr
+    # # print "============="
+    # print ini.get_section_value("window", "x")
+    # print "============="
+    print ini.get_section_childs("window")
+    ini.set_section_value("window", "w", "3450")
+    print ini.get_section_childs("window")
+    print ini.get_section_value("window", "w")
+    # print "============================="
+    ini.set_section_child_name("window", "width", "w")
+    ini.set_section_child_name("window", "height", "h")
+    # print "============================="
+    print ini.get_section_value("window", "w")
+    print ini.get_section_value("window", "h")
+    ini.ini_save()
+    
 

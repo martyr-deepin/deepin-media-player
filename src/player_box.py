@@ -127,6 +127,9 @@ class PlayerBox(object):
         self.toolbar2.progressbar.pb.connect("button-release-event",
                                              self.progressbar_set_point_bool,
                                              self.toolbar2.progressbar)
+        self.toolbar2.progressbar.pb.connect("enter-notify-event", self.show_preview_enter)
+        self.toolbar2.progressbar.pb.connect("leave-notify-event", self.hide_preview_leave)        
+        
         # play_control_panel.
         self.toolbar2.play_control_panel.stop_btn.connect("clicked", self.stop_button_clicked)
         self.toolbar2.play_control_panel.pre_btn.connect("clicked", self.pre_button_clicked)
@@ -633,10 +636,10 @@ class PlayerBox(object):
         if progressbar.drag_bool: # Mouse left.
             if 1 == pb_bit:
                 self.toolbar2.progressbar.set_pos(progressbar.pos)
-
+                
             if 2 == pb_bit:
                 self.progressbar.set_pos(progressbar.pos)
-
+                
             if self.mp:
                 if 1 == self.mp.state:
                     self.mp.seek(int(progressbar.pos))
@@ -646,44 +649,52 @@ class PlayerBox(object):
             if self.play_video_file_bool(self.mp.path):           
                 if self.show_bool:                                
                     self.x_root = event.x_root                                
-                    self.y_root = event.y_root                   
-                    preview_y_padding = self.app.window.get_position()[1] + self.screen.allocation.height + self.app.titlebar.box.allocation.height - self.preview.bg.get_allocation()[3]
+                    self.y_root = event.y_root                                       
                     # preview window show.
                     self.preview.show_preview()
+                    if 1 == pb_bit:
+                        preview_y_padding = self.app.window.get_position()[1] + self.screen.allocation.height + self.app.titlebar.box.allocation.height - self.preview.bg.get_allocation()[3]
+                    if 2 == pb_bit:    
+                        preview_y_padding = self.toolbar2.panel.get_position()[1] - self.preview.bg.get_allocation()[3]
+
                     # previwe window show position.
                     self.preview.move_preview(self.x_root - self.preview.bg.get_allocation()[2]/2,
                                               preview_y_padding)        
-                                           
                 # if self.show_id == None and self.read_id == None:                                    
                 if self.read_id == None:    
-                    self.start_time_function(event.x)
+                    self.start_time_function(event.x, progressbar)
                     
                         
     '''Read preview image.'''        
-    def start_time_function(self, pos):                  
-        self.show_id = gtk.timeout_add(10, self.save_scrot_image, pos)
-        self.read_id = gtk.timeout_add(15, self.read_image_time, pos)                            
+    def start_time_function(self, pos, progressbar):                  
+        self.show_id = gtk.timeout_add(10, self.save_scrot_image, pos, progressbar)
+        self.read_id = gtk.timeout_add(15, self.read_image_time, pos, progressbar)                            
 
         
-    def read_image_time(self, pos):    
+    def read_image_time(self, pos, progressbar):    
         # print "start read preview image... ..."
-        save_pos = (float(int(pos))/self.progressbar.pb.allocation.width*self.progressbar.max)        
+        save_pos = int((float(int(pos)) / progressbar.pb.allocation.width * progressbar.max)        )
+        print "读取图片:" + str(save_pos)
+        
         if os.path.exists("/tmp/preview/" + self.get_player_file_name(self.mp.path) + "/" + str(int(save_pos)) + ".jpeg"):                    
             try:                
                 # Read preview image.
                 self.preview.set_image("/tmp/preview/" + self.get_player_file_name(self.mp.path) + "/" + str(int(save_pos)) + ".jpeg")
+                print "set preview image...."
                 # preview background window show time.
                 self.preview.set_pos(int(save_pos))
-                self.preview.bg.queue_draw()
+                self.preview.bg.queue_draw()                
             except:   
-                print ""
+                print "read image,Error!!"
                 
         self.read_id = None
         return False
             
     '''Save media player scrot image.'''
-    def save_scrot_image(self, pos): # scrot use thread function.
-        save_pos = (float(int(pos))/self.progressbar.pb.allocation.width*self.progressbar.max)                
+    def save_scrot_image(self, pos, progressbar): # scrot use thread function.
+        save_pos = int((float(int(pos)) / progressbar.pb.allocation.width * progressbar.max))
+        print "保存图片:" + str(save_pos)
+        
         if not os.path.exists("/tmp/preview/" + self.get_player_file_name(self.mp.path) + "/" + str(int(save_pos)) + ".jpeg"):            
             # Save preview image.
             # print "截图视频路径:" + self.preview.mp.path
