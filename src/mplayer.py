@@ -128,6 +128,7 @@ class  Mplayer(gobject.GObject):
         gobject.GObject.__init__(self)
         
         self.xid         = xid 
+        self.mplayer_pid = 0
         self.state       = 0
         self.vide_bool   = False
         self.pause_bool  = False
@@ -191,10 +192,13 @@ class  Mplayer(gobject.GObject):
                                          stderr = subprocess.PIPE,
                                          shell  = False)
             self.emit("play-start", False)
+            self.mplayer_pid = self.mpID.pid
+
             (self.mplayerIn, self.mplayerOut) = (self.mpID.stdin, self.mpID.stdout)
             fcntl.fcntl(self.mplayerOut, 
                         fcntl.F_SETFL, 
                         os.O_NONBLOCK)
+            
             # get lenght size.
             self.getPosID = gobject.timeout_add(100, self.get_time_pos) 
             
@@ -205,6 +209,7 @@ class  Mplayer(gobject.GObject):
             self.get_time_length()
             self.vide_bool = get_vide_flags(self.path)
           
+    
     ## Cmd control ##    
     def cmd(self, cmdStr):
         '''Mplayer command'''

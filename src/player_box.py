@@ -87,7 +87,8 @@ class PlayerBox(object):
         self.argv_path_list = argv_path_list # command argv.
         self.app.window.connect("destroy", self.quit_player_window)
         self.app.window.connect("configure-event", self.app_configure_hide_tool)
-
+        self.app.window.connect("window-state-event", self.set_toolbar2_position)
+        
         '''Screen window init.'''
         self.screen = MplayerView()
         # Screen signal init.
@@ -366,9 +367,18 @@ class PlayerBox(object):
         self.app.window.set_visible(True)
         if self.mp:
             # Quit deepin-media-player.
+            os.system("kill %s" %(self.mp.mplayer_pid))
+            #os.system("pkill mplayer")
             self.mp.quit()
+            
 
-
+    def set_toolbar2_position(self, widget, event):        
+        print "fsdfsdf###"
+        self.toolbar2.show_toolbar2()
+        self.toolbar.panel.move(self.panel_x + 1, self.panel_y + self.app.titlebar.allocation[3])
+        self.toolbar2.panel.move(self.panel_x + 1, self.panel_y + self.screen.allocation.height - 40)
+        self.toolbar2.hide_toolbar2()
+        
     # ToolBar control function.
     def app_configure_hide_tool(self, widget, event): #app: configure-event.
         #Set mute and value.
@@ -667,7 +677,7 @@ class PlayerBox(object):
                     # preview window show.
                     self.preview.show_preview()
                     if 1 == pb_bit:
-                        preview_y_padding = self.app.window.get_position()[1] + self.screen.allocation.height + self.app.titlebar.box.allocation.height - self.preview.bg.get_allocation()[3]
+                        preview_y_padding = self.app.window.get_position()[1] + self.screen.allocation.height + self.app.titlebar.allocation.height - self.preview.bg.get_allocation()[3]
                     if 2 == pb_bit:    
                         preview_y_padding = self.toolbar2.panel.get_position()[1] - self.preview.bg.get_allocation()[3]
 
