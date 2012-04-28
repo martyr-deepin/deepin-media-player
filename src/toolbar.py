@@ -20,16 +20,17 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from dtk.ui.frame import *
-from dtk.ui.panel import *
-from dtk.ui.utils import *
+from dtk.ui.frame import HorizontalFrame, VerticalFrame
+from dtk.ui.panel import Panel
+from dtk.ui.utils import propagate_expose
 
-from utils import *
-from constant import *
-from togglehoverbutton import *
-from mutualbutton import *
+from utils import app_theme,allocation
+from constant import APP_WIDTH,PANEL_HEIGHT
+from togglehoverbutton import ToggleHoverButton
+from mutualbutton import MutualButton
+import gtk
+import cairo
 
-import os
 
 class ToolBar(object):
     def __init__(self):
