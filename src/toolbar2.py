@@ -37,7 +37,7 @@ import gtk
 class ToolBar2(object):            
     def __init__(self, background_pixbuf = app_theme.get_pixbuf("bg.png")):
         self.background_pixbuf = background_pixbuf
-        self.panel = Panel(APP_WIDTH, 42, window_type = gtk.WINDOW_POPUP)
+        self.panel = Panel(APP_WIDTH, 42, gtk.WINDOW_POPUP)
         self.vbox = gtk.VBox()
         self.progressbar = ProgressBar()        
         
