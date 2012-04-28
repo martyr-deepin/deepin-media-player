@@ -387,7 +387,7 @@ class PlayerBox(object):
             self.toolbar.panel.move(self.panel_x, self.panel_y)            
             self.toolbar2.panel.move(self.panel_x, self.panel_y + (widget.allocation[3] - self.toolbar2.panel.allocation[3]))            
         else:    # common mode.            
-            self.toolbar.panel.move(self.panel_x + 1, self.panel_y + self.app.titlebar.box.allocation[3])
+            self.toolbar.panel.move(self.panel_x + 1, self.panel_y + self.app.titlebar.allocation[3])
             self.toolbar2.panel.move(self.panel_x + 1, self.panel_y + self.screen.allocation.height - 40)
             
         self.set_toolbar_show_opsition()    
@@ -522,7 +522,7 @@ class PlayerBox(object):
             self.toolbar2.panel.show_all()
             # Set toolbar2 panel position.
             self.toolbar2.panel.move(self.panel_x,
-                                     self.panel_y + (widget.allocation[3] - self.toolbar2.panel.allocation[3]) - self.app.titlebar.box.allocation[3])
+                                     self.panel_y + (widget.allocation[3] - self.toolbar2.panel.allocation[3]) - self.app.titlebar.allocation[3])
 
             self.toolbar2.panel.hide_all()
 
@@ -562,7 +562,7 @@ class PlayerBox(object):
             if self.mode_state_bool: # Concise mode.
                 self.toolbar.panel.move(self.panel_x, self.panel_y)            
             else:    # common mode.            
-                self.toolbar.panel.move(self.panel_x + 1, self.panel_y + self.app.titlebar.box.allocation[3])
+                self.toolbar.panel.move(self.panel_x + 1, self.panel_y + self.app.titlebar.allocation[3])
             
             self.toolbar.panel.set_keep_above(True)
         else:
@@ -667,7 +667,7 @@ class PlayerBox(object):
                     # preview window show.
                     self.preview.show_preview()
                     if 1 == pb_bit:
-                        preview_y_padding = self.app.window.get_position()[1] + self.screen.allocation.height + self.app.titlebar.box.allocation.height - self.preview.bg.get_allocation()[3]
+                        preview_y_padding = self.app.window.get_position()[1] + self.screen.allocation.height + self.app.titlebar.allocation.height - self.preview.bg.get_allocation()[3]
                     if 2 == pb_bit:    
                         preview_y_padding = self.toolbar2.panel.get_position()[1] - self.preview.bg.get_allocation()[3]
 
