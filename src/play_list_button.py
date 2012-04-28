@@ -23,7 +23,6 @@
 
 from dtk.ui.draw import draw_pixbuf
 from dtk.ui.utils import propagate_expose
-# from dtk.ui.frame import *
 from utils import app_theme
 import gtk
 

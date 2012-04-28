@@ -24,7 +24,7 @@ from dtk.ui.draw import draw_font
 from dtk.ui.utils import get_content_size,propagate_expose
 from dtk.ui.box import EventBox
 
-from utils import allocation,app_theme
+from utils import allocation
 # from constant import *
 
 class ShowTime(object):
