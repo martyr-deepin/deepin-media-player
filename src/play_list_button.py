@@ -21,15 +21,18 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from dtk.ui.draw import *
-from dtk.ui.frame import *
-from utils import *
+from dtk.ui.draw import draw_pixbuf
+from dtk.ui.utils import propagate_expose
+# from dtk.ui.frame import *
+from utils import app_theme
+import gtk
 
 
 class PlayListButton(object):
     def __init__(self):
         self.button = ImageButton()        
     
+        
 class ImageButton(gtk.Button):
     def __init__(self, 
                  bg_pixbuf=app_theme.get_pixbuf("list_button_background.png"),
@@ -57,7 +60,7 @@ class ImageButton(gtk.Button):
         bg_image = self.bg_pixbuf.get_pixbuf()
         if self.flags:
             bg_border_height = bg_image.get_height()/2 - 5
-            bg_border_width  = 2
+            # bg_border_width  = 2
             pixbuf = bg_image.scale_simple(bg_image.get_width(),
                                            bg_image.get_height(),
                                            gtk.gdk.INTERP_BILINEAR)
