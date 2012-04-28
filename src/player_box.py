@@ -667,7 +667,7 @@ class PlayerBox(object):
                     # preview window show.
                     self.preview.show_preview()
                     if 1 == pb_bit:
-                        preview_y_padding = self.app.window.get_position()[1] + self.screen.allocation.height + self.app.titlebar.allocation.height - self.preview.bg.get_allocation()[3]
+                        preview_y_padding = self.app.window.get_position()[1] + self.screen.allocation.height + self.app.titlebar.box.allocation.height - self.preview.bg.get_allocation()[3]
                     if 2 == pb_bit:    
                         preview_y_padding = self.toolbar2.panel.get_position()[1] - self.preview.bg.get_allocation()[3]
 
