@@ -20,14 +20,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from dtk.ui.utils import *
-from dtk.ui.draw import *
-from dtk.ui.box import *
-from dtk.ui.frame import *
- 
-
-from constant import *
-from utils import *
+from dtk.ui.utils import alpha_color_hex_to_cairo
+from dtk.ui.draw import draw_pixbuf
+from utils import app_theme
 import gtk
 import gobject
 
@@ -89,6 +84,9 @@ class VolumeButton(gtk.HBox, gobject.GObject):
         
         self.set_value(self.volume_value)
         
+        
+        
+        
     def volume_progressbar_motion_notify(self, widget, event):
         if self.drag:
             self.mute_bool = False
@@ -115,34 +113,49 @@ class VolumeButton(gtk.HBox, gobject.GObject):
     def volume_progressbar_expose(self, widget, event):
         cr = widget.window.cairo_create()
         rect = widget.allocation
-        x,y,w,h = rect.x, rect.y, rect.width, rect.height
-
-        
-        draw_width = 100.0/57
-        
+        x,y,w,h = rect.x, rect.y, rect.width, rect.height        
         cr.set_line_width(4)
+        
+        volume_width = 57
+        volume_x_padding = 5
         # draw bg.
-        for i in range(0, 57):            
+        for i in range(0, volume_width):            
             cr.set_source_rgba(*alpha_color_hex_to_cairo(self.bg_color.get_color_info()))
-            cr.move_to(x + 5, y + h/2 )
-            cr.line_to(x + i + 5, y + h/2)
+            cr.move_to(x + volume_x_padding, y + h/2 )
+            cr.line_to(x + i + volume_x_padding, y + h/2)
             cr.stroke()
             
         # draw fg.    
         for i in range(0, int(self.volume_value*0.57)):
             cr.set_source_rgba(*alpha_color_hex_to_cairo(self.fg_color.get_color_info()))
-            cr.move_to(x + 5, y + h/2 )
-            cr.line_to(x + i + 5, y + h/2)
+            cr.move_to(x + volume_x_padding, y + h/2 )
+            cr.line_to(x + i + volume_x_padding, y + h/2)
             cr.stroke()
             
             
         # Draw point.    
         if self.volume_value == 0:    
-            draw_pixbuf(cr, self.volume_button_pixbuf.get_pixbuf(), x + 2, y + h/2 - 5)    
+            volume_image_x_padding = 2
+            volume_image_y_padding = 5
+            draw_pixbuf(cr, 
+                        self.volume_button_pixbuf.get_pixbuf(), 
+                        x + volume_image_x_padding, 
+                        y + h/2 - volume_image_y_padding)    
+            
         if self.volume_value == 100:
-            draw_pixbuf(cr, self.volume_button_pixbuf.get_pixbuf(), x + 53, y + h/2 - 5) 
+            volume_image_x_padding = 53
+            volume_image_y_padding = 5
+            draw_pixbuf(cr, 
+                        self.volume_button_pixbuf.get_pixbuf(), 
+                        x + volume_image_x_padding, 
+                        y + h/2 - volume_image_y_padding)             
+            
         if 0 < self.volume_value < 100:   
-            draw_pixbuf(cr, self.volume_button_pixbuf.get_pixbuf(), x  + self.volume_value*0.50, y + h/2 - 5)
+            volume_value_padding = 0.50
+            draw_pixbuf(cr, 
+                        self.volume_button_pixbuf.get_pixbuf(), 
+                        x  + self.volume_value * volume_value_padding, 
+                        y + h/2 - 5)
             
         return True
         
@@ -154,9 +167,12 @@ class VolumeButton(gtk.HBox, gobject.GObject):
 
             
     def set_value(self, value):
-        if value > 100:
+        volume_max_value = 100
+        volume_min_value = 6
+        if value > volume_max_value:
             value = 100
-        if value < 6:
+            
+        if value < volume_min_value:
             value = 0
         
         self.emit("get-value-event", value, self.mute_bool)    
