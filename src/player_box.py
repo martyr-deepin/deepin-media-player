@@ -20,22 +20,25 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from dtk.ui.mplayer_view import MplayerView
 from dtk.ui.box import EventBox
-from dtk.ui.frame import *
-from dtk.ui.utils import *
-from dtk.ui.label import *
+from dtk.ui.frame import HorizontalFrame,VerticalFrame
+from dtk.ui.utils import is_double_click
 
-from utils import *
-from constant import *
-from progressbar import *
-from toolbar import *
-from toolbar2 import *
-from play_control_panel import *
-from play_list_button import *
-from volume_button import *
-from drag import *
-from preview import *
-from playlist import *
+from utils import allocation,path_threads
+from show_time import ShowTime
+from progressbar import ProgressBar
+from toolbar import ToolBar
+from toolbar2 import ToolBar2
+from play_control_panel import PlayControlPanel
+from play_list_button import PlayListButton
+from volume_button import VolumeButton
+from drag import drag_connect
+from preview import PreView
+from mplayer import Mplayer
+import gtk
+import os
+# from playlist import *
 
 class PlayerBox(object):
     def __init__ (self, app, argv_path_list):
@@ -149,8 +152,8 @@ class PlayerBox(object):
         # Hide playlist and show playlist widget hbox.
         self.hbox.pack_start(self.vbox)
 
-        '''playlist'''
-        self.playlist = PlayList()
+        # '''playlist'''
+        # self.playlist = PlayList()
         # self.hbox.pack_start(self.playlist.vbox)
         
         '''Bottom control.'''
