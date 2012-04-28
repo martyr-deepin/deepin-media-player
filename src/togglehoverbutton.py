@@ -20,10 +20,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from dtk.ui.draw import *
-from dtk.ui.utils import *
-from constant import *
-from utils import *
+from dtk.ui.draw import draw_pixbuf
+from dtk.ui.utils import propagate_expose
+from utils import app_theme
 import gtk
 import gobject
 
