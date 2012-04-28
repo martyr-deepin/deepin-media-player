@@ -20,11 +20,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from dtk.ui.draw import *
-from dtk.ui.box import *
+from dtk.ui.draw import draw_font
+from dtk.ui.utils import get_content_size,propagate_expose
+from dtk.ui.box import EventBox
 
-from utils import*
-from constant import *
+from utils import allocation,app_theme
+# from constant import *
 
 class ShowTime(object):
     def __init__(self,
