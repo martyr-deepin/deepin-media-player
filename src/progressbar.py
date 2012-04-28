@@ -21,14 +21,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import gtk
-import gobject
-import cairo
-from dtk.ui.utils import *
-from dtk.ui.draw import *
+# import gobject
+from dtk.ui.draw import draw_pixbuf
+from dtk.ui.utils import container_remove_all
 
-from utils import *
-from constant import *
-from preview import *
+from utils import app_theme,allocation
+from constant import DRAW_PROGRESSBAR_WIDTH_PADDING
+
 
 class ProgressBar(object):
     '''Media player progressbar.'''
@@ -165,7 +164,7 @@ class ProgressBar(object):
     def hide_progressbar(self):
         container_remove_all(self.hbox) 
              
-#gobject.type_register(ProgressBar.hbox)
+# gobject.type_register(ProgressBar)
 
 
 
