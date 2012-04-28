@@ -373,7 +373,6 @@ class PlayerBox(object):
             
 
     def set_toolbar2_position(self, widget, event):        
-        print "fsdfsdf###"
         self.toolbar2.show_toolbar2()
         self.toolbar.panel.move(self.panel_x + 1, self.panel_y + self.app.titlebar.allocation[3])
         self.toolbar2.panel.move(self.panel_x + 1, self.panel_y + self.screen.allocation.height - 40)
