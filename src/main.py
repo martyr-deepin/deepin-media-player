@@ -21,11 +21,11 @@
 
 from dtk.ui.application import Application
 
-from utils import *
-from constant import *
-from player_box import *
-from mplayer import *
-import os
+from utils import app_theme
+from constant import APP_WIDTH, APP_HEIGHT
+from player_box import PlayerBox
+from mplayer import init_mplayer_config
+# import os
 import sys
 import gtk
 
