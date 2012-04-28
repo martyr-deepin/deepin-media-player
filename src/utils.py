@@ -28,6 +28,8 @@ import os
 app_theme = Theme(os.path.join(
         (os.path.dirname(os.path.realpath(__file__))), "../app_theme"))
 
+# play list dict.
+
 
 def allocation(widget):
     cr = widget.window.cairo_create()

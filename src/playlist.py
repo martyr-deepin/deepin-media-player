@@ -19,15 +19,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from dtk.ui.listview import *
-from dtk.ui.scrolled_window import*
-from dtk.ui.frame import *
-from mplayer import *
-from constant import *
-from utils import *
+from dtk.ui.listview import ListView
+from dtk.ui.scrolled_window import ScrolledWindow
+from dtk.ui.frame import VerticalFrame
+# from constant import *
+# from utils import *
 
-import time
-
+# import time
+import gobject
 
 class PlayList(object):
     
@@ -49,24 +48,9 @@ class PlayList(object):
         self.vbox.pack_start(self.vbox_vframe)
         
     def double_click_item(self, list_view, list_item, colume, offset_x, offset_y):    
-        # if media_player["mp"].playList != []:
-        #     if media_player["mp"].state == 0:
-        #         media_player["mp"].play(list_item.title)
-        #     else:
-        #         media_player["mp"].quit()
-        #         media_player["mp"].play(list_item.title)
         pass
     
     def init_playlist_path(self, widget, event):                     
-        # if [] == self.item_array:
-        #     media_player["mp"].findCurrentDir(get_home_path() + "/视频")
-            
-            # self.item_array = []
-            # for i in range(0, media_player["mp"].playListSum):
-            #     self.item_array.append((media_player["mp"].playList[i], ""))
-        
-            # items = map(lambda (title, length): MediaItem(title, length), self.item_array)
-            # self.list_view.add_items(items)    
         pass
             
                 
@@ -149,7 +133,9 @@ def clicked_button(widget, list_view, mp):
 def double_click_item(list_view, list_item, colume, offset_x, offset_y):    
     print "* Button press: %s" % (str((list_item.title, list_item.length)))
 
-    
+from mplayer import Mplayer    
+import gtk
+
 if __name__ == "__main__":        
     win = gtk.Window(gtk.WINDOW_TOPLEVEL)
     win.connect("destroy", gtk.main_quit)
@@ -158,6 +144,7 @@ if __name__ == "__main__":
     scrolled_window = ScrolledWindow()
     mp = Mplayer()
     list_view = ListView()
+    list_view.set_size_request(500, 500)
     list_view.connect("double-click-item", double_click_item)
     scrolled_window.add_child(list_view)    
     vbox.pack_start(scrolled_window, True,True)

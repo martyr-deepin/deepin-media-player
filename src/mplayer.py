@@ -119,7 +119,9 @@ class  Mplayer(gobject.GObject):
         "play-next":(gobject.SIGNAL_RUN_LAST,
                         gobject.TYPE_NONE,(gobject.TYPE_INT,)),
         "play-pre":(gobject.SIGNAL_RUN_LAST,
-                        gobject.TYPE_NONE,(gobject.TYPE_INT,))
+                        gobject.TYPE_NONE,(gobject.TYPE_INT,)),
+        "add-path":(gobject.SIGNAL_RUN_LAST,
+                        gobject.TYPE_NONE,(gobject.TYPE_STRING,))
         }
     def __init__(self, xid = None):
         
@@ -626,12 +628,13 @@ class  Mplayer(gobject.GObject):
         
     def addPlayList(self, index, path):
         '''Add a File'''
-        self.playList.intert(index, path)
+        self.playList.intert(index, path)        
         self.playListSum += 1
         
     def addPlayFile(self, path):    
         if self.findFile(path): # play file.
             self.playList.append(path)
+            self.emit("add-path", path)
             self.playListSum += 1
         
     def loadPlayList(self, listFileName):

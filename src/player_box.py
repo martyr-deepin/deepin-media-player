@@ -38,7 +38,7 @@ from preview import PreView
 from mplayer import Mplayer
 import gtk
 import os
-# from playlist import *
+# from playlist import PlayList
 
 class PlayerBox(object):
     def __init__ (self, app, argv_path_list):
@@ -310,7 +310,7 @@ class PlayerBox(object):
         if [] != self.bottom_main_vbox.get_children():
             self.bottom_main_vbox.foreach(self.bottom_main_vbox.remove(self.bottom_play_control_hbox_vframe_event_box))
 
-
+        
     '''Init media player.'''
     def init_media_player(self, mplayer, xid):
         '''Init deepin media player.'''
@@ -328,7 +328,7 @@ class PlayerBox(object):
         self.mp.connect("play-end", self.media_player_end)
         self.mp.connect("play-next", self.media_player_next)
         self.mp.connect("play-pre", self.media_player_pre)
-                
+        
         self.mp.playListState = 2 # play mode.
         try:
             for file_path in self.argv_path_list:
