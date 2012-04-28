@@ -29,7 +29,7 @@ from constant import *
 from utils import *
 import random
 import gtk
-
+import cairo
 
 class PreView(object): 
     def __init__(self, path = "", pos = 0):
