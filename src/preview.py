@@ -19,15 +19,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from dtk.ui.application import Application
-from dtk.ui.mplayer_view import *
-from dtk.ui.box import *
-from dtk.ui.draw import *
-
-from mplayer import *
-from constant import *
-from utils import *
-import random
+from mplayer import Mplayer
+from constant import PREVIEW_PV_WIDTH, PREVIEW_PV_HEIGHT
 import gtk
 import cairo
 
