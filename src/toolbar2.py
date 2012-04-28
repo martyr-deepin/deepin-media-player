@@ -20,18 +20,19 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from dtk.ui.frame import *
-from dtk.ui.panel import *
-from dtk.ui.utils import *
+from dtk.ui.frame import HorizontalFrame
+from dtk.ui.panel import Panel
 
-from utils import *
-from constant import *
+from utils import app_theme
+from constant import APP_WIDTH
 
-from progressbar import *
-from show_time import *
-from play_control_panel import *
-from volume_button import *
+from progressbar import ProgressBar
+from show_time import ShowTime
+from play_control_panel import PlayControlPanel
+from volume_button import VolumeButton
 
+import gtk
+# import cairo
 
 class ToolBar2(object):            
     def __init__(self, background_pixbuf = app_theme.get_pixbuf("bg.png")):
