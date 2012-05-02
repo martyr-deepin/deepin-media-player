@@ -25,7 +25,6 @@ from dtk.ui.box import EventBox
 from dtk.ui.frame import HorizontalFrame,VerticalFrame
 from dtk.ui.utils import is_double_click
 
-
 from utils import allocation,path_threads
 from show_time import ShowTime
 from progressbar import ProgressBar
@@ -38,10 +37,12 @@ from drag import drag_connect
 from preview import PreView
 from mplayer import Mplayer
 from mplayer import get_length
-import gtk
-import os
 from playlist import PlayList
 from playlist import MediaItem
+
+import threading
+import gtk
+import os
 
 
 
@@ -54,6 +55,9 @@ class PlayerBox(object):
         self.full_bool = False  # Set window full bool.
         self.mode_state_bool = False # Concise mode(True) and common mode(False).
 
+        # playlist.
+        self.add_play_list_length_id = None
+        
         # Preview window.
         self.x_root = 0
         self.y_root = 0
@@ -241,13 +245,37 @@ class PlayerBox(object):
             self.mp.delPlayList(self.play_list_dict[list_item_i.title])
             del self.play_list_dict[list_item_i.title]                    
             
+    def add_play_list(self, mplayer, path): # mplayer signal: "add-path"                       
+        '''Play list add play file timeout.[100-1028 a play file].'''
+        if self.add_play_list_length_id:
+            gtk.timeout_remove(self.add_play_list_length_id)
+            self.add_play_list_length_id = None
+            
+        if not self.add_play_list_length_id:    
+            self.add_play_list_length_id = gtk.timeout_add(2000, self.add_play_list_length)    
+        
+        gtk.timeout_add(10, self.add_play_list_time, path)
+
+        
+    def add_play_list_length(self):    
+        '''staring length show.[add length]'''
+        path_thread_id = threading.Thread(target=self.length_threads)
+        path_thread_id.start()
+        return False
+        
+    def length_threads(self):
+        for i in self.play_list.list_view.items:
+            print i.title
+            
+        print "开启线程,你满意了吧."
         
     def add_play_list_time(self, path):    
         '''play list add play file.'''
         self.play_list_dict[self.get_player_file_name(path)] = path
         media_item = [MediaItem(self.get_player_file_name(path), str(" "))]                
         self.play_list.list_view.add_items(media_item)                
-                
+        return False        
+    
     def double_play_list_file(self, list_view, list_item, colume, offset_x, offset_y):     
         '''double play file.'''
         if self.mp:
@@ -344,12 +372,7 @@ class PlayerBox(object):
     def hide_bottom(self):
         if [] != self.bottom_main_vbox.get_children():
             self.bottom_main_vbox.foreach(self.bottom_main_vbox.remove(self.bottom_play_control_hbox_vframe_event_box))
-
-        
-    def add_play_list(self, mplayer, path): # mplayer signal: "add-path"                       
-        '''Play list add play file timeout.[100-1028 a play file].'''
-        gtk.timeout_add(10, self.add_play_list_time, path)
-                        
+                                
     
     '''Init media player.'''
     def init_media_player(self, mplayer, xid):

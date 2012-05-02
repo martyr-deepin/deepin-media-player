@@ -26,6 +26,9 @@ from dtk.ui.listview import render_text
 from dtk.ui.scrolled_window import ScrolledWindow
 from dtk.ui.frame import VerticalFrame
 from dtk.ui.constant import DEFAULT_FONT_SIZE,ALIGN_END
+from mplayer import Mplayer    
+import gtk
+
 # from constant import *
 # from utils import *
 
@@ -127,6 +130,7 @@ class MediaItem(gobject.GObject):
         return [self.render_title,
                 self.render_length]
     
+    
 ############################################    
 # Test funcation.    #######################
 ############################################    
@@ -136,8 +140,6 @@ def clicked_button(widget, list_view, mp):
 def double_click_item(list_view, list_item, colume, offset_x, offset_y):    
     print "* Button press: %s" % (str((list_item.title, list_item.length)))
 
-from mplayer import Mplayer    
-import gtk
 
 if __name__ == "__main__":        
     win = gtk.Window(gtk.WINDOW_TOPLEVEL)
@@ -146,7 +148,20 @@ if __name__ == "__main__":
     
     scrolled_window = ScrolledWindow()
     mp = Mplayer()
+    list_item = [MediaItem("测试一", "离家出家"),
+                 MediaItem("测试二", "离家出家")]
+    
     list_view = ListView()
+    list_view.add_items(list_item)
+        
+    # print list_item[0].get_column_sizes()
+    # print list_item[1].update(list_item[1].title,"你的")
+    # list_item[1].emit_redraw_request()
+    
+    # list_view.items[0].update(list_view.items[0].title, "改变时间")
+    list_view.items[0].length = "改变时间,离家出家吧..."
+    list_view.items[0].emit_redraw_request()        
+    
     list_view.set_size_request(500, 500)
     list_view.connect("double-click-item", double_click_item)
     scrolled_window.add_child(list_view)    
