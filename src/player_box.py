@@ -25,6 +25,7 @@ from dtk.ui.box import EventBox
 from dtk.ui.frame import HorizontalFrame,VerticalFrame
 from dtk.ui.utils import is_double_click
 
+
 from utils import allocation,path_threads
 from show_time import ShowTime
 from progressbar import ProgressBar
@@ -38,7 +39,8 @@ from preview import PreView
 from mplayer import Mplayer
 import gtk
 import os
-# from playlist import PlayList
+from playlist import PlayList
+from playlist import MediaItem
 
 class PlayerBox(object):
     def __init__ (self, app, argv_path_list):
@@ -153,9 +155,14 @@ class PlayerBox(object):
         # Hide playlist and show playlist widget hbox.
         self.hbox.pack_start(self.vbox)
 
+        
         # '''playlist'''
-        # self.playlist = PlayList()
-        # self.hbox.pack_start(self.playlist.vbox)
+        # self.media_item = []                
+        # self.playlist.list_view.add_items(self.media_item)
+        self.playlist = PlayList()            
+                
+        self.hbox.pack_start(self.playlist.vbox)
+        
         
         '''Bottom control.'''
         # Hide Bottom and show Bottom.
@@ -312,6 +319,11 @@ class PlayerBox(object):
             self.bottom_main_vbox.foreach(self.bottom_main_vbox.remove(self.bottom_play_control_hbox_vframe_event_box))
 
         
+    def add_play_list(self, mplayer, path):        
+        media_item = [MediaItem(path,"")]                
+        self.playlist.list_view.add_items(media_item)
+        
+        
     '''Init media player.'''
     def init_media_player(self, mplayer, xid):
         '''Init deepin media player.'''
@@ -329,6 +341,7 @@ class PlayerBox(object):
         self.mp.connect("play-end", self.media_player_end)
         self.mp.connect("play-next", self.media_player_next)
         self.mp.connect("play-pre", self.media_player_pre)
+        self.mp.connect("add-path", self.add_play_list)
         
         self.mp.playListState = 2 # play mode.
         try:
