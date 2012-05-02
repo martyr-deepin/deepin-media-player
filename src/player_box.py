@@ -165,6 +165,8 @@ class PlayerBox(object):
         self.play_list_dict = {} # play list dict type.
         self.play_list = PlayList()                    
         self.play_list.list_view.connect("double-click-item", self.double_play_list_file)
+        self.play_list.list_view.connect("delete-select-items", self.delete_play_list_file)
+        
         self.hbox.pack_start(self.play_list.vbox)
         
         
@@ -233,6 +235,19 @@ class PlayerBox(object):
         
                 
     '''Play List'''     
+    def delete_play_list_file(self, list_view, list_item):
+        # delete file of play list.
+        for list_item_i in list_item:
+            self.mp.delPlayList(self.play_list_dict[list_item_i.title])
+            del self.play_list_dict[list_item_i.title]                    
+            
+        
+    def add_play_list_time(self, path):    
+        '''play list add play file.'''
+        self.play_list_dict[self.get_player_file_name(path)] = path
+        media_item = [MediaItem(self.get_player_file_name(path), str(" "))]                
+        self.play_list.list_view.add_items(media_item)                
+                
     def double_play_list_file(self, list_view, list_item, colume, offset_x, offset_y):     
         '''double play file.'''
         if self.mp:
@@ -334,14 +349,7 @@ class PlayerBox(object):
     def add_play_list(self, mplayer, path): # mplayer signal: "add-path"                       
         '''Play list add play file timeout.[100-1028 a play file].'''
         gtk.timeout_add(10, self.add_play_list_time, path)
-        
-        
-    def add_play_list_time(self, path):    
-        '''play list add play file.'''
-        self.play_list_dict[self.get_player_file_name(path)] = path
-        media_item = [MediaItem(self.get_player_file_name(path), str(" "))]                
-        self.play_list.list_view.add_items(media_item)                
-        
+                        
     
     '''Init media player.'''
     def init_media_player(self, mplayer, xid):

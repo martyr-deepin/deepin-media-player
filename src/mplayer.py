@@ -632,7 +632,7 @@ class  Mplayer(gobject.GObject):
     def delPlayList(self, path): 
         '''Del a File'''
         self.playList.remove(path)
-        self.playListSum -= 1
+        self.playListSum -= 1        
         
     def addPlayList(self, index, path):
         '''Add a File'''
@@ -664,4 +664,5 @@ class  Mplayer(gobject.GObject):
             self.playList.remove(i)
         for i in self.playList:
             self.playList.remove(i)
-        
+        # self.playList = []    
+        # self.playListNum = 0
