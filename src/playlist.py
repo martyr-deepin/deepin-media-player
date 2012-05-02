@@ -42,8 +42,8 @@ class PlayList(object):
         self.scrolled_window = ScrolledWindow()    
         self.list_view = ListView()
         self.item_array = []
-        self.list_view.connect("configure-event", self.init_playlist_path)
-        self.list_view.connect("double-click-item", self.double_click_item)
+        # self.list_view.connect("configure-event", self.init_playlist_path)
+        # self.list_view.connect("double-click-item", self.double_click_item)
         self.scrolled_window.add_child(self.list_view)
         
 
@@ -51,11 +51,11 @@ class PlayList(object):
         self.vbox_vframe.add(self.playlist_vbox)
         self.vbox.pack_start(self.vbox_vframe)
         
-    def double_click_item(self, list_view, list_item, colume, offset_x, offset_y):    
-        pass
+    # def double_click_item(self, list_view, list_item, colume, offset_x, offset_y):    
+    #     pass
     
-    def init_playlist_path(self, widget, event):                     
-        pass
+    # def init_playlist_path(self, widget, event):                     
+    #     pass
             
                 
     def show_playlist(self):

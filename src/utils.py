@@ -23,7 +23,7 @@
 from dtk.ui.theme import Theme
 import threading
 import os
-
+from mplayer import get_length
 
 app_theme = Theme(os.path.join(
         (os.path.dirname(os.path.realpath(__file__))), "../app_theme"))
@@ -53,6 +53,7 @@ def path_threads(path, mp):
                 # .dmp add play file..
                 if(mp.findDmp(new_file)):
                     mp.loadPlayList(new_file)
+                    
                 # play file[.rmvb, .avi...].    
                 if(mp.findFile(new_file)):
                     old_file = new_file
@@ -60,3 +61,4 @@ def path_threads(path, mp):
                     new_file = file1 + file2.lower()                    
                     os.rename(old_file,new_file)
                     mp.addPlayFile(new_file)                
+                    

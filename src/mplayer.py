@@ -54,12 +54,15 @@ def get_home_path():
 # Get play file length.
 def get_length(file_path):
     '''Get media player length.'''    
+    # cmd = "ffmpeg -i '%s' 2>&1 | grep 'Duration' | cut -d ' ' -f 4 | sed s/,//" % (file_path)
     cmd = "mplayer -vo null -ao null -frames 0 -identify '%s' 2>&1" % (file_path)
-    fp = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
+    fp = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)    
     cmd_str = fp.communicate()[0]
     length_compile = re.compile(r"ID_LENGTH=([\d|\.]+)")
     length = length_compile.findall(cmd_str)[0]
-    return float(length)
+    # return (fp.stdout.read().split()[0])
+    return length
+
 
 def init_mplayer_config():
         # create .config.

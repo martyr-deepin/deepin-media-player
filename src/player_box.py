@@ -163,8 +163,9 @@ class PlayerBox(object):
         # self.media_item = []                
         # self.playlist.list_view.add_items(self.media_item)
         self.play_list_dict = {} # play list dict type.
-        self.playlist = PlayList()                    
-        self.hbox.pack_start(self.playlist.vbox)
+        self.play_list = PlayList()                    
+        self.play_list.list_view.connect("double-click-item", self.double_play_list_file)
+        self.hbox.pack_start(self.play_list.vbox)
         
         
         '''Bottom control.'''
@@ -231,7 +232,15 @@ class PlayerBox(object):
         self.bottom_play_control_hbox_vframe_event_box.connect("motion-notify-event", self.hide_preview_function)
         
                 
-        
+    '''Play List'''     
+    def double_play_list_file(self, list_view, list_item, colume, offset_x, offset_y):     
+        '''double play file.'''
+        if self.mp:
+            if self.mp.state == 1:                
+                self.mp.quit()                                        
+        # play file.        
+        self.mp.play(self.play_list_dict[list_item.title])
+   
         
     def hide_preview_function(self, widget, event):    
         '''Hide preview window.'''
@@ -323,14 +332,16 @@ class PlayerBox(object):
 
         
     def add_play_list(self, mplayer, path): # mplayer signal: "add-path"                       
-        '''Play list add play file.[100-1028 a play file].'''
+        '''Play list add play file timeout.[100-1028 a play file].'''
         gtk.timeout_add(10, self.add_play_list_time, path)
         
         
     def add_play_list_time(self, path):    
-        media_item = [MediaItem(self.get_player_file_name(path), "")]                
-        self.playlist.list_view.add_items(media_item)
-            
+        '''play list add play file.'''
+        self.play_list_dict[self.get_player_file_name(path)] = path
+        media_item = [MediaItem(self.get_player_file_name(path), str(" "))]                
+        self.play_list.list_view.add_items(media_item)                
+        
     
     '''Init media player.'''
     def init_media_player(self, mplayer, xid):
