@@ -37,7 +37,7 @@ def allocation(widget):
     return cr, rect.x, rect.y, rect.width, rect.height
 
 def path_threads(path, mp):
-    # '''thread path.'''
+    '''Thread path.'''
     os.chdir(path)
     
     if os.path.isdir(path):
@@ -60,7 +60,3 @@ def path_threads(path, mp):
                     new_file = file1 + file2.lower()                    
                     os.rename(old_file,new_file)
                     mp.addPlayFile(new_file)                
-                    
-                # gtk.gdk.threads_enter()
-                # text.set_text(new_path)
-                # gtk.gdk.threads_leave()

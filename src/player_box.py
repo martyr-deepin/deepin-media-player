@@ -37,10 +37,13 @@ from volume_button import VolumeButton
 from drag import drag_connect
 from preview import PreView
 from mplayer import Mplayer
+from mplayer import get_length
 import gtk
 import os
 from playlist import PlayList
 from playlist import MediaItem
+
+
 
 class PlayerBox(object):
     def __init__ (self, app, argv_path_list):
@@ -156,11 +159,11 @@ class PlayerBox(object):
         self.hbox.pack_start(self.vbox)
 
         
-        # '''playlist'''
+        '''playlist'''
         # self.media_item = []                
         # self.playlist.list_view.add_items(self.media_item)
-        self.playlist = PlayList()            
-                
+        self.play_list_dict = {} # play list dict type.
+        self.playlist = PlayList()                    
         self.hbox.pack_start(self.playlist.vbox)
         
         
@@ -319,11 +322,16 @@ class PlayerBox(object):
             self.bottom_main_vbox.foreach(self.bottom_main_vbox.remove(self.bottom_play_control_hbox_vframe_event_box))
 
         
-    def add_play_list(self, mplayer, path):        
-        media_item = [MediaItem(path,"")]                
+    def add_play_list(self, mplayer, path): # mplayer signal: "add-path"                       
+        '''Play list add play file.[100-1028 a play file].'''
+        gtk.timeout_add(10, self.add_play_list_time, path)
+        
+        
+    def add_play_list_time(self, path):    
+        media_item = [MediaItem(self.get_player_file_name(path), "")]                
         self.playlist.list_view.add_items(media_item)
-        
-        
+            
+    
     '''Init media player.'''
     def init_media_player(self, mplayer, xid):
         '''Init deepin media player.'''

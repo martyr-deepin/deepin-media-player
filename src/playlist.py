@@ -70,8 +70,7 @@ class MediaItem(gobject.GObject):
     
     __gsignals__ = {
         "redraw-request" : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, ()),
-    }
-    
+    }    
     def __init__(self, title, length):
         '''Init list item.'''
         gobject.GObject.__init__(self)
