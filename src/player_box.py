@@ -57,7 +57,7 @@ class PlayerBox(object):
 
         # playlist.
         self.add_play_list_length_id = None
-        
+        self.show_or_hide_play_list_bool = False
         # Preview window.
         self.x_root = 0
         self.y_root = 0
@@ -245,11 +245,13 @@ class PlayerBox(object):
             self.app.window.resize(self.app.window.allocation.width + self.play_list.play_list_width,
                                    self.app.window.allocation.height)
             self.play_list.show_play_list()
+            self.show_or_hide_play_list_bool = True
             
         if False == self.play_list_button.button.flags:    
             self.app.window.resize(self.app.window.allocation.width - self.play_list.play_list_width,
                                    self.app.window.allocation.height)
             self.play_list.hide_play_list()
+            self.show_or_hide_play_list_bool = False
                     
         
     '''Play list control'''     
@@ -534,6 +536,9 @@ class PlayerBox(object):
         self.toolbar2.volume_button.set_value(self.save_volume_value)
 
     def set_window_full(self):
+        # if True. play list hide.
+        if self.show_or_hide_play_list_bool:
+            self.play_list.hide_play_list()
         # self.screen.queue_draw()
         self.concise_window_function()
         self.toolbar.panel.fullscreen()  # Toolbar hide.
@@ -553,6 +558,10 @@ class PlayerBox(object):
         self.common_window_function()
         self.full_bool = False
         
+        # # if True. play list show.
+        if self.show_or_hide_play_list_bool:
+            self.play_list.show_play_list()            
+
 
     def full_play_window(self, widget): #full_button
         '''Full player window.'''
