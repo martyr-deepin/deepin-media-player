@@ -160,7 +160,7 @@ class PlayerBox(object):
         self.vbox.pack_start(self.screen, True, True)
         self.vbox.pack_start(self.progressbar.hbox,False, False)
         # Hide playlist and show playlist widget hbox.
-        self.hbox.pack_start(self.vbox)
+        self.hbox.pack_start(self.vbox, True, True)
 
         
         '''playlist'''
@@ -171,7 +171,7 @@ class PlayerBox(object):
         self.play_list.list_view.connect("double-click-item", self.double_play_list_file)
         self.play_list.list_view.connect("delete-select-items", self.delete_play_list_file)
         
-        self.hbox.pack_start(self.play_list.vbox)
+        self.hbox.pack_start(self.play_list.vbox, False, False)
         
         
         '''Bottom control.'''

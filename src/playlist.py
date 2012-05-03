@@ -27,6 +27,7 @@ from dtk.ui.scrolled_window import ScrolledWindow
 from dtk.ui.frame import VerticalFrame
 from dtk.ui.constant import DEFAULT_FONT_SIZE,ALIGN_END
 from mplayer import Mplayer    
+from utils import app_theme
 import gtk
 
 # from constant import *
@@ -40,16 +41,18 @@ class PlayList(object):
     def __init__(self):
         self.vbox = gtk.VBox()
         self.playlist_vbox = gtk.VBox()
-        self.vbox_vframe = VerticalFrame(padding = 0)
-        
+        self.playlist_vbox.set_size_request(200, 50)
+        self.vbox_vframe = gtk.Alignment()
+        self.vbox_vframe.set(0.0, 0.0, 1.0, 1.0)        
+        self.vbox_vframe.set_padding(0, 2, 0, 0)
+                
         self.scrolled_window = ScrolledWindow()    
-        self.list_view = ListView()
+        self.list_view = ListView(background_pixbuf=app_theme.get_pixbuf("play_list_bg.jpg"))
         self.item_array = []
         # self.list_view.connect("configure-event", self.init_playlist_path)
         # self.list_view.connect("double-click-item", self.double_click_item)
         self.scrolled_window.add_child(self.list_view)
-        
-
+                
         self.playlist_vbox.pack_start(self.scrolled_window)
         self.vbox_vframe.add(self.playlist_vbox)
         self.vbox.pack_start(self.vbox_vframe)
@@ -69,8 +72,7 @@ class PlayList(object):
         container_remove_all(self.vbox)    
         
 class MediaItem(gobject.GObject):
-    '''List item.'''
-    
+    '''List item.'''    
     __gsignals__ = {
         "redraw-request" : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, ()),
     }    
