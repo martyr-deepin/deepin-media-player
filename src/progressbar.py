@@ -23,6 +23,7 @@
 import gtk
 # import gobject
 from dtk.ui.draw import draw_pixbuf
+from dtk.ui.draw import draw_line
 from dtk.ui.utils import container_remove_all
 
 from utils import app_theme,allocation
@@ -132,6 +133,10 @@ class ProgressBar(object):
                         x + pos - hight_pixbuf.get_width(), 
                         y + 2)
             
+        # Draw line.        
+        cr.set_source_rgba(1, 1, 1, 0.1) # 10% #FFFFFF.
+        draw_line(cr, x , y + h - 1, x + w, y + h -1)    
+            
         # Draw mouse point.    
         if self.drag_pixbuf_bool:
             # Progressbar start point.
@@ -153,7 +158,8 @@ class ProgressBar(object):
                 draw_pixbuf(cr, 
                             drag_pixbuf, 
                             x + DRAW_PROGRESSBAR_WIDTH_PADDING + pos - drag_pixbuf.get_width()/2, 
-                            y)
+                            y)                            
+                
         return True
        
     def show_progressbar(self):

@@ -238,7 +238,7 @@ class PlayerBox(object):
         self.bottom_play_control_hbox_vframe_event_box.connect("motion-notify-event", self.hide_preview_function)
         
                 
-    '''Play List'''     
+    '''Play list control'''     
     def delete_play_list_file(self, list_view, list_item):
         # delete file of play list.
         for list_item_i in list_item:
@@ -272,7 +272,7 @@ class PlayerBox(object):
     def add_play_list_time(self, path): # 257 call.   
         '''play list add play file.'''
         self.play_list_dict[self.get_player_file_name(path)] = path
-        media_item = [MediaItem(self.get_player_file_name(path), str(""))]                
+        media_item = [MediaItem(self.get_player_file_name(path), str("        "))]                
         self.play_list.list_view.add_items(media_item)                
         return False        
     
