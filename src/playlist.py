@@ -19,15 +19,18 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from dtk.ui.draw import draw_line
 from dtk.ui.utils import container_remove_all
 from dtk.ui.listview import ListView
 from dtk.ui.listview import get_content_size
 from dtk.ui.listview import render_text
 from dtk.ui.scrolled_window import ScrolledWindow
+from dtk.ui.box import EventBox
 # from dtk.ui.frame import VerticalFrame
 from dtk.ui.constant import DEFAULT_FONT_SIZE,ALIGN_END
 from mplayer import Mplayer    
 from utils import app_theme
+from utils import allocation
 import gtk
 
 # from constant import *
@@ -41,7 +44,7 @@ class PlayList(object):
     def __init__(self):
         self.vbox = gtk.VBox()
         self.playlist_vbox = gtk.VBox()
-        self.play_list_width = 200
+        self.play_list_width = 220
         self.play_list_height = 50
         self.playlist_vbox.set_size_request(self.play_list_width, self.play_list_height)
         self.vbox_vframe = gtk.Alignment()
@@ -57,7 +60,20 @@ class PlayList(object):
                 
         self.playlist_vbox.pack_start(self.scrolled_window)
         self.vbox_vframe.add(self.playlist_vbox)
-        self.vbox.pack_start(self.vbox_vframe)
+        self.vbox.pack_start(self.vbox_vframe, True, True)
+        
+        self.draw_line_event_box = EventBox()
+        self.draw_line_event_box.connect("expose-event", self.draw_lien_expose_event)
+        self.vbox.pack_start(self.draw_line_event_box, False, False)
+        
+        
+        
+        
+    def draw_lien_expose_event(self, widget, event):    
+        cr, x, y, w, h = allocation(widget)
+        cr.set_source_rgba(1, 1, 1, 0.1) # 10% #FFFFFF
+        draw_line(cr, x, y+h-2, x+w, y+h-2)
+        return True
         
     # def double_click_item(self, list_view, list_item, colume, offset_x, offset_y):    
     #     pass
@@ -69,7 +85,8 @@ class PlayList(object):
     def show_play_list(self):
         if self.vbox.get_children() == [] and self.vbox_vframe != None:
            self.vbox.add(self.vbox_vframe)
-            
+           self.vbox.pack_start(self.draw_line_event_box, False, False) 
+           
     def hide_play_list(self):
         container_remove_all(self.vbox)    
         

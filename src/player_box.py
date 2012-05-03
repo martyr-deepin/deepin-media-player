@@ -238,15 +238,19 @@ class PlayerBox(object):
         
         '''Hide preview window.'''                        
         self.bottom_play_control_hbox_vframe_event_box.connect("motion-notify-event", self.hide_preview_function)
-        
+                
+    '''play list button'''    
     def play_list_button_clicked(self, widget): # play list button signal:clicked.           
         if True == self.play_list_button.button.flags: 
+            self.app.window.resize(self.app.window.allocation.width + self.play_list.play_list_width,
+                                   self.app.window.allocation.height)
             self.play_list.show_play_list()
             
         if False == self.play_list_button.button.flags:    
+            self.app.window.resize(self.app.window.allocation.width - self.play_list.play_list_width,
+                                   self.app.window.allocation.height)
             self.play_list.hide_play_list()
-            
-        
+                    
         
     '''Play list control'''     
     def delete_play_list_file(self, list_view, list_item):
