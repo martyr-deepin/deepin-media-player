@@ -215,6 +215,8 @@ class PlayerBox(object):
         # play list button.
         self.play_list_button_hframe = HorizontalFrame()
         self.play_list_button = PlayListButton()
+        # play_list_button connect signal.
+        self.play_list_button.button.connect("clicked", self.play_list_button_clicked)
         self.play_list_button_hframe.add(self.play_list_button.button)
         self.play_list_button_hframe.set(1, 0, 0, 0)
         self.play_list_button_hframe.set_padding(0, 0, 0, 10)
@@ -237,7 +239,15 @@ class PlayerBox(object):
         '''Hide preview window.'''                        
         self.bottom_play_control_hbox_vframe_event_box.connect("motion-notify-event", self.hide_preview_function)
         
-                
+    def play_list_button_clicked(self, widget): # play list button signal:clicked.           
+        if True == self.play_list_button.button.flags: 
+            self.play_list.show_play_list()
+            
+        if False == self.play_list_button.button.flags:    
+            self.play_list.hide_play_list()
+            
+        
+        
     '''Play list control'''     
     def delete_play_list_file(self, list_view, list_item):
         # delete file of play list.
@@ -377,6 +387,8 @@ class PlayerBox(object):
     '''Init media player.'''
     def init_media_player(self, mplayer, xid):
         '''Init deepin media player.'''
+        self.play_list.hide_play_list() # Hide play list.
+        
         self.save_volume_value = self.volume_button.volume_value
         self.save_volume_mute_bool = self.volume_button.mute_bool
 

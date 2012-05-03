@@ -24,7 +24,7 @@ from dtk.ui.listview import ListView
 from dtk.ui.listview import get_content_size
 from dtk.ui.listview import render_text
 from dtk.ui.scrolled_window import ScrolledWindow
-from dtk.ui.frame import VerticalFrame
+# from dtk.ui.frame import VerticalFrame
 from dtk.ui.constant import DEFAULT_FONT_SIZE,ALIGN_END
 from mplayer import Mplayer    
 from utils import app_theme
@@ -41,7 +41,9 @@ class PlayList(object):
     def __init__(self):
         self.vbox = gtk.VBox()
         self.playlist_vbox = gtk.VBox()
-        self.playlist_vbox.set_size_request(200, 50)
+        self.play_list_width = 200
+        self.play_list_height = 50
+        self.playlist_vbox.set_size_request(self.play_list_width, self.play_list_height)
         self.vbox_vframe = gtk.Alignment()
         self.vbox_vframe.set(0.0, 0.0, 1.0, 1.0)        
         self.vbox_vframe.set_padding(0, 2, 0, 0)
@@ -64,11 +66,11 @@ class PlayList(object):
     #     pass
             
                 
-    def show_playlist(self):
+    def show_play_list(self):
         if self.vbox.get_children() == [] and self.vbox_vframe != None:
            self.vbox.add(self.vbox_vframe)
             
-    def hide_playlist(self):
+    def hide_play_list(self):
         container_remove_all(self.vbox)    
         
 class MediaItem(gobject.GObject):
