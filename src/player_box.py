@@ -188,8 +188,8 @@ class PlayerBox(object):
         self.show_time_label_hframe = HorizontalFrame()        
         self.show_time_label = ShowTime()
         self.show_time_label.time_box.set_size_request(110, -1)
-        self.show_time_label.time_font1 = "00 : 00 : 00 "
-        self.show_time_label.time_font2 = " / 00 : 00 : 00"
+        self.show_time_label.time_font1 = "00 : 00 : 00  "
+        self.show_time_label.time_font2 = "  / 00 : 00 : 00"
         self.show_time_label_hframe.add(self.show_time_label.time_box)
         self.show_time_label_hframe.set(0, 0.5, 0, 0)
         
@@ -281,7 +281,8 @@ class PlayerBox(object):
         '''Get length threads'''
         for i in self.play_list.list_view.items:
             i.length = str(get_length(self.play_list_dict[i.title]))
-        
+            i.emit_redraw_request()
+            
             
     def add_play_list_time(self, path): # 257 call.   
         '''play list add play file.'''
