@@ -412,7 +412,7 @@ class PlayerBox(object):
         self.mp.connect("play-pre", self.media_player_pre)
         self.mp.connect("add-path", self.add_play_list)
         
-        self.mp.playListState = 2 # play mode.
+        self.mp.playListState = 1 # play mode.
         try:
             for file_path in self.argv_path_list:
                 if self.mp.findDmp(file_path): # .dmp add play file.
@@ -870,6 +870,15 @@ class PlayerBox(object):
 
     def media_player_start(self, mplayer, play_bool):
         '''media player start play.'''
+        # print self.get_player_file_name(mplayer.path)
+        
+        for i in self.play_list.list_view.items:
+            if i.title == self.get_player_file_name(mplayer.path):
+                item = i
+                break
+            
+        self.play_list.list_view.set_highlight(item)    
+        
         self.progressbar.set_pos(0)
         self.toolbar2.progressbar.set_pos(0)        
         
