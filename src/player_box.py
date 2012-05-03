@@ -264,15 +264,15 @@ class PlayerBox(object):
         return False
         
     def length_threads(self):
+        '''Get length threads'''
         for i in self.play_list.list_view.items:
-            print i.title
-            
-        print "开启线程,你满意了吧."
+            i.length = str(get_length(self.play_list_dict[i.title]))
         
-    def add_play_list_time(self, path):    
+            
+    def add_play_list_time(self, path): # 257 call.   
         '''play list add play file.'''
         self.play_list_dict[self.get_player_file_name(path)] = path
-        media_item = [MediaItem(self.get_player_file_name(path), str(" "))]                
+        media_item = [MediaItem(self.get_player_file_name(path), str(""))]                
         self.play_list.list_view.add_items(media_item)                
         return False        
     
