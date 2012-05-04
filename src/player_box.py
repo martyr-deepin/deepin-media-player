@@ -257,9 +257,11 @@ class PlayerBox(object):
     '''Play list control'''     
     def delete_play_list_file(self, list_view, list_item):
         # delete file of play list.
+        play_list_dict_save = self.play_list_dict
         for list_item_i in list_item:
-            self.mp.delPlayList(self.play_list_dict[list_item_i.title])
+            self.mp.delPlayList(play_list_dict_save[list_item_i.title])
             del self.play_list_dict[list_item_i.title]                    
+            
             
     def add_play_list(self, mplayer, path): # mplayer signal: "add-path"                       
         '''Play list add play file timeout.[100-1028 a play file].'''
@@ -296,11 +298,15 @@ class PlayerBox(object):
     def double_play_list_file(self, list_view, list_item, colume, offset_x, offset_y):     
         '''double play file.'''
         if self.mp:
-            if self.mp.state == 1:                
+            if 1 == self.mp.state:                
                 self.mp.quit()                                        
+                
         # play file.        
         self.mp.play(self.play_list_dict[list_item.title])
-   
+        self.mp.playListNum = list_item.get_index()           
+                    
+        self.play_list.list_view.set_highlight(list_item)    
+
         
     def hide_preview_function(self, widget, event):    
         '''Hide preview window.'''
@@ -872,14 +878,15 @@ class PlayerBox(object):
 
     def media_player_start(self, mplayer, play_bool):
         '''media player start play.'''
-        # print self.get_player_file_name(mplayer.path)
-        
-        for i in self.play_list.list_view.items:
-            if i.title == self.get_player_file_name(mplayer.path):
-                item = i
+        # print self.get_player_file_name(mplayer.path)                
+        Num = 0
+        for item in self.play_list.list_view.items:
+            if Num == self.mp.playListNum:
+                self.play_list.list_view.set_highlight(item)    
                 break
-            
-        self.play_list.list_view.set_highlight(item)    
+            else:    
+                Num += 1
+                
         
         self.progressbar.set_pos(0)
         self.toolbar2.progressbar.set_pos(0)        

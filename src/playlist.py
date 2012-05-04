@@ -123,7 +123,7 @@ class MediaItem(gobject.GObject):
         self.title_padding_x = 10
         self.title_padding_y = 5
         (self.title_width, self.title_height) = get_content_size(self.title, 4) #DEFAULT_FONT_SIZE
-        self.title_width = 100
+        self.title_width = 90
         
         self.length_padding_x = 10
         self.length_padding_y = 5

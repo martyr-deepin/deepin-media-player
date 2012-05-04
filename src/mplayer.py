@@ -164,6 +164,7 @@ class  Mplayer(gobject.GObject):
         self.vide_bool   = False
         self.pause_bool  = False
         self.lenState    = 0
+        self.path = ""
         
         self.timeHour    = 0
         self.timeMin     = 0
