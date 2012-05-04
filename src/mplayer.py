@@ -61,9 +61,37 @@ def get_length(file_path):
     length_compile = re.compile(r"ID_LENGTH=([\d|\.]+)")
     length = length_compile.findall(cmd_str)[0]
     # return (fp.stdout.read().split()[0])
-    return length
+    return length_to_time(length)
 
 
+def length_to_time(length):        
+    timeSec = int(float(length))
+    timeHour = 0
+    timeMin = 0
+    
+    if timeSec >= 3600:
+        timeHour = int(timeSec / 3600)
+        timeSec -= int(timeHour * 3600)
+        
+    if timeSec >= 60:
+        timeMin  = int(timeSec / 60)
+        timeSec -= int(timeMin * 60)         
+            
+    if timeHour > 0:    
+        return str("%s时%s分%s秒"%(str(time_add_zero(timeHour)), 
+                                  str(time_add_zero(timeMin)), 
+                                  str(time_add_zero(timeSec))))
+    if timeMin > 0:
+        return str("%s分%s秒"%(str(time_add_zero(timeMin)), 
+                               str(time_add_zero(timeSec))))
+    if timeSec > 0:
+        return str("%s秒"%(str(time_add_zero(timeSec))))
+    
+def time_add_zero(time_to):    
+    if 0 <= time_to <= 9:
+        time_to = "0" + str(time_to)
+    return str(time_to)
+        
 def init_mplayer_config():
         # create .config.
         path = get_home_path() + "/.config"

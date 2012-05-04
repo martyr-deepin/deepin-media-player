@@ -122,11 +122,14 @@ class MediaItem(gobject.GObject):
         # Calculate item size.
         self.title_padding_x = 10
         self.title_padding_y = 5
-        (self.title_width, self.title_height) = get_content_size(self.title, DEFAULT_FONT_SIZE)
+        (self.title_width, self.title_height) = get_content_size(self.title, 4) #DEFAULT_FONT_SIZE
+        self.title_width = 100
         
         self.length_padding_x = 10
         self.length_padding_y = 5
-        (self.length_width, self.length_height) = get_content_size(self.length, DEFAULT_FONT_SIZE)
+        (self.length_width, self.length_height) = get_content_size(self.length, 4) #DEFAULT_FONT_SIZE
+        self.length_width = 80
+        
         
     def render_title(self, cr, rect):
         '''Render title.'''
@@ -169,8 +172,8 @@ if __name__ == "__main__":
     
     scrolled_window = ScrolledWindow()
     mp = Mplayer()
-    list_item = [MediaItem("测试一", "离家出家"),
-                 MediaItem("测试二", "离家出家")]
+    list_item = [MediaItem("你是子厚道的,这个非常好看的电影.rmvb", "120小时30分40秒"),
+                 MediaItem("测试二你是的附近的看附近思考的了附近哭附近的思考了附近的死了看法.rmvb", "120小时30分40秒")]
     
     list_view = ListView()
     list_view.add_items(list_item)
@@ -180,8 +183,8 @@ if __name__ == "__main__":
     # list_item[1].emit_redraw_request()
     
     # list_view.items[0].update(list_view.items[0].title, "改变时间")
-    list_view.items[0].length = "改变时间,离家出家吧..."
-    list_view.items[0].emit_redraw_request()        
+    # list_view.items[0].length = "改变时间,离家出家吧..."
+    # list_view.items[0].emit_redraw_request()        
     
     list_view.set_size_request(500, 500)
     list_view.connect("double-click-item", double_click_item)
