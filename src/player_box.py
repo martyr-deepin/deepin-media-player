@@ -404,6 +404,8 @@ class PlayerBox(object):
         self.mp = Mplayer(xid)
         # Init darg file signal.
         drag_connect(self.screen, self.mp)
+        drag_connect(self.play_list.list_view, self.mp)
+        
         self.mp.connect("get-time-pos", self.get_time_pos)
         self.mp.connect("get-time-length", self.get_time_length)
         self.mp.connect("play-start", self.media_player_start)

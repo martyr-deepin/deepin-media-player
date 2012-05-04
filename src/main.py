@@ -20,7 +20,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from dtk.ui.application import Application
-
+from dtk.ui.dragbar import Dragbar
 from utils import app_theme
 from constant import APP_WIDTH, APP_HEIGHT
 from player_box import PlayerBox
@@ -53,7 +53,8 @@ class MediaPlayer(object):
         self.player_box = PlayerBox(self.app, argv_path_list)
         # # Add child widget to app. 
         self.app.main_box.pack_start(self.player_box.main_vbox_hframe)
-        
+        # drag function.
+        Dragbar(self.app.window, self.app.window)
         self.app.window.show_all()
         
         
