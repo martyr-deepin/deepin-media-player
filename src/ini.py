@@ -381,7 +381,11 @@ class INI(gobject.GObject):
                 for root in self.root:
                     ini_fp.write("[" + root.root_name +  "]\n")
                     for child in root.child_addr: 
-                        ini_fp.write(child + " = " + root.child_addr[child] + "\n")
+                        
+                        if root.root_name == "PlayMemory":
+                            ini_fp.write('"' + child + '"' + " = " + str(root.child_addr[child]) + "\n")
+                        else:    
+                            ini_fp.write(child + " = " + root.child_addr[child] + "\n")
                 ini_fp.close()
             else:    
                 print "无法保存root为空"
@@ -407,9 +411,15 @@ if __name__ == "__main__":
     ini.connect("send-error", test)
     ini.start()
     
-    rooo = ini.get_section("window")
+    rooo = ini.get_section("PlayMemory")
+    print rooo.root_name
+    print rooo.child_addr
+    
+    rooo.child_addr["abcdef"] = 5000
+    rooo.child_addr["我大家疯狂的房间的看法觉得浪费"] = 300
     print "=============="
-    print ini.get_section_value("PlayMemory", '吸血鬼日记.The.Vampire.Diaries.S02E02.Chi_Eng.HDTVrip.624X352-YYeTs人人影视')
-    print ini.get_section_value("PlayMemory", "明天是否知")
+    # print ini.get_section_value("PlayMemory", '吸血鬼日记.The.Vampire.Diaries.S02E02.Chi_Eng.HDTVrip.624X352-YYeTs人人影视')
+    # print ini.get_section_value("PlayMemory", "明天是否知")
     #这是一个简单的测试,不懂
-
+    print rooo.child_addr
+    ini.ini_save()
