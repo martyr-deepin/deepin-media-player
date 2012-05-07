@@ -478,7 +478,8 @@ class PlayerBox(object):
             self.volume_button.mute_bool = self.save_volume_mute_bool
             self.volume_button.set_value(self.save_volume_value)
 
-        if self.save_volume_mute_bool: self.mp.nomute()
+        if self.save_volume_mute_bool: 
+            self.mp.nomute()
 
         self.toolbar.panel.hide_all()
         self.panel_x, self.panel_y = self.screen.window.get_root_origin()
@@ -526,7 +527,12 @@ class PlayerBox(object):
         self.show_bottom()
         self.app.window.show_all()
 
-        self.volume_button.mute_bool = True if 1 == self.save_volume_mute_bool else False
+        if self.save_volume_mute_bool:
+            self.volume_button.mute_bool = True
+        else:    
+            self.volume_button.mute_bool = False
+            
+        # self.volume_button.mute_bool = True if 1 == self.save_volume_mute_bool else False
         self.volume_button.set_value(self.save_volume_value)
 
     def concise_window_function(self):
@@ -540,7 +546,13 @@ class PlayerBox(object):
         self.toolbar.panel.hide_all() # hide toolbar.
         self.toolbar2.panel.hide_all()
 
-        self.toolbar2.volume_button.mute_bool = True if 1 == self.save_volume_mute_bool else False
+        if self.save_volume_mute_bool:
+            self.toolbar2.volume_button.mute_bool = True
+        else:    
+            self.toolbar2.volume_button.mute_bool = False
+            
+            
+        # self.toolbar2.volume_button.mute_bool = True if 1 == self.save_volume_mute_bool else False
         self.toolbar2.volume_button.set_value(self.save_volume_value)
 
     def set_window_full(self):
@@ -609,7 +621,10 @@ class PlayerBox(object):
             self.app.show_titlebar()
             self.show_hide_set()
 
-
+        if self.save_volume_mute_bool:
+            if self.mp:
+                self.mp.nomute()
+                
     def hide_window_widget(self, widget): #concise_button
         '''Hide widnow titlebar and play control panel.
         Hide progressbar.
@@ -617,6 +632,7 @@ class PlayerBox(object):
         Hide border of window.
         [concise mode:]
         '''
+                
         if self.full_bool:
             self.show_hide_set()
 
@@ -633,6 +649,10 @@ class PlayerBox(object):
             self.toolbar2.panel.hide_all()
 
 
+        if self.save_volume_mute_bool:
+            if self.mp:
+                self.mp.nomute()
+            
     def set_window_above(self, widget): #above_button
         self.above_bool = not self.above_bool
         self.app.window.set_keep_above(self.above_bool)
@@ -853,7 +873,7 @@ class PlayerBox(object):
     def get_time_length(self, mplayer, length):
         '''Get mplayer length to max of progressbar.'''
         self.mp.setvolume(self.save_volume_value)
-        if 1 == self.save_volume_mute_bool:
+        if self.save_volume_mute_bool:
             self.mp.nomute()
 
         self.progressbar.max = length
