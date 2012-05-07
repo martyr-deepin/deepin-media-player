@@ -27,7 +27,7 @@ import string, os, sys
 import gobject
 
 
-
+# ini config.
 class MediaConfig(gobject.GObject):
     __gsignals__ = {
         "media-config":(gobject.SIGNAL_RUN_LAST,
