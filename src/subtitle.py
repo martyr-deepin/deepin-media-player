@@ -21,33 +21,151 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from dtk.ui.application import Application
+from dtk.ui.entry import TextEntry
+from dtk.ui.frame import HorizontalFrame
+from utils import app_theme
+import gtk
 import urllib
 import re
 import threading
 import gobject
 
-#进入字幕下载页面
-# http://yyets.com/ (链接地址)showsubtitle-2070.html
-#下载字幕链接
-# http://yyets.com/ (下载链接)?mod=2&ac=download_attachment&id=2070&type=sub
-# 下载链接: /?mod=2&ac=download_attachment&id=2070&type=sub
-#人人影视
-
-# http://yyets.com/?mod=2&ac=search_result&op=normal&class=subtitle&keyword=%E5%8A%9F%E5%A4%AB%E7%86%8A%E7%8C%AB &search=&page=2
-
-# http://yyets.com/?mod=2&ac=search_result&op=normal&class=subtitle&keyword=%E5%8A%9F%E5%A4%AB%E7%86%8A%E7%8C%AB&search=&page2= (页码)
-
-
-# main_http = "http://yyets.com/listsubtitle.html"
-
-# HTTP_ADDRES = "http://yyets.com/listsubtitle.html"
+from dtk.ui.draw import draw_line
+from dtk.ui.utils import container_remove_all
+from dtk.ui.listview import ListView
+from dtk.ui.listview import get_content_size
+from dtk.ui.listview import render_text
+from dtk.ui.scrolled_window import ScrolledWindow
+from dtk.ui.box import EventBox
+# from dtk.ui.frame import VerticalFrame
+from dtk.ui.constant import DEFAULT_FONT_SIZE,ALIGN_END
+from utils import allocation
 
 
+gtk.gdk.threads_init()
 
+class PlayList(object):
+    
+    def __init__(self):
+        self.vbox = gtk.VBox()
+        self.playlist_vbox = gtk.VBox()
+        self.play_list_width = 220
+        self.play_list_height = 50
+        self.playlist_vbox.set_size_request(self.play_list_width, self.play_list_height)
+        self.vbox_vframe = gtk.Alignment()
+        self.vbox_vframe.set(0.0, 0.0, 1.0, 1.0)        
+        self.vbox_vframe.set_padding(0, 2, 0, 0)
+                
+        self.scrolled_window = ScrolledWindow()    
+        self.list_view = ListView(background_pixbuf=app_theme.get_pixbuf("play_list_bg.jpg"))
+        self.item_array = []
+        # self.list_view.connect("configure-event", self.init_playlist_path)
+        # self.list_view.connect("double-click-item", self.double_click_item)
+        self.scrolled_window.add_child(self.list_view)
+                
+        self.playlist_vbox.pack_start(self.scrolled_window)
+        self.vbox_vframe.add(self.playlist_vbox)
+        self.vbox.pack_start(self.vbox_vframe, True, True)
+        
+        self.draw_line_event_box = EventBox()
+        self.draw_line_event_box.connect("expose-event", self.draw_lien_expose_event)
+        self.vbox.pack_start(self.draw_line_event_box, False, False)
+        
+        
+        
+        
+    def draw_lien_expose_event(self, widget, event):    
+        cr, x, y, w, h = allocation(widget)
+        cr.set_source_rgba(1, 1, 1, 0.1) # 10% #FFFFFF
+        draw_line(cr, x, y+h-2, x+w, y+h-2)
+        return True
+        
+    # def double_click_item(self, list_view, list_item, colume, offset_x, offset_y):    
+    #     pass
+    
+    # def init_playlist_path(self, widget, event):                     
+    #     pass
+            
+                
+    def show_play_list(self):
+        if self.vbox.get_children() == [] and self.vbox_vframe != None:
+           self.vbox.add(self.vbox_vframe)
+           self.vbox.pack_start(self.draw_line_event_box, False, False) 
+           
+    def hide_play_list(self):
+        container_remove_all(self.vbox)    
+        
+class MediaItem(gobject.GObject):
+    '''List item.'''    
+    __gsignals__ = {
+        "redraw-request" : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, ()),
+    }    
+    def __init__(self, title, length):
+        '''Init list item.'''
+        gobject.GObject.__init__(self)
+        self.update(title, length)
+        self.index = None
+        
+    def set_index(self, index):
+        '''Update index.'''
+        self.index = index
+        
+    def get_index(self):
+        '''Get index.'''
+        return self.index
+        
+    def emit_redraw_request(self):
+        '''Emit redraw-request signal.'''
+        self.emit("redraw-request")
+        
+    def update(self, title, length):
+        '''Update.'''
+        # Update.
+        self.title = title
+        self.length = length
+        
+        # Calculate item size.
+        self.title_padding_x = 10
+        self.title_padding_y = 5
+        (self.title_width, self.title_height) = get_content_size(self.title, 4) #DEFAULT_FONT_SIZE
+        self.title_width = 400
+        
+        self.length_padding_x = 10
+        self.length_padding_y = 5
+        (self.length_width, self.length_height) = get_content_size(self.length, 4) #DEFAULT_FONT_SIZE
+        
+        
+    def render_title(self, cr, rect):
+        '''Render title.'''
+        rect.x += self.title_padding_x
+        render_text(cr, rect, self.title)
+    
+    def render_length(self, cr, rect):
+        '''Render length.'''
+        rect.width -= self.length_padding_x
+        render_text(cr, rect, self.length, ALIGN_END)
+        
+    def get_column_sizes(self):
+        '''Get sizes.'''
+        return [(self.title_width + self.title_padding_x * 2, 
+                 self.title_height + self.title_padding_y * 2),
+                (self.length_width + self.length_padding_x * 2, 
+                 self.length_height + self.length_padding_y * 2),
+                ]    
+    
+    def get_renders(self):
+        '''Get render callbacks.'''
+        return [self.render_title,
+                self.render_length]
+
+    
 class SubTitle(gobject.GObject):
     __gsignals__ = {
         "get-subtitle-info":(gobject.SIGNAL_RUN_LAST,
-                           gobject.TYPE_NONE,(gobject.TYPE_STRING, gobject.TYPE_STRING,))
+                             gobject.TYPE_NONE,(gobject.TYPE_STRING, gobject.TYPE_STRING)),
+        "down-end":(gobject.SIGNAL_RUN_LAST,
+                             gobject.TYPE_NONE,(gobject.TYPE_STRING, gobject.TYPE_STRING))        
         }
     def __init__(self):
         gobject.GObject.__init__(self)        
@@ -135,9 +253,10 @@ class SubTitle(gobject.GObject):
             # print subtitle_down_address
             
             #Save subtitle name and down address.
-            self.down_url_dict[subtitle_name] = subtitle_down_address                        
+            # self.down_url_dict[subtitle_name] = subtitle_down_address                        
             self.emit("get-subtitle-info", subtitle_name, subtitle_down_address)
                         
+        print self.down_url_dict
         
     def down_url_to_path(self, down_url, file_path_and_name):
         #local down.
@@ -146,28 +265,92 @@ class SubTitle(gobject.GObject):
         subtitle_down_address = p.findall(html_search)[0][16:].strip(">")
         subtitle_down_address = self.html_main + subtitle_down_address.strip('"')           
         urllib.urlretrieve(subtitle_down_address, file_path_and_name)
-                
+        self.emit("down-end", file_path_and_name, subtitle_down_address)
         
         
-# Test get info.        
-def test(subtitle, name, address):        
-    print "'===' + test: ====",
-    print '==' + name + '===='
-    print '==' + address + '==='
-    subtitle.down_url_to_path(address, "/home/long/" + name + ".rar")
-    
-if __name__ == "__main__":        
-    sub_title = SubTitle()        
-    sub_title.connect("get-subtitle-info", test)
-    sub_title.Find("黑侠")
-    # sub_title.Find("功夫熊猫")
-    #sub_title.Find("黑")
-    
-    
-    
+class SubTitleGui(object):
+     def __init__(self):
+         self.sub_title = SubTitle()
+         
+         self.sub_title.connect("get-subtitle-info", self.show_subtitle_info)
+         self.sub_title.connect("down-end", self.down_end_messagebox)
+         
+         self.app = Application("SubTitle", False)
+         self.app.window.set_size_request(500, 200) 
+         self.app.add_titlebar(["close"],
+                              app_theme.get_pixbuf("OrdinaryMode.png"),
+                              "字幕搜索", " ", add_separator = True)
         
+         # self.label = Label("fjsdfjsdlfk")
+         self.sub_title_text = TextEntry()
+         self.sub_title_text.set_size(300, 24)
+         self.start_btn = gtk.Button("搜索")
+         self.start_btn.connect("clicked", self.sub_title_find)
+         self.start_btn.set_size_request(80, 24)
+         self.top_hbox = gtk.HBox()
+         self.top_hbox.pack_start(self.sub_title_text)
+         self.top_hbox.pack_start(self.start_btn)
+         
+         self.show_subtitle_list = PlayList()
+         self.show_subtitle_list.list_view.connect("double-click-item", self.down_sub_title)
+         self.vbox = gtk.VBox()
+         self.vbox_frame = HorizontalFrame(2)
+         self.vbox_frame.add(self.vbox)
+         
+         self.vbox.pack_start(self.top_hbox,False,False)
+         self.vbox.pack_start(self.show_subtitle_list.vbox,True,True)
+         
+         self.app.main_box.pack_start(self.vbox_frame)
+         
+         self.app.window.show_all()
+         # self.app.run()
+         
+     def down_end_messagebox(self, subtitle, name, address):    
+         print name + "下载完毕..."
+         
+     def down_sub_title(self, list_view, list_item, colume, offset_x, offset_y):    
+         self.sub_title.down_url_to_path(self.sub_title.down_url_dict[list_item.title], 
+                                         "/home/long/" + list_item.title + ".rar")
+         # print self.sub_title.down_url_dict['\u9ed1\u4fa0 Hak hap']
+     
+     def sub_title_find(self, widget):    
+         
+         self.show_subtitle_list.list_view.clear()
+         self.sub_title.Find(self.sub_title_text.get_text())
+         
+     def show_subtitle_info(self, subtitle, name, address):    
+         self.sub_title.down_url_dict[name] = address
+         
+         gtk.timeout_add(10, self.show_subtitle_info_time, name)
+         
+     def show_subtitle_info_time(self, name):             
+         media_item = [MediaItem(name, str(""))]                
+         self.show_subtitle_list.list_view.add_items(media_item)                
+         
+         
+SubTitleGui()         
+gtk.gdk.threads_enter()         
+gtk.main()
+gtk.gdk.threads_leave()
+
+# # Test get info.        
+# def test(subtitle, name, address):        
+#     print "'===' + test: ====",
+#     print '==' + name + '===='
+#     print '==' + address + '==='
+#     print address
+    
+#     subtitle.down_url_to_path(address, "/home/long/" + name + ".rar")
+    
+# if __name__ == "__main__":        
+#     sub_title = SubTitle()        
+#     sub_title.connect("get-subtitle-info", test)
+#     sub_title.Find("黑侠")
+#     # sub_title.Find("功夫熊猫")
+#     #sub_title.Find("黑")
+    
+    
+    
+     
         
-# 要得到搜索结果的个数
-# 将各个字幕链接地址保存起来. (有多页,自动进行翻页下载)
-# 字典类型. 名字 对应下载地址
 
