@@ -898,6 +898,9 @@ class PlayerBox(object):
 
     def media_player_start(self, mplayer, play_bool):
         '''media player start play.'''
+        # if self.save_volume_mute_bool:
+        #     self.mp.nomute()
+            
         # print self.get_player_file_name(mplayer.path)                
         Num = 0
         for item in self.play_list.list_view.items:
