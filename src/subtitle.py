@@ -256,7 +256,7 @@ class SubTitle(gobject.GObject):
             # self.down_url_dict[subtitle_name] = subtitle_down_address                        
             self.emit("get-subtitle-info", subtitle_name, subtitle_down_address)
                         
-        print self.down_url_dict
+        # print self.down_url_dict
         
     def down_url_to_path(self, down_url, file_path_and_name):
         #local down.
