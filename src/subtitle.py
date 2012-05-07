@@ -217,7 +217,7 @@ class SubTitle(gobject.GObject):
         while subtitle_sum < self.subtitle_num:
             i += 1
             html_search = urllib.urlopen(self.html_sourct + self.file_name + "&search=&page=%d" % (i)).read()
-            fp = open(self.file_name, "w")
+            fp = open("/tmp/" + self.file_name, "w")
             fp.write(html_search)
             fp.close()
             
@@ -232,10 +232,13 @@ class SubTitle(gobject.GObject):
             
         # subtitle down url to dict.    
         # print self.down_url_list
+
         path_thread_id = threading.Thread(target=self.down_list_to_dict)
         path_thread_id.start()                        
+        # self.down_list_to_dict()    
         
     def down_list_to_dict(self):        
+        # gtk.gdk.threads_enter()
         for list_i in self.down_url_list:
             # get subtitle name.
             p = re.compile(ur'(%s.+</a>)' % (self.file_name.decode('UTF-8')))
@@ -257,6 +260,7 @@ class SubTitle(gobject.GObject):
             self.emit("get-subtitle-info", subtitle_name, subtitle_down_address)
                         
         # print self.down_url_dict
+        # gtk.gdk.threads_leave()
         
     def down_url_to_path(self, down_url, file_path_and_name):
         #local down.
@@ -310,7 +314,7 @@ class SubTitleGui(object):
          
      def down_sub_title(self, list_view, list_item, colume, offset_x, offset_y):    
          self.sub_title.down_url_to_path(self.sub_title.down_url_dict[list_item.title], 
-                                         "/home/long/" + list_item.title + ".rar")
+                                         "/tmp/" + list_item.title + ".rar")
          # print self.sub_title.down_url_dict['\u9ed1\u4fa0 Hak hap']
      
      def sub_title_find(self, widget):    
@@ -321,11 +325,11 @@ class SubTitleGui(object):
      def show_subtitle_info(self, subtitle, name, address):    
          self.sub_title.down_url_dict[name] = address
          
-         gtk.timeout_add(10, self.show_subtitle_info_time, name)
+         gtk.timeout_add(1, self.show_subtitle_info_time, name)
          
      def show_subtitle_info_time(self, name):             
-         media_item = [MediaItem(name, str(""))]                
-         self.show_subtitle_list.list_view.add_items(media_item)                
+         media_item = [MediaItem(name, str(""))]                         
+         self.show_subtitle_list.list_view.add_items(media_item)                         
          
          
 SubTitleGui()         

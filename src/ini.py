@@ -137,6 +137,10 @@ class INI(gobject.GObject):
                             self.ch = self.ini_fp.read(1)
                             if '/' == self.ch:                            
                                 break
+                            if '\n' == self.ch:
+                                self.line_num += 1
+                                self.column_num = 0
+                                
                         if not self.ch:
                             self.line_num = save_line_num + 1
                             self.column_num = save_column_num
@@ -394,21 +398,6 @@ if __name__ == "__main__":
     
     rooo = ini.get_section("window")
     print "=============="
-    # print rooo.root_name
-    # # print rooo.child_addr
-    # # print "============="
-    # print ini.get_section_value("window", "x")
-    # print "============="
-    print ini.get_section_childs("window")
-    ini.set_section_value("window", "w", "3450")
-    print ini.get_section_childs("window")
-    print ini.get_section_value("window", "w")
-    # print "============================="
-    ini.set_section_child_name("window", "width", "w")
-    ini.set_section_child_name("window", "height", "h")
-    # print "============================="
-    print ini.get_section_value("window", "w")
-    print ini.get_section_value("window", "h")
-    ini.ini_save()
+    
     #这是一个简单的测试,不懂
 

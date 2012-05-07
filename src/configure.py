@@ -39,7 +39,7 @@ class MediaConfig(gobject.GObject):
         gobject.GObject.__init__(self)
         self.config_path = ""        
         self.cf = ConfigParser.ConfigParser()
-        self.emit("media-config")
+        # self.emit("media-config")
         
     def init_read(self, config_path):    
         self.config_path = config_path
