@@ -208,6 +208,8 @@ class INI(gobject.GObject):
                     if not self.ch:    
                         self.line_num += 1
                         self.error_input("字符串缺少结束符")
+                        break
+                    
                     self.child_name += self.ch
                     
             else:
@@ -408,5 +410,6 @@ if __name__ == "__main__":
     rooo = ini.get_section("window")
     print "=============="
     print ini.get_section_value("PlayMemory", '吸血鬼日记.The.Vampire.Diaries.S02E02.Chi_Eng.HDTVrip.624X352-YYeTs人人影视')
+    print ini.get_section_value("PlayMemory", "明天是否知")
     #这是一个简单的测试,不懂
 

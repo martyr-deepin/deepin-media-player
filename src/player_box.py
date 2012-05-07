@@ -37,9 +37,11 @@ from drag import drag_connect
 from preview import PreView
 from mplayer import Mplayer
 from mplayer import get_length
+from mplayer import get_home_path
 from playlist import PlayList
 from playlist import MediaItem
 
+from ini import INI
 import threading
 import gtk
 import os
@@ -55,6 +57,10 @@ class PlayerBox(object):
         self.full_bool = False  # Set window full bool.
         self.mode_state_bool = False # Concise mode(True) and common mode(False).
 
+        # ini play memory.
+        self.ini = INI(get_home_path() + "/.config/deepin-media-player/config.ini")
+        self.ini.start()
+        
         # playlist.
         self.add_play_list_length_id = None
         self.show_or_hide_play_list_bool = False
@@ -872,6 +878,12 @@ class PlayerBox(object):
     
     def get_time_length(self, mplayer, length):
         '''Get mplayer length to max of progressbar.'''
+        # play memory.
+        init_value = self.ini.get_section_value('PlayMemory', self.get_player_file_name(mplayer.path))
+        
+        if init_value != None:
+            self.mp.seek(int(init_value))
+
         self.mp.setvolume(self.save_volume_value)
         if self.save_volume_mute_bool:
             self.mp.nomute()
@@ -895,9 +907,10 @@ class PlayerBox(object):
                 self.toolbar2.show_time.time_font2 = self.set_time_string(self.mp.timeHour) + ":" + self.set_time_string(self.mp.timeMin) + ":" + self.set_time_string(self.mp.timeSec)
                 self.toolbar2.panel.queue_draw()
                 self.app.window.queue_draw()
-
+                
     def media_player_start(self, mplayer, play_bool):
-        '''media player start play.'''
+        '''media player start play.'''        
+        
         # if self.save_volume_mute_bool:
         #     self.mp.nomute()
             
