@@ -415,8 +415,7 @@ if __name__ == "__main__":
     print rooo.root_name
     print rooo.child_addr
     
-    rooo.child_addr["abcdef"] = 5000
-    rooo.child_addr["我大家疯狂的房间的看法觉得浪费"] = 300
+    rooo.child_addr["功夫熊猫"] = 300
     print "=============="
     # print ini.get_section_value("PlayMemory", '吸血鬼日记.The.Vampire.Diaries.S02E02.Chi_Eng.HDTVrip.624X352-YYeTs人人影视')
     # print ini.get_section_value("PlayMemory", "明天是否知")
