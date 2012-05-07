@@ -65,11 +65,11 @@ class INI(gobject.GObject):
                     break
                 else: #开始处理 字符.
                     if self.unicode_bool():
-                        if self.root_bool:
-                            self.child_name += self.ch
-                        else:    
-                            self.line_num += 1
-                            self.error_input("多余的中文字符..请检查配置文件")
+                        # if self.root_bool:
+                        #     self.child_name += self.ch                            
+                        # else:    
+                        self.line_num += 1
+                        self.error_input("多余的中文字符..请检查配置文件")
                         # sys.exit(0)
                     elif self.number_bool(): #判断数字    
                         self.number_func()
@@ -199,16 +199,22 @@ class INI(gobject.GObject):
                 self.value_name = ""
                 self.child_name = ""
                 self.child_bool = False        
-            elif self.root_bool:    
-                pass
+            elif self.root_bool and not self.child_bool: #"播放记忆功能"                   
+                while True:                    
+                    self.ch = self.ini_fp.read(1)
+                    if '\"' == self.ch or "'" == self.ch:
+                        self.child_bool = True
+                        break
+                    if not self.ch:    
+                        self.line_num += 1
+                        self.error_input("字符串缺少结束符")
+                    self.child_name += self.ch
+                    
             else:
                 self.line_num += 1
                 self.error_input("无效的字符串类型")
                 # sys.exit(0)
                 
-        if self.root_bool and not self.child_bool:   
-            if "." == self.ch:               
-                self.child_name += self.ch
                 
                 
                 
@@ -401,6 +407,6 @@ if __name__ == "__main__":
     
     rooo = ini.get_section("window")
     print "=============="
-    print ini.get_section_value("PlayMemory", '吸血鬼日记.The.Vampire.Diaries.S02E02.Chi_Eng.HDTVrip.624X352-YYeTs人人影视"')
+    print ini.get_section_value("PlayMemory", '吸血鬼日记.The.Vampire.Diaries.S02E02.Chi_Eng.HDTVrip.624X352-YYeTs人人影视')
     #这是一个简单的测试,不懂
 
