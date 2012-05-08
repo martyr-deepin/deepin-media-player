@@ -993,10 +993,12 @@ class PlayerBox(object):
         # Play file modify start_btn.
         self.media_player_midfy_start_bool()
         # print mplayer.posNum
-        if mplayer.posNum < mplayer.lenNum - 1:
+        if mplayer.posNum < mplayer.lenNum - 1:            
             root = self.ini.get_section("PlayMemory")
-            root.child_addr[self.get_player_file_name(mplayer.path)] = mplayer.posNum
-            self.ini.ini_save()
+            # print root
+            if root != -1:
+                root.child_addr[self.get_player_file_name(mplayer.path)] = mplayer.posNum
+                self.ini.ini_save()
             
     def media_player_next(self, mplayer, play_bool):
         if 1 == play_bool:

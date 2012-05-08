@@ -294,19 +294,21 @@ class INI(gobject.GObject):
             if self.root_bool:
                 self.line_num += 1
                 self.error_input("缺少参数值")
-                # sys.exit(0)                                
-                
+                # sys.exit(0)                                                
             self.error_input("缺少节点和参数值")
         
     def get_section(self, root_name):        
         try:
             save_i = 0
+            save_bool = False
             for i in range(0, len(self.root)):
+                # print self.root[i].root_name
                 if self.root[i].root_name == root_name:
-                    save_i = i
+                    save_i = 0
+                    save_bool = True
                     break
-            print save_i    
-            if 0 == save_i: # Create new root section.   
+            
+            if not save_bool: # Create new root section.   
                 self.save_root = ROOT()        
                 self.save_root.root_name = root_name                     
                 self.root.append(self.save_root)                                                                        
@@ -314,9 +316,13 @@ class INI(gobject.GObject):
                 for i in range(0, len(self.root)):
                     if self.root[i].root_name == root_name:
                         save_i = i
+                        save_bool = True
                         break            
-                      
-            return self.root[save_i]
+                    
+            if save_bool:          
+                return self.root[save_i]
+            else:
+                return -1
         except:
             print "由于前面出现错误..."
             
