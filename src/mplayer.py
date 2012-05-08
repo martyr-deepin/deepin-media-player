@@ -663,7 +663,7 @@ class  Mplayer(gobject.GObject):
     
     def delPlayList(self, path): 
         '''Del a File'''
-        self.playList.remove(path)
+        self.playList.remove(path)            
         self.playListSum -= 1        
         
     def addPlayList(self, index, path):
@@ -673,9 +673,15 @@ class  Mplayer(gobject.GObject):
         
     def addPlayFile(self, path):    
         if self.findFile(path): # play file.
-            self.playList.append(path)
-            self.emit("add-path", path)
-            self.playListSum += 1
+            go = True
+            for i in self.playList:
+                if self.get_player_file_name(i) == self.get_player_file_name(path):
+                    go = False
+                    break
+            if go:        
+                self.playList.append(path)
+                self.emit("add-path", path)
+                self.playListSum += 1
         
     def loadPlayList(self, listFileName):
         f = open(listFileName)
@@ -706,3 +712,8 @@ class  Mplayer(gobject.GObject):
         self.random_num = 0        
         self.emit("clear-play-list", 1)
         
+
+    def get_player_file_name(self, pathfile2):     
+        file1, file2 = os.path.split(pathfile2)
+        return os.path.splitext(file2)[0]
+       
