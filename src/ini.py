@@ -83,12 +83,12 @@ class INI(gobject.GObject):
         if self.end:
             self.ini_fp = None
             self.root = None
-        else:    
-            # self.line_num += 1
-            print "提示:共有%d行ini配置代码." % (self.line_num)       
-            for i in self.root:
-                print i.root_name
-                print i.child_addr
+        # else:    
+        #     # self.line_num += 1
+        #     print "提示:共有%d行ini配置代码." % (self.line_num)       
+        #     for i in self.root:
+        #         print i.root_name
+        #         print i.child_addr
         
             
     def error_input(self, error_mesagbox):    
@@ -167,7 +167,7 @@ class INI(gobject.GObject):
            #如果正确,开始处理关键字,比如: [window],就继续读下面的值. width = 34,要过滤掉空格.         
             self.save_root = ROOT()        
             self.save_root.root_name = self.root_name                     
-            print self.save_root.root_name
+            # print self.save_root.root_name
             self.root.append(self.save_root)                                
             
             self.ini_fp.seek(-1, 1)        
@@ -181,7 +181,7 @@ class INI(gobject.GObject):
                         save_i = i
                         break
                 # 连续的读取字符串,参数值的赋值
-                print self.column_num    
+                # print self.column_num    
                 while True:
                     self.ch = self.ini_fp.read(1)
                     if '"' == self.ch or "'" == self.ch:

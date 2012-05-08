@@ -20,6 +20,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# from dtk.ui.dragbar import Dragbar
 from dtk.ui.mplayer_view import MplayerView
 from dtk.ui.box import EventBox
 from dtk.ui.frame import HorizontalFrame,VerticalFrame
@@ -56,7 +57,9 @@ class PlayerBox(object):
         self.above_bool = False # Set window above bool.
         self.full_bool = False  # Set window full bool.
         self.mode_state_bool = False # Concise mode(True) and common mode(False).
-
+        
+        self.clear_play_list_bool = False # drag play file.
+        
         # ini play memory.
         self.ini = INI(get_home_path() + "/.config/deepin-media-player/config.ini")
         self.ini.start()
@@ -103,7 +106,10 @@ class PlayerBox(object):
         self.app.window.connect("destroy", self.quit_player_window)
         self.app.window.connect("configure-event", self.app_configure_hide_tool)
         self.app.window.connect("window-state-event", self.set_toolbar2_position)
-        
+        #keyboard Quick key.
+        self.app.window.connect("realize", gtk.Widget.grab_focus)
+        self.app.window.connect("key-release-event", self.get_key_event)
+                
         '''Screen window init.'''
         self.screen = MplayerView()
         # Screen signal init.
@@ -134,7 +140,7 @@ class PlayerBox(object):
         self.toolbar.toolbar_above_button.connect("clicked", self.set_window_above)
 
         '''Toolbar2 Init.'''
-        self.toolbar2 = ToolBar2()
+        self.toolbar2 = ToolBar2()        
         self.toolbar2.panel.set_size_request(1, 40) # Set toolbar2 height.
         self.toolbar2.panel.connect("motion-notify-event", self.set_keep_window_toolbar2)
         #self.toolbar2.show_toolbar2() Test function.
@@ -162,6 +168,9 @@ class PlayerBox(object):
                                                          self.toolbar2_volume_button_set_mute)
         self.toolbar2.volume_button.connect("get-value-event",
                                             self.toolbar2_volume_button_set_volume)
+        
+        
+        
         # Child widget add to vbox.
         self.vbox.pack_start(self.screen, True, True)
         self.vbox.pack_start(self.progressbar.hbox,False, False)
@@ -245,6 +254,27 @@ class PlayerBox(object):
         '''Hide preview window.'''                        
         self.bottom_play_control_hbox_vframe_event_box.connect("motion-notify-event", self.hide_preview_function)
                 
+        
+        
+        
+    def get_key_event(self, widget, event): # app: key-release-event       
+        keyval = event.keyval                
+        unicode_key = gtk.gdk.keyval_name(keyval)        
+        self.control_player(unicode_key, widget)
+        return True
+        
+    def control_player(self, keyval, widget):    
+        if self.mp:
+            if "Right" == keyval:
+                self.mp.seek(self.mp.posNum + 5)
+            elif "Left" == keyval:    
+                self.mp.seek(self.mp.posNum - 5)
+            elif "space" == keyval:    
+                self.start_button_time_pause()
+
+                
+        
+        
     '''play list button'''    
     def play_list_button_clicked(self, widget): # play list button signal:clicked.           
         if True == self.play_list_button.button.flags: 
@@ -271,6 +301,8 @@ class PlayerBox(object):
             
     def add_play_list(self, mplayer, path): # mplayer signal: "add-path"                       
         '''Play list add play file timeout.[100-1028 a play file].'''
+            
+                    
         if self.add_play_list_length_id:
             gtk.timeout_remove(self.add_play_list_length_id)
             self.add_play_list_length_id = None
@@ -279,7 +311,7 @@ class PlayerBox(object):
             self.add_play_list_length_id = gtk.timeout_add(2000, self.add_play_list_length)    
         
         gtk.timeout_add(10, self.add_play_list_time, path)
-
+        
         
     def add_play_list_length(self):    
         '''staring length show.[add length]'''
@@ -294,11 +326,20 @@ class PlayerBox(object):
             i.emit_redraw_request()
             
             
-    def add_play_list_time(self, path): # 257 call.   
+    def add_play_list_time(self, path): # all.   
         '''play list add play file.'''
         self.play_list_dict[self.get_player_file_name(path)] = path
         media_item = [MediaItem(self.get_player_file_name(path), str("        "))]                
         self.play_list.list_view.add_items(media_item)                
+        
+        if self.clear_play_list_bool:
+            self.clear_play_list_bool = False
+            if 1 == self.mp.state:
+                self.mp.quit()
+                
+            self.mp.play(self.mp.playList[0])
+            self.mp.playListNum += 1    
+            self.play_list.list_view.set_highlight(self.play_list.list_view.items[0])        
         return False        
     
     def double_play_list_file(self, list_view, list_item, colume, offset_x, offset_y):     
@@ -415,8 +456,8 @@ class PlayerBox(object):
         #self.unset_flags()
         self.mp = Mplayer(xid)
         # Init darg file signal.
-        drag_connect(self.screen, self.mp)
-        drag_connect(self.play_list.list_view, self.mp)
+        drag_connect(self.screen, self.mp, self.play_list.list_view)
+        drag_connect(self.play_list.list_view, self.mp, self.play_list.list_view)
         
         self.mp.connect("get-time-pos", self.get_time_pos)
         self.mp.connect("get-time-length", self.get_time_length)
@@ -425,6 +466,7 @@ class PlayerBox(object):
         self.mp.connect("play-next", self.media_player_next)
         self.mp.connect("play-pre", self.media_player_pre)
         self.mp.connect("add-path", self.add_play_list)
+        self.mp.connect("clear-play-list", self.clear_play_list)
         
         self.mp.playListState = 1 # play mode.
         try:
@@ -438,7 +480,11 @@ class PlayerBox(object):
         except:
             print "Error:->>Test command: python main.py add file or dir"
 
-
+    def clear_play_list(self, mplayer, mp_bool):        
+        self.play_list.list_view.clear()
+        self.play_list_dict = {}
+        self.clear_play_list_bool = True
+        
     def draw_background(self, widget, event):
         '''Draw screen mplayer view background.'''
         cr, x, y, w, h = allocation(widget)
@@ -685,7 +731,7 @@ class PlayerBox(object):
     # Toolbar hide and show.
     def show_and_hide_toolbar(self, widget, event): # screen:motion_notify_event
         '''Show and hide toolbar.'''
-        # Show toolbar.
+        # Show toolbar.                        
         if 0 <= event.y <= 20:
             self.app.window.set_keep_above(True)
             self.toolbar.show_toolbar()
@@ -878,16 +924,16 @@ class PlayerBox(object):
     
     def get_time_length(self, mplayer, length):
         '''Get mplayer length to max of progressbar.'''
-        # play memory.
-        init_value = self.ini.get_section_value('PlayMemory', self.get_player_file_name(mplayer.path))
-        
+        # play memory.                
+        init_value = self.ini.get_section_value('PlayMemory', self.get_player_file_name(mplayer.path))        
+        print init_value
         if init_value != None:
             self.mp.seek(int(init_value))
-
+            
         self.mp.setvolume(self.save_volume_value)
         if self.save_volume_mute_bool:
             self.mp.nomute()
-
+            
         self.progressbar.max = length
         self.toolbar2.progressbar.max = length # toolbar2 max value.
         Hour, Min, Sec = self.mp.time(length)
@@ -913,17 +959,16 @@ class PlayerBox(object):
         
         # if self.save_volume_mute_bool:
         #     self.mp.nomute()
-            
         # print self.get_player_file_name(mplayer.path)                
         Num = 0
+        # print self.play_list.list_view.items
         for item in self.play_list.list_view.items:
             if Num == self.mp.playListNum:
                 self.play_list.list_view.set_highlight(item)    
                 break
             else:    
                 Num += 1
-                
-        
+                        
         self.progressbar.set_pos(0)
         self.toolbar2.progressbar.set_pos(0)        
         
@@ -934,7 +979,7 @@ class PlayerBox(object):
         #print self.input_string + "Linux Deepin Media player...end"
         # Play file modify start_btn.
         self.media_player_midfy_start_bool()
-        print mplayer.posNum
+        # print mplayer.posNum
         if mplayer.posNum < mplayer.lenNum - 1:
             root = self.ini.get_section("PlayMemory")
             root.child_addr[self.get_player_file_name(mplayer.path)] = mplayer.posNum

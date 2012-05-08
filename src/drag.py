@@ -22,10 +22,8 @@
 import pygtk
 import gtk
 import os
-import re
 import urllib
-from utils import *
-from mplayer import *
+from utils import path_threads
 
 pygtk.require('2.0')
 
@@ -38,7 +36,10 @@ def drag_drop(wid, context, x, y, time):
     wid.drag_get_data(context, context.targets[-1], time)
     return True
 
-def drag_data_received(wid, context, x, y, data, info, time, mp):
+def drag_data_received(wid, context, x, y, data, info, time, mp, play_list):    
+    if data.get_uris():
+        mp.clearPlayList() # clear mplayer play list.    
+        
     for f in data.get_uris():
         path = urllib.unquote(f)[7:]
         # print path
@@ -53,12 +54,11 @@ def drag_data_received(wid, context, x, y, data, info, time, mp):
         # Add play file.    
         if os.path.isfile(path):    
             mp.addPlayFile(path)
-            
-    # print mp.playList        
-    context.finish(True, False, time)
+
+    context.finish(True, False, time)    
     return True
 
-def drag_connect(wid, mp):    
+def drag_connect(wid, mp, play_list):    
     targets = [("text/media-player", gtk.TARGET_SAME_APP, 1),
                ("text/uri-list", 0, 0),
                ("text/plain", 0, 3)]
@@ -66,12 +66,12 @@ def drag_connect(wid, mp):
     wid.drag_dest_set(gtk.DEST_DEFAULT_ALL, targets, gtk.gdk.ACTION_COPY)
     wid.connect('drag_motion', drag_motion)
     wid.connect('drag_drop', drag_drop)
-    wid.connect('drag_data_received', drag_data_received, mp)    
+    wid.connect('drag_data_received', drag_data_received, mp, play_list)    
     
 def click_get_playlist(widget, event, mp):    
     print mp.playList
     
-    
+from mplayer import Mplayer    
 if __name__ == "__main__":    
     mp = Mplayer()
     win = gtk.Window(gtk.WINDOW_TOPLEVEL)

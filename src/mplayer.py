@@ -140,19 +140,22 @@ class  Mplayer(gobject.GObject):
         "get-time-pos":(gobject.SIGNAL_RUN_LAST,
                         gobject.TYPE_NONE,(gobject.TYPE_INT,)),
         "get-time-length":(gobject.SIGNAL_RUN_LAST,
-                        gobject.TYPE_NONE,(gobject.TYPE_INT,)),
+                           gobject.TYPE_NONE,(gobject.TYPE_INT,)),
         "volume":(gobject.SIGNAL_RUN_LAST,
-                        gobject.TYPE_NONE,(gobject.TYPE_INT,)),
+                  gobject.TYPE_NONE,(gobject.TYPE_INT,)),
         "play-start":(gobject.SIGNAL_RUN_LAST,
-                        gobject.TYPE_NONE,(gobject.TYPE_INT,)),
+                      gobject.TYPE_NONE,(gobject.TYPE_INT,)),
         "play-end":(gobject.SIGNAL_RUN_LAST,
-                        gobject.TYPE_NONE,(gobject.TYPE_INT,)),
+                    gobject.TYPE_NONE,(gobject.TYPE_INT,)),
         "play-next":(gobject.SIGNAL_RUN_LAST,
-                        gobject.TYPE_NONE,(gobject.TYPE_INT,)),
+                     gobject.TYPE_NONE,(gobject.TYPE_INT,)),
         "play-pre":(gobject.SIGNAL_RUN_LAST,
-                        gobject.TYPE_NONE,(gobject.TYPE_INT,)),
+                    gobject.TYPE_NONE,(gobject.TYPE_INT,)),
         "add-path":(gobject.SIGNAL_RUN_LAST,
-                        gobject.TYPE_NONE,(gobject.TYPE_STRING,))
+                    gobject.TYPE_NONE,(gobject.TYPE_STRING,)),
+        "clear-play-list":(gobject.SIGNAL_RUN_LAST,
+                    gobject.TYPE_NONE,(gobject.TYPE_INT,))
+
         }
     def __init__(self, xid = None):
         
@@ -689,9 +692,17 @@ class  Mplayer(gobject.GObject):
         f.close()
                 
     def clearPlayList(self):
-        for i in self.playList:
-            self.playList.remove(i)
-        for i in self.playList:
-            self.playList.remove(i)
-        # self.playList = []    
-        # self.playListNum = 0
+        # for i in self.playList:
+        #     self.playList.remove(i)
+        # for i in self.playList:
+        #     self.playList.remove(i)
+        # clear play list.
+        self.playList      = [] 
+        # player list sum. 
+        self.playListSum   = 0 
+        # player list number. 
+        self.playListNum   = -1
+        # random player num.
+        self.random_num = 0        
+        self.emit("clear-play-list", 1)
+        
