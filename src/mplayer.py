@@ -461,6 +461,7 @@ class  Mplayer(gobject.GObject):
             try:
                 self.mplayerIn.close()
                 self.mplayerOut.close()
+                self.mpID.kill()
             except StandardError:
                 pass
                 
