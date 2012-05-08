@@ -624,6 +624,11 @@ class PlayerBox(object):
 
 
     def set_window_quit_full(self):
+        # # if True. play list show.
+        if self.show_or_hide_play_list_bool:
+            if not self.mode_state_bool:
+                self.play_list.show_play_list()            
+
         # self.screen.queue_draw()
         self.toolbar.panel.unfullscreen()
         #self.toolbar2.panel.unfullscreen()
@@ -631,9 +636,6 @@ class PlayerBox(object):
         self.common_window_function()
         self.full_bool = False
         
-        # # if True. play list show.
-        if self.show_or_hide_play_list_bool:
-            self.play_list.show_play_list()            
 
 
     def full_play_window(self, widget): #full_button
@@ -661,6 +663,9 @@ class PlayerBox(object):
         Show window border.
         [common mode:]
         '''        
+        if self.show_or_hide_play_list_bool:
+            self.play_list.show_play_list()
+        
         if self.mode_state_bool:
             # window Angle.
             self.app.window.set_window_shape(True)
@@ -678,6 +683,7 @@ class PlayerBox(object):
             if self.mp:
                 self.mp.nomute()
                 
+                
     def hide_window_widget(self, widget): #concise_button
         '''Hide widnow titlebar and play control panel.
         Hide progressbar.
@@ -685,6 +691,8 @@ class PlayerBox(object):
         Hide border of window.
         [concise mode:]
         '''
+        if self.show_or_hide_play_list_bool:
+            self.play_list.hide_play_list()
                 
         if self.full_bool:
             self.show_hide_set()
@@ -705,7 +713,9 @@ class PlayerBox(object):
         if self.save_volume_mute_bool:
             if self.mp:
                 self.mp.nomute()
-            
+                
+
+                
     def set_window_above(self, widget): #above_button
         self.above_bool = not self.above_bool
         self.app.window.set_keep_above(self.above_bool)
