@@ -295,7 +295,7 @@ class PlayerBox(object):
         # delete file of play list.
         play_list_dict_save = self.play_list_dict
         for list_item_i in list_item:
-            print play_list_dict_save[list_item_i.title]
+            # print play_list_dict_save[list_item_i.title]
             self.mp.delPlayList(play_list_dict_save[list_item_i.title])
             # del self.play_list_dict[list_item_i.title]                    
             
@@ -927,7 +927,7 @@ class PlayerBox(object):
         '''Get mplayer length to max of progressbar.'''
         # play memory.                
         init_value = self.ini.get_section_value('PlayMemory', self.get_player_file_name(mplayer.path))        
-        print init_value
+        # print init_value
         if init_value != None:
             self.mp.seek(int(init_value))
             
