@@ -35,7 +35,7 @@ import gtk
 # import cairo
 
 class ToolBar2(object):            
-    def __init__(self, background_pixbuf = app_theme.get_pixbuf("bg.png")):
+    def __init__(self, background_pixbuf = app_theme.get_pixbuf("my_bg2.jpg")):
         self.background_pixbuf = background_pixbuf
         self.panel = Panel(APP_WIDTH, 42, window_type=gtk.WINDOW_POPUP)
         self.vbox = gtk.VBox()
