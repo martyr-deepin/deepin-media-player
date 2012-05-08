@@ -260,10 +260,11 @@ class PlayerBox(object):
     def get_key_event(self, widget, event): # app: key-release-event       
         keyval = event.keyval                
         unicode_key = gtk.gdk.keyval_name(keyval)        
-        self.control_player(unicode_key, widget)
+        self.control_player(unicode_key, widget, event)
         return True
         
-    def control_player(self, keyval, widget):    
+    def control_player(self, keyval, widget, event):    
+        # print keyval
         if self.mp:
             if "Right" == keyval:
                 self.mp.seek(self.mp.posNum + 5)
@@ -271,7 +272,8 @@ class PlayerBox(object):
                 self.mp.seek(self.mp.posNum - 5)
             elif "space" == keyval:    
                 self.start_button_time_pause()
-
+            elif "Return" == keyval:    
+                self.full_play_window(widget)
                 
         
         
