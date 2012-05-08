@@ -1,0 +1,682 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="keywords" content="美剧,高清电影,双语字幕,字幕下载,字幕翻译,RMVB电影,手机电影,HR-HDTV电影,迅雷下载,快车下载,BT下载,磁力下载,电驴下载,人人影视,人人影視,字幕组,耶鲁,哈佛,大学课程" />
+  <meta name="description" content="搜索关键词 功夫熊猫 结果列表|我为人人 最快最全的资源分享站 " />
+  <title>搜索关键词 功夫熊猫 结果列表|我为人人 最快最全的资源分享站  </title>
+<style type="text/css">
+@import url(template/default/css/css_body.css);
+@import url(template/default/css/kevin_other.css);
+@import url(template/default/css/css_all.css);
+</style>
+<script type="text/javascript" src="template/default/js/jquery-1.5.min.js"></script>
+<script>!window.jQuery && document.write('<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"><\/script>');</script>
+
+  <script type="text/javascript" src="template/default/js/yyets.js"></script>
+ </head>
+
+ <body>
+ 	<!--/弹出登陆层样式 Start-->
+<div id="upload">
+<div id="close">
+<h2><a href="#" onclick="ShowUploadLayers('layersall','','hide');ShowUploadLayers('upload','','hide')">关闭</a></h2>
+<strong class="upcat">请选择需要发布的资源类型：</strong>
+
+<div class="upname">
+ <a href="./?mod=2&ac=pub_subtitle" class="zm">字幕</a><a href="./?mod=2&ac=pub_news" class="zx">资讯</a><a href="./?mod=2&ac=pub_movie" class="dy">电影</a><a href="./?mod=2&ac=pub_juji" class="ds">电视剧</a><a href="./?mod=2&ac=pub_animation" class="dm">动漫</a><a href="./?mod=2&ac=pub_music" class="yy">音乐</a><a href="./?mod=2&ac=pub_game" class="yx">游戏</a><a href="./?mod=2&ac=manage_trade&op=pub" class="sp">商品</a>
+</div>
+
+</div>
+</div>
+</div>
+
+<div id="logins">
+<div id="close">
+<h2><a href="#" onclick="ShowLoginsLayers('layersall','','hide');ShowLoginsLayers('logins','','hide')">关闭</a></h2>
+<form action="./?mod=1&ac=login" method="POST">
+<ul class="formbox">
+<li><span>&nbsp;</span>
+<b>用户登录 </b>(与论坛账号一致)</li>
+<li><span>用户名</span>
+<input type="text" id="username" name="username" size="25" maxlength="40" tabindex="1" /></li>
+<li><span>密码</span>
+<input type="password" id="password" name="password" size="25" tabindex="2" /></li>
+
+<li><span>&nbsp;</span><button class="submit" type="submit" name="71ee30ae117cddace55bd01714904227" value="true" tabindex="4">登陆</button> <input type="checkbox" CHECKED class="checkbox" name="cookietime" id="cookietime" tabindex="3" value="2592000" /> <label for="cookietime">记住登录</label></li>
+</ul>
+</form>
+<p>如果没有账号请到论坛注册一个&nbsp;&nbsp;<a href="http://www.yyets.com/register.php">点击这里注册</a></p>
+</div>
+</div>
+<div id="layersall"></div>
+<!--/弹出登陆层样式 End-->
+  	<div id="header">
+<div id="umenu">
+<script src="./?mod=1&ac=show_login"></script> 
+</div>
+<div id="logo">
+<div id="usearch">
+<div class="menu">
+<a href="javascript:;" id="menu1"  onclick="javascript:doClick_menu(this)">全部</a>
+<a href="javascript:;" id="menu2"  onclick="javascript:doClick_menu(this)">资源</a>
+<a href="javascript:;" id="menu3" onclick="javascript:doClick_menu(this)">字幕</a>
+<a href="javascript:;" id="menu4" onclick="javascript:doClick_menu(this)">资讯</a>
+</div>
+<p><div id="menu_con1"></div><div id="menu_con2" ></div><div id="menu_con3"></div><div id="menu_con4"></div></p>
+<div id="utext"><input name="keyword" type="text" onkeyup="doEnter(event);">
+<img src="template/default/images/btn.png" onclick="doClick_submit()"></div>
+</div>
+</div>
+ 
+  
+            <script type="text/javascript">var obj=document.getElementById("menu3");doClick_menu(obj);</script><div id="menu">
+<ul>
+<li ><a href="./"><span>首页</span></a></li>
+<li ><a href="./listnews.html"><span>资讯</span></a></li>
+<li ><a href="./listresource-all-1.html"><span>资源介绍</span></a></li>
+<li class="current"><a href="./listsubtitle.html"><span>字幕下载</span></a></li>			
+<li><a href="./?mod=2&ac=my_collect"><span>我的收藏</span></a></li>
+<li><a href="http://u.yyets.com"><span>公开课</span></a></li>
+<li><a href="http://oabt.org"><span>最新资源磁力下载</span></a></li>			
+  <li><a href="http://weibo.com/yyets"><span>人人影视官方微博</span></a></li>
+<li><a href="http://www.yyets.com/index.php"><span>论坛</span></a></li>
+<li><a href="http://www.yyets.com/forum-38-1.html"><span>加入我们</span></a></li>
+<li><a href="http://cooperation.yyets.com"><span>合作洽谈</span></a></li>
+</ul>
+</div>
+</div>
+  	<div id="wrap">
+<div class="ad_text">
+<table width="944" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td></td>
+  </tr>
+  <tr>
+    <td>
+<script type="text/javascript">/*960*90，全站顶12011-1-29*/ var cpro_id = 'u366210';</script><script src="http://cpro.baidu.com/cpro/ui/c.js" type="text/javascript"></script><br>
+<script type="text/javascript">/*960*90，创建于2011-6-1*/ var cpro_id = 'u494427';</script><script src="http://cpro.baidu.com/cpro/ui/c.js" type="text/javascript"></script>
+  </tr>
+</table>
+
+</div>
+<!--/Header -->	 
+
+<div id="photolist">
+<span class="headactions"><a href="./?mod=2&ac=pub_subtitle"><img src="template/default/images/push_button_4.gif" /></a></span>
+<div class="title">共有 <font color="#E80204">48</font> 个搜索结果 &nbsp; &nbsp; <strong>排序：</strong><a href="./?mod=2&ac=search_result&op=normal&class=subtitle&keyword=功夫熊猫&search=count">按下载量</a> <a href="./?mod=2&ac=search_result&op=normal&class=subtitle&keyword=功夫熊猫&search=pub_time">按发布日期</a> <a href="./?mod=2&ac=search_result&op=normal&class=subtitle&keyword=功夫熊猫&search=edit_time">按最后更新日期</a> <a href="./?mod=2&ac=list_subtitle&level=recommend">只显示推荐字幕</a></div>
+<div id="searchlist">
+<ul>
+<li class="name"><font color="#3DAF00">【动画字幕】</font><a href="./showsubtitle-18744.html"><font color=red>功夫熊猫</font>：盖世传奇 第一季第十三集 Kung Fu Panda - Legends of Awosomeness S01E13</a> <em>  </em></li>
+<li><span>【用户评分】</span>  0星/10星 (0票)</li>
+<li><span>【下载次数】</span> 68</li>
+<li><span>【字幕语种】</span>     简&nbsp;
+         繁&nbsp;
+         英&nbsp;
+         中英&nbsp;
+     </li>
+<li><span>【字幕格式】</span>    SRT&nbsp;
+       ASS&nbsp;
+    </li>
+<li><span>【对应版本】</span> Kung.Fu.Panda - Legends.of.Awosomeness.S01E13.720p.HDTV.x264-DemonAst</li>
+<li><span>【字幕分段】</span> 1</li>
+<li><span>【字幕来源】</span>    原创翻译&nbsp;
+   </li>
+<li><span>【字幕上传】</span> 2012-04-11 17:13:56 由 <a href="http://www.yyets.com/space-uid-526886.html">l3ob</a> 上传</li>
+</ul>
+<ul>
+<li class="name"><font color="#3DAF00">【动画字幕】</font><a href="./showsubtitle-18639.html"><font color=red>功夫熊猫</font>：盖世传奇 第一季第二十一集 Kung Fu Panda Legends of Awesomeness S01E21</a> <em>  </em></li>
+<li><span>【用户评分】</span>  0星/10星 (0票)</li>
+<li><span>【下载次数】</span> 229</li>
+<li><span>【字幕语种】</span>     简&nbsp;
+         繁&nbsp;
+         英&nbsp;
+         中英&nbsp;
+     </li>
+<li><span>【字幕格式】</span>    SRT&nbsp;
+       ASS&nbsp;
+    </li>
+<li><span>【对应版本】</span> Kung.Fu.Panda.Legends.of.Awesomeness.S01E21.In.With.the.Old.720p.HDTV.DD5.1.x264-HWE</li>
+<li><span>【字幕分段】</span> 1</li>
+<li><span>【字幕来源】</span>    原创翻译&nbsp;
+   </li>
+<li><span>【字幕上传】</span> 2012-04-01 23:18:38 由 <a href="http://www.yyets.com/space-uid-526886.html">l3ob</a> 上传</li>
+</ul>
+<ul>
+<li class="name"><font color="#3DAF00">【美剧字幕】</font><a href="./showsubtitle-18623.html"><font color=red>功夫熊猫</font>：盖世传奇 第一季第二十一集 Kung Fu Panda Legends of Awesomeness S01E21</a> <em>  </em></li>
+<li><span>【用户评分】</span>  0星/10星 (0票)</li>
+<li><span>【下载次数】</span> 216</li>
+<li><span>【字幕语种】</span>     简&nbsp;
+         繁&nbsp;
+         英&nbsp;
+         中英&nbsp;
+     </li>
+<li><span>【字幕格式】</span>    SRT&nbsp;
+       ASS&nbsp;
+    </li>
+<li><span>【对应版本】</span> Kung Fu Panda Legends of Awesomeness - 121 - In With the Old {C_P}</li>
+<li><span>【字幕分段】</span> 1</li>
+<li><span>【字幕来源】</span>    原创翻译&nbsp;
+   </li>
+<li><span>【字幕上传】</span> 2012-03-31 21:05:38 由 <a href="http://www.yyets.com/space-uid-452474.html">xw891031</a> 上传</li>
+</ul>
+<ul>
+<li class="name"><font color="#3DAF00">【美剧字幕】</font><a href="./showsubtitle-17672.html"><font color=red>功夫熊猫</font>：盖世传奇 第一季第二十集 Kung Fu Panda Legends of Awesomeness S01E20</a> <em>  </em></li>
+<li><span>【用户评分】</span>  0星/10星 (0票)</li>
+<li><span>【下载次数】</span> 617</li>
+<li><span>【字幕语种】</span>     简&nbsp;
+         繁&nbsp;
+         英&nbsp;
+         中英&nbsp;
+     </li>
+<li><span>【字幕格式】</span>    SRT&nbsp;
+       ASS&nbsp;
+    </li>
+<li><span>【对应版本】</span> Kung Fu Panda Legends of Awesomeness S01E20 My Favorite Yao 720p HDTV x264</li>
+<li><span>【字幕分段】</span> 1</li>
+<li><span>【字幕来源】</span>    原创翻译&nbsp;
+   </li>
+<li><span>【字幕上传】</span> 2012-01-26 23:23:04 由 <a href="http://www.yyets.com/space-uid-452474.html">xw891031</a> 上传</li>
+</ul>
+<ul>
+<li class="name"><font color="#3DAF00">【美剧字幕】</font><a href="./showsubtitle-17671.html"><font color=red>功夫熊猫</font>：盖世传奇 第一季第十九集 Kung Fu Panda Legends of Awesomeness S01E19</a> <em>  </em></li>
+<li><span>【用户评分】</span>  0星/10星 (0票)</li>
+<li><span>【下载次数】</span> 352</li>
+<li><span>【字幕语种】</span>     简&nbsp;
+         繁&nbsp;
+         英&nbsp;
+         中英&nbsp;
+     </li>
+<li><span>【字幕格式】</span>    SRT&nbsp;
+       ASS&nbsp;
+    </li>
+<li><span>【对应版本】</span> Kung.Fu.Panda - Legends.of.Awosomeness.S01E19.720p.HDTV.x264-DemonAst</li>
+<li><span>【字幕分段】</span> 1</li>
+<li><span>【字幕来源】</span>    原创翻译&nbsp;
+   </li>
+<li><span>【字幕上传】</span> 2012-01-26 23:21:50 由 <a href="http://www.yyets.com/space-uid-452474.html">xw891031</a> 上传</li>
+</ul>
+<ul>
+<li class="name"><font color="#3DAF00">【美剧字幕】</font><a href="./showsubtitle-17652.html"><font color=red>功夫熊猫</font>：盖世传奇 第一季第十八集 Kung Fu Panda Legends of Awesomeness S01E18</a> <em>  </em></li>
+<li><span>【用户评分】</span>  0星/10星 (0票)</li>
+<li><span>【下载次数】</span> 320</li>
+<li><span>【字幕语种】</span>     简&nbsp;
+         繁&nbsp;
+         英&nbsp;
+         中英&nbsp;
+     </li>
+<li><span>【字幕格式】</span>    SRT&nbsp;
+       ASS&nbsp;
+    </li>
+<li><span>【对应版本】</span> Kung.Fu.Panda - Legends.of.Awosomeness.S01E18.720p.HDTV.x264-DemonAst</li>
+<li><span>【字幕分段】</span> 1</li>
+<li><span>【字幕来源】</span>    原创翻译&nbsp;
+   </li>
+<li><span>【字幕上传】</span> 2012-01-26 10:25:19 由 <a href="http://www.yyets.com/space-uid-452474.html">xw891031</a> 上传</li>
+</ul>
+<ul>
+<li class="name"><font color="#3DAF00">【美剧字幕】</font><a href="./showsubtitle-17628.html"><font color=red>功夫熊猫</font>：盖世传奇 第一季第十七集 Kung Fu Panda Legends of Awesomeness S01E17</a> <em>  </em></li>
+<li><span>【用户评分】</span>  0星/10星 (0票)</li>
+<li><span>【下载次数】</span> 346</li>
+<li><span>【字幕语种】</span>     简&nbsp;
+         繁&nbsp;
+         英&nbsp;
+         中英&nbsp;
+     </li>
+<li><span>【字幕格式】</span>    SRT&nbsp;
+       ASS&nbsp;
+    </li>
+<li><span>【对应版本】</span> Kung.Fu.Panda - Legends.of.Awosomeness.S01E17.720p.HDTV.x264-DemonAst</li>
+<li><span>【字幕分段】</span> 1</li>
+<li><span>【字幕来源】</span>    原创翻译&nbsp;
+   </li>
+<li><span>【字幕上传】</span> 2012-01-24 14:38:53 由 <a href="http://www.yyets.com/space-uid-452474.html">xw891031</a> 上传</li>
+</ul>
+<ul>
+<li class="name"><font color="#3DAF00">【美剧字幕】</font><a href="./showsubtitle-17524.html"><font color=red>功夫熊猫</font>：盖世传奇 第一季第十六集 Kung Fu Panda Legends of Awesomeness S01E16</a> <em>  </em></li>
+<li><span>【用户评分】</span>  0星/10星 (0票)</li>
+<li><span>【下载次数】</span> 322</li>
+<li><span>【字幕语种】</span>     简&nbsp;
+         繁&nbsp;
+         英&nbsp;
+         中英&nbsp;
+     </li>
+<li><span>【字幕格式】</span>    SRT&nbsp;
+       ASS&nbsp;
+    </li>
+<li><span>【对应版本】</span> Kung.Fu.Panda - Legends.of.Awosomeness.S01E16.720p.HDTV.x264-DemonAst</li>
+<li><span>【字幕分段】</span> 1</li>
+<li><span>【字幕来源】</span>    原创翻译&nbsp;
+   </li>
+<li><span>【字幕上传】</span> 2012-01-18 21:54:47 由 <a href="http://www.yyets.com/space-uid-452474.html">xw891031</a> 上传</li>
+</ul>
+<ul>
+<li class="name"><font color="#3DAF00">【美剧字幕】</font><a href="./showsubtitle-17480.html"><font color=red>功夫熊猫</font>：盖世传奇 第一季第十五集 Kung Fu Panda Legends of Awesomeness S01E15</a> <em>  </em></li>
+<li><span>【用户评分】</span>  0星/10星 (0票)</li>
+<li><span>【下载次数】</span> 389</li>
+<li><span>【字幕语种】</span>     简&nbsp;
+         繁&nbsp;
+         英&nbsp;
+         中英&nbsp;
+     </li>
+<li><span>【字幕格式】</span>    SRT&nbsp;
+       ASS&nbsp;
+    </li>
+<li><span>【对应版本】</span> Kung.Fu.Panda - Legends.of.Awosomeness.S01E15.720p.HDTV.x264-DemonAst</li>
+<li><span>【字幕分段】</span> 1</li>
+<li><span>【字幕来源】</span>    原创翻译&nbsp;
+   </li>
+<li><span>【字幕上传】</span> 2012-01-16 11:48:45 由 <a href="http://www.yyets.com/space-uid-452474.html">xw891031</a> 上传</li>
+</ul>
+<ul>
+<li class="name"><font color="#3DAF00">【美剧字幕】</font><a href="./showsubtitle-17416.html"><font color=red>功夫熊猫</font>：盖世传奇 第一季第十四集 Kung Fu Panda Legends of Awesomeness S01E14</a> <em>  </em></li>
+<li><span>【用户评分】</span>  0星/10星 (0票)</li>
+<li><span>【下载次数】</span> 463</li>
+<li><span>【字幕语种】</span>     简&nbsp;
+         繁&nbsp;
+         英&nbsp;
+         中英&nbsp;
+     </li>
+<li><span>【字幕格式】</span>    SRT&nbsp;
+       ASS&nbsp;
+    </li>
+<li><span>【对应版本】</span> Kung.Fu.Panda - Legends.of.Awosomeness.S01E14.720p.HDTV.x264-DemonAst</li>
+<li><span>【字幕分段】</span> 1</li>
+<li><span>【字幕来源】</span>    原创翻译&nbsp;
+   </li>
+<li><span>【字幕上传】</span> 2012-01-10 21:43:10 由 <a href="http://www.yyets.com/space-uid-452474.html">xw891031</a> 上传</li>
+</ul>
+<ul>
+<li class="name"><font color="#3DAF00">【美剧字幕】</font><a href="./showsubtitle-17320.html"><font color=red>功夫熊猫</font>：盖世传奇 第一季第十二集 Kung Fu Panda Legends of Awesomeness S01E12</a> <em>  </em></li>
+<li><span>【用户评分】</span>  0星/10星 (0票)</li>
+<li><span>【下载次数】</span> 585</li>
+<li><span>【字幕语种】</span>     简&nbsp;
+         繁&nbsp;
+         英&nbsp;
+         中英&nbsp;
+     </li>
+<li><span>【字幕格式】</span>    SRT&nbsp;
+       ASS&nbsp;
+    </li>
+<li><span>【对应版本】</span> Kung.Fu.Panda - Legends.of.Awosomeness.S01E12.720p.HDTV.x264-DemonAst</li>
+<li><span>【字幕分段】</span> 1</li>
+<li><span>【字幕来源】</span>    原创翻译&nbsp;
+   </li>
+<li><span>【字幕上传】</span> 2011-12-31 10:44:09 由 <a href="http://www.yyets.com/space-uid-452474.html">xw891031</a> 上传</li>
+</ul>
+<ul>
+<li class="name"><font color="#3DAF00">【电影字幕】</font><a href="./showsubtitle-17312.html"><font color=red>功夫熊猫</font>：盖世传奇 第一季第十一集 Kung Fu Panda Legends of Awesomeness S01E11</a> <em>  </em></li>
+<li><span>【用户评分】</span>  0星/10星 (0票)</li>
+<li><span>【下载次数】</span> 490</li>
+<li><span>【字幕语种】</span>     简&nbsp;
+         繁&nbsp;
+         英&nbsp;
+         中英&nbsp;
+     </li>
+<li><span>【字幕格式】</span>    SRT&nbsp;
+       ASS&nbsp;
+    </li>
+<li><span>【对应版本】</span> Kung.Fu.Panda - Legends.of.Awosomeness.S01E11.720p.HDTV.x264-DemonAst</li>
+<li><span>【字幕分段】</span> 1</li>
+<li><span>【字幕来源】</span>    原创翻译&nbsp;
+   </li>
+<li><span>【字幕上传】</span> 2011-12-30 12:52:05 由 <a href="http://www.yyets.com/space-uid-452474.html">xw891031</a> 上传</li>
+</ul>
+<ul>
+<li class="name"><font color="#3DAF00">【美剧字幕】</font><a href="./showsubtitle-17295.html"><font color=red>功夫熊猫</font>：盖世传奇 第一季第十集 Kung Fu Panda Legends of Awesomeness S01E10</a> <em>  </em></li>
+<li><span>【用户评分】</span>  0星/10星 (0票)</li>
+<li><span>【下载次数】</span> 418</li>
+<li><span>【字幕语种】</span>     简&nbsp;
+         繁&nbsp;
+         英&nbsp;
+         中英&nbsp;
+     </li>
+<li><span>【字幕格式】</span>    SRT&nbsp;
+       ASS&nbsp;
+    </li>
+<li><span>【对应版本】</span> Kung.Fu.Panda - Legends.of.Awosomeness.S01E10.720p.HDTV.x264-DemonAst</li>
+<li><span>【字幕分段】</span> 1</li>
+<li><span>【字幕来源】</span>    原创翻译&nbsp;
+   </li>
+<li><span>【字幕上传】</span> 2011-12-28 21:33:10 由 <a href="http://www.yyets.com/space-uid-452474.html">xw891031</a> 上传</li>
+</ul>
+<ul>
+<li class="name"><font color="#3DAF00">【美剧字幕】</font><a href="./showsubtitle-17294.html"><font color=red>功夫熊猫</font>：盖世传奇 第一季第九集 Kung Fu Panda Legends of Awesomeness S01E09</a> <em>  </em></li>
+<li><span>【用户评分】</span>  0星/10星 (0票)</li>
+<li><span>【下载次数】</span> 430</li>
+<li><span>【字幕语种】</span>     简&nbsp;
+         繁&nbsp;
+         英&nbsp;
+         中英&nbsp;
+     </li>
+<li><span>【字幕格式】</span>    SRT&nbsp;
+       ASS&nbsp;
+    </li>
+<li><span>【对应版本】</span> Kung.Fu.Panda - Legends.of.Awosomeness.S01E09.720p.HDTV.x264-DemonAst</li>
+<li><span>【字幕分段】</span> 1</li>
+<li><span>【字幕来源】</span>    原创翻译&nbsp;
+   </li>
+<li><span>【字幕上传】</span> 2011-12-28 21:29:06 由 <a href="http://www.yyets.com/space-uid-452474.html">xw891031</a> 上传</li>
+</ul>
+<ul>
+<li class="name"><font color="#3DAF00">【美剧字幕】</font><a href="./showsubtitle-17293.html"><font color=red>功夫熊猫</font>：盖世传奇 第一季第八集 Kung Fu Panda Legends of Awesomeness S01E08</a> <em>  </em></li>
+<li><span>【用户评分】</span>  0星/10星 (0票)</li>
+<li><span>【下载次数】</span> 470</li>
+<li><span>【字幕语种】</span>     简&nbsp;
+         繁&nbsp;
+         英&nbsp;
+         中英&nbsp;
+     </li>
+<li><span>【字幕格式】</span>    SRT&nbsp;
+       ASS&nbsp;
+    </li>
+<li><span>【对应版本】</span> Kung.Fu.Panda - Legends.of.Awosomeness.S01E08.720p.HDTV.x264-DemonAst</li>
+<li><span>【字幕分段】</span> 1</li>
+<li><span>【字幕来源】</span>    原创翻译&nbsp;
+   </li>
+<li><span>【字幕上传】</span> 2011-12-28 20:56:42 由 <a href="http://www.yyets.com/space-uid-452474.html">xw891031</a> 上传</li>
+</ul>
+<ul>
+<li class="name"><font color="#3DAF00">【美剧字幕】</font><a href="./showsubtitle-17292.html"><font color=red>功夫熊猫</font>：盖世传奇 第一季第七集 Kung Fu Panda Legends of Awesomeness S01E07</a> <em>  </em></li>
+<li><span>【用户评分】</span>  0星/10星 (0票)</li>
+<li><span>【下载次数】</span> 472</li>
+<li><span>【字幕语种】</span>     简&nbsp;
+         繁&nbsp;
+         英&nbsp;
+         中英&nbsp;
+     </li>
+<li><span>【字幕格式】</span>    SRT&nbsp;
+       ASS&nbsp;
+    </li>
+<li><span>【对应版本】</span> Kung Fu Panda Legends of Awesomeness S01E07 Hometown Hero 720p HDTV x264</li>
+<li><span>【字幕分段】</span> 1</li>
+<li><span>【字幕来源】</span>    原创翻译&nbsp;
+   </li>
+<li><span>【字幕上传】</span> 2011-12-28 20:45:27 由 <a href="http://www.yyets.com/space-uid-452474.html">xw891031</a> 上传</li>
+</ul>
+<ul>
+<li class="name"><font color="#3DAF00">【美剧字幕】</font><a href="./showsubtitle-17291.html"><font color=red>功夫熊猫</font>：盖世传奇 第一季第六集 Kung Fu Panda Legends of Awesomeness S01E06</a> <em>  </em></li>
+<li><span>【用户评分】</span>  0星/10星 (0票)</li>
+<li><span>【下载次数】</span> 494</li>
+<li><span>【字幕语种】</span>     简&nbsp;
+         繁&nbsp;
+         英&nbsp;
+         中英&nbsp;
+     </li>
+<li><span>【字幕格式】</span>    SRT&nbsp;
+       ASS&nbsp;
+    </li>
+<li><span>【对应版本】</span> Kung Fu Panda Legends of Awesomeness S01E06 Good Croc Bad Croc 720p HDTV x264</li>
+<li><span>【字幕分段】</span> 1</li>
+<li><span>【字幕来源】</span>    原创翻译&nbsp;
+   </li>
+<li><span>【字幕上传】</span> 2011-12-28 20:42:09 由 <a href="http://www.yyets.com/space-uid-452474.html">xw891031</a> 上传</li>
+</ul>
+<ul>
+<li class="name"><font color="#3DAF00">【美剧字幕】</font><a href="./showsubtitle-17290.html"><font color=red>功夫熊猫</font>：盖世传奇 第一季第五集 Kung Fu Panda Legends of Awesomeness S01E05</a> <em>  </em></li>
+<li><span>【用户评分】</span>  0星/10星 (0票)</li>
+<li><span>【下载次数】</span> 541</li>
+<li><span>【字幕语种】</span>     简&nbsp;
+         繁&nbsp;
+         英&nbsp;
+         中英&nbsp;
+     </li>
+<li><span>【字幕格式】</span>    SRT&nbsp;
+       ASS&nbsp;
+    </li>
+<li><span>【对应版本】</span> Kung Fu Panda Legends of Awesomeness S01E05 Fluttering Finger Mindslip 720p HDTV x264</li>
+<li><span>【字幕分段】</span> 1</li>
+<li><span>【字幕来源】</span>    原创翻译&nbsp;
+   </li>
+<li><span>【字幕上传】</span> 2011-12-28 20:38:06 由 <a href="http://www.yyets.com/space-uid-452474.html">xw891031</a> 上传</li>
+</ul>
+<ul>
+<li class="name"><font color="#3DAF00">【美剧字幕】</font><a href="./showsubtitle-17289.html"><font color=red>功夫熊猫</font>：盖世传奇 第一季第四集 Kung Fu Panda Legends of Awesomeness S01E04</a> <em>  </em></li>
+<li><span>【用户评分】</span>  0星/10星 (0票)</li>
+<li><span>【下载次数】</span> 631</li>
+<li><span>【字幕语种】</span>     简&nbsp;
+         繁&nbsp;
+         英&nbsp;
+         中英&nbsp;
+     </li>
+<li><span>【字幕格式】</span>    &nbsp;
+    </li>
+<li><span>【对应版本】</span> Kung Fu Panda Legends of Awesomeness S01E04 Chain Reaction 720p HDTV x264</li>
+<li><span>【字幕分段】</span> 1</li>
+<li><span>【字幕来源】</span>    原创翻译&nbsp;
+   </li>
+<li><span>【字幕上传】</span> 2011-12-28 20:31:04 由 <a href="http://www.yyets.com/space-uid-452474.html">xw891031</a> 上传</li>
+</ul>
+<ul>
+<li class="name"><font color="#3DAF00">【美剧字幕】</font><a href="./showsubtitle-17288.html"><font color=red>功夫熊猫</font>：盖世传奇 第一季第三集 Kung Fu Panda Legends of Awesomeness S01E03</a> <em>  </em></li>
+<li><span>【用户评分】</span>  0星/10星 (0票)</li>
+<li><span>【下载次数】</span> 427</li>
+<li><span>【字幕语种】</span>     简&nbsp;
+         繁&nbsp;
+         英&nbsp;
+         中英&nbsp;
+     </li>
+<li><span>【字幕格式】</span>    SRT&nbsp;
+       ASS&nbsp;
+    </li>
+<li><span>【对应版本】</span> Kung Fu Panda Legends of Awesomeness S01E03 Sticky Situation 720p HDTV x264</li>
+<li><span>【字幕分段】</span> 1</li>
+<li><span>【字幕来源】</span>    原创翻译&nbsp;
+   </li>
+<li><span>【字幕上传】</span> 2011-12-28 20:20:50 由 <a href="http://www.yyets.com/space-uid-452474.html">xw891031</a> 上传</li>
+</ul>
+<ul>
+<li class="name"><font color="#3DAF00">【美剧字幕】</font><a href="./showsubtitle-16876.html"><font color=red>功夫熊猫</font>非凡传奇3-7英文字幕 Kung Fu Panda Legends of Awesomeness</a> <em>  </em></li>
+<li><span>【用户评分】</span>  0星/10星 (0票)</li>
+<li><span>【下载次数】</span> 1174</li>
+<li><span>【字幕语种】</span>     英&nbsp;
+     </li>
+<li><span>【字幕格式】</span>    SRT&nbsp;
+    </li>
+<li><span>【对应版本】</span> 720p</li>
+<li><span>【字幕分段】</span> 5</li>
+<li><span>【字幕来源】</span>    转载&nbsp;
+   </li>
+<li><span>【字幕上传】</span> 2011-11-22 13:10:45 由 <a href="http://www.yyets.com/space-uid-1295692.html">janiris</a> 上传</li>
+</ul>
+<ul>
+<li class="name"><font color="#3DAF00">【动画字幕】</font><a href="./showsubtitle-16509.html"><font color=red>功夫熊猫</font>：盖世传奇 第一季第二集 Kung Fu Panda - Legends of Awesomeness S01E02</a> <em>  </em></li>
+<li><span>【用户评分】</span>  0星/10星 (0票)</li>
+<li><span>【下载次数】</span> 2500</li>
+<li><span>【字幕语种】</span>     简&nbsp;
+         繁&nbsp;
+         英&nbsp;
+         中英&nbsp;
+     </li>
+<li><span>【字幕格式】</span>    SRT&nbsp;
+       ASS&nbsp;
+    </li>
+<li><span>【对应版本】</span> Kung Fu Panda - Legends of Awesomeness S01E02 The Princess and the Po 1080i HDTV DD5.1 MPEG2-TrollHD</li>
+<li><span>【字幕分段】</span> 1</li>
+<li><span>【字幕来源】</span>    原创翻译&nbsp;
+   </li>
+<li><span>【字幕上传】</span> 2011-10-29 16:16:34 由 <a href="http://www.yyets.com/space-uid-526886.html">l3ob</a> 上传</li>
+</ul>
+<ul>
+<li class="name"><font color="#3DAF00">【电影字幕】</font><a href="./showsubtitle-16332.html"><font color=red>功夫熊猫</font>2 Kung Fu Panda 2</a> <em>  </em></li>
+<li><span>【用户评分】</span>  0星/10星 (0票)</li>
+<li><span>【下载次数】</span> 20341</li>
+<li><span>【字幕语种】</span>     简&nbsp;
+         繁&nbsp;
+         英&nbsp;
+         中英&nbsp;
+     </li>
+<li><span>【字幕格式】</span>    SRT&nbsp;
+       ASS&nbsp;
+    </li>
+<li><span>【对应版本】</span> Kung.Fu.Panda.2.720p.BluRay.x264-MHD</li>
+<li><span>【字幕分段】</span> 1</li>
+<li><span>【字幕来源】</span>    原创翻译&nbsp;
+      校正调整&nbsp;
+   </li>
+<li><span>【字幕上传】</span> 2011-10-18 18:36:47 由 <a href="http://www.yyets.com/space-uid-505019.html">yyp</a> 上传</li>
+</ul>
+<ul>
+<li class="name"><font color="#3DAF00">【高清字幕】</font><a href="./showsubtitle-16327.html"><font color=red>功夫熊猫</font>2 Kung Fu Panda 2</a> <em>  </em></li>
+<li><span>【用户评分】</span>  0星/10星 (0票)</li>
+<li><span>【下载次数】</span> 13450</li>
+<li><span>【字幕语种】</span>     简&nbsp;
+         英&nbsp;
+         中英&nbsp;
+     </li>
+<li><span>【字幕格式】</span>    SRT&nbsp;
+       ASS&nbsp;
+    </li>
+<li><span>【对应版本】</span> Kung.Fu.Panda.2.2011.1080p.Bluray.x264.DTS-HDChina</li>
+<li><span>【字幕分段】</span> 1</li>
+<li><span>【字幕来源】</span>    原创翻译&nbsp;
+   </li>
+<li><span>【字幕上传】</span> 2011-10-17 23:54:58 由 <a href="http://www.yyets.com/space-uid-242907.html">chongmei3250</a> 上传</li>
+</ul>
+<ul>
+<li class="name"><font color="#3DAF00">【高清字幕】</font><a href="./showsubtitle-16301.html"><font color=red>功夫熊猫</font>2 Kung Fu Panda 2</a> <em>  </em></li>
+<li><span>【用户评分】</span>  0星/10星 (0票)</li>
+<li><span>【下载次数】</span> 7127</li>
+<li><span>【字幕语种】</span>     英&nbsp;
+         中英&nbsp;
+     </li>
+<li><span>【字幕格式】</span>    SRT&nbsp;
+       ASS&nbsp;
+    </li>
+<li><span>【对应版本】</span> Kung.Fu.Panda.2.720p.BluRay.x264-MHD</li>
+<li><span>【字幕分段】</span> 1</li>
+<li><span>【字幕来源】</span>    轻度修正&nbsp;
+      全面调整&nbsp;
+   </li>
+<li><span>【字幕上传】</span> 2011-10-16 13:59:39 由 <a href="http://www.yyets.com/space-uid-408239.html">chenhaomouse</a> 上传</li>
+</ul>
+<ul>
+<li class="name"><font color="#3DAF00">【动画字幕】</font><a href="./showsubtitle-16054.html"><font color=red>功夫熊猫</font>：盖世传奇 第一季第一集 Kung Fu Panda Legends of Awesomeness S01E01</a> <em>  </em></li>
+<li><span>【用户评分】</span>  0星/10星 (0票)</li>
+<li><span>【下载次数】</span> 4351</li>
+<li><span>【字幕语种】</span>     简&nbsp;
+         繁&nbsp;
+         英&nbsp;
+         中英&nbsp;
+     </li>
+<li><span>【字幕格式】</span>    SRT&nbsp;
+       ASS&nbsp;
+    </li>
+<li><span>【对应版本】</span> Kung Fu Panda Legends of Awesomeness S01E01 Scorpion's Sting 720p HDTV x264</li>
+<li><span>【字幕分段】</span> 1</li>
+<li><span>【字幕来源】</span>    原创翻译&nbsp;
+   </li>
+<li><span>【字幕上传】</span> 2011-10-01 09:34:54 由 <a href="http://www.yyets.com/space-uid-526886.html">l3ob</a> 上传</li>
+</ul>
+<ul>
+<li class="name"><font color="#3DAF00">【电影字幕】</font><a href="./showsubtitle-15591.html"><font color=red>功夫熊猫</font>2 Kung_Fu_Panda_2</a> <em>  </em></li>
+<li><span>【用户评分】</span>  0星/10星 (0票)</li>
+<li><span>【下载次数】</span> 13194</li>
+<li><span>【字幕语种】</span>     简&nbsp;
+         繁&nbsp;
+         英&nbsp;
+         中英&nbsp;
+     </li>
+<li><span>【字幕格式】</span>    SRT&nbsp;
+       ASS&nbsp;
+    </li>
+<li><span>【对应版本】</span> Kung_Fu_Panda_2_2011_R6_LiNE_XViD-CHOiCE</li>
+<li><span>【字幕分段】</span> 1</li>
+<li><span>【字幕来源】</span>    原创翻译&nbsp;
+   </li>
+<li><span>【字幕上传】</span> 2011-08-25 18:04:10 由 <a href="http://www.yyets.com/space-uid-505019.html">yyp</a> 上传</li>
+</ul>
+<ul>
+<li class="name"><font color="#3DAF00">【电影字幕】</font><a href="./showsubtitle-15615.html"><font color=red>功夫熊猫</font>2 Kung Fu Panda 2 2011 DVDRIP mkv</a> <em>  </em></li>
+<li><span>【用户评分】</span>  0星/10星 (0票)</li>
+<li><span>【下载次数】</span> 7970</li>
+<li><span>【字幕语种】</span>     简&nbsp;
+         中英&nbsp;
+     </li>
+<li><span>【字幕格式】</span>    &nbsp;
+    </li>
+<li><span>【对应版本】</span> 功夫熊猫2  Kung.Fu.Panda.2.2011 DVDRIP.mkv</li>
+<li><span>【字幕分段】</span> 0</li>
+<li><span>【字幕来源】</span>    &nbsp;
+   </li>
+<li><span>【字幕上传】</span> 2011-08-27 15:33:34 由 <a href="http://www.yyets.com/space-uid-1427356.html">fcy6571</a> 上传</li>
+</ul>
+<ul>
+<li class="name"><font color="#3DAF00">【电影字幕】</font><a href="./showsubtitle-15530.html"><font color=red>功夫熊猫</font>2 Kung Fu Panda 2</a> <em>  </em></li>
+<li><span>【用户评分】</span>  0星/10星 (0票)</li>
+<li><span>【下载次数】</span> 7475</li>
+<li><span>【字幕语种】</span>     简&nbsp;
+     </li>
+<li><span>【字幕格式】</span>    SRT&nbsp;
+    </li>
+<li><span>【对应版本】</span> Kung Fu Panda 2 2011 R6 LiNE XViD - CHOiCE</li>
+<li><span>【字幕分段】</span> 1</li>
+<li><span>【字幕来源】</span>    转载&nbsp;
+   </li>
+<li><span>【字幕上传】</span> 2011-08-20 14:52:59 由 <a href="http://www.yyets.com/space-uid-1246141.html">yangliming</a> 上传</li>
+</ul>
+<ul>
+<li class="name"><font color="#3DAF00">【电影字幕】</font><a href="./showsubtitle-15526.html"><font color=red>功夫熊猫</font>2 Kung Fu Panda 2 2011AC3 XViD utf cht</a> <em>  </em></li>
+<li><span>【用户评分】</span>  0星/10星 (0票)</li>
+<li><span>【下载次数】</span> 4248</li>
+<li><span>【字幕语种】</span>     繁&nbsp;
+     </li>
+<li><span>【字幕格式】</span>    SRT&nbsp;
+    </li>
+<li><span>【对应版本】</span> Kung.Fu.Panda.2.2011AC3.XViD.utf.cht</li>
+<li><span>【字幕分段】</span> 1</li>
+<li><span>【字幕来源】</span>    转载&nbsp;
+   </li>
+<li><span>【字幕上传】</span> 2011-08-20 11:56:15 由 <a href="http://www.yyets.com/space-uid-1418815.html">brantguan</a> 上传</li>
+</ul>
+</div>
+</div>
+  <div id="pages_btns" style="margin:10px;">
+<div class="pages"><a href="?mod=2&ac=search_result&op=normal&class=subtitle&keyword=功夫熊猫&search=&page=1"><strong>1</strong></a><a href="?mod=2&ac=search_result&op=normal&class=subtitle&keyword=功夫熊猫&search=&page=2">2</a><a href="?mod=2&ac=search_result&op=normal&class=subtitle&keyword=功夫熊猫&search=&page=2" >下一页</a><a href="?mod=2&ac=search_result&op=normal&class=subtitle&keyword=功夫熊猫&search=&page=2" class="last">最后一页</a></div>
+
+</div>
+ 
+   
+<!--/Footer -->
+
+<div class="ad_botbanner">
+<script type="text/javascript">
+alimama_pid="mm_11028064_2355388_9111932";
+alimama_titlecolor="0000FF";
+alimama_descolor ="000000";
+alimama_bgcolor="FFFFFF";
+alimama_bordercolor="E6E6E6";
+alimama_linkcolor="008000";
+alimama_bottomcolor="FFFFFF";
+alimama_anglesize="0";
+alimama_bgpic="0";
+alimama_icon="0";
+alimama_sizecode="15";
+alimama_width=950;
+alimama_height=90;
+alimama_type=2;
+</script>
+<script src="http://a.alimama.cn/inf.js" type="text/javascript"></script>
+</div>
+
+</div>
+
+<div id="footer"> 
+
+本站由网友凭兴趣爱好自发组建,一切收入均用做网站程序开发与维护，为非赢利性网站
+<br /> 本站所有内容均由网友发布，本站不对内容的合法性承担任何责任，如您认为网友所发内容侵犯您的权益<br /> 请邮件告知给我们,收到邮件并确认后24小时内删除，我们的邮箱：YYeTs.net@gmail.com<br />Powered by Ngosoft team&copy; 2009  皖ICP备11022510号-1
+<script src="http://s20.cnzz.com/stat.php?id=3546884&web_id=3546884&show=pic1" language="JavaScript"></script></div>
+
+<div style="display:none;">
+<div id="ad_text"></div>
+<div id="ad_botbanner"></div>
+<script type="text/javascript">
+          document.getElementById("ads_01").innerHTML = document.getElementById("ad_text").innerHTML;
+          document.getElementById("ad_text").innerHTML = "";
+          document.getElementById("ads_02").innerHTML = document.getElementById("ad_botbanner").innerHTML;
+          document.getElementById("ad_botbanner").innerHTML = "";
+        </script>
+
+</div>
+ </body>
+</html>

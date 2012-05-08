@@ -456,8 +456,8 @@ class PlayerBox(object):
         #self.unset_flags()
         self.mp = Mplayer(xid)
         # Init darg file signal.
-        drag_connect(self.screen, self.mp, self.play_list.list_view)
-        drag_connect(self.play_list.list_view, self.mp, self.play_list.list_view)
+        drag_connect(self.screen, self.mp, self.play_list.list_view, True)
+        drag_connect(self.play_list.list_view, self.mp, self.play_list.list_view, False)
         
         self.mp.connect("get-time-pos", self.get_time_pos)
         self.mp.connect("get-time-length", self.get_time_length)

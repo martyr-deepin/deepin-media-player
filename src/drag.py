@@ -36,9 +36,10 @@ def drag_drop(wid, context, x, y, time):
     wid.drag_get_data(context, context.targets[-1], time)
     return True
 
-def drag_data_received(wid, context, x, y, data, info, time, mp, play_list):    
+def drag_data_received(wid, context, x, y, data, info, time, mp, play_list, widget_bool):    
     if data.get_uris():
-        mp.clearPlayList() # clear mplayer play list.    
+        if widget_bool:
+            mp.clearPlayList() # clear mplayer play list.    
         
     for f in data.get_uris():
         path = urllib.unquote(f)[7:]
@@ -58,7 +59,7 @@ def drag_data_received(wid, context, x, y, data, info, time, mp, play_list):
     context.finish(True, False, time)    
     return True
 
-def drag_connect(wid, mp, play_list):    
+def drag_connect(wid, mp, play_list, widget_bool):    
     targets = [("text/media-player", gtk.TARGET_SAME_APP, 1),
                ("text/uri-list", 0, 0),
                ("text/plain", 0, 3)]
@@ -66,7 +67,7 @@ def drag_connect(wid, mp, play_list):
     wid.drag_dest_set(gtk.DEST_DEFAULT_ALL, targets, gtk.gdk.ACTION_COPY)
     wid.connect('drag_motion', drag_motion)
     wid.connect('drag_drop', drag_drop)
-    wid.connect('drag_data_received', drag_data_received, mp, play_list)    
+    wid.connect('drag_data_received', drag_data_received, mp, play_list, widget_bool)    
     
 def click_get_playlist(widget, event, mp):    
     print mp.playList
