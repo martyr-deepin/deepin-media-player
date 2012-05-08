@@ -302,22 +302,21 @@ class INI(gobject.GObject):
         try:
             save_i = 0
             for i in range(0, len(self.root)):
-                if self.root[i] == root_name:
+                if self.root[i].root_name == root_name:
                     save_i = i
                     break
-                
+            print save_i    
             if 0 == save_i: # Create new root section.   
                 self.save_root = ROOT()        
                 self.save_root.root_name = root_name                     
                 self.root.append(self.save_root)                                                                        
                 
                 for i in range(0, len(self.root)):
-                    if self.root[i] == root_name:
+                    if self.root[i].root_name == root_name:
                         save_i = i
                         break            
-                return self.root[i]
-            else:    
-                return self.root[i]
+                      
+            return self.root[save_i]
         except:
             print "由于前面出现错误..."
             
