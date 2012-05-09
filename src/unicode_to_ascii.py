@@ -23,7 +23,7 @@
 
 class UnicodeToAscii(object):    
     def __init__(self):
-        self.list_dict = {"a":["abcd","abfwsq"]}
+        self.list_dict = {}
         
     def dict_add_strings(self, strings):    
         
@@ -42,8 +42,7 @@ class UnicodeToAscii(object):
         else:    
             self.list_dict[key] = []
             self.list_dict[key].append(strings)
-
-        
+            
     def unicode_to_ascii(self, ascii):    
         if ascii >= -20319 and ascii <= -20284:  
             return 'a'  
@@ -92,6 +91,34 @@ class UnicodeToAscii(object):
         if ascii >= -11055 and ascii <= -10247:  
             return 'z'  
         
+    def get_key_list(self, key):            
+        try:
+            return self.list_dict[key]
+        except:
+            return None
+        
+    def get_strcmp_bool(self, str1, str2): 
+        '''str1 cmp str2:True or False'''
+        str1_num = len(str1)
+        str2_num = len(str2)
+        
+        str1_point = 0
+        str2_point = 0
+        
+        if str1_num > str2_num: # 'hailongqiu' vs 'hailong' 
+            return False
+        
+        if str1 == str2: # 'hailongqiu' vs 'hailongqiu'
+            return True        
+                
+        while str1_point != str1_num: # 'hailongqiu' vs ['hailong', 'jing'] -> 'h' vs ['h', 'j']            
+            if str1[str1_point] != str2[str2_point]:
+                return False            
+            str1_point += 1
+            str2_point += 1                                        
+            
+        return True
+    
     def print_list_dict(self):    
         '''print list dict.'''
         for list_key in self.list_dict:
@@ -106,11 +133,14 @@ if __name__ == "__main__":
     test = UnicodeToAscii()        
     
     # test.dict_add_strings("abcef")
+    for i in range(0, 50000):
+        test.dict_add_strings("在中国")
+        test.dict_add_strings("中过的人不是人")
+        test.dict_add_strings("在乃")
+        test.dict_add_strings("在中国的的一个地方")
+        test.dict_add_strings("在中国的的一个地方不是你想知道的")
+        test.dict_add_strings("在中国的的一个地方不是你想知道的")
 
-    test.dict_add_strings("在中国")
-    test.dict_add_strings("中过的人不是人")
-    test.dict_add_strings("在乃")
-    
     test.dict_add_strings('啊屁股')
     test.dict_add_strings("把")
     test.dict_add_strings("吧")
@@ -120,4 +150,11 @@ if __name__ == "__main__":
     test.dict_add_strings("才")
     # test.dict_add_strings("a")
     # test.dict_add_strings("A")
-    test.print_list_dict()
+    list = test.get_key_list('z')
+    save_list = []
+    if list:
+        for i in list:
+            if test.get_strcmp_bool("在中国的的一个地方", i):
+                save_list.append(i)
+        
+    # test.print_list_dict()
