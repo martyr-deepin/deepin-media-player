@@ -324,7 +324,8 @@ class INI(gobject.GObject):
             else:
                 return -1
         except:
-            print "由于前面出现错误..."
+            # print "由于前面出现错误..."
+            pass
             
     def get_section_value(self, root_name, child_name):
         try:
@@ -335,7 +336,8 @@ class INI(gobject.GObject):
                     break
             return self.root[save_i].child_addr[child_name]    
         except:
-            print "由于前面出现错误..."
+            # print "由于前面出现错误..."
+            pass
         
             
     def get_section_childs(self, root_name):    
@@ -348,7 +350,8 @@ class INI(gobject.GObject):
             
             return  self.root[save_i].child_addr       
         except:
-            print "由于前面出现错误"
+            # print "由于前面出现错误"
+            pass
             
         
     def set_section_value(self, root_name, child_name, value):
@@ -360,7 +363,8 @@ class INI(gobject.GObject):
                     break
             self.root[save_i].child_addr[child_name] = value   
         except:    
-            print "由于前面出现错误"
+            # print "由于前面出现错误"
+            pass
 
     
     
@@ -388,7 +392,8 @@ class INI(gobject.GObject):
             self.root[save_i].child_addr = save_dict.copy()    
         
         except:    
-            print "由于前面出现错误"
+            # print "由于前面出现错误"
+            pass
         
         
     def ini_save(self):            
@@ -406,8 +411,10 @@ class INI(gobject.GObject):
                 ini_fp.close()
             else:    
                 print "无法保存root为空"
+                
         except:
-            print "由于前面出现错误"
+            # print "由于前面出现错误"
+            pass
             
             
     def set_path(self, path):    

@@ -340,7 +340,6 @@ class PlayerBox(object):
             self.clear_play_list_bool = False
             if 1 == self.mp.state:
                 self.mp.quit()
-                
             self.start_button_clicked(self.play_control_panel.start_btn, 1)    
             # self.mp.play(self.mp.playList[0])
             # self.mp.playListNum += 1    
@@ -354,10 +353,16 @@ class PlayerBox(object):
                 self.mp.quit()                                        
                 
         # play file.        
-        self.start_button_clicked(self.play_control_panel.start_btn, 1)                    
-        # self.mp.play(self.play_list_dict[list_item.title])
-        # self.mp.playListNum = list_item.get_index()           
-                    
+        # self.start_button_clicked(self.play_control_panel.start_btn, 1)                    
+        self.mp.play(self.play_list_dict[list_item.title])
+        self.mp.playListNum = list_item.get_index()           
+
+        self.play_control_panel.start_btn.start_bool = False
+        self.play_control_panel.start_btn.queue_draw()
+        self.toolbar2.play_control_panel.start_btn.start_bool = False
+        self.toolbar2.play_control_panel.start_btn.queue_draw()
+
+                
         self.play_list.list_view.set_highlight(list_item)    
 
         
@@ -418,8 +423,17 @@ class PlayerBox(object):
         
     def test_open(self, open_dialog, path_name):
         if len(path_name) > 0:
-            self.mp.addPlayFile(path_name)    
-            self.add_play_list_time(path_name)
+            # self.mp.addPlayFile(path_name)    
+            # # self.mp.playList.append(path_name)
+            # # self.mp.playListNum += 1
+            # self.clear_play_list_bool = True
+            # self.add_play_list_time(path_name)            
+            pass
+            # if 1 == self.mp.state:
+            #     self.mp.quit()
+            # self.start_button_clicked(self.play_control_panel.start_btn, 1)    
+            # self.play_list
+            # self.play_list.list_view.set_highlight(self.play_list.list_view.items[0])        
             
     def volume_button_set_mute(self, widget, event):
         '''Set mute.'''
@@ -956,7 +970,7 @@ class PlayerBox(object):
         init_value = self.ini.get_section_value('PlayMemory', self.get_player_file_name(mplayer.path))        
         # print init_value
         if init_value != None:
-            self.mp.seek(int(init_value))
+            self.mp.seek(int(init_value))                        
             
         self.mp.setvolume(self.save_volume_value)
         if self.save_volume_mute_bool:
@@ -1008,11 +1022,17 @@ class PlayerBox(object):
         # Play file modify start_btn.
         self.media_player_midfy_start_bool()
         # print mplayer.posNum
-        if mplayer.posNum < mplayer.lenNum - 1:            
+        if mplayer.posNum < mplayer.lenNum - 10:            
             root = self.ini.get_section("PlayMemory")
             # print root
             if root != -1:
                 root.child_addr[self.get_player_file_name(mplayer.path)] = mplayer.posNum
+                self.ini.ini_save()
+        else:    
+            root = self.ini.get_section("PlayMemory")
+            # print root
+            if root != -1:
+                del root.child_addr[self.get_player_file_name(mplayer.path)]
                 self.ini.ini_save()
             
     def media_player_next(self, mplayer, play_bool):
