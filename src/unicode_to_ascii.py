@@ -135,7 +135,20 @@ import os
 import gtk
 
 def test_text_input(widget, event):
+    x, y = win.window.get_root_origin()    
+    font_win.move(x+1, y + win.allocation.height + 32)
+    font_win.show_all()    
+    
+    
+    font_win.resize(widget.allocation.width, widget.allocation.height)
+    
+    
     str1 =  widget.get_text()
+    if len(str1) == 0:
+        font_win.hide_all()
+        for i in font_win_vbox.get_children():
+            font_win_vbox.remove(i)
+    
     if len(str1) > 0:
         list = test.get_key_list(test.unicode_to_ascii(str1)) # 得到搜索的首字母,搜索出散列表匹配的所有字符串
     
@@ -144,11 +157,20 @@ def test_text_input(widget, event):
             for str2 in list:
                 if test.get_strcmp_bool(str1, str2):
                     save_list.append(str2)
-        print "符合匹配的字符"    
-        # print save_list
+        
+        for i in font_win_vbox.get_children():
+            font_win_vbox.remove(i)
+            
+        show_height = 0   
         for i in save_list:
-            print i
-    
+            font_win_vbox.pack_start(gtk.Label(i),False,False)
+            show_height += 20
+            
+        font_win_vbox.show_all()    
+        if show_height >= 100:
+            font_win.resize(widget.allocation.width, 80)
+        if show_height >= 500:
+            font_win.resize(widget.allocation.width, 300)
     
 if __name__ == "__main__":        
     test = UnicodeToAscii()                
@@ -163,8 +185,18 @@ if __name__ == "__main__":
     win.connect("destroy", gtk.main_quit)
     text = gtk.Entry()
     text.connect("key-release-event", test_text_input)
-    
+        
     win.add(text)
     win.show_all()
+    
+    #补全窗口
+    font_win = gtk.Window(gtk.WINDOW_TOPLEVEL)
+    font_win.set_decorated(False)
+    scrolled_window = gtk.ScrolledWindow()
+    font_win_vbox = gtk.VBox()
+    scrolled_window.add_with_viewport(font_win_vbox)
+    font_win.add(scrolled_window)
+    
+    
     gtk.main()
         
