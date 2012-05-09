@@ -219,8 +219,6 @@ class PlayerBox(object):
         self.play_control_panel.next_btn.connect("clicked", self.next_button_clicked) # next play.
         self.play_control_panel.open_btn.connect("clicked", self.open_button_clicked) # show open window.
         
-        # open window.
-        self.open_dialog = OpenDialog()
         
         # Volume button.
         self.volume_button_hframe = HorizontalFrame()
@@ -308,9 +306,7 @@ class PlayerBox(object):
             
             
     def add_play_list(self, mplayer, path): # mplayer signal: "add-path"                       
-        '''Play list add play file timeout.[100-1028 a play file].'''
-            
-                    
+        '''Play list add play file timeout.[100-1028 a play file].'''            
         if self.add_play_list_length_id:
             gtk.timeout_remove(self.add_play_list_length_id)
             self.add_play_list_length_id = None
@@ -414,8 +410,17 @@ class PlayerBox(object):
         self.mp.next()
 
     def open_button_clicked(self, widget):    
-        self.open_dialog.show_dialog()
+        # open window.
+        open_dialog = OpenDialog()        
+        open_dialog.show_dialog()
+        open_dialog.connect("get-path-name", self.test_open)
+
         
+    def test_open(self, open_dialog, path_name):
+        if len(path_name) > 0:
+            self.mp.addPlayFile(path_name)    
+            self.add_play_list_time(path_name)
+            
     def volume_button_set_mute(self, widget, event):
         '''Set mute.'''
         if 1 == event.button:
