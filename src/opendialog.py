@@ -121,9 +121,26 @@ class OpenDialog(gobject.GObject):
         self.open_window.hide_all()
                 
         
-    def up_chdir_button(self, widget):    
-        self.save_split_path = self.save_path.split("/")
+    def up_chdir_button(self, widget):            
+        save_split_text = self.save_path.split("/")
         
+        if len(save_split_text) > 2:         
+            print save_split_text
+            del_name = save_split_text[len(save_split_text)-1]
+            save_split_text.remove(del_name)
+            print save_split_text
+            self.save_path = "/".join(save_split_text)
+
+            
+        for i in self.get_fixed_childs():
+            self.fixed.remove(i)                
+                
+                
+        self.button_y_offset = 0   
+        self.show_file_and_dir(self.save_path)
+        self.show_split_path_name()
+        
+            
     def up_chdir_split_button(self, widget, text):    
         
         save_split_text = []
