@@ -38,7 +38,7 @@ def drag_drop(wid, context, x, y, time):
 
 def drag_data_received(wid, context, x, y, data, info, time, mp, play_list, widget_bool):    
     if data.get_uris():
-        if widget_bool:
+        if widget_bool:            
             mp.clearPlayList() # clear mplayer play list.    
         
     for f in data.get_uris():

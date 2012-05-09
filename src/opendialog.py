@@ -138,7 +138,7 @@ class OpenDialog(gobject.GObject):
         
         if widget.state == gtk.STATE_PRELIGHT:
             cr.set_source_rgba(1, 0, 0, 0.1)
-            cr.rectangle(x, y ,w , h)
+            cr.rectangle(x, y-5 ,w , h)
             cr.fill()
             
         return True
