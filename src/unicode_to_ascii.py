@@ -25,14 +25,9 @@ class UnicodeToAscii(object):
     def __init__(self):
         self.list_dict = {}
         
-    def dict_add_strings(self, strings):    
+    def dict_add_strings(self, strings):            
         
-        if 0 <= ord(strings[0:1].lower()) <= 127:
-            key = strings[0:1].lower()            
-        else:                
-            key = strings.decode('utf-8') # str to utf-8(unicode)
-            key = key[0].encode('gbk') # utf-8 to gbk.                        
-            key = self.unicode_to_ascii(key)
+        key = self.unicode_to_ascii(strings)
             
         keys = self.list_dict.keys()
         if key in keys:
@@ -41,8 +36,15 @@ class UnicodeToAscii(object):
             self.list_dict[key] = []
             self.list_dict[key].append(strings)
             
-    def unicode_to_ascii(self, key):    
+    def unicode_to_ascii(self, strings):            
+        if 0 <= ord(strings[0:1].lower()) <= 127:
+            key = strings[0:1].lower()            
+            return key
+        
+        key = strings.decode('utf-8') # str to utf-8(unicode)
+        key = key[0].encode('gbk') # utf-8 to gbk.                                
         ascii = ord(key[0]) * 256 + ord(key[1]) - 65536 
+        
         if ascii >= -20319 and ascii <= -20284:  
             return 'a'  
         if ascii >= -20283 and ascii <= -19776:  
@@ -127,36 +129,25 @@ class UnicodeToAscii(object):
             print "]"    
             
 
-        
+import os        
+
 if __name__ == "__main__":        
     test = UnicodeToAscii()        
     
     # test.dict_add_strings("abcef")
     # for i in range(0, 1000):
-    test.dict_add_strings("在中国")
-    test.dict_add_strings("中过的人不是人")
-    test.dict_add_strings("在乃")
-    test.dict_add_strings("在中国的的一个地方")
-    test.dict_add_strings("在中国的的一个地方不是你想知道的")
-    test.dict_add_strings("在中国的的一个地方不是你想知道的")
-
-    test.dict_add_strings('啊屁股') # 将当前的字符串加入 散列表 中.
-    test.dict_add_strings("把")
-    test.dict_add_strings("吧")
+    temp_file_name = os.listdir('/home/long/音乐')
+    for i in temp_file_name:
+        test.dict_add_strings(i)
     
-    test.dict_add_strings("从")
-    test.dict_add_strings("从那里来")
-    test.dict_add_strings("才")
-    # test.dict_add_strings("a")
-    # test.dict_add_strings("A")
-
-    list = test.get_key_list('z') # 得到搜索的首字母,搜索出散列表匹配的所有字符串
+    str1 =  "张学友-一"   
+    list = test.get_key_list(test.unicode_to_ascii(str1)) # 得到搜索的首字母,搜索出散列表匹配的所有字符串
     
     save_list = []
     if list:
-        for i in list:
-            if test.get_strcmp_bool("在中国的的一个地方", i):
-                save_list.append(i)
+        for str2 in list:
+            if test.get_strcmp_bool(str1, str2):
+                save_list.append(str2)
     print "符合匹配的字符"    
     # print save_list
     for i in save_list:
