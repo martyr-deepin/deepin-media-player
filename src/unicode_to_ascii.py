@@ -128,28 +128,43 @@ class UnicodeToAscii(object):
                 print "'" + list_strs + "'" + ",",
             print "]"    
             
-
+            
+            
+#======================Test===================
 import os        
+import gtk
 
-if __name__ == "__main__":        
-    test = UnicodeToAscii()        
+def test_text_input(widget, event):
+    str1 =  widget.get_text()
+    if len(str1) > 0:
+        list = test.get_key_list(test.unicode_to_ascii(str1)) # 得到搜索的首字母,搜索出散列表匹配的所有字符串
     
-    # test.dict_add_strings("abcef")
-    # for i in range(0, 1000):
+        save_list = []
+        if list:
+            for str2 in list:
+                if test.get_strcmp_bool(str1, str2):
+                    save_list.append(str2)
+        print "符合匹配的字符"    
+        # print save_list
+        for i in save_list:
+            print i
+    
+    
+if __name__ == "__main__":        
+    test = UnicodeToAscii()                
+    
     temp_file_name = os.listdir('/home/long/音乐')
     for i in temp_file_name:
         test.dict_add_strings(i)
+                   
+    win = gtk.Window(gtk.WINDOW_TOPLEVEL)    
+    win.set_title("测试补全")
+    win.set_size_request(200, 20)
+    win.connect("destroy", gtk.main_quit)
+    text = gtk.Entry()
+    text.connect("key-release-event", test_text_input)
     
-    str1 =  "张学友-一"   
-    list = test.get_key_list(test.unicode_to_ascii(str1)) # 得到搜索的首字母,搜索出散列表匹配的所有字符串
-    
-    save_list = []
-    if list:
-        for str2 in list:
-            if test.get_strcmp_bool(str1, str2):
-                save_list.append(str2)
-    print "符合匹配的字符"    
-    # print save_list
-    for i in save_list:
-        print i
-    # test.print_list_dict()
+    win.add(text)
+    win.show_all()
+    gtk.main()
+        
