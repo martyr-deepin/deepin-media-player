@@ -149,7 +149,7 @@ if __name__ == "__main__":
     test.dict_add_strings("才")
     # test.dict_add_strings("a")
     # test.dict_add_strings("A")
-    x
+
     list = test.get_key_list('z') # 得到搜索的首字母,搜索出散列表匹配的所有字符串
     
     save_list = []
