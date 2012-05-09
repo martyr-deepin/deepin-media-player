@@ -124,6 +124,25 @@ class OpenDialog(gobject.GObject):
     def up_chdir_button(self, widget):    
         self.save_split_path = self.save_path.split("/")
         
+    def up_chdir_split_button(self, widget, text):    
+        
+        save_split_text = []
+        for i in self.save_split_path:            
+            save_split_text.append(i)
+            if i == text:
+                break
+            
+        temp_path = "/".join(save_split_text)
+        self.save_path = temp_path
+        
+        for i in self.get_fixed_childs():
+                self.fixed.remove(i)                
+                
+                
+        self.button_y_offset = 0   
+        self.show_file_and_dir(temp_path)
+        self.show_split_path_name()
+        
     def fixed_add_button_child(self, text, x, y):
         temp_path = self.save_path + "/" + text
         isfile_bool = False
@@ -171,12 +190,12 @@ class OpenDialog(gobject.GObject):
             else:    
                 draw_pixbuf(cr, vide_pixbuf, x, y + pixbuf_padding)
         draw_font(cr, text, 10, "#000000", 
-                  x +18 , y , w, h)           
+                  x +18 , y , w, h)
         
         if widget.state == gtk.STATE_PRELIGHT:
             cr.set_source_rgba(1, 0, 0, 0.1)
             cr.rectangle(x, y ,w , h)
-            cr.fill()            
+            cr.fill()
         return True
     
     def open_file_or_dir(self, widget, text):          
@@ -193,27 +212,25 @@ class OpenDialog(gobject.GObject):
             for i in self.get_fixed_childs():
                 self.fixed.remove(i)                
                 
-            self.button_y_offset = 0            
+            self.button_y_offset = 0   
             self.show_file_and_dir(temp_path)
             self.show_split_path_name()
             
-    def get_fixed_childs(self): 
-        return self.fixed.get_children() #return list.  
+    def get_fixed_childs(self):
+        return self.fixed.get_children() #return list.
     
-    def show_split_path_name(self):        
+    def show_split_path_name(self):    
         for i in self.top_hbox.get_children():
-                self.top_hbox.remove(i)                
+                self.top_hbox.remove(i)
         self.save_split_path = self.save_path.split("/")
         
         for i in self.save_split_path:
-            print i
             if len(i) > 0:
-                button = Button(i)
-                
-                self.top_hbox.pack_start(button, False, False)
-                
-                
+                button = Button(i)                
+                button.connect("clicked", self.up_chdir_split_button, i)
+                self.top_hbox.pack_start(button, False, False)                                
         self.top_hbox_all.show_all()
+        
         
     def show_dialog(self):
         if self.init_bool:
@@ -224,8 +241,9 @@ class OpenDialog(gobject.GObject):
         self.open_window.show_all()
         
     def show_file_and_dir(self, path):
-        if os.path.isdir(path): # is dir.
+        if os.path.isdir(path): # is dir.            
             all_dir_and_file = os.listdir(path)
+            # print all_dir_and_file
             for file_name in all_dir_and_file:
                 self.fixed_add_button_child(str(file_name), self.button_x_offset, self.button_y_offset)
         self.open_window.show_all()
