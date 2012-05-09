@@ -125,20 +125,21 @@ class OpenDialog(gobject.GObject):
         folder_pixbuf = self.folder_pixbuf.get_pixbuf().scale_simple(18, 18, gtk.gdk.INTERP_BILINEAR)
         
         
+        pixbuf_padding = 2
         if os.path.isdir(temp_path):
-            draw_pixbuf(cr, folder_pixbuf, x, y)                            
+            draw_pixbuf(cr, folder_pixbuf, x, y + pixbuf_padding)       
         if os.path.isfile(temp_path):        
             file1, file2 = os.path.splitext(text)
-            if file2.lower() in [".mp3", ".mp4", "wav"]:            
-                draw_pixbuf(cr, music_pixbuf, x, y)                            
+            if file2.lower() in [".mp3","wav"]:            
+                draw_pixbuf(cr, music_pixbuf, x, y + pixbuf_padding)    
             else:    
-                draw_pixbuf(cr, vide_pixbuf, x, y)
+                draw_pixbuf(cr, vide_pixbuf, x, y + pixbuf_padding)
         draw_font(cr, text, 8, "#000000", 
                   x +18 , y , w, h)           
         
         if widget.state == gtk.STATE_PRELIGHT:
             cr.set_source_rgba(1, 0, 0, 0.1)
-            cr.rectangle(x, y-5 ,w , h)
+            cr.rectangle(x, y ,w , h)
             cr.fill()
             
         return True
