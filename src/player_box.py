@@ -41,6 +41,7 @@ from mplayer import get_length
 from mplayer import get_home_path
 from playlist import PlayList
 from playlist import MediaItem
+from opendialog import OpenDialog
 
 from ini import INI
 import threading
@@ -216,6 +217,10 @@ class PlayerBox(object):
         self.play_control_panel.pre_btn.connect("clicked", self.pre_button_clicked) # pre play.
         self.play_control_panel.start_btn.connect("clicked", self.start_button_clicked, 1) # start play or pause play.
         self.play_control_panel.next_btn.connect("clicked", self.next_button_clicked) # next play.
+        self.play_control_panel.open_btn.connect("clicked", self.open_button_clicked) # show open window.
+        
+        # open window.
+        self.open_dialog = OpenDialog()
         
         # Volume button.
         self.volume_button_hframe = HorizontalFrame()
@@ -340,8 +345,9 @@ class PlayerBox(object):
             if 1 == self.mp.state:
                 self.mp.quit()
                 
-            self.mp.play(self.mp.playList[0])
-            self.mp.playListNum += 1    
+            self.start_button_clicked(self.play_control_panel.start_btn, 1)    
+            # self.mp.play(self.mp.playList[0])
+            # self.mp.playListNum += 1    
             self.play_list.list_view.set_highlight(self.play_list.list_view.items[0])        
         return False        
     
@@ -352,8 +358,9 @@ class PlayerBox(object):
                 self.mp.quit()                                        
                 
         # play file.        
-        self.mp.play(self.play_list_dict[list_item.title])
-        self.mp.playListNum = list_item.get_index()           
+        self.start_button_clicked(self.play_control_panel.start_btn, 1)                    
+        # self.mp.play(self.play_list_dict[list_item.title])
+        # self.mp.playListNum = list_item.get_index()           
                     
         self.play_list.list_view.set_highlight(list_item)    
 
@@ -406,6 +413,9 @@ class PlayerBox(object):
         '''next'''
         self.mp.next()
 
+    def open_button_clicked(self, widget):    
+        self.open_dialog.show_dialog()
+        
     def volume_button_set_mute(self, widget, event):
         '''Set mute.'''
         if 1 == event.button:
