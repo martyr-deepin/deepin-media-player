@@ -20,6 +20,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from dtk.ui.utils import propagate_expose
+from dtk.ui.utils import move_window
 from dtk.ui.titlebar import Titlebar
 from dtk.ui.scrolled_window import ScrolledWindow
 from dtk.ui.button import Button
@@ -43,31 +45,49 @@ class OpenDialog(gobject.GObject):
         self.button_x_offset = 0
         self.button_y_offset = 0
         self.save_path = self.get_home_path()
+        self.save_split_path = self.save_path.split("/")
+        
         self.init_bool = True
         self.file_name = ""
         self.play_file_geshi = [".rmvb", ".avi", ".mp3", ".mp4", "wav"]
-        
+                
         # show file or path of image.
         self.vide_pixbuf = app_theme.get_pixbuf("Videos.ico")
         self.music_pixbuf = app_theme.get_pixbuf("Music.ico")
         self.folder_pixbuf = app_theme.get_pixbuf("Folder.ico")
         
+        self.window_bg_pixbuf = app_theme.get_pixbuf("my_bg2.jpg")
+        # up button.
+        self.top_hbox_all = gtk.HBox()        
+        self.up_btn_frame = gtk.Alignment()                
+        self.up_btn_frame.set(0, 0, 0, 0)
+        self.up_btn_frame.set_padding(0, 0, 8, 8)        
+        self.up_btn = Button("UP")        
+        self.up_btn.connect("clicked", self.up_chdir_button)
+        self.up_btn_frame.add(self.up_btn)
+        
+        self.top_hbox = gtk.HBox()
+        self.top_hbox_all.pack_start(self.up_btn_frame, False, False)
+        self.top_hbox_all.pack_start(self.top_hbox)
+        
         # self.open_window = Application("OpenDialog", True)
         self.open_window = gtk.Window(gtk.WINDOW_TOPLEVEL)
+        
+        self.open_window.connect("expose-event", self.draw_window_background)
         self.open_window.connect("destroy", lambda w: self.open_window.destroy())
         self.open_window.set_decorated(False)
         self.title_bar = Titlebar(["close"])
         self.title_bar.close_button.connect("clicked", lambda w:self.open_window.destroy())
+        self.title_bar.drag_box.connect('button-press-event', lambda w, e: move_window(w, e, self.open_window))
+        
         self.main_vbox = gtk.VBox()
         self.main_vbox.pack_start(self.title_bar, False, False)
         self.open_window.add(self.main_vbox)
         
-        # self.open_window.window.connect("destroy", self.open_window.destroy)
-        self.open_window.set_size_request(500, 400) 
+        window_width = 560
+        window_height = 400
+        self.open_window.set_size_request(window_width, window_height) 
         
-        # self.open_window.add_titlebar(["close"],
-        #                               app_theme.get_pixbuf("OrdinaryMode.png"),
-        #                               titlebar_name, " ", add_separator = True)        
         
         self.scrolled_window_frame = gtk.Alignment()
         self.scrolled_window_frame.set(1, 1, 1, 1)
@@ -78,9 +98,7 @@ class OpenDialog(gobject.GObject):
 
         self.scrolled_window.add_child(self.fixed)    
         
-        # main_box add fixed.
-        self.main_vbox.pack_start(self.scrolled_window_frame, True, True)
-        # bottom button.
+        # bottom button. ok and cancel button.
         self.hbox_frame = gtk.Alignment()
         self.hbox_frame.set(1, 0, 0, 0)
         self.hbox_frame.set_padding(0, 2, 0, 20)
@@ -88,15 +106,24 @@ class OpenDialog(gobject.GObject):
         self.hbox_frame.add(self.hbox)
         self.ok_btn = Button(titlebar_name)
         self.cancel_btn = Button("取消")
+        self.cancel_btn.connect("clicked", lambda w:self.open_window.destroy())
         self.hbox.pack_start(self.ok_btn, False, False)
         self.hbox.pack_start(self.cancel_btn, False, False)
-        # main_box add hbox_frame
         
+        
+        self.main_vbox.pack_start(self.top_hbox_all, False, False)
+        # main_box add fixed.
+        self.main_vbox.pack_start(self.scrolled_window_frame, True, True)
+        # main_box add hbox_frame        
         self.main_vbox.pack_start(self.hbox_frame, False, False)
         
-        self.open_window.show_all()        
+        self.open_window.show_all()    
         self.open_window.hide_all()
                 
+        
+    def up_chdir_button(self, widget):    
+        self.save_split_path = self.save_path.split("/")
+        
     def fixed_add_button_child(self, text, x, y):
         temp_path = self.save_path + "/" + text
         isfile_bool = False
@@ -116,32 +143,40 @@ class OpenDialog(gobject.GObject):
             self.fixed.put(button, int(x), int(y))
             self.button_y_offset += 23
             
+    def draw_window_background(self, widget, event):        
+        cr, x, y, w, h = allocation(widget)
+        window_bg_pixbuf = self.window_bg_pixbuf.get_pixbuf().scale_simple(w, h, gtk.gdk.INTERP_BILINEAR)
+        draw_pixbuf(cr, window_bg_pixbuf, x, y)       
+        propagate_expose(widget, event)
+        return True
+    
     def draw_button_bacbground(self, widget, event, text):    
         cr, x, y, w, h = allocation(widget)
         temp_path = self.save_path + "/" + text
         
-        music_pixbuf = self.music_pixbuf.get_pixbuf().scale_simple(18, 18, gtk.gdk.INTERP_BILINEAR)
-        vide_pixbuf = self.vide_pixbuf.get_pixbuf().scale_simple(18, 18, gtk.gdk.INTERP_BILINEAR)
-        folder_pixbuf = self.folder_pixbuf.get_pixbuf().scale_simple(18, 18, gtk.gdk.INTERP_BILINEAR)
+        pixbuf_width = 20
+        music_pixbuf = self.music_pixbuf.get_pixbuf().scale_simple(pixbuf_width, pixbuf_width, gtk.gdk.INTERP_BILINEAR)
+        vide_pixbuf = self.vide_pixbuf.get_pixbuf().scale_simple(pixbuf_width, pixbuf_width, gtk.gdk.INTERP_BILINEAR)
+        folder_pixbuf = self.folder_pixbuf.get_pixbuf().scale_simple(pixbuf_width, pixbuf_width, gtk.gdk.INTERP_BILINEAR)
         
         
         pixbuf_padding = 2
         if os.path.isdir(temp_path):
             draw_pixbuf(cr, folder_pixbuf, x, y + pixbuf_padding)       
+            
         if os.path.isfile(temp_path):        
             file1, file2 = os.path.splitext(text)
             if file2.lower() in [".mp3","wav"]:            
                 draw_pixbuf(cr, music_pixbuf, x, y + pixbuf_padding)    
             else:    
                 draw_pixbuf(cr, vide_pixbuf, x, y + pixbuf_padding)
-        draw_font(cr, text, 8, "#000000", 
+        draw_font(cr, text, 10, "#000000", 
                   x +18 , y , w, h)           
         
         if widget.state == gtk.STATE_PRELIGHT:
             cr.set_source_rgba(1, 0, 0, 0.1)
             cr.rectangle(x, y ,w , h)
-            cr.fill()
-            
+            cr.fill()            
         return True
     
     def open_file_or_dir(self, widget, text):          
@@ -160,12 +195,29 @@ class OpenDialog(gobject.GObject):
                 
             self.button_y_offset = 0            
             self.show_file_and_dir(temp_path)
-        
+            self.show_split_path_name()
+            
     def get_fixed_childs(self): 
-        return self.fixed.get_children() #return list.   
+        return self.fixed.get_children() #return list.  
     
+    def show_split_path_name(self):        
+        for i in self.top_hbox.get_children():
+                self.top_hbox.remove(i)                
+        self.save_split_path = self.save_path.split("/")
+        
+        for i in self.save_split_path:
+            print i
+            if len(i) > 0:
+                button = Button(i)
+                
+                self.top_hbox.pack_start(button, False, False)
+                
+                
+        self.top_hbox_all.show_all()
+        
     def show_dialog(self):
         if self.init_bool:
+            self.show_split_path_name()
             self.show_file_and_dir(self.save_path)
             self.init_bool = False
             
@@ -175,14 +227,18 @@ class OpenDialog(gobject.GObject):
         if os.path.isdir(path): # is dir.
             all_dir_and_file = os.listdir(path)
             for file_name in all_dir_and_file:
-                self.fixed_add_button_child(str(file_name), self.button_x_offset, self.button_y_offset)                
+                self.fixed_add_button_child(str(file_name), self.button_x_offset, self.button_y_offset)
         self.open_window.show_all()
         
     def get_home_path(self):
         return os.path.expanduser("~")
         
-if __name__ == "__main__":    
+def test_open(OpenDialog, text):
+    print text
+    
+if __name__ == "__main__":
     open_dialog = OpenDialog()
     open_dialog.show_dialog()
+    open_dialog.connect("get-path-name", test_open)
     gtk.main()
 
