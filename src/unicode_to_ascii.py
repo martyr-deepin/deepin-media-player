@@ -128,7 +128,35 @@ class UnicodeToAscii(object):
                 print "'" + list_strs + "'" + ",",
             print "]"    
             
+    def get_max_index(self, list_strs, index):                
+        if len(list_strs) > 0:
+            max_bool = True
+            temp_list_str = list_strs[0].decode('utf-8')        
+            save_list_str = ""                
+        
+            while max_bool:
             
+                max_key = self.unicode_to_ascii(temp_list_str[index])        
+                temp_max_key = max_key
+                print temp_max_key    
+            
+                for list_str in list_strs:
+                    temp_list_str = list_str.decode('utf-8')                            
+                    max_key = self.unicode_to_ascii(temp_list_str[index])
+                    if temp_max_key != max_key:
+                        max_bool = False
+                        break                                    
+                
+                if max_bool:    
+                    save_list_str += temp_max_key # save key.   
+                index += 1        
+            if len(save_list_str) > 0:    
+                return save_list_str    
+            return None
+                
+
+                
+        
             
 #======================Test===================
 import os        
@@ -162,7 +190,8 @@ def test_text_input(widget, event):
             font_win_vbox.remove(i)
             
         show_height = 0   
-        for i in save_list:
+        print test.get_max_index(save_list, len(str1.decode('utf-8'))) # 找到出现字母最多.
+        for i in save_list:            
             font_win_vbox.pack_start(gtk.Label(i),False,False)
             show_height += 20
             
@@ -172,6 +201,7 @@ def test_text_input(widget, event):
         if show_height >= 500:
             font_win.resize(widget.allocation.width, 300)
     
+            
 if __name__ == "__main__":        
     test = UnicodeToAscii()                
     
