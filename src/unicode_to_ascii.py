@@ -129,6 +129,7 @@ class UnicodeToAscii(object):
             print "]"    
             
     def get_max_index(self, list_strs, index):                
+        '''return max strs.'''
         if len(list_strs) > 0:
             max_bool = True
             temp_list_str = list_strs[0].decode('utf-8')        
@@ -148,7 +149,8 @@ class UnicodeToAscii(object):
                         break                                    
                 
                 if max_bool:    
-                    save_list_str += temp_max_key # save key.   
+                    # save_list_str += temp_max_key # save key.   
+                    save_list_str += temp_list_str[index]
                 index += 1        
             if len(save_list_str) > 0:    
                 return save_list_str    
