@@ -20,6 +20,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from dtk.ui.entry import TextEntry
 from dtk.ui.utils import propagate_expose
 from dtk.ui.utils import move_window
 from dtk.ui.titlebar import Titlebar
@@ -28,6 +29,7 @@ from dtk.ui.button import Button
 from dtk.ui.draw import draw_pixbuf
 from dtk.ui.draw import draw_font
 # from dtk.ui.utils import propagate_expose
+from unicode_to_ascii import UnicodeToAscii
 from utils import app_theme
 from utils import allocation
 import os
@@ -41,6 +43,8 @@ class OpenDialog(gobject.GObject):
         }    
     def __init__ (self, titlebar_name = "打开"):        
         gobject.GObject.__init__(self)
+        
+        self.unicoe_to_ascii = UnicodeToAscii()
         
         self.button_x_offset = 0
         self.button_y_offset = 0
@@ -57,11 +61,21 @@ class OpenDialog(gobject.GObject):
         self.folder_pixbuf = app_theme.get_pixbuf("Folder.ico")
         
         self.window_bg_pixbuf = app_theme.get_pixbuf("my_bg2.jpg")
+        
+        # input text.
+        self.text_entry_frame = gtk.Alignment()
+        self.text_entry_frame.set(0, 0, 0, 0)
+        self.text_entry_frame.set_padding(0, 0, 8, 8)
+        self.text_entry = TextEntry()
+        self.text_entry.connect("key-release-event", self.text_entry_action)
+        self.text_entry_frame.add(self.text_entry)
+        self.text_entry.set_size(500, 24)
+        
         # up button.
         self.top_hbox_all = gtk.HBox()        
         self.up_btn_frame = gtk.Alignment()                
         self.up_btn_frame.set(0, 0, 0, 0)
-        self.up_btn_frame.set_padding(0, 0, 8, 8)        
+        self.up_btn_frame.set_padding(2, 2, 8, 8)        
         self.up_btn = Button("UP")        
         self.up_btn.connect("clicked", self.up_chdir_button)
         self.up_btn_frame.add(self.up_btn)
@@ -111,6 +125,8 @@ class OpenDialog(gobject.GObject):
         self.hbox.pack_start(self.cancel_btn, False, False)
         
         
+        # main_vbox add input text.
+        self.main_vbox.pack_start(self.text_entry_frame, False, False)
         self.main_vbox.pack_start(self.top_hbox_all, False, False)
         # main_box add fixed.
         self.main_vbox.pack_start(self.scrolled_window_frame, True, True)
@@ -120,15 +136,34 @@ class OpenDialog(gobject.GObject):
         self.open_window.show_all()    
         self.open_window.hide_all()
                 
+    def text_entry_action(self, widget, event):                        
+        str1 = self.text_entry.get_text()    
+        if len(str1) > 0:            
         
+            list = self.unicoe_to_ascii.get_key_list(self.unicoe_to_ascii.unicode_to_ascii(str1))    
+            save_list = []
+        
+            if list:
+                for str2 in list:
+                    if self.unicoe_to_ascii.get_strcmp_bool(str1, str2):
+                        save_list.append(str2)
+        
+            # print save_list            
+            # print len(str1.decode('utf-8'))
+            buquan_font = self.unicoe_to_ascii.get_max_index(save_list, len(str1.decode('utf-8')))            
+            if buquan_font:
+                self.text_entry.set_text(buquan_font)
+                # print buquan_font
+
+    
     def up_chdir_button(self, widget):            
         save_split_text = self.save_path.split("/")
         
         if len(save_split_text) > 2:         
-            print save_split_text
+            # print save_split_text
             del_name = save_split_text[len(save_split_text)-1]
             save_split_text.remove(del_name)
-            print save_split_text
+            # print save_split_text
             self.save_path = "/".join(save_split_text)
 
             
@@ -229,6 +264,7 @@ class OpenDialog(gobject.GObject):
             for i in self.get_fixed_childs():
                 self.fixed.remove(i)                
                 
+            
             self.button_y_offset = 0   
             self.show_file_and_dir(temp_path)
             self.show_split_path_name()
@@ -247,7 +283,15 @@ class OpenDialog(gobject.GObject):
                 button.connect("clicked", self.up_chdir_split_button, i)
                 self.top_hbox.pack_start(button, False, False)                                
         self.top_hbox_all.show_all()
+        self.text_entry.set_text(self.save_path)    
         
+
+        self.unicoe_to_ascii.clear_dict()
+        temp_list = os.listdir(self.save_path)                        
+        for list_strs in temp_list:
+            str1 = self.save_path + "/" + list_strs
+            self.unicoe_to_ascii.dict_add_strings(str1)
+            
         
     def show_dialog(self):
         if self.init_bool:

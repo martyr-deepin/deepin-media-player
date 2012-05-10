@@ -25,6 +25,9 @@ class UnicodeToAscii(object):
     def __init__(self):
         self.list_dict = {}
         
+    def clear_dict(self):    
+        self.list_dict = {}
+        
     def dict_add_strings(self, strings):            
         
         key = self.unicode_to_ascii(strings)
@@ -130,34 +133,40 @@ class UnicodeToAscii(object):
             
     def get_max_index(self, list_strs, index):                
         '''return max strs.'''
-        if len(list_strs) > 0:
-            max_bool = True
-            temp_list_str = list_strs[0].decode('utf-8')        
-            save_list_str = ""                
-        
-            while max_bool:
+        try:
+            if len(list_strs) > 0:
+                index = index
+                max_bool = True
+                temp_list_str = list_strs[0].decode('utf-8')        
+                save_list_str = ""                
             
-                max_key = self.unicode_to_ascii(temp_list_str[index])        
-                temp_max_key = max_key
-                print temp_max_key    
+                if len(list_strs) == 1:                
+                    return temp_list_str
             
-                for list_str in list_strs:
-                    temp_list_str = list_str.decode('utf-8')                            
-                    max_key = self.unicode_to_ascii(temp_list_str[index])
-                    if temp_max_key != max_key:
-                        max_bool = False
-                        break                                    
-                
-                if max_bool:    
-                    # save_list_str += temp_max_key # save key.   
-                    save_list_str += temp_list_str[index]
-                index += 1        
-            if len(save_list_str) > 0:    
-                return save_list_str    
-            return None
-                
+                while max_bool:
+                    max_key = self.unicode_to_ascii(temp_list_str[index])        
+                    temp_max_key = max_key
 
                 
+                    for list_str in list_strs:                        
+                    
+                        temp_list_str = list_str.decode('utf-8')                            
+                        max_key = self.unicode_to_ascii(temp_list_str[index])
+                        if temp_max_key != max_key:
+                            max_bool = False
+                            break                                    
+                
+                    if max_bool:    
+                        # save_list_str += temp_max_key # save key.   
+                        save_list_str += temp_list_str[index]
+                    index += 1        
+                
+                if len(save_list_str) > 0:    
+                    return save_list_str    
+                return None
+                
+        except:
+            return None
         
             
 #======================Test===================
@@ -193,6 +202,7 @@ def test_text_input(widget, event):
             
         show_height = 0   
         print test.get_max_index(save_list, len(str1.decode('utf-8'))) # 找到出现字母最多.
+        
         for i in save_list:            
             font_win_vbox.pack_start(gtk.Label(i),False,False)
             show_height += 20
@@ -207,7 +217,7 @@ def test_text_input(widget, event):
 if __name__ == "__main__":        
     test = UnicodeToAscii()                
     
-    temp_file_name = os.listdir('/home/long/音乐')
+    temp_file_name = os.listdir('/home/long')
     for i in temp_file_name:
         test.dict_add_strings(i)
                    
