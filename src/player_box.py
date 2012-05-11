@@ -970,6 +970,11 @@ class PlayerBox(object):
             if self.mp:
                 if 1 == self.mp.state:
                     self.mp.seek(int(progressbar.pos))
+                    self.show_time_label.time_font2 = self.set_time_string(self.mp.timeHour) + ":" + self.set_time_string(self.mp.timeMin) + ":" + self.set_time_string(self.mp.timeSec)
+                    self.toolbar2.show_time.time_font2 = self.set_time_string(self.mp.timeHour) + ":" + self.set_time_string(self.mp.timeMin) + ":" + self.set_time_string(self.mp.timeSec)
+                    self.toolbar2.panel.queue_draw()
+                    self.app.window.queue_draw()
+                
             
         # Show preview window.            
         if 1 == self.mp.state:            
