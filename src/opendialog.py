@@ -66,10 +66,12 @@ class OpenDialog(gobject.GObject):
         self.text_entry_frame = gtk.Alignment()
         self.text_entry_frame.set(0, 0, 0, 0)
         self.text_entry_frame.set_padding(0, 0, 8, 8)
-        self.text_entry = TextEntry()
-        self.text_entry.connect("key-release-event", self.text_entry_action)
+        
+        self.text_entry =  gtk.Entry()#TextEntry()
+        self.text_entry.connect("key-press-event", self.text_entry_action)
         self.text_entry_frame.add(self.text_entry)
-        self.text_entry.set_size(500, 24)
+        # self.text_entry.set_size_(500, 24)
+        self.text_entry.set_size_request(500, 24)
         
         # up button.
         self.top_hbox_all = gtk.HBox()        
@@ -86,7 +88,7 @@ class OpenDialog(gobject.GObject):
         
         # self.open_window = Application("OpenDialog", True)
         self.open_window = gtk.Window(gtk.WINDOW_TOPLEVEL)
-        
+        self.open_window.connect("configure-event", self.hide_keys_window)
         self.open_window.connect("expose-event", self.draw_window_background)
         self.open_window.connect("destroy", lambda w: self.open_window.destroy())
         self.open_window.set_decorated(False)
@@ -136,25 +138,94 @@ class OpenDialog(gobject.GObject):
         self.open_window.show_all()    
         self.open_window.hide_all()
                 
-    def text_entry_action(self, widget, event):                        
-        str1 = self.text_entry.get_text()    
-        if len(str1) > 0:            
+        # show keys window.
+        self.keys_window = gtk.Window(gtk.WINDOW_TOPLEVEL)
+        self.keys_window.set_keep_above(True)
+        self.keys_window.set_decorated(False)
+        self.keys_window.set_size_request(-1, 25)
+        self.keys_scroll_window = ScrolledWindow()
         
-            list = self.unicoe_to_ascii.get_key_list(self.unicoe_to_ascii.unicode_to_ascii(str1))    
-            save_list = []
+        self.keys_window_vbox = gtk.VBox()
         
-            if list:
-                for str2 in list:
-                    if self.unicoe_to_ascii.get_strcmp_bool(str1, str2):
-                        save_list.append(str2)
+        self.keys_scroll_window.add_child(self.keys_window_vbox)
+        self.keys_window.add(self.keys_scroll_window)
+        self.keys_window.show_all()
+        x, y = self.open_window.window.get_root_origin()
+        self.keys_window.move(x + 8, y + 47)
+        self.keys_window.hide_all()
         
-            # print save_list            
-            # print len(str1.decode('utf-8'))
-            buquan_font = self.unicoe_to_ascii.get_max_index(save_list, len(str1.decode('utf-8')))            
-            if buquan_font:
-                self.text_entry.set_text(buquan_font)
-                # print buquan_font
-
+    def hide_keys_window(self, widget, event):    
+        self.keys_window.hide_all()
+        
+    def text_entry_action(self, widget, event):                                
+        str1 = self.text_entry.get_text()            
+        print str1
+        if 65293 != event.keyval:                        
+            x, y = widget.window.get_root_origin()
+            self.keys_window.show_all()
+            self.keys_window.set_opacity(0)                                        
+        
+            
+            if len(str1) > 0:            
+        
+                list = self.unicoe_to_ascii.get_key_list(self.unicoe_to_ascii.unicode_to_ascii(str1))    
+                save_list = []
+                height_window = 10
+            
+                childs = self.keys_window_vbox.get_children()
+                for i in childs:
+                    self.keys_window_vbox.remove(i)
+                
+                if list:
+                    for str2 in list:
+                        if self.unicoe_to_ascii.get_strcmp_bool(str1, str2):
+                            button = gtk.Button(str2)
+                            button.set_size_request(400, -1)
+                            button.connect("expose-event", self.draw_keys_font, str2)
+                            button.connect("clicked", self.set_text_strings, str2)
+                            self.keys_window_vbox.pack_start(button)
+                            save_list.append(str2)                        
+                            height_window += 20
+                        
+                    if height_window > 300:        
+                        height_window = 300
+                    
+                    self.keys_window.resize(widget.allocation.width, height_window)        
+                    self.keys_window.move(x + 8, y + 47)
+                    self.keys_window.set_opacity(1)
+                    self.keys_window.show_all()
+                    # print save_list            
+                    # print len(str1.decode('utf-8'))
+                    # buquan_font = self.unicoe_to_ascii.get_max_index(save_list, len(str1.decode('utf-8')))            
+                    # print buquan_font
+                    # print save_list
+                    # print buquan_font           
+                    # if buquan_font and buquan_font != '/':
+                    #     self.text_entry.set_text(self.save_path + buquan_font)
+                    # print buquan_font
+        else:
+            save_split_text = str1.split("/")
+            save_split_text = save_split_text[len(save_split_text)-1]
+            self.open_file_or_dir(widget, save_split_text)
+            self.keys_window.hide_all()
+            
+    def set_text_strings(self, widget, str2):        
+        save_split_text = str2.split("/")
+        save_split_text = save_split_text[len(save_split_text)-1]            
+        self.open_file_or_dir(widget, save_split_text)
+        self.keys_window.hide_all()        
+        
+    def draw_keys_font(self, widget, event, key):
+        cr, x, y, w, h = allocation(widget)
+        draw_font(cr, key, 10, "#FF0000", 
+                  x +18 , y , w, h)
+        
+        if widget.state == gtk.STATE_PRELIGHT:
+            cr.set_source_rgba(0, 0, 1, 0.3)
+            cr.rectangle(x, y ,w , h)
+            cr.fill()
+        
+        return True
     
     def up_chdir_button(self, widget):            
         save_split_text = self.save_path.split("/")
@@ -241,7 +312,7 @@ class OpenDialog(gobject.GObject):
                 draw_pixbuf(cr, music_pixbuf, x, y + pixbuf_padding)    
             else:    
                 draw_pixbuf(cr, vide_pixbuf, x, y + pixbuf_padding)
-        draw_font(cr, text, 10, "#000000", 
+        draw_font(cr, " " + text, 10, "#000000", 
                   x +18 , y , w, h)
         
         if widget.state == gtk.STATE_PRELIGHT:
