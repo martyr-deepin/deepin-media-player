@@ -688,8 +688,9 @@ class  Mplayer(gobject.GObject):
         f = open(listFileName)
         for i in f:            
             if self.findFile(i.strip("\n")):
-                self.playListSum += 1
-                self.playList.append(i.strip("\n"))
+                # self.playListSum += 1
+                # self.playList.append(i.strip("\n"))
+                self.addPlayFile(i.strip("\n"))
         f.close()
        
     def savePlayList(self, listFileName):

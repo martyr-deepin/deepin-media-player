@@ -272,7 +272,7 @@ class PlayerBox(object):
     def modify_mouse_icon(self, widget, event): # screen: motion-notify-event 
         w = widget.allocation.width
         h = widget.allocation.height
-        right_padding = 5
+        # right_padding = 5
         bottom_padding = 5
         drag_bool = False
         
@@ -317,7 +317,7 @@ class PlayerBox(object):
     def drag_resize_window(self, widget, event): # screen: button-press-event -> drag resize window.
         w = widget.allocation.width
         h = widget.allocation.height
-        left_padding = 5
+        # left_padding = 5
         bottom_padding = 5
         drag_bool = False
         
