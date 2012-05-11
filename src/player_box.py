@@ -115,6 +115,10 @@ class PlayerBox(object):
         self.screen = MplayerView()
         # Screen signal init.
         self.screen.add_events(gtk.gdk.ALL_EVENTS_MASK)
+        # drag resize window.
+        self.screen.connect("button-press-event", self.draw_resize_window)
+        self.screen.connect("motion-notify-event", self.modify_mouse_icon)
+        
         self.screen.connect_after("expose-event", self.draw_background)
         self.screen.connect("button-press-event", self.move_media_player_window)
         self.screen.connect("button-release-event", self.screen_media_player_clear)
@@ -257,8 +261,44 @@ class PlayerBox(object):
         '''Hide preview window.'''                        
         self.bottom_play_control_hbox_vframe_event_box.connect("motion-notify-event", self.hide_preview_function)
                 
+    def modify_mouse_icon(self, widget, event): # screen: motion-notify-event 
+        w = widget.allocation.width
+        h = widget.allocation.height
+        right_padding = 5
+        drag_bool = False
+
+        if (w - right_padding <= event.x <= w) and (right_padding <= event.y <= h - right_padding):
+            drag = gtk.gdk.RIGHT_SIDE
+            drag_bool = True            
+        elif (0 <= event.x <= right_padding) and (right_padding <= event.y <= h - right_padding):    
+            drag = gtk.gdk.LEFT_SIDE
+            drag_bool = True
+            
+        if drag_bool:    
+            widget.window.set_cursor(gtk.gdk.Cursor(drag))
+        else:    
+            widget.window.set_cursor(None)    
+            
         
+    def draw_resize_window(self, widget, event): # screen: button-press-event -> drag resize window.
+        w = widget.allocation.width
+        h = widget.allocation.height
+        left_padding = 10
+        drag_bool = False
         
+        if (w - left_padding <= event.x <= w) and (left_padding <= event.y <= h - left_padding): # Right
+            drag = gtk.gdk.WINDOW_EDGE_EAST
+            drag_bool = True                        
+        elif (0 <= event.x <= 20) and (left_padding <= event.y <= h - left_padding): # Left
+            drag = gtk.gdk.WINDOW_EDGE_WEST
+            drag_bool = True            
+            
+        if drag_bool:    
+            self.app.window.begin_resize_drag(drag,
+                                              event.button,
+                                              int(event.x_root),
+                                              int(event.y_root),
+                                              event.time)
         
     def get_key_event(self, widget, event): # app: key-release-event       
         keyval = event.keyval                
