@@ -116,7 +116,7 @@ class PlayerBox(object):
         # Screen signal init.
         self.screen.add_events(gtk.gdk.ALL_EVENTS_MASK)
         # drag resize window.
-        self.screen.connect("button-press-event", self.draw_resize_window)
+        self.screen.connect("button-press-event", self.drag_resize_window)
         self.screen.connect("motion-notify-event", self.modify_mouse_icon)
         
         self.screen.connect_after("expose-event", self.draw_background)
@@ -138,7 +138,7 @@ class PlayerBox(object):
         self.progressbar.pb.connect("leave-notify-event", self.hide_preview_leave)        
         
         '''Toolbar Init.'''
-        self.toolbar = ToolBar()
+        self.toolbar = ToolBar()        
         self.toolbar.toolbar_full_button.connect("clicked", self.full_play_window)
         self.toolbar.toolbar_common_button.connect("clicked", self.show_window_widget)
         self.toolbar.toolbar_concise_button.connect("clicked", self.hide_window_widget)
@@ -147,6 +147,10 @@ class PlayerBox(object):
         '''Toolbar2 Init.'''
         self.toolbar2 = ToolBar2()        
         self.toolbar2.panel.set_size_request(1, 40) # Set toolbar2 height.
+        # draw resize window.
+        self.toolbar2.panel.connect("button-press-event", self.drag_resize_window)
+        self.toolbar2.panel.connect("motion-notify-event", self.modify_mouse_icon)
+        
         self.toolbar2.panel.connect("motion-notify-event", self.set_keep_window_toolbar2)
         #self.toolbar2.show_toolbar2() Test function.
         self.toolbar2.progressbar.pb.connect("motion-notify-event",
@@ -214,6 +218,7 @@ class PlayerBox(object):
         self.show_time_label_hframe.set(0, 0.5, 0, 0)
         
         self.play_control_panel = PlayControlPanel()
+        
         self.play_control_panel_hframe = self.play_control_panel.hbox_hframe
         self.play_control_panel_hframe.set(1, 0.5, 0, 0)
         
@@ -252,7 +257,10 @@ class PlayerBox(object):
         self.bottom_play_control_hbox_vframe_event_box = EventBox()
         self.bottom_play_control_hbox_vframe_event_box.add_events(gtk.gdk.ALL_EVENTS_MASK)
         self.bottom_play_control_hbox_vframe_event_box.add(self.bottom_play_control_hbox_vframe)
-        
+        # draw resize window.
+        self.bottom_play_control_hbox_vframe_event_box.connect("button-press-event", self.drag_resize_window)
+        self.bottom_play_control_hbox_vframe_event_box.connect("motion-notify-event", self.modify_mouse_icon)
+
         self.bottom_main_vbox.pack_start(self.bottom_play_control_hbox_vframe_event_box)
         # vbox add to main_hbox
         self.main_vbox.pack_start(self.hbox, True, True) # screen and progressbar
@@ -265,25 +273,52 @@ class PlayerBox(object):
         w = widget.allocation.width
         h = widget.allocation.height
         right_padding = 5
+        bottom_padding = 5
         drag_bool = False
-
-        if (w - right_padding <= event.x <= w) and (right_padding <= event.y <= h - right_padding):
+        
+        if "MplayerView" == type(widget).__name__: 
+            try:
+                self.bottom_play_control_hbox_vframe_event_box.window.set_cursor(None)
+            except:    
+                pass
+            
+        if (w - right_padding <= event.x <= w) and (right_padding <= event.y <= h - right_padding): #Right
             drag = gtk.gdk.RIGHT_SIDE
             drag_bool = True            
-        elif (0 <= event.x <= right_padding) and (right_padding <= event.y <= h - right_padding):    
+        elif (0 <= event.x <= right_padding) and (right_padding <= event.y <= h - right_padding):  #left  
             drag = gtk.gdk.LEFT_SIDE
             drag_bool = True
-            
+        elif (bottom_padding <= event.x <= w - bottom_padding) and (h - bottom_padding <= event.y <= h): # bottom                
+            drag = gtk.gdk.BOTTOM_SIDE
+            if "MplayerView" != type(widget).__name__: 
+                drag_bool = True
+            else:    
+                drag_bool = False
+        elif (0 <= event.x <= bottom_padding) and (h - bottom_padding <= event.y <= h):                
+            if "MplayerView" != type(widget).__name__:
+                drag = gtk.gdk.BOTTOM_LEFT_CORNER
+                drag_bool = True
+            else:
+                drag_bool = False
+        elif (w - bottom_padding <= event.x <= w) and (h - bottom_padding <= event.y <= h):
+            if "MplayerView" != type(widget).__name__:
+                drag = gtk.gdk.BOTTOM_RIGHT_CORNER
+                drag_bool = True
+            else:
+                drag_bool = False
+        # MplayerView   EventBox Panel
+
         if drag_bool:    
             widget.window.set_cursor(gtk.gdk.Cursor(drag))
         else:    
             widget.window.set_cursor(None)    
             
         
-    def draw_resize_window(self, widget, event): # screen: button-press-event -> drag resize window.
+    def drag_resize_window(self, widget, event): # screen: button-press-event -> drag resize window.
         w = widget.allocation.width
         h = widget.allocation.height
-        left_padding = 10
+        left_padding = 5
+        bottom_padding = 5
         drag_bool = False
         
         if (w - left_padding <= event.x <= w) and (left_padding <= event.y <= h - left_padding): # Right
@@ -292,7 +327,25 @@ class PlayerBox(object):
         elif (0 <= event.x <= 20) and (left_padding <= event.y <= h - left_padding): # Left
             drag = gtk.gdk.WINDOW_EDGE_WEST
             drag_bool = True            
-            
+        elif (bottom_padding <= event.x <= w - bottom_padding) and (h - bottom_padding <= event.y <= h):    
+            drag = gtk.gdk.WINDOW_EDGE_SOUTH
+            if "MplayerView" != type(widget).__name__: 
+                drag_bool = True            
+            else:    
+                drag_bool = False
+        elif (0 <= event.x <= bottom_padding) and (h - bottom_padding <= event.y <= h):        
+            if "MplayerView" != type(widget).__name__: 
+                drag = gtk.gdk.WINDOW_EDGE_SOUTH_WEST
+                drag_bool = True            
+            else:    
+                drag_bool = False            
+        elif (w - bottom_padding <= event.x <= w) and (h - bottom_padding <= event.y <= h):        
+            if "MplayerView" != type(widget).__name__: 
+                drag = gtk.gdk.WINDOW_EDGE_SOUTH_EAST
+                drag_bool = True            
+            else:    
+                drag_bool = False           
+                
         if drag_bool:    
             self.app.window.begin_resize_drag(drag,
                                               event.button,
