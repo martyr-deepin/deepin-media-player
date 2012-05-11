@@ -282,25 +282,25 @@ class PlayerBox(object):
             except:    
                 pass
             
-        if (w - right_padding <= event.x <= w) and (right_padding <= event.y <= h - right_padding): #Right
-            drag = gtk.gdk.RIGHT_SIDE
-            drag_bool = True            
-        elif (0 <= event.x <= right_padding) and (right_padding <= event.y <= h - right_padding):  #left  
-            drag = gtk.gdk.LEFT_SIDE
-            drag_bool = True
-        elif (bottom_padding <= event.x <= w - bottom_padding) and (h - bottom_padding <= event.y <= h): # bottom                
-            drag = gtk.gdk.BOTTOM_SIDE
-            if "MplayerView" != type(widget).__name__: 
-                drag_bool = True
-            else:    
-                drag_bool = False
-        elif (0 <= event.x <= bottom_padding) and (h - bottom_padding <= event.y <= h):                
-            if "MplayerView" != type(widget).__name__:
-                drag = gtk.gdk.BOTTOM_LEFT_CORNER
-                drag_bool = True
-            else:
-                drag_bool = False
-        elif (w - bottom_padding <= event.x <= w) and (h - bottom_padding <= event.y <= h):
+        # if (w - right_padding <= event.x <= w) and (right_padding <= event.y <= h - right_padding): #Right
+        #     drag = gtk.gdk.RIGHT_SIDE
+        #     drag_bool = True            
+        # elif (0 <= event.x <= right_padding) and (right_padding <= event.y <= h - right_padding):  #left  
+        #     drag = gtk.gdk.LEFT_SIDE
+        #     drag_bool = True
+        # elif (bottom_padding <= event.x <= w - bottom_padding) and (h - bottom_padding <= event.y <= h): # bottom                
+        #     drag = gtk.gdk.BOTTOM_SIDE
+        #     if "MplayerView" != type(widget).__name__: 
+        #         drag_bool = True
+        #     else:    
+        #         drag_bool = False
+        # elif (0 <= event.x <= bottom_padding) and (h - bottom_padding <= event.y <= h):                
+        #     if "MplayerView" != type(widget).__name__:
+        #         drag = gtk.gdk.BOTTOM_LEFT_CORNER
+        #         drag_bool = True
+        #     else:
+        #         drag_bool = False
+        if (w - bottom_padding <= event.x <= w) and (h - bottom_padding <= event.y <= h):
             if "MplayerView" != type(widget).__name__:
                 drag = gtk.gdk.BOTTOM_RIGHT_CORNER
                 drag_bool = True
@@ -321,25 +321,25 @@ class PlayerBox(object):
         bottom_padding = 5
         drag_bool = False
         
-        if (w - left_padding <= event.x <= w) and (left_padding <= event.y <= h - left_padding): # Right
-            drag = gtk.gdk.WINDOW_EDGE_EAST
-            drag_bool = True                        
-        elif (0 <= event.x <= 20) and (left_padding <= event.y <= h - left_padding): # Left
-            drag = gtk.gdk.WINDOW_EDGE_WEST
-            drag_bool = True            
-        elif (bottom_padding <= event.x <= w - bottom_padding) and (h - bottom_padding <= event.y <= h):    
-            drag = gtk.gdk.WINDOW_EDGE_SOUTH
-            if "MplayerView" != type(widget).__name__: 
-                drag_bool = True            
-            else:    
-                drag_bool = False
-        elif (0 <= event.x <= bottom_padding) and (h - bottom_padding <= event.y <= h):        
-            if "MplayerView" != type(widget).__name__: 
-                drag = gtk.gdk.WINDOW_EDGE_SOUTH_WEST
-                drag_bool = True            
-            else:    
-                drag_bool = False            
-        elif (w - bottom_padding <= event.x <= w) and (h - bottom_padding <= event.y <= h):        
+        # if (w - left_padding <= event.x <= w) and (left_padding <= event.y <= h - left_padding): # Right
+        #     drag = gtk.gdk.WINDOW_EDGE_EAST
+        #     drag_bool = True                        
+        # elif (0 <= event.x <= 20) and (left_padding <= event.y <= h - left_padding): # Left
+        #     drag = gtk.gdk.WINDOW_EDGE_WEST
+        #     drag_bool = True            
+        # elif (bottom_padding <= event.x <= w - bottom_padding) and (h - bottom_padding <= event.y <= h):    
+        #     drag = gtk.gdk.WINDOW_EDGE_SOUTH
+        #     if "MplayerView" != type(widget).__name__: 
+        #         drag_bool = True            
+        #     else:    
+        #         drag_bool = False
+        # elif (0 <= event.x <= bottom_padding) and (h - bottom_padding <= event.y <= h):        
+        #     if "MplayerView" != type(widget).__name__: 
+        #         drag = gtk.gdk.WINDOW_EDGE_SOUTH_WEST
+        #         drag_bool = True            
+        #     else:    
+        #         drag_bool = False            
+        if (w - bottom_padding <= event.x <= w) and (h - bottom_padding <= event.y <= h):        
             if "MplayerView" != type(widget).__name__: 
                 drag = gtk.gdk.WINDOW_EDGE_SOUTH_EAST
                 drag_bool = True            
