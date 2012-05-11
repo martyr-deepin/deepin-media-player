@@ -128,7 +128,7 @@ def init_mplayer_config():
         
 def get_vide_flags(path):
         file1, file2 = os.path.splitext(path)
-        if file2 in ['.mkv','.rmvb','.avi','.wmv','.3gp','.rm','.mp4']:
+        if file2 in ['.mkv','.rmvb','.avi','.wmv','.3gp','.rm','.mp4','.webm']:
             return True
         else:
             return False
@@ -185,7 +185,10 @@ class  Mplayer(gobject.GObject):
         # random player num.
         self.random_num = 0;
         
-        self.play_file_mode = ['.mkv','.mp3','.mp4','.rmvb','.avi','.wmv','.3gp','rm', 'asf']
+        self.play_file_mode = ['.mkv','.mp3','.mp4',
+                               '.rmvb','.avi','.wmv',
+                               '.3gp','rm', 'asf',
+                               '.webm']
         
         self.volumebool = False
         # player state.
