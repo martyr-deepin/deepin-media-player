@@ -370,6 +370,7 @@ class PlayerBox(object):
                 self.start_button_time_pause()
             elif "Return" == keyval:    
                 self.full_play_window(widget)
+                self.toolbar.toolbar_full_button.flags = not self.toolbar.toolbar_full_button.flags
                 
         
         
