@@ -110,7 +110,7 @@ class PlayerBox(object):
         self.app.window.connect("window-state-event", self.set_toolbar2_position)
         #keyboard Quick key.
         self.app.window.connect("realize", gtk.Widget.grab_focus)
-        self.app.window.connect("key-release-event", self.get_key_event)
+        self.app.window.connect("key-press-event", self.get_key_event)
                 
         '''Screen window init.'''
         self.screen = MplayerView()
@@ -364,9 +364,9 @@ class PlayerBox(object):
         # print keyval
         if self.mp:
             if "Right" == keyval:
-                self.mp.seek(self.mp.posNum + 5)
+                self.mp.seek(self.mp.posNum + 10)
             elif "Left" == keyval:    
-                self.mp.seek(self.mp.posNum - 5)
+                self.mp.seek(self.mp.posNum - 10)
             elif "space" == keyval:    
                 self.start_button_time_pause()
             elif "Return" == keyval:    
