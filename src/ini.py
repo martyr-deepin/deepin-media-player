@@ -333,7 +333,7 @@ class INI(gobject.GObject):
             # save_i = 0
             for i in range(0, len(self.root)):
                 if self.root[i].root_name == root_name:
-                    return self.root[save_i].child_addr       
+                    return self.root[i].child_addr       
                     # save_i = i
                     break
             
