@@ -31,7 +31,7 @@ class INI(gobject.GObject):
         }
     def __init__(self, ini_path):
         gobject.GObject.__init__(self)
-        
+        self.keys = ['PlayMemory', 'PlayTime']
         self.ini_path = ini_path
         self.ini_fp = open(ini_path, "r")
         self.ch = ''
@@ -299,14 +299,11 @@ class INI(gobject.GObject):
         
     def get_section(self, root_name):        
         try:
-            save_i = 0
             save_bool = False
             for i in range(0, len(self.root)):
-                # print self.root[i].root_name
+                
                 if self.root[i].root_name == root_name:
-                    save_i = 0
-                    save_bool = True
-                    break
+                    return self.root[i]
             
             if not save_bool: # Create new root section.   
                 self.save_root = ROOT()        
@@ -315,26 +312,17 @@ class INI(gobject.GObject):
                 
                 for i in range(0, len(self.root)):
                     if self.root[i].root_name == root_name:
-                        save_i = i
-                        save_bool = True
-                        break            
+                        return self.root[i]
                     
-            if save_bool:          
-                return self.root[save_i]
-            else:
-                return -1
-        except:
-            # print "由于前面出现错误..."
+
+            return None         
+        except:           
             pass
             
     def get_section_value(self, root_name, child_name):
         try:
-            save_i = 0
-            for i in range(0, len(self.root)):
-                if self.root[i].root_name == root_name:
-                    save_i = i
-                    break
-            return self.root[save_i].child_addr[child_name]    
+            root_childs = self.get_section_childs(root_name)
+            return root_childs[child_name]            
         except:
             # print "由于前面出现错误..."
             pass
@@ -356,12 +344,11 @@ class INI(gobject.GObject):
         
     def set_section_value(self, root_name, child_name, value):
         try:
-            save_i = 0
-            for i in range(0, len(self.root)):
-                if self.root[i].root_name == root_name:
-                    save_i = i
-                    break
-            self.root[save_i].child_addr[child_name] = value   
+            root_childs = self.get_section_childs(root_name)
+            if not root_childs:
+                return None
+            root_childs[child_name] = value
+            return True
         except:    
             # print "由于前面出现错误"
             pass
@@ -387,10 +374,10 @@ class INI(gobject.GObject):
                 if i == child_name:
                     save_dict[modify_name] = self.root[save_i].child_addr[i]    
                 else:    
-                    save_dict[i] = self.root[save_i].child_addr[i]    
+                    save_dict[i] = self.root[save_i].child_addr[i]  
             
             self.root[save_i].child_addr = save_dict.copy()    
-        
+            return True
         except:    
             # print "由于前面出现错误"
             pass
@@ -402,21 +389,26 @@ class INI(gobject.GObject):
                 ini_fp = open(self.ini_path, "w")
                 for root in self.root:
                     ini_fp.write("[" + root.root_name +  "]\n")
-                    for child in root.child_addr: 
-                        
+                    root_childs = self.get_section_childs(root.root_name)
+                    for child in root_childs:                        
+                    # for child in root.child_addr:                         
+                        # print "!@!@!@" + root.root_name
                         if root.root_name == "PlayMemory":
+                        # if root.root_name in self.keys:
+                            ini_fp.write('"' + child + '"' + " = " + str(root.child_addr[child]) + "\n")
+                        elif root.root_name == "PlayTime":    
                             ini_fp.write('"' + child + '"' + " = " + str(root.child_addr[child]) + "\n")
                         else:    
                             ini_fp.write(child + " = " + root.child_addr[child] + "\n")
                 ini_fp.close()
             else:    
-                print "无法保存root为空"
+                print "无法保存,root为空"
                 
         except:
             # print "由于前面出现错误"
             pass
             
-            
+                
     def set_path(self, path):    
         self.ini_path = path
         
@@ -434,15 +426,17 @@ if __name__ == "__main__":
     ini = INI(os.path.expanduser("~") + "/.config/deepin-media-player/config.ini")            
     ini.connect("send-error", test)
     ini.start()
-    
+            
     rooo = ini.get_section("PlayMemory")
-    print rooo.root_name
-    print rooo.child_addr
+    rooo.child_addr["功夫熊猫"] = 50
+    ini.set_section_value("PlayMemory", "功夫熊猫", 500)
+    print ini.get_section_value("PlayMemory", "功夫熊猫")
     
-    rooo.child_addr["功夫熊猫"] = 300
     print "=============="
-    # print ini.get_section_value("PlayMemory", '吸血鬼日记.The.Vampire.Diaries.S02E02.Chi_Eng.HDTVrip.624X352-YYeTs人人影视')
-    # print ini.get_section_value("PlayMemory", "明天是否知")
-    #这是一个简单的测试,不懂
-    print rooo.child_addr
+    rooo1 = ini.get_section("PlayTime")
+    rooo1.child_addr["功夫熊猫"] = 4320
+    ini.set_section_value("PlayTime", "功夫熊猫", 5321)
+    ini.set_section_child_name("PlayTime", "功夫熊猫", "邱海龙")
+    print "@@@@@@@@@@@@@@@"
+    # print ini.get_section_value("PlayTime", "邱海龙")
     ini.ini_save()

@@ -420,6 +420,7 @@ class PlayerBox(object):
     def length_threads(self):
         '''Get length threads'''
         for i in self.play_list.list_view.items:
+            
             i.length = str(get_length(self.play_list_dict[i.title]))
             i.emit_redraw_request()
             
