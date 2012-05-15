@@ -393,11 +393,11 @@ class INI(gobject.GObject):
                     for child in root_childs:                        
                     # for child in root.child_addr:                         
                         # print "!@!@!@" + root.root_name
-                        if root.root_name == "PlayMemory":
-                        # if root.root_name in self.keys:
+                        # if root.root_name == "PlayMemory":
+                        if root.root_name in self.keys:
                             ini_fp.write('"' + child + '"' + " = " + str(root.child_addr[child]) + "\n")
-                        elif root.root_name == "PlayTime":    
-                            ini_fp.write('"' + child + '"' + " = " + str(root.child_addr[child]) + "\n")
+                        # elif root.root_name == "PlayTime":    
+                            # ini_fp.write('"' + child + '"' + " = " + str(root.child_addr[child]) + "\n")
                         else:    
                             ini_fp.write(child + " = " + root.child_addr[child] + "\n")
                 ini_fp.close()
@@ -430,6 +430,7 @@ if __name__ == "__main__":
     rooo = ini.get_section("PlayMemory")
     rooo.child_addr["功夫熊猫"] = 50
     ini.set_section_value("PlayMemory", "功夫熊猫", 500)
+    ini.set_section_child_name("PlayMemory", "功夫熊猫", "功夫吗毛")
     print ini.get_section_value("PlayMemory", "功夫熊猫")
     
     print "=============="
