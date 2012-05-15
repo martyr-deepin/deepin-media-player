@@ -109,7 +109,7 @@ class PlayerBox(object):
         self.app.window.connect("configure-event", self.app_configure_hide_tool)
         self.app.window.connect("window-state-event", self.set_toolbar2_position)
         #keyboard Quick key.
-        self.app.window.connect("realize", gtk.Widget.grab_focus)
+        # self.app.window.connect("realize", gtk.Widget.grab_focus)
         self.app.window.connect("key-press-event", self.get_key_event)
                 
         '''Screen window init.'''
@@ -603,16 +603,21 @@ class PlayerBox(object):
         self.mp.connect("clear-play-list", self.clear_play_list)
         
         self.mp.playListState = 1 # play mode.
-        try:
-            for file_path in self.argv_path_list:
-                if self.mp.findDmp(file_path): # .dmp add play file.
-                    self.mp.loadPlayList(file_path)
-                elif os.path.isfile(file_path): # add play file.
-                    self.mp.addPlayFile(file_path)
-                elif os.path.isdir(file_path): # add dir.
-                    path_threads(file_path, self.mp)
-        except:
-            print "Error:->>Test command: python main.py add file or dir"
+        
+        # try:
+        # argv path list.
+        for file_path in self.argv_path_list:
+            if self.mp.findDmp(file_path): # .dmp add play file.
+                self.mp.loadPlayList(file_path)
+            elif os.path.isfile(file_path): # add play file.
+                self.mp.addPlayFile(file_path)
+            elif os.path.isdir(file_path): # add dir.
+                path_threads(file_path, self.mp)
+                
+        self.start_button_clicked(self.play_control_panel.start_btn, 1)    
+        # self.play_list.list_view.set_highlight(self.play_list.list_view.items[0])        
+        # except:
+        #     print "Error:->>Test command: python main.py add file or dir"
 
     def clear_play_list(self, mplayer, mp_bool):        
         self.play_list.list_view.clear()
