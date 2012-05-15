@@ -368,7 +368,7 @@ class PlayerBox(object):
             elif "Left" == keyval:    
                 self.mp.seek(self.mp.posNum - 10)
             elif "space" == keyval:    
-                self.start_button_time_pause()
+                self.virtual_set_start_btn_clicked()
             elif "Return" == keyval:    
                 self.full_play_window(widget)
                 self.toolbar.toolbar_full_button.flags = not self.toolbar.toolbar_full_button.flags
@@ -933,11 +933,18 @@ class PlayerBox(object):
         self.screen_move_bool = False
         # playing file.
         if 1 == self.mp.state:
-            if self.screen_pause_bool:
-                # Pause play.
-                gtk.timeout_add(300, self.screen_time_pause)
-                self.screen_pause_bool = False
-
+            self.virtual_set_start_btn_clicked()
+            
+    def virtual_set_start_btn_clicked(self):        
+        if self.mode_state_bool:
+            self.toolbar2.play_control_panel.start_btn.start_bool = not self.toolbar2.play_control_panel.start_btn.start_bool
+            self.toolbar2.play_control_panel.start_btn.queue_draw()
+            self.start_button_clicked(self.toolbar2.play_control_panel.start_btn, 2) 
+        else:    
+            self.play_control_panel.start_btn.start_bool = not self.play_control_panel.start_btn.start_bool
+            self.play_control_panel.start_btn.queue_draw()
+            self.start_button_clicked(self.play_control_panel.start_btn, 1)
+            
     '''Toolbar2 keep above play window and Toolbar2'''
     def set_keep_window_toolbar2(self, widget, event):
         pass
