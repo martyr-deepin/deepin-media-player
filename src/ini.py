@@ -330,13 +330,15 @@ class INI(gobject.GObject):
             
     def get_section_childs(self, root_name):    
         try:
-            save_i = 0
+            # save_i = 0
             for i in range(0, len(self.root)):
                 if self.root[i].root_name == root_name:
-                    save_i = i
+                    return self.root[save_i].child_addr       
+                    # save_i = i
                     break
             
-            return  self.root[save_i].child_addr       
+            return None    
+            # return  self.root[save_i].child_addr       
         except:
             # print "由于前面出现错误"
             pass
