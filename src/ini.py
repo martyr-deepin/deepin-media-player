@@ -274,7 +274,7 @@ class INI(gobject.GObject):
                 
             while True:    
                 if ' ' != self.ch:
-                    self.value_name += self.ch
+                    self.value_name += self.ch                    
                 self.ch = self.ini_fp.read(1)                
                 
                 if '\n' == self.ch:
@@ -282,10 +282,12 @@ class INI(gobject.GObject):
                     self.column_num = 0
                     break
                 
-                if not self.number_bool():
+                
+                if not self.number_bool() and self.ch != ".":
                     self.ini_fp.seek(-1, 1)
                     break
                     
+                
             self.root[i].child_addr[self.child_name] = (self.value_name)            
             self.value_name = ""
             self.child_name = ""
@@ -438,8 +440,8 @@ if __name__ == "__main__":
     print "=============="
     rooo1 = ini.get_section("PlayTime")
     rooo1.child_addr["功夫熊猫"] = 4320
-    ini.set_section_value("PlayTime", "功夫熊猫", 5321)
+    ini.set_section_value("PlayTime", "功夫熊猫", 5321.7878)
     ini.set_section_child_name("PlayTime", "功夫熊猫", "邱海龙")
     print "@@@@@@@@@@@@@@@"
-    # print ini.get_section_value("PlayTime", "邱海龙")
+    print ini.get_section_value("PlayTime", "邱海龙")
     ini.ini_save()

@@ -61,7 +61,7 @@ def get_length(file_path):
     length_compile = re.compile(r"ID_LENGTH=([\d|\.]+)")
     length = length_compile.findall(cmd_str)[0]
     # return (fp.stdout.read().split()[0])
-    return length_to_time(length), length
+    return length_to_time(length), str((length))
 
 
 def length_to_time(length):        

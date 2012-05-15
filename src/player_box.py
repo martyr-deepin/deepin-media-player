@@ -39,6 +39,7 @@ from preview import PreView
 from mplayer import Mplayer
 from mplayer import get_length
 from mplayer import get_home_path
+from mplayer import length_to_time
 from playlist import PlayList
 from playlist import MediaItem
 from opendialog import OpenDialog
@@ -420,11 +421,17 @@ class PlayerBox(object):
     def length_threads(self):
         '''Get length threads'''
         for i in self.play_list.list_view.items:             
-            print self.ini.get_section_value("PlayTime", i.title)
-            i.length, length = get_length(self.play_list_dict[i.title])            
+            length = self.ini.get_section_value("PlayTime", i.title)
+            if length:
+                i.length = length_to_time(length)
+            else:    
+                i.length, length = get_length(self.play_list_dict[i.title])            
+                root = self.ini.get_section("PlayTime")
+                root.child_addr[i.title] = length
             i.emit_redraw_request()
             
-            
+        self.ini.ini_save()    
+        
     def add_play_list_time(self, path): # all.   
         '''play list add play file.'''
         self.play_list_dict[self.get_player_file_name(path)] = path
