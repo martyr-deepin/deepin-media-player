@@ -117,7 +117,7 @@ class PlayerBox(object):
         # Screen signal init.
         self.screen.add_events(gtk.gdk.ALL_EVENTS_MASK)
         # drag resize window.
-        self.screen.connect("key-release-event", self.get_key_event)
+        self.screen.connect("key-press-event", self.get_key_event)
         self.screen.connect("button-press-event", self.drag_resize_window)
         self.screen.connect("motion-notify-event", self.modify_mouse_icon)
         
@@ -194,7 +194,7 @@ class PlayerBox(object):
         # self.playlist.list_view.add_items(self.media_item)
         self.play_list_dict = {} # play list dict type.
         self.play_list = PlayList()                    
-        self.play_list.list_view.connect("key-release-event", self.get_key_event)
+        self.play_list.list_view.connect("key-press-event", self.get_key_event)
         self.play_list.list_view.connect("double-click-item", self.double_play_list_file)
         self.play_list.list_view.connect("delete-select-items", self.delete_play_list_file)
         
