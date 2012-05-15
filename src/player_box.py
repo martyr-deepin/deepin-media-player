@@ -613,8 +613,8 @@ class PlayerBox(object):
                 self.mp.addPlayFile(file_path)
             elif os.path.isdir(file_path): # add dir.
                 path_threads(file_path, self.mp)
-                
-        self.start_button_clicked(self.play_control_panel.start_btn, 1)    
+            self.clear_play_list_bool = True    
+            
         # self.play_list.list_view.set_highlight(self.play_list.list_view.items[0])        
         # except:
         #     print "Error:->>Test command: python main.py add file or dir"
