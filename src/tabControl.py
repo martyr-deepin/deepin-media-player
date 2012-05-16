@@ -28,7 +28,6 @@ import gtk
 from dtk.ui.utils import get_content_size, color_hex_to_cairo
 from utils import app_theme
 from dtk.ui.draw import cairo_state, draw_vlinear, draw_pixbuf, draw_line, draw_font
-from dtk.ui.constant import DEFAULT_FONT_SIZE
 import gobject
 
 class Button(gtk.Button):
@@ -39,13 +38,16 @@ class Button(gtk.Button):
         # Init.
         gtk.Button.__init__(self)
         self.label = label
-        
+        self.font_size = 12
         # Init button size.
-        (font_width, font_height) = get_content_size(label, DEFAULT_FONT_SIZE)
+        (font_width, font_height) = get_content_size(label, self.font_size)
         self.set_size_request(max(width, font_width + 2 * padding_x), max(height, font_height + 2 * padding_y))
         
         # Handle signal.
         self.connect("expose-event", self.expose_button)
+        
+    def set_font_size(self, size):    
+        self.font_size = size
         
     def expose_button(self, widget, event):
         '''Callback for button 'expose-event' event.'''
@@ -111,8 +113,8 @@ class Button(gtk.Button):
         draw_line(cr, x + w, y + 2, x + w, y + h - 2)
         
         # Draw font.
-        if self.label != "":
-            draw_font(cr, self.label, DEFAULT_FONT_SIZE, 
+        if self.label != "":            
+            draw_font(cr, self.label, self.font_size, 
                       app_theme.get_color("buttonFont").get_color(),
                       x, y, w, h)
         
@@ -139,7 +141,7 @@ class TabPage(gtk.VBox):
         
         
     def get_main_childs(self):    
-        '''获取总容器里面的所有子容器'''
+        '''Get container all child container.'''
         return self.get_children()
     
     def get_box_childs(self):
@@ -147,7 +149,7 @@ class TabPage(gtk.VBox):
         return box.get_children()
         
     def get_title_childs(self):    
-        '''获取便签栏里面的所有子控件'''
+        '''Get title all child container.'''
         if "v" == self.tab_page_type: 
             childs = self.return_title_container().get_children()
             
@@ -157,15 +159,15 @@ class TabPage(gtk.VBox):
         return childs    
     
     def get_panel_childs(self):
-        '''获取面板栏里面 当前显示的控件.'''
+        '''Get panel  widget of curren show '''
         return self.panel_box.get_children()
     
     def return_panel_container(self):
-        '''返回面板的容器'''
+        '''return widget of panel'''
         return self.panel_box
     
     def return_box_container(self):    
-        '''返回总容器里面的容器'''
+        '''return main container in container.'''
         if "v" == self.tab_page_type: 
             return self.vbox
             
@@ -173,7 +175,7 @@ class TabPage(gtk.VBox):
             return self.hbox
                 
     def return_title_container(self):
-        '''返回标签容器'''
+        '''return title container.'''
         if "v" == self.tab_page_type: 
             return self.hbox
             
@@ -187,22 +189,15 @@ class TabPage(gtk.VBox):
             
         box = self.return_title_container()
         button = Button(text)
+        button.set_size_request(250, 50)
         button.connect("clicked", self.clicked_show_panel, self.title_num)
         box.pack_start(button, False, False)
         self.title_num += 1
-        
-    # def draw_widget(self, widget, event):    
-        
-    #     return True
-    
-    def title_add_child(self, widget):    
-        '''便签栏对应添加 显示的控件'''
-        pass
-        
+                    
     def show_index_page(self, index):
-        '''显示page的页'''
+        '''show select page'''
         if self.panel_list[index]:
-            # 清除面板容器内的东西.
+            # clear panel.
             for child in self.get_panel_childs():
                 self.return_panel_container().remove(child)
             #     
@@ -212,25 +207,22 @@ class TabPage(gtk.VBox):
     def clicked_show_panel(self, widget, title_num):    
         self.show_index_page(title_num)
         
-    def set_type(self, tab_page_type):    
-                
-        # 清除所以容器里面的东西.
-        # 第一步: 清除标签里面的所有容器.
+    def set_type(self, tab_page_type):                   
         childs = self.get_title_childs()
         for child in childs:
             box = self.return_title_container()
             box.remove(child)
-        # 第二步: 清除标签和面板容器.    
+
         for child in self.get_box_childs():    
             self.return_box_container().remove(child)
-        # 第三步: 总容器清除里面所以东西.    
+
         for child in self.get_main_childs():    
             self.remove(child)
             
         self.tab_page_type = tab_page_type        
-        # 如果为纵向, 改变, vbox 为容器 包含 标签和面板.
+        
+        # if v, modify -> vbox contaier = title and panel
         if "v" == self.tab_page_type:                
-            # 标签栏添加子控件.
             for child in childs:
                 print child
                 self.hbox.pack_start(child, False, False)
@@ -240,9 +232,7 @@ class TabPage(gtk.VBox):
             self.pack_start(self.vbox, True, True)
             self.show_all()
             
-        # 如果为横向, 改变, hbox 为容器 包含 标签和面板.    
         if "h" == self.tab_page_type:                                        
-            # 标签栏添加子控件.
             for child in childs:
                 self.vbox.pack_start(child, False, False)            
                 
@@ -267,28 +257,28 @@ if __name__ == "__main__":
     vbox = gtk.VBox()
     tabpage = TabPage()
     
-    tab_vbox_0 = gtk.VBox()
-    tab_vbox_0.pack_start(gtk.Button("反击的是浪费加快速度分"))
-    tab_vbox_0.pack_start(gtk.Button("发觉了送到附近都开始了"))
+    tab_vbox_0 = gtk.Fixed()
+    tab_vbox_0.put(gtk.Button("反击的是浪费加快速度分"), 20, 50)
+    tab_vbox_0.put(gtk.Button("发觉了送到附近都开始了"), 70, 100)
     
     tabpage.panel_box.pack_start(tab_vbox_0)
-    tabpage.create_title("text", tab_vbox_0)    
+    tabpage.create_title("文件播放", tab_vbox_0)    
     
-    tab_vbox_1 = gtk.VBox()
-    tab_vbox_1.pack_start(gtk.Button("fjsdlfjdsklf"))
-    tab_vbox_1.pack_start(gtk.Button("fdsljfdsklfjdklf"))
+    tab_vbox_1 = gtk.Fixed()
+    tab_vbox_1.put(gtk.Button("fjsdlfjdsklf"), 20, 50)
+    tab_vbox_1.put(gtk.Button("fdsljfdsklfjdklf"), 120, 50)
     
-    tabpage.create_title("你的发动机jfdklsjfksdfjsdklfjklsdfjksdlfjdslkfj放开", tab_vbox_1)
+    tabpage.create_title("系统设置", tab_vbox_1)
     
-    tab_vbox_2 = gtk.VBox()
+    tab_vbox_2 = gtk.Fixed()
     text1 = gtk.Entry()
     text1.set_text("fjskldjfdskfjkdl")
     text2 = gtk.Entry()
     text2.set_text("fjldskfjksdfjdsklfjsdkfjsdklfjskfjkfl房价是大力开发几点思考放假看")
-    tab_vbox_2.pack_start(text1)
-    tab_vbox_2.pack_start(text2)
+    tab_vbox_2.put(text1, 20, 50)
+    tab_vbox_2.put(text2, 100, 200)
     
-    tabpage.create_title("反击的咖啡机", tab_vbox_2)
+    tabpage.create_title("热键/鼠标", tab_vbox_2)
     tabpage.show_index_page(1)
     
     vbtn = gtk.Button("改变方向: 纵向")

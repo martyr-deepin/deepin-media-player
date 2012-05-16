@@ -116,12 +116,12 @@
 	 "buttonBorder":[
 	    (1, ("#b18ecf", 1)),
 	 ],
-	 "buttonBackgroundNormal":[ 
+	 "buttonBa":[ 
 		(0, ("#e0c1f0",1)),
         (1, ("#d7b7ed",1)),
      ],
      "buttonBackgroundPrelight":[
-        (0, ("#e9dbf5",1)),
+        (0, ("#",1)),
         (1, ("#decdf0",1)),
      ],
      "buttonBackgroundActive":[
