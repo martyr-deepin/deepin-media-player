@@ -43,6 +43,7 @@ from mplayer import length_to_time
 from playlist import PlayList
 from playlist import MediaItem
 from opendialog import OpenDialog
+from tooltip import Tooltip
 
 from ini import INI
 import threading
@@ -96,6 +97,8 @@ class PlayerBox(object):
         self.main_vbox_hframe = HorizontalFrame(1)
         self.main_vbox_hframe.add(self.main_vbox)
 
+        '''tooltip window'''
+        self.tooltip = Tooltip("深度影音", 0, 0)
         
         '''Preview window'''
         self.preview = PreView()
@@ -1155,14 +1158,24 @@ class PlayerBox(object):
             if root != -1:
                 del root.child_addr[self.get_player_file_name(mplayer.path)]
                 self.ini.ini_save()
-            
+                
+        self.MessageBox("结束播放")        
+        
     def media_player_next(self, mplayer, play_bool):
         if 1 == play_bool:
             self.media_player_midfy_start_bool()
-
+                        
+            self.MessageBox("下一首")
+            
+    def MessageBox(self, text):        
+        x, y = self.screen.window.get_root_origin()
+        self.tooltip.show_tooltip(text, x, y + self.tooltip.allocation.height)
+        self.tooltip.set_keep_above(True)
+        
     def media_player_pre(self, mplayer, play_bool):
         self.media_player_midfy_start_bool()
-
+        self.MessageBox("上一首")
+        
     def media_player_midfy_start_bool(self):  # media_player_end and media_player_next and media_player_pre.
         self.progressbar.set_pos(0)
         self.toolbar2.progressbar.set_pos(0)

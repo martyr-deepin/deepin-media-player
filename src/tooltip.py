@@ -73,6 +73,7 @@ class Tooltip(Window):
         
         # Show.
         self.show_all()
+        self.hide_all()
         
     def set_text(self, text):   
         self.text = text
@@ -82,7 +83,7 @@ class Tooltip(Window):
             font_height + self.paddingY * 2)
         
         
-    def show_tooltip(self):    
+    def show_tooltip(self, text, x, y):    
         self.opacity = 0.0
         self.animation_delay = 50 # milliseconds
         self.animation_ticker = 0
@@ -91,6 +92,8 @@ class Tooltip(Window):
         self.animation_end_times = 47
         
         self.animation_id = gtk.timeout_add(self.animation_delay, self.start_animation)
+        self.set_text(text)
+        self.move(x, y)
         self.show_all()
         
     def start_animation(self):
