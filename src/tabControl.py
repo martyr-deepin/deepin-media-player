@@ -137,9 +137,9 @@ gobject.type_register(Button)
 
 
 class TabPage(gtk.VBox):
-    def __init__(self):
+    def __init__(self, tab_page_type = "h"):
         gtk.VBox.__init__(self)
-        self.tab_page_type = "h"
+        self.tab_page_type = tab_page_type
         self.panel_list = []
         self.title_num = 0
         
@@ -200,13 +200,13 @@ class TabPage(gtk.VBox):
             return self.vbox
         
         
-    def create_title(self, text, widget=None, image=None):
+    def create_title(self, text, widget=None, image=None, w=150, h=40):
         if widget:
             self.panel_list.append(widget)
             
         box = self.return_title_container()
         button = Button(text)
-        button.set_size_request(250, 50)
+        button.set_size_request(w, h)
         button.connect("clicked", self.clicked_show_panel, self.title_num)
         box.pack_start(button, False, False)
         self.title_num += 1
