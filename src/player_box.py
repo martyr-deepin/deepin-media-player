@@ -802,7 +802,7 @@ class PlayerBox(object):
         '''Full player window.'''
         if not self.full_bool: # Full player window.
             self.set_window_full()
-            self.MessageBox("全屏")
+            # self.MessageBox("全屏")
         else:
             self.set_window_quit_full()
             if self.mode_state_bool:
@@ -810,7 +810,7 @@ class PlayerBox(object):
             else:
                 self.common_window_function()
                 
-            self.MessageBox("退出全屏")    
+            # self.MessageBox("退出全屏")    
 
     def show_hide_set(self):
         '''show_window_widget and hide_window_widget'''
