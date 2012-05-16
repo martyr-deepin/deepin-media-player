@@ -43,6 +43,7 @@ from mplayer import length_to_time
 from playlist import PlayList
 from playlist import MediaItem
 from opendialog import OpenDialog
+from tooltip import Tooltip
 
 from ini import INI
 import threading
@@ -96,6 +97,9 @@ class PlayerBox(object):
         self.main_vbox_hframe = HorizontalFrame(1)
         self.main_vbox_hframe.add(self.main_vbox)
 
+        '''Tooltip window'''
+        self.tooltip = Tooltip("深度影音", 0, 0)
+        
         '''Preview window'''
         self.preview = PreView()
         
@@ -270,7 +274,19 @@ class PlayerBox(object):
         
         '''Hide preview window.'''                        
         self.bottom_play_control_hbox_vframe_event_box.connect("motion-notify-event", self.hide_preview_function)
+        
                 
+        
+    def MessageBox(self, text):    
+        x, y = self.screen.window.get_root_origin()
+        self.app.window.set_keep_above(True)        
+        if self.full_bool or self.mode_state_bool:
+            self.tooltip.show_tooltip(text, x + 5, y + 5)
+        else:    
+            self.tooltip.show_tooltip(text, x + 5, y + 30)
+        self.tooltip.set_keep_above(True)    
+        
+        
     def modify_mouse_icon(self, widget, event): # screen: motion-notify-event 
         w = widget.allocation.width
         h = widget.allocation.height
@@ -582,6 +598,7 @@ class PlayerBox(object):
     '''Init media player.'''
     def init_media_player(self, mplayer, xid):
         '''Init deepin media player.'''
+        
         self.play_list.hide_play_list() # Hide play list.
         
         self.save_volume_value = self.volume_button.volume_value

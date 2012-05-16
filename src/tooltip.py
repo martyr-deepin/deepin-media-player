@@ -24,26 +24,27 @@ from dtk.ui.constant import DEFAULT_FONT_SIZE
 from dtk.ui.draw import draw_vlinear, draw_font
 from dtk.ui.theme import ui_theme
 from dtk.ui.utils import get_content_size, propagate_expose
-from dtk.ui.window import Window
+# from dtk.ui.window import Window
 import gobject
 import gtk
         
 
 
 
-class Tooltip(Window):
+class Tooltip(gtk.Window):
     '''Tooltip.'''
     
     def __init__ (self, text, x, y, text_size=DEFAULT_FONT_SIZE, text_color="tooltipText",
                   paddingX=10, paddingY=10):
         '''Init tooltip.'''
         # Init.
-        Window.__init__(self, gtk.WINDOW_POPUP)
+        gtk.Window.__init__(self, gtk.WINDOW_POPUP)
         self.paddingX = paddingX
         self.paddingY = paddingY
         
         self.text = text
-        self.text_size = text_size
+        self.text_size = 10
+        
         self.text_color = text_color
         self.opacity = 0.0
         self.animation_delay = 50 # milliseconds
@@ -55,17 +56,17 @@ class Tooltip(Window):
         
         # Init Window.
         self.set_opacity(self.opacity)
-        self.set_modal(True)
+        # self.set_modal(True)
         self.set_size_request(
-            font_width + paddingX * 2, 
-            font_height + paddingY * 2)
+            font_width + paddingX *2, 
+            font_height + paddingY *2)
         self.move(x, y)
         
         # Init signal.
         self.connect("focus-out-event", lambda w,e: self.exit())
         
         self.tooltip_box = gtk.VBox()
-        self.window_frame.add(self.tooltip_box)
+        self.add(self.tooltip_box)
         self.tooltip_box.connect("expose-event", self.expose_tooltip) 
         
         # # Add time show tooltip.
@@ -74,6 +75,9 @@ class Tooltip(Window):
         # Show.
         self.show_all()
         self.hide_all()
+        
+    def set_font_size(self, size):    
+        self.font_size = size
         
     def set_text(self, text):   
         self.text = text
