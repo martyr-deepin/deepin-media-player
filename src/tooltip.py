@@ -38,7 +38,7 @@ class Tooltip(Window):
                   paddingX=10, paddingY=10):
         '''Init tooltip.'''
         # Init.
-        Window.__init__(self)
+        Window.__init__(self, gtk.WINDOW_POPUP)
         self.paddingX = paddingX
         self.paddingY = paddingY
         
@@ -161,8 +161,7 @@ gobject.type_register(Tooltip)
 
 # Test......=========================
 def test_tip(widget):
-    tooltip.set_text("你是知道不知道这个问题的啊,打我的积分开设的反击的")
-    tooltip.show_tooltip()
+    tooltip.show_tooltip("你是知道不知道这个问题的啊,打我的积分开设的反击的", 100, 200)
     
 if __name__ == "__main__":
     tooltip = Tooltip("你知道吗?", 100, 200)
