@@ -85,7 +85,7 @@ class Tooltip(gtk.Window):
         self.set_size_request(
             font_width + self.paddingX * 2, 
             font_height + self.paddingY * 2)
-        
+        self.queue_draw()
         
     def show_tooltip(self, text, x, y):    
         self.opacity = 0.0

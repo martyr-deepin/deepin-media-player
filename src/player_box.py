@@ -506,7 +506,9 @@ class PlayerBox(object):
             self.play_control_panel.start_btn.queue_draw()
             self.toolbar2.play_control_panel.start_btn.start_bool = False
             self.toolbar2.play_control_panel.start_btn.queue_draw()
+            self.MessageBox("播放")
             if 0 == self.mp.state: # NO player file.
+                self.MessageBox("没有可播放的文件")
                 self.play_control_panel.start_btn.start_bool = True # start_btn modify play state.
                 self.play_control_panel.start_btn.queue_draw()
                 self.toolbar2.play_control_panel.start_btn.start_bool = True
@@ -523,9 +525,11 @@ class PlayerBox(object):
 
     def start_button_time_pause(self): # start_button_clicked.
         if self.mp.pause_bool:
+            self.MessageBox("播放")
             self.mp.seek(int(self.progressbar.pos))
             self.mp.start_play()
         else:
+            self.MessageBox("暂停")
             self.mp.pause()
         return  False
 
@@ -562,11 +566,11 @@ class PlayerBox(object):
                     self.mp.nomute()
                 else:
                     self.mp.offmute()
-
+                        
     def volume_button_set_volume(self, volume_button, value, mute_bool):
         if self.mp:
-            self.mp.setvolume(value)
-
+            self.mp.setvolume(value)            
+                
             self.save_volume_mute_bool = mute_bool
             self.save_volume_value = value
 
@@ -798,13 +802,15 @@ class PlayerBox(object):
         '''Full player window.'''
         if not self.full_bool: # Full player window.
             self.set_window_full()
+            self.MessageBox("全屏")
         else:
             self.set_window_quit_full()
             if self.mode_state_bool:
                 self.concise_window_function()
             else:
                 self.common_window_function()
-
+                
+            self.MessageBox("退出全屏")    
 
     def show_hide_set(self):
         '''show_window_widget and hide_window_widget'''
@@ -827,7 +833,7 @@ class PlayerBox(object):
             self.app.window.set_window_shape(True)
             self.common_window_function()
             self.mode_state_bool = False
-
+            self.MessageBox("普通模式")
 
         if self.full_bool: # qiut full.
             self.show_bottom()
@@ -864,7 +870,7 @@ class PlayerBox(object):
                                      self.panel_y + (widget.allocation[3] - self.toolbar2.panel.allocation[3]) - self.app.titlebar.allocation[3])
 
             self.toolbar2.panel.hide_all()
-
+            self.MessageBox("简洁模式")
 
         if self.save_volume_mute_bool:
             if self.mp:
@@ -875,7 +881,10 @@ class PlayerBox(object):
     def set_window_above(self, widget): #above_button
         self.above_bool = not self.above_bool
         self.app.window.set_keep_above(self.above_bool)
-
+        if self.above_bool:
+            self.MessageBox("置顶")
+        else:    
+            self.MessageBox("取消置顶")
 
     # Control mplayer window.
     def move_media_player_window(self, widget, event): # screen: button-press-event
@@ -1177,10 +1186,11 @@ class PlayerBox(object):
     def media_player_next(self, mplayer, play_bool):
         if 1 == play_bool:
             self.media_player_midfy_start_bool()
-                                            
+            self.MessageBox("下一首")
             
     def media_player_pre(self, mplayer, play_bool):
         self.media_player_midfy_start_bool()
+        self.MessageBox("上一首")
         
     def media_player_midfy_start_bool(self):  # media_player_end and media_player_next and media_player_pre.
         self.progressbar.set_pos(0)
