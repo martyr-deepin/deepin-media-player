@@ -38,7 +38,7 @@ class Button(gtk.Button):
         # Init.
         gtk.Button.__init__(self)
         self.label = label
-        self.font_size = 12
+        self.font_size = 9
         # Init button size.
         (font_width, font_height) = get_content_size(label, self.font_size)
         self.set_size_request(max(width, font_width + 2 * padding_x), max(height, font_height + 2 * padding_y))
@@ -48,6 +48,9 @@ class Button(gtk.Button):
         
     def set_font_size(self, size):    
         self.font_size = size
+        
+    def set_size(self, w, h):    
+        self.set_size_request(w, h)
         
     def expose_button(self, widget, event):
         '''Callback for button 'expose-event' event.'''
@@ -72,13 +75,23 @@ class Button(gtk.Button):
                 background_color = app_theme.get_shadow_color("buttonBackgroundNormal").get_color_info()
                 border_color = app_theme.get_color("buttonBorderNormal").get_color()
             elif widget.state == gtk.STATE_PRELIGHT:
+                
                 background_color = app_theme.get_shadow_color("buttonBackgroundPrelight").get_color_info()
                 border_color = app_theme.get_color("buttonBorderPrelight").get_color()
             elif widget.state == gtk.STATE_ACTIVE:
                 background_color = app_theme.get_shadow_color("buttonBackgroundActive").get_color_info()
                 border_color = app_theme.get_color("buttonBorderActive").get_color()
             draw_vlinear(cr, x, y, w, h, background_color)    
-
+            
+        if widget.state == gtk.STATE_PRELIGHT:            
+            cr.set_source_rgba(0, 0, 0, 0.3)
+            cr.rectangle(x, y, w, h)
+            cr.fill()
+        elif widget.state == gtk.STATE_ACTIVE:
+            cr.set_source_rgba(0, 0, 0, 0.7)
+            cr.rectangle(x, y, w, h)
+            cr.fill()
+            
         # Draw button corner.
         draw_pixbuf(cr, top_left, x, y)
         draw_pixbuf(cr, top_right, x + w - 2, y)
@@ -139,6 +152,10 @@ class TabPage(gtk.VBox):
         self.hbox.pack_start(self.panel_box, True, True)
         self.pack_start(self.hbox, True, True)
         
+    def set_title_size(self, w, h):    
+        for child in self.get_title_childs():
+            child.set_size(w, h)
+            
         
     def get_main_childs(self):    
         '''Get container all child container.'''
@@ -205,7 +222,8 @@ class TabPage(gtk.VBox):
             self.show_all()
             
     def clicked_show_panel(self, widget, title_num):    
-        self.show_index_page(title_num)
+        if title_num < len(self.panel_list):
+            self.show_index_page(title_num)
         
     def set_type(self, tab_page_type):                   
         childs = self.get_title_childs()
@@ -224,7 +242,6 @@ class TabPage(gtk.VBox):
         # if v, modify -> vbox contaier = title and panel
         if "v" == self.tab_page_type:                
             for child in childs:
-                print child
                 self.hbox.pack_start(child, False, False)
 
             self.vbox.pack_start(self.hbox, False, False)
@@ -244,7 +261,7 @@ class TabPage(gtk.VBox):
 gobject.type_register(TabPage)            
             
             
-# test ============            
+# demo ============            
 def modify_v(widget):        
     tabpage.set_type('v')
     
@@ -279,7 +296,13 @@ if __name__ == "__main__":
     tab_vbox_2.put(text2, 100, 200)
     
     tabpage.create_title("热键/鼠标", tab_vbox_2)
-    tabpage.show_index_page(1)
+    tabpage.show_index_page(0)
+    tabpage.create_title("高清加速")
+    tabpage.create_title("字幕设置")
+    tabpage.create_title("视频截图")
+    tabpage.create_title("声音设置")
+    tabpage.create_title("画面设置")
+    tabpage.create_title("其它设置")
     
     vbtn = gtk.Button("改变方向: 纵向")
     vbtn.connect("clicked", modify_v)
@@ -288,7 +311,7 @@ if __name__ == "__main__":
     vbox.pack_start(tabpage)
     vbox.pack_start(vbtn)
     vbox.pack_start(hbtn)
-    
+    tabpage.set_title_size(150, 40)
     win.add(vbox)        
     win.show_all()
     gtk.main()
