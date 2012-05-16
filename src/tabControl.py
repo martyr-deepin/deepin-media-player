@@ -46,6 +46,10 @@ class Button(gtk.Button):
         # Handle signal.
         self.connect("expose-event", self.expose_button)
         
+    def set_text(self, text):    
+        self.label = text
+        self.queue_draw()
+        
     def set_font_size(self, size):    
         self.font_size = size
         
@@ -152,6 +156,14 @@ class TabPage(gtk.VBox):
         self.hbox.pack_start(self.panel_box, True, True)
         self.pack_start(self.hbox, True, True)
         
+    def set_index_text(self, index, text):    
+        '''Set title text.'''
+        if index < self.title_num:
+            childs = self.get_title_childs()
+            childs[index].set_text(text)
+            return True
+        return None
+    
     def set_title_size(self, w, h):    
         for child in self.get_title_childs():
             child.set_size(w, h)
@@ -198,8 +210,7 @@ class TabPage(gtk.VBox):
             
         if "h" == self.tab_page_type:
             return self.vbox
-        
-        
+                
     def create_title(self, text, widget=None, image=None, w=150, h=40):
         if widget:
             self.panel_list.append(widget)
@@ -303,7 +314,9 @@ if __name__ == "__main__":
     tabpage.create_title("声音设置")
     tabpage.create_title("画面设置")
     tabpage.create_title("其它设置")
+    tabpage.create_title("其它设置")
     
+    tabpage.set_index_text(10, "我知道的我知道的")
     vbtn = gtk.Button("改变方向: 纵向")
     vbtn.connect("clicked", modify_v)
     hbtn = gtk.Button("改变方向: 横向")
