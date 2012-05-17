@@ -62,30 +62,6 @@ class Button(gtk.Button):
         cr = widget.window.cairo_create()
         rect = widget.allocation
         x, y, w, h = rect.x, rect.y, rect.width, rect.height
-        top_left = app_theme.get_pixbuf("button.png").get_pixbuf()
-        top_right = top_left.rotate_simple(90)
-        bottom_right = top_left.rotate_simple(180)
-        bottom_left = top_left.rotate_simple(270)
-        
-        # Clip rectangle with four corner.
-        # with cairo_state(cr):
-        #     cr.rectangle(x + 1, y, w - 2, 1)
-        #     cr.rectangle(x, y + 1, w, h - 2)
-        #     cr.rectangle(x + 1, y + h - 1, w - 2, 1)
-        #     cr.clip()
-            
-        #     # Draw background.
-        #     if widget.state == gtk.STATE_NORMAL:
-        #         background_color = app_theme.get_shadow_color("buttonBackgroundNormal").get_color_info()
-        #         border_color = app_theme.get_color("buttonBorderNormal").get_color()
-        #     elif widget.state == gtk.STATE_PRELIGHT:
-                
-        #         background_color = app_theme.get_shadow_color("buttonBackgroundPrelight").get_color_info()
-        #         border_color = app_theme.get_color("buttonBorderPrelight").get_color()
-        #     elif widget.state == gtk.STATE_ACTIVE:
-        #         background_color = app_theme.get_shadow_color("buttonBackgroundActive").get_color_info()
-        #         border_color = app_theme.get_color("buttonBorderActive").get_color()
-        #     draw_vlinear(cr, x, y, w, h, background_color)    
             
         cr.set_source_rgba(1, 1, 1, 1)
         cr.rectangle(x, y, w, h)
@@ -99,40 +75,7 @@ class Button(gtk.Button):
             cr.set_source_rgba(0, 0, 0, 0.7)
             cr.rectangle(x, y, w, h)
             cr.fill()
-            
-        # # Draw button corner.
-        # draw_pixbuf(cr, top_left, x, y)
-        # draw_pixbuf(cr, top_right, x + w - 2, y)
-        # draw_pixbuf(cr, bottom_right, x + w - 2, y + h - 2)
-        # draw_pixbuf(cr, bottom_left, x, y + h - 2)
-        
-        # # Draw button corner mask.
-        # (r, g, b) = color_hex_to_cairo(border_color)
-        # cr.set_source_rgba(r, g, b, 0.4)
-        
-        # # Draw top-left corner mask.
-        # draw_line(cr, x + 1, y + 1, x + 2, y + 1)
-        # draw_line(cr, x, y + 2, x + 2, y + 2)
-        
-        # # Draw top-right corner mask.
-        # draw_line(cr, x + w - 2, y + 1, x + w - 1, y + 1)
-        # draw_line(cr, x + w - 2, y + 2, x + w, y + 2)
-        
-        # # Draw bottom-left corner mask.
-        # draw_line(cr, x + 1, y + h, x + 2, y + h)
-        # draw_line(cr, x, y + h - 1, x + 2, y + h - 1)
-
-        # # Draw bottom-right corner mask.
-        # draw_line(cr, x + w - 2, y + h, x + w - 1, y + h)
-        # draw_line(cr, x + w - 2, y + h - 1, x + w, y + h - 1)
-        
-        # # Draw button border.
-        # cr.set_source_rgb(*color_hex_to_cairo(border_color))
-        # draw_line(cr, x + 2, y + 1, x + w - 2, y + 1)
-        # draw_line(cr, x + 2, y + h, x + w - 2, y + h)
-        # draw_line(cr, x + 1, y + 2, x + 1, y + h - 2)
-        # draw_line(cr, x + w, y + 2, x + w, y + h - 2)
-        
+                    
         # Draw font.
         if self.label != "":            
             draw_font(cr, self.label, self.font_size, 
@@ -154,6 +97,8 @@ class TabPage(gtk.VBox):
         self.vbox = gtk.VBox()
         self.hbox = gtk.HBox() 
         self.panel_box = gtk.VBox()  
+        self.panel_box.add_events(gtk.gdk.ALL_EVENTS_MASK)
+        self.panel_box.connect("expose-event", self.draw_panel_background)
         # Init "v" type struct.
                 
         self.hbox.pack_start(self.vbox, False, False)
@@ -170,8 +115,7 @@ class TabPage(gtk.VBox):
     
     def set_title_size(self, w, h):    
         for child in self.get_title_childs():
-            child.set_size(w, h)
-            
+            child.set_size(w, h)            
         
     def get_main_childs(self):    
         '''Get container all child container.'''
@@ -273,6 +217,19 @@ class TabPage(gtk.VBox):
             self.pack_start(self.hbox, True, True)
             self.show_all()
             
+    def draw_panel_background(self, widget, event):            
+        cr = widget.window.cairo_create()
+        x, y, w, h = widget.allocation
+        print "**********"
+        cr.set_source_rgba(1, 1, 1, 0.5)
+        cr.rectangle(x, y, w, h)
+        cr.fill()
+        
+        if "get_child" in dir(widget) and widget.get_child() != None:
+            widget.propagate_expose(widget.get_child(), event)    
+            
+        return True
+    
 gobject.type_register(TabPage)            
             
             
