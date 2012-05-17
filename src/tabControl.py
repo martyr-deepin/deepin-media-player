@@ -109,19 +109,21 @@ class TabPage(gtk.VBox):
     def __init__(self, tab_page_type = "h"):
         gtk.VBox.__init__(self)
         self.tab_page_type = tab_page_type
-        self.panel_list = []
+        self.panel_list = {}
         self.title_num = 0
         
         self.vbox = gtk.VBox()
         self.hbox = gtk.HBox() 
         self.panel_box = gtk.VBox()  
         self.panel_box.add_events(gtk.gdk.ALL_EVENTS_MASK)
-        self.panel_box.connect("expose-event", self.draw_panel_background)
+        # self.panel_box.connect("expose-event", self.draw_panel_background)
         # Init "v" type struct.
                 
         self.hbox.pack_start(self.vbox, False, False)
         self.hbox.pack_start(self.panel_box, True, True)
         self.pack_start(self.hbox, True, True)
+        
+        
         
     def set_index_text(self, index, text):    
         '''Set title text.'''
@@ -179,7 +181,7 @@ class TabPage(gtk.VBox):
                 
     def create_title(self, text, widget=None, image=None, w=150, h=40):
         if widget:
-            self.panel_list.append(widget)
+            self.panel_list[self.title_num] = widget
             
         box = self.return_title_container()
         button = Button(text, index=self.title_num)
@@ -188,19 +190,30 @@ class TabPage(gtk.VBox):
         box.pack_start(button, False, False)
         self.title_num += 1
                     
+        
     def show_index_page(self, index):
         '''show select page'''
-        if self.panel_list[index]:
-            # clear panel.
+
+        if self.panel_lsit_bool(index):
             for child in self.get_panel_childs():
                 self.return_panel_container().remove(child)
-            #     
             self.return_panel_container().pack_start(self.panel_list[index], True, True)    
-            self.show_all()
+            self.return_panel_container().show_all()
             
-    def clicked_show_panel(self, widget, title_num):    
-        if title_num < len(self.panel_list):
+        # childs = self.get_title_childs()
+        # childs[index].set_index(index)
+            
+    def panel_lsit_bool(self, index):        
+        try:
+            self.panel_list[index]
+            return True
+        except:
+            return None
+        
+    def clicked_show_panel(self, widget, title_num):        
+        if self.panel_lsit_bool(title_num):
             self.show_index_page(title_num)
+            
         childs = self.get_title_childs()
         for child in childs:
             child.set_index(title_num)
@@ -246,8 +259,7 @@ class TabPage(gtk.VBox):
         cr.fill()
         
         if "get_child" in dir(widget) and widget.get_child() != None:
-            widget.propagate_expose(widget.get_child(), event)    
-            
+            widget.propagate_expose(widget.get_child(), event)                
         return True
     
 gobject.type_register(TabPage)            
@@ -287,6 +299,11 @@ if __name__ == "__main__":
     tab_vbox_2.put(text1, 20, 50)
     tab_vbox_2.put(text2, 100, 200)
     
+    tab_vbox_3 = gtk.Fixed()
+    text3 = gtk.Entry()
+    text3.set_text("fjskldjfdskfjkdl")
+    tab_vbox_3.put(text3, 20, 50)
+
     tabpage.create_title("热键/鼠标", tab_vbox_2)
     tabpage.show_index_page(0)
     tabpage.create_title("高清加速")
@@ -295,7 +312,7 @@ if __name__ == "__main__":
     tabpage.create_title("声音设置")
     tabpage.create_title("画面设置")
     tabpage.create_title("其它设置")
-    tabpage.create_title("其它设置")
+    tabpage.create_title("测试一下", tab_vbox_3)
     
     tabpage.set_index_text(10, "我知道的我知道的")
     vbtn = gtk.Button("改变方向: 纵向")

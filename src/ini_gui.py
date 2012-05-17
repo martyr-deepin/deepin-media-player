@@ -60,6 +60,7 @@ class IniGui(Window):
                         
         # TabPage.
         self.tabpage = TabPage()
+        
         self.tabpage.create_title("文件播放")
         self.tabpage.create_title("系统设置")
         self.tabpage.create_title("热键/鼠标")
@@ -70,6 +71,7 @@ class IniGui(Window):
         self.tabpage.create_title("画面设置")
         self.tabpage.create_title("其它设置")
         
+        self.tabpage.show_index_page(0)
         # self.main_vbox = gtk.VBox()
         
         # Button.
@@ -122,8 +124,8 @@ class IniGui(Window):
             widget.propagate_expose(widget.get_child(), event)    
         return True
         
-def test_open_ini(widget):        
-    IniGui()    
+def test_open_ini(widget):            
+    ini_gui = IniGui()    
     
 if __name__ == "__main__":        
     win = gtk.Window(gtk.WINDOW_TOPLEVEL)
