@@ -56,6 +56,7 @@ class IniGui(Window):
         # Titlebar.
         icon_dpixbuf = None
         self.titlebar = Titlebar(["min", "close"], icon_dpixbuf, app_name = "配置界面", title = "")
+        self.titlebar.close_button.connect("clicked", lambda w:self.destroy())
         self.titlebar.drag_box.connect('button-press-event', lambda w, e: move_window(w, e, self))        
                         
         # TabPage.
@@ -125,10 +126,11 @@ class IniGui(Window):
         return True
         
 def test_open_ini(widget):            
-    ini_gui = IniGui()    
+    IniGui()    
     
 if __name__ == "__main__":        
     win = gtk.Window(gtk.WINDOW_TOPLEVEL)
+    win.connect("destroy", gtk.main_quit)
     btn = gtk.Button()
     btn.connect("clicked", test_open_ini)
     win.add(btn)
