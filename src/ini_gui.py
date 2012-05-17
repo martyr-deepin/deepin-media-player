@@ -20,6 +20,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from dtk.ui.window import Window
 from dtk.ui.titlebar import Titlebar
 from dtk.ui.utils import move_window
 from dtk.ui.draw import draw_pixbuf
@@ -31,35 +32,32 @@ import gtk
 import os
 
 
-class IniGui(gtk.Window):    
+class IniGui(Window):    
     def __init__ (self):
-        gtk.Window.__init__(self)
+        Window.__init__(self, True)
         
-        self.window_bg_pixbuf = app_theme.get_pixbuf("bg.png")
-        
+        # modify window background.
+        self.background_dpixbuf = app_theme.get_pixbuf("bg.png")
         # Init ini.
         self.ini = INI(os.path.expanduser("~") + "/.config/deepin-media-player/config.ini")        
         # self.ini.connect("Send-Error", self.error_messagebox)        
         self.ini.start()
                 
-        
+        self.set_position(gtk.WIN_POS_CENTER)
         self.set_decorated(False)
-        WIN_WIDTH = 560
-        WIN_HEIGHT = 430
+        WIN_WIDTH = 580
+        WIN_HEIGHT = 440
         self.set_size_request(WIN_WIDTH, WIN_HEIGHT)
         self.set_title("配置界面")
-        self.set_modal(True)
-        self.add_events(gtk.gdk.ALL_EVENTS_MASK)
-        
-        self.connect("expose-event", self.draw_background)
-        self.connect("destroy", gtk.main_quit)        
+        self.set_modal(True)        
+        # inigui signal event.        
+        self.connect("destroy", lambda w: self.hide_all())
         
         # Titlebar.
-        self.titlebar = Titlebar(["min", "close"], title="播放器设置")
+        icon_dpixbuf = None
+        self.titlebar = Titlebar(["min", "close"], icon_dpixbuf, app_name = "配置界面", title = "")
         self.titlebar.drag_box.connect('button-press-event', lambda w, e: move_window(w, e, self))        
-        
-        
-        self.titlebar.change_title("播放器设置")
+                        
         # TabPage.
         self.tabpage = TabPage()
         self.tabpage.create_title("文件播放")
@@ -72,7 +70,7 @@ class IniGui(gtk.Window):
         self.tabpage.create_title("画面设置")
         self.tabpage.create_title("其它设置")
         
-        self.main_vbox = gtk.VBox()
+        # self.main_vbox = gtk.VBox()
         
         # Button.
         self.buton_hbox_frame = gtk.Alignment()
@@ -97,14 +95,16 @@ class IniGui(gtk.Window):
         self.buton_hbox.pack_start(self.ok_btn, False, False)
         self.buton_hbox.pack_start(self.cancel_btn_frame, False, False)
         
+        
+        self.main_vbox = self.window_frame
         self.main_vbox.pack_start(self.titlebar, False, False)
         self.tabpage_frame = gtk.Alignment()
         tabpage_frame_padding = 8
-        self.tabpage_frame.set_padding(tabpage_frame_padding, 0, 0, 0)
+        self.tabpage_frame.set_padding(tabpage_frame_padding, 0, 2, 2)
         self.tabpage_frame.add(self.tabpage)
         self.main_vbox.pack_start(self.tabpage_frame, False, False)
         self.main_vbox.pack_start(self.buton_hbox_frame, False, False)
-        self.add(self.main_vbox)
+        # self.add(self.main_vbox)
         self.show_all()        
         
         
@@ -122,7 +122,13 @@ class IniGui(gtk.Window):
             widget.propagate_expose(widget.get_child(), event)    
         return True
         
-        
-if __name__ == "__main__":        
+def test_open_ini(widget):        
     IniGui()    
+    
+if __name__ == "__main__":        
+    win = gtk.Window(gtk.WINDOW_TOPLEVEL)
+    btn = gtk.Button()
+    btn.connect("clicked", test_open_ini)
+    win.add(btn)
+    win.show_all()    
     gtk.main()
