@@ -20,7 +20,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
+from dtk.ui.titlebar import Titlebar
+from dtk.ui.utils import move_window
 from dtk.ui.draw import draw_pixbuf
 from ini import INI
 from tabControl import TabPage
@@ -40,8 +41,12 @@ class IniGui(gtk.Window):
         self.ini = INI(os.path.expanduser("~") + "/.config/deepin-media-player/config.ini")        
         # self.ini.connect("Send-Error", self.error_messagebox)        
         self.ini.start()
-                                
-        self.set_size_request(570, 400)
+                
+        
+        self.set_decorated(False)
+        WIN_WIDTH = 560
+        WIN_HEIGHT = 430
+        self.set_size_request(WIN_WIDTH, WIN_HEIGHT)
         self.set_title("配置界面")
         self.set_modal(True)
         self.add_events(gtk.gdk.ALL_EVENTS_MASK)
@@ -49,6 +54,12 @@ class IniGui(gtk.Window):
         self.connect("expose-event", self.draw_background)
         self.connect("destroy", gtk.main_quit)        
         
+        # Titlebar.
+        self.titlebar = Titlebar(["min", "close"], title="播放器设置")
+        self.titlebar.drag_box.connect('button-press-event', lambda w, e: move_window(w, e, self))        
+        
+        
+        self.titlebar.change_title("播放器设置")
         # TabPage.
         self.tabpage = TabPage()
         self.tabpage.create_title("文件播放")
@@ -60,17 +71,22 @@ class IniGui(gtk.Window):
         self.tabpage.create_title("声音设置")
         self.tabpage.create_title("画面设置")
         self.tabpage.create_title("其它设置")
+        
         self.main_vbox = gtk.VBox()
         
         # Button.
         self.buton_hbox_frame = gtk.Alignment()
         self.buton_hbox_frame.set(1, 0.5, 0, 0)
-        self.buton_hbox_frame.set_padding(5, 5, 1, 1)
+        buton_hbox_frame_padding = 5
+        self.buton_hbox_frame.set_padding(buton_hbox_frame_padding, 
+                                          buton_hbox_frame_padding, 1, 1)
         self.buton_hbox = gtk.HBox()
         self.buton_hbox_frame.add(self.buton_hbox)
                 
         self.ok_btn = Button("确定")
-        self.ok_btn.set_size(90, 25)
+        ok_btn_width = 90
+        ok_btn_height = 25
+        self.ok_btn.set_size(ok_btn_width, ok_btn_height)
         self.cancel_btn_frame = gtk.Alignment()
         cancel_btn_padding = 10
         self.cancel_btn_frame.set_padding(0, 0, cancel_btn_padding, cancel_btn_padding)
@@ -81,11 +97,15 @@ class IniGui(gtk.Window):
         self.buton_hbox.pack_start(self.ok_btn, False, False)
         self.buton_hbox.pack_start(self.cancel_btn_frame, False, False)
         
-        self.main_vbox.pack_start(self.tabpage, False, False)
+        self.main_vbox.pack_start(self.titlebar, False, False)
+        self.tabpage_frame = gtk.Alignment()
+        tabpage_frame_padding = 8
+        self.tabpage_frame.set_padding(tabpage_frame_padding, 0, 0, 0)
+        self.tabpage_frame.add(self.tabpage)
+        self.main_vbox.pack_start(self.tabpage_frame, False, False)
         self.main_vbox.pack_start(self.buton_hbox_frame, False, False)
         self.add(self.main_vbox)
-        self.show_all()
-               
+        self.show_all()        
         
         
     def draw_background(self, widget, event):    

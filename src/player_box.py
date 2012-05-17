@@ -1144,6 +1144,13 @@ class PlayerBox(object):
                 
     def media_player_start(self, mplayer, play_bool):
         '''media player start play.'''        
+        # title show play file name.
+        file_name = self.get_player_file_name(mplayer.path)
+        if len(file_name) > 25:
+            file_name = file_name[0:3] + "..."
+            
+        self.app.titlebar.change_title(str(file_name))
+        # TabPage.
         
         # if self.save_volume_mute_bool:
         #     self.mp.nomute()
