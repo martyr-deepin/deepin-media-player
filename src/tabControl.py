@@ -33,12 +33,14 @@ import gobject
 class Button(gtk.Button):
     '''Button.'''
     
-    def __init__(self, label="", width=69, height=22, padding_x=10, padding_y=3):
+    def __init__(self, label="", width=69, height=22, padding_x=10, padding_y=3, index = 0):
         '''Init button.'''
         # Init.
         gtk.Button.__init__(self)
         self.label = label
         self.font_size = 9
+        self.index = index
+        self.select_index = None
         # Init button size.
         (font_width, font_height) = get_content_size(label, self.font_size)
         self.set_size_request(max(width, font_width + 2 * padding_x), max(height, font_height + 2 * padding_y))
@@ -54,7 +56,11 @@ class Button(gtk.Button):
         self.font_size = size
         
     def set_size(self, w, h):    
-        self.set_size_request(w, h)
+        self.set_size_request(w, h)                
+        
+    def set_index(self, index):    
+        self.select_index = index
+        self.queue_draw()
         
     def expose_button(self, widget, event):
         '''Callback for button 'expose-event' event.'''
@@ -63,24 +69,36 @@ class Button(gtk.Button):
         rect = widget.allocation
         x, y, w, h = rect.x, rect.y, rect.width, rect.height
             
+        # draw background.
         cr.set_source_rgba(1, 1, 1, 1)
         cr.rectangle(x, y, w, h)
         cr.fill()
             
-        if widget.state == gtk.STATE_PRELIGHT:            
+        if widget.state == gtk.STATE_PRELIGHT: 
             cr.set_source_rgba(0, 0, 0, 0.3)
             cr.rectangle(x, y, w, h)
             cr.fill()
+            
         elif widget.state == gtk.STATE_ACTIVE:
             cr.set_source_rgba(0, 0, 0, 0.7)
             cr.rectangle(x, y, w, h)
             cr.fill()
                     
         # Draw font.
-        if self.label != "":            
-            draw_font(cr, self.label, self.font_size, 
+        if self.label != "":
+            draw_font(cr, self.label, self.font_size,
                       app_theme.get_color("buttonFont").get_color(),
                       x, y, w, h)
+            
+        if self.select_index == self.index:    
+            cr.set_source_rgba(0, 0, 0, 0.7)
+            cr.rectangle(x, y, w, h)
+            cr.fill()
+            
+            draw_font(cr, self.label, self.font_size,
+                      "#FFFFFF",
+                      x, y, w, h)
+            
         
         return True        
 
@@ -164,7 +182,7 @@ class TabPage(gtk.VBox):
             self.panel_list.append(widget)
             
         box = self.return_title_container()
-        button = Button(text)
+        button = Button(text, index=self.title_num)
         button.set_size_request(w, h)
         button.connect("clicked", self.clicked_show_panel, self.title_num)
         box.pack_start(button, False, False)
@@ -183,7 +201,10 @@ class TabPage(gtk.VBox):
     def clicked_show_panel(self, widget, title_num):    
         if title_num < len(self.panel_list):
             self.show_index_page(title_num)
-        
+        childs = self.get_title_childs()
+        for child in childs:
+            child.set_index(title_num)
+            
     def set_type(self, tab_page_type):                   
         childs = self.get_title_childs()
         for child in childs:
@@ -220,7 +241,6 @@ class TabPage(gtk.VBox):
     def draw_panel_background(self, widget, event):            
         cr = widget.window.cairo_create()
         x, y, w, h = widget.allocation
-        print "**********"
         cr.set_source_rgba(1, 1, 1, 0.5)
         cr.rectangle(x, y, w, h)
         cr.fill()
