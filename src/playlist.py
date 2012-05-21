@@ -31,6 +31,7 @@ from dtk.ui.constant import DEFAULT_FONT_SIZE,ALIGN_END
 from mplayer import Mplayer    
 from utils import app_theme
 from utils import allocation
+from play_list_control_panel import PlayListControlPanel
 import gtk
 
 # from constant import *
@@ -64,6 +65,8 @@ class PlayList(object):
         
         self.draw_line_event_box = EventBox()
         self.draw_line_event_box.connect("expose-event", self.draw_lien_expose_event)
+        self.play_list_control_panel = PlayListControlPanel()
+        self.vbox.pack_start(self.play_list_control_panel, False, False)
         self.vbox.pack_start(self.draw_line_event_box, False, False)
         
         
@@ -86,6 +89,7 @@ class PlayList(object):
         if self.vbox.get_children() == [] and self.vbox_vframe != None:
            self.vbox.add(self.vbox_vframe)
            self.vbox.pack_start(self.draw_line_event_box, False, False) 
+           self.vbox.pack_start(self.play_list_control_panel, False, False)
            
     def hide_play_list(self):
         container_remove_all(self.vbox)    
