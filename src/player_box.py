@@ -122,10 +122,17 @@ class PlayerBox(object):
         # self.app.window.connect("key-press-event", self.get_key_event)
                 
         '''Screen window init.'''
-        self.screen = MplayerView()
+        self.screen = gtk.DrawingArea()
+        
         # Screen signal init.
         self.screen.add_events(gtk.gdk.ALL_EVENTS_MASK)
         # drag resize window.
+        self.screen.connect("realize", self.init_media_player)
+        self.screen.unset_flags(gtk.DOUBLE_BUFFERED) # disable double buffered to avoid video blinking
+        
+        # Handle signal.
+        # self.connect("realize", self.realize_mplayer_view)
+
         self.screen.connect("key-press-event", self.get_key_event)
         self.screen.connect("button-press-event", self.drag_resize_window)
         self.screen.connect("motion-notify-event", self.modify_mouse_icon)
@@ -135,7 +142,7 @@ class PlayerBox(object):
         self.screen.connect("button-release-event", self.screen_media_player_clear)
         self.screen.connect("motion-notify-event", self.show_and_hide_toolbar)
         self.screen.connect("configure-event", self.configure_hide_tool)
-        self.screen.connect("get-xid", self.init_media_player)
+        # self.screen.connect("get-xid", self.init_media_player)
 
 
         '''Progressbar Init.'''
@@ -606,7 +613,7 @@ class PlayerBox(object):
                                 
     
     '''Init media player.'''
-    def init_media_player(self, mplayer, xid):
+    def init_media_player(self, widget):
         '''Init deepin media player.'''
         
         self.play_list.hide_play_list() # Hide play list.
@@ -616,7 +623,7 @@ class PlayerBox(object):
 
         self.screen.queue_draw()
         #self.unset_flags()
-        self.mp = Mplayer(xid)
+        self.mp = Mplayer(widget.window.xid)
         # Init darg file signal.
         drag_connect(self.screen, self.mp, self.play_list.list_view, True)
         drag_connect(self.play_list.list_view, self.mp, self.play_list.list_view, False)
@@ -655,9 +662,42 @@ class PlayerBox(object):
     def draw_background(self, widget, event):
         '''Draw screen mplayer view background.'''
         cr, x, y, w, h = allocation(widget)
-
+        
         if self.mp:
             if (self.mp.state) and (self.mp.vide_bool): # vide file.
+                if 0 != self.video_width or 0 != self.video_height:                                        
+                    video_ratio = float(self.video_width) / self.video_height
+                    
+                    bit = video_ratio - (float(w) / h)
+                    cr.set_source_rgb(0, 0, 0)
+                    if 0 == bit:
+                        return False
+                    elif bit < 0:                             
+                        s = w - h * (video_ratio)
+                        s = s / 2
+                        
+                        # Draw left.
+                        cr.rectangle(x, y - 50, s - 1, h + 50)
+                        cr.fill()
+                        
+                        # Draw right.
+                        cr.rectangle(x + s + h * (self.video_width / self.video_height) -1, y - 50, s - 1, h + 50)
+                        cr.fill()
+                    elif bit > 0:
+                        video_ratio = float(self.video_height) / self.video_width                        
+                        s = h - w * video_ratio
+                        s = s / 2
+                        
+                        # Draw UP.                        
+                        cr.rectangle(x, y - self.app.titlebar.allocation.height, w , s)
+                        cr.fill()
+                        
+                        # Draw bottom.
+                        cr.rectangle(x, y + s + w * (video_ratio) - self.app.titlebar.allocation.height, w, s)
+                        cr.fill()
+                        
+                    return True
+            
                 if self.mp.pause_bool: # vide pause.
                     # Draw pause background.
                     return False
@@ -690,6 +730,10 @@ class PlayerBox(object):
     # ToolBar control function.
     def app_configure_hide_tool(self, widget, event): #app: configure-event.
         #Set mute and value.
+        
+        if self.mp:
+            self.screen.queue_draw()    
+            
         if self.toolbar2.volume_button.mute_bool != self.save_volume_mute_bool:
             self.toolbar2.volume_button.mute_bool = self.save_volume_mute_bool
             self.toolbar2.volume_button.set_value(self.save_volume_value)
@@ -1151,7 +1195,7 @@ class PlayerBox(object):
     def media_player_start(self, mplayer, play_bool):
         '''media player start play.'''        
         #
-        self.video_width, video_height = get_vide_width_height(mplayer.path)
+        self.video_width, self.video_height = get_vide_width_height(mplayer.path)
         
         # title show play file name.
         file_name = self.get_player_file_name(mplayer.path)

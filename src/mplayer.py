@@ -75,7 +75,7 @@ def get_vide_width_height(file_path):
     
     video_width = width_compile.findall(length)[0][:-1]
     video_height = height_compile.findall(length)[0][1:]
-    return video_width, video_height
+    return float(video_width), float(video_height)
 
 
 def length_to_time(length):        
