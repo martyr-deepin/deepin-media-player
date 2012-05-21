@@ -37,6 +37,7 @@ from volume_button import VolumeButton
 from drag import drag_connect
 from preview import PreView
 from mplayer import Mplayer
+from mplayer import get_vide_width_height
 from mplayer import get_length
 from mplayer import get_home_path
 from mplayer import length_to_time
@@ -66,6 +67,11 @@ class PlayerBox(object):
         # ini play memory.
         self.ini = INI(get_home_path() + "/.config/deepin-media-player/config.ini")
         self.ini.start()
+        
+        # screen draw borde video width and height.        
+        #get_vide_width_height (function return value)
+        self.video_height = 0
+        self.video_width = 0
         
         # playlist.
         self.add_play_list_length_id = None
@@ -1144,6 +1150,9 @@ class PlayerBox(object):
                 
     def media_player_start(self, mplayer, play_bool):
         '''media player start play.'''        
+        #
+        self.video_width, video_height = get_vide_width_height(mplayer.path)
+        
         # title show play file name.
         file_name = self.get_player_file_name(mplayer.path)
         if len(file_name) > 25:
