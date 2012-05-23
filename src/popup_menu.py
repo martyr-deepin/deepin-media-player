@@ -19,17 +19,42 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from dtk.ui.menu import Menu
 
 class PopupMenu(object):
     def __init__(self):
         
+        self.root_menu = Menu([(None, "单个播放", None), # 0
+                          (None, "顺序播放", None), # 1
+                          (None, "随机播放", None), # 2
+                          (None, "单个循环", None), # 3
+                          (None, "列表循环", None)]) # 4
         
         
         
+######## Test demo ##################        
+import gtk        
+
+def popup_menu_show(widget, event):
+    
+    print "I lovec na ldinux "
+    popup_menu = PopupMenu()
+    popup_menu.root_menu.show_all()
+    
+    
+if __name__ == "__main__":        
+    
+    
+    
+    win = gtk.Window(gtk.WINDOW_TOPLEVEL)
+    win.connect("destroy", gtk.main_quit)
+    win.add_events(gtk.gdk.ALL_EVENTS_MASK)
+    # events.
+    win.connect("button-press-event", popup_menu_show)
+    win.show_all()
+    gtk.main()
         
-        
-        
-        
+    
         
         
 '''        
