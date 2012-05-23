@@ -32,6 +32,39 @@ import gtk
 import os
 
 
+class FilePlay(gtk.VBox):
+    def __init__ (self):
+        gtk.VBox.__init__(self)                
+        
+class SystemSet(gtk.VBox):        
+    def __init__ (self):
+        gtk.VBox.__init__(self)
+                
+class KeyMouse(gtk.VBox):        
+    def __init__ (self):
+        gtk.VBox.__init__(self)
+
+class SubTitle(gtk.VBox):        
+    def __init__ (self):
+        gtk.VBox.__init__(self)
+
+class VideoScrot(gtk.VBox):        
+    def __init__ (self):
+        gtk.VBox.__init__(self)
+        
+class SoundSet(gtk.VBox):        
+    def __init__ (self):
+        gtk.VBox.__init__(self)
+        
+class FrameSet(gtk.VBox):       
+    def __init__ (self):
+        gtk.VBox.__init__(self)
+        
+class OtherSet(gtk.VBox):        
+    def __init__ (self):
+        gtk.VBox.__init__(self)
+        
+        
 class IniGui(Window):    
     def __init__ (self):
         Window.__init__(self, True)
@@ -54,15 +87,15 @@ class IniGui(Window):
         self.connect("destroy", lambda w: self.hide_all())
         
         # Titlebar.
-        icon_dpixbuf = None
-        self.titlebar = Titlebar(["min", "close"], icon_dpixbuf, app_name = "配置界面", title = "")
+        icon_pixbuf = app_theme.get_pixbuf("OrdinaryMode.png")
+        self.titlebar = Titlebar(["min", "close"], icon_pixbuf, app_name = "配置界面", title = "")
         self.titlebar.close_button.connect("clicked", lambda w:self.destroy())
         self.titlebar.drag_box.connect('button-press-event', lambda w, e: move_window(w, e, self))        
                         
         # TabPage.
         self.tabpage = TabPage()
-        
-        self.tabpage.create_title("文件播放")
+                
+        self.tabpage.create_title("文件播放")        
         self.tabpage.create_title("系统设置")
         self.tabpage.create_title("热键/鼠标")
         self.tabpage.create_title("高清加速")
@@ -110,7 +143,6 @@ class IniGui(Window):
         # self.add(self.main_vbox)
         self.show_all()        
         
-        
     def draw_background(self, widget, event):    
         cr = widget.window.cairo_create()
         x, y, w, h = widget.get_allocation()        
@@ -130,6 +162,7 @@ def test_open_ini(widget):
     
 if __name__ == "__main__":        
     win = gtk.Window(gtk.WINDOW_TOPLEVEL)
+    win.set_size_request(50, 50)
     win.connect("destroy", gtk.main_quit)
     btn = gtk.Button()
     btn.connect("clicked", test_open_ini)

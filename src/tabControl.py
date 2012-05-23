@@ -180,8 +180,8 @@ class TabPage(gtk.VBox):
             return self.vbox
                 
     def create_title(self, text, widget=None, image=None, w=150, h=40):
-        if widget:
-            self.panel_list[self.title_num] = widget
+        # if widget:
+        self.panel_list[self.title_num] = widget
             
         box = self.return_title_container()
         button = Button(text, index=self.title_num)
@@ -193,12 +193,12 @@ class TabPage(gtk.VBox):
         
     def show_index_page(self, index):
         '''show select page'''
-
         if self.panel_lsit_bool(index):
             for child in self.get_panel_childs():
                 self.return_panel_container().remove(child)
-            self.return_panel_container().pack_start(self.panel_list[index], True, True)    
-            self.return_panel_container().show_all()
+            if self.panel_list[index]:    
+                self.return_panel_container().pack_start(self.panel_list[index], True, True)    
+                self.return_panel_container().show_all()
             
         # childs = self.get_title_childs()
         # childs[index].set_index(index)
