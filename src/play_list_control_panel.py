@@ -48,13 +48,13 @@ class PlayListControlPanel(gtk.HBox):
         self.hbox_frame.add(self.hbox)
         
         self.pack_start(self.hbox_frame, True, True)
-        # self.connect("expose-event", self.draw_background)
+        self.hbox_frame.connect("expose-event", self.draw_background)
         
     def draw_background(self, widget, event):
         cr = widget.window.cairo_create()
         x, y , w, h = widget.allocation
         cr.set_source_rgba(0, 0, 0, 0.5)
-        cr.rectangle(x, y, w, h)
+        cr.rectangle(x, y - 2, w, h)
         cr.fill()
         
         propagate_expose(widget, event)
@@ -67,3 +67,11 @@ class PlayListControlPanel(gtk.HBox):
         
         
         
+if __name__ == "__main__":
+    win = gtk.Window(gtk.WINDOW_TOPLEVEL)
+    win.connect("destroy", gtk.main_quit)
+    
+    win.add(PlayListControlPanel())
+    
+    win.show_all()
+    gtk.main()

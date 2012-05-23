@@ -26,7 +26,6 @@ import ConfigParser
 import string, os, sys
 import gobject
 
-
 # ini config.
 class MediaConfig(gobject.GObject):
     __gsignals__ = {

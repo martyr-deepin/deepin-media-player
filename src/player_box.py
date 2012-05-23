@@ -21,7 +21,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # from dtk.ui.dragbar import Dragbar
-from dtk.ui.mplayer_view import MplayerView
+# from dtk.ui.mplayer_view import MplayerView
 from dtk.ui.box import EventBox
 from dtk.ui.frame import HorizontalFrame,VerticalFrame
 from dtk.ui.utils import is_double_click
@@ -195,15 +195,14 @@ class PlayerBox(object):
                                                          self.toolbar2_volume_button_set_mute)
         self.toolbar2.volume_button.connect("get-value-event",
                                             self.toolbar2_volume_button_set_volume)
-        
-        
+                        
         
         # Child widget add to vbox.
         self.vbox.pack_start(self.screen, True, True)
         self.vbox.pack_start(self.progressbar.hbox,False, False)
         # Hide playlist and show playlist widget hbox.
         self.hbox.pack_start(self.vbox, True, True)
-
+        
         
         '''playlist'''
         # self.media_item = []                
