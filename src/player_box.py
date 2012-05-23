@@ -927,9 +927,8 @@ class PlayerBox(object):
 
         if self.save_volume_mute_bool:
             if self.mp:
-                self.mp.nomute()
+                self.mp.nomute()                
                 
-
                 
     def set_window_above(self, widget): #above_button
         self.above_bool = not self.above_bool
@@ -956,11 +955,7 @@ class PlayerBox(object):
             self.full_play_window(widget)
             self.toolbar.toolbar_full_button.flags = not self.toolbar.toolbar_full_button.flags
             self.double_bool = True
-            gtk.timeout_add(10, self.double_restart_bool)
-        # playing file.
-        elif 1 == event.button and event.type == gtk.gdk.BUTTON_PRESS:
-            if 1 == self.mp.state:
-                self.signal_timeout.append(gtk.timeout_add(200, self.signal_restart_bool))
+            gtk.timeout_add(300, self.double_restart_bool)
                 
 
     def double_restart_bool(self):
@@ -978,6 +973,7 @@ class PlayerBox(object):
                 self.signal_timeout = []
                 
             self.virtual_set_start_btn_clicked()    
+            
     # Toolbar hide and show.
     def show_and_hide_toolbar(self, widget, event): # screen:motion_notify_event
         '''Show and hide toolbar.'''
@@ -1037,7 +1033,12 @@ class PlayerBox(object):
 
     def screen_media_player_clear(self, widget, event): # screen: button-release-event
         self.screen_move_bool = False
-            
+        # playing file.
+        if 1 == event.button and event.type == gtk.gdk.BUTTON_RELEASE:
+            if 1 == self.mp.state:
+                # self.virtual_set_start_btn_clicked()
+                self.signal_timeout.append(gtk.timeout_add(500, self.signal_restart_bool))
+        
         
     def virtual_set_start_btn_clicked(self):        
         if self.mode_state_bool:

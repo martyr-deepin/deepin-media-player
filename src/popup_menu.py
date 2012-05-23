@@ -20,98 +20,57 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from dtk.ui.menu import Menu
+from utils import app_theme
 
 class PopupMenu(object):
     def __init__(self):
-        
-        self.root_menu = Menu([(None, "单个播放", None), # 0
+        self.menu = Menu([(None, "单个播放", None), # 0
                           (None, "顺序播放", None), # 1
                           (None, "随机播放", None), # 2
                           (None, "单个循环", None), # 3
-                          (None, "列表循环", None)]) # 4
+                          (None, "列表循环", None)] # 4
+                         ) 
+        
+        
+        self.menu2 = Menu([(None, "按名称", None),
+                           (None, "按类型", None)])
+        
+        self.root_menu = Menu([(None, "添加文件", None), 
+                               (None, "添加文件夹", None),
+                               (None),
+                               (None, "删除选中项", None),
+                               (None, "清空播放列表", None),
+                               (None, "删除无效文件", None),
+                               (None),
+                               (None, "播放顺序", self.menu),                               
+                               (None, "排序", self.menu2),
+                               (None),
+                               (None, "打开所在文件夹", None)
+                               ], 
+                              True)
         
         
         
-######## Test demo ##################        
-import gtk        
+        
+######## Test demo ##################            
 
-def popup_menu_show(widget, event):
-    if event.button == 1 and event.type == gtk.gdk._2BUTTON_PRESS:
-        print "双击..."
-        double_bool = True
-    else:    
-        if event.button == 1 and event.type == gtk.gdk.BUTTON_PRESS and not double_bool:
-            gtk.timeout_add(500, signal_show)    
+import gtk
+
+
+def show_pop_menu(widget, event):
+    if event.button == 3:
+        menu.root_menu.show((int(event.x_root), int(event.y_root)),
+                            (0, 0))
     
-def signal_show():        
-    print "单击..."        
-    return False
     
 if __name__ == "__main__":        
-    
-    double_bool = False
-    popup_menu = PopupMenu()
-    
+    menu = PopupMenu()
     win = gtk.Window(gtk.WINDOW_TOPLEVEL)
     win.connect("destroy", gtk.main_quit)
-    win.add_events(gtk.gdk.ALL_EVENTS_MASK)
-    # events.
-    win.connect("button-press-event", popup_menu_show)
+    btn = gtk.Button("点击菜单")
+    btn.connect("button-press-event", show_pop_menu)
+    win.add(btn)
     win.show_all()
     gtk.main()
         
     
-        
-        
-'''        
-sub_menu_a = Menu(
-        [(ui_theme.get_pixbuf("menu/menuItem1.png"), "子菜单A1", None),
-         None,
-         (ui_theme.get_pixbuf("menu/menuItem2.png"), "子菜单A2", None),
-         (ui_theme.get_pixbuf("menu/menuItem3.png"), "子菜单A3", None),
-         ])
-    sub_menu_e = Menu(
-        [(ui_theme.get_pixbuf("menu/menuItem1.png"), "子菜单E1", None),
-         (ui_theme.get_pixbuf("menu/menuItem2.png"), "子菜单E2", None),
-         None,
-         (ui_theme.get_pixbuf("menu/menuItem3.png"), "子菜单E3", None),
-         ])
-    sub_menu_d = Menu(
-        [(ui_theme.get_pixbuf("menu/menuItem1.png"), "子菜单D1", None),
-         (ui_theme.get_pixbuf("menu/menuItem2.png"), "子菜单D2", None),
-         None,
-         (ui_theme.get_pixbuf("menu/menuItem3.png"), "子菜单D3", sub_menu_e),
-         ])
-    sub_menu_c = Menu(
-        [(ui_theme.get_pixbuf("menu/menuItem1.png"), "子菜单C1", None),
-         (ui_theme.get_pixbuf("menu/menuItem2.png"), "子菜单C2", None),
-         None,
-         (ui_theme.get_pixbuf("menu/menuItem3.png"), "子菜单C3", sub_menu_d),
-         ])
-    sub_menu_b = Menu(
-        [(ui_theme.get_pixbuf("menu/menuItem1.png"), "子菜单B1", None),
-         None,
-         (ui_theme.get_pixbuf("menu/menuItem2.png"), "子菜单B2", None),
-         None,
-         (ui_theme.get_pixbuf("menu/menuItem3.png"), "子菜单B3", sub_menu_c),
-         ])
-    
-    menu = Menu(
-        [(ui_theme.get_pixbuf("menu/menuItem1.png"), "测试测试测试1", lambda : PopupWindow(application.window)),
-         (ui_theme.get_pixbuf("menu/menuItem2.png"), "测试测试测试2", sub_menu_a),
-         (ui_theme.get_pixbuf("menu/menuItem3.png"), "测试测试测试3", sub_menu_b),
-         None,
-         (None, "测试测试测试", None),
-         (None, "测试测试测试", None),
-         None,
-         (ui_theme.get_pixbuf("menu/menuItem6.png"), "测试测试测试4", None, (1, 2, 3)),
-         (ui_theme.get_pixbuf("menu/menuItem7.png"), "测试测试测试5", None),
-         (ui_theme.get_pixbuf("menu/menuItem8.png"), "测试测试测试6", None),
-         ],
-        True
-        )
-    application.set_menu_callback(lambda button: menu.show(
-            get_widget_root_coordinate(button, WIDGET_POS_BOTTOM_LEFT),
-            (button.get_allocation().width, 0)))
-            
-'''    
