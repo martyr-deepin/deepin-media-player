@@ -956,7 +956,7 @@ class PlayerBox(object):
             self.full_play_window(widget)
             self.toolbar.toolbar_full_button.flags = not self.toolbar.toolbar_full_button.flags
             self.double_bool = True
-            gtk.timeout_add(50, self.double_restart_bool)
+            gtk.timeout_add(10, self.double_restart_bool)
         # playing file.
         elif 1 == event.button and event.type == gtk.gdk.BUTTON_PRESS:
             if 1 == self.mp.state:
@@ -972,11 +972,12 @@ class PlayerBox(object):
         
     def signal_restart_bool(self):  
         if not self.double_bool:
-            self.virtual_set_start_btn_clicked()
+            
             for timeout_id in self.signal_timeout:
                 gtk.timeout_remove(timeout_id)
                 self.signal_timeout = []
-        
+                
+            self.virtual_set_start_btn_clicked()    
     # Toolbar hide and show.
     def show_and_hide_toolbar(self, widget, event): # screen:motion_notify_event
         '''Show and hide toolbar.'''
