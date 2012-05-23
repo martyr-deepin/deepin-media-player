@@ -55,6 +55,10 @@ import os
 
 class PlayerBox(object):
     def __init__ (self, app, argv_path_list):
+        # signal and double.
+        self.double_bool = False
+        self.signal_timeout = []
+        
         self.input_string = "player_box: " # Test input string(message).
         self.mp = None
         self.point_bool = False
@@ -951,8 +955,28 @@ class PlayerBox(object):
         if is_double_click(event):
             self.full_play_window(widget)
             self.toolbar.toolbar_full_button.flags = not self.toolbar.toolbar_full_button.flags
+            self.double_bool = True
+            gtk.timeout_add(50, self.double_restart_bool)
+        # playing file.
+        elif 1 == event.button and event.type == gtk.gdk.BUTTON_PRESS:
+            if 1 == self.mp.state:
+                self.signal_timeout.append(gtk.timeout_add(200, self.signal_restart_bool))
+                
 
-
+    def double_restart_bool(self):
+        if self.double_bool:
+            self.double_bool = False
+            for timeout_id in self.signal_timeout:
+                gtk.timeout_remove(timeout_id)
+                self.signal_timeout = []
+        
+    def signal_restart_bool(self):  
+        if not self.double_bool:
+            self.virtual_set_start_btn_clicked()
+            for timeout_id in self.signal_timeout:
+                gtk.timeout_remove(timeout_id)
+                self.signal_timeout = []
+        
     # Toolbar hide and show.
     def show_and_hide_toolbar(self, widget, event): # screen:motion_notify_event
         '''Show and hide toolbar.'''
@@ -1012,10 +1036,8 @@ class PlayerBox(object):
 
     def screen_media_player_clear(self, widget, event): # screen: button-release-event
         self.screen_move_bool = False
-        # playing file.
-        if 1 == self.mp.state:
-            self.virtual_set_start_btn_clicked()
             
+        
     def virtual_set_start_btn_clicked(self):        
         if self.mode_state_bool:
             self.toolbar2.play_control_panel.start_btn.start_bool = not self.toolbar2.play_control_panel.start_btn.start_bool

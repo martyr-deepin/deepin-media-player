@@ -36,15 +36,21 @@ class PopupMenu(object):
 import gtk        
 
 def popup_menu_show(widget, event):
+    if event.button == 1 and event.type == gtk.gdk._2BUTTON_PRESS:
+        print "双击..."
+        double_bool = True
+    else:    
+        if event.button == 1 and event.type == gtk.gdk.BUTTON_PRESS and not double_bool:
+            gtk.timeout_add(500, signal_show)    
     
-    print "I lovec na ldinux "
-    popup_menu = PopupMenu()
-    popup_menu.root_menu.show_all()
-    
+def signal_show():        
+    print "单击..."        
+    return False
     
 if __name__ == "__main__":        
     
-    
+    double_bool = False
+    popup_menu = PopupMenu()
     
     win = gtk.Window(gtk.WINDOW_TOPLEVEL)
     win.connect("destroy", gtk.main_quit)
