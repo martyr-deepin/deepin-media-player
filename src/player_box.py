@@ -1245,8 +1245,8 @@ class PlayerBox(object):
                 
     def media_player_start(self, mplayer, play_bool):
         '''media player start play.'''        
-        # 
-        # self.video_width, self.video_height = get_vide_width_height(mplayer.path)
+        # Get draw width, height.       
+        self.video_width, self.video_height = get_vide_width_height(mplayer.path)
         
         # # title show play file name.
         # file_name = self.get_player_file_name(mplayer.path)
