@@ -25,6 +25,7 @@
 from dtk.ui.box import EventBox
 from dtk.ui.frame import HorizontalFrame,VerticalFrame
 from dtk.ui.utils import is_double_click
+from dtk.ui.menu import Menu
 
 from utils import allocation,path_threads
 from show_time import ShowTime
@@ -45,6 +46,7 @@ from playlist import PlayList
 from playlist import MediaItem
 from opendialog import OpenDialog
 from tooltip import Tooltip
+# from popup_menu import PopupMenu
 
 from ini import INI
 import threading
@@ -107,6 +109,32 @@ class PlayerBox(object):
         self.main_vbox_hframe = HorizontalFrame(1)
         self.main_vbox_hframe.add(self.main_vbox)
 
+        '''play list popup menu'''
+        self.menu = Menu([(None, "单个播放", self.sigle_play),      # 0
+                          (None, "顺序播放", self.sequence_play),   # 1
+                          (None, "随机播放", self.rand_play),       # 2
+                          (None, "单个循环", self.sigle_loop_play), # 3
+                          (None, "列表循环", self.loop_list_play)]  # 4
+                         ) 
+                                        
+        self.menu2 = Menu([(None, "按名称", self.name_sort),
+                           (None, "按类型", self.type_sort)])
+        
+        self.root_menu = Menu([(None, "添加文件", self.add_file), 
+                               (None, "添加文件夹", self.add_file_dir),
+                               (None),
+                               (None, "删除选中项", self.del_index),
+                               (None, "清空播放列表", self.clear_list),
+                               (None, "删除无效文件", self.del_error_file),
+                               (None),
+                               (None, "播放顺序", self.menu),                               
+                               (None, "排序", self.menu2),
+                               (None),
+                               (None, "打开所在文件夹", self.open_current_file_dir)
+                               ], 
+                              True)                        
+                    
+        
         '''Tooltip window'''
         self.tooltip = Tooltip("深度影音", 0, 0)
         
@@ -216,7 +244,7 @@ class PlayerBox(object):
         self.play_list.list_view.connect("key-press-event", self.get_key_event)
         self.play_list.list_view.connect("double-click-item", self.double_play_list_file)
         self.play_list.list_view.connect("delete-select-items", self.delete_play_list_file)
-        
+        self.play_list.list_view.connect("button-press-event", self.show_popup_menu)
         self.hbox.pack_start(self.play_list.vbox, False, False)
         
         
@@ -1217,15 +1245,15 @@ class PlayerBox(object):
                 
     def media_player_start(self, mplayer, play_bool):
         '''media player start play.'''        
-        #
-        self.video_width, self.video_height = get_vide_width_height(mplayer.path)
+        # 
+        # self.video_width, self.video_height = get_vide_width_height(mplayer.path)
         
-        # title show play file name.
-        file_name = self.get_player_file_name(mplayer.path)
-        if len(file_name) > 25:
-            file_name = file_name[0:3] + "..."
+        # # title show play file name.
+        # file_name = self.get_player_file_name(mplayer.path)
+        # if len(file_name) > 25:
+        #     file_name = file_name[0:3] + "..."
             
-        self.app.titlebar.change_title(str(file_name))
+        # self.app.titlebar.change_title(str(file_name))
         # TabPage.
         
         # if self.save_volume_mute_bool:
@@ -1254,13 +1282,14 @@ class PlayerBox(object):
         if mplayer.posNum < mplayer.lenNum - 10:            
             root = self.ini.get_section("PlayMemory")
             # print root
-            if root != -1:
+            if root != None:
                 root.child_addr[self.get_player_file_name(mplayer.path)] = mplayer.posNum
                 self.ini.ini_save()
         else:    
             root = self.ini.get_section("PlayMemory")
             # print root
-            if root != -1:
+            if root != None:
+                print self.get_player_file_name(mplayer.path)
                 del root.child_addr[self.get_player_file_name(mplayer.path)]
                 self.ini.ini_save()
                 
@@ -1308,3 +1337,64 @@ class PlayerBox(object):
         file1, file2 = os.path.split(pathfile2)
         return os.path.splitext(file2)[0]
    
+
+    '''play list menu signal.'''
+    def show_popup_menu(self, widget, event):
+        if 3 == event.button:
+            self.root_menu.show((int(event.x_root), int(event.y_root)),
+                                (0, 0))    
+        
+    def sigle_play(self):
+        if self.mp:
+            self.mp.playListState = 0
+            print "0"
+            
+    def sequence_play(self):        
+        if self.mp:
+            self.mp.playListState = 1
+            print "1"
+            
+    def rand_play(self):        
+        if self.mp:
+            self.mp.playListState = 2
+            print "2"
+            
+    def sigle_loop_play(self):        
+        if self.mp:
+            self.mp.playListState = 3
+            print "3"
+            
+    def loop_list_play(self):
+        if self.mp:
+            self.mp.playListState = 4
+            print "4"
+            
+    def name_sort(self):        
+        print "****"
+    
+    def type_sort(self):
+        print "********"
+    
+    def add_file(self):
+        print "*****"
+    def add_file_dir(self):
+        print "****"
+    def del_index(self):        
+        print "*****"
+    def clear_list(self):    
+        print "******"
+    def del_error_file(self):    
+        print "*******"
+        
+    def open_current_file_dir(self):    
+        print "open current file dir"
+    
+        
+  
+        
+        
+        
+        
+        
+        
+    
