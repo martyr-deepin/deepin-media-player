@@ -1289,7 +1289,7 @@ class PlayerBox(object):
             root = self.ini.get_section("PlayMemory")
             # print root
             if root != None:
-                print self.get_player_file_name(mplayer.path)
+                # print self.get_player_file_name(mplayer.path)
                 del root.child_addr[self.get_player_file_name(mplayer.path)]
                 self.ini.ini_save()
                 

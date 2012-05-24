@@ -517,7 +517,12 @@ class  Mplayer(gobject.GObject):
             else:
                 self.playListNum -= 1
                 return False
-        
+        # signal loop.    
+        elif self.playListState == 3:            
+            self.playListNum -= 1
+            self.play(self.playList[self.playListNum])                
+            
+            
         self.playListNum = self.playListNum % self.playListSum
         
         self.next_or_pre_state()    
