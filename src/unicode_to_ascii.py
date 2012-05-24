@@ -39,6 +39,30 @@ class UnicodeToAscii(object):
             self.list_dict[key] = []
             self.list_dict[key].append(strings)
             
+    def unicode_bool(self, strings):
+        if 0 <= ord(strings[0:1].lower()) <= 127:
+            return False # False -> asicc. 
+        return True # True -> unicoe.
+    
+    def number_bool(self, number):
+        if 0 <= ord(number[0:1].lower()) <= 127:
+            if 49 <= ord(number[0:1].lower()) <= 57:
+                return True            
+        return False
+        
+    def en_bool(self, en):
+        '''English.'''
+        if 0 <= ord(en[0:1].lower()) <= 127:
+            if 65 <= ord(en[0:1].lower()) <= 90 or 97 <= ord(en[0:1].lower()) <= 122:
+                return True            
+        return False    
+    
+    
+    def unicoe_to_index(self, strings, index):
+        if len(strings.decode('utf-8')) > index:
+            return strings.decode('utf-8')[index]
+        return None
+    
     def unicode_to_ascii(self, strings):            
         if 0 <= ord(strings[0:1].lower()) <= 127:
             key = strings[0:1].lower()            
