@@ -26,6 +26,7 @@ class Sort(object):
     def __init__(self):
         self.uta = UnicodeToAscii()        
         
+        self.save_tree_list = []        
         self.en_tree = Tree() # 英文树
         self.cn_tree = Tree() # 中文树
         self.num_tree = Tree() # 数字树
@@ -48,15 +49,15 @@ class Sort(object):
         for list_str in name_list:
             self.list_str = list_str
             self.index = self.uta.unicoe_to_index(list_str, 0).lower()
-            print self.index
-            print self.list_str
             if self.uta.number_bool(self.index): # 数字
-                print "数字"
+                self.c_point = self.num_tree
+                self.node_cmp()                
             elif self.uta.en_bool(self.index):  # 英文
                 self.c_point = self.en_tree
                 self.node_cmp() # 递归检索
-            elif self.uta.unicode_bool(self.index): # 判断中文字符                
-                print "中国字符"
+            elif self.uta.unicode_bool(self.index): # 判断中文字符              
+                self.c_point = self.cn_tree
+                self.node_cmp()
 
                 
     def node_cmp(self): 
@@ -79,7 +80,7 @@ class Sort(object):
             if self.index > self.c_point.has_list.keys()[0]: # 右边
                 if [] == self.c_point.child_2[1]:                    
                     self.c_point.child_2[1] = Tree()
-
+                    
                 self.c_point = self.c_point.child_2[1]            
                 self.node_cmp()          
                 return True
@@ -94,14 +95,20 @@ class Sort(object):
                 return True
     
     def mid_tree(self, node):        
+        self.save_tree_list = []
+        self.mid_tree_2(node)        
+        return self.save_tree_list
+    
+    def mid_tree_2(self, node):    
         '''中序遍历'''
-        if node.child_2[0]:
-            self.mid_tree(node.child_2[0])
-        print node.has_list
-        if node.child_2[1]:
-            self.mid_tree(node.child_2[1])
-            
-            
+        if node.has_list:
+            if node.child_2[0]:
+                self.mid_tree_2(node.child_2[0])
+            key = node.has_list.keys()[0]    
+            self.save_tree_list.append(node.has_list[key])
+            if node.child_2[1]:
+                self.mid_tree_2(node.child_2[1])
+                                        
         
     def str_cmp(self, c_point):
         '''对比字符(str1, str2).'''
@@ -137,16 +144,18 @@ class Tree(object):
 if __name__ == "__main__":    
     sort = Sort()
     test_en_list = ["gbcdefg", "gvdeas", "gdfdsf", "gafdsf", "gdjfkd",                    
-                    "dfjkdjf", "fsdfsdf", "fsdfsdf", "Ffsdf", "fdsfsdf",
-                    "fjklqpqkd", "akx,sk", "fdjpdsfj", "pieirjfd", "weifkdfj",
                     "fcjsdkfj", "wodkf", "fjdke", "adfjeickmfk", "fjdskeidk"]
     
     sort.name_sort(test_en_list)
     sort.c_point = sort.en_tree
     print "!@@@@@@@@@@@@@@@@@@@@@@@@2"
-    sort.mid_tree(sort.en_tree)
-            
-            
+    print sort.mid_tree(sort.en_tree)
+    # print sort.save_tree_list    
+    # print "~!~!~!~!~!~!~!~!~!~!~!~"
+    # # sort.mid_tree(sort.cn_tree)    
+    # print "@@#@#@#@#@#@#@#!@#@#@#@#"
+    # sort.mid_tree(sort.num_tree)
+    
         
 
         
