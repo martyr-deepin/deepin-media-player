@@ -1353,28 +1353,23 @@ class PlayerBox(object):
         
     def sigle_play(self):
         if self.mp:
-            self.mp.playListState = 0
-            print "0"
+            self.mp.playListState = 0        
             
     def sequence_play(self):        
         if self.mp:
-            self.mp.playListState = 1
-            print "1"
+            self.mp.playListState = 1        
             
     def rand_play(self):        
         if self.mp:
-            self.mp.playListState = 2
-            print "2"
+            self.mp.playListState = 2        
             
     def sigle_loop_play(self):        
         if self.mp:
-            self.mp.playListState = 3
-            print "3"
+            self.mp.playListState = 3        
             
     def loop_list_play(self):
         if self.mp:
-            self.mp.playListState = 4
-            print "4"
+            self.mp.playListState = 4        
             
     def name_sort(self):        
         print "****"
@@ -1384,12 +1379,19 @@ class PlayerBox(object):
     
     def add_file(self):
         print "*****"
+        
     def add_file_dir(self):
         print "****"
+        
     def del_index(self):        
-        print "*****"
+        # self.delete_play_list_file(self.play_list.list_view, self.play_list.list_view.items)
+        self.play_list.list_view.delete_select_items()
+        
+        
     def clear_list(self):    
-        print "******"
+        self.play_list.list_view.clear()
+        self.mp.clearPlayList()
+        
     def del_error_file(self):    
         print "*******"
         
