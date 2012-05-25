@@ -491,10 +491,11 @@ class PlayerBox(object):
                 try:
                     root.child_addr[i.title] = length
                 except:    
-                    length = 10
+                    print "length_threads-error."
+                self.ini.ini_save()    
             i.emit_redraw_request()
             
-        self.ini.ini_save()    
+            
         
     def add_play_list_time(self, path): # all.   
         '''play list add play file.'''

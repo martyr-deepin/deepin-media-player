@@ -59,7 +59,11 @@ def get_length(file_path):
     fp = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)    
     cmd_str = fp.communicate()[0]
     length_compile = re.compile(r"ID_LENGTH=([\d|\.]+)")
-    length = length_compile.findall(cmd_str)[0]
+    try:
+        length = length_compile.findall(cmd_str)[0]
+    except:    
+        
+        length = 520
     # return (fp.stdout.read().split()[0])
     return length_to_time(length), str((length))
 
