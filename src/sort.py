@@ -20,10 +20,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# 平衡二叉树 + 散列表
-
 from unicode_to_ascii import UnicodeToAscii
-
 
 class Sort(object):
     def __init__(self):
@@ -74,12 +71,8 @@ class Sort(object):
             if [] == self.c_point.has_list[self.index]:
                 self.c_point.has_list[self.index].append(self.list_str)
             else: # 如果 has_list 对应的 键值 不为空.进行排序.                        
-                for has_list_i in self.c_point.has_list[self.index]:
-                    insert_i = self.str_cmp(self.list_str ,has_list_i)
-                    # 如果大于就加入到后面.
-                    if insert_i:
-                        self.c_point.has_list[self.index].insert(insert_i, self.list_str) 
-                        break                                                                    
+                insert_i = self.str_cmp(self.c_point)    
+                self.c_point.has_list[self.index].insert(insert_i, self.list_str)
             return True
         else: #如果没有对应的键值             
             if self.index > self.c_point.has_list.keys()[0]: # 右边
@@ -103,9 +96,10 @@ class Sort(object):
     def print_sort_tree(self):            
         print self.c_point.has_list
         if self.c_point.child_2[0] != []:
+            save_c_point = self.c_point
             self.c_point = self.c_point.child_2[0]
             self.print_sort_tree()        
-
+            self.c_point = save_c_point
         
         if self.c_point.child_2[1] != []:  
             self.c_point = self.c_point.child_2[1]
@@ -113,28 +107,20 @@ class Sort(object):
 
             
         
-    def str_cmp(self, str1, str2):
+    def str_cmp(self, c_point):
         '''对比字符(str1, str2).'''
-        str1_num = len(str1)
-        str2_num = len(str2)
+        insert_i = 0
+        break_bool = False
+        for has_list_str in c_point.has_list[self.index]:
+            break_bool = cmp(self.list_str, has_list_str)
+            
+            if -1 == break_bool: # str2 > str1
+                break
+            insert_i += 1
+            
+        return insert_i
         
-        str1_point_i = 1
-        str2_point_j = 1
         
-        if str1 == str2:
-            return str1_point_i
-                
-        while str1_point_i != str1_num: # 'qiuhailong' vs 'qiuilong' i > h
-            # if str1[str1_point_i] > str2[str2_point_j]:                
-            str1_index = self.uta.unicoe_to_index(str1, str1_point_i)
-            str2_index = self.uta.unicoe_to_index(str2, str2_point_j)
-            if str1_index > str2_index:
-                return str1_point_i
-            str1_point_i += 1
-            str2_point_j += 1                                        
-        
-        return False
-    
     def type_sort(self):
         pass
     
@@ -154,29 +140,36 @@ class Tree(object):
 
 if __name__ == "__main__":    
     sort = Sort()
-    test_list = ["gbcdefg", 
-              "dcdefg", 
-              "fdcdefge",
-              "gfjdk",                 
-              "jzcvdsfe",
-              "cvdeas",
-              "adfdsf",
-              "ydjfkd",
-              "idjfkdf",
-              "zcjsdkfj"]
-    
-    sort.name_sort(test_list)
-    # sort.c_point.has_list
+    test_en_list = ["gbcdefg", 
+                    "gcdefg", 
+                    "gdcdefge",
+                    "gfjdk",                 
+                    "gzcvdsfe",
+                    "gvdeas",
+                    "gdfdsf",
+                    "gafdsf",
+                    "gdjfkd",                    
+                    "gcdefg", 
+                    "gdcdefge",
+                    "cfjdk",                 
+                    "bzcvdsfe",
+                    "avdeas",
+                    "pdfdsf",
+                    "oafdsf",
+                    "hdjfkd",                    
+                    "jcdefg", 
+                    "hdcdefge",
+                    "kfjdk",                 
+                    "ozcvdsfe",
+                    "lvdeas",
+                    "kdfdsf",
+                    "jafdsf",
+                    "hdjfkd",                                        
+                    "rdjfkdf",
+                    "fcjsdkfj"]
+        
+    sort.name_sort(test_en_list)
     sort.c_point = sort.en_tree
-    # print sort.c_point.child_2[1].has_list
-    # print sort.c_point.child_2[0].child_2[1].has_list
-    # print sort.c_point.child_2[1].child_2[0].has_list
-    # print sort.c_point.child_2[1].child_2[0].child_2[1]
-    # print sort.c_point.child_2[1].child_2[1].has_list
-    # print sort.c_point.child_2[1].child_2[1].child_2[1].has_list
-
-
-    print "########################"
     sort.print_sort_tree()
     
             
