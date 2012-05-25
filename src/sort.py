@@ -47,8 +47,9 @@ class Sort(object):
 
         for list_str in name_list:
             self.list_str = list_str
-            self.index = self.uta.unicoe_to_index(list_str, 0)
-            
+            self.index = self.uta.unicoe_to_index(list_str, 0).lower()
+            print self.index
+            print self.list_str
             if self.uta.number_bool(self.index): # 数字
                 print "数字"
             elif self.uta.en_bool(self.index):  # 英文
@@ -91,20 +92,15 @@ class Sort(object):
                 self.c_point = self.c_point.child_2[0]
                 self.node_cmp()
                 return True
-                    
-        
-    def print_sort_tree(self):            
-        print self.c_point.has_list
-        if self.c_point.child_2[0] != []:
-            save_c_point = self.c_point
-            self.c_point = self.c_point.child_2[0]
-            self.print_sort_tree()        
-            self.c_point = save_c_point
-        
-        if self.c_point.child_2[1] != []:  
-            self.c_point = self.c_point.child_2[1]
-            self.print_sort_tree()        
-
+    
+    def mid_tree(self, node):        
+        '''中序遍历'''
+        if node.child_2[0]:
+            self.mid_tree(node.child_2[0])
+        print node.has_list
+        if node.child_2[1]:
+            self.mid_tree(node.child_2[1])
+            
             
         
     def str_cmp(self, c_point):
@@ -112,7 +108,7 @@ class Sort(object):
         insert_i = 0
         break_bool = False
         for has_list_str in c_point.has_list[self.index]:
-            break_bool = cmp(self.list_str, has_list_str)
+            break_bool = cmp(self.list_str.lower(), has_list_str.lower())
             
             if -1 == break_bool: # str2 > str1
                 break
@@ -140,56 +136,15 @@ class Tree(object):
 
 if __name__ == "__main__":    
     sort = Sort()
-    test_en_list = ["gbcdefg", 
-                    "gcdefg", 
-                    "gdcdefge",
-                    "gfjdk",                 
-                    "gzcvdsfe",
-                    "gvdeas",
-                    "gdfdsf",
-                    "gafdsf",
-                    "gdjfkd",                    
-                    "gcdefg", 
-                    "gdcdefge",
-                    "cfjdk",                 
-                    "bzcvdsfe",
-                    "avdeas",
-                    "pdfdsf",
-                    "oafdsf",
-                    "hdjfkd",                    
-                    "jcdefg", 
-                    "hdcdefge",
-                    "kfjdk",                 
-                    
-                    "uvdeas",
-                    "udfdsf",
-                    "vafdsf",
-                    "vdjfkd",                    
-                    "ecdefg", 
-                    "ddcdefge",
-                    "dfjdk",                 
-                    "kzcvdsfe",
-                    "lvdeas",
-                    "pdfdsf",
-                    "oafdsf",
-                    "hdjfkd",                    
-                    "qcdefg", 
-                    "zdcdefge",
-                    "sfjdk",                 
-                    
-                    
-                    "ozcvdsfe",
-                    "lvdeas",
-                    "kdfdsf",
-                    "jafdsf",
-                    "hdjfkd",                                        
-                    "rdjfkdf",
-                    "fcjsdkfj"]
-        
+    test_en_list = ["gbcdefg", "gvdeas", "gdfdsf", "gafdsf", "gdjfkd",                    
+                    "dfjkdjf", "fsdfsdf", "fsdfsdf", "Ffsdf", "fdsfsdf",
+                    "fjklqpqkd", "akx,sk", "fdjpdsfj", "pieirjfd", "weifkdfj",
+                    "fcjsdkfj", "wodkf", "fjdke", "adfjeickmfk", "fjdskeidk"]
+    
     sort.name_sort(test_en_list)
     sort.c_point = sort.en_tree
-    sort.print_sort_tree()
-    
+    print "!@@@@@@@@@@@@@@@@@@@@@@@@2"
+    sort.mid_tree(sort.en_tree)
             
             
         
