@@ -59,7 +59,7 @@ class Sort(object):
 
                 
     def node_cmp(self): 
-        # 坚持 has_list 是否为空.
+        # 检查 has_list 是否为空.
         if {} == self.c_point.has_list:
             self.c_point.has_list[self.index] = []
             self.c_point.has_list[self.index].append(self.list_str)                           
@@ -160,6 +160,24 @@ if __name__ == "__main__":
                     "jcdefg", 
                     "hdcdefge",
                     "kfjdk",                 
+                    
+                    "uvdeas",
+                    "udfdsf",
+                    "vafdsf",
+                    "vdjfkd",                    
+                    "ecdefg", 
+                    "ddcdefge",
+                    "dfjdk",                 
+                    "kzcvdsfe",
+                    "lvdeas",
+                    "pdfdsf",
+                    "oafdsf",
+                    "hdjfkd",                    
+                    "qcdefg", 
+                    "zdcdefge",
+                    "sfjdk",                 
+                    
+                    
                     "ozcvdsfe",
                     "lvdeas",
                     "kdfdsf",

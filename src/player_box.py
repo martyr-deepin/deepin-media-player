@@ -488,7 +488,10 @@ class PlayerBox(object):
             else:    
                 i.length, length = get_length(self.play_list_dict[i.title])            
                 root = self.ini.get_section("PlayTime")
-                root.child_addr[i.title] = length
+                try:
+                    root.child_addr[i.title] = length
+                except:    
+                    length = 10
             i.emit_redraw_request()
             
         self.ini.ini_save()    
@@ -1249,11 +1252,11 @@ class PlayerBox(object):
         self.video_width, self.video_height = get_vide_width_height(mplayer.path)
         
         # # title show play file name.
-        # file_name = self.get_player_file_name(mplayer.path)
+        file_name = self.get_player_file_name(mplayer.path)
         # if len(file_name) > 25:
         #     file_name = file_name[0:3] + "..."
             
-        # self.app.titlebar.change_title(str(file_name))
+        self.app.titlebar.change_title(str(file_name))
         # TabPage.
         
         # if self.save_volume_mute_bool:
