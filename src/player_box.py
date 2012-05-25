@@ -1395,24 +1395,33 @@ class PlayerBox(object):
         if temp_num:
             temp_list.append(temp_num)
             
-        # clear play list.
-        self.play_list.list_view.clear()        
-        list_item = []
+        # clear play list.        
+        self.play_list.list_view.clear()
+        self.mp.playList = []
+        self.mp.playListSum   = 0 
+        self.mp.playListNum   = -1
+        self.mp.random_num = 0        
+        
         # play list restart add file name.
+        list_item = []        
         for i in temp_list:
             for j in i:
                 for k in j:
-                    list_item.append(MediaItem(k, temp_dict[k]))
+                    list_item.append(MediaItem(k, temp_dict[k]))                
+                
+                    self.mp.playList.append(self.play_list_dict[k])
+                    self.mp.playListSum += 1
                     
         self.play_list.list_view.add_items(list_item)                
         
-        # highlight staring play file.
+        # # highlight staring play file.
+        num = 0
         for item in self.play_list.list_view.items:
             if self.play_list_dict[item.title] == self.mp.path:
-                self.play_list.list_view.set_highlight(item)    
-                break
-            
-            
+                self.play_list.list_view.set_highlight(item)
+                break                        
+            num += 1
+        self.mp.playListNum = num
         
         
     def type_sort(self):
@@ -1447,6 +1456,7 @@ class PlayerBox(object):
         
     def open_current_file_dir_path(self, list_view, list_item, column, offset_x, offset_y):        
         self.open_file_name = self.play_list_dict[list_item.title]
+
 
 
   
