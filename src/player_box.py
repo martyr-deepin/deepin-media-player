@@ -60,7 +60,7 @@ class PlayerBox(object):
         # signal and double.
         self.double_bool = False
         self.signal_timeout = []
-        
+        self.open_file_name = "" # open current file dir name.
         self.input_string = "player_box: " # Test input string(message).
         self.mp = None
         self.point_bool = False
@@ -245,6 +245,9 @@ class PlayerBox(object):
         self.play_list.list_view.connect("double-click-item", self.double_play_list_file)
         self.play_list.list_view.connect("delete-select-items", self.delete_play_list_file)
         self.play_list.list_view.connect("button-press-event", self.show_popup_menu)
+        self.play_list.list_view.connect("single-click-item", self.open_current_file_dir_path)
+        self.play_list.list_view.connect("motion-notify-item", self.open_current_file_dir_path)
+        
         self.hbox.pack_start(self.play_list.vbox, False, False)
         
         
@@ -1390,10 +1393,19 @@ class PlayerBox(object):
     def del_error_file(self):    
         print "*******"
         
-    def open_current_file_dir(self):    
-        print "open current file dir"
-    
+    def open_current_file_dir(self):            
+        try:
+            file_name, file_name2 = os.path.split(self.open_file_name)
+        except:
+            file_name = "~/音乐"            
+            
+        os.system("nautilus %s" % (file_name))
+        self.open_file_name = ""
         
+    def open_current_file_dir_path(self, list_view, list_item, column, offset_x, offset_y):        
+        self.open_file_name = self.play_list_dict[list_item.title]
+
+
   
         
         
