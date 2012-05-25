@@ -147,7 +147,6 @@ if __name__ == "__main__":
                     "fcjsdkfj", "wodkf", "fjdke", "adfjeickmfk", "fjdskeidk"]
     
     sort.name_sort(test_en_list)
-    sort.c_point = sort.en_tree
     print "!@@@@@@@@@@@@@@@@@@@@@@@@2"
     print sort.mid_tree(sort.en_tree)
     # print sort.save_tree_list    

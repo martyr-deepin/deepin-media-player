@@ -46,6 +46,7 @@ from playlist import PlayList
 from playlist import MediaItem
 from opendialog import OpenDialog
 from tooltip import Tooltip
+from sort import Sort
 # from popup_menu import PopupMenu
 
 from ini import INI
@@ -1266,15 +1267,12 @@ class PlayerBox(object):
         # if self.save_volume_mute_bool:
         #     self.mp.nomute()
         # print self.get_player_file_name(mplayer.path)                
-        Num = 0
-        # print self.play_list.list_view.items
+        
         for item in self.play_list.list_view.items:
-            if Num == self.mp.playListNum:
+            if self.play_list_dict[item.title] == self.mp.path:
                 self.play_list.list_view.set_highlight(item)    
-                break
-            else:    
-                Num += 1
-                        
+                break        
+            
         self.progressbar.set_pos(0)
         self.toolbar2.progressbar.set_pos(0)        
         
@@ -1372,8 +1370,51 @@ class PlayerBox(object):
             self.mp.playListState = 4        
             
     def name_sort(self):        
-        print "****"
-    
+        '''Play list name sort.'''
+        sort = Sort()                
+        temp_dict = {}
+        temp_list = []
+        
+        for item in self.play_list.list_view.items:
+            temp_dict[item.title] = item.length
+            temp_list.append(item.title)
+                    
+        sort.name_sort(temp_list)
+        temp_list = []
+                
+        # Add cn.
+        temp_cn = sort.mid_tree(sort.cn_tree)        
+        if temp_cn:
+            temp_list.append(temp_cn)
+        # Add en.    
+        temp_en = sort.mid_tree(sort.en_tree)
+        if temp_en:
+            temp_list.append(temp_en)
+        # Add number.
+        temp_num = sort.mid_tree(sort.num_tree)
+        if temp_num:
+            temp_list.append(temp_num)
+            
+        # clear play list.
+        self.play_list.list_view.clear()        
+        list_item = []
+        # play list restart add file name.
+        for i in temp_list:
+            for j in i:
+                for k in j:
+                    list_item.append(MediaItem(k, temp_dict[k]))
+                    
+        self.play_list.list_view.add_items(list_item)                
+        
+        # highlight staring play file.
+        for item in self.play_list.list_view.items:
+            if self.play_list_dict[item.title] == self.mp.path:
+                self.play_list.list_view.set_highlight(item)    
+                break
+            
+            
+        
+        
     def type_sort(self):
         print "********"
     
