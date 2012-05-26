@@ -406,7 +406,9 @@ class INI(gobject.GObject):
                             ini_fp.write(child + " = " + root.child_addr[child] + "\n")
                 ini_fp.close()
             else:    
-                print "无法保存,root为空"
+                # print "无法保存,root为空"
+                print "   "
+                # pass
                 
         except:
             # print "由于前面出现错误"

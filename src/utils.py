@@ -41,9 +41,17 @@ def path_threads(path, mp):
     
     if os.path.isdir(path):
         for i in os.listdir(path):
-            new_path = path + "/" + i
+            if "." == i[0:1]:
+                continue
+            
+            if "/" != path:
+                new_path = path + "/" + i
+            else:    
+                new_path = path + i
+                            
             if os.path.isdir(new_path):
                 path_thread_id = threading.Thread(target=path_threads, args=(new_path, mp))
+                path_thread_id.setDaemon(True)
                 path_thread_id.start()
                 #path_threads(new_path, mp)
                 
