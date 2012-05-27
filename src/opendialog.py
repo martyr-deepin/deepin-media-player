@@ -33,9 +33,15 @@ import gio
 import gtk
 import os
 import datetime
+import gobject
 
 class OpenDialog(Window):
+    __gsignals__ = {
+        "get-path-name" : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (str,)),
+    }    
+    
     def __init__(self, path_name="~", Filter = {"所有文件":"*.*","文本文件":"*.txt*"}, width=500, height=350):
+        
         Window.__init__(self)
         # file type.
         self.filter = Filter # Save Filter.
@@ -133,13 +139,15 @@ class OpenDialog(Window):
                         print path
             else: # File.
                 print "This is File type."
-        
-    def show_open_window(self):    
-        self.show_all()        
-        
+                
     def open_path_file(self, list_view, item, column, offset_x, offset_y):    
-        temp_path_name = self.path_name + item.title + "/"        
-        self.path_list_show(temp_path_name)
+        temp_path_name = self.path_name + item.title                 
+        
+        if os.path.isfile(temp_path_name):
+            self.emit("get-path-name", temp_path_name)
+        else:    
+            temp_path_name +=  "/"
+            self.path_list_show(temp_path_name)
         
     def path_list_show(self, temp_path_name):
         if os.path.isdir(temp_path_name):
@@ -246,20 +254,23 @@ class OpenDialog(Window):
         return nb    
         
 #=========Test============
-def show_open_window_button(widget):    
-    open_dialog = OpenDialog("/home/") 
+# def show_open_window_button(widget):    
+#     open_dialog = OpenDialog("/home/") 
+    
+def get_path_name(OpenDialog, str):    
+    print str
     
 if __name__ == "__main__":
     open_dialog = OpenDialog("/home/") 
+    open_dialog.connect("get-path-name", get_path_name)
     open_dialog.set_filter({"所有文件":"*.*",
                             "文本文件":"*.txt*",
                             "音频文件":"*.mp3*",
                             "视频文件":"*.rmvb*"})    
     open_dialog.set_title("深度影音打开")
-    open_dialog.set_icon(gtk.gdk.pixbuf_new_from_file("/home/long/图片/open.png"))
-    open_dialog.filter_to_file_type("所有文件")
-    open_dialog.show_open_window()
-    
+    # open_dialog.set_icon(gtk.gdk.pixbuf_new_from_file("/home/long/图片/open.png"))
+    open_dialog.filter_to_file_type("所有文件")    
+    open_dialog.show_open_window()    
     # win = gtk.Window(gtk.WINDOW_TOPLEVEL)
     # win.set_size_request(100, 100)
     # btn = gtk.Button()
