@@ -117,10 +117,10 @@ class OpenDialog(Window):
         self.open_button_frame = gtk.Alignment()
         self.open_button_frame.set_padding(0, 0, 5, 5)
         self.open_button = Button("打开")
-        # self, list_view, item, column, offset_x, offset_y
-        self.open_button.connect("clicked", lambda w:self.open_path_file(self.list_view, 
-                                                                     self.list_view.items[self.list_view.select_rows[0]], 
-                                                                     -1, 0, 0))
+
+
+        self.open_button.connect("clicked", self.open_button_clicked)            
+
         self.open_button_frame.add(self.open_button)
         
         self.cancel_button_frame = gtk.Alignment()
@@ -139,6 +139,16 @@ class OpenDialog(Window):
         self.titlebar.close_button.connect("clicked", lambda w:self.destroy())
         self.titlebar.min_button.connect("clicked", lambda w: self.min_window())
         self.window_frame.add(self.main_vbox)
+        
+    def open_button_clicked(self, widget):    
+        try:
+            item = self.list_view.items[self.list_view.select_rows[0]]            
+        except:
+            item = self.list_view.items[0]
+    
+        self.open_path_file(self.list_view, 
+                                item,
+                                -1, 0, 0)
         
     def init_dir(self, path_name):            
         if "~" == path_name:
