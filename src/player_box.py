@@ -27,6 +27,7 @@ from dtk.ui.frame import HorizontalFrame,VerticalFrame
 from dtk.ui.utils import is_double_click
 from dtk.ui.menu import Menu
 
+from opendialog import OpenDialog
 from utils import allocation,path_threads
 from show_time import ShowTime
 from progressbar import ProgressBar
@@ -279,7 +280,7 @@ class PlayerBox(object):
         self.play_control_panel.pre_btn.connect("clicked", self.pre_button_clicked) # pre play.
         self.play_control_panel.start_btn.connect("clicked", self.start_button_clicked, 1) # start play or pause play.
         self.play_control_panel.next_btn.connect("clicked", self.next_button_clicked) # next play.
-        #self.play_control_panel.open_btn.connect("clicked", self.open_button_clicked) # show open window.
+        self.play_control_panel.open_btn.connect("clicked", self.open_button_clicked) # show open window.
         
         
         # Volume button.
@@ -589,7 +590,21 @@ class PlayerBox(object):
         '''next'''
         self.mp.next()
         
-            
+    def get_path_name(self, open_dialog, path_string):    
+        print path_string
+        
+    def open_button_clicked(self, widget):        
+        open_dialog = OpenDialog() 
+        open_dialog.connect("get-path-name", self.get_path_name)
+        open_dialog.set_filter({"所有文件":"*.*",
+                                "音频文件":"*.mp3*",
+                                "视频文件":"*.rmvb*"})    
+        # open_dialog.init_dir("/")
+        open_dialog.set_title("深度影音打开")
+        open_dialog.filter_to_file_type("所有文件")    
+        open_dialog.show_open_window()    
+    
+        
     def volume_button_set_mute(self, widget, event):
         '''Set mute.'''
         if 1 == event.button:

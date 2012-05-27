@@ -310,7 +310,6 @@ def show_open_window_button(widget):
                             "视频文件":"*.rmvb*"})    
     open_dialog.init_dir("/")
     open_dialog.set_title("深度影音打开")
-    # open_dialog.set_icon(gtk.gdk.pixbuf_new_from_file("/home/long/图片/open.png"))
     open_dialog.filter_to_file_type("所有文件")    
     open_dialog.show_open_window()    
     
