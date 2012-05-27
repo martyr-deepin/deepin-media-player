@@ -236,13 +236,23 @@ class OpenDialog(Window):
                                                       ]))                
         icon_theme = gtk.icon_theme_get_default()
         info_attr = gio_file_info.get_attribute_as_string(gio.FILE_ATTRIBUTE_STANDARD_CONTENT_TYPE)                
+        print info_attr
         display_type = str(gio.content_type_get_description(info_attr))
         display_size = str(gio_file_info.get_size())
         display_modify_time = gio_file_info.get_modification_time()
         icon = gio.content_type_get_icon(info_attr)
         icon_info = icon_theme.lookup_by_gicon(icon, icon_size, gtk.ICON_LOOKUP_USE_BUILTIN)        
         # return icon, size, modify_time.
-        return icon_info.load_icon(), display_size, display_type, display_modify_time
+        try:
+            pixbuf = icon_info.load_icon()
+        except Exception,e:    
+            info_attr = "text-plain"
+            icon = gio.content_type_get_icon(info_attr)
+            icon_info = icon_theme.lookup_by_gicon(icon, icon_size, gtk.ICON_LOOKUP_USE_BUILTIN)        
+            pixbuf = icon_info.load_icon()
+            print "icon_to_pixbuf:%s" % (e)
+            
+        return pixbuf, display_size, display_type, display_modify_time
         
     
     def str_size(self, nb, average=0, base=1024):        
@@ -264,13 +274,7 @@ class OpenDialog(Window):
         return nb    
         
 #=========Test============
-# def show_open_window_button(widget):    
-#     open_dialog = OpenDialog("/home/") 
-    
-def get_path_name(OpenDialog, str):    
-    print str
-    
-if __name__ == "__main__":
+def show_open_window_button(widget):        
     open_dialog = OpenDialog() 
     open_dialog.connect("get-path-name", get_path_name)
     open_dialog.set_filter({"所有文件":"*.*",
@@ -282,11 +286,16 @@ if __name__ == "__main__":
     # open_dialog.set_icon(gtk.gdk.pixbuf_new_from_file("/home/long/图片/open.png"))
     open_dialog.filter_to_file_type("所有文件")    
     open_dialog.show_open_window()    
-    # win = gtk.Window(gtk.WINDOW_TOPLEVEL)
-    # win.set_size_request(100, 100)
-    # btn = gtk.Button()
-    # btn.connect("clicked", show_open_window_button)
-    # win.add(btn)        
-    # win.show_all()
+    
+def get_path_name(OpenDialog, str):    
+    print str
+    
+if __name__ == "__main__":
+    win = gtk.Window(gtk.WINDOW_TOPLEVEL)
+    win.set_size_request(100, 100)
+    btn = gtk.Button()
+    btn.connect("clicked", show_open_window_button)
+    win.add(btn)        
+    win.show_all()
     gtk.main()
     
