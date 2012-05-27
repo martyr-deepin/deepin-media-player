@@ -54,6 +54,8 @@ class OpenDialog(Window):
         self.set_modal(True)
         # Set open dialog above.
         self.set_keep_above(True)
+        # Set window center.
+        self.set_position(gtk.WIN_POS_MOUSE)
         
         self.set_size_request(width, height)
         self.scrolled_window = ScrolledWindow()
@@ -318,7 +320,7 @@ def show_open_window_button(widget):
                             "文本文件":"*.txt*",
                             "音频文件":"*.mp3*",
                             "视频文件":"*.rmvb*"})    
-    open_dialog.init_dir("/")
+    # open_dialog.init_dir("/")
     open_dialog.set_title("深度影音打开")
     open_dialog.filter_to_file_type("所有文件")    
     open_dialog.show_open_window()    
