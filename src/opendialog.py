@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
+# houshaohui:code->[str_size, size, type, mtime]. 
 # Copyright (C) 2012 Deepin, Inc.
 #               2012 Hailong Qiu
 #
@@ -21,374 +22,191 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from dtk.ui.entry import TextEntry
-from dtk.ui.utils import propagate_expose
-from dtk.ui.utils import move_window
 from dtk.ui.titlebar import Titlebar
+from dtk.ui.listview import ListView
 from dtk.ui.scrolled_window import ScrolledWindow
-from dtk.ui.button import Button
-from dtk.ui.draw import draw_pixbuf
-from dtk.ui.draw import draw_font
-# from dtk.ui.utils import propagate_expose
-from unicode_to_ascii import UnicodeToAscii
-from utils import app_theme
-from utils import allocation
-import os
-import gtk
-import gobject
+from dtk.ui.window import Window
+from openlist import OpenItem
 
-class OpenDialog(gobject.GObject):
-    __gsignals__ = {
-        "get-path-name":(gobject.SIGNAL_RUN_LAST,
-                         gobject.TYPE_NONE,(gobject.TYPE_STRING,))
-        }    
-    def __init__ (self, titlebar_name = "打开"):        
-        gobject.GObject.__init__(self)
+
+import gio
+import gtk
+import os
+import datetime
+
+class OpenDialog(Window):
+    def __init__(self, path_name="~", width=500, height=350):
+        Window.__init__(self)
+        # Set open window -> dialog.
+        self.set_modal(True)
+        # Set open dialog above.
+        self.set_keep_above(True)
         
-        self.unicoe_to_ascii = UnicodeToAscii()
+        self.set_size_request(width, height)
+        self.scrolled_window = ScrolledWindow()
         
-        self.button_x_offset = 0
-        self.button_y_offset = 0
-        self.save_path = self.get_home_path()
-        self.save_split_path = self.save_path.split("/")
+        self.list_view = ListView()
+        # Add list view events.
+        self.list_view.connect("delete-select-items", self.no_delete_file)
+        self.list_view.connect("double-click-item", self.open_path_file)
         
-        self.init_bool = True
-        self.file_name = ""
-        self.play_file_geshi = [".rmvb", ".avi", ".mp3", ".mp4", "wav"]
-                
-        # show file or path of image.
-        self.vide_pixbuf = app_theme.get_pixbuf("Videos.ico")
-        self.music_pixbuf = app_theme.get_pixbuf("Music.ico")
-        self.folder_pixbuf = app_theme.get_pixbuf("Folder.ico")
+        self.list_view.add_titles(["名称", "大小", "类型", "修改日期"]) 
+        self.list_item = []
+        self.path_name = ""
+        self.path_list = ""
         
-        self.window_bg_pixbuf = app_theme.get_pixbuf("my_bg2.jpg")
-        
-        # input text.
-        self.text_entry_frame = gtk.Alignment()
-        self.text_entry_frame.set(0, 0, 0, 0)
-        self.text_entry_frame.set_padding(0, 0, 8, 8)
-        
-        self.text_entry =  gtk.Entry()#TextEntry()
-        self.text_entry.connect("key-press-event", self.text_entry_action)
-        self.text_entry_frame.add(self.text_entry)
-        # self.text_entry.set_size_(500, 24)
-        self.text_entry.set_size_request(500, 24)
-        
-        # up button.
-        self.top_hbox_all = gtk.HBox()        
-        self.up_btn_frame = gtk.Alignment()                
-        self.up_btn_frame.set(0, 0, 0, 0)
-        self.up_btn_frame.set_padding(2, 2, 8, 8)        
-        self.up_btn = Button("UP")        
-        self.up_btn.connect("clicked", self.up_chdir_button)
-        self.up_btn_frame.add(self.up_btn)
-        
-        self.top_hbox = gtk.HBox()
-        self.top_hbox_all.pack_start(self.up_btn_frame, False, False)
-        self.top_hbox_all.pack_start(self.top_hbox)
-        
-        # self.open_window = Application("OpenDialog", True)
-        self.open_window = gtk.Window(gtk.WINDOW_TOPLEVEL)
-        self.open_window.connect("configure-event", self.hide_keys_window)
-        self.open_window.connect("expose-event", self.draw_window_background)
-        self.open_window.connect("destroy", lambda w: self.open_window.destroy())
-        self.open_window.set_decorated(False)
-        self.title_bar = Titlebar(["close"])
-        self.title_bar.close_button.connect("clicked", lambda w:self.open_window.destroy())
-        self.title_bar.drag_box.connect('button-press-event', lambda w, e: move_window(w, e, self.open_window))
+        if "~" == path_name:
+            self.path_name = os.path.expanduser("~") + "/"
+        else:    
+            if os.path.exists(path_name): # File path ok.
+                self.path_name = path_name
+            else: # File Error.
+                self.path_name = os.path.expanduser("~") + "/"
+        # init open window.        
+        self.path_list_show(self.path_name)        
+        self.scrolled_window.add_child(self.list_view)     
         
         self.main_vbox = gtk.VBox()
-        self.main_vbox.pack_start(self.title_bar, False, False)
-        self.open_window.add(self.main_vbox)
         
-        window_width = 560
-        window_height = 400
-        self.open_window.set_size_request(window_width, window_height) 
+        # titlebar .
+        self.titlebar = Titlebar(["min", "close"], title="打开对话框")
+        self.main_vbox.pack_start(self.titlebar, False, False)
+        
+        # input path name ->text widget.
+        open_window_borde_width = 3
+        open_window_borde_height = 2
+        
+        self.path_entry_frame = gtk.Alignment()
+        self.path_entry_frame.set(1, 1, 1, 1)        
+        self.path_entry_frame.set_padding(open_window_borde_height, open_window_borde_height, 
+                                          open_window_borde_width, open_window_borde_width)
+        self.path_entry = TextEntry(self.path_name)
+        # entry events.
+        # draw_entry_background select_all
+        self.path_entry.entry.connect("changed", self.input_path_entry)
+        
+        self.path_entry.set_size(1, 30)
+        self.path_entry_frame.add(self.path_entry)
+        self.main_vbox.pack_start(self.path_entry_frame, False, False)
+        
+        # return and chdir dir button.
         
         
-        self.scrolled_window_frame = gtk.Alignment()
+        # scrolled window .
+        self.scrolled_window_frame = gtk.Alignment()        
         self.scrolled_window_frame.set(1, 1, 1, 1)
-        self.scrolled_window_frame.set_padding(1, 2, 2, 2)
-        self.scrolled_window = ScrolledWindow()
+        self.scrolled_window_frame.set_padding(open_window_borde_height, open_window_borde_height + 8, 
+                                               open_window_borde_width, open_window_borde_width)
         self.scrolled_window_frame.add(self.scrolled_window)
-        self.fixed = gtk.Fixed()
-
-        self.scrolled_window.add_child(self.fixed)    
-        
-        # bottom button. ok and cancel button.
-        self.hbox_frame = gtk.Alignment()
-        self.hbox_frame.set(1, 0, 0, 0)
-        self.hbox_frame.set_padding(0, 2, 0, 20)
-        self.hbox = gtk.HBox()        
-        self.hbox_frame.add(self.hbox)
-        self.ok_btn = Button(titlebar_name)
-        self.cancel_btn = Button("取消")
-        self.cancel_btn.connect("clicked", lambda w:self.open_window.destroy())
-        self.hbox.pack_start(self.ok_btn, False, False)
-        self.hbox.pack_start(self.cancel_btn, False, False)
-        
-        
-        # main_vbox add input text.
-        self.main_vbox.pack_start(self.text_entry_frame, False, False)
-        self.main_vbox.pack_start(self.top_hbox_all, False, False)
-        # main_box add fixed.
         self.main_vbox.pack_start(self.scrolled_window_frame, True, True)
-        # main_box add hbox_frame        
-        self.main_vbox.pack_start(self.hbox_frame, False, False)
         
-        self.open_window.show_all()    
-        self.open_window.hide_all()
-                
-        # show keys window.
-        self.keys_window = gtk.Window(gtk.WINDOW_TOPLEVEL)
-        self.keys_window.set_keep_above(True)
-        self.keys_window.set_decorated(False)
-        self.keys_window.set_size_request(-1, 25)
-        self.keys_scroll_window = ScrolledWindow()
+        # move open window.
+        self.add_move_event(self.titlebar.drag_box)
+        self.titlebar.close_button.connect("clicked", lambda w:self.destroy())
+        self.titlebar.min_button.connect("clicked", lambda w: self.min_window())
+        self.window_frame.add(self.main_vbox)
+        self.show_all()
         
-        self.keys_window_vbox = gtk.VBox()
-        
-        self.keys_scroll_window.add_child(self.keys_window_vbox)
-        self.keys_window.add(self.keys_scroll_window)
-        self.keys_window.show_all()
-        x, y = self.open_window.window.get_root_origin()
-        self.keys_window.move(x + 8, y + 47)
-        self.keys_window.hide_all()
-        
-    def hide_keys_window(self, widget, event):    
-        self.keys_window.hide_all()
-        
-    def text_entry_action(self, widget, event):                                
-        str1 = self.text_entry.get_text()            
-        print str1
-        if 65293 != event.keyval:                        
-            x, y = widget.window.get_root_origin()
-            self.keys_window.show_all()
-            self.keys_window.set_opacity(0)                                        
-        
-            
-            if len(str1) > 0:            
-        
-                list = self.unicoe_to_ascii.get_key_list(self.unicoe_to_ascii.unicode_to_ascii(str1))    
-                save_list = []
-                height_window = 10
-            
-                childs = self.keys_window_vbox.get_children()
-                for i in childs:
-                    self.keys_window_vbox.remove(i)
-                
-                if list:
-                    for str2 in list:
-                        if self.unicoe_to_ascii.get_strcmp_bool(str1, str2):
-                            button = gtk.Button(str2)
-                            button.set_size_request(400, -1)
-                            button.connect("expose-event", self.draw_keys_font, str2)
-                            button.connect("clicked", self.set_text_strings, str2)
-                            self.keys_window_vbox.pack_start(button)
-                            save_list.append(str2)                        
-                            height_window += 20
+    def input_path_entry(self, entry, text):    
+        if os.path.exists(text):
+            if os.path.isdir(text): # Dir.
+                for path in os.listdir(text):
+                    if "." != path[0:1]:
+                        self.path_entry.select_start_index = 5
+                        self.path_entry.entry.select_to_end()
+                        print path
                         
-                    if height_window > 300:        
-                        height_window = 300
+            else: # File.
+                print "This is File type."
+        
+    def show_open_window(self):    
+        self.show_all()        
+        
+    def open_path_file(self, list_view, item, column, offset_x, offset_y):    
+
+        temp_path_name = self.path_name + item.title + "/"        
+        self.path_list_show(temp_path_name)
+        
+    def path_list_show(self, temp_path_name):    
+        if os.path.isdir(temp_path_name):
+            # clear list item.
+            self.list_view.clear()
+            self.list_item = []
+            # file list.
+            self.path_name = temp_path_name
+            self.path_list = os.listdir(self.path_name)
+            if self.path_list:
+                for path_str in self.path_list:
+                    if "." != path_str[0:1]:
+                        pixbuf, size_num, file_type, modify_time  = self.icon_to_pixbuf(self.path_name + path_str, 16)        
+                        real_path = os.path.realpath(self.path_name + path_str)
+                        if os.path.isdir(real_path):
+                            file_size = "%d %s" % (len(os.listdir(real_path)), "项")
+                        else:    
+                            file_size  = self.str_size(size_num)
+                            
+                            
+                        file_ctime = datetime.datetime.fromtimestamp(os.path.getmtime(real_path)).strftime("%x %A %X")   
+                        self.list_item.append(OpenItem(pixbuf, path_str, file_size, file_type, file_ctime))
                     
-                    self.keys_window.resize(widget.allocation.width, height_window)        
-                    self.keys_window.move(x + 8, y + 47)
-                    self.keys_window.set_opacity(1)
-                    self.keys_window.show_all()
-                    # print save_list            
-                    # print len(str1.decode('utf-8'))
-                    # buquan_font = self.unicoe_to_ascii.get_max_index(save_list, len(str1.decode('utf-8')))            
-                    # print buquan_font
-                    # print save_list
-                    # print buquan_font           
-                    # if buquan_font and buquan_font != '/':
-                    #     self.text_entry.set_text(self.save_path + buquan_font)
-                    # print buquan_font
-        else:
-            save_split_text = str1.split("/")
-            save_split_text = save_split_text[len(save_split_text)-1]
-            self.open_file_or_dir(widget, save_split_text)
-            self.keys_window.hide_all()
-            
-    def set_text_strings(self, widget, str2):        
-        save_split_text = str2.split("/")
-        save_split_text = save_split_text[len(save_split_text)-1]            
-        self.open_file_or_dir(widget, save_split_text)
-        self.keys_window.hide_all()        
+                self.list_view.add_items(self.list_item)
         
-    def draw_keys_font(self, widget, event, key):
-        cr, x, y, w, h = allocation(widget)
-        draw_font(cr, key, 10, "#FF0000", 
-                  x +18 , y , w, h)
-        
-        if widget.state == gtk.STATE_PRELIGHT:
-            cr.set_source_rgba(0, 0, 1, 0.3)
-            cr.rectangle(x, y ,w , h)
-            cr.fill()
-        
-        return True
+    def no_delete_file(self, list_view, items):    
+        self.list_view.clear()
+        self.list_view.add_items(self.list_item)
     
-    def up_chdir_button(self, widget):            
-        save_split_text = self.save_path.split("/")
         
-        if len(save_split_text) > 2:         
-            # print save_split_text
-            del_name = save_split_text[len(save_split_text)-1]
-            save_split_text.remove(del_name)
-            # print save_split_text
-            self.save_path = "/".join(save_split_text)
-
+    def icon_to_pixbuf(self, path, icon_size = 16):
+        '''Get pat(cell_min_sh to pixbuf.'''
+        gio_file = gio.File(path)
+        gio_file_info = gio_file.query_info(",".join([gio.FILE_ATTRIBUTE_STANDARD_CONTENT_TYPE,
+                                                      gio.FILE_ATTRIBUTE_STANDARD_TYPE, 
+                                                      gio.FILE_ATTRIBUTE_STANDARD_NAME,
+                                                      gio.FILE_ATTRIBUTE_STANDARD_SIZE,
+                                                      gio.FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME,
+                                                      gio.FILE_ATTRIBUTE_TIME_MODIFIED,
+                                                      gio.FILE_ATTRIBUTE_STANDARD_ICON,
+                                                      ]))                
+        icon_theme = gtk.icon_theme_get_default()
+        info_attr = gio_file_info.get_attribute_as_string(gio.FILE_ATTRIBUTE_STANDARD_CONTENT_TYPE)                
+        display_type = str(gio.content_type_get_description(info_attr))
+        display_size = str(gio_file_info.get_size())
+        display_modify_time = gio_file_info.get_modification_time()
+        icon = gio.content_type_get_icon(info_attr)
+        icon_info = icon_theme.lookup_by_gicon(icon, icon_size, gtk.ICON_LOOKUP_USE_BUILTIN)        
+        # return icon, size, modify_time.
+        return icon_info.load_icon(), display_size, display_type, display_modify_time
+        
+    
+    def str_size(self, nb, average=0, base=1024):        
+        if average != 0:
+            average += 1
+        nb = float(nb)    
+        size_format = ""
+        if base == 1024:
+            units = ("B KB MB GB").split()
+        else:    
+            units = ("B KB MB GB").split()
             
-        for i in self.get_fixed_childs():
-            self.fixed.remove(i)                
-                
-                
-        self.button_y_offset = 0   
-        self.show_file_and_dir(self.save_path)
-        self.show_split_path_name()
-        
-            
-    def up_chdir_split_button(self, widget, text):    
-        
-        save_split_text = []
-        for i in self.save_split_path:            
-            save_split_text.append(i)
-            if i == text:
+        for size_format in units:    
+            if len("%d" % int(nb)) <= 3:
                 break
-            
-        temp_path = "/".join(save_split_text)
-        self.save_path = temp_path
+            nb = float(nb) / float(base)
+        nb = "%f" % round(nb, 1)    
+        nb = nb[:nb.rfind(".") + average] + size_format
+        return nb    
         
-        for i in self.get_fixed_childs():
-                self.fixed.remove(i)                
-                
-                
-        self.button_y_offset = 0   
-        self.show_file_and_dir(temp_path)
-        self.show_split_path_name()
-        
-    def fixed_add_button_child(self, text, x, y):
-        temp_path = self.save_path + "/" + text
-        isfile_bool = False
-        
-        if os.path.isfile(temp_path):
-            # if os.path.splitext(text)
-            file1, file2 = os.path.splitext(text)
-            if file2.lower() in self.play_file_geshi:
-                isfile_bool = True
-            
-        
-        if os.path.isdir(temp_path) or isfile_bool:            
-            button = gtk.Button(str(text))
-            button.set_size_request(400, -1)
-            button.connect("clicked", self.open_file_or_dir, str(text))
-            button.connect("expose-event", self.draw_button_bacbground, str(text))                            
-            self.fixed.put(button, int(x), int(y))
-            self.button_y_offset += 23
-            
-    def draw_window_background(self, widget, event):        
-        cr, x, y, w, h = allocation(widget)
-        window_bg_pixbuf = self.window_bg_pixbuf.get_pixbuf().scale_simple(w, h, gtk.gdk.INTERP_BILINEAR)
-        draw_pixbuf(cr, window_bg_pixbuf, x, y)       
-        propagate_expose(widget, event)
-        return True
-    
-    def draw_button_bacbground(self, widget, event, text):    
-        cr, x, y, w, h = allocation(widget)
-        temp_path = self.save_path + "/" + text
-        
-        pixbuf_width = 20
-        music_pixbuf = self.music_pixbuf.get_pixbuf().scale_simple(pixbuf_width, pixbuf_width, gtk.gdk.INTERP_BILINEAR)
-        vide_pixbuf = self.vide_pixbuf.get_pixbuf().scale_simple(pixbuf_width, pixbuf_width, gtk.gdk.INTERP_BILINEAR)
-        folder_pixbuf = self.folder_pixbuf.get_pixbuf().scale_simple(pixbuf_width, pixbuf_width, gtk.gdk.INTERP_BILINEAR)
-        
-        
-        pixbuf_padding = 2
-        if os.path.isdir(temp_path):
-            draw_pixbuf(cr, folder_pixbuf, x, y + pixbuf_padding)       
-            
-        if os.path.isfile(temp_path):        
-            file1, file2 = os.path.splitext(text)
-            if file2.lower() in [".mp3","wav"]:            
-                draw_pixbuf(cr, music_pixbuf, x, y + pixbuf_padding)    
-            else:    
-                draw_pixbuf(cr, vide_pixbuf, x, y + pixbuf_padding)
-        draw_font(cr, " " + text, 10, "#000000", 
-                  x +18 , y , w, h)
-        
-        if widget.state == gtk.STATE_PRELIGHT:
-            cr.set_source_rgba(1, 0, 0, 0.1)
-            cr.rectangle(x, y ,w , h)
-            cr.fill()
-        return True
-    
-    def open_file_or_dir(self, widget, text):          
-        temp_path = self.save_path + "/" + text
-        
-        if os.path.isfile(temp_path):
-            self.filename = temp_path
-            self.open_window.destroy()
-            self.emit("get-path-name", self.filename)
-            
-        if os.path.isdir(temp_path):
-            self.save_path += "/" + text # save path.
-            # clear all button.
-            for i in self.get_fixed_childs():
-                self.fixed.remove(i)                
-                
-            
-            self.button_y_offset = 0   
-            self.show_file_and_dir(temp_path)
-            self.show_split_path_name()
-            
-    def get_fixed_childs(self):
-        return self.fixed.get_children() #return list.
-    
-    def show_split_path_name(self):    
-        for i in self.top_hbox.get_children():
-                self.top_hbox.remove(i)
-        self.save_split_path = self.save_path.split("/")
-        
-        for i in self.save_split_path:
-            if len(i) > 0:
-                button = Button(i)                
-                button.connect("clicked", self.up_chdir_split_button, i)
-                self.top_hbox.pack_start(button, False, False)                                
-        self.top_hbox_all.show_all()
-        self.text_entry.set_text(self.save_path)    
-        
-
-        self.unicoe_to_ascii.clear_dict()
-        temp_list = os.listdir(self.save_path)                        
-        for list_strs in temp_list:
-            str1 = self.save_path + "/" + list_strs
-            self.unicoe_to_ascii.dict_add_strings(str1)
-            
-        
-    def show_dialog(self):
-        if self.init_bool:
-            self.show_split_path_name()
-            self.show_file_and_dir(self.save_path)
-            self.init_bool = False
-            
-        self.open_window.show_all()
-        
-    def show_file_and_dir(self, path):
-        if os.path.isdir(path): # is dir.            
-            all_dir_and_file = os.listdir(path)
-            # print all_dir_and_file
-            for file_name in all_dir_and_file:
-                self.fixed_add_button_child(str(file_name), self.button_x_offset, self.button_y_offset)
-        self.open_window.show_all()
-        
-    def get_home_path(self):
-        return os.path.expanduser("~")
-        
-def test_open(OpenDialog, text):
-    print text
+#=========Test============
+def show_open_window(widget):    
+    open_dialog = OpenDialog("/home/") 
     
 if __name__ == "__main__":
-    open_dialog = OpenDialog()
-    open_dialog.show_dialog()
-    open_dialog.connect("get-path-name", test_open)
+    open_dialog = OpenDialog("/home/") 
+    # win = gtk.Window(gtk.WINDOW_TOPLEVEL)
+    # win.set_size_request(100, 100)
+    # btn = gtk.Button()
+    # btn.connect("clicked", show_open_window)
+    # win.add(btn)        
+    # win.show_all()
     gtk.main()
-
+    
