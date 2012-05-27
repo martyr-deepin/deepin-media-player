@@ -40,13 +40,14 @@ class OpenDialog(Window):
         "get-path-name" : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (str,)),
     }    
     
-    def __init__(self, path_name="~", Filter = {"所有文件":"*.*","文本文件":"*.txt*"}, width=500, height=350):
+    def __init__(self, path_name="~", Filter = {"所有文件":"*.*"}, width=500, height=350):
         
         Window.__init__(self)
         # file type.
         self.filter = Filter # Save Filter.
         self.filter_format = ""
-        self.filter_to_file_type("文本文件")
+        # init file type.
+        self.filter_to_file_type("所有文件")
         
         # Set open window -> dialog.
         self.set_modal(True)
@@ -66,17 +67,10 @@ class OpenDialog(Window):
         self.path_name = ""
         self.path_list = ""
         
-        if "~" == path_name:
-            self.path_name = os.path.expanduser("~") + "/"
-        else:    
-            if os.path.exists(path_name): # File path ok.
-                self.path_name = path_name
-            else: # File Error.
-                self.path_name = os.path.expanduser("~") + "/"
-        # init open window.        
-        self.path_list_show(self.path_name)        
-        self.scrolled_window.add_child(self.list_view)     
+        # init dir(path).
+        self.init_dir(path_name)
         
+        self.scrolled_window.add_child(self.list_view)             
         self.main_vbox = gtk.VBox()
         
         # titlebar .
@@ -118,6 +112,19 @@ class OpenDialog(Window):
         self.titlebar.min_button.connect("clicked", lambda w: self.min_window())
         self.window_frame.add(self.main_vbox)
         
+    def init_dir(self, path_name):            
+        if "~" == path_name:
+            self.path_name = os.path.expanduser("~") + "/"
+        else:    
+            if os.path.exists(path_name): # File path ok.
+                if os.path.isdir(path_name):
+                    self.path_name = path_name
+                    if "/" != path_name[-1:]:
+                        self.path_name += "/"
+            else: # File Error.
+                self.path_name = os.path.expanduser("~") + "/"
+                
+        self.path_list_show(self.path_name)
         
     def show_open_window(self):    
         self.show_all()
@@ -165,24 +172,27 @@ class OpenDialog(Window):
             self.path_list = os.listdir(self.path_name)
             if self.path_list:
                 for path_str in self.path_list:
-                    if "." != path_str[0:1]:                        
+                    try:
+                        if "." != path_str[0:1]:                        
                         
-                        real_path = os.path.realpath(self.path_name + path_str)
-                        # real_path format == self.filter_format -> True
-                        if os.path.isfile(real_path):
-                            if not self.filter_file_type_bool(real_path):
-                                continue                                                        
+                            real_path = os.path.realpath(self.path_name + path_str)
+                             # real_path format == self.filter_format -> True
+                            if os.path.isfile(real_path):
+                                if not self.filter_file_type_bool(real_path):
+                                    continue                                                        
                             
-                        pixbuf, size_num, file_type, modify_time  = self.icon_to_pixbuf(self.path_name + path_str, 16)
+                            pixbuf, size_num, file_type, modify_time  = self.icon_to_pixbuf(self.path_name + path_str, 16)
                         
-                        if os.path.isdir(real_path):
-                            file_size = "%d %s" % (len(os.listdir(real_path)), "项")
-                        else:
-                            file_size  = self.str_size(size_num)                            
+                            if os.path.isdir(real_path):
+                                file_size = "%d %s" % (len(os.listdir(real_path)), "项")
+                            else:
+                                file_size  = self.str_size(size_num)                            
                                                         
-                        file_ctime = datetime.datetime.fromtimestamp(os.path.getmtime(real_path)).strftime("%x %A %X")   
+                            file_ctime = datetime.datetime.fromtimestamp(os.path.getmtime(real_path)).strftime("%x %A %X")   
                         
-                        self.list_item.append(OpenItem(pixbuf, path_str, file_size, file_type, file_ctime))
+                            self.list_item.append(OpenItem(pixbuf, path_str, file_size, file_type, file_ctime))
+                    except Exception, e:    
+                        print "path_list_show:%s" % (e)
                         
                 if self.list_item:    
                     self.list_view.add_items(self.list_item)
@@ -261,12 +271,13 @@ def get_path_name(OpenDialog, str):
     print str
     
 if __name__ == "__main__":
-    open_dialog = OpenDialog("/home/") 
+    open_dialog = OpenDialog() 
     open_dialog.connect("get-path-name", get_path_name)
     open_dialog.set_filter({"所有文件":"*.*",
                             "文本文件":"*.txt*",
                             "音频文件":"*.mp3*",
                             "视频文件":"*.rmvb*"})    
+    open_dialog.init_dir("/")
     open_dialog.set_title("深度影音打开")
     # open_dialog.set_icon(gtk.gdk.pixbuf_new_from_file("/home/long/图片/open.png"))
     open_dialog.filter_to_file_type("所有文件")    
