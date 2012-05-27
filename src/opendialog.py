@@ -26,6 +26,7 @@ from dtk.ui.titlebar import Titlebar
 from dtk.ui.listview import ListView
 from dtk.ui.scrolled_window import ScrolledWindow
 from dtk.ui.window import Window
+from dtk.ui.button import Button
 from openlist import OpenItem
 
 
@@ -90,7 +91,7 @@ class OpenDialog(Window):
         # entry events.
         # draw_entry_background select_all
         self.path_entry.entry.connect("changed", self.input_path_entry)
-        
+                
         
         self.path_entry.set_size(1, 30)
         self.path_entry_frame.add(self.path_entry)
@@ -105,6 +106,33 @@ class OpenDialog(Window):
                                                open_window_borde_width, open_window_borde_width)
         self.scrolled_window_frame.add(self.scrolled_window)
         self.main_vbox.pack_start(self.scrolled_window_frame, True, True)
+        
+        # open_button and cancel_button
+        self.button_hbox = gtk.HBox()
+        self.button_hbox_frmae = gtk.Alignment()
+        self.button_hbox_frmae.set(1, 0.5, 0, 0)
+        self.button_hbox_frmae.set_padding(0, 8, 0, 5)
+        self.button_hbox_frmae.add(self.button_hbox)
+        
+        self.open_button_frame = gtk.Alignment()
+        self.open_button_frame.set_padding(0, 0, 5, 5)
+        self.open_button = Button("打开")
+        # self, list_view, item, column, offset_x, offset_y
+        self.open_button.connect("clicked", lambda w:self.open_path_file(self.list_view, 
+                                                                     self.list_view.items[self.list_view.select_rows[0]], 
+                                                                     -1, 0, 0))
+        self.open_button_frame.add(self.open_button)
+        
+        self.cancel_button_frame = gtk.Alignment()
+        self.cancel_button = Button("取消")
+        # cancel_button event[destroy open window].
+        self.cancel_button.connect("clicked", lambda w:self.destroy())
+        self.cancel_button_frame.add(self.cancel_button)
+        
+        self.button_hbox.pack_start(self.open_button_frame)
+        self.button_hbox.pack_start(self.cancel_button_frame)
+        
+        self.main_vbox.pack_start(self.button_hbox_frmae, False, False)
         
         # move open window.
         self.add_move_event(self.titlebar.drag_box)
@@ -142,8 +170,7 @@ class OpenDialog(Window):
                 for path in os.listdir(text):
                     if "." != path[0:1]:
                         self.path_entry.select_start_index = 5
-                        self.path_entry.entry.select_to_end()                        
-                        print path
+                        self.path_entry.entry.select_to_end()
             else: # File.
                 print "This is File type."
                 
@@ -152,6 +179,7 @@ class OpenDialog(Window):
         
         if os.path.isfile(temp_path_name):
             self.emit("get-path-name", temp_path_name)
+            self.destroy()
         else:    
             temp_path_name +=  "/"
             self.path_list_show(temp_path_name)
@@ -236,7 +264,6 @@ class OpenDialog(Window):
                                                       ]))                
         icon_theme = gtk.icon_theme_get_default()
         info_attr = gio_file_info.get_attribute_as_string(gio.FILE_ATTRIBUTE_STANDARD_CONTENT_TYPE)                
-        print info_attr
         display_type = str(gio.content_type_get_description(info_attr))
         display_size = str(gio_file_info.get_size())
         display_modify_time = gio_file_info.get_modification_time()
@@ -292,6 +319,7 @@ def get_path_name(OpenDialog, str):
     
 if __name__ == "__main__":
     win = gtk.Window(gtk.WINDOW_TOPLEVEL)
+    win.connect("destroy", gtk.main_quit)
     win.set_size_request(100, 100)
     btn = gtk.Button()
     btn.connect("clicked", show_open_window_button)
