@@ -35,8 +35,13 @@ import os
 import datetime
 
 class OpenDialog(Window):
-    def __init__(self, path_name="~", width=500, height=350):
+    def __init__(self, path_name="~", Filter = {"所有文件":"*.*","文本文件":"*.txt*"}, width=500, height=350):
         Window.__init__(self)
+        # file type.
+        self.filter = Filter # Save Filter.
+        self.filter_format = ""
+        self.filter_to_file_type("文本文件")
+        
         # Set open window -> dialog.
         self.set_modal(True)
         # Set open dialog above.
@@ -69,7 +74,8 @@ class OpenDialog(Window):
         self.main_vbox = gtk.VBox()
         
         # titlebar .
-        self.titlebar = Titlebar(["min", "close"], title="打开对话框")
+        self.titlebar = Titlebar(["min", "close"], app_name="打开对话框")
+        
         self.main_vbox.pack_start(self.titlebar, False, False)
         
         # input path name ->text widget.
@@ -85,13 +91,13 @@ class OpenDialog(Window):
         # draw_entry_background select_all
         self.path_entry.entry.connect("changed", self.input_path_entry)
         
+        
         self.path_entry.set_size(1, 30)
         self.path_entry_frame.add(self.path_entry)
         self.main_vbox.pack_start(self.path_entry_frame, False, False)
         
         # return and chdir dir button.
-        
-        
+                
         # scrolled window .
         self.scrolled_window_frame = gtk.Alignment()        
         self.scrolled_window_frame.set(1, 1, 1, 1)
@@ -105,17 +111,26 @@ class OpenDialog(Window):
         self.titlebar.close_button.connect("clicked", lambda w:self.destroy())
         self.titlebar.min_button.connect("clicked", lambda w: self.min_window())
         self.window_frame.add(self.main_vbox)
+        
+        
+    def show_open_window(self):    
         self.show_all()
         
-    def input_path_entry(self, entry, text):    
+    def set_title(self, title_text):    
+        self.titlebar.app_name_box.change_text(title_text)
+        
+    # def set_icon(self, pixbuf):    
+    #     self.titlebar.icon_box.image_dpixbuf = pixbuf 
+        
+    def input_path_entry(self, entry, text):
+        '''input path entry.'''    
         if os.path.exists(text):
             if os.path.isdir(text): # Dir.
                 for path in os.listdir(text):
                     if "." != path[0:1]:
                         self.path_entry.select_start_index = 5
-                        self.path_entry.entry.select_to_end()
+                        self.path_entry.entry.select_to_end()                        
                         print path
-                        
             else: # File.
                 print "This is File type."
         
@@ -123,12 +138,17 @@ class OpenDialog(Window):
         self.show_all()        
         
     def open_path_file(self, list_view, item, column, offset_x, offset_y):    
-
         temp_path_name = self.path_name + item.title + "/"        
         self.path_list_show(temp_path_name)
         
-    def path_list_show(self, temp_path_name):    
+    def path_list_show(self, temp_path_name):
         if os.path.isdir(temp_path_name):
+            try:
+                self.path_entry.entry.set_text(temp_path_name)
+            except Exception, e:    
+                print "path_list_show: %s" % (e)
+            
+            # modefiy path_entry text.            
             # clear list item.
             self.list_view.clear()
             self.list_item = []
@@ -137,19 +157,48 @@ class OpenDialog(Window):
             self.path_list = os.listdir(self.path_name)
             if self.path_list:
                 for path_str in self.path_list:
-                    if "." != path_str[0:1]:
-                        pixbuf, size_num, file_type, modify_time  = self.icon_to_pixbuf(self.path_name + path_str, 16)        
+                    if "." != path_str[0:1]:                        
+                        
                         real_path = os.path.realpath(self.path_name + path_str)
+                        # real_path format == self.filter_format -> True
+                        if os.path.isfile(real_path):
+                            if not self.filter_file_type_bool(real_path):
+                                continue                                                        
+                            
+                        pixbuf, size_num, file_type, modify_time  = self.icon_to_pixbuf(self.path_name + path_str, 16)
+                        
                         if os.path.isdir(real_path):
                             file_size = "%d %s" % (len(os.listdir(real_path)), "项")
-                        else:    
-                            file_size  = self.str_size(size_num)
-                            
-                            
+                        else:
+                            file_size  = self.str_size(size_num)                            
+                                                        
                         file_ctime = datetime.datetime.fromtimestamp(os.path.getmtime(real_path)).strftime("%x %A %X")   
+                        
                         self.list_item.append(OpenItem(pixbuf, path_str, file_size, file_type, file_ctime))
-                    
-                self.list_view.add_items(self.list_item)
+                        
+                if self.list_item:    
+                    self.list_view.add_items(self.list_item)
+        
+    def set_filter(self, filter_dict):                
+        self.filter = filter_dict
+        
+    def filter_to_file_type(self, type_name):
+        '''{name:*.*, name1:*.txt*, name2:*.out*... ...}'''
+        self.filter_format = self.filter[type_name]
+        
+    def filter_file_type_bool(self, file_name):
+        '''Get file type->bool[True or False]'''        
+        # All File.
+        if "*.*" == self.filter_format:
+            return True
+        # Get file format.
+        file_path, file_format = os.path.splitext(file_name)
+        file_format = "*" + file_format + "*"
+        if file_format in self.filter_format:
+            return True
+        else:
+            return False
+    
         
     def no_delete_file(self, list_view, items):    
         self.list_view.clear()
@@ -197,15 +246,24 @@ class OpenDialog(Window):
         return nb    
         
 #=========Test============
-def show_open_window(widget):    
+def show_open_window_button(widget):    
     open_dialog = OpenDialog("/home/") 
     
 if __name__ == "__main__":
     open_dialog = OpenDialog("/home/") 
+    open_dialog.set_filter({"所有文件":"*.*",
+                            "文本文件":"*.txt*",
+                            "音频文件":"*.mp3*",
+                            "视频文件":"*.rmvb*"})    
+    open_dialog.set_title("深度影音打开")
+    open_dialog.set_icon(gtk.gdk.pixbuf_new_from_file("/home/long/图片/open.png"))
+    open_dialog.filter_to_file_type("所有文件")
+    open_dialog.show_open_window()
+    
     # win = gtk.Window(gtk.WINDOW_TOPLEVEL)
     # win.set_size_request(100, 100)
     # btn = gtk.Button()
-    # btn.connect("clicked", show_open_window)
+    # btn.connect("clicked", show_open_window_button)
     # win.add(btn)        
     # win.show_all()
     gtk.main()
