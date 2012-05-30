@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# houshaohui:code->[str_size, size, type, mtime]. 
+# houshaohui:code->[str_size function, get size, type, mtime]. 
 # Copyright (C) 2012 Deepin, Inc.
 #               2012 Hailong Qiu
 #
@@ -41,7 +41,7 @@ class OpenDialog(Window):
         "get-path-name" : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (str,)),
     }    
     
-    def __init__(self, path_name="~", Filter = {"所有文件":"*.*"}, width=500, height=350):
+    def __init__(self, path_name="~", Filter = {"所有文件":".*"}, width=500, height=350):
         
         Window.__init__(self)
         # file type.
@@ -220,7 +220,7 @@ class OpenDialog(Window):
                             if os.path.isfile(real_path):
                                 if not self.filter_file_type_bool(real_path):
                                     continue                                                        
-                            
+                                
                             pixbuf, size_num, file_type, modify_time  = self.icon_to_pixbuf(self.path_name + path_str, 16)
                         
                             if os.path.isdir(real_path):
@@ -247,16 +247,33 @@ class OpenDialog(Window):
     def filter_file_type_bool(self, file_name):
         '''Get file type->bool[True or False]'''        
         # All File.
-        if "*.*" == self.filter_format:
+        if ".*" == self.filter_format:
             return True
         # Get file format.
         file_path, file_format = os.path.splitext(file_name)
-        file_format = "*" + file_format + "*"
-        if file_format in self.filter_format:
+        file_format = file_format 
+        if file_format in self.filter_format.split("|"):            
+            return True
+                
+        gio_file = gio.File(file_name)
+        file_atrr = ",".join([gio.FILE_ATTRIBUTE_STANDARD_CONTENT_TYPE,
+                                                      gio.FILE_ATTRIBUTE_STANDARD_TYPE, 
+                                                      gio.FILE_ATTRIBUTE_STANDARD_NAME,
+                                                      gio.FILE_ATTRIBUTE_STANDARD_SIZE,
+                                                      gio.FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME,
+                                                      gio.FILE_ATTRIBUTE_TIME_MODIFIED,
+                                                      gio.FILE_ATTRIBUTE_STANDARD_ICON,
+                                            ])
+        gio_file_info = gio_file.query_info(file_atrr)                
+        info_attr = gio_file_info.get_attribute_as_string(gio.FILE_ATTRIBUTE_STANDARD_CONTENT_TYPE)       
+        file_format = info_attr       
+
+        if str(file_format) in self.filter_format.split("|"):
             return True
         else:
             return False
-    
+        
+        
         
     def no_delete_file(self, list_view, items):    
         self.list_view.clear()
@@ -276,6 +293,7 @@ class OpenDialog(Window):
                                                       ]))                
         icon_theme = gtk.icon_theme_get_default()
         info_attr = gio_file_info.get_attribute_as_string(gio.FILE_ATTRIBUTE_STANDARD_CONTENT_TYPE)                
+
         display_type = str(gio.content_type_get_description(info_attr))
         display_size = str(gio_file_info.get_size())
         display_modify_time = gio_file_info.get_modification_time()
@@ -312,17 +330,25 @@ class OpenDialog(Window):
         nb = nb[:nb.rfind(".") + average] + size_format
         return nb    
         
+# 音频和视频文件: audio/mpeg , # 支持大多数音频格式
+#              video/webm ,  
+#              video/x-msvideo, # 支持大多数视频格式.
 #=========Test============
 def show_open_window_button(widget):        
     open_dialog = OpenDialog() 
     open_dialog.connect("get-path-name", get_path_name)
-    open_dialog.set_filter({"所有文件":"*.*",
-                            "文本文件":"*.txt*",
-                            "音频文件":"*.mp3*",
-                            "视频文件":"*.rmvb*"})    
-    # open_dialog.init_dir("/")
+    open_dialog.set_filter({"所有文件":".*",
+                            "文本文件":".txt",
+                            # "音频文件":".mp3|.webm",
+                            "音频文件":"audio/mpeg", # 所有音频格式.
+                            "视频文件":"video/x-msvideo|.rmvb", 
+                            # "视频文件":".rmvb"
+                            })        
+    open_dialog.init_dir("/")
     open_dialog.set_title("深度影音打开")
-    open_dialog.filter_to_file_type("所有文件")    
+    # open_dialog.filter_to_file_type("所有文件")    
+    # open_dialog.filter_to_file_type("音频文件")
+    open_dialog.filter_to_file_type("视频文件")
     open_dialog.show_open_window()    
     
 def get_path_name(OpenDialog, str):    
