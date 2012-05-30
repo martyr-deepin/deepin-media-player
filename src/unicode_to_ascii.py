@@ -22,9 +22,9 @@
 
 
 class UnicodeToAscii(object):    
-    def __init__(self):
-        self.list_dict = {}
-                    
+    # def __init__(self):
+    #     self.list_dict = {}
+                            
     def unicode_bool(self, strings):
         if 0 <= ord(strings[0:1].lower()) <= 127:
             return False # False -> asicc. 

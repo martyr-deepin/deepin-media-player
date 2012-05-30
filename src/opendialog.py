@@ -75,9 +75,13 @@ class OpenDialog(Window):
         self.list_item = []
         self.path_name = ""
         self.path_list = ""
+        self.input_path_list = []
+        self.input_string = ""
+        self.input_path = ""
         
         # Init dir(path).
         self.init_dir(path_name)
+        self.input_path = self.path_name # Save entry intpu path.
         
         self.scrolled_window.add_child(self.list_view)             
         self.main_vbox = gtk.VBox()
@@ -99,7 +103,8 @@ class OpenDialog(Window):
         self.path_entry = TextEntry(self.path_name)
         # entry events.
         # draw_entry_background select_all
-        self.path_entry.entry.connect("changed", self.input_path_entry)                        
+        # self.path_entry.entry.connect("changed", self.input_path_entry)
+        self.path_entry.entry.connect("key-press-event", self.input_path_entry)
         
         self.path_entry.set_size(1, 30)
         self.path_entry_frame.add(self.path_entry)
@@ -213,17 +218,60 @@ class OpenDialog(Window):
     # def set_icon(self, pixbuf):    
     #     self.titlebar.icon_box.image_dpixbuf = pixbuf 
         
-    def input_path_entry(self, entry, text):
+    def input_path_entry(self, widget, event):
         '''input path entry.'''    
-        if os.path.exists(text):
-            if os.path.isdir(text): # Dir.
-                for path in os.listdir(text):
-                    if "." != path[0:1]:
-                        self.path_entry.select_start_index = 5
-                        self.path_entry.entry.select_to_end()
-            else: # File.
-                print "This is File type."
+        keyval = event.keyval
+        keyval = gtk.gdk.keyval_name(keyval)
+        # print keyval
                 
+        if "Return" == keyval:
+            temp_path_name = widget.get_text()
+            if os.path.exists(temp_path_name):
+                # file.
+                if os.path.isfile(temp_path_name):
+                    self.open_button_clicked(self.open_button)
+                # dir.    
+                elif os.path.isdir(temp_path_name):                         
+                    if "/" != temp_path_name[-1:]:
+                        temp_path_name += "/"                            
+                    self.path_list_show(temp_path_name)
+            else:    
+                print "input_path_entry:%s" % ("Dir or File Error... ...")
+        else:# 路径补足
+            temp_path_name = widget.get_text()
+            if os.path.exists(temp_path_name) and "/" == temp_path_name[-1:]:         
+                # Get path list.
+                if os.path.isdir(temp_path_name):                    
+                    self.input_path = temp_path_name # Save input path.        
+                    self.input_path_list = os.listdir(temp_path_name)                        
+            else:            
+                path_list = ""
+                temp_path_list = temp_path_name.split("/")
+                temp_path_len  = len(temp_path_name.split("/"))
+                temp_path_list[0] = "/"
+                
+                for path_num in range(0, temp_path_len - 1):   
+                    path_list += temp_path_list[path_num]
+                    if "/" != path_list:
+                        path_list += "/"
+                        
+                try:                                
+                    self.input_path_list = os.listdir(path_list)        
+                except Exception, e:    
+                    print "input_path_entry:%s" % (e)
+
+                                            
+                    
+
+            for path_str in self.input_path_list:        
+               print path_str
+            
+               
+            # Save entry input strings.
+            self.input_string = temp_path_name.split("/")[len(temp_path_name.split("/")) - 1]                        
+                    
+        return True
+        
     def open_path_file(self, list_view, item, column, offset_x, offset_y):    
         temp_path_name = self.path_name + item.title                 
         
@@ -386,7 +434,7 @@ def show_open_window_button(widget):
     open_dialog.set_title("深度影音打开")
     # open_dialog.filter_to_file_type("所有文件")    
     # open_dialog.filter_to_file_type("音频文件")
-    open_dialog.filter_to_file_type("视频文件")
+    # open_dialog.filter_to_file_type("视频文件")
     open_dialog.show_open_window()   
     
 def get_path_name(OpenDialog, str):
