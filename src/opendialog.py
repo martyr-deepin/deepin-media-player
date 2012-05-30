@@ -29,7 +29,7 @@ from dtk.ui.window import Window
 from dtk.ui.button import Button
 from openlist import OpenItem
 
-
+from unicode_to_ascii import UnicodeToAscii
 import gio
 import gtk
 import os
@@ -49,6 +49,8 @@ class OpenDialog(Window):
     def __init__(self, path_name="~", Filter = {"所有文件":".*"}, width=500, height=350):
         
         Window.__init__(self)
+        # Init unicode.
+        self.utf = UnicodeToAscii()
         # file type.
         self.filter = Filter # Save Filter.
         self.filter_format = ""
@@ -103,7 +105,7 @@ class OpenDialog(Window):
         self.path_entry = TextEntry(self.path_name)
         # entry events.
         # draw_entry_background select_all
-        # self.path_entry.entry.connect("changed", self.input_path_entry)
+        self.path_entry.entry.connect("changed", self.input_path_entry_query)
         self.path_entry.entry.connect("key-press-event", self.input_path_entry)
         
         self.path_entry.set_size(1, 30)
@@ -218,12 +220,19 @@ class OpenDialog(Window):
     # def set_icon(self, pixbuf):    
     #     self.titlebar.icon_box.image_dpixbuf = pixbuf 
         
+    def input_path_entry_query(self, entry, text):            
+        self.input_path_entry(self.path_entry.entry, self.path_entry.entry.event)
+        
     def input_path_entry(self, widget, event):
         '''input path entry.'''    
-        keyval = event.keyval
-        keyval = gtk.gdk.keyval_name(keyval)
+        try:
+            keyval = event.keyval
+            keyval = gtk.gdk.keyval_name(keyval)
+        except Exception, e:    
+            print "input_path_entry:%s" % (e)            
+            keyval = ""
         # print keyval
-                
+        
         if "Return" == keyval:
             temp_path_name = widget.get_text()
             if os.path.exists(temp_path_name):
@@ -249,7 +258,7 @@ class OpenDialog(Window):
                 temp_path_list = temp_path_name.split("/")
                 temp_path_len  = len(temp_path_name.split("/"))
                 temp_path_list[0] = "/"
-                print "分开/:" + str(temp_path_list)
+                
                 for path_num in range(0, temp_path_len - 1):   
                     path_list += temp_path_list[path_num]
                     
@@ -263,19 +272,45 @@ class OpenDialog(Window):
                     self.input_path_list = os.listdir(path_list)        
                 except Exception, e:    
                     print "input_path_entry:%s" % (e)
-
                                             
-                    
-            print "路径:" + self.input_path     
-            for path_str in self.input_path_list:        
-               print path_str
-            
-               
+            # input_path   input_string    input_path_list        
             # Save entry input strings.
             self.input_string = temp_path_name.split("/")[len(temp_path_name.split("/")) - 1]                        
-                    
+            
+            temp_input_path_list = self.input_path_list            
+            input_str_num = 0
+            save_temp_input_path_list = []
+            # Delete . file.
+            for path_list in temp_input_path_list:
+                if "." == path_list[0]:
+                    continue
+                save_temp_input_path_list.append(path_list)
+            temp_input_path_list = save_temp_input_path_list    
+            
+            # print temp_input_path_list
+            
+            for input_str in self.input_string.decode('utf-8'):
+                save_temp_input_path_list = self.return_cmp_list(input_str, temp_input_path_list, input_str_num)
+                temp_input_path_list = save_temp_input_path_list
+                # if len(temp_input_path_list) < 1:
+                #     break                
+                input_str_num += 1
+            print temp_input_path_list    
         return True
         
+    def return_cmp_list(self, token, symbol_table, index):              
+        temp_symbol_table = []
+        print token
+        for symbol in symbol_table:
+            temp_symbol = symbol.decode('utf-8')
+            temp_symbol_len = len(temp_symbol)
+            
+            if temp_symbol_len > index:            
+                if  temp_symbol[index] == token:
+                    temp_symbol_table.append(symbol)                
+                
+        return temp_symbol_table
+    
     def open_path_file(self, list_view, item, column, offset_x, offset_y):    
         temp_path_name = self.path_name + item.title                 
         
