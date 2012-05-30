@@ -179,10 +179,17 @@ class OpenDialog(Window):
         except:
             item = self.list_view.items[0]
             
-        self.open_path_file(self.list_view, 
-                            item,
-                            -1, 0, 0)
+        # open file and dir.    
+        temp_path_name = self.path_name + item.title    
+        self.emit("get-path-name", temp_path_name)
+        self.destroy()
         
+        # open file.
+        # self.open_path_file(self.list_view, 
+        #                     item,
+        #                     -1, 0, 0)
+            
+            
     def init_dir(self, path_name):            
         if "~" == path_name:
             self.path_name = os.path.expanduser("~") + "/"
