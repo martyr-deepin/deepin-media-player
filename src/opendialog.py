@@ -36,7 +36,12 @@ import os
 import datetime
 import gobject
 
+# 音频和视频文件[file format]: audio/mpeg , # 支持大多数音频格式
+#              video/webm ,  
+#              video/x-msvideo, # 支持大多数视频格式.    
+
 class OpenDialog(Window):
+    '''Open dialog window.'''
     __gsignals__ = {
         "get-path-name" : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (str,)),
     }    
@@ -65,18 +70,19 @@ class OpenDialog(Window):
         self.list_view.connect("delete-select-items", self.no_delete_file)
         self.list_view.connect("double-click-item", self.open_path_file)
         
+        # List view title.
         self.list_view.add_titles(["名称", "大小", "类型", "修改日期"]) 
         self.list_item = []
         self.path_name = ""
         self.path_list = ""
         
-        # init dir(path).
+        # Init dir(path).
         self.init_dir(path_name)
         
         self.scrolled_window.add_child(self.list_view)             
         self.main_vbox = gtk.VBox()
         
-        # titlebar .
+        # titlebar.
         self.titlebar = Titlebar(["min", "close"], app_name="打开对话框")
         
         self.main_vbox.pack_start(self.titlebar, False, False)
@@ -85,6 +91,7 @@ class OpenDialog(Window):
         open_window_borde_width = 3
         open_window_borde_height = 2
         
+        self.top_hbox = gtk.HBox()
         self.path_entry_frame = gtk.Alignment()
         self.path_entry_frame.set(1, 1, 1, 1)        
         self.path_entry_frame.set_padding(open_window_borde_height, open_window_borde_height, 
@@ -92,12 +99,24 @@ class OpenDialog(Window):
         self.path_entry = TextEntry(self.path_name)
         # entry events.
         # draw_entry_background select_all
-        self.path_entry.entry.connect("changed", self.input_path_entry)
-                
+        self.path_entry.entry.connect("changed", self.input_path_entry)                        
         
         self.path_entry.set_size(1, 30)
         self.path_entry_frame.add(self.path_entry)
-        self.main_vbox.pack_start(self.path_entry_frame, False, False)
+        
+        self.return_upper_button_frame = gtk.Alignment()
+        self.return_upper_button_frame.set(0, 0.5, 0, 0)
+        self.return_upper_button_frame.set_padding(0, 0, 5, 20)
+        self.return_upper_button = Button("返回上一层")
+        self.return_upper_button.connect("clicked", self.return_upper_button_clicked)
+        self.return_upper_button_frame.add(self.return_upper_button)
+        # self.new_file_button = Button("创建文件夹")
+        
+        self.top_hbox.pack_start(self.path_entry_frame)
+        self.top_hbox.pack_start(self.return_upper_button_frame, False, False)
+        # self.top_hbox.pack_start(self.new_file_button, False, False)
+        
+        self.main_vbox.pack_start(self.top_hbox, False, False)
         
         # return and chdir dir button.
                 
@@ -116,15 +135,14 @@ class OpenDialog(Window):
         self.button_hbox_frmae.set_padding(0, 8, 0, 5)
         self.button_hbox_frmae.add(self.button_hbox)
         
+        # Open Button.
         self.open_button_frame = gtk.Alignment()
         self.open_button_frame.set_padding(0, 0, 5, 5)
         self.open_button = Button("打开")
-
-
         self.open_button.connect("clicked", self.open_button_clicked)            
-
         self.open_button_frame.add(self.open_button)
         
+        # Cancel Button.
         self.cancel_button_frame = gtk.Alignment()
         self.cancel_button = Button("取消")
         # cancel_button event[destroy open window].
@@ -142,15 +160,28 @@ class OpenDialog(Window):
         self.titlebar.min_button.connect("clicked", lambda w: self.min_window())
         self.window_frame.add(self.main_vbox)
         
+    def return_upper_button_clicked(self, widget):
+        path_name = ""
+        path_name_list = self.path_name[:-1].split("/")
+        path_name_list[0] = '/'
+        path_name_len = len(path_name_list)                
+                    
+        for num in range(0, path_name_len-1):                
+            path_name += path_name_list[num]
+            if "/" != path_name:
+                path_name += "/"
+            
+        self.path_list_show(path_name)    
+        
     def open_button_clicked(self, widget):    
         try:
             item = self.list_view.items[self.list_view.select_rows[0]]            
         except:
             item = self.list_view.items[0]
-    
+            
         self.open_path_file(self.list_view, 
-                                item,
-                                -1, 0, 0)
+                            item,
+                            -1, 0, 0)
         
     def init_dir(self, path_name):            
         if "~" == path_name:
@@ -211,6 +242,7 @@ class OpenDialog(Window):
             self.path_name = temp_path_name
             self.path_list = os.listdir(self.path_name)
             if self.path_list:
+                # Loop show path file ->name, size, type, modify time.
                 for path_str in self.path_list:
                     try:
                         if "." != path_str[0:1]:                        
@@ -241,7 +273,7 @@ class OpenDialog(Window):
         self.filter = filter_dict
         
     def filter_to_file_type(self, type_name):
-        '''{name:*.*, name1:*.txt*, name2:*.out*... ...}'''
+        '''{type_name:.*, type_name1:.txt|.c|.cpp, type_name2:.out... ...}'''
         self.filter_format = self.filter[type_name]
         
     def filter_file_type_bool(self, file_name):
@@ -283,14 +315,15 @@ class OpenDialog(Window):
     def icon_to_pixbuf(self, path, icon_size = 16):
         '''Get pat(cell_min_sh to pixbuf.'''
         gio_file = gio.File(path)
-        gio_file_info = gio_file.query_info(",".join([gio.FILE_ATTRIBUTE_STANDARD_CONTENT_TYPE,
-                                                      gio.FILE_ATTRIBUTE_STANDARD_TYPE, 
-                                                      gio.FILE_ATTRIBUTE_STANDARD_NAME,
-                                                      gio.FILE_ATTRIBUTE_STANDARD_SIZE,
-                                                      gio.FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME,
-                                                      gio.FILE_ATTRIBUTE_TIME_MODIFIED,
-                                                      gio.FILE_ATTRIBUTE_STANDARD_ICON,
-                                                      ]))                
+        file_type_atrr = ",".join([gio.FILE_ATTRIBUTE_STANDARD_CONTENT_TYPE,
+                                   gio.FILE_ATTRIBUTE_STANDARD_TYPE, 
+                                   gio.FILE_ATTRIBUTE_STANDARD_NAME,
+                                   gio.FILE_ATTRIBUTE_STANDARD_SIZE,
+                                   gio.FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME,
+                                   gio.FILE_ATTRIBUTE_TIME_MODIFIED,
+                                   gio.FILE_ATTRIBUTE_STANDARD_ICON,
+                                   ])
+        gio_file_info = gio_file.query_info(file_type_atrr)                
         icon_theme = gtk.icon_theme_get_default()
         info_attr = gio_file_info.get_attribute_as_string(gio.FILE_ATTRIBUTE_STANDARD_CONTENT_TYPE)                
 
@@ -329,29 +362,27 @@ class OpenDialog(Window):
         nb = "%f" % round(nb, 1)    
         nb = nb[:nb.rfind(".") + average] + size_format
         return nb    
-        
-# 音频和视频文件: audio/mpeg , # 支持大多数音频格式
-#              video/webm ,  
-#              video/x-msvideo, # 支持大多数视频格式.
+
 #=========Test============
-def show_open_window_button(widget):        
-    open_dialog = OpenDialog() 
+def show_open_window_button(widget):
+    open_dialog = OpenDialog()
+    # Init open_dialog connect event.
     open_dialog.connect("get-path-name", get_path_name)
     open_dialog.set_filter({"所有文件":".*",
                             "文本文件":".txt",
                             # "音频文件":".mp3|.webm",
                             "音频文件":"audio/mpeg", # 所有音频格式.
-                            "视频文件":"video/x-msvideo|.rmvb", 
+                            "视频文件":"video/x-msvideo|.rmvb",
                             # "视频文件":".rmvb"
-                            })        
-    open_dialog.init_dir("/")
+                            })
+    # open_dialog.init_dir("/home")
     open_dialog.set_title("深度影音打开")
     # open_dialog.filter_to_file_type("所有文件")    
     # open_dialog.filter_to_file_type("音频文件")
     open_dialog.filter_to_file_type("视频文件")
-    open_dialog.show_open_window()    
+    open_dialog.show_open_window()   
     
-def get_path_name(OpenDialog, str):    
+def get_path_name(OpenDialog, str):
     print str
     
 if __name__ == "__main__":
