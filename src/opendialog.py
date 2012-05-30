@@ -249,11 +249,15 @@ class OpenDialog(Window):
                 temp_path_list = temp_path_name.split("/")
                 temp_path_len  = len(temp_path_name.split("/"))
                 temp_path_list[0] = "/"
-                
+                print "分开/:" + str(temp_path_list)
                 for path_num in range(0, temp_path_len - 1):   
                     path_list += temp_path_list[path_num]
+                    
                     if "/" != path_list:
                         path_list += "/"
+                    # Save entry input path.    
+                    if os.path.exists(path_list):    
+                        self.input_path = path_list
                         
                 try:                                
                     self.input_path_list = os.listdir(path_list)        
@@ -262,7 +266,7 @@ class OpenDialog(Window):
 
                                             
                     
-
+            print "路径:" + self.input_path     
             for path_str in self.input_path_list:        
                print path_str
             
