@@ -48,7 +48,8 @@ class ComBox(gtk.Alignment):
         self.hbox = gtk.HBox()
         self.start_btn_frame = gtk.Alignment()
         self.start_btn_frame.set(1, 1, 1, 1)
-        self.start_btn = Button("弹出")
+        self.start_btn = Button("V")
+        self.start_btn.set_size_request(12, 25)
         self.start_btn.connect("button-press-event", self.show_pop_win_press)
         self.start_btn_frame.add(self.start_btn)
         
