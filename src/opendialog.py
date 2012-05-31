@@ -28,6 +28,7 @@ from dtk.ui.listview import ListView
 from dtk.ui.scrolled_window import ScrolledWindow
 from dtk.ui.window import Window
 from dtk.ui.button import Button
+from dtk.ui.combo import ComboBox
 from openlist import OpenItem
 
 from unicode_to_ascii import UnicodeToAscii
@@ -40,6 +41,16 @@ import gobject
 # 音频和视频文件[file format]: audio/mpeg , # 支持大多数音频格式
 #              video/webm ,  
 #              video/x-msvideo, # 支持大多数视频格式.    
+
+class FilterItem(object):
+    def __init__(self, filter_name):
+        
+        self.filter_name = filter_name
+        
+    def get_label(self):    
+        return self.filter_name
+    
+       
 
 class OpenDialog(Window):
     '''Open dialog window.'''
@@ -58,10 +69,15 @@ class OpenDialog(Window):
         # init file type.
         self.filter_to_file_type("所有文件")
         
+        # init filter combo_box
+        self.combo_box = ComboBox()
+        self.combo_box.connect("item-selected", self.filter_selected_cb)
+
+        
         # Set open window -> dialog.
         self.set_modal(True)
         # Set open dialog above.
-        self.set_keep_above(True)
+        # self.set_keep_above(True)
         # Set window center.
         self.set_position(gtk.WIN_POS_MOUSE)
         
@@ -95,6 +111,7 @@ class OpenDialog(Window):
         self.titlebar = Titlebar(["min", "close"], app_name="打开对话框")
         
         self.main_vbox.pack_start(self.titlebar, False, False)
+        
         
         # input path name ->text widget.
         open_window_borde_width = 3
@@ -159,10 +176,12 @@ class OpenDialog(Window):
         self.cancel_button.connect("clicked", lambda w:self.destroy())
         self.cancel_button_frame.add(self.cancel_button)
         
+        self.button_hbox.pack_start(self.combo_box, False, False)        
         self.button_hbox.pack_start(self.open_button_frame)
         self.button_hbox.pack_start(self.cancel_button_frame)
         
         self.main_vbox.pack_start(self.button_hbox_frmae, False, False)
+  
         
         # move open window.
         self.add_move_event(self.titlebar.drag_box)
@@ -399,11 +418,16 @@ class OpenDialog(Window):
                     self.list_view.add_items(self.list_item)
         
     def set_filter(self, filter_dict):                
+        self.combo_box.clear()
         self.filter = filter_dict
+        for filter_str in filter_dict.keys():
+            self.combo_box.add_item(FilterItem(filter_str))
+        self.combo_box.set_top_index(2)    
         
     def filter_to_file_type(self, type_name):
         '''{type_name:.*, type_name1:.txt|.c|.cpp, type_name2:.out... ...}'''
         self.filter_format = self.filter[type_name]
+        
         
     def filter_file_type_bool(self, file_name):
         '''Get file type->bool[True or False]'''        
@@ -492,6 +516,10 @@ class OpenDialog(Window):
         nb = nb[:nb.rfind(".") + average] + size_format
         return nb    
 
+    def filter_selected_cb(self, widget, item):
+        self.filter_to_file_type(item.get_label())
+        self.path_list_show(self.path_name)
+        
 #=========Test============
 def show_open_window_button(widget):
     open_dialog = OpenDialog()
