@@ -108,7 +108,7 @@ class OpenDialog(Window):
         self.path_entry = TextEntry(self.path_name)
         # entry events.
         # draw_entry_background select_all
-        self.path_entry.entry.connect("changed", self.input_path_entry_query)
+        self.path_entry.entry.connect("key-release-event", self.input_path_entry_query)
         self.path_entry.entry.connect("key-press-event", self.input_path_entry)
         
         self.path_entry.set_size(1, 30)
@@ -228,8 +228,11 @@ class OpenDialog(Window):
     # def set_icon(self, pixbuf):    
     #     self.titlebar.icon_box.image_dpixbuf = pixbuf 
         
-    def input_path_entry_query(self, entry, text):            
-        pass
+    def input_path_entry_query(self, widget, event):
+        text = self.path_entry.entry.get_text()        
+        if self.utf.unicode_bool(text.decode("utf-8")[len(text.decode("utf-8")) - 1]):
+            self.input_path_entry(widget, event)
+            
         
     def input_path_entry(self, widget, event):
         '''input path entry.'''    
@@ -240,7 +243,7 @@ class OpenDialog(Window):
             print "input_path_entry:%s" % (e)
             keyval = ""
             
-        print keyval
+        # print keyval
         
         self.entry_color_bool = False            
         if "Return" == keyval:
@@ -256,7 +259,7 @@ class OpenDialog(Window):
                     self.path_list_show(temp_path_name)
             else:    
                 print "input_path_entry:%s" % ("Dir or File Error... ...")
-        elif "Left" == keyval or "Right" == keyval: 
+        elif keyval in ["Left", "Right", "Shift_L", "Shift_R", "Caps_Lock", "Control_R", "Control_L", "Alt_L", "Alt_R", "/"]: 
             pass
         elif "Tab" == keyval :
             if "" != self.tab_path_entry_input:
@@ -267,7 +270,7 @@ class OpenDialog(Window):
         else:# 路径补足
             temp_path_name = widget.get_text()
             
-            print "路径补足：" + str(temp_path_name)
+            # print "路径补足：" + str(temp_path_name)
             if os.path.exists(temp_path_name) and "/" == temp_path_name[-1:]:         
                 # Get path list.
                 if os.path.isdir(temp_path_name):                   
@@ -333,7 +336,7 @@ class OpenDialog(Window):
         
     def return_cmp_list(self, token, symbol_table, index):              
         temp_symbol_table = []
-        print token
+        # print token
         for symbol in symbol_table:
             temp_symbol = symbol.decode('utf-8')
             temp_symbol_len = len(temp_symbol)

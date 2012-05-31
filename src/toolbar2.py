@@ -35,14 +35,14 @@ import gtk
 # import cairo
 
 class ToolBar2(object):            
-    def __init__(self, background_pixbuf = app_theme.get_pixbuf("my_bg2.jpg")):
-        self.background_pixbuf = background_pixbuf
+    def __init__(self):#, background_pixbuf = app_theme.get_pixbuf("my_bg2.jpg")):
+        # self.background_pixbuf = background_pixbuf
         self.panel = Panel(APP_WIDTH, 42, window_type=gtk.WINDOW_POPUP)
         self.vbox = gtk.VBox()
         self.progressbar = ProgressBar()        
         
         # panel signal.
-        self.panel.connect("expose-event", self.panel_expose)        
+        # self.panel.connect("expose-event", self.panel_expose)        
         
         # self.panel.set_type_hint(gtk.gdk.WINDOW_TYPE_HINT_TOOLBAR)
         # self.panel.set_type_hint(gtk.gdk.WINDOW_TYPE_HINT_POPUP_MENU)
