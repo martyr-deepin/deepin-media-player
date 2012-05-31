@@ -19,8 +19,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from skin import app_theme
 from dtk.ui.application import Application
-from utils import app_theme
 from constant import APP_WIDTH, APP_HEIGHT
 from player_box import PlayerBox
 from mplayer import init_mplayer_config
@@ -38,10 +38,11 @@ class MediaPlayer(object):
         init_mplayer_config()
         self.app = Application("mediaplayer", False)
         # Set app size.
-        self.app.window.set_size_request(APP_WIDTH, APP_HEIGHT) 
+        # self.app.window.set_size_request(APP_WIDTH, APP_HEIGHT) 
+        self.app.set_default_size(APP_WIDTH, APP_HEIGHT)
                
         # Set app background.
-        self.app.window.change_background(app_theme.get_pixbuf("my_bg2.jpg"))
+        # self.app.window.change_background(app_theme.get_pixbuf("my_bg2.jpg"))
         # self.app.window.change_background(app_theme.get_pixbuf("bg.png"))
         # Add app titlebar.
         self.app.add_titlebar(["theme", "menu", "max", "min", "close"],

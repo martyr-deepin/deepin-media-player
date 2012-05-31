@@ -23,7 +23,7 @@
 from dtk.ui.frame import HorizontalFrame
 from dtk.ui.draw import draw_pixbuf
 from dtk.ui.utils import propagate_expose
-from utils import app_theme
+from skin import app_theme
 from ImageButton import ImageButton
 import gtk
 

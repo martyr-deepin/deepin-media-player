@@ -27,7 +27,7 @@ from dtk.ui.draw import draw_pixbuf
 from ini import INI
 from tabControl import TabPage
 from tabControl import Button
-from utils import app_theme
+from skin import app_theme
 import gtk
 import os
 

@@ -22,7 +22,7 @@
 
 from dtk.ui.utils import alpha_color_hex_to_cairo
 from dtk.ui.draw import draw_pixbuf
-from utils import app_theme
+from skin import app_theme
 import gtk
 import gobject
 

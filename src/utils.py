@@ -20,15 +20,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from dtk.ui.theme import Theme
 import threading
 import os
-
-app_theme = Theme(os.path.join(
-        (os.path.dirname(os.path.realpath(__file__))), "../app_theme"))
-
-# play list dict.
-
 
 def allocation(widget):
     cr = widget.window.cairo_create()

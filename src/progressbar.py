@@ -26,7 +26,8 @@ from dtk.ui.draw import draw_pixbuf
 from dtk.ui.draw import draw_line
 from dtk.ui.utils import container_remove_all
 
-from utils import app_theme,allocation
+from skin import app_theme
+from utils import allocation
 from constant import DRAW_PROGRESSBAR_WIDTH_PADDING
 
 

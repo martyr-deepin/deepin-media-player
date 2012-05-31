@@ -29,7 +29,7 @@ from dtk.ui.box import EventBox
 # from dtk.ui.frame import VerticalFrame
 from dtk.ui.constant import DEFAULT_FONT_SIZE,ALIGN_END
 from mplayer import Mplayer    
-from utils import app_theme
+from skin import app_theme
 from utils import allocation
 from play_list_control_panel import PlayListControlPanel
 import gtk
@@ -53,7 +53,8 @@ class PlayList(object):
         self.vbox_vframe.set_padding(0, 2, 0, 0)
                 
         self.scrolled_window = ScrolledWindow()    
-        self.list_view = ListView(background_pixbuf=app_theme.get_pixbuf("play_list_bg.jpg"))
+        # self.list_view = ListView(background_pixbuf=app_theme.get_pixbuf("play_list_bg.jpg"))
+        self.list_view = ListView()
         self.item_array = []
         # self.list_view.connect("configure-event", self.init_playlist_path)
         # self.list_view.connect("double-click-item", self.double_click_item)

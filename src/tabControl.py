@@ -26,7 +26,7 @@
 
 import gtk
 from dtk.ui.utils import get_content_size, color_hex_to_cairo
-from utils import app_theme
+from skin import app_theme
 from dtk.ui.draw import cairo_state, draw_vlinear, draw_pixbuf, draw_line, draw_font
 import gobject
 

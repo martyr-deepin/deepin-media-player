@@ -24,7 +24,7 @@
 from dtk.ui.application import Application
 from dtk.ui.entry import TextEntry
 from dtk.ui.frame import HorizontalFrame
-from utils import app_theme
+from skin import app_theme
 import gtk
 import urllib
 import re

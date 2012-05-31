@@ -24,7 +24,8 @@ from dtk.ui.frame import HorizontalFrame, VerticalFrame
 from dtk.ui.panel import Panel
 from dtk.ui.utils import propagate_expose
 
-from utils import app_theme,allocation
+from skin import app_theme
+from utils import allocation
 from constant import APP_WIDTH,PANEL_HEIGHT
 from togglehoverbutton import ToggleHoverButton
 from mutualbutton import MutualButton
