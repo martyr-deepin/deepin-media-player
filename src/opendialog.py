@@ -80,6 +80,7 @@ class OpenDialog(Window):
         self.input_path_list = []
         self.input_string = ""
         self.input_path = ""
+        self.entry_color_bool = False
         
         # Init dir(path).
         self.init_dir(path_name)
@@ -167,6 +168,11 @@ class OpenDialog(Window):
         self.titlebar.min_button.connect("clicked", lambda w: self.min_window())
         self.window_frame.add(self.main_vbox)
         
+    def set_entry_color(self, start, end):    
+        self.path_entry.entry.select_start_index = start
+        self.path_entry.entry.select_end_index = end
+        self.path_entry.entry.queue_draw()
+        
     def return_upper_button_clicked(self, widget):
         path_name = ""
         path_name_list = self.path_name[:-1].split("/")
@@ -222,7 +228,7 @@ class OpenDialog(Window):
         
     def input_path_entry_query(self, entry, text):            
         self.input_path_entry(self.path_entry.entry, self.path_entry.entry.event)
-        
+
     def input_path_entry(self, widget, event):
         '''input path entry.'''    
         try:
@@ -231,8 +237,9 @@ class OpenDialog(Window):
         except Exception, e:    
             print "input_path_entry:%s" % (e)            
             keyval = ""
+            
         # print keyval
-        
+                    
         if "Return" == keyval:
             temp_path_name = widget.get_text()
             if os.path.exists(temp_path_name):
@@ -246,12 +253,20 @@ class OpenDialog(Window):
                     self.path_list_show(temp_path_name)
             else:    
                 print "input_path_entry:%s" % ("Dir or File Error... ...")
+        elif self.entry_color_bool:    
+            if "Right" == keyval:
+                self.entry_color_bool = False                
+            elif "Left" == keyval:    
+                self.path_entry.set_text(self.input_path + self.input_string)
+                self.entry_color_bool = False                
         else:# 路径补足
             temp_path_name = widget.get_text()
+            print temp_path_name
             if os.path.exists(temp_path_name) and "/" == temp_path_name[-1:]:         
                 # Get path list.
                 if os.path.isdir(temp_path_name):                    
-                    self.input_path = temp_path_name # Save input path.        
+                    if not self.entry_color_bool:
+                        self.input_path = temp_path_name # Save input path.        
                     self.input_path_list = os.listdir(temp_path_name)                        
             else:            
                 path_list = ""
@@ -275,7 +290,8 @@ class OpenDialog(Window):
                                             
             # input_path   input_string    input_path_list        
             # Save entry input strings.
-            self.input_string = temp_path_name.split("/")[len(temp_path_name.split("/")) - 1]                        
+            if not self.entry_color_bool:
+                self.input_string = temp_path_name.split("/")[len(temp_path_name.split("/")) - 1]                        
             
             temp_input_path_list = self.input_path_list            
             input_str_num = 0
@@ -287,15 +303,23 @@ class OpenDialog(Window):
                 save_temp_input_path_list.append(path_list)
             temp_input_path_list = save_temp_input_path_list    
             
-            # print temp_input_path_list
             
             for input_str in self.input_string.decode('utf-8'):
                 save_temp_input_path_list = self.return_cmp_list(input_str, temp_input_path_list, input_str_num)
                 temp_input_path_list = save_temp_input_path_list
-                # if len(temp_input_path_list) < 1:
-                #     break                
+                if len(temp_input_path_list) < 1:
+                    break                
                 input_str_num += 1
-            print temp_input_path_list    
+                               
+            if len(temp_input_path_list) == 1: 
+                self.entry_color_bool = True
+                if "BackSpace" != keyval:
+                    self.path_entry.set_text(self.input_path + temp_input_path_list[0])
+                    start_index = len(self.path_entry.get_text()) - len(temp_input_path_list[0]) + len(self.input_string)
+                    end_index = len(self.path_entry.get_text())                
+                    self.set_entry_color(start_index, 
+                                         end_index)
+                
         return True
         
     def return_cmp_list(self, token, symbol_table, index):              
