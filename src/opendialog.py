@@ -230,9 +230,8 @@ class OpenDialog(Window):
         
     def input_path_entry_query(self, widget, event):
         text = self.path_entry.entry.get_text()        
-        if self.utf.unicode_bool(text.decode("utf-8")[len(text.decode("utf-8")) - 1]):
+        if self.utf.unicode_bool(text.decode("utf-8")[len(text.decode("utf-8")) - 1]) and not self.entry_color_bool:
             self.input_path_entry(widget, event)
-            
         
     def input_path_entry(self, widget, event):
         '''input path entry.'''    
