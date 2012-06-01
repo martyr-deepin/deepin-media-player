@@ -30,14 +30,16 @@ class TreeView(gtk.DrawingArea):
         self.set_can_focus(True)
         # Init DrawingArea event.
         self.add_events(gtk.gdk.ALL_EVENTS_MASK)        
-        # self.connect("button-press-event", self.press_notify_event)
+        self.connect("button-press-event", self.press_notify_event)
         self.connect("motion-notify-event", self.move_notify_event)
         self.connect("expose-event", self.draw_expose_event)
         self.connect("key-press-event", self.key_press_tree_view)
         # 
-        self.height = height
-        self.move_height = 0
+        self.height = height # child widget height.
+        self.move_height = 0 #
+        self.press_height = 0
         self.draw_y_padding = 0
+        self.modify_color = False
         
     def key_press_tree_view(self, widget, event):
         keyval = gtk.gdk.keyval_name(event.keyval)        
@@ -59,16 +61,26 @@ class TreeView(gtk.DrawingArea):
         cr = widget.window.cairo_create()
         rect = widget.allocation        
         x, y, w, h = rect.x, rect.y, rect.width, rect.height
-        cr.set_source_rgba(0, 0, 1, 0.3)
         
+        if self.modify_color:
+            cr.set_source_rgba(1, 0, 0, 0.3)
+            self.draw_y_padding = int(self.press_height) / self.height * self.height
+            cr.rectangle(x, y + self.draw_y_padding, w, self.height)
+            cr.fill()
+                    
+        cr.set_source_rgba(0, 0, 1, 0.3)
+            
         self.draw_y_padding = int(self.move_height) / self.height * self.height
         cr.rectangle(x, y + self.draw_y_padding, w, self.height)
         cr.fill()
+        
         return True
     
     def press_notify_event(self, widget, event):    
-        self.move_height = event.y
-                
+        self.modify_color = True
+        self.press_height = event.y
+        self.queue_draw()
+        
     def move_notify_event(self, widget, event):    
         self.move_height = event.y
         self.queue_draw()        
