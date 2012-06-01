@@ -20,12 +20,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
-
+from dtk.ui.draw import draw_font
 import gtk
 
 class TreeView(gtk.DrawingArea):
-    def __init__(self, height = 30):
+    
+    def __init__(self, height = 30, font_size = 8, font_color = "#FFFFFF"):
         gtk.DrawingArea.__init__(self)
         self.set_can_focus(True)
         # Init DrawingArea event.
@@ -40,10 +40,15 @@ class TreeView(gtk.DrawingArea):
         self.height = height # child widget height.
         self.move_height = 0 #
         self.press_height = 0
+        # Position y.
         self.draw_y_padding = 0
+        # Draw press move bool.
         self.press_draw_bool = False
         self.move_draw_bool = False
-                
+        # Font init.
+        self.font_size = font_size
+        self.font_color = font_color
+        # Key map dict.
         self.keymap = {
             "Up" : self.up_key_press,
             "Down" : self.down_key_press,
@@ -71,8 +76,8 @@ class TreeView(gtk.DrawingArea):
             if self.move_height < 0:    
                 self.move_height = 0
             elif self.move_height > self.allocation.height:
-                self.move_height = int(self.allocation.height) / self.height * self.height
-        
+                self.move_height = int(self.allocation.height) / self.height * self.height                                        
+        # expose-evet queue_draw.        
         self.queue_draw()    
         
     def draw_expose_event(self, widget, event):                    
@@ -85,15 +90,21 @@ class TreeView(gtk.DrawingArea):
             self.draw_y_padding = int(self.press_height) / self.height * self.height
             cr.rectangle(x, y + self.draw_y_padding, w, self.height)
             cr.fill()
-                            
+                                    
         if self.move_draw_bool:    
             cr.set_source_rgba(0, 0, 1, 0.3)            
             self.draw_y_padding = int(self.move_height) / self.height * self.height
             cr.rectangle(x, y + self.draw_y_padding, w, self.height)
             cr.fill()
-        
+                                            
         return True
     
+    def set_font_size(self, size):
+        if size > self.height / 2:
+            size = self.height / 2
+            
+        self.font_size = size
+        
     def press_notify_event(self, widget, event):    
         self.press_draw_bool = True
         self.press_height = event.y
@@ -104,12 +115,14 @@ class TreeView(gtk.DrawingArea):
         self.move_height = event.y
         self.queue_draw()        
 
+                
+        
+        
 #======== Test ===============        
 if __name__ == "__main__":        
     win = gtk.Window(gtk.WINDOW_TOPLEVEL)        
     win.connect("destroy", gtk.main_quit)
-    tree_view = TreeView()        
-
+    tree_view = TreeView()
     win.add(tree_view)
     win.show_all()
     gtk.main()
