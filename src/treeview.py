@@ -41,11 +41,9 @@ class TreeView(gtk.DrawingArea):
         self.move_height = 0 #
         self.press_height = 0
         self.draw_y_padding = 0
-        self.modify_color = False
-        self.move_color = False
-        
-        
-        # connect dict signal.
+        self.press_draw_bool = False
+        self.move_draw_bool = False
+                
         self.keymap = {
             "Up" : self.up_key_press,
             "Down" : self.down_key_press,
@@ -82,13 +80,13 @@ class TreeView(gtk.DrawingArea):
         rect = widget.allocation        
         x, y, w, h = rect.x, rect.y, rect.width, rect.height
         
-        if self.modify_color:
+        if self.press_draw_bool:
             cr.set_source_rgba(1, 0, 0, 0.3)
             self.draw_y_padding = int(self.press_height) / self.height * self.height
             cr.rectangle(x, y + self.draw_y_padding, w, self.height)
             cr.fill()
                             
-        if self.move_color:    
+        if self.move_draw_bool:    
             cr.set_source_rgba(0, 0, 1, 0.3)            
             self.draw_y_padding = int(self.move_height) / self.height * self.height
             cr.rectangle(x, y + self.draw_y_padding, w, self.height)
@@ -97,12 +95,12 @@ class TreeView(gtk.DrawingArea):
         return True
     
     def press_notify_event(self, widget, event):    
-        self.modify_color = True
+        self.press_draw_bool = True
         self.press_height = event.y
         self.queue_draw()
         
     def move_notify_event(self, widget, event):    
-        self.move_color = True
+        self.move_draw_bool = True
         self.move_height = event.y
         self.queue_draw()        
 
