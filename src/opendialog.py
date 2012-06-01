@@ -529,20 +529,21 @@ class OpenDialog(Window):
         self.clear_widget()        
         child_list = text[:-1].split("/")
         child_list[0] = "/"
+        
         for child in child_list:
-            button = gtk.Button(str(child))
+            button = Button(str(child))
             button.connect("clicked", self.jmp_dir_btn_clicked, child)
-            button.set_size_request(30,1)
-            self.scrol_btn.scrol_hbox.pack_start(button)
+            self.scrol_btn.scrol_hbox.pack_start(button, False, False)
+            
         self.scrol_btn.scrol_hbox.show_all()
         
     def jmp_dir_btn_clicked(self, widget, text):    
         path = ""
         for child in self.scrol_btn.scrol_hbox.get_children():
-            path += child.get_label()
-            if child.get_label() != "/":
+            path += child.label
+            if child.label != "/":
                 path += "/"
-            if child.get_label() == text:
+            if child.label == text:
                 break
         self.path_list_show(path)    
             
