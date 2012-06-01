@@ -44,11 +44,15 @@ import gobject
 #              video/x-msvideo, # 支持大多数视频格式.    
 
 class FilterItem(object):
-    def __init__(self, filter_name):        
+    def __init__(self, filter_name, item_icon=None):        
         self.filter_name = filter_name
+        self.item_icon = item_icon
         
     def get_label(self):    
         return self.filter_name           
+    
+    def get_icon(self):
+        self.item_icon
     
 
 class OpenDialog(Window):
@@ -427,7 +431,7 @@ class OpenDialog(Window):
         self.filter = filter_dict
         for filter_str in filter_dict.keys():
             self.combo_box.add_item(FilterItem(filter_str))
-        self.combo_box.set_top_index(2)    
+        self.combo_box.set_select_index(2)    
         
     def filter_to_file_type(self, type_name):
         '''{type_name:.*, type_name1:.txt|.c|.cpp, type_name2:.out... ...}'''

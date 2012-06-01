@@ -83,6 +83,7 @@ class ScrolledButton(gtk.HBox):
         hadju.set_value(hadju.get_value() - child_width)
         self.value = hadju.get_value() # Save hadju value.
                     
+        
 # Register widget.
 gobject.type_register(ScrolledButton)        
 
