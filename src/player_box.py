@@ -593,12 +593,12 @@ class PlayerBox(object):
     def open_button_clicked(self, widget):        
         open_dialog = OpenDialog() 
         open_dialog.connect("get-path-name", self.get_path_name)
-        open_dialog.set_filter({"所有文件":"*.*",
+        open_dialog.set_filter({"所有文件":".*",
                                 "音频文件":"audio/mpeg",
                                 "视频文件":"video/x-msvideo|.rmvb",
                                 "播放列表":".dmp"})    
         
-        # open_dialog.init_dir("/")
+        open_dialog.combo_box.item_label.text = "所有文件"
         open_dialog.set_title("深度影音打开")
         open_dialog.filter_to_file_type("所有文件")    
         open_dialog.show_open_window()    

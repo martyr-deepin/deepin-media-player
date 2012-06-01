@@ -433,17 +433,17 @@ if __name__ == "__main__":
     ini.connect("send-error", test)
     ini.start()
             
-    rooo = ini.get_section("PlayMemory")
-    rooo.child_addr["功夫熊猫"] = 50
-    ini.set_section_value("PlayMemory", "功夫熊猫", 500)
-    ini.set_section_child_name("PlayMemory", "功夫熊猫", "功夫吗毛")
-    print ini.get_section_value("PlayMemory", "功夫熊猫")
+    # rooo = ini.get_section("PlayMemory")
+    # rooo.child_addr["功夫熊猫"] = 50
+    # ini.set_section_value("PlayMemory", "功夫熊猫", 500)
+    # ini.set_section_child_name("PlayMemory", "功夫熊猫", "功夫吗毛")
+    # print ini.get_section_value("PlayMemory", "功夫熊猫")
     
-    print "=============="
-    rooo1 = ini.get_section("PlayTime")
-    rooo1.child_addr["功夫熊猫"] = 4320
-    ini.set_section_value("PlayTime", "功夫熊猫", 5321.7878)
-    ini.set_section_child_name("PlayTime", "功夫熊猫", "邱海龙")
-    print "@@@@@@@@@@@@@@@"
-    print ini.get_section_value("PlayTime", "邱海龙")
+    # print "=============="
+    # rooo1 = ini.get_section("PlayTime")
+    # rooo1.child_addr["功夫熊猫"] = 4320
+    # ini.set_section_value("PlayTime", "功夫熊猫", 5321.7878)
+    # ini.set_section_child_name("PlayTime", "功夫熊猫", "邱海龙")
+    # print "@@@@@@@@@@@@@@@"
+    # print ini.get_section_value("PlayTime", "邱海龙")
     ini.ini_save()
