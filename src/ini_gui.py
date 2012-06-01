@@ -20,6 +20,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+
 from dtk.ui.window import Window
 from dtk.ui.titlebar import Titlebar
 from dtk.ui.utils import move_window
@@ -70,12 +71,13 @@ class IniGui(Window):
         Window.__init__(self, True)
         
         # modify window background.
-        self.background_dpixbuf = app_theme.get_pixbuf("bg.png")
+        # self.background_dpixbuf = app_theme.get_pixbuf("bg.png")
         # Init ini.
         self.ini = INI(os.path.expanduser("~") + "/.config/deepin-media-player/config.ini")        
         # self.ini.connect("Send-Error", self.error_messagebox)        
         self.ini.start()
                 
+        
         self.set_position(gtk.WIN_POS_CENTER)
         self.set_decorated(False)
         WIN_WIDTH = 580
@@ -87,8 +89,10 @@ class IniGui(Window):
         self.connect("destroy", lambda w: self.hide_all())
         
         # Titlebar.
-        icon_pixbuf = app_theme.get_pixbuf("OrdinaryMode.png")
-        self.titlebar = Titlebar(["min", "close"], icon_pixbuf, app_name = "配置界面", title = "")
+        # icon_pixbuf = app_theme.get_pixbuf("OrdinaryMode.png")
+        # self.titlebar = Titlebar(["min", "close"], icon_pixbuf, app_name = "配置界面", title = "")
+        self.titlebar = Titlebar(["min", "close"], app_name = "配置界面", title = "")
+
         self.titlebar.close_button.connect("clicked", lambda w:self.destroy())
         self.titlebar.drag_box.connect('button-press-event', lambda w, e: move_window(w, e, self))        
                         
