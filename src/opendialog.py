@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# houshaohui:code->[str_size function, get size, type, mtime]. 
+# houshaohui:code->[str_size function, get size, type, mtime, combox]. 
 # Copyright (C) 2012 Deepin, Inc.
 #               2012 Hailong Qiu
 #
@@ -29,8 +29,9 @@ from dtk.ui.scrolled_window import ScrolledWindow
 from dtk.ui.window import Window
 from dtk.ui.button import Button
 from dtk.ui.combo import ComboBox
-from openlist import OpenItem
 
+from scrolled_button import ScrolledButton
+from openlist import OpenItem
 from unicode_to_ascii import UnicodeToAscii
 import gio
 import gtk
@@ -43,14 +44,12 @@ import gobject
 #              video/x-msvideo, # 支持大多数视频格式.    
 
 class FilterItem(object):
-    def __init__(self, filter_name):
-        
+    def __init__(self, filter_name):        
         self.filter_name = filter_name
         
     def get_label(self):    
-        return self.filter_name
+        return self.filter_name           
     
-       
 
 class OpenDialog(Window):
     '''Open dialog window.'''
@@ -69,10 +68,6 @@ class OpenDialog(Window):
         # init file type.
         self.filter_to_file_type("所有文件")
         
-        # init filter combo_box
-        self.combo_box = ComboBox()
-        self.combo_box.connect("item-selected", self.filter_selected_cb)
-
         
         # Set open window -> dialog.
         self.set_modal(True)
@@ -145,6 +140,11 @@ class OpenDialog(Window):
         
         self.main_vbox.pack_start(self.top_hbox, False, False)
         
+        # scrolled buton.
+        self.scrol_btn = ScrolledButton()
+        self.add_widget(self.path_name)
+        self.main_vbox.pack_start(self.scrol_btn, False, False)
+        
         # return and chdir dir button.
                 
         # scrolled window .
@@ -161,6 +161,10 @@ class OpenDialog(Window):
         self.button_hbox_frmae.set(1, 0.5, 0, 0)
         self.button_hbox_frmae.set_padding(0, 8, 0, 5)
         self.button_hbox_frmae.add(self.button_hbox)
+        
+        # init filter combo_box
+        self.combo_box = ComboBox()
+        self.combo_box.connect("item-selected", self.filter_selected_cb)
         
         # Open Button.
         self.open_button_frame = gtk.Alignment()
@@ -378,6 +382,7 @@ class OpenDialog(Window):
     def path_list_show(self, temp_path_name):
         if os.path.isdir(temp_path_name):
             try:
+                self.add_widget(temp_path_name)
                 self.path_entry.entry.set_text(temp_path_name)
             except Exception, e:    
                 print "path_list_show: %s" % (e)
@@ -403,7 +408,7 @@ class OpenDialog(Window):
                                 
                             pixbuf, size_num, file_type, modify_time  = self.icon_to_pixbuf(self.path_name + path_str, 16)
                         
-                            if os.path.isdir(real_path):
+                            if os.path.isdir(real_path):                                
                                 file_size = "%d %s" % (len(os.listdir(real_path)), "项")
                             else:
                                 file_size  = self.str_size(size_num)                            
@@ -519,6 +524,31 @@ class OpenDialog(Window):
     def filter_selected_cb(self, widget, item):
         self.filter_to_file_type(item.get_label())
         self.path_list_show(self.path_name)
+        
+    def add_widget(self, text):
+        self.clear_widget()        
+        child_list = text[:-1].split("/")
+        child_list[0] = "/"
+        for child in child_list:
+            button = gtk.Button(str(child))
+            button.connect("clicked", self.jmp_dir_btn_clicked, child)
+            button.set_size_request(30,1)
+            self.scrol_btn.scrol_hbox.pack_start(button)
+        self.scrol_btn.scrol_hbox.show_all()
+        
+    def jmp_dir_btn_clicked(self, widget, text):    
+        path = ""
+        for child in self.scrol_btn.scrol_hbox.get_children():
+            path += child.get_label()
+            if child.get_label() != "/":
+                path += "/"
+            if child.get_label() == text:
+                break
+        self.path_list_show(path)    
+            
+    def clear_widget(self):     
+        for child in self.scrol_btn.scrol_hbox.get_children():
+            self.scrol_btn.scrol_hbox.remove(child)
         
 #=========Test============
 def show_open_window_button(widget):
