@@ -568,6 +568,7 @@ def show_open_window_button(widget):
                             # "音频文件":".mp3|.webm",
                             "音频文件":"audio/mpeg", # 所有音频格式.
                             "视频文件":"video/x-msvideo|.rmvb",
+                            "播放列表":".dmp"
                             # "视频文件":".rmvb"
                             })
     # open_dialog.init_dir("/home")

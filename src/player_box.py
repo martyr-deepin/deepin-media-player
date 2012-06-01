@@ -590,20 +590,31 @@ class PlayerBox(object):
         '''next'''
         self.mp.next()
         
-    def get_path_name(self, open_dialog, path_string):    
-        print path_string
-        
     def open_button_clicked(self, widget):        
         open_dialog = OpenDialog() 
         open_dialog.connect("get-path-name", self.get_path_name)
         open_dialog.set_filter({"所有文件":"*.*",
-                                "音频文件":"*.mp3*",
-                                "视频文件":"*.rmvb*"})    
+                                "音频文件":"audio/mpeg",
+                                "视频文件":"video/x-msvideo|.rmvb",
+                                "播放列表":".dmp"})    
+        
         # open_dialog.init_dir("/")
         open_dialog.set_title("深度影音打开")
         open_dialog.filter_to_file_type("所有文件")    
         open_dialog.show_open_window()    
     
+    def get_path_name(self, open_dialog, path_string):    
+        print path_string
+        if os.path.isdir(path_string):            
+            path_threads(path_string, self.mp)
+
+        # Add .Dmp.    
+        if self.mp.findDmp(path_string):
+            self.mp.loadPlayList(path_string)
+            
+        # Add play file.    
+        if os.path.isfile(path_string):    
+            self.mp.addPlayFile(path_string)
         
     def volume_button_set_mute(self, widget, event):
         '''Set mute.'''
@@ -1459,10 +1470,11 @@ class PlayerBox(object):
             self.mp.playListNum = num        
                 
     def add_file(self):
-        print "*****"
+        self.open_button_clicked(self.play_control_panel.open_btn)
+
         
     def add_file_dir(self):
-        print "****"
+        self.open_button_clicked(self.play_control_panel.open_btn)
         
     def del_index(self):
         # self.delete_play_list_file(self.play_list.list_view, self.play_list.list_view.items)
@@ -1482,9 +1494,7 @@ class PlayerBox(object):
                 if not os.path.exists(path):
                     self.play_list.list_view.items.remove(item)
                     self.mp.delPlayList(path)   
-                    
-                    
-                    
+                                                            
     def open_current_file_dir(self):            
         try:
             file_name, file_name2 = os.path.split(self.open_file_name)
