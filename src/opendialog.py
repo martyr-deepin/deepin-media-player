@@ -535,6 +535,9 @@ class OpenDialog(Window):
             button.connect("clicked", self.jmp_dir_btn_clicked, child)
             self.scrol_btn.scrol_hbox.pack_start(button, False, False)
             
+        hadju = self.scrol_btn.scrol_win.get_hadjustment()    
+        hadju.set_value(hadju.get_upper())
+        
         self.scrol_btn.scrol_hbox.show_all()
         
     def jmp_dir_btn_clicked(self, widget, text):    

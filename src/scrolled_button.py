@@ -62,8 +62,10 @@ class ScrolledButton(gtk.HBox):
         return child_width
     
     
-    def left_button_clicked(self, widget):
-        '''Left'''
+    # def left_button_clicked(self, widget):
+        # '''Left'''
+    def right_buton_clicked(self, widget):
+        # '''Right'''
         # Get scrol_win hadju.                    
         hadju = self.scrol_win.get_hadjustment()
         child_width = self.get_hbox_child_width()
@@ -71,11 +73,13 @@ class ScrolledButton(gtk.HBox):
             hadju.set_value(hadju.get_value() + child_width) # Set hadju value.
             self.value = hadju.get_value() # Save hadju value.
             
-    def right_buton_clicked(self, widget):
-        '''Right'''
+    # def right_buton_clicked(self, widget):
+        # '''Right'''
+    def left_button_clicked(self, widget):
+        '''Left'''    
         hadju = self.scrol_win.get_hadjustment()
         child_width = self.get_hbox_child_width()
-        hadju = self.scrol_win.get_hadjustment()
+        # hadju = self.scrol_win.get_hadjustment()
         hadju.set_value(hadju.get_value() - child_width)
         self.value = hadju.get_value() # Save hadju value.
                     
