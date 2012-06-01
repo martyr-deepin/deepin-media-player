@@ -34,26 +34,46 @@ class TreeView(gtk.DrawingArea):
         self.connect("motion-notify-event", self.move_notify_event)
         self.connect("expose-event", self.draw_expose_event)
         self.connect("key-press-event", self.key_press_tree_view)
+        self.connect("leave-notify-event", self.clear_move_notify_event)
+        self.connect("realize", lambda w: self.grab_focus()) # focus key after realize
         # 
         self.height = height # child widget height.
         self.move_height = 0 #
         self.press_height = 0
         self.draw_y_padding = 0
         self.modify_color = False
+        self.move_color = False
         
+        
+        # connect dict signal.
+        self.keymap = {
+            "Up" : self.up_key_press,
+            "Down" : self.down_key_press,
+            }
+        
+    def clear_move_notify_event(self, widget, event): # focus-out-event    
+        self.move_color = False
+        self.queue_draw()
+        
+    def up_key_press(self):    
+        self.move_height -= self.height
+        
+    def down_key_press(self):    
+        self.move_height += self.height
+                
     def key_press_tree_view(self, widget, event):
         keyval = gtk.gdk.keyval_name(event.keyval)        
+        
         # Up Left.
-        if "Up" == keyval:
-            self.move_height -= self.height
-        elif "Down" == keyval:    
-            self.move_height += self.height
+        if self.keymap.has_key(keyval):
+            self.keymap[keyval]()
             
-        # Set 0 < self.move_height > self.allocation.height ->
-        if self.move_height < 0:    
-            self.move_height = 0
-        elif self.move_height > self.allocation.height:
-            self.move_height = int(self.allocation.height) / self.height * self.height
+        # Set : 0 < self.move_height > self.allocation.height ->
+        if (self.move_height < 0) or (self.move_height > self.allocation.height):    
+            if self.move_height < 0:    
+                self.move_height = 0
+            elif self.move_height > self.allocation.height:
+                self.move_height = int(self.allocation.height) / self.height * self.height
         
         self.queue_draw()    
         
@@ -67,12 +87,12 @@ class TreeView(gtk.DrawingArea):
             self.draw_y_padding = int(self.press_height) / self.height * self.height
             cr.rectangle(x, y + self.draw_y_padding, w, self.height)
             cr.fill()
-                    
-        cr.set_source_rgba(0, 0, 1, 0.3)
-            
-        self.draw_y_padding = int(self.move_height) / self.height * self.height
-        cr.rectangle(x, y + self.draw_y_padding, w, self.height)
-        cr.fill()
+                            
+        if self.move_color:    
+            cr.set_source_rgba(0, 0, 1, 0.3)            
+            self.draw_y_padding = int(self.move_height) / self.height * self.height
+            cr.rectangle(x, y + self.draw_y_padding, w, self.height)
+            cr.fill()
         
         return True
     
@@ -82,6 +102,7 @@ class TreeView(gtk.DrawingArea):
         self.queue_draw()
         
     def move_notify_event(self, widget, event):    
+        self.move_color = True
         self.move_height = event.y
         self.queue_draw()        
 
