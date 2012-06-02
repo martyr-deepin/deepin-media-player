@@ -73,6 +73,7 @@ class TreeView(gtk.DrawingArea):
         self.keymap = {
             "Up"     : self.up_key_press,
             "Down"   : self.down_key_press,
+            "Return" : lambda :self.press_notify_function(self.move_height)
             }
         
     def clear_move_notify_event(self, widget, event): # focus-out-event
@@ -109,7 +110,7 @@ class TreeView(gtk.DrawingArea):
         # Up Left.
         if self.keymap.has_key(keyval):
             self.keymap[keyval]()
-        
+                
         # Set : 0 < self.move_height > self.allocation.height ->
         if (self.move_height < 0) or (self.move_height > self.allocation.height):
             if self.move_height < 0:
@@ -168,8 +169,11 @@ class TreeView(gtk.DrawingArea):
         self.font_size = size
         
     def press_notify_event(self, widget, event):        
+        self.press_notify_function(event.y) 
+        
+    def press_notify_function(self, y):    
         temp_press_height = self.press_height
-        self.press_height = event.y
+        self.press_height = y
         index_len = len(self.draw_widget_list)
         index = int(self.press_height / self.height)
         
@@ -181,7 +185,7 @@ class TreeView(gtk.DrawingArea):
             self.queue_draw()
         else:
             self.press_height = temp_press_height
-            
+        
     def move_notify_event(self, widget, event):
         temp_move_height = self.move_height # Save move_height.
         self.move_height = event.y
