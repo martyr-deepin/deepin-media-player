@@ -224,6 +224,7 @@ class OpenDialog(Window):
         # open file and dir.
         temp_path_name = self.path_name + item.title
         self.emit("get-path-name", temp_path_name)
+        self.set_opacity(0)
         self.destroy()
         
         # open file.
