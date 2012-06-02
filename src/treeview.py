@@ -79,11 +79,29 @@ class TreeView(gtk.DrawingArea):
         self.move_color = False
         self.queue_draw()
         
-    def up_key_press(self):
-        self.move_height -= self.height
+    def move_bool(self, operation):    
+        temp_move_height = self.move_height
+        
+        if "-" == operation:
+            temp_move_height -= self.height
+        elif "+" == operation:    
+            temp_move_height += self.height
+            
+        index = int(temp_move_height) / self.height
+        index_len = len(self.draw_widget_list)
+        
+        if index_len > index:
+            return True
+        else:
+            return False
+        
+    def up_key_press(self):        
+        if self.move_bool("-"):
+            self.move_height -= self.height
         
     def down_key_press(self):
-        self.move_height += self.height
+        if self.move_bool("+"):
+            self.move_height += self.height
                 
     def key_press_tree_view(self, widget, event):
         keyval = gtk.gdk.keyval_name(event.keyval)
