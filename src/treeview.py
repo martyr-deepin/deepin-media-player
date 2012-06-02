@@ -23,7 +23,7 @@
 from dtk.ui.draw import draw_pixbuf
 from dtk.ui.draw import draw_font
 import gtk
-
+from collections import OrderedDict
 
 
 
@@ -175,9 +175,8 @@ class TreeView(gtk.DrawingArea):
 class Tree(object):
     def __init__(self):
         self.parent_node = None
-        self.child_dict = {}
-        self.child_show_bool = False
-        
+        self.child_dict = OrderedDict()
+        self.child_show_bool = False        
         self.name = ""
         self.pixbuf = None
         
@@ -224,13 +223,15 @@ class Tree(object):
                 
                 
 #======== Test ===============
-if __name__ == "__main__":
+from dtk.ui.scrolled_window import ScrolledWindow
 
-    
+if __name__ == "__main__":    
+    scrolled_window = ScrolledWindow()
     win = gtk.Window(gtk.WINDOW_TOPLEVEL)        
     win.connect("destroy", gtk.main_quit)
     tree_view = TreeView()
-    win.add(tree_view)
+    scrolled_window.add_child(tree_view)
+    win.add(scrolled_window)
     win.show_all()
     tree_view.add_node(None, "小学")
     tree_view.add_node(None, "初中")
@@ -242,6 +243,9 @@ if __name__ == "__main__":
     tree_view.add_node("小学", "3年级")
     
     tree_view.add_node("大学", "软件学院")
+    tree_view.add_node("软件学院", "ZB48901")
+    tree_view.add_node("软件学院", "ZB48902")
+    tree_view.add_node("软件学院", "ZB48903")
     tree_view.add_node("大学", "工商学院")
     tree_view.add_node("大学", "理工学院")
     tree_view.add_node("大学", "机电学院")
