@@ -22,6 +22,7 @@
 
 from dtk.ui.draw import draw_pixbuf
 from dtk.ui.draw import draw_font
+from dtk.ui.utils import get_content_size
 from skin import app_theme
 
 
@@ -125,18 +126,22 @@ class TreeView(gtk.DrawingArea):
             for draw_widget in self.draw_widget_list:                    
                 
                 if draw_widget[0].name:
+                    draw_font_width = 80
                     draw_font(cr, 
-                              "+" + draw_widget[0].name, 
+                              draw_widget[0].name, 
                               self.font_size, 
                               self.font_color, 
                               draw_widget[1], 
-                              temp_height + self.height/2, 100, 0)
-                    
-                if draw_widget[0].child_show_bool:    
+                              temp_height + self.height/2, draw_font_width, 0)
+                                        
+                if draw_widget[0].child_show_bool:
                     pixbuf = self.press_pixbuf.get_pixbuf()
                 else:    
                     pixbuf = self.normal_pixbuf.get_pixbuf()                                        
-                draw_pixbuf(cr, pixbuf, 80 + draw_widget[1], temp_height + self.height/2 - pixbuf.get_height()/2)    
+                draw_pixbuf_x = 30    
+                draw_pixbuf(cr, pixbuf,
+                            draw_pixbuf_x + draw_widget[1] + get_content_size(draw_widget[0].name, self.font_size)[0],
+                            temp_height + self.height/2 - pixbuf.get_height()/2)
                     
                 temp_height += self.height
         return True
@@ -245,6 +250,7 @@ from dtk.ui.scrolled_window import ScrolledWindow
 if __name__ == "__main__":    
     scrolled_window = ScrolledWindow()
     win = gtk.Window(gtk.WINDOW_TOPLEVEL)        
+    win.set_size_request(200, 500)
     win.connect("destroy", gtk.main_quit)
     tree_view = TreeView()
     scrolled_window.add_child(tree_view)
