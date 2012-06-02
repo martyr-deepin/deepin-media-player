@@ -25,14 +25,17 @@ from dtk.ui.draw import draw_font
 from dtk.ui.utils import get_content_size
 from skin import app_theme
 
-
-import gtk
 from collections import OrderedDict
+import gtk
+import gobject
 
 # 滚动窗口对 treeview 无效. 
 
 class TreeView(gtk.DrawingArea):
-    
+    __gsignals__ = {
+        "single-click-view" : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (str, int, )),
+        "motion-notify-view" : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (str, int)),
+    }        
     def __init__(self, height = 30, width = 50, 
                  font_size = 10, font_color = "#000000", 
                  normal_pixbuf = app_theme.get_pixbuf("tree_view_0.png"),
@@ -92,18 +95,21 @@ class TreeView(gtk.DrawingArea):
         index_len = len(self.draw_widget_list)
         
         if index_len > index:
+            self.emit("motion-notify-view", self.draw_widget_list[index][0].name, index)
             return True
         else:
             return False
         
     def up_key_press(self):        
         if self.move_bool("-"):
-            self.move_height -= self.height
-        
+            self.move_height -= self.height            
+            
+            
     def down_key_press(self):
         if self.move_bool("+"):
             self.move_height += self.height
-                
+            
+            
     def key_press_tree_view(self, widget, event):
         keyval = gtk.gdk.keyval_name(event.keyval)
         
@@ -183,6 +189,7 @@ class TreeView(gtk.DrawingArea):
                 self.draw_widget_list[index][0].child_show_bool = not self.draw_widget_list[index][0].child_show_bool 
             self.sort()
             self.queue_draw()
+            self.emit("single-click-view", self.draw_widget_list[index][0].name, index)
         else:
             self.press_height = temp_press_height
         
@@ -195,6 +202,7 @@ class TreeView(gtk.DrawingArea):
         if index_len > index_num: 
             self.move_draw_bool = True                            
             self.queue_draw()
+            self.emit("motion-notify-view", self.draw_widget_list[index_num][0].name, index_num)
         else:
             self.move_height = temp_move_height
             
@@ -279,12 +287,18 @@ class Tree(object):
 #======== Test ===============
 from dtk.ui.scrolled_window import ScrolledWindow
 
+def test_show_tree_view(TreeView, name, index):
+    print name
+    print index
 if __name__ == "__main__":    
     scrolled_window = ScrolledWindow()
     win = gtk.Window(gtk.WINDOW_TOPLEVEL)        
     win.set_size_request(200, 500)
     win.connect("destroy", gtk.main_quit)
     tree_view = TreeView()
+    tree_view.connect("single-click-view", test_show_tree_view)
+    tree_view.connect("motion-notify-view", test_show_tree_view)
+    
     scrolled_window.add_child(tree_view)
     win.add(scrolled_window)
     win.show_all()
