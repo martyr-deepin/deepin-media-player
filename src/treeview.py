@@ -22,16 +22,27 @@
 
 from dtk.ui.draw import draw_pixbuf
 from dtk.ui.draw import draw_font
+from skin import app_theme
+
+
 import gtk
 from collections import OrderedDict
 
-
+# 问题: 去掉多余的 鼠标移动和点击下去 画颜色.
+# 图标状态转换问题.
+# 滚动窗口对 treeview 无效. 
 
 class TreeView(gtk.DrawingArea):
     
-    def __init__(self, height = 30, width = 50, font_size = 10, font_color = "#000000"):
-        gtk.DrawingArea.__init__(self)
+    def __init__(self, height = 30, width = 50, 
+                 font_size = 10, font_color = "#000000", 
+                 normal_pixbuf = app_theme.get_pixbuf("tree_view_0.png"),
+                 press_pixbuf=app_theme.get_pixbuf("tree_view_1.png")):
         
+        gtk.DrawingArea.__init__(self)
+        # pixbuf.
+        self.normal_pixbuf = normal_pixbuf
+        self.press_pixbuf = press_pixbuf
         # root node.
         self.root = Tree()
         self.set_can_focus(True)
@@ -120,8 +131,13 @@ class TreeView(gtk.DrawingArea):
                               self.font_color, 
                               draw_widget[1], 
                               temp_height + self.height/2, 100, 0)
-                # if draw_widget[0].pixbuf:    
-
+                    
+                if draw_widget[0].child_show_bool:    
+                    pixbuf = self.press_pixbuf.get_pixbuf()
+                else:    
+                    pixbuf = self.normal_pixbuf.get_pixbuf()                                        
+                draw_pixbuf(cr, pixbuf, 80 + draw_widget[1], temp_height + self.height/2 - pixbuf.get_height()/2)    
+                    
                 temp_height += self.height
         return True
     
@@ -135,7 +151,8 @@ class TreeView(gtk.DrawingArea):
         self.press_height = event.y
         index = int(self.press_height / self.height)
         print "索引值:%s" % (index)
-        self.draw_widget_list[index][0].child_show_bool = not self.draw_widget_list[index][0].child_show_bool 
+        if self.draw_widget_list[index][0].child_dict:
+            self.draw_widget_list[index][0].child_show_bool = not self.draw_widget_list[index][0].child_show_bool 
         self.sort()
         self.queue_draw()
         
