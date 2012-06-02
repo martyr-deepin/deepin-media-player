@@ -290,21 +290,39 @@ from dtk.ui.scrolled_window import ScrolledWindow
 def test_show_tree_view(TreeView, name, index):
     print name
     print index
+        
+    if dict_widget.has_key(name):
+        for widget in vbox.get_children():
+            vbox.remove(widget)        
+    
+        vbox.pack_start(dict_widget[name])    
+        vbox.show_all()
+    
 if __name__ == "__main__":    
-    scrolled_window = ScrolledWindow()
+    hbox = gtk.HBox()
+    vbox = gtk.VBox()
+    dict_widget = {"小学":gtk.Button("小学显示来看看"),
+                   "初中":gtk.Button("初中你上过来啦吗"),
+                   "大学":gtk.Button("就是培养垃圾的地方呢"),
+                   "深度":gtk.Button("深度人你布是布指导的")}
+    
     win = gtk.Window(gtk.WINDOW_TOPLEVEL)        
     win.set_size_request(200, 500)
     win.connect("destroy", gtk.main_quit)
     tree_view = TreeView()
     tree_view.connect("single-click-view", test_show_tree_view)
-    tree_view.connect("motion-notify-view", test_show_tree_view)
+    # tree_view.connect("motion-notify-view", test_show_tree_view)
     
-    scrolled_window.add_child(tree_view)
-    win.add(scrolled_window)
-    win.show_all()
+    hbox.pack_start(tree_view, True, True)
+    hbox.pack_start(vbox, False, False)
+    
+    win.add(hbox)
+    win.show_all()    
+    
     tree_view.add_node(None, "小学")
     tree_view.add_node(None, "初中")
     tree_view.add_node(None, "大学")
+    tree_view.add_node(None, "深度")
     
     tree_view.add_node("小学", "1年级")
     tree_view.add_node("1年级", "1:1:2")    
@@ -318,7 +336,12 @@ if __name__ == "__main__":
     tree_view.add_node("大学", "工商学院")
     tree_view.add_node("大学", "理工学院")
     tree_view.add_node("大学", "机电学院")
-
+    
+    tree_view.add_node("深度", "开发部")
+    tree_view.add_node("开发部", "王勇")
+    tree_view.add_node("开发部", "猴哥")
+    tree_view.add_node("开发部", "邱海龙")
+    
     tree_view.sort()    
     
 
