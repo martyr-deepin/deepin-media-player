@@ -133,7 +133,10 @@ class TreeView(gtk.DrawingArea):
     def press_notify_event(self, widget, event):        
         self.press_draw_bool = True
         self.press_height = event.y
-        print "索引值:%s" % (int(self.press_height / self.height))
+        index = int(self.press_height / self.height)
+        print "索引值:%s" % (index)
+        self.draw_widget_list[index][0].child_show_bool = not self.draw_widget_list[index][0].child_show_bool 
+        self.sort()
         self.queue_draw()
         
     def move_notify_event(self, widget, event):
@@ -145,6 +148,7 @@ class TreeView(gtk.DrawingArea):
         self.root.add_node(root_name, node_name, Tree())
         
     def sort(self):                
+        self.draw_widget_list = []
         for key in self.root.child_dict.keys():
             temp_list = [] 
             temp_list.append(self.root.child_dict[key])
@@ -158,14 +162,14 @@ class TreeView(gtk.DrawingArea):
                     
     def sort2(self, node, width):        
         for key in node.child_dict.keys():
-            print "%s:%s" % (width, key)
-            temp_list = [] 
-            temp_list.append(node.child_dict[key])
-            temp_list.append(width)
-            self.draw_widget_list.append(temp_list)            
+            if node.child_show_bool:
+                temp_list = [] 
+                temp_list.append(node.child_dict[key])
+                temp_list.append(width)
+                self.draw_widget_list.append(temp_list)            
             
-            if node.child_dict[key].child_dict:
-                self.sort2(node.child_dict[key], width+self.width)
+                if node.child_dict[key].child_dict:
+                    self.sort2(node.child_dict[key], width+self.width)
                 
         
 class Tree(object):
