@@ -152,20 +152,32 @@ class TreeView(gtk.DrawingArea):
         self.font_size = size
         
     def press_notify_event(self, widget, event):        
-        self.press_draw_bool = True
+        temp_press_height = self.press_height
         self.press_height = event.y
+        index_len = len(self.draw_widget_list)
         index = int(self.press_height / self.height)
-        print "索引值:%s" % (index)
-        if self.draw_widget_list[index][0].child_dict:
-            self.draw_widget_list[index][0].child_show_bool = not self.draw_widget_list[index][0].child_show_bool 
-        self.sort()
-        self.queue_draw()
         
+        if index_len > index:
+            self.press_draw_bool = True
+            if self.draw_widget_list[index][0].child_dict:
+                self.draw_widget_list[index][0].child_show_bool = not self.draw_widget_list[index][0].child_show_bool 
+            self.sort()
+            self.queue_draw()
+        else:
+            self.press_height = temp_press_height
+            
     def move_notify_event(self, widget, event):
-        self.move_draw_bool = True
+        temp_move_height = self.move_height # Save move_height.
         self.move_height = event.y
-        self.queue_draw()
+        index_len = len(self.draw_widget_list)
+        index_num = int(self.move_height) / self.height
         
+        if index_len > index_num: 
+            self.move_draw_bool = True                            
+            self.queue_draw()
+        else:
+            self.move_height = temp_move_height
+            
     def add_node(self,root_name, node_name):
         self.root.add_node(root_name, node_name, Tree())
         
