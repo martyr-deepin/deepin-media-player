@@ -29,7 +29,7 @@ import gtk
 
 class TreeView(gtk.DrawingArea):
     
-    def __init__(self, height = 30, font_size = 10, font_color = "#FFFFFF"):
+    def __init__(self, height = 30, width = 50, font_size = 10, font_color = "#000000"):
         gtk.DrawingArea.__init__(self)
         
         # root node.
@@ -45,6 +45,7 @@ class TreeView(gtk.DrawingArea):
         self.connect("realize", lambda w: self.grab_focus()) # focus key after realize
         # 
         self.height = height # child widget height.
+        self.width = width # draw widget width.
         self.move_height = 0 #
         self.press_height = 0
         # Position y.
@@ -55,6 +56,9 @@ class TreeView(gtk.DrawingArea):
         # Font init.
         self.font_size = font_size
         self.font_color = font_color
+        # Draw tree view child widget(save postion and Tree).
+        self.draw_widget_list = []
+        
         # Key map dict.
         self.keymap = {
             "Up"     : self.up_key_press,
@@ -104,17 +108,32 @@ class TreeView(gtk.DrawingArea):
             cr.rectangle(x, y + self.draw_y_padding, w, self.height)
             cr.fill()
         
+        if self.draw_widget_list:    
+            # (cr, text, font_size, font_color, x, y, width, height, 
+            temp_height = 0
+            for draw_widget in self.draw_widget_list:                    
+                
+                if draw_widget[0].name:
+                    draw_font(cr, 
+                              "+" + draw_widget[0].name, 
+                              self.font_size, 
+                              self.font_color, 
+                              draw_widget[1], 
+                              temp_height + self.height/2, 100, 0)
+                # if draw_widget[0].pixbuf:    
+
+                temp_height += self.height
         return True
     
     def set_font_size(self, size):
         if size > self.height / 2:
-            size = self.height / 2
-        
+            size = self.height / 2        
         self.font_size = size
         
-    def press_notify_event(self, widget, event):
+    def press_notify_event(self, widget, event):        
         self.press_draw_bool = True
         self.press_height = event.y
+        print "索引值:%s" % (int(self.press_height / self.height))
         self.queue_draw()
         
     def move_notify_event(self, widget, event):
@@ -127,17 +146,27 @@ class TreeView(gtk.DrawingArea):
         
     def sort(self):                
         for key in self.root.child_dict.keys():
+            temp_list = [] 
+            temp_list.append(self.root.child_dict[key])
+            temp_list.append(0)
+            self.draw_widget_list.append(temp_list)            
+            
             if self.root.child_dict[key].child_dict:
-                self.sort2(self.root.child_dict[key])
-        
-    def sort2(self, node):        
-        print "--"        
+                self.sort2(self.root.child_dict[key], self.width)
+                
+        self.queue_draw()
+                    
+    def sort2(self, node, width):        
         for key in node.child_dict.keys():
-            print key
+            print "%s:%s" % (width, key)
+            temp_list = [] 
+            temp_list.append(node.child_dict[key])
+            temp_list.append(width)
+            self.draw_widget_list.append(temp_list)            
+            
             if node.child_dict[key].child_dict:
-                self.sort2(node.child_dict[key])
-                print "--"
-        
+                self.sort2(node.child_dict[key], width+self.width)
+                
         
 class Tree(object):
     def __init__(self):
@@ -185,13 +214,9 @@ class Tree(object):
                 self.sort2(self.child_dict[key])
         
     def sort2(self, node):        
-        print "--"        
         for key in node.child_dict.keys():
-            print key
             if node.child_dict[key].child_dict:
                 self.sort2(node.child_dict[key])
-                print "--"                
-                
                 
                 
 #======== Test ===============
@@ -203,28 +228,21 @@ if __name__ == "__main__":
     tree_view = TreeView()
     win.add(tree_view)
     win.show_all()
-    tree_view.add_node(None, "aa")
-    tree_view.add_node(None, "bb")
-    tree_view.add_node(None, "cc")
-    tree_view.add_node("cc", "cc11")
-    tree_view.add_node("cc", "cc22")
+    tree_view.add_node(None, "小学")
+    tree_view.add_node(None, "初中")
+    tree_view.add_node(None, "大学")
     
-    tree_view.add_node("cc11", "cc11cc11")
-    tree_view.add_node("cc11", "cc11cc22")
-    tree_view.add_node("cc11", "cc11cc33")
-    tree_view.add_node("cc11", "cc11cc44")
-    tree_view.add_node("cc11", "aaaaa3243")
-    tree_view.add_node("cc11", "bbbbb234")
-    tree_view.add_node("cc11", "aaaaa")
+    tree_view.add_node("小学", "1年级")
+    tree_view.add_node("1年级", "1:1:2")    
+    tree_view.add_node("小学", "2年级")
+    tree_view.add_node("小学", "3年级")
     
-    tree_view.add_node("aaaaa", "bbbbb")
-    tree_view.add_node("aaaaa", "bbbb1234b")
-    tree_view.add_node("aaaaa", "bbbb1234b")
-    tree_view.add_node("aaaaa", "bbbb1234b")
-    tree_view.add_node("aaaaa", "bbbb1234b")
-    tree_view.add_node("aaaaa", "bbbb1234b")
-    
-    tree_view.root.sort()    
+    tree_view.add_node("大学", "软件学院")
+    tree_view.add_node("大学", "工商学院")
+    tree_view.add_node("大学", "理工学院")
+    tree_view.add_node("大学", "机电学院")
+
+    tree_view.sort()    
     
 
     gtk.main()
