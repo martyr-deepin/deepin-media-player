@@ -29,8 +29,6 @@ from skin import app_theme
 import gtk
 from collections import OrderedDict
 
-# 问题: 去掉多余的 鼠标移动和点击下去 画颜色.
-# 图标状态转换问题.
 # 滚动窗口对 treeview 无效. 
 
 class TreeView(gtk.DrawingArea):
