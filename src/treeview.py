@@ -34,7 +34,8 @@ import gobject
 
 # 滚动窗口对 treeview 无效. 
 
-class TreeView(gtk.DrawingArea):
+# class TreeView(gtk.DrawingArea):
+class TreeView(gtk.Button):
     __gsignals__ = {
         "single-click-view" : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (str, int, )),
         "motion-notify-view" : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (str, int)),
@@ -44,7 +45,8 @@ class TreeView(gtk.DrawingArea):
                  normal_pixbuf = app_theme.get_pixbuf("tree_view_0.png"),
                  press_pixbuf=app_theme.get_pixbuf("tree_view_1.png")):
         
-        gtk.DrawingArea.__init__(self)
+        # gtk.DrawingArea.__init__(self)
+        gtk.Button.__init__(self)
         # pixbuf.
         self.normal_pixbuf = normal_pixbuf
         self.press_pixbuf = press_pixbuf
@@ -135,17 +137,18 @@ class TreeView(gtk.DrawingArea):
         x, y, w, h = rect.x, rect.y, rect.width, rect.height
         
         # Draw background.
-        # cr.translate(x, y)
+        cr.translate(x, y)
         try:
             (shadow_x, shadow_y) = self.get_toplevel().get_shadow_size()            
             skin_config.render_background(cr, self, shadow_x, shadow_y)
         except Exception, e:
             pass
             
-        cr.rectangle(x, y, w, h)
+        cr.rectangle(x-4, y-4, w, h)
+        # cr.fill()
         cr.clip()
         
-        # # Draw mask.
+        # Draw mask.
         draw_vlinear(cr, x, y, w, h,
                      app_theme.get_shadow_color("linearBackground").get_color_info())
         
@@ -317,7 +320,8 @@ def test_show_tree_view(TreeView, name, index):
     
         vbox.pack_start(dict_widget[name])    
         vbox.show_all()
-    
+def tree_view_clicked(widget):    
+    print "************"
 if __name__ == "__main__":    
     hbox = gtk.HBox()
     vbox = gtk.VBox()
@@ -331,9 +335,10 @@ if __name__ == "__main__":
     win.connect("destroy", gtk.main_quit)
     tree_view = TreeView()
     tree_view.connect("single-click-view", test_show_tree_view)
+    tree_view.connect("clicked", tree_view_clicked)
     # tree_view.connect("motion-notify-view", test_show_tree_view)
     
-    hbox.pack_start(tree_view, True, True)
+    hbox.pack_start(tree_view)
     hbox.pack_start(vbox, False, False)
     
     win.add(hbox)
