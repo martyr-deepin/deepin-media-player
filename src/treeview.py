@@ -135,14 +135,13 @@ class TreeView(gtk.DrawingArea):
         x, y, w, h = rect.x, rect.y, rect.width, rect.height
         
         # Draw background.
-        cr.translate(x, y)
+        # cr.translate(x, y)
         (shadow_x, shadow_y) = self.get_toplevel().get_shadow_size()
         skin_config.render_background(cr, self, shadow_x, shadow_y)
         cr.rectangle(x, y, w, h)
-        # cr.fill()
         cr.clip()
         
-        # Draw mask.
+        # # Draw mask.
         draw_vlinear(cr, x, y, w, h,
                      app_theme.get_shadow_color("linearBackground").get_color_info())
         
