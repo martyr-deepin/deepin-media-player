@@ -136,8 +136,12 @@ class TreeView(gtk.DrawingArea):
         
         # Draw background.
         # cr.translate(x, y)
-        (shadow_x, shadow_y) = self.get_toplevel().get_shadow_size()
-        skin_config.render_background(cr, self, shadow_x, shadow_y)
+        try:
+            (shadow_x, shadow_y) = self.get_toplevel().get_shadow_size()            
+            skin_config.render_background(cr, self, shadow_x, shadow_y)
+        except Exception, e:
+            pass
+            
         cr.rectangle(x, y, w, h)
         cr.clip()
         
