@@ -208,6 +208,7 @@ class TreeView(gtk.DrawingArea):
             
     def add_node(self,root_name, node_name):
         self.root.add_node(root_name, node_name, Tree())
+        self.sort()
         
     def sort(self):                
         self.draw_widget_list = []
@@ -340,11 +341,7 @@ if __name__ == "__main__":
     tree_view.add_node("深度", "开发部")
     tree_view.add_node("开发部", "王勇")
     tree_view.add_node("开发部", "猴哥")
-    tree_view.add_node("开发部", "邱海龙")
-    
-    tree_view.sort()    
-    
-
+    tree_view.add_node("开发部", "邱海龙")        
     gtk.main()
 
     

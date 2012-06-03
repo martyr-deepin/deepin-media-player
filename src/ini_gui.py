@@ -19,21 +19,47 @@
 # 
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+from skin import app_theme
+from treeview import TreeView
 
-
+from dtk.ui.window import Window 
 from dtk.ui.label import Label
 from dtk.ui.button import CheckButton, RadioButton
+from dtk.ui.line import HSeparator
+
+
 
 import gtk
 
 TITLE_WIDTH = 10    
 
-class IniGui(object):
+class IniGui(Window):
     def __init__(self):
-        pass
-
-
-
+        Window.__init__(self)
+        # Set configure window.
+        self.set_size_request(500, 500)
+        self.main_hbox = gtk.HBox()
+        self.tree_view = TreeView(width = 20)
+        # TreeView event.
+        self.tree_view.connect("single-click-view", self.set_con_widget)        
+        self.tree_view.add_node(None, "文件播放")
+        self.tree_view.add_node(None, "系统设置")
+        self.tree_view.add_node(None, "快捷键    ")
+        self.tree_view.add_node("快捷键    ", "播放控制")
+        self.tree_view.add_node("快捷键    ", "其它快捷键")
+        self.tree_view.add_node(None, "字幕设置")
+        self.tree_view.add_node(None, "截图设置")
+        self.tree_view.add_node(None, "其它设置")
+                
+        self.configure = Configure()
+        self.main_hbox.pack_start(self.tree_view, True, True)
+        self.main_hbox.pack_start(self.configure)
+        self.window_frame.add(self.main_hbox)
+        self.show_all()
+        
+    def set_con_widget(self, treeview, string, index):    
+        self.configure.set(string)
+        
 class Configure(gtk.VBox):
     def __init__(self):
         gtk.VBox.__init__(self)
@@ -84,10 +110,15 @@ class FilePlay(gtk.VBox):
     def __init__(self):
         gtk.VBox.__init__(self)
         self.fixed = gtk.Fixed()
-        self.label = gtk.Label()
+        self.label = Label("文件播放")
+        self.label.set_size_request(100, 30)
         self.btn = gtk.Button("确定")
+        self.heparator=HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
+        self.heparator.set_size_request(100, 5)
         self.fixed.put(self.label, TITLE_WIDTH, 5)
-        self.fixed.put(self.btn, TITLE_WIDTH, 20)
+        self.fixed.put(self.heparator, 0, 35)
+        self.fixed.put(self.btn, TITLE_WIDTH, 5+35+30)
+        
         self.pack_start(self.fixed)
         
 class SystemSet(gtk.VBox):        
@@ -157,22 +188,6 @@ class OtherSet(gtk.VBox):
         
         
         
-def test_show_con(widget, string):        
-    con.set(string)
-    
 if __name__ == "__main__":        
-    win = gtk.Window(gtk.WINDOW_TOPLEVEL)    
-    win.connect("destroy", gtk.main_quit)
-    vbox = gtk.VBox()
-    con = Configure()
-    vbox.pack_start(con, True, True)
-    btn1 = gtk.Button("截图设置")
-    btn1.connect("clicked", test_show_con, btn1.get_label())
-    btn2 = gtk.Button("其它设置")
-    btn2.connect("clicked", test_show_con, btn2.get_label())
-    vbox.pack_start(btn1)
-    vbox.pack_start(btn2)
-    win.add(vbox)
-    win.show_all()
+    IniGui()
     gtk.main()
-    
