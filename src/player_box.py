@@ -591,6 +591,9 @@ class PlayerBox(object):
         self.mp.next()
         
     def open_button_clicked(self, widget):        
+        self.show_open_dialog_window()
+        
+    def show_open_dialog_window(self):    
         open_dialog = OpenDialog() 
         open_dialog.connect("get-path-name", self.get_path_name)
         open_dialog.set_filter({"所有文件":".*",
@@ -602,7 +605,7 @@ class PlayerBox(object):
         open_dialog.set_title("深度影音打开")
         open_dialog.filter_to_file_type("所有文件")    
         open_dialog.show_open_window()    
-    
+        
     def get_path_name(self, open_dialog, path_string):    
         print path_string
         if os.path.isdir(path_string):            
@@ -1470,11 +1473,10 @@ class PlayerBox(object):
             self.mp.playListNum = num        
                 
     def add_file(self):
-        self.open_button_clicked(self.play_control_panel.open_btn)
-
+        self.show_open_dialog_window()
         
     def add_file_dir(self):
-        self.open_button_clicked(self.play_control_panel.open_btn)
+        self.show_open_dialog_window()
         
     def del_index(self):
         # self.delete_play_list_file(self.play_list.list_view, self.play_list.list_view.items)
@@ -1504,9 +1506,8 @@ class PlayerBox(object):
         os.system("nautilus %s" % (file_name))
         self.open_file_name = ""
         
-    def open_current_file_dir_path(self, list_view, list_item, column, offset_x, offset_y):        
+    def open_current_file_dir_path(self, list_view, list_item, column, offset_x, offset_y):
         self.open_file_name = self.play_list_dict[list_item.title]
-
 
 
   
