@@ -31,7 +31,7 @@ class INI(gobject.GObject):
         }
     def __init__(self, ini_path):
         gobject.GObject.__init__(self)
-        self.keys = ['PlayMemory', 'PlayTime']
+        self.keys = ['PlayMemory', 'PlayTime', 'Window']
         self.ini_path = ini_path
         self.ini_fp = open(ini_path, "r")
         self.ch = ''
@@ -299,6 +299,7 @@ class INI(gobject.GObject):
                 # sys.exit(0)                                                
             self.error_input("缺少节点和参数值")
         
+            
     def get_section(self, root_name):        
         try:
             save_bool = False
@@ -310,24 +311,23 @@ class INI(gobject.GObject):
             if not save_bool: # Create new root section.   
                 self.save_root = ROOT()        
                 self.save_root.root_name = root_name                     
-                self.root.append(self.save_root)                                                                        
-                
+                self.root.append(self.save_root)                                                                      
+                # print self.save_root
                 for i in range(0, len(self.root)):
                     if self.root[i].root_name == root_name:
                         return self.root[i]
-                    
 
             return None         
-        except:           
-            pass
+        except Exception,e:           
+            print "get_section%s" %(e)
             
     def get_section_value(self, root_name, child_name):
         try:
             root_childs = self.get_section_childs(root_name)
-            return root_childs[child_name]            
-        except:
-            # print "由于前面出现错误..."
-            pass
+            return root_childs[child_name]
+        except Exception, e:
+            print "get_section_value:%s" % (e)
+            
         
             
     def get_section_childs(self, root_name):    
@@ -338,19 +338,28 @@ class INI(gobject.GObject):
                     return self.root[i].child_addr       
                     # save_i = i
                     break
+                
+            save_root = ROOT()        
+            save_root.root_name = root_name                     
+            # print self.save_root.root_name
+            self.root.append(save_root)                                
             
-            return None    
+            for i in range(0, len(self.root)):
+                if self.root[i].root_name == root_name:
+                    return self.root[i].child_addr       
+                    # save_i = i
+                    break            
+                
             # return  self.root[save_i].child_addr       
-        except:
+        except Exception, e:
             # print "由于前面出现错误"
-            pass
+            print "get_section_childs:%s" % (e)
             
         
     def set_section_value(self, root_name, child_name, value):
         try:
-            root_childs = self.get_section_childs(root_name)
-            if not root_childs:
-                return None
+            root_childs = self.get_section_childs(root_name)    
+            # print "set_section_value:%s" % (root_childs)            
             root_childs[child_name] = value
             return True
         except:    
@@ -433,7 +442,12 @@ if __name__ == "__main__":
     ini.connect("send-error", test)
     ini.start()
             
-    # rooo = ini.get_section("PlayMemory")
+    rooo = ini.get_section("PlayMemory")
+    print "test %s" %(rooo)
+    ini.set_section_value("PlayMemory", "功夫熊猫", "32.45")
+    ini.get_section("WindowScreen")
+    ini.set_section_value("WindowScreen", 'width', "32.45")
+    print ini.get_section_value("WindowScreen", "width")
     # rooo.child_addr["功夫熊猫"] = 50
     # ini.set_section_value("PlayMemory", "功夫熊猫", 500)
     # ini.set_section_child_name("PlayMemory", "功夫熊猫", "功夫吗毛")
