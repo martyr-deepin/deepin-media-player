@@ -19,11 +19,14 @@
 # 
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+from skin import app_theme
 
-from dtk.ui.draw import draw_pixbuf
+from dtk.ui.draw import draw_pixbuf, draw_vlinear
 from dtk.ui.draw import draw_font
 from dtk.ui.utils import get_content_size
-from skin import app_theme
+from dtk.ui.skin_config import skin_config
+
+
 
 from collections import OrderedDict
 import gtk
@@ -130,6 +133,19 @@ class TreeView(gtk.DrawingArea):
         cr = widget.window.cairo_create()
         rect = widget.allocation
         x, y, w, h = rect.x, rect.y, rect.width, rect.height
+        
+        # Draw background.
+        cr.translate(x, y)
+        (shadow_x, shadow_y) = self.get_toplevel().get_shadow_size()
+        skin_config.render_background(cr, self, shadow_x, shadow_y)
+        cr.rectangle(x, y, w, h)
+        # cr.fill()
+        cr.clip()
+        
+        # Draw mask.
+        draw_vlinear(cr, x, y, w, h,
+                     app_theme.get_shadow_color("linearBackground").get_color_info())
+        
         
         if self.press_draw_bool:
             cr.set_source_rgba(1, 0, 0, 0.3)
