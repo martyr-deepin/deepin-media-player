@@ -55,7 +55,7 @@ class IniGui(Window):
         # TreeView event.
         self.tree_view.connect("single-click-view", self.set_con_widget)
         # TreeView add node.
-        self.tree_view.add_node(None, "文件播放",False, pixbuf_x_align=0)
+        self.tree_view.add_node(None, "文件播放")
         self.tree_view.add_node(None, "系统设置")
         self.tree_view.add_node(None, "快捷键")
         self.tree_view.add_node("快捷键", "播放控制", False)
