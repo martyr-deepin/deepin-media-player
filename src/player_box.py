@@ -22,6 +22,7 @@
 
 # from dtk.ui.dragbar import Dragbar
 # from dtk.ui.mplayer_view import MplayerView
+from dtk.ui.config import Config
 from dtk.ui.box import EventBox
 from dtk.ui.frame import HorizontalFrame,VerticalFrame
 from dtk.ui.utils import is_double_click
@@ -49,7 +50,7 @@ from tooltip import Tooltip
 from sort import Sort
 # from popup_menu import PopupMenu
 
-from ini import INI
+# from ini import INI
 import threading
 import gtk
 import os
@@ -72,8 +73,8 @@ class PlayerBox(object):
         self.clear_play_list_bool = False # drag play file.
         
         # ini play memory.
-        self.ini = INI(get_home_path() + "/.config/deepin-media-player/config.ini")
-        self.ini.start()
+        self.ini = Config(get_home_path() + "/.config/deepin-media-player/config.ini")
+        self.ini.load()
         
         # screen draw borde video width and height.        
         #get_vide_width_height (function return value)
@@ -486,18 +487,13 @@ class PlayerBox(object):
     def length_threads(self):
         '''Get length threads'''
         for i in self.play_list.list_view.items:             
-            length = self.ini.get_section_value("PlayTime", i.title)
+            length = self.ini.get("PlayTime", i.title)
             if length:
                 i.length = length_to_time(length)
             else:    
                 i.length, length = get_length(self.play_list_dict[i.title])            
-                root = self.ini.get_section("PlayTime")
-                try:
-                    root.child_addr[i.title] = length
-                except:    
-                    # print "length_threads-error."
-                    print "  "
-                self.ini.ini_save()    
+                self.ini.set("PlayTime", i.title, length)
+                self.ini.write()    
             i.emit_redraw_request()
             
             
@@ -1231,7 +1227,7 @@ class PlayerBox(object):
     def get_time_length(self, mplayer, length):
         '''Get mplayer length to max of progressbar.'''
         # play memory.                
-        init_value = self.ini.get_section_value('PlayMemory', self.get_player_file_name(mplayer.path))        
+        init_value = self.ini.get('PlayMemory', self.get_player_file_name(mplayer.path))        
         # print init_value
         if init_value != None:
             self.mp.seek(int(init_value))                        
@@ -1292,14 +1288,13 @@ class PlayerBox(object):
         #print self.input_string + "Linux Deepin Media player...end"
         # Play file modify start_btn.
         self.media_player_midfy_start_bool()
-
-        root = self.ini.get_section("PlayMemory")
+        
         if mplayer.posNum < mplayer.lenNum - 10:                        
-            self.ini.set_section_value("PlayMemory", self.get_player_file_name(mplayer.path), mplayer.posNum)
+            self.ini.set("PlayMemory", self.get_player_file_name(mplayer.path), mplayer.posNum)
             
         else:    
-            self.ini.set_section_value("PlayMemory", self.get_player_file_name(mplayer.path), 0) 
-        self.ini.ini_save()        
+            self.ini.set("PlayMemory", self.get_player_file_name(mplayer.path), 0) 
+        self.ini.write()        
                 
         
     def media_player_next(self, mplayer, play_bool):

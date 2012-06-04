@@ -173,7 +173,7 @@ class INI(gobject.GObject):
             self.ini_fp.seek(-1, 1)        
             self.root_name = ""
             self.root_bool = True
-        elif "'" == self.ch or '"' == self.ch:    
+        elif "'" == self.ch or '"' == self.ch:
             if self.root_bool and self.child_bool:
                 save_i = 0
                 for i in range(0, len(self.root)):
@@ -195,14 +195,14 @@ class INI(gobject.GObject):
                         
                         
                         
-                self.root[i].child_addr[self.child_name] = (self.value_name)            
+                self.root[save_i].child_addr[self.child_name] = (self.value_name)            
                 self.value_name = ""
                 self.child_name = ""
                 self.child_bool = False        
             elif self.root_bool and not self.child_bool: #"播放记忆功能"                   
                 while True:                    
                     self.ch = self.ini_fp.read(1)
-                    if '\"' == self.ch or "'" == self.ch:
+                    if '"' == self.ch or "'" == self.ch:
                         self.child_bool = True
                         break
                     if not self.ch:    
@@ -211,16 +211,12 @@ class INI(gobject.GObject):
                         break
                     
                     self.child_name += self.ch
-                    
+                # self.ini_fp.seek(-1, 1)
             else:
                 self.line_num += 1
                 self.error_input("无效的字符串类型")
                 # sys.exit(0)
-                
-                
-                
-                
-                
+                                                                                
     '''字母处理 import:导入模块处理'''        
     def letter_func(self):        
         if self.root_bool and self.child_bool:    
@@ -272,7 +268,7 @@ class INI(gobject.GObject):
                     save_i = i
                     break
                 
-            while True:    
+            while True:
                 if ' ' != self.ch:
                     self.value_name += self.ch                    
                 self.ch = self.ini_fp.read(1)                
@@ -437,17 +433,21 @@ class ROOT(object):
 def test(INI, STRING):        
     print STRING
     
+    
+from dtk.ui.config import Config    
+
 if __name__ == "__main__":        
-    ini = INI(os.path.expanduser("~") + "/.config/deepin-media-player/config.ini")            
-    ini.connect("send-error", test)
-    ini.start()
-            
-    rooo = ini.get_section("PlayMemory")
-    print "test %s" %(rooo)
-    ini.set_section_value("PlayMemory", "功夫熊猫", "32.45")
-    ini.get_section("WindowScreen")
-    ini.set_section_value("WindowScreen", 'width', "32.45")
-    print ini.get_section_value("WindowScreen", "width")
+    ini = Config(os.path.expanduser("~") + "/.config/deepin-media-player/config.ini")            
+    ini.load()    
+    
+    print ini.get("window", "width") 
+    print ini.get("window", "改哦你发福膝盖哦@#@你[]")
+    # rooo = ini.get_section("PlayMemory")
+    # print "test %s" %(rooo)
+    # ini.set_section_value("PlayMemory", "功夫熊猫", "32.45")
+    # ini.get_section("WindowScreen")
+    # ini.set_section_value("WindowScreen", 'width', "32.45")
+    # print ini.get_section_value("WindowScreen", "width")
     # rooo.child_addr["功夫熊猫"] = 50
     # ini.set_section_value("PlayMemory", "功夫熊猫", 500)
     # ini.set_section_child_name("PlayMemory", "功夫熊猫", "功夫吗毛")
@@ -460,4 +460,4 @@ if __name__ == "__main__":
     # ini.set_section_child_name("PlayTime", "功夫熊猫", "邱海龙")
     # print "@@@@@@@@@@@@@@@"
     # print ini.get_section_value("PlayTime", "邱海龙")
-    ini.ini_save()
+
