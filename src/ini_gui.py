@@ -37,7 +37,7 @@ class IniGui(Window):
     def __init__(self):
         Window.__init__(self)
         # Set configure window.
-        self.set_size_request(700, 500)
+        self.set_size_request(550, 400)
         
         self.main_vbox = gtk.VBox()
         self.main_hbox = gtk.HBox()
@@ -50,16 +50,16 @@ class IniGui(Window):
         self.titlebar.close_button.connect("clicked", lambda w:self.destroy())
         self.titlebar.min_button.connect("clicked", lambda w: self.min_window())
         
-        self.tree_view = TreeView(width=20)
-        # self.scrolled_window.add_child(self.tree_view)
+        self.tree_view = TreeView(width = 20, font_x = 10)
+        self.scrolled_window.add_child(self.tree_view)
         # TreeView event.
         self.tree_view.connect("single-click-view", self.set_con_widget)
         # TreeView add node.
-        self.tree_view.add_node(None, "文件播放")
+        self.tree_view.add_node(None, "文件播放",False, pixbuf_x_align=0)
         self.tree_view.add_node(None, "系统设置")
-        self.tree_view.add_node(None, "快捷键    ")
-        self.tree_view.add_node("快捷键    ", "播放控制")
-        self.tree_view.add_node("快捷键    ", "其它快捷键")
+        self.tree_view.add_node(None, "快捷键")
+        self.tree_view.add_node("快捷键", "播放控制", False)
+        self.tree_view.add_node("快捷键", "其它快捷键", False)
         self.tree_view.add_node(None, "字幕设置")
         self.tree_view.add_node(None, "截图设置")
         self.tree_view.add_node(None, "其它设置")
@@ -72,8 +72,8 @@ class IniGui(Window):
         self.main_vbox.pack_start(self.titlebar, False, False)
         self.main_vbox.pack_start(self.main_hbox_frame, True, True)
                 
-        # self.main_hbox.pack_start(self.scrolled_window, False, False)
-        self.main_hbox.pack_start(self.tree_view, True, True)
+        self.main_hbox.pack_start(self.scrolled_window, False, False)
+        # self.main_hbox.pack_start(self.tree_view, True, True)
         self.main_hbox.pack_start(self.configure)
                 
         self.window_frame.add(self.main_vbox)
