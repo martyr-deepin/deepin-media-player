@@ -603,7 +603,7 @@ class PlayerBox(object):
         open_dialog.show_open_window()    
         
     def get_path_name(self, open_dialog, path_string):    
-        print path_string
+        # print path_string
         if os.path.isdir(path_string):            
             path_threads(path_string, self.mp)
 
@@ -1289,11 +1289,11 @@ class PlayerBox(object):
         # Play file modify start_btn.
         self.media_player_midfy_start_bool()
         
-        if mplayer.posNum < mplayer.lenNum - 10:                        
-            self.ini.set("PlayMemory", self.get_player_file_name(mplayer.path), mplayer.posNum)
+        self.ini.set("PlayMemory", self.get_player_file_name(mplayer.path), 0)
+        if mplayer.posNum < mplayer.lenNum - 100:
+            self.ini.set("PlayMemory", self.get_player_file_name(mplayer.path), mplayer.posNum)            
+
             
-        else:    
-            self.ini.set("PlayMemory", self.get_player_file_name(mplayer.path), 0) 
         self.ini.write()        
                 
         
@@ -1420,8 +1420,6 @@ class PlayerBox(object):
                     break                        
                 num += 1
             self.mp.playListNum = num
-
-
         
     def type_sort(self):
         if self.play_list.list_view.items:
