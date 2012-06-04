@@ -51,6 +51,7 @@ class IniGui(Window):
         self.titlebar.min_button.connect("clicked", lambda w: self.min_window())
         
         self.tree_view = TreeView(width = 20, font_x = 10)
+        
         self.scrolled_window.add_child(self.tree_view)
         # TreeView event.
         self.tree_view.connect("single-click-view", self.set_con_widget)

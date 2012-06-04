@@ -262,7 +262,7 @@ class TreeView(gtk.DrawingArea):
             if self.root.child_dict[key].child_dict:
                 self.sort2(self.root.child_dict[key], self.width)
                 
-        self.queue_draw()
+                self.queue_draw()
                     
     def sort2(self, node, width):        
         for key in node.child_dict.keys():
@@ -270,7 +270,7 @@ class TreeView(gtk.DrawingArea):
                 temp_list = [] 
                 temp_list.append(node.child_dict[key])
                 temp_list.append(width)
-                self.draw_widget_list.append(temp_list)            
+                self.draw_widget_list.append(temp_list) 
             
                 if node.child_dict[key].child_dict:
                     self.sort2(node.child_dict[key], width+self.width)
