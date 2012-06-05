@@ -48,7 +48,7 @@ from mplayer import get_home_path
 from mplayer import length_to_time
 from playlist import PlayList
 from playlist import MediaItem
-from tooltip import Tooltip
+# from tooltip import Tooltip
 from sort import Sort
 # from popup_menu import PopupMenu
 
@@ -141,7 +141,7 @@ class PlayerBox(object):
                     
         
         '''Tooltip window'''
-        self.tooltip = Tooltip("深度影音", 0, 0)
+        # self.tooltip = Tooltip("深度影音", 0, 0)
         
         '''Preview window'''
         self.preview = PreView()
@@ -183,7 +183,7 @@ class PlayerBox(object):
         self.screen.connect("button-release-event", self.screen_media_player_clear)
         self.screen.connect("motion-notify-event", self.show_and_hide_toolbar)
         self.screen.connect("configure-event", self.configure_hide_tool)
-        self.screen.connect("leave-notify-event", self.hide_all_toolbars)
+        # self.screen.connect("leave-notify-event", self.hide_all_toolbars)
         # self.screen.connect("get-xid", self.init_media_player)
 
 
@@ -199,7 +199,7 @@ class PlayerBox(object):
         
         '''Toolbar Init.'''
         self.toolbar = ToolBar()        
-        self.toolbar.panel.connect("leave-notify-event", self.set_show_toolbar_bool)
+        # self.toolbar.panel.connect("leave-notify-event", self.set_show_toolbar_bool)
         self.toolbar.toolbar_full_button.connect("clicked", self.full_play_window)
         self.toolbar.toolbar_common_button.connect("clicked", self.show_window_widget)
         self.toolbar.toolbar_concise_button.connect("clicked", self.hide_window_widget)
@@ -338,6 +338,7 @@ class PlayerBox(object):
         
     def set_show_toolbar_function_false(self, widget, event):    
         self.show_toolbar_focus_bool = False
+        self.toolbar.hide_toolbar()
         
     def set_show_toolbar_bool(self, widget, event):    
         self.show_toolbar_bool = False
@@ -349,14 +350,14 @@ class PlayerBox(object):
             self.toolbar.hide_toolbar()
             
         
-    def MessageBox(self, text):    
-        x, y = self.screen.window.get_root_origin()
-        self.app.window.set_keep_above(True)        
-        if self.full_bool or self.mode_state_bool:
-            self.tooltip.show_tooltip(text, x + 5, y + 5)
-        else:    
-            self.tooltip.show_tooltip(text, x + 5, y + 30)
-        self.tooltip.set_keep_above(True)    
+    # def MessageBox(self, text):    
+    #     x, y = self.screen.window.get_root_origin()
+    #     self.app.window.set_keep_above(True)        
+    #     if self.full_bool or self.mode_state_bool:
+    #         self.tooltip.show_tooltip(text, x + 5, y + 5)
+    #     else:    
+    #         self.tooltip.show_tooltip(text, x + 5, y + 30)
+    #     self.tooltip.set_keep_above(True)    
         
         
     def modify_mouse_icon(self, widget, event): # screen: motion-notify-event 
@@ -578,9 +579,9 @@ class PlayerBox(object):
             self.play_control_panel.start_btn.queue_draw()
             self.toolbar2.play_control_panel.start_btn.start_bool = False
             self.toolbar2.play_control_panel.start_btn.queue_draw()
-            self.MessageBox("播放")
+            # self.MessageBox("播放")
             if 0 == self.mp.state: # NO player file.
-                self.MessageBox("没有可播放的文件")
+                # self.MessageBox("没有可播放的文件")
                 self.play_control_panel.start_btn.start_bool = True # start_btn modify play state.
                 self.play_control_panel.start_btn.queue_draw()
                 self.toolbar2.play_control_panel.start_btn.start_bool = True
@@ -597,11 +598,11 @@ class PlayerBox(object):
 
     def start_button_time_pause(self): # start_button_clicked.
         if self.mp.pause_bool:
-            self.MessageBox("播放")
+            # self.MessageBox("播放")
             self.mp.seek(int(self.progressbar.pos))
             self.mp.start_play()
         else:
-            self.MessageBox("暂停")
+            # self.MessageBox("暂停")
             self.mp.pause()
         return  False
 
@@ -968,7 +969,7 @@ class PlayerBox(object):
             self.app.window.set_window_shape(True)
             self.common_window_function()
             self.mode_state_bool = False
-            self.MessageBox("普通模式")
+            # self.MessageBox("普通模式")
 
         if self.full_bool: # qiut full.
             self.show_bottom()
@@ -1005,7 +1006,7 @@ class PlayerBox(object):
                                      self.panel_y + (widget.allocation[3] - self.toolbar2.panel.allocation[3]) - self.app.titlebar.allocation[3])
 
             self.toolbar2.panel.hide_all()
-            self.MessageBox("简洁模式")
+            # self.MessageBox("简洁模式")
 
         if self.save_volume_mute_bool:
             if self.mp:
@@ -1015,10 +1016,10 @@ class PlayerBox(object):
     def set_window_above(self, widget): #above_button
         self.above_bool = not self.above_bool
         self.app.window.set_keep_above(self.above_bool)
-        if self.above_bool:
-            self.MessageBox("置顶")
-        else:    
-            self.MessageBox("取消置顶")
+        # if self.above_bool:
+            # self.MessageBox("置顶")
+        # else:    
+        #     self.MessageBox("取消置顶")
 
     # Control mplayer window.
     def move_media_player_window(self, widget, event): # screen: button-press-event
@@ -1344,11 +1345,11 @@ class PlayerBox(object):
     def media_player_next(self, mplayer, play_bool):
         if 1 == play_bool:
             self.media_player_midfy_start_bool()
-            self.MessageBox("下一首")
+            # self.MessageBox("下一首")
             
     def media_player_pre(self, mplayer, play_bool):
         self.media_player_midfy_start_bool()
-        self.MessageBox("上一首")
+        # self.MessageBox("上一首")
         
     def media_player_midfy_start_bool(self):  # media_player_end and media_player_next and media_player_pre.
         self.progressbar.set_pos(0)

@@ -108,7 +108,7 @@ class ToolBar(object):
         
     def hide_panel_toolbar(self, widget, event):    
         self.show = 1
-        self.hide_toolbar()
+        # self.hide_toolbar()
         
     def show_toolbar(self):   
         if 0 == self.show:
