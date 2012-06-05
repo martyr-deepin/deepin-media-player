@@ -223,6 +223,9 @@ class OpenDialog(Window):
             
         # open file and dir.
         temp_path_name = self.path_name + item.title
+        if temp_path_name != self.path_entry.get_text():
+            if os.path.exists(self.path_entry.get_text()):
+                temp_path_name = self.path_entry.get_text()
         self.emit("get-path-name", temp_path_name)
         self.set_opacity(0)
         self.destroy()
@@ -356,9 +359,10 @@ class OpenDialog(Window):
                     end_index = len(self.path_entry.get_text())                
                     self.set_entry_color(start_index, 
                                          end_index)                    
-
+                    
             else:
                 self.tab_path_entry_input = ""        
+                
         return True
         
     def return_cmp_list(self, token, symbol_table, index):              
