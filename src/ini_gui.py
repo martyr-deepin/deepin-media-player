@@ -20,7 +20,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from skin import app_theme
-from treeview import TreeView
+
+from treeview import TreeView, TreeViewItem
 
 from dtk.ui.titlebar import Titlebar
 from dtk.ui.window import Window 
@@ -50,38 +51,39 @@ class IniGui(Window):
         self.titlebar.close_button.connect("clicked", lambda w:self.destroy())
         self.titlebar.min_button.connect("clicked", lambda w: self.min_window())
         
-        self.tree_view = TreeView(width = 20, font_x = 10)
-        
-        self.scrolled_window.add_child(self.tree_view)
+        self.tree_view = TreeView()
         # TreeView event.
-        self.tree_view.connect("single-click-view", self.set_con_widget)
+        self.tree_view.connect("single-click-item", self.set_con_widget)
+        self.scrolled_window.add_child(self.tree_view)
+        
         # TreeView add node.
-        self.tree_view.add_node(None, "文件播放")
-        self.tree_view.add_node(None, "系统设置")
-        self.tree_view.add_node(None, "快捷键")
-        self.tree_view.add_node("快捷键", "播放控制", False)
-        self.tree_view.add_node("快捷键", "其它快捷键", False)
-        self.tree_view.add_node(None, "字幕设置")
-        self.tree_view.add_node(None, "截图设置")
-        self.tree_view.add_node(None, "其它设置")
+        self.tree_view.add_item(None, TreeViewItem("文件播放"))
+        self.tree_view.add_item(None, TreeViewItem("系统设置"))
+        key = self.tree_view.add_item(None, TreeViewItem("快捷键"))
+        self.tree_view.add_item(None, TreeViewItem("字幕设置"))
+        self.tree_view.add_item(None, TreeViewItem("截图设置"))
+        self.tree_view.add_item(None, TreeViewItem("其它设置"))        
+        
+        self.tree_view.add_item(key, TreeViewItem("播放控制"))
+        self.tree_view.add_item(key, TreeViewItem("其它快捷键"))
                         
         self.main_hbox_frame = gtk.Alignment()
         self.main_hbox_frame.set(1, 1, 1, 1)
-        self.main_hbox_frame.set_padding(2, 2, 2, 2)
+        self.main_hbox_frame.set_padding(4, 4, 4, 4)
         
         self.main_hbox_frame.add(self.main_hbox)
         self.main_vbox.pack_start(self.titlebar, False, False)
         self.main_vbox.pack_start(self.main_hbox_frame, True, True)
                 
         self.main_hbox.pack_start(self.scrolled_window, False, False)
-        # self.main_hbox.pack_start(self.tree_view, True, True)
         self.main_hbox.pack_start(self.configure)
                 
         self.window_frame.add(self.main_vbox)
         self.show_all()
         
-    def set_con_widget(self, treeview, string, index):
-        self.configure.set(string)
+    def set_con_widget(self, treeview, item):
+        print item.get_title()
+        self.configure.set(item.get_title())
         
 class Configure(gtk.VBox):
     def __init__(self):
