@@ -179,6 +179,7 @@ class PlayerBox(object):
         self.screen.connect("button-release-event", self.screen_media_player_clear)
         self.screen.connect("motion-notify-event", self.show_and_hide_toolbar)
         self.screen.connect("configure-event", self.configure_hide_tool)
+        self.screen.connect("leave-notify-event", self.hide_all_toolbars)
         # self.screen.connect("get-xid", self.init_media_player)
 
 
@@ -331,8 +332,10 @@ class PlayerBox(object):
     def set_show_toolbar_bool(self, widget, event):    
         self.show_toolbar_bool = False
         
-    def hide_all_toolbars(self, widget, event):            
+    def hide_all_toolbars(self, widget, event):
         if not self.show_toolbar_bool:
+            if not self.above_bool:
+                self.app.window.set_keep_above(False)
             self.toolbar.hide_toolbar()
             
         
@@ -814,6 +817,8 @@ class PlayerBox(object):
             self.mp.nomute()
 
         self.toolbar.panel.hide_all()
+        self.show_toolbar_bool = False
+        
         self.panel_x, self.panel_y = self.screen.window.get_root_origin()
         if self.mode_state_bool: # Concise mode.
             self.toolbar.panel.move(self.panel_x, self.panel_y)            
@@ -855,6 +860,7 @@ class PlayerBox(object):
 
         self.main_vbox_hframe.set_padding(0, 0, 1, 1)
         self.toolbar.panel.hide_all()
+        self.show_toolbar_bool = False
         self.toolbar2.panel.hide_all()
         self.show_bottom()
         self.app.window.show_all()
@@ -1045,9 +1051,11 @@ class PlayerBox(object):
         '''Show and hide toolbar.'''
         # Show toolbar.                        
         if 0 <= event.y <= 20:
-            self.app.window.set_keep_above(True)
+            # self.app.window.set_keep_above(True)
+            # self.toolbar.panel.set_keep_above(True)
             self.toolbar.show_toolbar()
             self.show_toolbar_bool = True
+            
             
             self.panel_x, self.panel_y = self.screen.window.get_root_origin()
             if self.mode_state_bool: # Concise mode.
@@ -1055,7 +1063,7 @@ class PlayerBox(object):
             else:    # common mode.            
                 self.toolbar.panel.move(self.panel_x + 1, self.panel_y + self.app.titlebar.allocation[3])
             
-            self.toolbar.panel.set_keep_above(True)
+            # self.toolbar.panel.set_keep_above(True)
         else:
             if not self.above_bool:
                 self.app.window.set_keep_above(False)

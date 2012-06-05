@@ -108,6 +108,7 @@ class ToolBar(object):
         
     def hide_panel_toolbar(self, widget, event):    
         self.show = 1
+        self.hide_toolbar()
         
     def show_toolbar(self):   
         if 0 == self.show:
@@ -115,7 +116,7 @@ class ToolBar(object):
             self.panel.set_opacity(0)
             gtk.timeout_add(50, self.show_time)
             self.show = 1
-            self.panel.set_keep_above(True)
+            # self.panel.set_keep_above(True)
             
     def hide_toolbar(self):    
         if 1 == self.show:
