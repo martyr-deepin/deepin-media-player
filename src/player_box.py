@@ -707,7 +707,7 @@ class PlayerBox(object):
         '''Draw screen mplayer view background.'''
         cr, x, y, w, h = allocation(widget)
         
-        if self.mp and (1 == self.state):
+        if self.mp and (1 == self.mp.state):
             if (self.mp.state) and (self.mp.vide_bool): # vide file.
                 if 0 != self.video_width or 0 != self.video_height:                                        
                     video_ratio = float(self.video_width) / self.video_height
