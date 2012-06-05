@@ -21,8 +21,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # APP : media player window.
-APP_WIDTH  = 540 # media player width.
-APP_HEIGHT = 400 # media player height.
+APP_WIDTH  = 640 # media player width.
+APP_HEIGHT = 480 # media player height.
 DRAW_PIXBUF_Y = 27 # media player titlebar.
 DRAW_PIXBUF_HEIGHT = 2 # media player height.
 PANEL_HEIGHT = 20 # panel height.

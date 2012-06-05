@@ -762,9 +762,7 @@ class PlayerBox(object):
             cr,
             pixbuf,
             rect.x + (rect.width - pixbuf.get_width()) / 2,
-            rect.y + (rect.height - pixbuf.get_height()) / 2)
-        
-        # draw_pixbuf()
+            rect.y + (rect.height - pixbuf.get_height()) / 2)        
         return True
 
 

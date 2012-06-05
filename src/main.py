@@ -39,11 +39,8 @@ class MediaPlayer(object):
         self.app = Application("mediaplayer", False)
         # Set app size.
         # self.app.window.set_size_request(APP_WIDTH, APP_HEIGHT) 
-        self.app.set_default_size(APP_WIDTH, APP_HEIGHT)
-               
-        # Set app background.
-        # self.app.window.change_background(app_theme.get_pixbuf("my_bg2.jpg"))
-        # self.app.window.change_background(app_theme.get_pixbuf("bg.png"))
+        self.app.set_default_size(APP_WIDTH, APP_HEIGHT)               
+                                
         # Add app titlebar.
         # self.app.add_titlebar(["theme", "menu", "max", "min", "close"],
         self.app.add_titlebar(["max", "min", "close"],
