@@ -24,14 +24,16 @@
 # from dtk.ui.mplayer_view import MplayerView
 from dtk.ui.config import Config
 from dtk.ui.box import EventBox
+from dtk.ui.draw import draw_pixbuf
 from dtk.ui.frame import HorizontalFrame,VerticalFrame
-from dtk.ui.utils import is_double_click
+from dtk.ui.utils import is_double_click, color_hex_to_cairo
 from dtk.ui.menu import Menu
 
 from opendialog import OpenDialog
 from utils import allocation,path_threads
 from show_time import ShowTime
 from progressbar import ProgressBar
+from skin import app_theme
 from toolbar import ToolBar
 from toolbar2 import ToolBar2
 from play_control_panel import PlayControlPanel
@@ -749,9 +751,20 @@ class PlayerBox(object):
                     return False                
                 
         # if no player vide file or no player.
-        cr.set_source_rgb(0, 0, 0)
+        cr.set_source_rgb(*color_hex_to_cairo("#1f1f1f"))
         cr.rectangle(0, 0, w, h)
         cr.fill()
+        
+        # Draw player image.
+        rect = widget.allocation
+        pixbuf = app_theme.get_pixbuf("player.png").get_pixbuf()
+        draw_pixbuf(
+            cr,
+            pixbuf,
+            rect.x + (rect.width - pixbuf.get_width()) / 2,
+            rect.y + (rect.height - pixbuf.get_height()) / 2)
+        
+        # draw_pixbuf()
         return True
 
 
