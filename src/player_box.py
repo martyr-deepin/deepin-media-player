@@ -772,7 +772,8 @@ class PlayerBox(object):
         self.app.window.set_visible(True)
         if self.mp:
             # Quit deepin-media-player.
-            os.system("kill %s" %(self.mp.mplayer_pid))
+            # os.system("kill %s" %(self.mp.mplayer_pid))
+            os.system("pkill %s" %("mplayer"))
             #os.system("pkill mplayer")
             self.mp.quit()
             
