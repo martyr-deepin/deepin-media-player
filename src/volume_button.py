@@ -20,7 +20,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from dtk.ui.utils import alpha_color_hex_to_cairo
+from dtk.ui.utils import alpha_color_hex_to_cairo, color_hex_to_cairo
 from dtk.ui.draw import draw_pixbuf
 from skin import app_theme
 import gtk
@@ -127,7 +127,7 @@ class VolumeButton(gtk.HBox, gobject.GObject):
             
         # draw fg.    
         for i in range(0, int(self.volume_value*0.57)):
-            cr.set_source_rgba(*alpha_color_hex_to_cairo(self.fg_color.get_color_info()))
+            cr.set_source_rgba(*color_hex_to_cairo(("#60BAE4")))
             cr.move_to(x + volume_x_padding, y + h/2 )
             cr.line_to(x + i + volume_x_padding, y + h/2)
             cr.stroke()

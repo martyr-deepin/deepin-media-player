@@ -22,6 +22,7 @@
 
 import gtk
 # import gobject
+from dtk.ui.utils import color_hex_to_cairo
 from dtk.ui.draw import draw_pixbuf
 from dtk.ui.draw import draw_line
 from dtk.ui.utils import container_remove_all
