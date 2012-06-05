@@ -45,7 +45,8 @@ class MediaPlayer(object):
         # self.app.window.change_background(app_theme.get_pixbuf("my_bg2.jpg"))
         # self.app.window.change_background(app_theme.get_pixbuf("bg.png"))
         # Add app titlebar.
-        self.app.add_titlebar(["theme", "menu", "max", "min", "close"],
+        # self.app.add_titlebar(["theme", "menu", "max", "min", "close"],
+        self.app.add_titlebar(["max", "min", "close"],
                               app_theme.get_pixbuf("OrdinaryMode.png"),
                               "深度影音", " ", add_separator = True)
         

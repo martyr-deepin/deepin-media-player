@@ -19,15 +19,15 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from dtk.ui.draw import draw_line
-from dtk.ui.utils import container_remove_all
+from dtk.ui.draw import draw_line, draw_font
+from dtk.ui.utils import container_remove_all, color_hex_to_cairo
 from dtk.ui.listview import ListView
 from dtk.ui.listview import get_content_size
 from dtk.ui.listview import render_text
 from dtk.ui.scrolled_window import ScrolledWindow
 from dtk.ui.box import EventBox
 # from dtk.ui.frame import VerticalFrame
-from dtk.ui.constant import DEFAULT_FONT_SIZE,ALIGN_END
+from dtk.ui.constant import DEFAULT_FONT_SIZE,ALIGN_END, ALIGN_START
 from mplayer import Mplayer    
 from skin import app_theme
 from utils import allocation
@@ -55,6 +55,7 @@ class PlayList(object):
         self.scrolled_window = ScrolledWindow()    
         # self.list_view = ListView(background_pixbuf=app_theme.get_pixbuf("play_list_bg.jpg"))
         self.list_view = ListView()
+        self.list_view.draw_mask = self.draw_mask
         self.item_array = []
         # self.list_view.connect("configure-event", self.init_playlist_path)
         # self.list_view.connect("double-click-item", self.double_click_item)
@@ -67,11 +68,14 @@ class PlayList(object):
         self.draw_line_event_box = EventBox()
         self.draw_line_event_box.connect("expose-event", self.draw_lien_expose_event)
         self.play_list_control_panel = PlayListControlPanel()
-        self.vbox.pack_start(self.play_list_control_panel, False, False)
+        # self.vbox.pack_start(self.play_list_control_panel, False, False)
         self.vbox.pack_start(self.draw_line_event_box, False, False)
         
         
-        
+    def draw_mask(self, cr, x, y, w, h):    
+        cr.set_source_rgb(*color_hex_to_cairo("#101112"))
+        cr.rectangle(x, y, w, h)
+        cr.fill()
         
     def draw_lien_expose_event(self, widget, event):    
         cr, x, y, w, h = allocation(widget)
@@ -127,24 +131,26 @@ class MediaItem(gobject.GObject):
         # Calculate item size.
         self.title_padding_x = 10
         self.title_padding_y = 5
-        (self.title_width, self.title_height) = get_content_size(self.title, 4) #DEFAULT_FONT_SIZE
+        (self.title_width, self.title_height) = get_content_size(self.title, DEFAULT_FONT_SIZE) #DEFAULT_FONT_SIZE
         self.title_width = 90
         
         self.length_padding_x = 10
         self.length_padding_y = 5
-        (self.length_width, self.length_height) = get_content_size(self.length, 4) #DEFAULT_FONT_SIZE
+        (self.length_width, self.length_height) = get_content_size(self.length, DEFAULT_FONT_SIZE) #DEFAULT_FONT_SIZE
         self.length_width = 80
         
         
     def render_title(self, cr, rect):
         '''Render title.'''
         rect.x += self.title_padding_x
-        render_text(cr, rect, self.title)
+        # render_text(cr, rect, self.title)
+        draw_font(cr, self.title, DEFAULT_FONT_SIZE, "#FFFFFF", rect.x, rect.y, rect.width, rect.height, ALIGN_START)
     
     def render_length(self, cr, rect):
         '''Render length.'''
         rect.width -= self.length_padding_x
-        render_text(cr, rect, self.length, ALIGN_END)
+        # render_text(cr, rect, self.length, ALIGN_END)
+        draw_font(cr, self.length, DEFAULT_FONT_SIZE, "#FFFFFF", rect.x, rect.y, rect.width, rect.height, ALIGN_END)
         
     def get_column_sizes(self):
         '''Get sizes.'''
