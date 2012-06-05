@@ -339,16 +339,17 @@ class PlayerBox(object):
     def set_show_toolbar_function_false(self, widget, event):    
         self.show_toolbar_focus_bool = False
         self.toolbar.hide_toolbar()
+        self.toolbar2.hide_toolbar2()
         
     def set_show_toolbar_bool(self, widget, event):    
         self.show_toolbar_bool = False
         
     def hide_all_toolbars(self, widget, event):        
         if not self.show_toolbar_bool:
-            if not self.above_bool:
-                self.app.window.set_keep_above(False)
+            # if not self.above_bool:
+            #     self.app.window.set_keep_above(False)
             self.toolbar.hide_toolbar()
-            
+            self.toolbar2.hide_toolbar2()
         
     # def MessageBox(self, text):    
     #     x, y = self.screen.window.get_root_origin()
@@ -1084,15 +1085,13 @@ class PlayerBox(object):
         # Show toolbar2.
         if self.mode_state_bool or self.full_bool: # concise mode.
             if widget.allocation[3]-20 <= event.y < widget.allocation[3]:
-                self.app.window.set_keep_above(True)
-                self.toolbar2.show_toolbar2()
-                self.toolbar2.panel.set_keep_above(True)
+                if self.show_toolbar_focus_bool:
+                    self.toolbar2.show_toolbar2()
+                    self.show_toolbar_bool = True
             else:
-                if not self.above_bool:
-                    self.app.window.set_keep_above(False)
-                    self.toolbar2.panel.set_keep_above(False)
                 self.toolbar2.hide_toolbar2()
-
+                self.show_toolbar_bool = False
+                
         if self.screen_move_bool:
             self.screen_pause_bool = False
             self.app.window.begin_move_drag(self.event_button,
