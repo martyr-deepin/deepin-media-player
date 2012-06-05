@@ -206,10 +206,10 @@ class  Mplayer(gobject.GObject):
         # random player num.
         self.random_num = 0;
         
-        self.play_file_mode = ['.mkv', '.mp3', '.mp4',
+        self.play_file_mode = ['.mkv',  '.mp3', '.mp4',
                                '.rmvb', '.avi', '.wmv',
-                               '.3gp', 'rm', 'asf',
-                               '.webm']
+                               '.3gp',  'rm',   'asf',
+                               '.webm', '.wav', '.wma']
         
         self.volumebool = False
         # player state.

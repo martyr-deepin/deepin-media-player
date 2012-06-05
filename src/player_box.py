@@ -71,7 +71,7 @@ class PlayerBox(object):
         self.above_bool = False # Set window above bool.
         self.full_bool = False  # Set window full bool.
         self.mode_state_bool = False # Concise mode(True) and common mode(False).
-        
+        self.show_toolbar_bool = False
         self.clear_play_list_bool = False # drag play file.
         
         # ini play memory.
@@ -153,6 +153,7 @@ class PlayerBox(object):
         self.app.window.connect("destroy", self.quit_player_window)
         self.app.window.connect("configure-event", self.app_configure_hide_tool)
         self.app.window.connect("window-state-event", self.set_toolbar2_position)
+        self.app.window.connect("leave-notify-event", self.hide_all_toolbars)
         #keyboard Quick key.
         # self.app.window.connect("realize", gtk.Widget.grab_focus)
         # self.app.window.connect("key-press-event", self.get_key_event)
@@ -193,6 +194,7 @@ class PlayerBox(object):
         
         '''Toolbar Init.'''
         self.toolbar = ToolBar()        
+        self.toolbar.panel.connect("leave-notify-event", self.set_show_toolbar_bool)
         self.toolbar.toolbar_full_button.connect("clicked", self.full_play_window)
         self.toolbar.toolbar_common_button.connect("clicked", self.show_window_widget)
         self.toolbar.toolbar_concise_button.connect("clicked", self.hide_window_widget)
@@ -326,7 +328,13 @@ class PlayerBox(object):
         '''Hide preview window.'''                        
         self.bottom_play_control_hbox_vframe_event_box.connect("motion-notify-event", self.hide_preview_function)
         
-                
+    def set_show_toolbar_bool(self, widget, event):    
+        self.show_toolbar_bool = False
+        
+    def hide_all_toolbars(self, widget, event):            
+        if not self.show_toolbar_bool:
+            self.toolbar.hide_toolbar()
+            
         
     def MessageBox(self, text):    
         x, y = self.screen.window.get_root_origin()
@@ -593,6 +601,7 @@ class PlayerBox(object):
         
     def show_open_dialog_window(self):    
         open_dialog = OpenDialog() 
+        
         open_dialog.connect("get-path-name", self.get_path_name)
         open_dialog.set_filter({"所有文件":".*",
                                 "音频文件":"audio/mpeg",
@@ -603,6 +612,7 @@ class PlayerBox(object):
         open_dialog.set_title("深度影音打开")
         open_dialog.filter_to_file_type("所有文件")    
         open_dialog.show_open_window()    
+        open_dialog.set_keep_above(True)
         
     def get_path_name(self, open_dialog, path_string):    
         # print path_string
@@ -772,8 +782,10 @@ class PlayerBox(object):
         self.app.window.set_visible(True)
         if self.mp:
             # Quit deepin-media-player.
-            # os.system("kill %s" %(self.mp.mplayer_pid))
-            os.system("pkill %s" %("mplayer"))
+            # print self.mp.mplayer_pid
+            if self.mp.mplayer_pid:
+                os.system("kill %s" %(self.mp.mplayer_pid))
+            # os.system("pkill %s" %("mplayer"))
             #os.system("pkill mplayer")
             self.mp.quit()
             
@@ -1035,6 +1047,7 @@ class PlayerBox(object):
         if 0 <= event.y <= 20:
             self.app.window.set_keep_above(True)
             self.toolbar.show_toolbar()
+            self.show_toolbar_bool = True
             
             self.panel_x, self.panel_y = self.screen.window.get_root_origin()
             if self.mode_state_bool: # Concise mode.
@@ -1048,7 +1061,8 @@ class PlayerBox(object):
                 self.app.window.set_keep_above(False)
                 self.toolbar2.panel.set_keep_above(False)
             self.toolbar.hide_toolbar()
-
+            self.show_toolbar_bool = False
+            
         # Show toolbar2.
         if self.mode_state_bool or self.full_bool: # concise mode.
             if widget.allocation[3]-20 <= event.y < widget.allocation[3]:

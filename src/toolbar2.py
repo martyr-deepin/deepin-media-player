@@ -37,7 +37,7 @@ import gtk
 class ToolBar2(object):            
     def __init__(self):#, background_pixbuf = app_theme.get_pixbuf("my_bg2.jpg")):
         # self.background_pixbuf = background_pixbuf
-        self.panel = Panel(APP_WIDTH, 42, window_type=gtk.WINDOW_POPUP)
+        self.panel = Panel(APP_WIDTH, 45, window_type=gtk.WINDOW_POPUP)
         self.vbox = gtk.VBox()
         self.progressbar = ProgressBar()        
         
@@ -108,6 +108,7 @@ if __name__ == "__main__":
     def show_toolbar(widget, event):
         if 0 <= event.y <= 30:
             tb.show_toolbar2()
+            tb.panel.move(500, 500)
         else:    
             tb.hide_toolbar2()
             

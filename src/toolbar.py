@@ -129,7 +129,9 @@ class ToolBar(object):
 if __name__ == "__main__":
     
     def show_toolbar(widget, event):
+        
         tb.show_toolbar()
+        tb.panel.move(500, 500)
         
     def hide_toolbar(widget, event):    
         tb.hide_toolbar()
