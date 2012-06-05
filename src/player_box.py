@@ -1090,7 +1090,6 @@ class PlayerBox(object):
                     self.show_toolbar_bool = True
             else:
                 self.toolbar2.hide_toolbar2()
-                self.show_toolbar_bool = False
                 
         if self.screen_move_bool:
             self.screen_pause_bool = False
