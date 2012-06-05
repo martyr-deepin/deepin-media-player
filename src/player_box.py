@@ -72,6 +72,7 @@ class PlayerBox(object):
         self.full_bool = False  # Set window full bool.
         self.mode_state_bool = False # Concise mode(True) and common mode(False).
         self.show_toolbar_bool = False
+        self.show_toolbar_focus_bool = True
         self.clear_play_list_bool = False # drag play file.
         
         # ini play memory.
@@ -154,6 +155,9 @@ class PlayerBox(object):
         self.app.window.connect("configure-event", self.app_configure_hide_tool)
         self.app.window.connect("window-state-event", self.set_toolbar2_position)
         self.app.window.connect("leave-notify-event", self.hide_all_toolbars)
+        # test app window
+        self.app.window.connect("focus-out-event", self.set_show_toolbar_function_false)
+        self.app.window.connect("focus-in-event", self.set_show_toolbar_function_true)
         #keyboard Quick key.
         # self.app.window.connect("realize", gtk.Widget.grab_focus)
         # self.app.window.connect("key-press-event", self.get_key_event)
@@ -329,10 +333,16 @@ class PlayerBox(object):
         '''Hide preview window.'''                        
         self.bottom_play_control_hbox_vframe_event_box.connect("motion-notify-event", self.hide_preview_function)
         
+    def set_show_toolbar_function_true(self, widget, event):
+        self.show_toolbar_focus_bool = True
+        
+    def set_show_toolbar_function_false(self, widget, event):    
+        self.show_toolbar_focus_bool = False
+        
     def set_show_toolbar_bool(self, widget, event):    
         self.show_toolbar_bool = False
         
-    def hide_all_toolbars(self, widget, event):
+    def hide_all_toolbars(self, widget, event):        
         if not self.show_toolbar_bool:
             if not self.above_bool:
                 self.app.window.set_keep_above(False)
@@ -1051,17 +1061,16 @@ class PlayerBox(object):
         '''Show and hide toolbar.'''
         # Show toolbar.                        
         if 0 <= event.y <= 20:
-            # self.app.window.set_keep_above(True)
-            # self.toolbar.panel.set_keep_above(True)
-            self.toolbar.show_toolbar()
-            self.show_toolbar_bool = True
+            if self.show_toolbar_focus_bool:
+                self.toolbar.show_toolbar()
+                self.show_toolbar_bool = True
             
             
-            self.panel_x, self.panel_y = self.screen.window.get_root_origin()
-            if self.mode_state_bool: # Concise mode.
-                self.toolbar.panel.move(self.panel_x, self.panel_y)            
-            else:    # common mode.            
-                self.toolbar.panel.move(self.panel_x + 1, self.panel_y + self.app.titlebar.allocation[3])
+                self.panel_x, self.panel_y = self.screen.window.get_root_origin()
+                if self.mode_state_bool: # Concise mode.
+                    self.toolbar.panel.move(self.panel_x, self.panel_y)            
+                else:    # common mode.            
+                    self.toolbar.panel.move(self.panel_x + 1, self.panel_y + self.app.titlebar.allocation[3])
             
             # self.toolbar.panel.set_keep_above(True)
         else:
