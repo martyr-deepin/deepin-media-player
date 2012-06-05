@@ -707,7 +707,7 @@ class PlayerBox(object):
         '''Draw screen mplayer view background.'''
         cr, x, y, w, h = allocation(widget)
         
-        if self.mp:
+        if self.mp and (1 == self.state):
             if (self.mp.state) and (self.mp.vide_bool): # vide file.
                 if 0 != self.video_width or 0 != self.video_height:                                        
                     video_ratio = float(self.video_width) / self.video_height
@@ -746,7 +746,8 @@ class PlayerBox(object):
                     # Draw pause background.
                     return False
                 else:
-                    return False
+                    return False                
+                
         # if no player vide file or no player.
         cr.set_source_rgb(0, 0, 0)
         cr.rectangle(0, 0, w, h)

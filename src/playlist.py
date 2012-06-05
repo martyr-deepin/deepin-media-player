@@ -94,7 +94,7 @@ class PlayList(object):
         if self.vbox.get_children() == [] and self.vbox_vframe != None:
            self.vbox.add(self.vbox_vframe)
            self.vbox.pack_start(self.draw_line_event_box, False, False) 
-           self.vbox.pack_start(self.play_list_control_panel, False, False)
+           # self.vbox.pack_start(self.play_list_control_panel, False, False)
            
     def hide_play_list(self):
         container_remove_all(self.vbox)    
