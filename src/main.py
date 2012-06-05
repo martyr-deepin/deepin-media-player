@@ -40,6 +40,7 @@ class MediaPlayer(object):
         # Set app size.
         # self.app.window.set_size_request(APP_WIDTH, APP_HEIGHT) 
         self.app.set_default_size(APP_WIDTH, APP_HEIGHT)               
+        self.app.set_icon(app_theme.get_pixbuf("icon.ico"))
                                 
         # Add app titlebar.
         # self.app.add_titlebar(["theme", "menu", "max", "min", "close"],
