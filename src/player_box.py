@@ -29,6 +29,7 @@ from dtk.ui.frame import HorizontalFrame,VerticalFrame
 from dtk.ui.utils import is_double_click, color_hex_to_cairo
 from dtk.ui.menu import Menu
 
+from gio_format import format
 from opendialog import OpenDialog
 from utils import allocation,path_threads
 from show_time import ShowTime
@@ -447,11 +448,11 @@ class PlayerBox(object):
         
     def get_key_event(self, widget, event): # app: key-release-event       
         keyval = event.keyval                
-        unicode_key = gtk.gdk.keyval_name(keyval)        
+        unicode_key = gtk.gdk.keyval_name(keyval)  
         self.control_player(unicode_key, widget, event)
         return True
         
-    def control_player(self, keyval, widget, event):    
+    def control_player(self, keyval, widget, event):
         # print keyval
         if self.mp:
             if "Right" == keyval:
@@ -463,8 +464,6 @@ class PlayerBox(object):
             elif "Return" == keyval:    
                 self.full_play_window(widget)
                 self.toolbar.toolbar_full_button.flags = not self.toolbar.toolbar_full_button.flags
-                
-        
         
     '''play list button'''    
     def play_list_button_clicked(self, widget): # play list button signal:clicked.           
@@ -512,12 +511,12 @@ class PlayerBox(object):
     def length_threads(self):
         '''Get length threads'''
         for i in self.play_list.list_view.items:             
-            length = self.ini.get("PlayTime", i.title)
+            length = self.ini.get("PlayTime", self.play_list_dict[i.title])
             if length:
                 i.length = length_to_time(length)
             else:    
                 i.length, length = get_length(self.play_list_dict[i.title])            
-                self.ini.set("PlayTime", i.title, length)
+                self.ini.set("PlayTime", self.play_list_dict[i.title], length)
                 self.ini.write()    
             i.emit_redraw_request()
             
@@ -1332,9 +1331,9 @@ class PlayerBox(object):
         # Play file modify start_btn.
         self.media_player_midfy_start_bool()
         
-        self.ini.set("PlayMemory", self.get_player_file_name(mplayer.path), 0)
+        self.ini.set("PlayMemory", mplayer.path, 0)
         if mplayer.posNum < mplayer.lenNum - 100:
-            self.ini.set("PlayMemory", self.get_player_file_name(mplayer.path), mplayer.posNum)            
+            self.ini.set("PlayMemory", mplayer.path, mplayer.posNum)            
 
             
         self.ini.write()        
@@ -1372,11 +1371,7 @@ class PlayerBox(object):
         x, y = self.app.window.get_position()
         
     def play_video_file_bool(self, vide_path):    
-        file1, file2 = os.path.splitext(vide_path)
-        if file2.lower() in ['.mkv', '.rmvb','.avi','.wmv','.3gp','.rm', '.asf', '.mp4']:
-            return True
-        else:
-            return False
+        return format.get_video_bool(vide_path)
         
     def get_player_file_name(self, pathfile2):     
         file1, file2 = os.path.split(pathfile2)

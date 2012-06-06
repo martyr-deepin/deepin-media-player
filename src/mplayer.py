@@ -41,7 +41,7 @@ import gobject
 import shutil
 import subprocess
 from utils import *
-    
+from gio_format import format 
 
 # Get play widow ID.
 def get_window_xid(widget):
@@ -85,7 +85,7 @@ def get_vide_width_height(file_path):
         return float(0), float(0)
 
 
-def length_to_time(length):        
+def length_to_time(length):  
     timeSec = int(float(length))
     timeHour = 0
     timeMin = 0
@@ -97,11 +97,14 @@ def length_to_time(length):
     if timeSec >= 60:
         timeMin  = int(timeSec / 60)
         timeSec -= int(timeMin * 60)         
-            
+        
     if timeHour > 0:    
-        return str("%s时%s分%s秒"%(str(time_add_zero(timeHour)), 
-                                  str(time_add_zero(timeMin)), 
-                                  str(time_add_zero(timeSec))))
+        # return str("%s时%s分%s秒"%(str(time_add_zero(timeHour)), 
+        #                            str(time_add_zero(timeMin)), 
+        #                            str(time_add_zero(timeSec))))
+        return str("%s时%s分"%(str(time_add_zero(timeHour)), 
+                                   str(time_add_zero(timeMin))))
+
     if timeMin > 0:
         return str("%s分%s秒"%(str(time_add_zero(timeMin)), 
                                str(time_add_zero(timeSec))))
@@ -144,15 +147,11 @@ def init_mplayer_config():
             
         # create save preview window image.    
         if not os.path.exists("/tmp/preview"):
-            os.mkdir("/tmp/preview")            
+            os.mkdir("/tmp/preview") 
 
         
 def get_vide_flags(path):
-        file1, file2 = os.path.splitext(path)
-        if file2.lower() in ['.mkv','.rmvb','.avi','.wmv','.3gp','.rm','.mp4','.webm']:
-            return True
-        else:
-            return False
+    return format.get_video_bool(path)
             
         
 class  Mplayer(gobject.GObject):
@@ -205,11 +204,6 @@ class  Mplayer(gobject.GObject):
         self.playListNum   = -1
         # random player num.
         self.random_num = 0;
-        
-        self.play_file_mode = ['.mkv',  '.mp3', '.mp4',
-                               '.rmvb', '.avi', '.wmv',
-                               '.3gp',  'rm',   'asf',
-                               '.webm', '.wav', '.wma']
         
         self.volumebool = False
         # player state.
@@ -668,8 +662,7 @@ class  Mplayer(gobject.GObject):
         
     def findCurrentDir(self, path):
         '''Get all the files in the folder'''
-        pathdir = os.listdir(path)
-       
+        pathdir = os.listdir(path)       
         for pathfile in pathdir:
             pathfile2 = path + '/' + pathfile
             if os.path.isfile(pathfile2):
@@ -685,11 +678,7 @@ class  Mplayer(gobject.GObject):
             return False
         
     def findFile(self, pathfile2):
-        file1, file2 = os.path.splitext(pathfile2)
-        if file2.lower() in self.play_file_mode:
-            return True
-        else:
-            return False
+        return format.get_play_bool(pathfile2)
     
     def delPlayList(self, path): 
         '''Del a File'''
