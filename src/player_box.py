@@ -23,13 +23,14 @@
 # from dtk.ui.dragbar import Dragbar
 # from dtk.ui.mplayer_view import MplayerView
 from dtk.ui.keymap import get_key_name
-from dtk.ui.config import Config
+# from dtk.ui.config import Config
 from dtk.ui.box import EventBox
 from dtk.ui.draw import draw_pixbuf
 from dtk.ui.frame import HorizontalFrame,VerticalFrame
 from dtk.ui.utils import is_double_click, color_hex_to_cairo
 from dtk.ui.menu import Menu
 
+from ini import Config
 from gio_format import format
 from opendialog import OpenDialog
 from utils import allocation,path_threads
@@ -79,7 +80,7 @@ class PlayerBox(object):
         
         # ini play memory.
         self.ini = Config(get_home_path() + "/.config/deepin-media-player/config.ini")
-        self.ini.load()
+        # self.ini.load()
         
         # screen draw borde video width and height.        
         #get_vide_width_height (function return value)
@@ -476,7 +477,8 @@ class PlayerBox(object):
             else:    
                 i.length, length = get_length(self.play_list_dict[i.title])            
                 self.ini.set("PlayTime", '"%s"' % (self.play_list_dict[i.title]), length)
-                self.ini.write()    
+                # self.ini.write()    
+                self.ini.save()
             i.emit_redraw_request()
             
                     
@@ -1293,7 +1295,8 @@ class PlayerBox(object):
 
             
             
-        self.ini.write()        
+        # self.ini.write()        
+        self.ini.save()     
                 
         
     def media_player_next(self, mplayer, play_bool):
