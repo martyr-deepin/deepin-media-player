@@ -361,90 +361,41 @@ class PlayerBox(object):
     #         self.tooltip.show_tooltip(text, x + 5, y + 30)
     #     self.tooltip.set_keep_above(True)    
         
-        
     def modify_mouse_icon(self, widget, event): # screen: motion-notify-event 
         w = widget.allocation.width
         h = widget.allocation.height
-        # right_padding = 5
-        bottom_padding = 5
-        drag_bool = False
-        
-        if "MplayerView" == type(widget).__name__: 
-            try:
-                self.bottom_play_control_hbox_vframe_event_box.window.set_cursor(None)
-            except:    
-                pass
-            
-        # if (w - right_padding <= event.x <= w) and (right_padding <= event.y <= h - right_padding): #Right
-        #     drag = gtk.gdk.RIGHT_SIDE
-        #     drag_bool = True            
-        # elif (0 <= event.x <= right_padding) and (right_padding <= event.y <= h - right_padding):  #left  
-        #     drag = gtk.gdk.LEFT_SIDE
-        #     drag_bool = True
-        # elif (bottom_padding <= event.x <= w - bottom_padding) and (h - bottom_padding <= event.y <= h): # bottom                
-        #     drag = gtk.gdk.BOTTOM_SIDE
-        #     if "MplayerView" != type(widget).__name__: 
-        #         drag_bool = True
-        #     else:    
-        #         drag_bool = False
-        # elif (0 <= event.x <= bottom_padding) and (h - bottom_padding <= event.y <= h):                
-        #     if "MplayerView" != type(widget).__name__:
-        #         drag = gtk.gdk.BOTTOM_LEFT_CORNER
-        #         drag_bool = True
-        #     else:
-        #         drag_bool = False
+        bottom_padding = 10
+
         if (w - bottom_padding <= event.x <= w) and (h - bottom_padding <= event.y <= h):
             if "MplayerView" != type(widget).__name__:
                 drag = gtk.gdk.BOTTOM_RIGHT_CORNER
-                drag_bool = True
-            else:
-                drag_bool = False
-        # MplayerView   EventBox Panel
-
-        if drag_bool:    
-            widget.window.set_cursor(gtk.gdk.Cursor(drag))
-        else:    
-            widget.window.set_cursor(None)    
-            
+                widget.window.set_cursor(gtk.gdk.Cursor(drag))
+        else:        
+            widget.window.set_cursor(None)
+            self.app.window.window.set_cursor(None)
         
     def drag_resize_window(self, widget, event): # screen: button-press-event -> drag resize window.
         w = widget.allocation.width
         h = widget.allocation.height
-        # left_padding = 5
         bottom_padding = 5
         drag_bool = False
         
-        # if (w - left_padding <= event.x <= w) and (left_padding <= event.y <= h - left_padding): # Right
-        #     drag = gtk.gdk.WINDOW_EDGE_EAST
-        #     drag_bool = True                        
-        # elif (0 <= event.x <= 20) and (left_padding <= event.y <= h - left_padding): # Left
-        #     drag = gtk.gdk.WINDOW_EDGE_WEST
-        #     drag_bool = True            
-        # elif (bottom_padding <= event.x <= w - bottom_padding) and (h - bottom_padding <= event.y <= h):    
-        #     drag = gtk.gdk.WINDOW_EDGE_SOUTH
-        #     if "MplayerView" != type(widget).__name__: 
-        #         drag_bool = True            
-        #     else:    
-        #         drag_bool = False
-        # elif (0 <= event.x <= bottom_padding) and (h - bottom_padding <= event.y <= h):        
-        #     if "MplayerView" != type(widget).__name__: 
-        #         drag = gtk.gdk.WINDOW_EDGE_SOUTH_WEST
-        #         drag_bool = True            
-        #     else:    
-        #         drag_bool = False            
         if (w - bottom_padding <= event.x <= w) and (h - bottom_padding <= event.y <= h):        
             if "MplayerView" != type(widget).__name__: 
                 drag = gtk.gdk.WINDOW_EDGE_SOUTH_EAST
                 drag_bool = True            
             else:    
-                drag_bool = False           
-                
-        if drag_bool:    
+                drag_bool = False
+            
+        if drag_bool:
             self.app.window.begin_resize_drag(drag,
                                               event.button,
                                               int(event.x_root),
                                               int(event.y_root),
                                               event.time)
+        else:        
+            widget.window.set_cursor(None)
+
         
     def get_key_event(self, widget, event): # app: key-release-event       
         keyval = event.keyval                
