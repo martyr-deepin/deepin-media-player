@@ -22,6 +22,7 @@
 
 # from dtk.ui.dragbar import Dragbar
 # from dtk.ui.mplayer_view import MplayerView
+from dtk.ui.keymap import get_key_name
 from dtk.ui.config import Config
 from dtk.ui.box import EventBox
 from dtk.ui.draw import draw_pixbuf
@@ -161,7 +162,7 @@ class PlayerBox(object):
         self.app.window.connect("focus-in-event", self.set_show_toolbar_function_true)
         #keyboard Quick key.
         # self.app.window.connect("realize", gtk.Widget.grab_focus)
-        # self.app.window.connect("key-press-event", self.get_key_event)
+        self.app.window.connect("key-press-event", self.get_key_event)
                 
         '''Screen window init.'''
         self.screen = gtk.DrawingArea()
@@ -175,7 +176,7 @@ class PlayerBox(object):
         # Handle signal.
         # self.connect("realize", self.realize_mplayer_view)
 
-        self.screen.connect("key-press-event", self.get_key_event)
+        # self.screen.connect("key-press-event", self.get_key_event)
         self.screen.connect("button-press-event", self.drag_resize_window)
         self.screen.connect("motion-notify-event", self.modify_mouse_icon)
         
@@ -253,7 +254,7 @@ class PlayerBox(object):
         # self.playlist.list_view.add_items(self.media_item)
         self.play_list_dict = {} # play list dict type.
         self.play_list = PlayList()                    
-        self.play_list.list_view.connect("key-press-event", self.get_key_event)
+        # self.play_list.list_view.connect("key-press-event", self.get_key_event)
         self.play_list.list_view.connect("double-click-item", self.double_play_list_file)
         self.play_list.list_view.connect("delete-select-items", self.delete_play_list_file)
         self.play_list.list_view.connect("button-press-event", self.show_popup_menu)
@@ -334,6 +335,11 @@ class PlayerBox(object):
         '''Hide preview window.'''                        
         self.bottom_play_control_hbox_vframe_event_box.connect("motion-notify-event", self.hide_preview_function)
         
+        self.keymap = {"Right":self.key_right,
+                       "Left":self.key_left,
+                       "space":self.key_space,
+                       "Return":self.key_return}        
+    
     def set_show_toolbar_function_true(self, widget, event):
         self.show_toolbar_focus_bool = True
         
@@ -395,27 +401,26 @@ class PlayerBox(object):
                                               event.time)
         else:        
             widget.window.set_cursor(None)
-
         
     def get_key_event(self, widget, event): # app: key-release-event       
-        keyval = event.keyval                
-        unicode_key = gtk.gdk.keyval_name(keyval)  
-        self.control_player(unicode_key, widget, event)
+        keyval_name = get_key_name(event.keyval)
+        if self.keymap.has_key(keyval_name):
+            self.keymap[keyval_name]()
         return True
+    
+    def key_right(self):            
+        self.mp.seek(self.mp.posNum + 5)
         
-    def control_player(self, keyval, widget, event):
-        # print keyval
-        if self.mp:
-            if "Right" == keyval:
-                self.mp.seek(self.mp.posNum + 10)
-            elif "Left" == keyval:    
-                self.mp.seek(self.mp.posNum - 10)
-            elif "space" == keyval:    
-                self.virtual_set_start_btn_clicked()
-            elif "Return" == keyval:    
-                self.full_play_window(widget)
-                self.toolbar.toolbar_full_button.flags = not self.toolbar.toolbar_full_button.flags
+    def key_left(self):
+        self.mp.seek(self.mp.posNum - 5)
         
+    def key_space(self):
+        self.virtual_set_start_btn_clicked()
+    
+    def key_return(self):
+        self.full_play_window(self.app.window)
+        self.toolbar.toolbar_full_button.flags = not self.toolbar.toolbar_full_button.flags
+            
     '''play list button'''    
     def play_list_button_clicked(self, widget): # play list button signal:clicked.           
         if True == self.play_list_button.button.flags: 
