@@ -337,7 +337,7 @@ class PlayerBox(object):
         
         self.keymap = {"Right":self.key_right,
                        "Left":self.key_left,
-                       "space":self.key_space,
+                       "Space":self.key_space,
                        "Return":self.key_return}        
     
     def set_show_toolbar_function_true(self, widget, event):
@@ -404,6 +404,9 @@ class PlayerBox(object):
         
     def get_key_event(self, widget, event): # app: key-release-event       
         keyval_name = get_key_name(event.keyval)
+        if 32 == event.keyval:
+            keyval_name = "space"
+        # print keyval_name        
         if self.keymap.has_key(keyval_name):
             self.keymap[keyval_name]()
         return True
@@ -467,17 +470,16 @@ class PlayerBox(object):
     def length_threads(self):
         '''Get length threads'''
         for i in self.play_list.list_view.items:             
-            length = self.ini.get("PlayTime", self.play_list_dict[i.title])
+            length = self.ini.get("PlayTime", '"%s"' % (self.play_list_dict[i.title]))
             if length:
                 i.length = length_to_time(length)
             else:    
                 i.length, length = get_length(self.play_list_dict[i.title])            
-                self.ini.set("PlayTime", self.play_list_dict[i.title], length)
+                self.ini.set("PlayTime", '"%s"' % (self.play_list_dict[i.title]), length)
                 self.ini.write()    
             i.emit_redraw_request()
             
-            
-        
+                    
     def add_play_list_time(self, path): # all.   
         '''play list add play file.'''
         self.play_list_dict[self.get_player_file_name(path)] = path
@@ -743,7 +745,7 @@ class PlayerBox(object):
             pixbuf,
             x + (w - pixbuf.get_width()) / 2,
             (h - pixbuf.get_height()) / 2)        
-        return True
+        # return True
 
 
     def quit_player_window(self, widget):
@@ -753,8 +755,8 @@ class PlayerBox(object):
         if self.mp:
             # Quit deepin-media-player.
             # print self.mp.mplayer_pid
-            if self.mp.mplayer_pid:
-                os.system("kill %s" %(self.mp.mplayer_pid))
+            # if self.mp.mplayer_pid:
+            #     os.system("kill %s" %(self.mp.mplayer_pid))
             # os.system("pkill %s" %("mplayer"))
             #os.system("pkill mplayer")
             self.mp.quit()
@@ -770,8 +772,8 @@ class PlayerBox(object):
     def app_configure_hide_tool(self, widget, event): #app: configure-event.
         #Set mute and value.
         
-        if self.mp:
-            self.screen.queue_draw()    
+        # if self.mp:
+            # self.screen.queue_draw()    
             
         if self.toolbar2.volume_button.mute_bool != self.save_volume_mute_bool:
             self.toolbar2.volume_button.mute_bool = self.save_volume_mute_bool
@@ -1225,10 +1227,9 @@ class PlayerBox(object):
     def get_time_length(self, mplayer, length):
         '''Get mplayer length to max of progressbar.'''
         # play memory.                
-        init_value = self.ini.get('PlayMemory', self.get_player_file_name(mplayer.path))        
-        # print init_value
-        if init_value != None:
-            self.mp.seek(int(init_value))                        
+        pos = self.ini.get("PlayMemory", '"%s"' % ((mplayer.path)))
+        if pos is not None:
+            self.mp.seek(int(pos))                        
             
         self.mp.setvolume(self.save_volume_value)
         if self.save_volume_mute_bool:
@@ -1257,7 +1258,7 @@ class PlayerBox(object):
     def media_player_start(self, mplayer, play_bool):
         '''media player start play.'''        
         # Get draw width, height.       
-        self.video_width, self.video_height = get_vide_width_height(mplayer.path)
+        self.video_width, self.video_height = get_vide_width_height(mplayer.path)        
         
         # # title show play file name.
         file_name = self.get_player_file_name(mplayer.path)
@@ -1286,11 +1287,11 @@ class PlayerBox(object):
         #print self.input_string + "Linux Deepin Media player...end"
         # Play file modify start_btn.
         self.media_player_midfy_start_bool()
-        
-        self.ini.set("PlayMemory", mplayer.path, 0)
+        self.ini.set("PlayMemory", '"%s"' % (mplayer.path), 0)
         if mplayer.posNum < mplayer.lenNum - 100:
-            self.ini.set("PlayMemory", mplayer.path, mplayer.posNum)            
+            self.ini.set("PlayMemory", '"%s"' % (mplayer.path), mplayer.posNum)
 
+            
             
         self.ini.write()        
                 
