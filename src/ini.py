@@ -45,7 +45,6 @@ class Config(object):
             print "%s" % (e)
         
         
-        
     def init_config(self):        
         
         while True:
@@ -64,29 +63,31 @@ class Config(object):
                         self.section_bool = False
                         self.fp.seek(-1, 1)
                     else:    
-                        ch = self.fp.read(1)
+                        self.argv_save_ch += ch
+                        # ch = self.fp.read(1)
+                        
                 else:# Read argv.        
                     if "\n" == ch:
-
+                        # print self.argv_save_ch
                         self.split(self.argv_save_ch, "=")
                         self.argv_save_ch = ""
                     else:    
                         self.argv_save_ch += ch
                     
+            else:        
+                if "[" == ch:                
+                    while True:                    
+                        ch = self.fp.read(1)                    
                     
-            if "[" == ch:                
-                while True:                    
-                    ch = self.fp.read(1)                    
+                        if "\n" == ch:
+                            self.section_dict[self.section_save_ch] = {} # save section name.
+                            break
                     
-                    if "\n" == ch:
-                        self.section_dict[self.section_save_ch] = {} # save section name.
-                        break
-                    
-                    if "]" == ch:
-                        self.section_bool = True                       
-                    else:
-                        if ch != "[":
-                            self.section_save_ch += ch
+                        if "]" == ch:
+                            self.section_bool = True                       
+                        else:
+                            if ch != "[":
+                                self.section_save_ch += ch
                             
     def split(self, string, token):        
         split_lsit = [] 
