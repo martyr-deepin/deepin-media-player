@@ -28,8 +28,16 @@
 # set(节点名, 参数名, 值) : 无节点名 或 参数名 , 创建. 然后赋值.
 # from dtk.ui.config import Config
 
-class Config(object):
+import gobject    
+
+class Config(gobject.GObject):
+    __gsignals__ = {
+        "config-changed" : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE,
+                            (gobject.TYPE_STRING, gobject.TYPE_STRING, gobject.TYPE_STRING))
+        }
+
     def __init__(self, ini_path):
+        gobject.GObject.__init__(self)
         self.ini_path = ini_path
         self.section_bool = False
         self.argv_bool = False        
@@ -117,6 +125,8 @@ class Config(object):
             else:    
                 self.section_dict[section][argv] = str(value)
                 
+        self.emit("config-changed", section, argv, value)         
+                
     def get(self, section, argv):
         section = str(section)
         argv    = str(argv)
@@ -136,8 +146,13 @@ class Config(object):
                 
 import os                
 if __name__ == "__main__":
+    def test_get_section(confi, section, option, value):
+        print section
+        print option
+        print value
     config = Config(os.path.expanduser("~") + "/.config/deepin-media-player/config.ini")    
-    # config.set("window", "w[fdsfsdf]idth", "32.232323")
+    config.connect("config-changed", test_get_section)
+    config.set("window", "w[fdsfsdf]idth", "32.232323")
     # print "修改width:%s" % config.get("window", "width")
     # config.set("window", "width", "473843.343")
     # print "修改width:%s" % config.get("window", "h")
