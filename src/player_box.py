@@ -163,7 +163,7 @@ class PlayerBox(object):
         self.app.window.connect("focus-in-event", self.set_show_toolbar_function_true)
         #keyboard Quick key.
         # self.app.window.connect("realize", gtk.Widget.grab_focus)
-        # self.app.window.connect("key-press-event", self.get_key_event)
+        self.app.window.connect("key-press-event", self.get_key_event)
                 
         '''Screen window init.'''
         self.screen = gtk.DrawingArea()
@@ -178,7 +178,7 @@ class PlayerBox(object):
         # Handle signal.
         # self.connect("realize", self.realize_mplayer_view)
 
-        self.screen.connect("key-press-event", self.get_key_event)
+        # self.screen.connect("key-press-event", self.get_key_event)
         self.screen.connect("button-press-event", self.drag_resize_window)
         self.screen.connect("motion-notify-event", self.modify_mouse_icon)
         
@@ -492,6 +492,7 @@ class PlayerBox(object):
         self.play_list.list_view.add_items(media_item)                
         
         if self.clear_play_list_bool:
+            print "****************"
             self.clear_play_list_bool = False
             if 1 == self.mp.state:
                 self.mp.quit()
@@ -679,8 +680,10 @@ class PlayerBox(object):
             elif os.path.isfile(file_path): # add play file.
                 self.mp.addPlayFile(file_path)
             elif os.path.isdir(file_path): # add dir.
-                path_threads(file_path, self.mp)
-            self.clear_play_list_bool = True    
+                path_threads(file_path, self.mp)                
+                
+            if len(self.argv_path_list) > 1: # Set play bool.
+                self.clear_play_list_bool = True
             
         # self.play_list.list_view.set_highlight(self.play_list.list_view.items[0])        
         # except:
