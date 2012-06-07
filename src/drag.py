@@ -64,7 +64,8 @@ def drag_connect(wid, mp, play_list, widget_bool):
                ("text/uri-list", 0, 0),
                ("text/plain", 0, 3)]
     
-    wid.drag_dest_set(gtk.DEST_DEFAULT_ALL, targets, gtk.gdk.ACTION_COPY)
+    wid.drag_dest_set(gtk.DEST_DEFAULT_MOTION | gtk.DEST_DEFAULT_DROP, targets, gtk.gdk.ACTION_COPY)
+    
     wid.connect('drag_motion', drag_motion)
     wid.connect('drag_drop', drag_drop)
     wid.connect('drag_data_received', drag_data_received, mp, play_list, widget_bool)    
