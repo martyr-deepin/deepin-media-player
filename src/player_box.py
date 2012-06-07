@@ -163,21 +163,22 @@ class PlayerBox(object):
         self.app.window.connect("focus-in-event", self.set_show_toolbar_function_true)
         #keyboard Quick key.
         # self.app.window.connect("realize", gtk.Widget.grab_focus)
-        self.app.window.connect("key-press-event", self.get_key_event)
+        # self.app.window.connect("key-press-event", self.get_key_event)
                 
         '''Screen window init.'''
         self.screen = gtk.DrawingArea()
         
         # Screen signal init.
         self.screen.add_events(gtk.gdk.ALL_EVENTS_MASK)
-        # drag resize window.
+        self.screen.set_can_focus(True)
+        # drag resize window. .grab_focus()
         self.screen.connect("realize", self.init_media_player)
         self.screen.unset_flags(gtk.DOUBLE_BUFFERED) # disable double buffered to avoid video blinking
         
         # Handle signal.
         # self.connect("realize", self.realize_mplayer_view)
 
-        # self.screen.connect("key-press-event", self.get_key_event)
+        self.screen.connect("key-press-event", self.get_key_event)
         self.screen.connect("button-press-event", self.drag_resize_window)
         self.screen.connect("motion-notify-event", self.modify_mouse_icon)
         
@@ -382,6 +383,8 @@ class PlayerBox(object):
             self.app.window.window.set_cursor(None)
         
     def drag_resize_window(self, widget, event): # screen: button-press-event -> drag resize window.
+        self.screen.grab_focus()
+        
         w = widget.allocation.width
         h = widget.allocation.height
         bottom_padding = 5
@@ -645,7 +648,6 @@ class PlayerBox(object):
     '''Init media player.'''
     def init_media_player(self, widget):
         '''Init deepin media player.'''
-        
         self.play_list.hide_play_list() # Hide play list.
         
         self.save_volume_value = self.volume_button.volume_value
