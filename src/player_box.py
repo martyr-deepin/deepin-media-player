@@ -1302,6 +1302,7 @@ class PlayerBox(object):
                 
     def media_player_end(self, mplayer, play_bool):
         '''player end.'''
+        self.thread_manage.clear_threads()
         #print self.input_string + "Linux Deepin Media player...end"
         # Play file modify start_btn.
         self.media_player_midfy_start_bool()
