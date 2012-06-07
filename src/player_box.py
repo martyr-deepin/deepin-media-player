@@ -27,6 +27,7 @@ from dtk.ui.frame import HorizontalFrame,VerticalFrame
 from dtk.ui.utils import is_double_click, color_hex_to_cairo
 from dtk.ui.menu import Menu
 
+from thread_manage import ThreadManage
 from ini import Config
 from gio_format import format
 from opendialog import OpenDialog
@@ -72,6 +73,7 @@ class PlayerBox(object):
         self.show_toolbar_focus_bool = True
         self.clear_play_list_bool = False # drag play file.
         
+        self.thread_manage = ThreadManage()
         # ini play memory.
         self.ini = Config(get_home_path() + "/.config/deepin-media-player/config.ini")
         # self.ini.load()
@@ -1148,6 +1150,7 @@ class PlayerBox(object):
             if 1 == self.mp.state:            
                 if self.play_video_file_bool(self.mp.path):           
                     if self.show_bool:                                
+                        self.start_save_time_function(event.x, progressbar)
                         self.x_root = event.x_root                                
                         self.y_root = event.y_root                                       
                          # preview window show.
@@ -1160,49 +1163,52 @@ class PlayerBox(object):
                         # previwe window show position.
                         self.preview.move_preview(self.x_root - self.preview.bg.get_allocation()[2]/2,
                                               preview_y_padding)        
-                    # if self.show_id == None and self.read_id == None:                                    
-                    if self.read_id == None:    
-                        self.start_time_function(event.x, progressbar)
+                        self.start_read_time_function(event.x, progressbar)
+                        
                     
                         
     '''Read preview image.'''        
-    def start_time_function(self, pos, progressbar):                  
-        self.show_id = gtk.timeout_add(10, self.save_scrot_image, pos, progressbar)
-        self.read_id = gtk.timeout_add(15, self.read_image_time, pos, progressbar)                            
-
+    def start_save_time_function(self, pos, progressbar):                  
+        self.show_id = gtk.timeout_add(10, self.save_scrot_image_thread, pos, progressbar)
         
-    def read_image_time(self, pos, progressbar):    
-        # print "start read preview image... ..."
-        save_pos = int((float(int(pos)) / progressbar.pb.allocation.width * progressbar.max)        )
-        # print "读取图片:" + str(save_pos)
+    def start_read_time_function(self, pos, progressbar):                  
+        self.read_id = gtk.timeout_add(15, self.read_image_time_thread, pos, progressbar)                            
         
-        if os.path.exists("/tmp/preview/" + self.get_player_file_name(self.mp.path) + "/" + str(int(save_pos)) + ".jpeg"):                    
-            try:                
-                # Read preview image.
-                self.preview.set_image("/tmp/preview/" + self.get_player_file_name(self.mp.path) + "/" + str(int(save_pos)) + ".jpeg")
-                # print "set preview image...."
-                # preview background window show time.
-                self.preview.set_pos(int(save_pos))
-                self.preview.bg.queue_draw()                
-            except:   
-                print "read image,Error!!"
-                
-        self.read_id = None
+    def save_scrot_image_thread(self, pos, progressbar):
+        save_pos = int((float(int(pos)) / progressbar.pb.allocation.width * progressbar.max))
+        if not os.path.exists("/tmp/preview/" + self.get_player_file_name(self.mp.path) + "/" + str(int(save_pos)) + ".jpeg"):
+            if not self.thread_manage.thread_name_bool(save_pos):                            
+                save_thread_id = threading.Thread(target=self.save_scrot_image, args=(save_pos,))
+                self.thread_manage.add_thread(save_thread_id, save_pos)
+                save_thread_id.setDaemon(True)
+                save_thread_id.start()
         return False
+    
+    def read_image_time_thread(self, pos, progressbar):
+        save_pos = int((float(int(pos)) / progressbar.pb.allocation.width * progressbar.max))
+        if os.path.exists("/tmp/preview/" + self.get_player_file_name(self.mp.path) + "/" + str(int(save_pos)) + ".jpeg"):
+                save_thread_id = threading.Thread(target=self.read_image_time, args=(save_pos,))       
+                save_thread_id.setDaemon(True)
+                save_thread_id.start()                
+        return False
+    
+    def read_image_time(self, pos):    
+        '''Read preview image.'''
+        try:
+            self.preview.set_image("/tmp/preview/" + self.get_player_file_name(self.mp.path) + "/" + str(int(pos)) + ".jpeg")
+            self.preview.set_pos(int(pos))
+            self.preview.bg.queue_draw()                
+        except Exception, e:   
+            print "%s" % (e)
+                
             
     '''Save media player scrot image.'''
-    def save_scrot_image(self, pos, progressbar): # scrot use thread function.
-        save_pos = int((float(int(pos)) / progressbar.pb.allocation.width * progressbar.max))
-        # print "保存图片:" + str(save_pos)
-        
-        if not os.path.exists("/tmp/preview/" + self.get_player_file_name(self.mp.path) + "/" + str(int(save_pos)) + ".jpeg"):            
-            # Save preview image.
-            # print "截图视频路径:" + self.preview.mp.path
-            self.preview.mp.preview_scrot(int(save_pos),
-                                          "/tmp/preview/"+ self.get_player_file_name(self.mp.path) + "/" + str(int(save_pos)) + ".jpeg")            
-
-        self.show_id = None    
+    def save_scrot_image(self, pos): # scrot use thread function.
+        '''Save preview image.'''
+        self.preview.mp.preview_scrot(int(pos),
+                                      "/tmp/preview/"+ self.get_player_file_name(self.mp.path) + "/" + str(int(pos)) + ".jpeg")
                 
+        
     '''Show preview window'''
     def time_preview_show(self):        
         '''Show preview window'''
