@@ -20,10 +20,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# from dtk.ui.dragbar import Dragbar
-# from dtk.ui.mplayer_view import MplayerView
 from dtk.ui.keymap import get_key_name
-# from dtk.ui.config import Config
 from dtk.ui.box import EventBox
 from dtk.ui.draw import draw_pixbuf
 from dtk.ui.frame import HorizontalFrame,VerticalFrame
@@ -51,11 +48,8 @@ from mplayer import get_home_path
 from mplayer import length_to_time
 from playlist import PlayList
 from playlist import MediaItem
-# from tooltip import Tooltip
 from sort import Sort
-# from popup_menu import PopupMenu
 
-# from ini import INI
 import threading
 import gtk
 import os
@@ -235,7 +229,7 @@ class PlayerBox(object):
         self.toolbar2.play_control_panel.pre_btn.connect("clicked", self.pre_button_clicked)
         self.toolbar2.play_control_panel.start_btn.connect("clicked", self.start_button_clicked, 2)
         self.toolbar2.play_control_panel.next_btn.connect("clicked", self.next_button_clicked)
-
+        self.toolbar2.play_control_panel.open_btn.connect("clicked", self.open_button_clicked)
 
         # Toolbar2 volume button.
         self.toolbar2.volume_button.button_event.connect("button-press-event",
@@ -492,7 +486,6 @@ class PlayerBox(object):
         self.play_list.list_view.add_items(media_item)                
         
         if self.clear_play_list_bool:
-            print "****************"
             self.clear_play_list_bool = False
             if 1 == self.mp.state:
                 self.mp.quit()
