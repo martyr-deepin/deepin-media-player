@@ -302,7 +302,7 @@ class PlayerBox(object):
         self.volume_button = VolumeButton()
         self.volume_button_hframe.add(self.volume_button)
         self.volume_button_hframe.set(1, 0.5, 0, 0)
-        self.volume_button_hframe.set_padding(0, 0, 0, 10)
+        self.volume_button_hframe.set_padding(0, 5, 0, 10)
 
         self.volume_button.button_event.connect("button-press-event", self.volume_button_set_mute)
         self.volume_button.connect("get-value-event", self.volume_button_set_volume)
