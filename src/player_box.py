@@ -1123,27 +1123,32 @@ class PlayerBox(object):
                 progressbar.set_pos(progressbar.pos)
                 progressbar.drag_bool = True
                 self.point_bool = True
+            else:    
+                self.progressbar.set_pos(0)
+                self.toolbar2.progressbar.set_pos(0)                
 
     def progressbar_player_drag_pos_modify(self, widget, event, progressbar, pb_bit):
         '''Set player rate of progress.'''
+        
         if progressbar.drag_bool: # Mouse left.
             # Hide preview window.
             self.hide_preview_function(widget, event)
-            
-            if 1 == pb_bit:
-                self.toolbar2.progressbar.set_pos(progressbar.pos)
+            if 1 == self.mp.state:
+                if 1 == pb_bit:
+                    self.toolbar2.progressbar.set_pos(progressbar.pos)                
+                elif 2 == pb_bit:
+                    self.progressbar.set_pos(progressbar.pos)
                 
-            if 2 == pb_bit:
-                self.progressbar.set_pos(progressbar.pos)
-                
-            if self.mp:
-                if 1 == self.mp.state:
-                    self.mp.seek(int(progressbar.pos))
-                    self.show_time_label.time_font2 = self.set_time_string(self.mp.timeHour) + ":" + self.set_time_string(self.mp.timeMin) + ":" + self.set_time_string(self.mp.timeSec)
-                    self.toolbar2.show_time.time_font2 = self.set_time_string(self.mp.timeHour) + ":" + self.set_time_string(self.mp.timeMin) + ":" + self.set_time_string(self.mp.timeSec)
-                    self.toolbar2.panel.queue_draw()
-                    self.app.window.queue_draw()
-                
+                if self.mp:
+                    if 1 == self.mp.state:
+                        self.mp.seek(int(progressbar.pos))
+                        self.show_time_label.time_font2 = self.set_time_string(self.mp.timeHour) + ":" + self.set_time_string(self.mp.timeMin) + ":" + self.set_time_string(self.mp.timeSec)
+                        self.toolbar2.show_time.time_font2 = self.set_time_string(self.mp.timeHour) + ":" + self.set_time_string(self.mp.timeMin) + ":" + self.set_time_string(self.mp.timeSec)
+                        self.toolbar2.panel.queue_draw()
+                        self.app.window.queue_draw()
+            else:    
+                self.progressbar.set_pos(0)
+                self.toolbar2.progressbar.set_pos(0)                
             
         # Show preview window.            
         else:
