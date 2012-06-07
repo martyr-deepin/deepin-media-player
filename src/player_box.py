@@ -1146,24 +1146,25 @@ class PlayerBox(object):
                 
             
         # Show preview window.            
-        if 1 == self.mp.state:            
-            if self.play_video_file_bool(self.mp.path):           
-                if self.show_bool:                                
-                    self.x_root = event.x_root                                
-                    self.y_root = event.y_root                                       
-                    # preview window show.
-                    self.preview.show_preview()
-                    if 1 == pb_bit:
-                        preview_y_padding = self.app.window.get_position()[1] + self.screen.allocation.height + self.app.titlebar.allocation.height - self.preview.bg.get_allocation()[3]
-                    if 2 == pb_bit:    
-                        preview_y_padding = self.toolbar2.panel.get_position()[1] - self.preview.bg.get_allocation()[3]
+        else:
+            if 1 == self.mp.state:            
+                if self.play_video_file_bool(self.mp.path):           
+                    if self.show_bool:                                
+                        self.x_root = event.x_root                                
+                        self.y_root = event.y_root                                       
+                         # preview window show.
+                        self.preview.show_preview()
+                        if 1 == pb_bit:
+                            preview_y_padding = self.app.window.get_position()[1] + self.screen.allocation.height + self.app.titlebar.allocation.height - self.preview.bg.get_allocation()[3]
+                        if 2 == pb_bit:    
+                            preview_y_padding = self.toolbar2.panel.get_position()[1] - self.preview.bg.get_allocation()[3]
 
-                    # previwe window show position.
-                    self.preview.move_preview(self.x_root - self.preview.bg.get_allocation()[2]/2,
+                        # previwe window show position.
+                        self.preview.move_preview(self.x_root - self.preview.bg.get_allocation()[2]/2,
                                               preview_y_padding)        
-                # if self.show_id == None and self.read_id == None:                                    
-                if self.read_id == None:    
-                    self.start_time_function(event.x, progressbar)
+                    # if self.show_id == None and self.read_id == None:                                    
+                    if self.read_id == None:    
+                        self.start_time_function(event.x, progressbar)
                     
                         
     '''Read preview image.'''        
