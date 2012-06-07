@@ -84,6 +84,8 @@ class ToolBar(object):
         # self.input_mask = gtk.gdk.Region()
         # self.panel.window.input_shape_combine_region(self.input_mask, 0, 0)                           
         
+        self.show_time_id = None
+        
     def draw_panel_background(self, widget, event):
         cr,x,y,w,h = allocation(widget)
         cr.set_source_rgb(0.0, 0.0, 0.0)
@@ -105,10 +107,16 @@ class ToolBar(object):
         
     def show_panel_toolbar(self, widget, event):    
         self.show = 0
+        if self.show_time_id:
+            gtk.timeout_remove(self.show_time_id)
         
-    def hide_panel_toolbar(self, widget, event):    
+    def hide_panel_toolbar(self, widget, event):            
         self.show = 1
-        # self.hide_toolbar()
+        self.show_time_id = gtk.timeout_add(1000, self.hide_toolbar_time)
+        
+    def hide_toolbar_time(self):    
+        self.hide_toolbar()
+        return False
         
     def show_toolbar(self):   
         if 0 == self.show:
