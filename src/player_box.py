@@ -1238,12 +1238,7 @@ class PlayerBox(object):
         return str(num)
     
     def get_time_length(self, mplayer, length):
-        '''Get mplayer length to max of progressbar.'''
-        # play memory.                
-        pos = self.ini.get("PlayMemory", '"%s"' % ((mplayer.path)))
-        if pos is not None:
-            self.mp.seek(int(pos))                        
-            
+        '''Get mplayer length to max of progressbar.'''            
         self.mp.setvolume(self.save_volume_value)
         if self.save_volume_mute_bool:
             self.mp.nomute()
@@ -1268,8 +1263,19 @@ class PlayerBox(object):
                 self.toolbar2.panel.queue_draw()
                 self.app.window.queue_draw()
                 
+    def get_pos_ste_seek(self, pos):            
+        self.mp.seek(int(pos))                                    
+        
     def media_player_start(self, mplayer, play_bool):
-        '''media player start play.'''        
+        '''media player start play.'''                
+        #play memory.                        
+        pos = self.ini.get("PlayMemory", '"%s"' % ((mplayer.path)))        
+        if pos is not None:
+            gtk.timeout_add(100, self.get_pos_ste_seek, pos)
+
+            
+        
+        
         # Get draw width, height.       
         self.video_width, self.video_height = get_vide_width_height(mplayer.path)        
         
@@ -1301,7 +1307,7 @@ class PlayerBox(object):
         # Play file modify start_btn.
         self.media_player_midfy_start_bool()
         self.ini.set("PlayMemory", '"%s"' % (mplayer.path), 0)
-        if mplayer.posNum < mplayer.lenNum - 100:
+        if mplayer.posNum < mplayer.lenNum - 10:
             self.ini.set("PlayMemory", '"%s"' % (mplayer.path), mplayer.posNum)
 
             

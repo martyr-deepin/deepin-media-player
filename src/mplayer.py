@@ -253,7 +253,7 @@ class  Mplayer(gobject.GObject):
                         os.O_NONBLOCK)
             
             # get lenght size.
-            self.getPosID = gobject.timeout_add(500, self.get_time_pos) 
+            self.getPosID = gobject.timeout_add(400, self.get_time_pos) 
             
                     
             # IO_HUP[Monitor the pipeline is disconnected].
@@ -314,7 +314,7 @@ class  Mplayer(gobject.GObject):
             if line.startswith("ANS_TIME_POSITION"):
                 posNum = int(float(line.replace("ANS_TIME_POSITION=", "")))
                 if self.lenState:
-                        self.getLenID = gobject.timeout_add(10, self.get_time_length)
+                        self.getLenID = gobject.timeout_add(60, self.get_time_length)
                         self.lenState = 0
                 if posNum > 0:
                     self.posNum = posNum                   
