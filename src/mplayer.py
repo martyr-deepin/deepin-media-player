@@ -253,7 +253,7 @@ class  Mplayer(gobject.GObject):
                         os.O_NONBLOCK)
             
             # get lenght size.
-            self.getPosID = gobject.timeout_add(100, self.get_time_pos) 
+            self.getPosID = gobject.timeout_add(500, self.get_time_pos) 
             
                     
             # IO_HUP[Monitor the pipeline is disconnected].
