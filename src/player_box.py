@@ -709,11 +709,11 @@ class PlayerBox(object):
                         s = s / 2
                         
                         # Draw left.
-                        cr.rectangle(x, y - 50, s - 1, h + 50)
+                        cr.rectangle(x, y, s, h)
                         cr.fill()
                         
                         # Draw right.
-                        cr.rectangle(x + s + h * (self.video_width / self.video_height) -1, y - 50, s - 1, h + 50)
+                        cr.rectangle(x + s + h * video_ratio, y, s, h)
                         cr.fill()
                     elif bit > 0:
                         video_ratio = float(self.video_height) / self.video_width                        
@@ -721,11 +721,11 @@ class PlayerBox(object):
                         s = s / 2
                         
                         # Draw UP.                        
-                        cr.rectangle(x, y - self.app.titlebar.allocation.height, w , s)
+                        cr.rectangle(x, y, w , s)
                         cr.fill()
                         
                         # Draw bottom.
-                        cr.rectangle(x, y + s + w * (video_ratio) - self.app.titlebar.allocation.height, w, s)
+                        cr.rectangle(x, y + s + w * (video_ratio), w, s)
                         cr.fill()
                         
                     return True
@@ -1264,8 +1264,15 @@ class PlayerBox(object):
     def get_pos_ste_seek(self, pos):            
         self.mp.seek(int(pos))                                    
         
-    def media_player_start(self, mplayer, play_bool):
+    def media_player_start(self, mplayer, play_bool, w1, h1, w2, h2):
         '''media player start play.'''                
+        # Get mplayer play file width and height.
+        self.video_width = w1
+        self.video_height = h1
+        if w2 > w1:
+            self.video_width = w2
+            self.video_height = h2            
+            
         # Get mplayer pid.
         self.mplayer_pid = play_bool
         #play memory.                        
@@ -1273,11 +1280,10 @@ class PlayerBox(object):
         if pos is not None:
             gtk.timeout_add(100, self.get_pos_ste_seek, pos)
 
-            
-        
+                    
         
         # Get draw width, height.       
-        self.video_width, self.video_height = get_vide_width_height(mplayer.path)        
+        # self.video_width, self.video_height = get_vide_width_height(mplayer.path)        
         
         # # title show play file name.
         file_name = self.get_player_file_name(mplayer.path)
