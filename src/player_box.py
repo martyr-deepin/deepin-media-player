@@ -1208,27 +1208,14 @@ class PlayerBox(object):
     '''Save media player scrot image.'''
     def save_scrot_image(self, pos, progressbar): # scrot use thread function.
         '''Save preview image.'''
-        # print self.mp.lenNum
-        # bit_num = len(list(str(self.mp.lenNum)))
-        # bit = 1
-        # if bit_num >= 3:
-        #    bit = 10                      
-        
         video_pos = int((float(int(pos)) / progressbar.pb.allocation.width * progressbar.max))
         
-        # for temp_pos in range(video_pos, video_pos + 8 * bit, 2 * bit):
-        #     if temp_pos < self.mp.lenNum:
         if not os.path.exists("/tmp/preview/" + self.get_player_file_name(self.mp.path) + "/" + str(int(video_pos)) + ".jpeg"):
             self.preview.mp.preview_scrot(int(video_pos),
                                           "/tmp/preview/"+ self.get_player_file_name(self.mp.path) + "/" + str(int(video_pos)) + ".jpeg")
             self.start_read_time_function(pos, progressbar)
                         
-    '''Show preview window'''
-    def time_preview_show(self):        
-        '''Show preview window'''
-        self.preview.show_preview()
-        return False
-
+            
     def show_preview_enter(self, widget, event):
         if self.mp:
             if 1 == self.mp.state:
