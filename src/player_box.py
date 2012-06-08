@@ -54,7 +54,7 @@ from sort import Sort
 import threading
 import gtk
 import os
-
+import random
 
 
 class PlayerBox(object):
@@ -1150,7 +1150,7 @@ class PlayerBox(object):
             if 1 == self.mp.state:            
                 if self.play_video_file_bool(self.mp.path):           
                     if self.show_bool:                                
-                        self.start_save_time_function(event.x, progressbar)
+                        
                         self.x_root = event.x_root                                
                         self.y_root = event.y_root                                       
                          # preview window show.
@@ -1163,7 +1163,9 @@ class PlayerBox(object):
                         # previwe window show position.
                         self.preview.move_preview(self.x_root - self.preview.bg.get_allocation()[2]/2,
                                               preview_y_padding)        
-                        self.start_read_time_function(event.x, progressbar)
+                        
+                        self.start_save_time_function(event.x, progressbar)
+                        # self.start_read_time_function(event.x, progressbar)
                         
                     
                         
@@ -1172,43 +1174,55 @@ class PlayerBox(object):
         self.show_id = gtk.timeout_add(10, self.save_scrot_image_thread, pos, progressbar)
         
     def start_read_time_function(self, pos, progressbar):                  
-        self.read_id = gtk.timeout_add(15, self.read_image_time_thread, pos, progressbar)                            
+        self.read_id = gtk.timeout_add(30, self.read_image_time_thread, pos, progressbar)                            
         
-    def save_scrot_image_thread(self, pos, progressbar):
+    def save_scrot_image_thread(self, pos, progressbar):        
         save_pos = int((float(int(pos)) / progressbar.pb.allocation.width * progressbar.max))
-        if not os.path.exists("/tmp/preview/" + self.get_player_file_name(self.mp.path) + "/" + str(int(save_pos)) + ".jpeg"):
-            if not self.thread_manage.thread_name_bool(save_pos):                            
-                save_thread_id = threading.Thread(target=self.save_scrot_image, args=(save_pos,))
-                self.thread_manage.add_thread(save_thread_id, save_pos)
-                save_thread_id.setDaemon(True)
-                save_thread_id.start()
+        
+        if not self.thread_manage.thread_name_bool(save_pos):
+            save_thread_id = threading.Thread(target=self.save_scrot_image, args=(pos, progressbar))
+            self.thread_manage.add_thread(save_thread_id, save_pos)
+            save_thread_id.setDaemon(True)
+            save_thread_id.start()
         return False
     
     def read_image_time_thread(self, pos, progressbar):
         save_pos = int((float(int(pos)) / progressbar.pb.allocation.width * progressbar.max))
+        
         if os.path.exists("/tmp/preview/" + self.get_player_file_name(self.mp.path) + "/" + str(int(save_pos)) + ".jpeg"):
-                save_thread_id = threading.Thread(target=self.read_image_time, args=(save_pos,))       
+                save_thread_id = threading.Thread(target=self.read_image_time, args=(save_pos,))
                 save_thread_id.setDaemon(True)
-                save_thread_id.start()                
+                save_thread_id.start()    
         return False
     
-    def read_image_time(self, pos):    
+    def read_image_time(self, video_pos):    
         '''Read preview image.'''
         try:
-            self.preview.set_image("/tmp/preview/" + self.get_player_file_name(self.mp.path) + "/" + str(int(pos)) + ".jpeg")
-            self.preview.set_pos(int(pos))
+            self.preview.set_image("/tmp/preview/" + self.get_player_file_name(self.mp.path) + "/" + str(int(video_pos)) + ".jpeg")
+            self.preview.set_pos(int(video_pos))
             self.preview.bg.queue_draw()                
         except Exception, e:   
             print "%s" % (e)
                 
             
     '''Save media player scrot image.'''
-    def save_scrot_image(self, pos): # scrot use thread function.
+    def save_scrot_image(self, pos, progressbar): # scrot use thread function.
         '''Save preview image.'''
-        self.preview.mp.preview_scrot(int(pos),
-                                      "/tmp/preview/"+ self.get_player_file_name(self.mp.path) + "/" + str(int(pos)) + ".jpeg")
-                
+        # print self.mp.lenNum
+        # bit_num = len(list(str(self.mp.lenNum)))
+        # bit = 1
+        # if bit_num >= 3:
+        #    bit = 10                      
         
+        video_pos = int((float(int(pos)) / progressbar.pb.allocation.width * progressbar.max))
+        
+        # for temp_pos in range(video_pos, video_pos + 8 * bit, 2 * bit):
+        #     if temp_pos < self.mp.lenNum:
+        if not os.path.exists("/tmp/preview/" + self.get_player_file_name(self.mp.path) + "/" + str(int(video_pos)) + ".jpeg"):
+            self.preview.mp.preview_scrot(int(video_pos),
+                                          "/tmp/preview/"+ self.get_player_file_name(self.mp.path) + "/" + str(int(video_pos)) + ".jpeg")
+            self.start_read_time_function(pos, progressbar)
+                        
     '''Show preview window'''
     def time_preview_show(self):        
         '''Show preview window'''
