@@ -244,9 +244,10 @@ class  Mplayer(gobject.GObject):
                                          stdout = subprocess.PIPE,
                                          stderr = subprocess.PIPE,
                                          shell  = False)
-            self.emit("play-start", False)
+            
             self.mplayer_pid = self.mpID.pid
-
+            self.emit("play-start", self.mplayer_pid)
+            
             (self.mplayerIn, self.mplayerOut) = (self.mpID.stdin, self.mpID.stdout)
             fcntl.fcntl(self.mplayerOut, 
                         fcntl.F_SETFL, 

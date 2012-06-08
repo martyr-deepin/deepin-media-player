@@ -65,6 +65,8 @@ class PlayerBox(object):
         self.open_file_name = "" # open current file dir name.
         self.input_string = "player_box: " # Test input string(message).
         self.mp = None
+        self.mplayer_pid = None
+        
         self.point_bool = False
         self.above_bool = False # Set window above bool.
         self.full_bool = False  # Set window full bool.
@@ -755,12 +757,8 @@ class PlayerBox(object):
         self.app.window.set_opacity(0)
         self.app.window.set_visible(True)
         if self.mp:
-            # Quit deepin-media-player.
-            # print self.mp.mplayer_pid
-            # if self.mp.mplayer_pid:
-            #     os.system("kill %s" %(self.mp.mplayer_pid))
-            # os.system("pkill %s" %("mplayer"))
-            #os.system("pkill mplayer")
+            if self.mplayer_pid:
+                os.system("kill %s" %(self.mplayer_pid))
             self.mp.quit()
             
 
@@ -1268,6 +1266,8 @@ class PlayerBox(object):
         
     def media_player_start(self, mplayer, play_bool):
         '''media player start play.'''                
+        # Get mplayer pid.
+        self.mplayer_pid = play_bool
         #play memory.                        
         pos = self.ini.get("PlayMemory", '"%s"' % ((mplayer.path)))        
         if pos is not None:
@@ -1302,7 +1302,7 @@ class PlayerBox(object):
         self.preview.set_path(mplayer.path) # Set preview window play path.        
                 
     def media_player_end(self, mplayer, play_bool):
-        '''player end.'''
+        '''player end.'''        
         self.thread_manage.clear_threads()
         #print self.input_string + "Linux Deepin Media player...end"
         # Play file modify start_btn.
