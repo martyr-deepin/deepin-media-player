@@ -129,29 +129,10 @@ class PreView(object):
         # Shape with given mask.
         widget.shape_combine_mask(bitmap, 0, 0)
         
-    # # Preview window.
-    # def draw_preview_background(self, widget, event):    
-    #     cr, x, y, w, h = allocation(widget)
-    #     if self.mp:            
-    #         if not self.pixbuf:
-    #             cr.set_source_rgb(0, 0, 0)
-    #             cr.rectangle(x,y,w,h)
-    #             cr.fill()
-    #         else:    
-    #             image = self.pixbuf.scale_simple(widget.allocation.width,
-    #                                              widget.allocation.height,
-    #                                              gtk.gdk.INTERP_BILINEAR)        
-    #             cr = widget.window.cairo_create()
-    #             draw_pixbuf(cr, image, widget.allocation.x, widget.allocation.y)            
-    #         return True
     
     def quit_mplayer(self, widget):
         if self.mp:
-            self.mp.quit()
-            
-            
-    # def init_mplayer_window(self, widget, event):        
-        
+            self.mp.quit()            
         
     def move_preview(self, x, y):        
         self.bg.move(int(x), int(y))
@@ -161,9 +142,6 @@ class PreView(object):
         self.bg.show_all()
         self.pv.show_all()
                 
-        # self.bg.set_keep_above(True)
-        # self.pv.set_keep_above(True)
-        # Init mplayer.
         region = gtk.gdk.Region()
         self.bg.window.input_shape_combine_region(region, 0, 0)
         self.pv.show_all()
@@ -187,9 +165,6 @@ class PreView(object):
         
     def motion_hide_preview(self, widget, event):    
         self.hide_preview()
-        
-    # def set_pixbuf(self, pixbuf_path):    
-    #     self.pixbuf = gtk.gdk.pixbuf_new_from_file(pixbuf_path)        
         
     def set_image(self, image_path):    
         self.image.set_from_file(image_path)
