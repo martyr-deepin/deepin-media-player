@@ -702,30 +702,48 @@ class PlayerBox(object):
                     
                     bit = video_ratio - (float(w) / h)
                     cr.set_source_rgb(0, 0, 0)
+                    
                     if 0 == bit:
                         return False
                     elif bit < 0:                             
                         s = w - h * (video_ratio)
                         s = s / 2
-                        
+                        x_padding = 0
+                        if self.app.titlebar.allocation.height > 1:                            
+                            s = s -1                            
+                        else:    
+                            s = s + 1
+                            x_padding = 1
+                            
                         # Draw left.
-                        cr.rectangle(x, y, s, h)
+                        cr.rectangle(x, y - self.app.titlebar.allocation.height, 
+                                     s - x_padding, h)
                         cr.fill()
                         
                         # Draw right.
-                        cr.rectangle(x + s + h * video_ratio, y, s, h)
+                        cr.rectangle(x + s + h * video_ratio - x_padding,
+                                     y - self.app.titlebar.allocation.height, 
+                                     s + x_padding + 1, h)
                         cr.fill()
+                        
                     elif bit > 0:
                         video_ratio = float(self.video_height) / self.video_width                        
                         s = h - w * video_ratio
                         s = s / 2
                         
                         # Draw UP.                        
-                        cr.rectangle(x, y, w , s)
+                        if 1 == self.app.titlebar.allocation.height:
+                            s = s + 1
+                        else:    
+                            s = s
+                            
+                        cr.rectangle(x - 1, y - self.app.titlebar.allocation.height, 
+                                     w + 1, s)
                         cr.fill()
                         
                         # Draw bottom.
-                        cr.rectangle(x, y + s + w * (video_ratio), w, s)
+                        cr.rectangle(x - 1, y + s + w * (video_ratio) - self.app.titlebar.allocation.height, 
+                                     w, s)
                         cr.fill()
                         
                     return True
