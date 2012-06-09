@@ -27,7 +27,6 @@ from dtk.ui.frame import HorizontalFrame,VerticalFrame
 from dtk.ui.utils import is_double_click, color_hex_to_cairo
 from dtk.ui.menu import Menu
 
-from thread_manage import ThreadManage
 from ini import Config
 from gio_format import format
 from opendialog import OpenDialog
@@ -75,7 +74,7 @@ class PlayerBox(object):
         self.show_toolbar_focus_bool = True
         self.clear_play_list_bool = False # drag play file.
         
-        self.thread_manage = ThreadManage()
+
         # ini play memory.
         self.ini = Config(get_home_path() + "/.config/deepin-media-player/config.ini")
         # self.ini.load()
@@ -693,9 +692,8 @@ class PlayerBox(object):
         
         if self.mp and (1 == self.mp.state):
             if (self.mp.state) and (self.mp.vide_bool): # vide file.
-                if 0 != self.video_width or 0 != self.video_height:                                        
+                if 0 != self.video_width or 0 != self.video_height:
                     video_ratio = float(self.video_width) / self.video_height
-                    
                     bit = video_ratio - (float(w) / h)
                     cr.set_source_rgb(0, 0, 0)
                     
@@ -1157,20 +1155,23 @@ class PlayerBox(object):
                 self.toolbar2.progressbar.set_pos(0)                            
         # Show preview window.            
         else:
-            # if 1 == self.mp.state:            
-            #     if self.play_video_file_bool(self.mp.path):           
-                self.x_root = event.x_root                                
-                self.y_root = event.y_root                                                               
-                # preview window show.
-                self.move_window_time(pb_bit)
-                
-    def move_window_time(self, pb_bit):                    
-        self.preview.show_preview()
+            # if True == 
+            if 1 == self.mp.state:            
+                if self.play_video_file_bool(self.mp.path):           
+                    self.x_root = event.x_root
+                    self.y_root = event.y_root                                                               
+                    save_pos = (float(int(event.x))/ widget.allocation.width* self.progressbar.max)
+                    # preview window show.
+                    self.move_window_time(save_pos, pb_bit)
+                    
+    def move_window_time(self, pos, pb_bit):                    
+        
         if 1 == pb_bit:
             preview_y_padding = self.app.window.get_position()[1] + self.screen.allocation.height + self.app.titlebar.allocation.height - self.preview.bg.get_allocation()[3]                            
         elif 2 == pb_bit:    
             preview_y_padding = self.toolbar2.panel.get_position()[1] - self.preview.bg.get_allocation()[3]
-
+            
+        self.preview.show_preview(pos)    
         # previwe window show position.
         self.preview.move_preview(self.x_root - self.preview.bg.get_allocation()[2]/2,
                                   preview_y_padding)
@@ -1217,6 +1218,9 @@ class PlayerBox(object):
         
     def media_player_start(self, mplayer, play_bool, w1, h1, w2, h2):
         '''media player start play.'''                
+        # Set preview window mplayer path.
+        self.preview.set_preview_path(mplayer.path)
+        
         # Get mplayer play file width and height.
         self.video_width = w1
         self.video_height = h1
@@ -1250,7 +1254,8 @@ class PlayerBox(object):
                 
     def media_player_end(self, mplayer, play_bool):
         '''player end.'''        
-        self.thread_manage.clear_threads()
+        # Quit preview window player.
+        self.preview.quit_preview_player()
         #print self.input_string + "Linux Deepin Media player...end"
         # Play file modify start_btn.
         self.media_player_midfy_start_bool()
