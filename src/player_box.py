@@ -192,7 +192,7 @@ class PlayerBox(object):
         self.progressbar.pb.connect("button-press-event", self.progressbar_player_point_pos_modify, self.progressbar, 1)
         self.progressbar.pb.connect("button-release-event", self.progressbar_set_point_bool, self.progressbar)
         
-        self.progressbar.pb.connect("enter-notify-event", self.show_preview_enter)
+        # self.progressbar.pb.connect("enter-notify-event", self.show_preview_enter)
         self.progressbar.pb.connect("leave-notify-event", self.hide_preview_leave)        
         
         '''Toolbar Init.'''
@@ -221,7 +221,7 @@ class PlayerBox(object):
         self.toolbar2.progressbar.pb.connect("button-release-event",
                                              self.progressbar_set_point_bool,
                                              self.toolbar2.progressbar)
-        self.toolbar2.progressbar.pb.connect("enter-notify-event", self.show_preview_enter)
+        # self.toolbar2.progressbar.pb.connect("enter-notify-event", self.show_preview_enter)
         self.toolbar2.progressbar.pb.connect("leave-notify-event", self.hide_preview_leave)        
         
         # play_control_panel.
@@ -1158,6 +1158,7 @@ class PlayerBox(object):
             # if True ==  configure gui set hide or show preview.
             if 1 == self.mp.state:            
                 if self.play_video_file_bool(self.mp.path):           
+                    self.preview.set_preview_path(self.mp.path)
                     self.x_root = event.x_root
                     self.y_root = event.y_root                                                               
                     save_pos = (float(int(event.x))/ widget.allocation.width* self.progressbar.max)
@@ -1172,18 +1173,17 @@ class PlayerBox(object):
         elif 2 == pb_bit:    
             preview_y_padding = self.toolbar2.panel.get_position()[1] - self.preview.bg.get_allocation()[3]
             
-        self.preview.show_preview(pos)    
-        self.preview.set_preview_path(self.mp.path)
+        self.preview.show_preview(pos)            
         # previwe window show position.
         self.preview.move_preview(self.x_root - self.preview.bg.get_allocation()[2]/2,
                                   preview_y_padding)
                         
-    def show_preview_enter(self, widget, event):
-        pass
+    # def show_preview_enter(self, widget, event):
+    #     pass
         
     def hide_preview_leave(self, widget, event):
         '''Hide preview window and remove show,read_id'''
-        pass
+        self.preview.hide_preview()
     
     def set_time_string(self, num):
         if 0 <= num <= 9:
@@ -1261,9 +1261,7 @@ class PlayerBox(object):
         self.ini.set("PlayMemory", '"%s"' % (mplayer.path), 0)
         if mplayer.posNum < mplayer.lenNum - 10:
             self.ini.set("PlayMemory", '"%s"' % (mplayer.path), mplayer.posNum)
-
-            
-            
+                        
         # self.ini.write()        
         self.ini.save()     
                 
@@ -1454,12 +1452,10 @@ class PlayerBox(object):
         try:
             file_name, file_name2 = os.path.split(self.open_file_name)
         except:
-            file_name = "~/音乐"            
+            file_name = "~"
             
         os.system("nautilus %s" % (file_name))
         self.open_file_name = ""
         
     def open_current_file_dir_path(self, list_view, list_item, column, offset_x, offset_y):
-        self.open_file_name = self.play_list_dict[list_item.title]
-            
-        
+        self.open_file_name = self.play_list_dict[list_item.title]                    

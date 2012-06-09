@@ -25,7 +25,7 @@ import gtk
 import cairo
 
 class PreView(object): 
-    def __init__(self, path = "", pos = 0):        
+    def __init__(self, path = "", pos = 0): 
         
         self.video_width = 0
         self.video_height = 0
@@ -175,7 +175,6 @@ class PreView(object):
         
     def show_preview(self, pos):        
         
-        # self.mp = Mplayer(self.pv.window.wid)
         self.bg.show_all()
         self.pv.show_all()
         
@@ -187,7 +186,10 @@ class PreView(object):
         
         # init preview window mplayer.
         self.init_mplayer_window(pos)
-            
+        
+    def hide_preview(self):
+        self.bg.hide_all()
+        self.pv.hide_all()                    
         
     def quit_preview_player(self):    
         self.hide_preview()
@@ -203,17 +205,16 @@ class PreView(object):
         
     def set_preview_path(self, path):        
         if 0 == self.mp.state:
-            self.mp.xid = self.xid
+            self.pv.show_all()            
+            self.pv.set_opacity(0)
+            self.mp.xid = self.pv.window.xid
             self.mp.path = path
             self.mp.play(self.mp.path)             
             self.mp.pause()
             self.mp.pause_bool = False
-
+            self.pv.hide_all()
+            self.pv.set_opacity(1)
             
-    def hide_preview(self):
-        self.bg.hide_all()
-        self.pv.hide_all()
-                    
     def time_to_string(self, time_pos):        
         if 0<= time_pos <= 9:
             return "0" + str(time_pos)        
