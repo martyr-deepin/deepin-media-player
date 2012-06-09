@@ -1155,14 +1155,15 @@ class PlayerBox(object):
                 self.toolbar2.progressbar.set_pos(0)                            
         # Show preview window.            
         else:
-            # if True == 
+            # if True ==  configure gui set hide or show preview.
             if 1 == self.mp.state:            
                 if self.play_video_file_bool(self.mp.path):           
                     self.x_root = event.x_root
                     self.y_root = event.y_root                                                               
                     save_pos = (float(int(event.x))/ widget.allocation.width* self.progressbar.max)
                     # preview window show.
-                    self.move_window_time(save_pos, pb_bit)
+                    self.move_window_time(save_pos, pb_bit)                
+                    
                     
     def move_window_time(self, pos, pb_bit):                    
         
@@ -1172,6 +1173,7 @@ class PlayerBox(object):
             preview_y_padding = self.toolbar2.panel.get_position()[1] - self.preview.bg.get_allocation()[3]
             
         self.preview.show_preview(pos)    
+        self.preview.set_preview_path(self.mp.path)
         # previwe window show position.
         self.preview.move_preview(self.x_root - self.preview.bg.get_allocation()[2]/2,
                                   preview_y_padding)
@@ -1217,10 +1219,7 @@ class PlayerBox(object):
         self.mp.seek(int(pos))                                    
         
     def media_player_start(self, mplayer, play_bool, w1, h1, w2, h2):
-        '''media player start play.'''                
-        # Set preview window mplayer path.
-        self.preview.set_preview_path(mplayer.path)
-        
+        '''media player start play.'''                        
         # Get mplayer play file width and height.
         self.video_width = w1
         self.video_height = h1

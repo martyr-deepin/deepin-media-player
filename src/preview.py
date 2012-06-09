@@ -191,8 +191,7 @@ class PreView(object):
         
     def quit_preview_player(self):    
         self.hide_preview()
-        if 1 == self.mp.state:
-            print "退出播放器预览"
+        if 1 == self.mp.state:            
             self.mp.quit()
             
     def get_video_width_and_height(self, mp, mp_pid, w1, h1, w2, h2):        
@@ -203,11 +202,14 @@ class PreView(object):
             self.video_height = h2
         
     def set_preview_path(self, path):        
-        self.mp.xid = self.xid
-        self.mp.path = path
-        self.mp.play(self.mp.path)        
-        self.mp.pause()
-        
+        if 0 == self.mp.state:
+            self.mp.xid = self.xid
+            self.mp.path = path
+            self.mp.play(self.mp.path)             
+            self.mp.pause()
+            self.mp.pause_bool = False
+
+            
     def hide_preview(self):
         self.bg.hide_all()
         self.pv.hide_all()
