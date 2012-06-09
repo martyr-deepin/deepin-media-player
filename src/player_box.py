@@ -521,7 +521,6 @@ class PlayerBox(object):
         
     def hide_preview_function(self, widget, event):    
         '''Hide preview window.'''
-        self.preview.hide_preview()
         self.hide_preview_leave(widget, event)
         
     '''play control panel.'''
@@ -1074,7 +1073,6 @@ class PlayerBox(object):
                                             self.event_time)
             
         # hide preview window.    
-        self.preview.hide_preview()    
         self.hide_preview_leave(widget, event)    
             
             
@@ -1170,10 +1168,9 @@ class PlayerBox(object):
                         self.y_root = event.y_root                                       
                         
                         # preview window show.
-                        self.move_window_time(pb_bit)
+                        # self.move_window_time(pb_bit)
                                                             
     def move_window_time(self, pb_bit):                    
-        self.preview.show_preview()
         if 1 == pb_bit:
             preview_y_padding = self.app.window.get_position()[1] + self.screen.allocation.height + self.app.titlebar.allocation.height - self.preview.bg.get_allocation()[3]                            
         elif 2 == pb_bit:    
@@ -1190,15 +1187,8 @@ class PlayerBox(object):
         
     def hide_preview_leave(self, widget, event):
         '''Hide preview window and remove show,read_id'''
-        if self.show_id:
-            self.show_bool = False
-            self.preview.hide_preview()
-            gtk.timeout_remove(self.show_id)
-            if self.read_id:
-                gtk.timeout_remove(self.read_id)
-            self.show_id = None
-            self.read_id = None
-            
+        pass
+    
     def set_time_string(self, num):
         if 0 <= num <= 9:
             return "0" + str(num)
@@ -1215,8 +1205,7 @@ class PlayerBox(object):
         Hour, Min, Sec = self.mp.time(length)
         self.show_time_label.time_font1 = self.set_time_string(Hour) + " : " + self.set_time_string(Min) + " : "+ self.set_time_string(Sec) + "  /"
         self.toolbar2.show_time.time_font1 = self.set_time_string(Hour) + " : " + self.set_time_string(Min) + " : "+ self.set_time_string(Sec) + "  /"
-        self.preview.set_path(mplayer.path)
-        # print self.preview.mp.path
+
         
     def get_time_pos(self, mplayer, pos):
         '''Get mplayer pos to pos of progressbar.'''
@@ -1249,11 +1238,6 @@ class PlayerBox(object):
         if pos is not None:
             gtk.timeout_add(100, self.get_pos_ste_seek, pos)
 
-                    
-        
-        # Get draw width, height.       
-        # self.video_width, self.video_height = get_vide_width_height(mplayer.path)        
-        
         # # title show play file name.
         file_name = self.get_player_file_name(mplayer.path)
         # if len(file_name) > 25:
@@ -1261,10 +1245,6 @@ class PlayerBox(object):
             
         self.app.titlebar.change_title(str(file_name))
         # TabPage.
-        
-        # if self.save_volume_mute_bool:
-        #     self.mp.nomute()
-        # print self.get_player_file_name(mplayer.path)                
         
         for item in self.play_list.list_view.items:
             if self.play_list_dict[item.title] == self.mp.path:
@@ -1274,7 +1254,6 @@ class PlayerBox(object):
         self.progressbar.set_pos(0)
         self.toolbar2.progressbar.set_pos(0)        
         
-        self.preview.set_path(mplayer.path) # Set preview window play path.        
                 
     def media_player_end(self, mplayer, play_bool):
         '''player end.'''        
