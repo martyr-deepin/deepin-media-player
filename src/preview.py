@@ -25,14 +25,8 @@ import gtk
 import cairo
 
 class PreView(object): 
-    def __init__(self, path = "", pos = 0):
-        self.path = path # play path.
-        self.pos  = pos  # play pos.
-        self.i = 0        
-        self.pixbuf = None        
-        
+    def __init__(self, path = "", pos = 0):        
         self.mp = Mplayer()
-        self.mp.state = 1    
         
         # Preview background window.
         self.bg = gtk.Window(gtk.WINDOW_POPUP)
@@ -53,25 +47,20 @@ class PreView(object):
         
         # Preview window.
         self.pv = gtk.Window(gtk.WINDOW_POPUP)
-        self.image = gtk.image_new_from_file("../app_theme/default/image/bg.png")
+        
         # Set preview window.        
         self.pv.set_size_request(PREVIEW_PV_WIDTH, PREVIEW_PV_HEIGHT)
         self.pv.set_decorated(False)
         self.pv.set_keep_above(True)
         self.pv.set_type_hint(gtk.gdk.WINDOW_TYPE_HINT_MENU) 
         self.pv.add_events(gtk.gdk.ALL_EVENTS_MASK)
-
-        
-        # self.pv.add(self.image)
-        
-        self.pv.connect("destroy", self.quit_mplayer)
+                
         # self.pv.connect("expose-event", self.draw_preview_background)
         # Hide preview window.
         self.pv.connect("motion-notify-event", self.motion_hide_preview)
         self.pv.connect("enter-notify-event", self.motion_hide_preview)
         # self.pv.connect("window-state-event", self.init_mplayer_window)
         
-        self.pv.add(self.image)
         
     # Background window.    
     def draw_background(self, widget, event):    
@@ -93,7 +82,9 @@ class PreView(object):
         font_width_padding = 25
         font_height_padding = 16
         cr.move_to(w/2 - font_width_padding, h - font_height_padding)
-        pos = self.pos
+        
+        # Show Time.
+        pos = 0
         
         time_hour = self.mp.time(pos)[0]
         time_min = self.mp.time(pos)[1]
@@ -128,12 +119,7 @@ class PreView(object):
         
         # Shape with given mask.
         widget.shape_combine_mask(bitmap, 0, 0)
-        
-    
-    def quit_mplayer(self, widget):
-        if self.mp:
-            self.mp.quit()            
-        
+            
     def move_preview(self, x, y):        
         self.bg.move(int(x), int(y))
         self.pv.move(int(x + 2), int(y+2))
@@ -156,16 +142,7 @@ class PreView(object):
             return "0" + str(time_pos)        
         return str(time_pos)
     
-    def set_pos(self, pos):
-        self.pos = pos        
-        
-    def set_path(self, path):    
-        if self.mp:
-            self.mp.path = path
-        
     def motion_hide_preview(self, widget, event):    
         self.hide_preview()
         
-    def set_image(self, image_path):    
-        self.image.set_from_file(image_path)
             

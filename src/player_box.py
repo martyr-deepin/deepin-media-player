@@ -91,9 +91,6 @@ class PlayerBox(object):
         # Preview window.
         self.x_root = 0
         self.y_root = 0
-        self.show_bool = False
-        self.show_id = None
-        self.read_id = None
         
         self.save_volume_mute_bool = False
         self.save_volume_value = 0
@@ -1160,17 +1157,15 @@ class PlayerBox(object):
                 self.toolbar2.progressbar.set_pos(0)                            
         # Show preview window.            
         else:
-            if 1 == self.mp.state:            
-                if self.play_video_file_bool(self.mp.path):           
-                    if self.show_bool:                                
-                        
-                        self.x_root = event.x_root                                
-                        self.y_root = event.y_root                                       
-                        
-                        # preview window show.
-                        # self.move_window_time(pb_bit)
-                                                            
+            # if 1 == self.mp.state:            
+            #     if self.play_video_file_bool(self.mp.path):           
+                self.x_root = event.x_root                                
+                self.y_root = event.y_root                                                               
+                # preview window show.
+                self.move_window_time(pb_bit)
+                
     def move_window_time(self, pb_bit):                    
+        self.preview.show_preview()
         if 1 == pb_bit:
             preview_y_padding = self.app.window.get_position()[1] + self.screen.allocation.height + self.app.titlebar.allocation.height - self.preview.bg.get_allocation()[3]                            
         elif 2 == pb_bit:    
@@ -1181,9 +1176,7 @@ class PlayerBox(object):
                                   preview_y_padding)
                         
     def show_preview_enter(self, widget, event):
-        if self.mp:
-            if 1 == self.mp.state:
-                self.show_bool = True
+        pass
         
     def hide_preview_leave(self, widget, event):
         '''Hide preview window and remove show,read_id'''
@@ -1464,13 +1457,5 @@ class PlayerBox(object):
         
     def open_current_file_dir_path(self, list_view, list_item, column, offset_x, offset_y):
         self.open_file_name = self.play_list_dict[list_item.title]
-
-
-  
+            
         
-        
-        
-        
-        
-        
-    
