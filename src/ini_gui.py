@@ -21,8 +21,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from skin import app_theme
 
-from treeview import TreeView, TreeViewItem
 
+from dtk.ui.treeview import TreeView, TreeViewItem
 from dtk.ui.titlebar import Titlebar
 from dtk.ui.window import Window 
 from dtk.ui.label import Label
@@ -32,13 +32,27 @@ from dtk.ui.scrolled_window import ScrolledWindow
 
 import gtk
 
-TITLE_WIDTH = 10    
+# Label title.
+label_width = 100 
+label_height = 30
+TITLE_WIDTH_PADDING = 10    
+TITLE_HEIGHT_PADDING = 2
+
+INI_WIDTH = 550
+INI_HEIGHT = 400
+
+# Heparator.
+heparator_x = 0
+heparator_y = 35
+heparator_width = 405
+heparator_height = 5
+
 
 class IniGui(Window):
     def __init__(self):
         Window.__init__(self)
         # Set configure window.
-        self.set_size_request(550, 400)
+        self.set_size_request(INI_WIDTH, INI_HEIGHT)  
         
         self.main_vbox = gtk.VBox()
         self.main_hbox = gtk.HBox()
@@ -51,7 +65,7 @@ class IniGui(Window):
         self.titlebar.close_button.connect("clicked", lambda w:self.destroy())
         self.titlebar.min_button.connect("clicked", lambda w: self.min_window())
         
-        self.tree_view = TreeView()
+        self.tree_view = TreeView(font_x_padding=15, arrow_x_padding=20)
         # TreeView event.
         self.tree_view.connect("single-click-item", self.set_con_widget)
         self.scrolled_window.add_child(self.tree_view)
@@ -59,13 +73,13 @@ class IniGui(Window):
         # TreeView add node.
         self.tree_view.add_item(None, TreeViewItem("文件播放"))
         self.tree_view.add_item(None, TreeViewItem("系统设置"))
-        key = self.tree_view.add_item(None, TreeViewItem("快捷键"))
+        key = self.tree_view.add_item(None, TreeViewItem("快捷键    "))
         self.tree_view.add_item(None, TreeViewItem("字幕设置"))
         self.tree_view.add_item(None, TreeViewItem("截图设置"))
         self.tree_view.add_item(None, TreeViewItem("其它设置"))        
         
-        self.tree_view.add_item(key, TreeViewItem("播放控制"))
-        self.tree_view.add_item(key, TreeViewItem("其它快捷键"))
+        self.tree_view.add_item(key, TreeViewItem("播放控制", has_arrow=False))
+        self.tree_view.add_item(key, TreeViewItem("其它快捷键", has_arrow=False))
                         
         self.main_hbox_frame = gtk.Alignment()
         self.main_hbox_frame.set(1, 1, 1, 1)
@@ -79,11 +93,15 @@ class IniGui(Window):
         self.main_hbox.pack_start(self.configure)
                 
         self.window_frame.add(self.main_vbox)
+        # Init configure index.
+        self.configure.set("文件播放")
         self.show_all()
         
     def set_con_widget(self, treeview, item):
-        print item.get_title()
+        # print item.get_title()
+        # Configure class Mode.
         self.configure.set(item.get_title())
+        
         
 class Configure(gtk.VBox):
     def __init__(self):
@@ -98,8 +116,6 @@ class Configure(gtk.VBox):
         self.sub_set = SubSet()
         self.screen_shot = ScreenShot()
         self.other_set = OtherSet()
-        #
-        self.pack_start(self.file_play, True, True)
         self.show_all()
         
     def set(self, class_name):
@@ -111,7 +127,7 @@ class Configure(gtk.VBox):
             if "文件播放" == class_name:
                 self.pack_start(self.file_play)
             elif "系统设置" == class_name:
-                self.pack_start(self.system_set)                
+                self.pack_start(self.system_set)
             elif "播放控制" == class_name:
                 self.pack_start(self.play_control)
             elif "其它快捷键" == class_name:
@@ -126,8 +142,7 @@ class Configure(gtk.VBox):
             for widget in self.get_children():    
                 if widget:
                     self.show_all()
-                    return True
-                
+                    return True                
         return None        
     
 
@@ -135,16 +150,27 @@ class FilePlay(gtk.VBox):
     def __init__(self):
         gtk.VBox.__init__(self)
         self.fixed = gtk.Fixed()
-        self.label = Label("文件播放")
-        self.label.set_size_request(100, 30)
-        self.btn = gtk.Button("确定")
-        self.heparator=HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
-        self.heparator.set_size_request(100, 5)
-        self.fixed.put(self.label, TITLE_WIDTH, 5)
-        self.fixed.put(self.heparator, 0, 35)
-        self.fixed.put(self.btn, TITLE_WIDTH, 5+35+30)
+        
+        self.label = Label("文件播放")        
+        self.label.set_size_request(label_width, label_height)
+        
+        self.heparator = HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
+        self.heparator.set_size_request(heparator_width, heparator_height)
+        
+        self.ai_set_radio_btn     = RadioButton()
+        self.close_position_radio_btn = RadioButton()
+        self.full_window_radio_btn   = RadioButton()
+        
+        # slef.
+        self.fixed.put(self.label, TITLE_WIDTH_PADDING, TITLE_HEIGHT_PADDING)
+        self.fixed.put(self.heparator, heparator_x, heparator_y)        
+        self.fixed.put(self.ai_set_radio_btn, 30, 40)
+        self.fixed.put(self.close_position_radio_btn, 30 + 40, 40)
+        self.fixed.put(self.full_window_radio_btn, 30 +40*2, 40)
+        
         
         self.pack_start(self.fixed)
+        
         
 class SystemSet(gtk.VBox):        
     def __init__(self):
@@ -155,9 +181,9 @@ class SystemSet(gtk.VBox):
         self.btn = gtk.Button("确定")
         self.heparator=HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
         self.heparator.set_size_request(100, 5)
-        self.fixed.put(self.label, TITLE_WIDTH, 5)
-        self.fixed.put(self.heparator, 0, 35)
-        self.fixed.put(self.btn, TITLE_WIDTH, 5+35+30)
+        self.fixed.put(self.label, TITLE_WIDTH_PADDING, 5)
+        self.fixed.put(self.heparator, 0, heparator_y)
+        self.fixed.put(self.btn, TITLE_WIDTH_PADDING, 5+35+30)
         
         self.pack_start(self.fixed)
         
@@ -171,9 +197,9 @@ class PlayControl(gtk.VBox):
         self.btn = gtk.Button("确定")
         self.heparator=HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
         self.heparator.set_size_request(100, 5)
-        self.fixed.put(self.label, TITLE_WIDTH, 5)
-        self.fixed.put(self.heparator, 0, 35)
-        self.fixed.put(self.btn, TITLE_WIDTH, 5+35+30)
+        self.fixed.put(self.label, TITLE_WIDTH_PADDING, 5)
+        self.fixed.put(self.heparator, 0, heparator_y)
+        self.fixed.put(self.btn, TITLE_WIDTH_PADDING, 5+35+30)
         
         self.pack_start(self.fixed)
         
@@ -187,9 +213,9 @@ class OtherKey(gtk.VBox):
         self.btn = gtk.Button("确定")
         self.heparator=HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
         self.heparator.set_size_request(100, 5)
-        self.fixed.put(self.label, TITLE_WIDTH, 5)
-        self.fixed.put(self.heparator, 0, 35)
-        self.fixed.put(self.btn, TITLE_WIDTH, 5+35+30)
+        self.fixed.put(self.label, TITLE_WIDTH_PADDING, 5)
+        self.fixed.put(self.heparator, 0, heparator_y)
+        self.fixed.put(self.btn, TITLE_WIDTH_PADDING, 5+35+30)
         
         self.pack_start(self.fixed)
         
@@ -203,9 +229,9 @@ class SubSet(gtk.VBox):
         self.btn = gtk.Button("确定")
         self.heparator=HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
         self.heparator.set_size_request(100, 5)
-        self.fixed.put(self.label, TITLE_WIDTH, 5)
-        self.fixed.put(self.heparator, 0, 35)
-        self.fixed.put(self.btn, TITLE_WIDTH, 5+35+30)
+        self.fixed.put(self.label, TITLE_WIDTH_PADDING, 5)
+        self.fixed.put(self.heparator, 0, heparator_y)
+        self.fixed.put(self.btn, TITLE_WIDTH_PADDING, 5+35+30)
         
         self.pack_start(self.fixed)
         
@@ -219,9 +245,9 @@ class ScreenShot(gtk.VBox):
         self.btn = gtk.Button("确定")
         self.heparator=HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
         self.heparator.set_size_request(100, 5)
-        self.fixed.put(self.label, TITLE_WIDTH, 5)
-        self.fixed.put(self.heparator, 0, 35)
-        self.fixed.put(self.btn, TITLE_WIDTH, 5+35+30)
+        self.fixed.put(self.label, TITLE_WIDTH_PADDING, 5)
+        self.fixed.put(self.heparator, 0, heparator_y)
+        self.fixed.put(self.btn, TITLE_WIDTH_PADDING, 5+35+30)
         
         self.pack_start(self.fixed)
         
@@ -234,9 +260,9 @@ class OtherSet(gtk.VBox):
         self.btn = gtk.Button("确定")
         self.heparator=HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
         self.heparator.set_size_request(100, 5)
-        self.fixed.put(self.label, TITLE_WIDTH, 5)
-        self.fixed.put(self.heparator, 0, 35)
-        self.fixed.put(self.btn, TITLE_WIDTH, 5+35+30)
+        self.fixed.put(self.label, TITLE_WIDTH_PADDING, 5)
+        self.fixed.put(self.heparator, 0, heparator_y)
+        self.fixed.put(self.btn, TITLE_WIDTH_PADDING, 5+35+30)
         
         self.pack_start(self.fixed)
         

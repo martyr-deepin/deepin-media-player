@@ -33,6 +33,7 @@ class PreView(object):
         self.mp = Mplayer()
         self.mp.connect("play-start", self.get_video_width_and_height)
         self.xid = None
+        self.pos = pos
         
         # Preview background window.
         self.bg = gtk.Window(gtk.WINDOW_POPUP)
@@ -131,7 +132,7 @@ class PreView(object):
         cr.move_to(w/2 - font_width_padding, h - font_height_padding)
         
         # Show Time.
-        pos = 0
+        pos = self.pos
         
         time_hour = self.mp.time(pos)[0]
         time_min = self.mp.time(pos)[1]
@@ -174,6 +175,8 @@ class PreView(object):
         self.pv.move(int(x + 2), int(y+2))
         
     def show_preview(self, pos):        
+        self.pos = pos
+        self.bg.queue_draw()
         
         self.bg.show_all()
         self.pv.show_all()
