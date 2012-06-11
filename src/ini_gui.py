@@ -21,7 +21,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from skin import app_theme
 
-
+from dtk.ui.entry import TextEntry
+from dtk.ui.combo import ComboBox,ComboBoxItem
 from dtk.ui.treeview import TreeView, TreeViewItem
 from dtk.ui.titlebar import Titlebar
 from dtk.ui.window import Window 
@@ -47,8 +48,6 @@ heparator_x = 0
 heparator_y = 35
 heparator_width = INI_WIDTH - 143
 heparator_height = 5
-
-
 
 
 class IniGui(Window):
@@ -97,7 +96,7 @@ class IniGui(Window):
                 
         self.window_frame.add(self.main_vbox)
         # Init configure index.
-        self.configure.set("文件播放")
+        self.configure.set("播放控制")
         self.show_all()
         
     def set_con_widget(self, treeview, item):
@@ -187,11 +186,11 @@ class FilePlay(gtk.VBox):
         self.show_preview_window_btn = CheckButton()
         self.show_preview_window_btn_label = Label("鼠标悬停进度条上显示预览图")
         
-        self.fixed.put(self.label, TITLE_WIDTH_PADDING, TITLE_HEIGHT_PADDING)
-        self.fixed.put(self.heparator, heparator_x, heparator_y)        
         # Video file open.
         video_file_open_x = 20
         video_file_open_y = 40
+        self.fixed.put(self.label, video_file_open_x, TITLE_HEIGHT_PADDING)
+        self.fixed.put(self.heparator, heparator_x, heparator_y)                
         self.fixed.put(self.video_file_open_label, 
                        video_file_open_x + 8, video_file_open_y)        
         video_file_open_y += 30
@@ -257,14 +256,64 @@ class SystemSet(gtk.VBox):
     def __init__(self):
         gtk.VBox.__init__(self)
         self.fixed = gtk.Fixed()
-        self.label = Label("系统设置")
-        self.label.set_size_request(100, 30)
-        self.btn = gtk.Button("确定")
+        self.label = Label("系统设置")        
+        self.label.set_size_request(label_width, label_height)        
         self.heparator=HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
-        self.heparator.set_size_request(100, 5)
-        self.fixed.put(self.label, TITLE_WIDTH_PADDING, 5)
-        self.fixed.put(self.heparator, 0, heparator_y)
-        self.fixed.put(self.btn, TITLE_WIDTH_PADDING, 5+35+30)
+        self.heparator.set_size_request(heparator_width, heparator_height)
+        # System setting.
+        # Minimize pause plaing.
+        self.pause_play_btn = CheckButton()
+        self.pause_play_btn_label = Label("最小化时暂停播放")
+        # Screen messagebox.
+        self.screen_msg_btn = Label("屏幕提示效果")
+        # Font set.
+        self.font_set_btn_label = Label("字体")
+        font_set_items = [ComboBoxItem("华彩")]
+        self.font_set_combo = ComboBox(font_set_items)
+        font_set_combo_width = 120
+        font_set_combo_height = 40
+        self.font_set_combo.set_size_request(font_set_combo_width, font_set_combo_height)
+        # Font size.
+        self.font_size_btn_label = Label("字号")
+        font_size_combo_width = 120
+        font_size_combo_height = 40        
+        font_set_items = [ComboBoxItem("18"),ComboBoxItem("19"),ComboBoxItem("20")]
+        self.font_size_btn_combo = ComboBox(font_set_items)
+        self.font_size_btn_combo.set_size_request(font_size_combo_width, font_size_combo_height)
+                
+        system_set_x = 20
+        system_set_y = 40
+        system_set_width = 0
+        self.fixed.put(self.label, system_set_x, TITLE_HEIGHT_PADDING)
+        self.fixed.put(self.heparator, heparator_x, heparator_y)        
+        self.fixed.put(self.pause_play_btn, 
+                       system_set_x, system_set_y)
+        # Minimize pause plaing.
+        system_set_width = self.pause_play_btn.get_size_request()[0]
+        self.fixed.put(self.pause_play_btn_label, 
+                       system_set_x + system_set_width, system_set_y)
+        # Screen messagebox.
+        system_set_y += 40
+        screen_msg_x_padding = 8
+        self.fixed.put(self.screen_msg_btn,
+                       system_set_x + screen_msg_x_padding, system_set_y)
+        # Font set.
+        system_set_y += 25        
+        font_set_x_padding = 7
+        self.fixed.put(self.font_set_btn_label, 
+                       system_set_x + font_set_x_padding, system_set_y)
+        system_set_y += 20
+        self.fixed.put(self.font_set_combo, 
+                       system_set_x + font_set_x_padding, system_set_y)
+        # Font Size.
+        font_size_x_padding = system_set_x + font_set_x_padding + self.font_set_combo.get_size_request()[0] + self.font_set_btn_label.get_size_request()[0] + 10
+        system_set_y -= 20
+        self.fixed.put(self.font_size_btn_label,
+                       font_size_x_padding, system_set_y)
+        system_set_y += 20
+        self.fixed.put(self.font_size_btn_combo,
+                       font_size_x_padding, system_set_y)
+        #        
         
         self.pack_start(self.fixed)
         
@@ -274,13 +323,140 @@ class PlayControl(gtk.VBox):
         gtk.VBox.__init__(self)
         self.fixed = gtk.Fixed()
         self.label = Label("播放控制")
-        self.label.set_size_request(100, 30)
-        self.btn = gtk.Button("确定")
+        self.label.set_size_request(label_width, label_height)        
+        # heparator.
         self.heparator=HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
-        self.heparator.set_size_request(100, 5)
-        self.fixed.put(self.label, TITLE_WIDTH_PADDING, 5)
+        self.heparator.set_size_request(heparator_width, heparator_height)
+        # setting keys.
+        entry_width = 150
+        entry_height = 20
+        # open file key.
+        self.open_file_entry_label = Label("打开文件")
+        self.open_file_entry       = TextEntry("Car + alt + A")        
+        self.open_file_entry.set_size(entry_width, entry_height)
+        # pre a.
+        self.pre_a_entry_label = Label("上一个")
+        self.pre_a_entry       = TextEntry("Car + alt + A")
+        self.pre_a_entry.set_size(entry_width, entry_height)
+        # open file dir.
+        self.open_file_dir_entry_label = Label("打开文件夹")
+        self.open_file_dir_entry       = TextEntry("Car + alt + A")
+        self.open_file_dir_entry.set_size(entry_width, entry_height)
+        # next a.
+        self.next_a_entry_label = Label("下一个")
+        self.next_a_entry       = TextEntry("Car + alt + A")
+        self.next_a_entry.set_size(entry_width, entry_height)
+        # play or pause.
+        self.play_or_pause_entry_label = Label("播放/暂停")
+        self.play_or_pause_entry = TextEntry("cat + alt + A")
+        self.play_or_pause_entry.set_size(entry_width, entry_height)
+        # add volume.
+        self.add_volume_entry_label = Label("升高音量")
+        self.add_volume_entry       = TextEntry("cat + alt + A")
+        self.add_volume_entry.set_size(entry_width, entry_height)
+        # seek.
+        self.seek_entry_label = Label("快进")
+        self.seek_entry       = TextEntry("Cat + alt + A")
+        self.seek_entry.set_size(entry_width, entry_height)
+        # sub volume.
+        self.sub_volume_entry_label = Label("降低音量")
+        self.sub_volume_entry       = TextEntry("Cat + alt + A")
+        self.sub_volume_entry.set_size(entry_width, entry_height)
+        # back.
+        self.back_entry_label = Label("快退")
+        self.back_entry       = TextEntry("Cat + alt + A")
+        self.back_entry.set_size(entry_width, entry_height)
+        # Mute. 
+        self.mute_entry_label = Label("静音")
+        self.mute_entry       = TextEntry("Cat + alt + A")
+        self.mute_entry.set_size(entry_width, entry_height)
+        # full.
+        self.full_entry_label = Label("全屏")
+        self.full_entry       = TextEntry("Cat + alt + A")
+        self.full_entry.set_size(entry_width, entry_height)
+        # Concise mode.
+        self.concise_entry_label = Label("简洁模式/普通模式")
+        self.concise_entry       = TextEntry("Cat + alt + A")
+        self.concise_entry.set_size(entry_width, entry_height)
+        
+        
+        
+        play_control_x = 20
+        play_control_y = 40
+        # label.
+        self.fixed.put(self.label, play_control_x, TITLE_HEIGHT_PADDING)
+        # heparator.
         self.fixed.put(self.heparator, 0, heparator_y)
-        self.fixed.put(self.btn, TITLE_WIDTH_PADDING, 5+35+30)
+        # open file key.
+        play_control_x += 10
+        self.fixed.put(self.open_file_entry_label,
+                       play_control_x, play_control_y)        
+        
+        play_control_y += self.open_file_entry_label.get_size_request()[1] + 2
+        self.fixed.put(self.open_file_entry,
+                       play_control_x, play_control_y)
+        # pre a.
+        play_control_x_padding = play_control_x + self.open_file_entry.get_size_request()[0] + self.open_file_entry_label.get_size_request()[0]
+        self.fixed.put(self.pre_a_entry,
+                       play_control_x_padding, play_control_y)       
+        self.fixed.put(self.pre_a_entry_label, play_control_x_padding, play_control_y - self.open_file_entry_label.get_size_request()[1] - 2)
+        # open file dir and next a.
+        play_control_y += self.pre_a_entry.get_size_request()[1] + 10
+        self.fixed.put(self.open_file_dir_entry_label,
+                       play_control_x, play_control_y)
+        self.fixed.put(self.next_a_entry_label,
+                       play_control_x_padding, play_control_y)
+        play_control_y += self.next_a_entry.get_size_request()[1] + 2
+        self.fixed.put(self.open_file_dir_entry,
+                       play_control_x, play_control_y)        
+        self.fixed.put(self.next_a_entry,
+                       play_control_x_padding, play_control_y)
+        play_control_y += self.next_a_entry.get_size_request()[1] + 10
+        # play or pause and add volume.
+        self.fixed.put(self.play_or_pause_entry_label, 
+                       play_control_x, play_control_y)
+        self.fixed.put(self.add_volume_entry_label, 
+                       play_control_x_padding, play_control_y)
+        play_control_y += self.play_or_pause_entry_label.get_size_request()[1] + 2
+        self.fixed.put(self.play_or_pause_entry, 
+                       play_control_x, play_control_y)
+        self.fixed.put(self.add_volume_entry, 
+                       play_control_x_padding, play_control_y)
+        play_control_y += self.play_or_pause_entry.get_size_request()[1] + 10
+        # seek and sub volume.
+        self.fixed.put(self.seek_entry_label,
+                       play_control_x, play_control_y)
+        self.fixed.put(self.sub_volume_entry_label,
+                       play_control_x_padding, play_control_y)
+        play_control_y += self.sub_volume_entry_label.get_size_request()[1] + 2
+        self.fixed.put(self.seek_entry,
+                       play_control_x, play_control_y)
+        self.fixed.put(self.sub_volume_entry,
+                       play_control_x_padding, play_control_y)
+        play_control_y += self.sub_volume_entry.get_size_request()[1] + 10
+        # back and mute.
+        self.fixed.put(self.back_entry_label, 
+                       play_control_x, play_control_y)        
+        self.fixed.put(self.mute_entry_label,                       
+                       play_control_x_padding, play_control_y)
+        play_control_y += self.mute_entry_label.get_size_request()[1] + 2
+        self.fixed.put(self.back_entry, 
+                       play_control_x_padding, play_control_y)        
+        self.fixed.put(self.mute_entry,                       
+                       play_control_x, play_control_y)
+        play_control_y += self.mute_entry_label.get_size_request()[1] + 10
+        # full and concise mode.
+        self.fixed.put(self.full_entry_label,
+                       play_control_x, play_control_y)        
+        self.fixed.put(self.concise_entry_label,
+                       play_control_x_padding, play_control_y)
+        play_control_y += self.concise_entry_label.get_size_request()[1] + 2
+        self.fixed.put(self.full_entry,
+                       play_control_x, play_control_y)        
+        self.fixed.put(self.concise_entry,
+                       play_control_x_padding, play_control_y)
+        play_control_y += self.concise_entry.get_size_request()[1] + 10
+        
         
         self.pack_start(self.fixed)
         
