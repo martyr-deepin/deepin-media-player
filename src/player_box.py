@@ -523,10 +523,6 @@ class PlayerBox(object):
     def stop_button_clicked(self, widget):
         self.mp.quit()
 
-    def pre_button_clicked(self, widget):
-        '''prev.'''
-        self.mp.pre()
-
     def start_button_clicked(self, widget, start_bit):
         '''start or pause'''
         if 0 == self.mp.state:
@@ -561,10 +557,16 @@ class PlayerBox(object):
             # self.MessageBox("暂停")
             self.mp.pause()
         return  False
+    
+    def pre_button_clicked(self, widget):
+        '''prev.'''
+        if (len(self.mp.playList) > 1):    
+            self.mp.pre()
 
     def next_button_clicked(self, widget):
         '''next'''
-        self.mp.next()
+        if (len(self.mp.playList) > 1):
+            self.mp.next()
         
     def open_button_clicked(self, widget):        
         self.show_open_dialog_window()
