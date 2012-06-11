@@ -96,7 +96,7 @@ class IniGui(Window):
                 
         self.window_frame.add(self.main_vbox)
         # Init configure index.
-        self.configure.set("播放控制")
+        self.configure.set("其它快捷键")
         self.show_all()
         
     def set_con_widget(self, treeview, item):
@@ -466,15 +466,78 @@ class OtherKey(gtk.VBox):
         gtk.VBox.__init__(self)
         self.fixed = gtk.Fixed()
         self.label = Label("其它快捷键")
-        self.label.set_size_request(100, 30)
-        self.btn = gtk.Button("确定")
+        self.label.set_size_request(label_width, label_height)                
         self.heparator=HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
-        self.heparator.set_size_request(100, 5)
-        self.fixed.put(self.label, TITLE_WIDTH_PADDING, 5)
-        self.fixed.put(self.heparator, 0, heparator_y)
-        self.fixed.put(self.btn, TITLE_WIDTH_PADDING, 5+35+30)
+        self.heparator.set_size_request(heparator_width, heparator_height)
+        entry_width  = 150
+        entry_height = 20
+        # Add Brightness.
+        self.add_bri_entry_label = Label("增加亮度")
+        self.add_bri_entry       = TextEntry("car + lat + a")        
+        self.add_bri_entry.set_size(entry_width, entry_height)
+        # Sub Brightness.
+        self.sub_bri_entry_label = Label("减少亮度")
+        self.sub_bri_entry       = TextEntry("car + lat + a")
+        self.sub_bri_entry.set_size(entry_width, entry_height)
+        # Inverse Rotation.
+        self.inverse_rotation_entry_label = Label("逆时针旋转")
+        self.inverse_rotation_entry       = TextEntry("cat + lat + a")
+        self.inverse_rotation_entry.set_size(entry_width, entry_height)
+        # Clockwise Rotation.
+        self.clockwise_entry_label = Label("顺时针旋转")
+        self.clockwise_entry       = TextEntry("cat + lat + a")
+        self.clockwise_entry.set_size(entry_width, entry_height)
+        # sort image.
+        self.sort_image_entry_label = Label("截图")
+        self.sort_image_entry       = TextEntry("cat + lat + a")
+        self.sort_image_entry.set_size(entry_width, entry_height)
         
+        
+        other_Key_x = 20
+        other_Key_y = 40
+        # label.
+        self.fixed.put(self.label, other_Key_x, TITLE_HEIGHT_PADDING)
+        # heparator.
+        self.fixed.put(self.heparator, heparator_x, heparator_y)
+        ########################################################
+        other_Key_x += 10        
+        # Add Brightness.
+        self.fixed.put(self.add_bri_entry_label, 
+                       other_Key_x, other_Key_y)
+        other_Key_y += self.add_bri_entry_label.get_size_request()[1] + 2
+        self.fixed.put(self.add_bri_entry,
+                       other_Key_x, other_Key_y)
+        other_Key_y += self.add_bri_entry.get_size_request()[1] + 10
+        # Sub Brightness.
+        self.fixed.put(self.sub_bri_entry_label, 
+                       other_Key_x, other_Key_y)
+        other_Key_y += self.sub_bri_entry_label.get_size_request()[1] + 2
+        self.fixed.put(self.sub_bri_entry,
+                       other_Key_x, other_Key_y)
+        other_Key_y += self.sub_bri_entry.get_size_request()[1] + 10
+        # Inverse Rotation.
+        self.fixed.put(self.inverse_rotation_entry_label,
+                       other_Key_x, other_Key_y)
+        other_Key_y += self.inverse_rotation_entry_label.get_size_request()[1] + 2
+        self.fixed.put(self.inverse_rotation_entry,
+                       other_Key_x, other_Key_y)
+        other_Key_y += self.inverse_rotation_entry.get_size_request()[1] + 10
+        # Clockwise Rotation.
+        self.fixed.put(self.clockwise_entry_label,
+                       other_Key_x, other_Key_y)
+        other_Key_y += self.clockwise_entry_label.get_size_request()[1] + 2
+        self.fixed.put(self.clockwise_entry,
+                       other_Key_x, other_Key_y)
+        other_Key_y += self.clockwise_entry.get_size_request()[1] + 10
+        # sort image.
+        self.fixed.put(self.sort_image_entry_label,
+                       other_Key_x, other_Key_y)
+        other_Key_y += self.sort_image_entry_label.get_size_request()[1] + 2
+        self.fixed.put(self.sort_image_entry,
+                       other_Key_x, other_Key_y)
+        other_Key_y += self.sort_image_entry.get_size_request()[1] + 10
         self.pack_start(self.fixed)
+        
         
 
 class SubSet(gtk.VBox):        
