@@ -522,11 +522,8 @@ class OtherSet(gtk.VBox):
         self.fixed.put(self.btn, TITLE_WIDTH_PADDING, 5+35+30)
         
         self.pack_start(self.fixed)
-                
         
-class About(gtk.VBox):
-    def __init__(self):
-        gtk.VBox.__init__(self)
+        
         
         
 if __name__ == "__main__":        

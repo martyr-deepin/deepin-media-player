@@ -323,6 +323,7 @@ class PlayerBox(object):
         # draw resize window.
         self.bottom_play_control_hbox_vframe_event_box.connect("button-press-event", self.drag_resize_window)
         self.bottom_play_control_hbox_vframe_event_box.connect("motion-notify-event", self.modify_mouse_icon)
+
         self.bottom_main_vbox.pack_start(self.bottom_play_control_hbox_vframe_event_box)
         # vbox add to main_hbox
         self.main_vbox.pack_start(self.hbox, True, True) # screen and progressbar
@@ -362,11 +363,12 @@ class PlayerBox(object):
     #     else:    
     #         self.tooltip.show_tooltip(text, x + 5, y + 30)
     #     self.tooltip.set_keep_above(True)    
+        
     def modify_mouse_icon(self, widget, event): # screen: motion-notify-event 
         w = widget.allocation.width
         h = widget.allocation.height
         bottom_padding = 10
-        
+
         if (w - bottom_padding <= event.x <= w) and (h - bottom_padding <= event.y <= h):
             if "MplayerView" != type(widget).__name__:
                 drag = gtk.gdk.BOTTOM_RIGHT_CORNER
