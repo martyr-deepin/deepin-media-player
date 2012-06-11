@@ -491,6 +491,15 @@ class OtherKey(gtk.VBox):
         self.sort_image_entry_label = Label("截图")
         self.sort_image_entry       = TextEntry("cat + lat + a")
         self.sort_image_entry.set_size(entry_width, entry_height)
+        # Switch Audio track.
+        self.switch_audio_track_entry_label = Label("切换音轨")
+        self.switch_audio_track_entry       = TextEntry("cat + lat + a")
+        self.switch_audio_track_entry.set_size(entry_width, entry_height)
+        # Load subtitle.
+        self.load_subtitle_entry_label = Label("载入字幕")
+        self.load_subtitle_entry       = TextEntry("cat + lat + a")
+        self.load_subtitle_entry.set_size(entry_width, entry_height)
+        
         
         
         other_Key_x = 20
@@ -536,6 +545,26 @@ class OtherKey(gtk.VBox):
         self.fixed.put(self.sort_image_entry,
                        other_Key_x, other_Key_y)
         other_Key_y += self.sort_image_entry.get_size_request()[1] + 10
+        # Switch Audio track.
+        self.fixed.put(self.switch_audio_track_entry_label,
+                       other_Key_x, other_Key_y)
+        other_Key_y += self.switch_audio_track_entry_label.get_size_request()[1] + 2
+        self.fixed.put(self.switch_audio_track_entry,
+                       other_Key_x, other_Key_y)
+        other_Key_y += self.switch_audio_track_entry_label.get_size_request()[1] + 10
+        ##############################################
+        # Load subtitle.
+        other_Key_x_padding = 
+        other_Key_y = 40
+        self.fixed.put(self.load_subtitle_entry_label,
+                       other_Key_x,  other_Key_y)
+        other_Key_y += self.load_subtitle_entry_label.get_size_request()[1] + 2
+        self.fixed.put(self.load_subtitle_entry,
+                       other_Key_x, other_Key_y)
+        other_Key_y += self.load_subtitle_entry.get_size_request()[1] + 10
+        
+        
+        
         self.pack_start(self.fixed)
         
         
