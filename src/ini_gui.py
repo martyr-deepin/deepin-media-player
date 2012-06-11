@@ -45,12 +45,8 @@ TITLE_HEIGHT_PADDING = 2
 # Heparator.
 heparator_x = 0
 heparator_y = 35
-heparator_width = 405
+heparator_width = INI_WIDTH - 143
 heparator_height = 5
-
-# Video file open.
-video_file_open_x = 20
-video_file_open_y = 40
 
 
 
@@ -64,15 +60,15 @@ class IniGui(Window):
         self.main_vbox = gtk.VBox()
         self.main_hbox = gtk.HBox()
         self.configure = Configure()
-        self.scrolled_window = ScrolledWindow()
-        self.scrolled_window.set_size_request(130, 1)
         self.titlebar = Titlebar(["min", "close"], app_name="深度影音配置")
         # move open window.
         self.add_move_event(self.titlebar.drag_box)
         self.titlebar.close_button.connect("clicked", lambda w:self.destroy())
         self.titlebar.min_button.connect("clicked", lambda w: self.min_window())
-        
-        self.tree_view = TreeView(font_x_padding=15, arrow_x_padding=20)
+        # Tree view window.
+        self.scrolled_window = ScrolledWindow()
+        self.scrolled_window.set_size_request(130, 1)        
+        self.tree_view = TreeView(font_x_padding=15, arrow_x_padding=35, height = 40)
         # TreeView event.
         self.tree_view.connect("single-click-item", self.set_con_widget)
         self.scrolled_window.add_child(self.tree_view)
@@ -165,30 +161,43 @@ class FilePlay(gtk.VBox):
         self.heparator.set_size_request(heparator_width, heparator_height)
         
         # Video file open.
-        self.ai_set_radio_btn     = RadioButton()
+        self.video_file_open_label = Label("视频文件打开时 : ")
+        self.ai_set_radio_btn       = RadioButton()
         self.ai_set_radio_btn_label = Label("智能调整")
 
-        self.adapt_video_btn = RadioButton()
+        self.adapt_video_btn       = RadioButton()
         self.adapt_video_btn_label = Label("窗口适应视频")
 
-        self.close_position_radio_btn = RadioButton()
+        self.close_position_radio_btn       = RadioButton()
         self.close_position_radio_btn_label = Label("应用关闭尺寸位置")
 
-        self.full_window_radio_btn   = RadioButton()        
+        self.full_window_radio_btn       = RadioButton()        
         self.full_window_radio_btn_label = Label("自动全屏")                
-        
+        ################################################################
         # open new file clear play list.
         self.clear_play_list_btn = CheckButton()
         self.clear_play_list_btn_label = Label("打开新文件时清空播放列表")        
         # memory up close media player -> file play postion.
         self.file_play_postion_btn = CheckButton()
         self.file_play_postion_btn_label = Label("记忆上次关闭播放器时文件的播放位置")
+        # play media when find file play in dir.
+        self.find_file_play_btn = CheckButton()
+        self.find_file_play_btn_label = Label("播放连续剧时自动在文件夹里查找关联文件播放")
+        # mouse progressbar show preview window.
+        self.show_preview_window_btn = CheckButton()
+        self.show_preview_window_btn_label = Label("鼠标悬停进度条上显示预览图")
         
         self.fixed.put(self.label, TITLE_WIDTH_PADDING, TITLE_HEIGHT_PADDING)
         self.fixed.put(self.heparator, heparator_x, heparator_y)        
         # Video file open.
-        self.fixed.put(self.ai_set_radio_btn, video_file_open_x, video_file_open_y)
-        video_file_width = self.ai_set_radio_btn.get_size_request()[0]
+        video_file_open_x = 20
+        video_file_open_y = 40
+        self.fixed.put(self.video_file_open_label, 
+                       video_file_open_x + 8, video_file_open_y)        
+        video_file_open_y += 30
+        self.fixed.put(self.ai_set_radio_btn,
+                       video_file_open_x, video_file_open_y)
+        video_file_width = self.ai_set_radio_btn.get_size_request()[0]        
         self.fixed.put(self.ai_set_radio_btn_label, 
                        video_file_open_x + video_file_width, video_file_open_y)
         video_file_width += self.ai_set_radio_btn_label.get_size_request()[0]
@@ -225,9 +234,25 @@ class FilePlay(gtk.VBox):
         file_play_postion_width = self.file_play_postion_btn.get_size_request()[0]
         self.fixed.put(self.file_play_postion_btn_label,
                        file_play_postion_x + file_play_postion_width, file_play_postion_y)
+        # play media when find file play in dir.
+        find_file_play_x = file_play_postion_x
+        find_file_play_y = file_play_postion_y + 40
+        self.fixed.put(self.find_file_play_btn,
+                       find_file_play_x, find_file_play_y)
+        find_file_play_width = self.find_file_play_btn.get_size_request()[0]
+        self.fixed.put(self.find_file_play_btn_label,
+                       find_file_play_x + find_file_play_width, find_file_play_y)
+        # mouse progressbar show preview window.
+        show_preview_window_x = find_file_play_x
+        show_preview_window_y = find_file_play_y + 40        
+        self.fixed.put(self.show_preview_window_btn,
+                       show_preview_window_x, show_preview_window_y)
+        show_preview_window_width = self.show_preview_window_btn.get_size_request()[0]
+        self.fixed.put(self.show_preview_window_btn_label,
+                       show_preview_window_x + show_preview_window_width, show_preview_window_y)
+        
         self.pack_start(self.fixed)
-        
-        
+                
 class SystemSet(gtk.VBox):        
     def __init__(self):
         gtk.VBox.__init__(self)
