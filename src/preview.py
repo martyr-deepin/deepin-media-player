@@ -134,9 +134,9 @@ class PreView(object):
         # Show Time.
         pos = self.pos
         
-        time_hour = self.mp.time(pos)[0]
-        time_min = self.mp.time(pos)[1]
-        time_sec = self.mp.time(pos)[2]
+        time_hour, time_min, time_sec = self.mp.time(pos)
+        # time_min = self.mp.time(pos)[1]
+        # time_sec = self.mp.time(pos)[2]
         
         cr.show_text("%s:%s:%s" % (self.time_to_string(time_hour), 
                                    self.time_to_string(time_min),
