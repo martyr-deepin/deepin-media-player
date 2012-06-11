@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # Copyright (C) 2011 ~ 2012 Deepin, Inc.
-#               2011 ~ 2012 Wang Yong
+#               2011 ~ 2012 Hailong Qiu
 # 
 # Author:     Hailong Qiu <qiuhailong@linuxdeepin.com>
 # Maintainer: Hailong Qiu <qiuhailong@linuxdeepin.com>
@@ -32,20 +32,27 @@ from dtk.ui.scrolled_window import ScrolledWindow
 
 import gtk
 
+# Ini(configure) window.
+INI_WIDTH = 640
+INI_HEIGHT = 480
+
 # Label title.
 label_width = 100 
 label_height = 30
 TITLE_WIDTH_PADDING = 10    
 TITLE_HEIGHT_PADDING = 2
 
-INI_WIDTH = 550
-INI_HEIGHT = 400
-
 # Heparator.
 heparator_x = 0
 heparator_y = 35
 heparator_width = 405
 heparator_height = 5
+
+# Video file open.
+video_file_open_x = 20
+video_file_open_y = 40
+
+
 
 
 class IniGui(Window):
@@ -157,18 +164,67 @@ class FilePlay(gtk.VBox):
         self.heparator = HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
         self.heparator.set_size_request(heparator_width, heparator_height)
         
+        # Video file open.
         self.ai_set_radio_btn     = RadioButton()
+        self.ai_set_radio_btn_label = Label("智能调整")
+
+        self.adapt_video_btn = RadioButton()
+        self.adapt_video_btn_label = Label("窗口适应视频")
+
         self.close_position_radio_btn = RadioButton()
-        self.full_window_radio_btn   = RadioButton()
+        self.close_position_radio_btn_label = Label("应用关闭尺寸位置")
+
+        self.full_window_radio_btn   = RadioButton()        
+        self.full_window_radio_btn_label = Label("自动全屏")                
         
-        # slef.
+        # open new file clear play list.
+        self.clear_play_list_btn = CheckButton()
+        self.clear_play_list_btn_label = Label("打开新文件时清空播放列表")        
+        # memory up close media player -> file play postion.
+        self.file_play_postion_btn = CheckButton()
+        self.file_play_postion_btn_label = Label("记忆上次关闭播放器时文件的播放位置")
+        
         self.fixed.put(self.label, TITLE_WIDTH_PADDING, TITLE_HEIGHT_PADDING)
         self.fixed.put(self.heparator, heparator_x, heparator_y)        
-        self.fixed.put(self.ai_set_radio_btn, 30, 40)
-        self.fixed.put(self.close_position_radio_btn, 30 + 40, 40)
-        self.fixed.put(self.full_window_radio_btn, 30 +40*2, 40)
-        
-        
+        # Video file open.
+        self.fixed.put(self.ai_set_radio_btn, video_file_open_x, video_file_open_y)
+        video_file_width = self.ai_set_radio_btn.get_size_request()[0]
+        self.fixed.put(self.ai_set_radio_btn_label, 
+                       video_file_open_x + video_file_width, video_file_open_y)
+        video_file_width += self.ai_set_radio_btn_label.get_size_request()[0]
+        self.fixed.put(self.adapt_video_btn, 
+                       video_file_open_x + video_file_width, video_file_open_y)        
+        video_file_width += self.adapt_video_btn.get_size_request()[0]
+        self.fixed.put(self.adapt_video_btn_label,
+                       video_file_open_x + video_file_width, video_file_open_y)
+        video_file_width += self.adapt_video_btn_label.get_size_request()[0]
+        self.fixed.put(self.close_position_radio_btn, 
+                       video_file_open_x + video_file_width, video_file_open_y)
+        video_file_width += self.close_position_radio_btn.get_size_request()[0]
+        self.fixed.put(self.close_position_radio_btn_label, 
+                       video_file_open_x + video_file_width, video_file_open_y)
+        video_file_width += self.close_position_radio_btn_label.get_size_request()[0]
+        self.fixed.put(self.full_window_radio_btn, 
+                       video_file_open_x + video_file_width, video_file_open_y)
+        video_file_width += self.full_window_radio_btn.get_size_request()[0]
+        self.fixed.put(self.full_window_radio_btn_label, 
+                       video_file_open_x + video_file_width, video_file_open_y)
+        # open new file clear play list.        
+        clear_play_list_x = video_file_open_x
+        clear_play_list_y = video_file_open_y + 40
+        self.fixed.put(self.clear_play_list_btn,
+                       clear_play_list_x, clear_play_list_y)        
+        clear_play_list_width = self.clear_play_list_btn.get_size_request()[0]
+        self.fixed.put(self.clear_play_list_btn_label,
+                       clear_play_list_x + clear_play_list_width, clear_play_list_y)               
+        # memory up close media player -> file play postion.
+        file_play_postion_x = clear_play_list_x
+        file_play_postion_y = clear_play_list_y + 40
+        self.fixed.put(self.file_play_postion_btn,
+                       file_play_postion_x, file_play_postion_y)        
+        file_play_postion_width = self.file_play_postion_btn.get_size_request()[0]
+        self.fixed.put(self.file_play_postion_btn_label,
+                       file_play_postion_x + file_play_postion_width, file_play_postion_y)
         self.pack_start(self.fixed)
         
         
