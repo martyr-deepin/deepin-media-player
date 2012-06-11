@@ -21,6 +21,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from skin import app_theme
 
+from dtk.ui.button import Button
 from dtk.ui.entry import TextEntry
 from dtk.ui.combo import ComboBox,ComboBoxItem
 from dtk.ui.treeview import TreeView, TreeViewItem
@@ -96,7 +97,7 @@ class IniGui(Window):
                 
         self.window_frame.add(self.main_vbox)
         # Init configure index.
-        self.configure.set("其它快捷键")
+        self.configure.set("截图设置")
         self.show_all()
         
     def set_con_widget(self, treeview, item):
@@ -469,6 +470,7 @@ class OtherKey(gtk.VBox):
         self.label.set_size_request(label_width, label_height)                
         self.heparator=HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
         self.heparator.set_size_request(heparator_width, heparator_height)
+        
         entry_width  = 150
         entry_height = 20
         # Add Brightness.
@@ -498,8 +500,27 @@ class OtherKey(gtk.VBox):
         # Load subtitle.
         self.load_subtitle_entry_label = Label("载入字幕")
         self.load_subtitle_entry       = TextEntry("cat + lat + a")
-        self.load_subtitle_entry.set_size(entry_width, entry_height)
-        
+        self.load_subtitle_entry.set_size(entry_width, entry_height)        
+        # subtitle advance 0.5.
+        self.subtitle_advance_entry_label = Label("字幕提前0.5秒")
+        self.subtitle_advance_entry       = TextEntry("cat + lat + a")
+        self.subtitle_advance_entry.set_size(entry_width, entry_height)
+        # subtitle Delay 0.5.
+        self.subtitle_delay_entry_label = Label("字幕延时0.5秒")
+        self.subtitle_delay_entry       = TextEntry("cat + lat + a")
+        self.subtitle_delay_entry.set_size(entry_width, entry_height)
+        # mouse left single clicked.        
+        self.mouse_left_single_clicked_combo_label = Label("鼠标左键单击")
+        self.mouse_left_single_clicked_combo       = ComboBox()
+        self.mouse_left_single_clicked_combo.set_size_request(entry_width, entry_height)
+        # mouse left double clicked.
+        self.mouse_left_double_clicked_combo_label = Label("鼠标左键双击")
+        self.mouse_left_double_clicked_combo       = ComboBox()
+        self.mouse_left_double_clicked_combo.set_size_request(entry_width, entry_height)
+        # mouse wheel.
+        self.mouse_wheel_combo_label = Label("鼠标滚轮")
+        self.mouse_wheel_combo       = ComboBox()
+        self.mouse_wheel_combo.set_size_request(entry_width, entry_height)
         
         
         other_Key_x = 20
@@ -554,15 +575,52 @@ class OtherKey(gtk.VBox):
         other_Key_y += self.switch_audio_track_entry_label.get_size_request()[1] + 10
         ##############################################
         # Load subtitle.
-        other_Key_x_padding = 
+        other_Key_x_padding = other_Key_x + self.switch_audio_track_entry.get_size_request()[0] + self.switch_audio_track_entry_label.get_size_request()[0]
         other_Key_y = 40
         self.fixed.put(self.load_subtitle_entry_label,
-                       other_Key_x,  other_Key_y)
+                       other_Key_x_padding,  other_Key_y)
         other_Key_y += self.load_subtitle_entry_label.get_size_request()[1] + 2
         self.fixed.put(self.load_subtitle_entry,
-                       other_Key_x, other_Key_y)
+                       other_Key_x_padding, other_Key_y)
         other_Key_y += self.load_subtitle_entry.get_size_request()[1] + 10
-        
+        ##############################################
+        # subtitle 0.5.
+        # subtitle advance 0.5.
+        self.fixed.put(self.subtitle_advance_entry_label,
+                       other_Key_x_padding, other_Key_y)
+        other_Key_y += self.subtitle_advance_entry_label.get_size_request()[1] + 2
+        self.fixed.put(self.subtitle_advance_entry,
+                       other_Key_x_padding, other_Key_y)
+        other_Key_y += self.subtitle_advance_entry.get_size_request()[1] + 10
+        # subtitle Delay 0.5.
+        self.fixed.put(self.subtitle_delay_entry_label,
+                       other_Key_x_padding, other_Key_y)
+        other_Key_y += self.subtitle_delay_entry_label.get_size_request()[1] + 2
+        self.fixed.put(self.subtitle_delay_entry,
+                       other_Key_x_padding, other_Key_y)
+        other_Key_y += self.subtitle_delay_entry.get_size_request()[1] + 10
+        # mouse left single clicked.        
+        self.fixed.put(self.mouse_left_single_clicked_combo_label, 
+                       other_Key_x_padding, other_Key_y)
+        other_Key_y += self.mouse_left_single_clicked_combo_label.get_size_request()[1] + 2
+        self.fixed.put(self.mouse_left_single_clicked_combo, 
+                       other_Key_x_padding, other_Key_y)
+        other_Key_y += self.mouse_left_single_clicked_combo.get_size_request()[1] + 10
+        # mouse left double clicked.
+        self.fixed.put(self.mouse_left_double_clicked_combo_label, 
+                       other_Key_x_padding, other_Key_y)
+        other_Key_y += self.mouse_left_double_clicked_combo_label.get_size_request()[1] + 2
+        self.fixed.put(self.mouse_left_double_clicked_combo, 
+                       other_Key_x_padding, other_Key_y)
+        other_Key_y += self.mouse_left_double_clicked_combo.get_size_request()[1] + 10
+        # mouse wheel.
+        self.fixed.put(self.mouse_wheel_combo_label,
+                       other_Key_x_padding, other_Key_y)
+        other_Key_y += self.mouse_wheel_combo_label.get_size_request()[1] + 2
+        self.fixed.put(self.mouse_wheel_combo,
+                       other_Key_x_padding, other_Key_y)
+        other_Key_y += self.mouse_wheel_combo_label.get_size_request()[1] + 10
+
         
         
         self.pack_start(self.fixed)
@@ -572,15 +630,44 @@ class OtherKey(gtk.VBox):
 class SubSet(gtk.VBox):        
     def __init__(self):
         gtk.VBox.__init__(self)
+        entry_width = 280
+        entry_height = 25
+        
         self.fixed = gtk.Fixed()
         self.label = Label("字幕设置")
-        self.label.set_size_request(100, 30)
-        self.btn = gtk.Button("确定")
+        self.label.set_size_request(label_width, label_height)
+
         self.heparator=HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
-        self.heparator.set_size_request(100, 5)
-        self.fixed.put(self.label, TITLE_WIDTH_PADDING, 5)
-        self.fixed.put(self.heparator, 0, heparator_y)
-        self.fixed.put(self.btn, TITLE_WIDTH_PADDING, 5+35+30)
+        self.heparator.set_size_request(heparator_width, heparator_height)
+        # Ai load subtitle.        
+        self.ai_load_subtitle_checkbtn       = CheckButton()
+        self.ai_load_subtitle_checkbtn_label = Label("自动载入字幕")
+        # Specified Location Search.
+        self.specified_location_search_label = Label("指定位置路径 : ")
+        self.specified_location_search_entry = TextEntry()
+        self.specified_location_search_entry.set_size(entry_width, entry_height)
+        self.specified_location_search_btn   = Button("浏览")
+        
+        sub_set_x = 20
+        sub_set_y = 40
+        self.fixed.put(self.label, sub_set_x, TITLE_HEIGHT_PADDING)
+        self.fixed.put(self.heparator, heparator_x, heparator_y)
+        sub_set_x += 10
+        # Ai load subtitle.
+        self.fixed.put(self.ai_load_subtitle_checkbtn,
+                       sub_set_x, sub_set_y)
+        self.fixed.put(self.ai_load_subtitle_checkbtn_label,
+                       sub_set_x + self.ai_load_subtitle_checkbtn.get_size_request()[0], sub_set_y)
+        sub_set_y += self.ai_load_subtitle_checkbtn.get_size_request()[1] + 25
+        # Specified Location Search.
+        sub_set_x += 5
+        self.fixed.put(self.specified_location_search_label,
+                       sub_set_x, sub_set_y)
+        sub_set_y += self.specified_location_search_label.get_size_request()[1] + 10
+        self.fixed.put(self.specified_location_search_entry,
+                       sub_set_x, sub_set_y + 1)
+        self.fixed.put(self.specified_location_search_btn,
+                       sub_set_x + self.specified_location_search_entry.get_size_request()[0] + 10, sub_set_y)
         
         self.pack_start(self.fixed)
         
@@ -590,13 +677,15 @@ class ScreenShot(gtk.VBox):
         gtk.VBox.__init__(self)
         self.fixed = gtk.Fixed()
         self.label = Label("截图设置")
-        self.label.set_size_request(100, 30)
-        self.btn = gtk.Button("确定")
+        self.label.set_size_request(label_width, label_height)
         self.heparator=HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
-        self.heparator.set_size_request(100, 5)
-        self.fixed.put(self.label, TITLE_WIDTH_PADDING, 5)
-        self.fixed.put(self.heparator, 0, heparator_y)
-        self.fixed.put(self.btn, TITLE_WIDTH_PADDING, 5+35+30)
+        self.heparator.set_size_request(heparator_width, heparator_height)                
+        
+        screenshot_x = 20
+        screenshot_y = 40
+        123456
+        self.fixed.put(self.label, screenshot_x, TITLE_HEIGHT_PADDING)
+        self.fixed.put(self.heparator, heparator_x, heparator_y)
         
         self.pack_start(self.fixed)
         
