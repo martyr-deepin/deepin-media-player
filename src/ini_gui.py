@@ -80,6 +80,7 @@ class IniGui(Window):
         self.tree_view.add_item(None, TreeViewItem("字幕设置"))
         self.tree_view.add_item(None, TreeViewItem("截图设置"))
         self.tree_view.add_item(None, TreeViewItem("其它设置"))        
+        self.tree_view.add_item(None, TreeViewItem("关于         "))        
         
         self.tree_view.add_item(key, TreeViewItem("播放控制", has_arrow=False))
         self.tree_view.add_item(key, TreeViewItem("其它快捷键", has_arrow=False))
@@ -110,7 +111,7 @@ class Configure(gtk.VBox):
     def __init__(self):
         gtk.VBox.__init__(self)
         self.class_list = ["文件播放", "系统设置", "播放控制", "其它快捷键",
-                           "字幕设置", "截图设置", "其它设置"]
+                           "字幕设置", "截图设置", "其它设置", "关于"]
         # Init all configure gui class.
         self.file_play = FilePlay()
         self.system_set = SystemSet()
@@ -119,9 +120,12 @@ class Configure(gtk.VBox):
         self.sub_set = SubSet()
         self.screen_shot = ScreenShot()
         self.other_set = OtherSet()
+        self.about = About()
+        
         self.show_all()
         
     def set(self, class_name):
+        class_name = class_name.strip()
         if class_name in self.class_list:
             
             for widget in self.get_children():
@@ -141,8 +145,10 @@ class Configure(gtk.VBox):
                 self.pack_start(self.screen_shot)
             elif "其它设置" == class_name:
                 self.pack_start(self.other_set)
-            
-            for widget in self.get_children():    
+            elif "关于" == class_name:
+                self.pack_start(self.about)
+                
+            for widget in self.get_children(): 
                 if widget:
                     self.show_all()
                     return True                
@@ -675,19 +681,70 @@ class SubSet(gtk.VBox):
 class ScreenShot(gtk.VBox):        
     def __init__(self):
         gtk.VBox.__init__(self)
+        entry_width = 250
+        entry_height = 25
         self.fixed = gtk.Fixed()
         self.label = Label("截图设置")
         self.label.set_size_request(label_width, label_height)
         self.heparator=HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
         self.heparator.set_size_request(heparator_width, heparator_height)                
-        
+        # Save clipboard.
+        self.save_clipboard_radio = RadioButton()
+        self.save_clipboard_radio_label = Label("仅保存在剪贴板")
+        # Save File.
+        self.save_file_radio = RadioButton()
+        self.save_file_radio_label = Label("保存成文件")
+        self.save_path_label = Label("保存路径 : ")
+        self.save_path_entry = TextEntry()
+        self.save_path_entry.set_size(entry_width, entry_height)        
+        self.save_path_button = Button("浏览")
+        self.save_type_label  = Label("保存类型 : ")
+        self.save_type_combo  = ComboBox()
+        # 
+        self.current_show_sort_label = Label("按当前显示的画面尺寸截图")
+        self.current_show_sort_check = CheckButton()
+        ###############################################
         screenshot_x = 20
-        screenshot_y = 40
-        123456
+        screenshot_y = 40        
         self.fixed.put(self.label, screenshot_x, TITLE_HEIGHT_PADDING)
         self.fixed.put(self.heparator, heparator_x, heparator_y)
-        
+        # Save clipboard.
+        self.fixed.put(self.save_clipboard_radio,
+                       screenshot_x, screenshot_y)
+        self.fixed.put(self.save_clipboard_radio_label,
+                       screenshot_x + self.save_clipboard_radio.get_size_request()[0], screenshot_y)
+        screenshot_y += self.save_clipboard_radio.get_size_request()[1] + 5
+        # Save file.
+        self.fixed.put(self.save_file_radio,
+                       screenshot_x, screenshot_y)
+        self.fixed.put(self.save_file_radio_label,
+                       screenshot_x + self.save_file_radio.get_size_request()[0], screenshot_y)        
+        screenshot_x_padding = screenshot_x + 45
+        screenshot_y += self.save_file_radio.get_size_request()[1] + 15
+        # save path.
+        self.fixed.put(self.save_path_label, screenshot_x_padding, screenshot_y)
+        # save type.
+        self.fixed.put(self.save_type_label, 
+                       screenshot_x_padding, screenshot_y + self.save_path_label.get_size_request()[1] + 10)        
+        screenshot_x_padding += self.save_path_label.get_size_request()[0] + 10
+        # save path entry .
+        self.fixed.put(self.save_path_entry, 
+                       screenshot_x_padding, screenshot_y - 2)
+        screenshot_x_padding += self.save_path_entry.get_size_request()[0]
+        self.fixed.put(self.save_path_button, 
+                       screenshot_x_padding + 10, screenshot_y - 4)
+        screenshot_y += self.save_path_button.get_size_request()[1]
+        screenshot_x_padding = screenshot_x + self.save_type_label.get_size_request()[0] + 55
+        # save type entry.
+        self.fixed.put(self.save_type_combo, screenshot_x_padding, screenshot_y)                
+        # 
+        screenshot_x = 20
+        screenshot_y += self.save_type_combo.get_size_request()[1] + 50
+        self.fixed.put(self.current_show_sort_check, screenshot_x, screenshot_y)
+        screenshot_x_padding = screenshot_x + self.current_show_sort_check.get_size_request()[0]
+        self.fixed.put(self.current_show_sort_label, screenshot_x_padding, screenshot_y)
         self.pack_start(self.fixed)
+        
         
 class OtherSet(gtk.VBox):    
     def __init__(self):
@@ -704,9 +761,21 @@ class OtherSet(gtk.VBox):
         
         self.pack_start(self.fixed)
         
+class About(gtk.VBox):    
+    def __init__(self):
+        gtk.VBox.__init__(self)
+        self.fixed = gtk.Fixed()
+        self.label = Label("关于")
+        self.label.set_size_request(100, 30)
+        self.btn = gtk.Button("确定")
+        self.heparator=HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
+        self.heparator.set_size_request(100, 5)
+        self.fixed.put(self.label, TITLE_WIDTH_PADDING, 5)
+        self.fixed.put(self.heparator, 0, heparator_y)
+        self.fixed.put(self.btn, TITLE_WIDTH_PADDING, 5+35+30)
         
-        
-        
+        self.pack_start(self.fixed)
+               
 if __name__ == "__main__":        
     IniGui()
     gtk.main()
