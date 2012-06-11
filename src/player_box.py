@@ -204,8 +204,9 @@ class PlayerBox(object):
         self.toolbar.toolbar_above_button.connect("clicked", self.set_window_above)
 
         '''Toolbar2 Init.'''
-        self.toolbar2 = ToolBar2()        
-        self.toolbar2.panel.set_size_request(1, 40) # Set toolbar2 height.
+        toolbar2_height = 45
+        self.toolbar2 = ToolBar2()                
+        self.toolbar2.panel.set_size_request(1, toolbar2_height) # Set toolbar2 height.
         # draw resize window.
         self.toolbar2.panel.connect("button-press-event", self.drag_resize_window)
         self.toolbar2.panel.connect("motion-notify-event", self.modify_mouse_icon)
