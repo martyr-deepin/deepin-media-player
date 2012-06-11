@@ -924,15 +924,15 @@ class PlayerBox(object):
         '''show_window_widget and hide_window_widget'''
         self.app.window.unfullscreen()
         self.toolbar.panel.unfullscreen()  # Toolbar hide.
-        self.full_bool = False
-
+        self.full_bool = False        
+                
     def show_window_widget(self, widget): #common_button
         '''Show window titlebar of window and play control panel.
         Show progressbar.
         Show playlist.
         Show window border.
         [common mode:]
-        '''        
+        '''                
         if self.show_or_hide_play_list_bool:
             self.play_list.show_play_list()
         
@@ -948,7 +948,9 @@ class PlayerBox(object):
             self.progressbar.show_progressbar()
             self.app.show_titlebar()
             self.show_hide_set()
-
+            # modify full icon.                
+            self.toolbar.toolbar_full_button.flags = True
+            
         if self.save_volume_mute_bool:
             if self.mp:
                 self.mp.nomute()
@@ -966,7 +968,9 @@ class PlayerBox(object):
                 
         if self.full_bool:
             self.show_hide_set()
-
+            # modify full icon.
+            self.toolbar.toolbar_full_button.flags = True
+            
         if not self.mode_state_bool:
             self.concise_window_function()
             # window Angle.
