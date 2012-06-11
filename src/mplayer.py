@@ -299,8 +299,8 @@ class  Mplayer(gobject.GObject):
         try:
             self.mplayerIn.write(cmdStr)
             self.mplayerIn.flush()
-        except StandardError:
-            print 'command error!!'
+        except StandardError, e:
+            print 'command error %s' % (e)
         
   
     def get_time_length(self):

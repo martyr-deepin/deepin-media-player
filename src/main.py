@@ -43,8 +43,7 @@ class MediaPlayer(object):
         self.app.set_icon(app_theme.get_pixbuf("icon.ico"))
                                 
         # Add app titlebar.
-        # self.app.add_titlebar(["theme", "menu", "max", "min", "close"],
-        self.app.add_titlebar(["max", "min", "close"],
+        self.app.add_titlebar(["theme", "menu", "max", "min", "close"],
                               app_theme.get_pixbuf("logo.png"),
                               "深度影音", " ", add_separator = True)
         
