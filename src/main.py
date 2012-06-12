@@ -36,7 +36,7 @@ class MediaPlayer(object):
         argv_path_list = sys.argv
         # Init emdia player config.
         init_mplayer_config()
-        self.app = Application("mediaplayer", False)
+        self.app = Application(False)
         # Set app size.
         # self.app.window.set_size_request(APP_WIDTH, APP_HEIGHT) 
         self.app.set_default_size(APP_WIDTH, APP_HEIGHT)               

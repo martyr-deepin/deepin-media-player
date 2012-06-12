@@ -24,7 +24,7 @@ from dtk.ui.keymap import get_key_name
 from dtk.ui.box import EventBox
 from dtk.ui.draw import draw_pixbuf
 from dtk.ui.frame import HorizontalFrame,VerticalFrame
-from dtk.ui.utils import is_double_click, color_hex_to_cairo
+from dtk.ui.utils import is_double_click, is_single_click,color_hex_to_cairo
 from dtk.ui.menu import Menu
 
 from ini import Config
@@ -42,7 +42,7 @@ from volume_button import VolumeButton
 from drag import drag_connect
 from preview import PreView
 from mplayer import Mplayer
-from mplayer import get_vide_width_height
+# from mplayer import get_vide_width_height
 from mplayer import get_length
 from mplayer import get_home_path
 from mplayer import length_to_time
@@ -53,7 +53,7 @@ from sort import Sort
 import threading
 import gtk
 import os
-import random
+# import random
 
 
 class PlayerBox(object):
@@ -74,7 +74,11 @@ class PlayerBox(object):
         self.show_toolbar_focus_bool = True
         self.clear_play_list_bool = False # drag play file.
         
-
+        # pause setting.
+        self.pause_time_id = None
+        self.pause_bool = False
+        self.pause_x = 0
+        self.pause_y = 0
         # ini play memory.
         self.ini = Config(get_home_path() + "/.config/deepin-media-player/config.ini")
         # self.ini.load()
@@ -99,8 +103,6 @@ class PlayerBox(object):
         self.event_x_root = None
         self.event_y_root = None
         self.event_time = None
-        self.screen_move_bool = False
-        self.screen_pause_bool = False
 
         self.panel_x = 0
         self.panel_y = 0
@@ -354,16 +356,7 @@ class PlayerBox(object):
             #     self.app.window.set_keep_above(False)
             self.toolbar.hide_toolbar()
             self.toolbar2.hide_toolbar2()
-        
-    # def MessageBox(self, text):    
-    #     x, y = self.screen.window.get_root_origin()
-    #     self.app.window.set_keep_above(True)        
-    #     if self.full_bool or self.mode_state_bool:
-    #         self.tooltip.show_tooltip(text, x + 5, y + 5)
-    #     else:    
-    #         self.tooltip.show_tooltip(text, x + 5, y + 30)
-    #     self.tooltip.set_keep_above(True)    
-        
+                
     def modify_mouse_icon(self, widget, event): # screen: motion-notify-event 
         w = widget.allocation.width
         h = widget.allocation.height
@@ -404,7 +397,7 @@ class PlayerBox(object):
     def get_key_event(self, widget, event): # app: key-release-event       
         keyval_name = get_key_name(event.keyval)
         if 32 == event.keyval:
-            keyval_name = "space"
+            keyval_name = "Space"
         # print keyval_name        
         if self.keymap.has_key(keyval_name):
             self.keymap[keyval_name]()
@@ -511,7 +504,6 @@ class PlayerBox(object):
         self.play_control_panel.start_btn.queue_draw()
         self.toolbar2.play_control_panel.start_btn.start_bool = False
         self.toolbar2.play_control_panel.start_btn.queue_draw()
-
                 
         self.play_list.list_view.set_highlight(list_item)    
 
@@ -532,9 +524,7 @@ class PlayerBox(object):
             self.play_control_panel.start_btn.queue_draw()
             self.toolbar2.play_control_panel.start_btn.start_bool = False
             self.toolbar2.play_control_panel.start_btn.queue_draw()
-            # self.MessageBox("播放")
             if 0 == self.mp.state: # NO player file.
-                # self.MessageBox("没有可播放的文件")
                 self.play_control_panel.start_btn.start_bool = True # start_btn modify play state.
                 self.play_control_panel.start_btn.queue_draw()
                 self.toolbar2.play_control_panel.start_btn.start_bool = True
@@ -547,15 +537,13 @@ class PlayerBox(object):
                 self.play_control_panel.start_btn.start_bool = self.toolbar2.play_control_panel.start_btn.start_bool
                 self.play_control_panel.start_btn.queue_draw()
 
-            gtk.timeout_add(300, self.start_button_time_pause)
-
+            gtk.timeout_add(50, self.start_button_time_pause)
+            
     def start_button_time_pause(self): # start_button_clicked.
         if self.mp.pause_bool:
-            # self.MessageBox("播放")
             self.mp.seek(int(self.progressbar.pos))
             self.mp.start_play()
         else:
-            # self.MessageBox("暂停")
             self.mp.pause()
         return  False
     
@@ -917,15 +905,12 @@ class PlayerBox(object):
         '''Full player window.'''
         if not self.full_bool: # Full player window.
             self.set_window_full()
-            # self.MessageBox("全屏")
         else:
             self.set_window_quit_full()
             if self.mode_state_bool:
                 self.concise_window_function()
             else:
-                self.common_window_function()
-                
-            # self.MessageBox("退出全屏")    
+                self.common_window_function()                
 
     def show_hide_set(self):
         '''show_window_widget and hide_window_widget'''
@@ -948,7 +933,6 @@ class PlayerBox(object):
             self.app.window.set_window_shape(True)
             self.common_window_function()
             self.mode_state_bool = False
-            # self.MessageBox("普通模式")
 
         if self.full_bool: # qiut full.
             self.show_bottom()
@@ -989,7 +973,6 @@ class PlayerBox(object):
                                      self.panel_y + (widget.allocation[3] - self.toolbar2.panel.allocation[3]) - self.app.titlebar.allocation[3])
 
             self.toolbar2.panel.hide_all()
-            # self.MessageBox("简洁模式")
 
         if self.save_volume_mute_bool:
             if self.mp:
@@ -999,47 +982,34 @@ class PlayerBox(object):
     def set_window_above(self, widget): #above_button
         self.above_bool = not self.above_bool
         self.app.window.set_keep_above(self.above_bool)
-        # if self.above_bool:
-            # self.MessageBox("置顶")
-        # else:    
-        #     self.MessageBox("取消置顶")
 
     # Control mplayer window.
     def move_media_player_window(self, widget, event): # screen: button-press-event
         '''Move window.'''
         if 1 == event.button:
-            self.screen_move_bool = True
-            self.screen_pause_bool = True
-            # Save screen event state.
             self.event_button = event.button
             self.event_x_root = event.x_root
             self.event_y_root = event.y_root
             self.event_time = event.time
-
+            
+        if not self.pause_bool:    
+            # pause / play. 123456 press.
+            self.pause_bool = True # Save pause bool.
+            self.pause_x = event.x # Save x postion.
+            self.pause_y = event.y # Save y postion.
+            
+        else:
+            gtk.timeout_remove(self.pause_time_id)
+            self.pause_bool = False
+        
         # Double clicked full.
         if is_double_click(event):
             self.full_play_window(widget)
             self.toolbar.toolbar_full_button.flags = not self.toolbar.toolbar_full_button.flags
-            self.double_bool = True
-            gtk.timeout_add(300, self.double_restart_bool)
-                
-
-    def double_restart_bool(self):
-        if self.double_bool:
-            self.double_bool = False
-            for timeout_id in self.signal_timeout:
-                gtk.timeout_remove(timeout_id)
-                self.signal_timeout = []
-        
-    def signal_restart_bool(self):  
-        if not self.double_bool:
-            
-            for timeout_id in self.signal_timeout:
-                gtk.timeout_remove(timeout_id)
-                self.signal_timeout = []
-                
-            self.virtual_set_start_btn_clicked()    
-            
+            if self.pause_time_id:
+                gtk.timeout_remove(self.pause_time_id)
+                self.pause_bool = False
+                       
     # Toolbar hide and show.
     def show_and_hide_toolbar(self, widget, event): # screen:motion_notify_event
         '''Show and hide toolbar.'''
@@ -1047,8 +1017,7 @@ class PlayerBox(object):
         if 0 <= event.y <= 20:
             if self.show_toolbar_focus_bool:
                 self.toolbar.show_toolbar()
-                self.show_toolbar_bool = True
-            
+                self.show_toolbar_bool = True            
             
                 self.panel_x, self.panel_y = self.screen.window.get_root_origin()
                 if self.mode_state_bool: # Concise mode.
@@ -1073,38 +1042,25 @@ class PlayerBox(object):
             else:
                 self.toolbar2.hide_toolbar2()
                 
-        if self.screen_move_bool:
-            self.screen_pause_bool = False
-            self.app.window.begin_move_drag(self.event_button,
-                                            int(self.event_x_root),
-                                            int(self.event_y_root),
-                                            self.event_time)
-            
         # hide preview window.    
         self.hide_preview_leave(widget, event)    
-            
-            
-    def screen_time_pause(self):
-        if self.mp.pause_bool:
-            self.play_control_panel.start_btn.start_bool = False
-            self.play_control_panel.start_btn.queue_draw()
-            self.mp.seek(int(self.progressbar.pos))
-            self.mp.start_play()
-        else:
-            self.play_control_panel.start_btn.start_bool = True
-            self.play_control_panel.start_btn.queue_draw()
-            self.mp.pause()
-        return  False
-
+        
+        # pause /play. 123456 motion.
+        if self.pause_bool:
+            if abs(self.pause_x - event.x) > 5 or abs(self.pause_y - event.y) > 5:
+                self.pause_bool = False
+                self.app.window.begin_move_drag(self.event_button,
+                                            int(self.event_x_root),
+                                            int(self.event_y_root),
+                                            self.event_time)            
+                           
     def screen_media_player_clear(self, widget, event): # screen: button-release-event
-        self.screen_move_bool = False
-        # playing file.
-        if 1 == event.button and event.type == gtk.gdk.BUTTON_RELEASE:
-            if 1 == self.mp.state:
-                # self.virtual_set_start_btn_clicked()
-                self.signal_timeout.append(gtk.timeout_add(500, self.signal_restart_bool))
-        
-        
+        # pause / play 123456 release.
+        if self.pause_bool:                                    
+            if 1 == self.mp.state:                
+                self.pause_time_id = gtk.timeout_add(250, self.virtual_set_start_btn_clicked)
+                self.pause_bool = False
+                  
     def virtual_set_start_btn_clicked(self):        
         if self.mode_state_bool:
             self.toolbar2.play_control_panel.start_btn.start_bool = not self.toolbar2.play_control_panel.start_btn.start_bool
@@ -1114,6 +1070,8 @@ class PlayerBox(object):
             self.play_control_panel.start_btn.start_bool = not self.play_control_panel.start_btn.start_bool
             self.play_control_panel.start_btn.queue_draw()
             self.start_button_clicked(self.play_control_panel.start_btn, 1)
+            
+        return False    
             
     '''Toolbar2 keep above play window and Toolbar2'''
     def set_keep_window_toolbar2(self, widget, event):
@@ -1282,11 +1240,10 @@ class PlayerBox(object):
     def media_player_next(self, mplayer, play_bool):
         if 1 == play_bool:
             self.media_player_midfy_start_bool()
-            # self.MessageBox("下一首")
+
             
     def media_player_pre(self, mplayer, play_bool):
         self.media_player_midfy_start_bool()
-        # self.MessageBox("上一首")
         
     def media_player_midfy_start_bool(self):  # media_player_end and media_player_next and media_player_pre.
         self.progressbar.set_pos(0)
