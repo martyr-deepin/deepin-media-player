@@ -99,7 +99,8 @@ class IniGui(Window):
         # bottom button.
         self.ok_btn     = Button("确定")
         self.cancel_btn = Button("取消")
-        self.cancel_btn.connect("clicked", self.destroy_ini_gui_window)
+        self.ok_btn.connect("clicked", self.save_configure_file_ok_clicked)
+        self.cancel_btn.connect("clicked", self.destroy_ini_gui_window_cancel_clicked)
         self.bottom_fixed = gtk.Fixed()
         bottom_fixed_height = 45
         self.bottom_fixed.set_size_request(1, bottom_fixed_height)
@@ -115,7 +116,26 @@ class IniGui(Window):
         self.configure.set("文件播放")
         self.show_all()
         
-    def destroy_ini_gui_window(self, widget):    
+    def save_configure_file_ok_clicked(self, widget):    
+        # save ini configure file.
+        print "_____________[FilePlay]________________________"
+        file_play_dict = self.configure.file_play.get_file_play_state()
+        for key in file_play_dict.keys():
+            print "%s = %s" % (str(key), str(file_play_dict[key]))
+        print "_____________[SystemSet]_______________________"
+        system_set_dict = self.configure.system_set.get_system_set_state()
+        for key in system_set_dict.keys():
+            print "%s = %s" % (str(key), str(system_set_dict[key]))
+        print "_____________[PlayControl]_____________________"    
+        play_control_dict = self.configure.play_control.get_play_control_state()
+        for key in play_control_dict.keys():
+            print "%s = %s" % (str(key), str(play_control_dict[key]))
+        print "_______________________________________________"    
+        # quit configure window.
+        self.destroy()
+    
+    def destroy_ini_gui_window_cancel_clicked(self, widget):    
+        # quit configure window.
         self.destroy()
         
     def set_con_widget(self, treeview, item):
@@ -185,8 +205,9 @@ class FilePlay(gtk.VBox):
         # Video file open.
         self.video_file_open_label = Label("视频文件打开时 : ")
         self.ai_set_radio_btn       = RadioButton()
+        self.ai_set_radio_btn.set_active(True)        
         self.ai_set_radio_btn_label = Label("智能调整")
-
+        
         self.adapt_video_btn       = RadioButton()
         self.adapt_video_btn_label = Label("窗口适应视频")
 
@@ -198,15 +219,18 @@ class FilePlay(gtk.VBox):
         ################################################################
         # open new file clear play list.
         self.clear_play_list_btn = CheckButton()
-        self.clear_play_list_btn_label = Label("打开新文件时清空播放列表")        
+        self.clear_play_list_btn.set_active(True)
+        self.clear_play_list_btn_label = Label("打开新文件时清空播放列表")                
         # memory up close media player -> file play postion.
         self.file_play_postion_btn = CheckButton()
+        self.file_play_postion_btn.set_active(True)
         self.file_play_postion_btn_label = Label("记忆上次关闭播放器时文件的播放位置")
         # play media when find file play in dir.
-        self.find_file_play_btn = CheckButton()
+        self.find_file_play_btn = CheckButton()        
         self.find_file_play_btn_label = Label("播放连续剧时自动在文件夹里查找关联文件播放")
         # mouse progressbar show preview window.
         self.show_preview_window_btn = CheckButton()
+        self.show_preview_window_btn.set_active(True)
         self.show_preview_window_btn_label = Label("鼠标悬停进度条上显示预览图")
         
         # Video file open.
@@ -274,13 +298,35 @@ class FilePlay(gtk.VBox):
                        show_preview_window_x + show_preview_window_width, show_preview_window_y)
         
         self.pack_start(self.fixed)
-                
+        
+    def get_file_play_state(self):           
+        video_file_dict = {}
+        # video file open.
+        video_file_open_num = 1
+        if self.ai_set_radio_btn.get_active():
+            video_file_open_num = 1
+        elif self.adapt_video_btn.get_active():    
+            video_file_open_num = 2
+        elif self.close_position_radio_btn.get_active():    
+            video_file_open_num = 3
+        elif self.full_window_radio_btn.get_active():    
+            video_file_open_num = 4            
+            
+        video_file_dict["video_file_open"] = video_file_open_num
+        #
+        video_file_dict["open_new_file_clear_play_list"] = self.clear_play_list_btn.get_active()
+        video_file_dict["memory_up_close_player_file_postion"] = self.file_play_postion_btn.get_active()
+        video_file_dict["find_play_file_relation_file"] = self.find_file_play_btn.get_active()
+        video_file_dict["mouse_progressbar_show_preview"] = self.show_preview_window_btn.get_active()
+        
+        return video_file_dict
+    
 class SystemSet(gtk.VBox):        
     def __init__(self):
         gtk.VBox.__init__(self)
         self.fixed = gtk.Fixed()
-        self.label = Label("系统设置")        
-        self.label.set_size_request(label_width, label_height)        
+        self.label = Label("系统设置")
+        self.label.set_size_request(label_width, label_height)
         self.heparator=HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
         self.heparator.set_size_request(heparator_width, heparator_height)
         # System setting.
@@ -340,6 +386,13 @@ class SystemSet(gtk.VBox):
         
         self.pack_start(self.fixed)
         
+    def get_system_set_state(self):           
+        system_set_dict = {}
+        #
+        system_set_dict["minimize_pause_play"] = self.pause_play_btn.get_active()
+        system_set_dict["font"] = self.font_set_combo.item_label.get_text()
+        system_set_dict["font_size"] = self.font_size_btn_combo.item_label.get_text()
+        return system_set_dict
         
 class PlayControl(gtk.VBox):       
     def __init__(self):
@@ -483,7 +536,25 @@ class PlayControl(gtk.VBox):
         
         self.pack_start(self.fixed)
         
+    def get_play_control_state(self):    
+        play_control_dict = {}
+        # Left.
+        play_control_dict["open_file_key"] =  self.open_file_entry.get_text()
+        play_control_dict["open_file_dir_key"] = self.open_file_dir_entry.get_text()
+        play_control_dict["play_or_pause_key"] = self.play_or_pause_entry.get_text()
+        play_control_dict["seek_key"] = self.seek_entry.get_text()
+        play_control_dict["back_key"] = self.back_entry.get_text()
+        play_control_dict["full_key"] = self.full_entry.get_text()
+        ############################
+        # Right.
+        play_control_dict["pre_a_key"]      = self.pre_a_entry.get_text()
+        play_control_dict["next_a_key"]     = self.next_a_entry.get_text()
+        play_control_dict["add_volume_key"] = self.add_volume_entry.get_text()
+        play_control_dict["sub_volume_key"] = self.sub_volume_entry.get_text()
+        play_control_dict["mute_key"]       = self.mute_entry.get_text()
+        play_control_dict["concise_key"]    = self.concise_entry.get_text()
         
+        return play_control_dict
 class OtherKey(gtk.VBox):
     def __init__(self):
         gtk.VBox.__init__(self)
