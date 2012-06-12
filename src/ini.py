@@ -20,14 +20,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
-# API
-# save
-# Config[类名]
-# get(节点名, 参数名) 返回参数名的 值: 无节点名 或 参数名, 返回None
-# set(节点名, 参数名, 值) : 无节点名 或 参数名 , 创建. 然后赋值.
-# from dtk.ui.config import Config
-
 import gobject    
 
 class Config(gobject.GObject):

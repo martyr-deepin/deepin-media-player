@@ -95,14 +95,30 @@ class IniGui(Window):
                 
         self.main_hbox.pack_start(self.scrolled_window, False, False)
         self.main_hbox.pack_start(self.configure)
-                
+        
+        # bottom button.
+        self.ok_btn     = Button("确定")
+        self.cancel_btn = Button("取消")
+        self.cancel_btn.connect("clicked", self.destroy_ini_gui_window)
+        self.bottom_fixed = gtk.Fixed()
+        bottom_fixed_height = 45
+        self.bottom_fixed.set_size_request(1, bottom_fixed_height)
+        button_x = 440
+        button_y = 8
+        
+        self.bottom_fixed.put(self.ok_btn, button_x, button_y)
+        self.bottom_fixed.put(self.cancel_btn, button_x + self.ok_btn.get_size_request()[0] + 20, button_y)
+        
+        self.main_vbox.pack_start(self.bottom_fixed, False, False)
         self.window_frame.add(self.main_vbox)
         # Init configure index.
-        self.configure.set("截图设置")
+        self.configure.set("文件播放")
         self.show_all()
         
+    def destroy_ini_gui_window(self, widget):    
+        self.destroy()
+        
     def set_con_widget(self, treeview, item):
-        # print item.get_title()
         # Configure class Mode.
         self.configure.set(item.get_title())
         
