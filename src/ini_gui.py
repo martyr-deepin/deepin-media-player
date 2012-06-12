@@ -751,31 +751,42 @@ class OtherSet(gtk.VBox):
         gtk.VBox.__init__(self)
         self.fixed = gtk.Fixed()
         self.label = Label("其它设置")
-        self.label.set_size_request(100, 30)
-        self.btn = gtk.Button("确定")
+        self.label.set_size_request(label_width, label_height)
         self.heparator=HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
-        self.heparator.set_size_request(100, 5)
-        self.fixed.put(self.label, TITLE_WIDTH_PADDING, 5)
-        self.fixed.put(self.heparator, 0, heparator_y)
-        self.fixed.put(self.btn, TITLE_WIDTH_PADDING, 5+35+30)
+        self.heparator.set_size_request(heparator_width, heparator_height)                
+        
+        otherset_x = 20
+        otherset_y = 40
+        #################################
+        self.fixed.put(self.label, otherset_x, TITLE_HEIGHT_PADDING)
+        self.fixed.put(self.heparator, otherset_x, otherset_y)
         
         self.pack_start(self.fixed)
+        
         
 class About(gtk.VBox):    
     def __init__(self):
         gtk.VBox.__init__(self)
         self.fixed = gtk.Fixed()
-        self.label = Label("关于")
-        self.label.set_size_request(100, 30)
-        self.btn = gtk.Button("确定")
+        self.label = Label("深度影音", text_size=12)        
+        self.label.set_size_request(label_width, label_height)
+        self.version_label = Label("版本:D1.02.3")
+        self.version_time  = Label("发布时间:2012.06.31")
+        
         self.heparator=HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
-        self.heparator.set_size_request(100, 5)
-        self.fixed.put(self.label, TITLE_WIDTH_PADDING, 5)
-        self.fixed.put(self.heparator, 0, heparator_y)
-        self.fixed.put(self.btn, TITLE_WIDTH_PADDING, 5+35+30)
+        self.heparator.set_size_request(heparator_width, heparator_height)                
+        
+        about_x = 20
+        about_y = 40
+        label_x_padding = about_x + 30
+        ####################################
+        self.fixed.put(self.label, label_x_padding, TITLE_HEIGHT_PADDING)
+        # self.fixed.put(self.version_label, label_x_padding + )
+        self.fixed.put(self.heparator, about_x, about_y)
         
         self.pack_start(self.fixed)
-               
+        
+        
 if __name__ == "__main__":        
     IniGui()
     gtk.main()
