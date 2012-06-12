@@ -130,7 +130,18 @@ class IniGui(Window):
         play_control_dict = self.configure.play_control.get_play_control_state()
         for key in play_control_dict.keys():
             print "%s = %s" % (str(key), str(play_control_dict[key]))
-        print "_______________________________________________"    
+        print "_____________[OtherKey]________________________"    
+        other_key_dict = self.configure.other_key.get_other_set_state()
+        for key in other_key_dict.keys():
+            print "%s = %s" % (str(key), str(other_key_dict[key]))
+        print "_____________[subtitleSet]______________________"                
+        sub_set_dict = self.configure.sub_set.get_subtitle_set_state()
+        for key in sub_set_dict.keys():
+            print "%s = %s" % (str(key), str(sub_set_dict[key]))
+        print "_____________[ScreenshotSet]____________________"    
+        screenshot_dict = self.configure.screen_shot.get_screenshot_state()
+        for key in screenshot_dict.keys():
+            print "%s = %s" % (str(key), str(screenshot_dict[key]))
         # quit configure window.
         self.destroy()
     
@@ -454,9 +465,7 @@ class PlayControl(gtk.VBox):
         self.concise_entry_label = Label("简洁模式/普通模式")
         self.concise_entry       = TextEntry("Cat + alt + A")
         self.concise_entry.set_size(entry_width, entry_height)
-        
-        
-        
+                        
         play_control_x = 20
         play_control_y = 40
         # label.
@@ -545,7 +554,6 @@ class PlayControl(gtk.VBox):
         play_control_dict["seek_key"] = self.seek_entry.get_text()
         play_control_dict["back_key"] = self.back_entry.get_text()
         play_control_dict["full_key"] = self.full_entry.get_text()
-        ############################
         # Right.
         play_control_dict["pre_a_key"]      = self.pre_a_entry.get_text()
         play_control_dict["next_a_key"]     = self.next_a_entry.get_text()
@@ -555,6 +563,7 @@ class PlayControl(gtk.VBox):
         play_control_dict["concise_key"]    = self.concise_entry.get_text()
         
         return play_control_dict
+    
 class OtherKey(gtk.VBox):
     def __init__(self):
         gtk.VBox.__init__(self)
@@ -713,14 +722,29 @@ class OtherKey(gtk.VBox):
         self.fixed.put(self.mouse_wheel_combo,
                        other_Key_x_padding, other_Key_y)
         other_Key_y += self.mouse_wheel_combo_label.get_size_request()[1] + 10
-
-        
-        
+                
         self.pack_start(self.fixed)
+    
+    def get_other_set_state(self):
+        other_set_dict = {}
+        # Left.
+        other_set_dict["add_brightness_key"] = self.add_bri_entry.get_text()
+        other_set_dict["sub_brightness_key"] = self.sub_bri_entry.get_text()
+        other_set_dict["inverse_rotation_key"] = self.inverse_rotation_entry.get_text()
+        other_set_dict["clockwise_key"] = self.clockwise_entry.get_text()
+        other_set_dict["sort_image_key"] = self.sort_image_entry.get_text()
+        other_set_dict["switch_audio_track_key"] = self.switch_audio_track_entry.get_text()
+        # Right.
+        other_set_dict["load_subtitle_key"] = self.load_subtitle_entry.get_text()
+        other_set_dict["subtitle_advance_key"] = self.subtitle_advance_entry.get_text()
+        other_set_dict["subtitle_delay_key"] = self.subtitle_delay_entry.get_text()
+        other_set_dict["mouse_left_single_clicked"] = self.mouse_left_single_clicked_combo.item_label.get_text()
+        other_set_dict["mouse_left_double_clicked"] = self.mouse_left_double_clicked_combo.item_label.get_text()
+        other_set_dict["mouse_wheel_event"] = self.mouse_wheel_combo.item_label.get_text()
         
-        
-
-class SubSet(gtk.VBox):        
+        return other_set_dict
+    
+class SubSet(gtk.VBox):    
     def __init__(self):
         gtk.VBox.__init__(self)
         entry_width = 280
@@ -732,7 +756,7 @@ class SubSet(gtk.VBox):
 
         self.heparator=HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
         self.heparator.set_size_request(heparator_width, heparator_height)
-        # Ai load subtitle.        
+        # Ai load subtitle.
         self.ai_load_subtitle_checkbtn       = CheckButton()
         self.ai_load_subtitle_checkbtn_label = Label("自动载入字幕")
         # Specified Location Search.
@@ -740,7 +764,6 @@ class SubSet(gtk.VBox):
         self.specified_location_search_entry = TextEntry()
         self.specified_location_search_entry.set_size(entry_width, entry_height)
         self.specified_location_search_btn   = Button("浏览")
-
         
         sub_set_x = 20
         sub_set_y = 40
@@ -765,6 +788,11 @@ class SubSet(gtk.VBox):
         
         self.pack_start(self.fixed)
         
+    def get_subtitle_set_state(self):    
+        sub_set_dict = {}
+        sub_set_dict["ai_load_subtitle"] = self.ai_load_subtitle_checkbtn.get_active()
+        sub_set_dict["specified_location_search"] = self.specified_location_search_entry.get_text()
+        return sub_set_dict
         
 class ScreenShot(gtk.VBox):        
     def __init__(self):
@@ -781,13 +809,16 @@ class ScreenShot(gtk.VBox):
         self.save_clipboard_radio_label = Label("仅保存在剪贴板")
         # Save File.
         self.save_file_radio = RadioButton()
+        self.save_file_radio.set_active(True)
         self.save_file_radio_label = Label("保存成文件")
         self.save_path_label = Label("保存路径 : ")
-        self.save_path_entry = TextEntry()
+        self.save_path_entry = TextEntry("~/.config/deepin-media-player/image")        
         self.save_path_entry.set_size(entry_width, entry_height)        
         self.save_path_button = Button("浏览")
         self.save_type_label  = Label("保存类型 : ")
         self.save_type_combo  = ComboBox()
+        self.save_type_combo.item_label.set_text(".png")
+        self.save_type_combo.add_item(ComboBoxItem(".png"))
         # 
         self.current_show_sort_label = Label("按当前显示的画面尺寸截图")
         self.current_show_sort_check = CheckButton()
@@ -831,7 +862,22 @@ class ScreenShot(gtk.VBox):
         self.fixed.put(self.current_show_sort_check, screenshot_x, screenshot_y)
         screenshot_x_padding = screenshot_x + self.current_show_sort_check.get_size_request()[0]
         self.fixed.put(self.current_show_sort_label, screenshot_x_padding, screenshot_y)
+        
         self.pack_start(self.fixed)
+        
+    def get_screenshot_state(self):     
+        screenshot_dict = {}
+        save_clipboard = 1
+        save_file = 2
+        if self.save_clipboard_radio.get_active():        
+            screenshot_dict["save_type_switch"] = save_clipboard
+        else:    
+            screenshot_dict["save_type_switch"] = save_file
+            screenshot_dict["save_path"]        = self.save_path_entry.get_text()
+            screenshot_dict["save_type"]        = self.save_type_combo.item_label.get_text()
+            
+        screenshot_dict["current_show_sort"] = self.current_show_sort_check.get_active()
+        return screenshot_dict
         
         
 class OtherSet(gtk.VBox):    
