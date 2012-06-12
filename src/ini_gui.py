@@ -653,6 +653,7 @@ class SubSet(gtk.VBox):
         self.specified_location_search_entry = TextEntry()
         self.specified_location_search_entry.set_size(entry_width, entry_height)
         self.specified_location_search_btn   = Button("浏览")
+
         
         sub_set_x = 20
         sub_set_y = 40
@@ -732,7 +733,7 @@ class ScreenShot(gtk.VBox):
                        screenshot_x_padding, screenshot_y - 2)
         screenshot_x_padding += self.save_path_entry.get_size_request()[0]
         self.fixed.put(self.save_path_button, 
-                       screenshot_x_padding + 10, screenshot_y - 4)
+                       screenshot_x_padding + 10, screenshot_y - 3)
         screenshot_y += self.save_path_button.get_size_request()[1]
         screenshot_x_padding = screenshot_x + self.save_type_label.get_size_request()[0] + 55
         # save type entry.
@@ -759,7 +760,7 @@ class OtherSet(gtk.VBox):
         otherset_y = 40
         #################################
         self.fixed.put(self.label, otherset_x, TITLE_HEIGHT_PADDING)
-        self.fixed.put(self.heparator, otherset_x, otherset_y)
+        self.fixed.put(self.heparator, heparator_x, heparator_y)
         
         self.pack_start(self.fixed)
         
@@ -770,19 +771,26 @@ class About(gtk.VBox):
         self.fixed = gtk.Fixed()
         self.label = Label("深度影音", text_size=12)        
         self.label.set_size_request(label_width, label_height)
-        self.version_label = Label("版本:D1.02.3")
-        self.version_time  = Label("发布时间:2012.06.31")
+        self.version_label = Label("版本:D1.02.3           发布时间:2012.06.31")
+        #
+        self.label_text_about = Label("　　深度影音是中国最大的网络电影平台，是中国互联网领域领先的正版数字电影服务提供商，始终走在电影潮流最前端，向广大用户提供方便流畅的在线电影和丰富多彩的电影社区服务。")
+        
+        self.index_label = Label("官方主页:")
+        # self.
         
         self.heparator=HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
-        self.heparator.set_size_request(heparator_width, heparator_height)                
+        self.heparator.set_size_request(heparator_width, heparator_height)
         
         about_x = 20
         about_y = 40
         label_x_padding = about_x + 30
+        label_y_padding = TITLE_HEIGHT_PADDING + 25
         ####################################
-        self.fixed.put(self.label, label_x_padding, TITLE_HEIGHT_PADDING)
-        # self.fixed.put(self.version_label, label_x_padding + )
-        self.fixed.put(self.heparator, about_x, about_y)
+        self.fixed.put(self.label, label_x_padding, label_y_padding)
+        label_x_padding += self.label.get_size_request()[0] + 30
+        self.fixed.put(self.version_label, label_x_padding, label_y_padding + 6)
+        
+        self.fixed.put(self.heparator, heparator_x, heparator_y + 30)
         
         self.pack_start(self.fixed)
         

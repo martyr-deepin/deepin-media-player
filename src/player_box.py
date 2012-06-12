@@ -148,7 +148,6 @@ class PlayerBox(object):
         self.app_width = 0  # Save media player window width.
         self.app_height = 0 # Save media player window height.
         self.argv_path_list = argv_path_list # command argv.
-        
         self.app.window.connect("destroy", self.quit_player_window)
         self.app.window.connect("configure-event", self.app_configure_hide_tool)
         self.app.window.connect("window-state-event", self.set_toolbar2_position)
