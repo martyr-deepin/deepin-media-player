@@ -43,6 +43,7 @@ from play_list_button import PlayListButton
 from volume_button import VolumeButton
 from drag import drag_connect
 from preview import PreView
+from ini_gui import IniGui
 from mplayer import Mplayer
 # from mplayer import get_vide_width_height
 from mplayer import get_length
@@ -81,8 +82,11 @@ class PlayerBox(object):
         self.pause_bool = False
         self.pause_x = 0
         self.pause_y = 0
-        # ini play memory.
+        # Init play memory.
         self.ini = Config(get_home_path() + "/.config/deepin-media-player/config.ini")
+        # Init deepin media player config gui.
+        self.config = Config(get_home_path() + "/.config/deepin-media-player/deepin_media_config.ini")
+        self.config.connect("config-changed", self.modify_config_section_value)
         # self.ini.load()
         
         # screen draw borde video width and height.        
@@ -202,14 +206,14 @@ class PlayerBox(object):
         self.help_menu = Menu([(None, "帮助信息", None),
                                (None, "问题反馈", None),
                                (None, "关于软件", None)])        
-
+        #aaaaaa
         self.title_root_menu = Menu([(None, "文件", self.file_menu), 
                                      (None, "播放", self.play_menu),
                                      (None, "画面", self.screen_menu),
                                      (None, "声音", self.volume_menu),
                                      (None, "字幕", self.subtitle_menu),
                                      (None, "截图", self.sort_menu),                            
-                                     (None, "选项", None),
+                                     (None, "选项", self.config_gui),
                                      (None, "总在最前", None),
                                      (None, "自定义换肤", None),
                                      (None, "帮助与反馈", self.help_menu),
@@ -418,6 +422,11 @@ class PlayerBox(object):
                        "Left":self.key_left,
                        "Space":self.key_space,
                        "Return":self.key_return}        
+        
+    def modify_config_section_value(self, Config, str1, str2, str3):    
+        print Config
+        print str1
+        print str2
     
     def set_show_toolbar_function_true(self, widget, event):
         self.show_toolbar_focus_bool = True
@@ -1208,15 +1217,15 @@ class PlayerBox(object):
                 self.toolbar2.progressbar.set_pos(0)                            
         # Show preview window.            
         else:
-            # if True ==  configure gui set hide or show preview.
-            if 1 == self.mp.state:            
-                if self.play_video_file_bool(self.mp.path):           
-                    self.preview.set_preview_path(self.mp.path)
-                    self.x_root = event.x_root
-                    self.y_root = event.y_root                                                               
-                    save_pos = (float(int(event.x))/ widget.allocation.width* self.progressbar.max)
-                    # preview window show.
-                    self.move_window_time(save_pos, pb_bit)                
+            if "true" ==  self.config.get("FilePlay", "mouse_progressbar_show_preview").lower():
+                if 1 == self.mp.state:            
+                    if self.play_video_file_bool(self.mp.path):           
+                        self.preview.set_preview_path(self.mp.path)
+                        self.x_root = event.x_root
+                        self.y_root = event.y_root                                                               
+                        save_pos = (float(int(event.x))/ widget.allocation.width* self.progressbar.max)
+                        # preview window show.
+                        self.move_window_time(save_pos, pb_bit)                
                     
                     
     def move_window_time(self, pos, pb_bit):                    
@@ -1511,3 +1520,12 @@ class PlayerBox(object):
         
     def open_current_file_dir_path(self, list_view, list_item, column, offset_x, offset_y):
         self.open_file_name = self.play_list_dict[list_item.title]                    
+
+    '''config gui window'''
+    def restart_load_config_file(self, IniGui, string):
+        self.config = Config(get_home_path() + "/.config/deepin-media-player/deepin_media_config.ini")
+        # self.config.connect("config-changed", self.modify_config_section_value)
+
+    def config_gui(self):
+        ini_gui = IniGui()
+        ini_gui.connect("config-changed", self.restart_load_config_file)

@@ -136,7 +136,10 @@ class Config(gobject.GObject):
                 argv_string = "%s = %s" % (argv_key, self.section_dict[section_key][argv_key])
                 fp.write(argv_string + "\n") # Save argv. 
                 
-import os                
+import os                                
+# config = Config(os.path.expanduser("~") + "/.config/deepin-media-player/deepin_media_config.ini")
+
+
 if __name__ == "__main__":
     def test_get_section(confi, section, option, value):
         print section
@@ -154,4 +157,6 @@ if __name__ == "__main__":
     # config.set("window2", "width", "32.232323")
     # config.set("window3", "width", "32.232323")
     config.save()
+    
+
     

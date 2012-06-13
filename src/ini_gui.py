@@ -54,11 +54,17 @@ heparator_y = 35
 heparator_width = INI_WIDTH - 143
 heparator_height = 5
 
+import gobject
 
-class IniGui(Window):
+class IniGui(Window, gobject.GObject):
+    __gsignals__ = {
+        "config-changed" : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE,
+                            (gobject.TYPE_STRING, ))
+        }
     def __init__(self):
         Window.__init__(self)
         self.ini = Config(config_path)
+        # self.ini = config
         # Set configure window.
         self.set_size_request(INI_WIDTH, INI_HEIGHT)  
         
@@ -156,6 +162,7 @@ class IniGui(Window):
             print "%s = %s" % (str(key), str(screenshot_dict[key]))
             
         self.ini.save()    
+        self.emit("config-changed", "save_over")
         # quit configure window.
         self.destroy()
     
@@ -222,6 +229,7 @@ class FilePlay(gtk.VBox):
         self.fixed = gtk.Fixed()
         # Init config file.
         self.ini = Config(config_path)
+        # self.ini = config
         self.label = Label("文件播放")        
         self.label.set_size_request(label_width, label_height)
         
@@ -376,6 +384,7 @@ class SystemSet(gtk.VBox):
         gtk.VBox.__init__(self)
         # Init config file.
         self.ini = Config(config_path)
+        # self.ini = config
         self.fixed = gtk.Fixed()
         self.label = Label("系统设置")
         self.label.set_size_request(label_width, label_height)
@@ -461,6 +470,7 @@ class PlayControl(gtk.VBox):
     def __init__(self):
         gtk.VBox.__init__(self)
         self.ini = Config(config_path)
+        # self.ini = config
         self.fixed = gtk.Fixed()
         self.label = Label("播放控制")
         self.label.set_size_request(label_width, label_height)        
@@ -655,9 +665,9 @@ class PlayControl(gtk.VBox):
     
 class OtherKey(gtk.VBox):
     def __init__(self):
-        # 123456
         gtk.VBox.__init__(self)
         self.ini = Config(config_path)
+        # self.ini = config
         self.fixed = gtk.Fixed()
         self.label = Label("其它快捷键")
         self.label.set_size_request(label_width, label_height)                
@@ -878,6 +888,7 @@ class SubSet(gtk.VBox):
         entry_width = 280
         entry_height = 25
         self.ini = Config(config_path)
+        # self.ini = config
         self.fixed = gtk.Fixed()
         self.label = Label("字幕设置")
         self.label.set_size_request(label_width, label_height)
@@ -935,6 +946,7 @@ class ScreenShot(gtk.VBox):
         entry_width = 250
         entry_height = 25
         self.ini = Config(config_path)
+        # self.ini = config
         self.fixed = gtk.Fixed()
         self.label = Label("截图设置")
         self.label.set_size_request(label_width, label_height)
