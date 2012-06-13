@@ -794,13 +794,13 @@ class PlayerBox(object):
                         
                         # Draw left.
                         cr.rectangle(x-left_x_padding, y - self.app.titlebar.allocation.height, 
-                                     s - left_width, h)
+                                     s - left_width, h + 1)
                         cr.fill()
                         
                         # Draw right.
                         cr.rectangle(x + h * (video_ratio) + s,
                                      y - self.app.titlebar.allocation.height, 
-                                     s, h)
+                                     s, h + 1)
                         cr.fill()
                         
                     elif bit > 0:
@@ -1084,16 +1084,17 @@ class PlayerBox(object):
             self.event_y_root = event.y_root
             self.event_time = event.time
             
-        if not self.pause_bool:    
-            # pause / play. 123456 press.
-            self.pause_bool = True # Save pause bool.
-            self.pause_x = event.x # Save x postion.
-            self.pause_y = event.y # Save y postion.
+        if is_single_click(event):    
+            if not self.pause_bool:    
+                # pause / play. 123456 press.
+                self.pause_bool = True # Save pause bool.
+                self.pause_x = event.x # Save x postion.
+                self.pause_y = event.y # Save y postion.
             
-        else:
-            if self.pause_time_id:
-                gtk.timeout_remove(self.pause_time_id)
-                self.pause_bool = False
+            else:
+                if self.pause_time_id:
+                    gtk.timeout_remove(self.pause_time_id)
+                    self.pause_bool = False
         
         # Double clicked full.
         if is_double_click(event):
