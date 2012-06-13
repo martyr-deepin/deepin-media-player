@@ -58,6 +58,7 @@ heparator_height = 5
 class IniGui(Window):
     def __init__(self):
         Window.__init__(self)
+        self.ini = Config(config_path)
         # Set configure window.
         self.set_size_request(INI_WIDTH, INI_HEIGHT)  
         
@@ -126,27 +127,35 @@ class IniGui(Window):
         print "_____________[FilePlay]________________________"
         file_play_dict = self.configure.file_play.get_file_play_state()
         for key in file_play_dict.keys():
+            self.ini.set("FilePlay", key, file_play_dict[key])
             print "%s = %s" % (str(key), str(file_play_dict[key]))
         print "_____________[SystemSet]_______________________"
         system_set_dict = self.configure.system_set.get_system_set_state()
         for key in system_set_dict.keys():
+            self.ini.set("SystemSet", key, system_set_dict[key])
             print "%s = %s" % (str(key), str(system_set_dict[key]))
         print "_____________[PlayControl]_____________________"    
         play_control_dict = self.configure.play_control.get_play_control_state()
         for key in play_control_dict.keys():
+            self.ini.set("PlayControl", key, play_control_dict[key])
             print "%s = %s" % (str(key), str(play_control_dict[key]))
         print "_____________[OtherKey]________________________"    
         other_key_dict = self.configure.other_key.get_other_set_state()
         for key in other_key_dict.keys():
+            self.ini.set("OtherKey", key, other_key_dict[key])
             print "%s = %s" % (str(key), str(other_key_dict[key]))
-        print "_____________[subtitleSet]______________________"                
+        print "_____________[SubtitleSet]______________________"                
         sub_set_dict = self.configure.sub_set.get_subtitle_set_state()
         for key in sub_set_dict.keys():
+            self.ini.set("SubtitleSet", key, sub_set_dict[key])
             print "%s = %s" % (str(key), str(sub_set_dict[key]))
         print "_____________[ScreenshotSet]____________________"    
         screenshot_dict = self.configure.screen_shot.get_screenshot_state()
         for key in screenshot_dict.keys():
+            self.ini.set("ScreenshotSet", key, screenshot_dict[key])
             print "%s = %s" % (str(key), str(screenshot_dict[key]))
+            
+        self.ini.save()    
         # quit configure window.
         self.destroy()
     
@@ -883,13 +892,13 @@ class SubSet(gtk.VBox):
             self.ai_load_subtitle_checkbtn.set_active(False)
         self.ai_load_subtitle_checkbtn_label = Label("自动载入字幕")
         # Specified Location Search.
-        self.specified_location_search_label = Label("指定位置路径 : ")
-        self.specified_location_search_entry = TextEntry()
+        self.specific_location_search_label = Label("指定位置路径 : ")
+        self.specific_location_search_entry = TextEntry()
         text_string = self.ini.get("SubtitleSet", "specific_location_search")
         if text_string:
-            self.specified_location_search_entry.set_text(text_string)
-        self.specified_location_search_entry.set_size(entry_width, entry_height)
-        self.specified_location_search_btn   = Button("浏览")
+            self.specific_location_search_entry.set_text(text_string)
+        self.specific_location_search_entry.set_size(entry_width, entry_height)
+        self.specific_location_search_btn   = Button("浏览")
         
         sub_set_x = 20
         sub_set_y = 40
@@ -904,20 +913,20 @@ class SubSet(gtk.VBox):
         sub_set_y += self.ai_load_subtitle_checkbtn.get_size_request()[1] + 25
         # Specified Location Search.
         sub_set_x += 5
-        self.fixed.put(self.specified_location_search_label,
+        self.fixed.put(self.specific_location_search_label,
                        sub_set_x, sub_set_y)
-        sub_set_y += self.specified_location_search_label.get_size_request()[1] + 10
-        self.fixed.put(self.specified_location_search_entry,
+        sub_set_y += self.specific_location_search_label.get_size_request()[1] + 10
+        self.fixed.put(self.specific_location_search_entry,
                        sub_set_x, sub_set_y + 1)
-        self.fixed.put(self.specified_location_search_btn,
-                       sub_set_x + self.specified_location_search_entry.get_size_request()[0] + 10, sub_set_y)
+        self.fixed.put(self.specific_location_search_btn,
+                       sub_set_x + self.specific_location_search_entry.get_size_request()[0] + 10, sub_set_y)
         
         self.pack_start(self.fixed)
         
     def get_subtitle_set_state(self):    
         sub_set_dict = {}
         sub_set_dict["ai_load_subtitle"] = self.ai_load_subtitle_checkbtn.get_active()
-        sub_set_dict["specified_location_search"] = self.specified_location_search_entry.get_text()
+        sub_set_dict["specific_location_search"] = self.specific_location_search_entry.get_text()
         return sub_set_dict
         
 class ScreenShot(gtk.VBox):        
@@ -935,10 +944,7 @@ class ScreenShot(gtk.VBox):
         self.save_clipboard_radio = RadioButton()
         # save clipboard radio event.
         self.save_clipboard_radio.connect("button-press-event", self.save_clipboard_radio_clicked)
-        if "true" == self.ini.get("ScreenshotSet", "save_clipboard").lower():
-            self.save_clipboard_radio.set_active(True)
-        else:    
-            self.save_clipboard_radio.set_active(False)
+        
         self.save_clipboard_radio_label = Label("仅保存在剪贴板")
         # Save File.
         self.save_file_radio = RadioButton()
@@ -953,6 +959,15 @@ class ScreenShot(gtk.VBox):
         # Save type.
         self.save_type_label  = Label("保存类型 : ")
         self.save_type_combo  = ComboBox()
+        if "true" == self.ini.get("ScreenshotSet", "save_clipboard").lower():
+            self.save_clipboard_radio.set_active(True)
+        else:    
+            self.save_clipboard_radio.set_active(False)
+            self.save_file_radio.set_active(False)                
+            self.save_path_entry.entry.set_editable(False)            
+            self.save_file_radio.set_active(False)                
+                        
+
         if "true" == self.ini.get("ScreenshotSet", "save_file").lower():
             self.save_file_radio.set_active(True)
             self.save_clipboard_radio.set_active(False)
@@ -962,8 +977,9 @@ class ScreenShot(gtk.VBox):
             self.save_type_combo.item_label.set_text(text_string)
             self.save_path_entry.entry.set_editable(True)
         else:    
-            self.save_file_radio.set_active(False)                
             self.save_path_entry.entry.set_editable(False)            
+            self.save_path_button.set_clickable(False)
+            self.save_file_radio.set_active(False)                
             
         self.save_type_combo.item_label.set_text(".png")
         self.save_type_combo.add_item(ComboBoxItem(".png"))
@@ -1031,15 +1047,10 @@ class ScreenShot(gtk.VBox):
         
     def get_screenshot_state(self):     
         screenshot_dict = {}
-        save_clipboard = 1
-        save_file = 2
-        if self.save_clipboard_radio.get_active():        
-            screenshot_dict["save_type_switch"] = save_clipboard
-        else:    
-            screenshot_dict["save_type_switch"] = save_file
-            screenshot_dict["save_path"]        = self.save_path_entry.get_text()
-            screenshot_dict["save_type"]        = self.save_type_combo.item_label.get_text()
-            
+        screenshot_dict["save_clipboard"]   = self.save_clipboard_radio.get_active() 
+        screenshot_dict["save_file"]        = self.save_file_radio.get_active()
+        screenshot_dict["save_path"]        = self.save_path_entry.get_text()
+        screenshot_dict["save_type"]        = self.save_type_combo.item_label.get_text()            
         screenshot_dict["current_show_sort"] = self.current_show_sort_check.get_active()
         return screenshot_dict
         
