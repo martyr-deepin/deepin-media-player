@@ -648,6 +648,7 @@ class OtherKey(gtk.VBox):
     def __init__(self):
         # 123456
         gtk.VBox.__init__(self)
+        self.ini = Config(config_path)
         self.fixed = gtk.Fixed()
         self.label = Label("其它快捷键")
         self.label.set_size_request(label_width, label_height)                
@@ -658,51 +659,88 @@ class OtherKey(gtk.VBox):
         entry_height = 20
         # Add Brightness.
         self.add_bri_entry_label = Label("增加亮度")
-        self.add_bri_entry       = TextEntry("car + lat + a")        
+        self.add_bri_entry       = TextEntry()
+        text_string = self.ini.get("OtherKey", "add_brightness_key")
+        if text_string:
+            self.add_bri_entry.set_text(text_string)
         self.add_bri_entry.set_size(entry_width, entry_height)
         # Sub Brightness.
         self.sub_bri_entry_label = Label("减少亮度")
-        self.sub_bri_entry       = TextEntry("car + lat + a")
+        self.sub_bri_entry       = TextEntry()
+        text_string = self.ini.get("OtherKey", "sub_brightness_key")
+        if text_string:
+            self.sub_bri_entry.set_text(text_string)
         self.sub_bri_entry.set_size(entry_width, entry_height)
         # Inverse Rotation.
         self.inverse_rotation_entry_label = Label("逆时针旋转")
-        self.inverse_rotation_entry       = TextEntry("cat + lat + a")
+        self.inverse_rotation_entry       = TextEntry()
+        text_string = self.ini.get("OtherKey", "inverse_rotation_key")
+        if text_string:
+            self.inverse_rotation_entry.set_text(text_string)
         self.inverse_rotation_entry.set_size(entry_width, entry_height)
         # Clockwise Rotation.
         self.clockwise_entry_label = Label("顺时针旋转")
-        self.clockwise_entry       = TextEntry("cat + lat + a")
+        self.clockwise_entry       = TextEntry()
+        text_string = self.ini.get("OtherKey", "clockwise_key")
+        if text_string:
+            self.clockwise_entry.set_text(text_string)
         self.clockwise_entry.set_size(entry_width, entry_height)
         # sort image.
         self.sort_image_entry_label = Label("截图")
-        self.sort_image_entry       = TextEntry("cat + lat + a")
+        self.sort_image_entry       = TextEntry()
+        text_string = self.ini.get("OtherKey", "sort_image_key")
+        if text_string:
+            self.sort_image_entry.set_text(text_string)
         self.sort_image_entry.set_size(entry_width, entry_height)
         # Switch Audio track.
         self.switch_audio_track_entry_label = Label("切换音轨")
-        self.switch_audio_track_entry       = TextEntry("cat + lat + a")
+        self.switch_audio_track_entry       = TextEntry()
+        text_string = self.ini.get("OtherKey", "switch_audio_track_key")
+        if text_string:
+            self.switch_audio_track_entry.set_text(text_string)
         self.switch_audio_track_entry.set_size(entry_width, entry_height)
         # Load subtitle.
         self.load_subtitle_entry_label = Label("载入字幕")
-        self.load_subtitle_entry       = TextEntry("cat + lat + a")
+        self.load_subtitle_entry       = TextEntry()
+        text_string = self.ini.get("OtherKey", "load_subtitle_key")
+        if text_string:
+            self.load_subtitle_entry.set_text(text_string)
         self.load_subtitle_entry.set_size(entry_width, entry_height)        
         # subtitle advance 0.5.
         self.subtitle_advance_entry_label = Label("字幕提前0.5秒")
-        self.subtitle_advance_entry       = TextEntry("cat + lat + a")
+        self.subtitle_advance_entry       = TextEntry()
+        text_string = self.ini.get("OtherKey", "subtitle_advance_key")
+        if text_string:
+            self.subtitle_advance_entry.set_text(text_string)
         self.subtitle_advance_entry.set_size(entry_width, entry_height)
         # subtitle Delay 0.5.
         self.subtitle_delay_entry_label = Label("字幕延时0.5秒")
-        self.subtitle_delay_entry       = TextEntry("cat + lat + a")
+        self.subtitle_delay_entry       = TextEntry()
+        text_string = self.ini.get("OtherKey", "subtitle_delay_key")
+        if text_string:
+            self.subtitle_delay_entry.set_text(text_string)
         self.subtitle_delay_entry.set_size(entry_width, entry_height)
         # mouse left single clicked.        
         self.mouse_left_single_clicked_combo_label = Label("鼠标左键单击")
         self.mouse_left_single_clicked_combo       = ComboBox()
+        self.mouse_left_single_clicked_combo.add_item(ComboBoxItem("测烙测试"))
+        text_string = self.ini.get("OtherKey", "mouse_left_single_clicked")
+        if text_string:
+            self.mouse_left_single_clicked_combo.item_label.set_text(text_string)
         self.mouse_left_single_clicked_combo.set_size_request(entry_width, entry_height)
         # mouse left double clicked.
         self.mouse_left_double_clicked_combo_label = Label("鼠标左键双击")
         self.mouse_left_double_clicked_combo       = ComboBox()
+        text_string = self.ini.get("OtherKey", "mouse_left_double_clicked")
+        if text_string:
+            self.mouse_left_double_clicked_combo.item_label.set_text(text_string)        
         self.mouse_left_double_clicked_combo.set_size_request(entry_width, entry_height)
         # mouse wheel.
         self.mouse_wheel_combo_label = Label("鼠标滚轮")
         self.mouse_wheel_combo       = ComboBox()
+        text_string = self.ini.get("OtherKey", "mouse_wheel_event")
+        if text_string:
+            self.mouse_wheel_combo.item_label.set_text(text_string)        
         self.mouse_wheel_combo.set_size_request(entry_width, entry_height)
         
         
@@ -830,7 +868,7 @@ class SubSet(gtk.VBox):
         gtk.VBox.__init__(self)
         entry_width = 280
         entry_height = 25
-        
+        self.ini = Config(config_path)
         self.fixed = gtk.Fixed()
         self.label = Label("字幕设置")
         self.label.set_size_request(label_width, label_height)
@@ -839,11 +877,17 @@ class SubSet(gtk.VBox):
         self.heparator.set_size_request(heparator_width, heparator_height)
         # Ai load subtitle.
         self.ai_load_subtitle_checkbtn       = CheckButton()
-        self.ai_load_subtitle_checkbtn.set_active(True)
+        if "true" == self.ini.get("SubtitleSet", "ai_load_subtitle").lower():            
+            self.ai_load_subtitle_checkbtn.set_active(True)
+        else:    
+            self.ai_load_subtitle_checkbtn.set_active(False)
         self.ai_load_subtitle_checkbtn_label = Label("自动载入字幕")
         # Specified Location Search.
         self.specified_location_search_label = Label("指定位置路径 : ")
         self.specified_location_search_entry = TextEntry()
+        text_string = self.ini.get("SubtitleSet", "specific_location_search")
+        if text_string:
+            self.specified_location_search_entry.set_text(text_string)
         self.specified_location_search_entry.set_size(entry_width, entry_height)
         self.specified_location_search_btn   = Button("浏览")
         
@@ -881,6 +925,7 @@ class ScreenShot(gtk.VBox):
         gtk.VBox.__init__(self)
         entry_width = 250
         entry_height = 25
+        self.ini = Config(config_path)
         self.fixed = gtk.Fixed()
         self.label = Label("截图设置")
         self.label.set_size_request(label_width, label_height)
@@ -888,22 +933,46 @@ class ScreenShot(gtk.VBox):
         self.heparator.set_size_request(heparator_width, heparator_height)                
         # Save clipboard.
         self.save_clipboard_radio = RadioButton()
+        # save clipboard radio event.
+        self.save_clipboard_radio.connect("button-press-event", self.save_clipboard_radio_clicked)
+        if "true" == self.ini.get("ScreenshotSet", "save_clipboard").lower():
+            self.save_clipboard_radio.set_active(True)
+        else:    
+            self.save_clipboard_radio.set_active(False)
         self.save_clipboard_radio_label = Label("仅保存在剪贴板")
         # Save File.
         self.save_file_radio = RadioButton()
+        self.save_file_radio.connect("button-press-event", self.save_file_radio_clicked)
         self.save_file_radio.set_active(True)
         self.save_file_radio_label = Label("保存成文件")
+        # Save path.
         self.save_path_label = Label("保存路径 : ")
-        self.save_path_entry = TextEntry("~/.config/deepin-media-player/image")        
-        self.save_path_entry.set_size(entry_width, entry_height)        
+        self.save_path_entry = TextEntry()        
+        self.save_path_entry.set_size(entry_width, entry_height)                
         self.save_path_button = Button("浏览")
+        # Save type.
         self.save_type_label  = Label("保存类型 : ")
         self.save_type_combo  = ComboBox()
+        if "true" == self.ini.get("ScreenshotSet", "save_file").lower():
+            self.save_file_radio.set_active(True)
+            self.save_clipboard_radio.set_active(False)
+            text_string = self.ini.get("ScreenshotSet", "save_path")
+            self.save_path_entry.set_text(text_string)
+            text_string = self.ini.get("ScreenshotSet", "save_type")            
+            self.save_type_combo.item_label.set_text(text_string)
+            self.save_path_entry.entry.set_editable(True)
+        else:    
+            self.save_file_radio.set_active(False)                
+            self.save_path_entry.entry.set_editable(False)            
+            
         self.save_type_combo.item_label.set_text(".png")
         self.save_type_combo.add_item(ComboBoxItem(".png"))
         # 
         self.current_show_sort_label = Label("按当前显示的画面尺寸截图")
         self.current_show_sort_check = CheckButton()
+        self.current_show_sort_check.set_active(False)
+        if "true" == self.ini.get("ScreenshotSet", "current_show_sort"):
+            self.current_show_sort_check.set_active(True)
         ###############################################
         screenshot_x = 20
         screenshot_y = 40        
@@ -946,6 +1015,19 @@ class ScreenShot(gtk.VBox):
         self.fixed.put(self.current_show_sort_label, screenshot_x_padding, screenshot_y)
         
         self.pack_start(self.fixed)
+        
+    def save_file_radio_clicked(self, widget, event):    
+        if 1 == event.button:
+            self.save_path_entry.entry.set_editable(True)
+            self.save_path_button.set_clickable(True)
+
+        
+    def save_clipboard_radio_clicked(self, widget, event):    
+        # self.save_path_entry.entry.set_editable(False)            
+        if 1 == event.button:
+            self.save_path_entry.entry.set_editable(False)
+            self.save_path_button.set_clickable(False)
+            #
         
     def get_screenshot_state(self):     
         screenshot_dict = {}
