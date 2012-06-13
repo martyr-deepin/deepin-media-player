@@ -31,7 +31,7 @@ from dtk.ui.button import CheckButton, RadioButton
 from dtk.ui.line import HSeparator
 from dtk.ui.scrolled_window import ScrolledWindow
 
-from treeview import TreeView, TreeViewItem
+from dtk.ui.treeview import TreeView, TreeViewItem
 from ini import Config
 from mplayer import get_home_path
 import gtk
@@ -86,8 +86,9 @@ class IniGui(Window):
         self.tree_view.add_item(None, TreeViewItem("其它设置"))        
         self.tree_view.add_item(None, TreeViewItem("关于         "))        
         
-        self.tree_view.add_item(key, TreeViewItem("播放控制", has_arrow=False))
         self.tree_view.add_item(key, TreeViewItem("其它快捷键", has_arrow=False))
+        self.tree_view.add_item(key, TreeViewItem("播放控制", has_arrow=False))
+        
                         
         self.main_hbox_frame = gtk.Alignment()
         self.main_hbox_frame.set(1, 1, 1, 1)
@@ -450,6 +451,7 @@ class SystemSet(gtk.VBox):
 class PlayControl(gtk.VBox):       
     def __init__(self):
         gtk.VBox.__init__(self)
+        self.ini = Config(config_path)
         self.fixed = gtk.Fixed()
         self.label = Label("播放控制")
         self.label.set_size_request(label_width, label_height)        
@@ -461,51 +463,87 @@ class PlayControl(gtk.VBox):
         entry_height = 20
         # open file key.
         self.open_file_entry_label = Label("打开文件")
-        self.open_file_entry       = TextEntry("Car + alt + A")        
+        self.open_file_entry       = TextEntry()
+        text_string = self.ini.get("PlayControl", "open_file_key")
+        if text_string:
+            self.open_file_entry.set_text(text_string)
         self.open_file_entry.set_size(entry_width, entry_height)
         # pre a.
         self.pre_a_entry_label = Label("上一个")
-        self.pre_a_entry       = TextEntry("Car + alt + A")
+        self.pre_a_entry       = TextEntry()
+        text_string = self.ini.get("PlayControl", "pre_a_key")
+        if text_string:
+            self.pre_a_entry.set_text(text_string)
         self.pre_a_entry.set_size(entry_width, entry_height)
         # open file dir.
         self.open_file_dir_entry_label = Label("打开文件夹")
-        self.open_file_dir_entry       = TextEntry("Car + alt + A")
+        self.open_file_dir_entry       = TextEntry()
+        text_string = self.ini.get("PlayControl", "open_file_dir_key")
+        if text_string:
+            self.open_file_dir_entry.set_text(text_string)
         self.open_file_dir_entry.set_size(entry_width, entry_height)
         # next a.
         self.next_a_entry_label = Label("下一个")
-        self.next_a_entry       = TextEntry("Car + alt + A")
+        self.next_a_entry       = TextEntry()
+        text_string = self.ini.get("PlayControl", "next_a_key")
+        if text_string:
+            self.next_a_entry.set_text(text_string)
         self.next_a_entry.set_size(entry_width, entry_height)
         # play or pause.
         self.play_or_pause_entry_label = Label("播放/暂停")
-        self.play_or_pause_entry = TextEntry("cat + alt + A")
+        self.play_or_pause_entry = TextEntry()
+        text_string = self.ini.get("PlayControl", "play_or_pause_key")
+        if text_string:
+            self.play_or_pause_entry.set_text(text_string)        
         self.play_or_pause_entry.set_size(entry_width, entry_height)
         # add volume.
         self.add_volume_entry_label = Label("升高音量")
-        self.add_volume_entry       = TextEntry("cat + alt + A")
+        self.add_volume_entry       = TextEntry()
+        text_string = self.ini.get("PlayControl", "add_volume_key")
+        if text_string:
+            self.add_volume_entry.set_text(text_string)        
         self.add_volume_entry.set_size(entry_width, entry_height)
         # seek.
         self.seek_entry_label = Label("快进")
-        self.seek_entry       = TextEntry("Cat + alt + A")
+        self.seek_entry       = TextEntry()
+        text_string = self.ini.get("PlayControl", "seek_key")
+        if text_string:
+            self.seek_entry.set_text(text_string)        
         self.seek_entry.set_size(entry_width, entry_height)
         # sub volume.
         self.sub_volume_entry_label = Label("降低音量")
-        self.sub_volume_entry       = TextEntry("Cat + alt + A")
+        self.sub_volume_entry       = TextEntry()
+        text_string = self.ini.get("PlayControl", "sub_volume_key")
+        if text_string:
+            self.sub_volume_entry.set_text(text_string)        
         self.sub_volume_entry.set_size(entry_width, entry_height)
         # back.
         self.back_entry_label = Label("快退")
-        self.back_entry       = TextEntry("Cat + alt + A")
+        self.back_entry       = TextEntry()
+        text_string = self.ini.get("PlayControl", "back_key")
+        if text_string:
+            self.back_entry.set_text(text_string)        
         self.back_entry.set_size(entry_width, entry_height)
         # Mute. 
         self.mute_entry_label = Label("静音")
-        self.mute_entry       = TextEntry("Cat + alt + A")
+        self.mute_entry       = TextEntry()
+        text_string = self.ini.get("PlayControl", "mute_key")
+        if text_string:
+            self.mute_entry.set_text(text_string)        
         self.mute_entry.set_size(entry_width, entry_height)
         # full.
         self.full_entry_label = Label("全屏")
-        self.full_entry       = TextEntry("Cat + alt + A")
+        self.full_entry       = TextEntry()
+        text_string = self.ini.get("PlayControl", "full_key")
+        if text_string:
+            self.full_entry.set_text(text_string)        
         self.full_entry.set_size(entry_width, entry_height)
         # Concise mode.
         self.concise_entry_label = Label("简洁模式/普通模式")
-        self.concise_entry       = TextEntry("Cat + alt + A")
+        self.concise_entry       = TextEntry()
+        text_string = self.ini.get("PlayControl", "concise_key")
+        if text_string:
+            self.concise_entry.set_text(text_string)        
         self.concise_entry.set_size(entry_width, entry_height)
                         
         play_control_x = 20
@@ -608,6 +646,7 @@ class PlayControl(gtk.VBox):
     
 class OtherKey(gtk.VBox):
     def __init__(self):
+        # 123456
         gtk.VBox.__init__(self)
         self.fixed = gtk.Fixed()
         self.label = Label("其它快捷键")

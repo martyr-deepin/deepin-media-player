@@ -26,13 +26,13 @@
 import gtk
 import gobject
 from collections import OrderedDict
-from skin import app_theme
 
-from dtk.ui.draw import draw_pixbuf, draw_vlinear, draw_font
-from dtk.ui.utils import (get_content_size, is_single_click, is_double_click, is_right_button, color_hex_to_cairo,
+from draw import draw_pixbuf, draw_vlinear, draw_font
+from utils import (get_content_size, is_single_click, is_double_click, is_right_button, color_hex_to_cairo,
                    cairo_state, get_match_parent)
-from dtk.ui.theme import ui_theme
-from dtk.ui.skin_config import skin_config
+from theme import ui_theme
+from skin_config import skin_config
+
 
 # (cr, text, font_size, font_color, x, y, width, height, font_align
 class TreeView(gtk.DrawingArea):
@@ -242,19 +242,6 @@ class TreeView(gtk.DrawingArea):
                         draw_pixbuf(cr, self.press_pixbuf.get_pixbuf(), 
                                     font_w + self.font_x_padding + draw_widget.width + self.arrow_x_padding, 
                                     temp_height + (self.height - self.normal_pixbuf.get_pixbuf().get_height()) / 2)
-                else:        
-                    pixbuf = draw_widget.tree_view_item.get_left_image()
-                    if pixbuf:
-                        image_width = draw_widget.tree_view_item.image_width
-                        image_height = draw_widget.tree_view_item.image_height
-                        if (not image_width) or (not image_height):
-                            image_width = self.font_size + 4
-                            image_height = self.font_size + 4
-
-                            pixbuf = pixbuf.scale_simple(image_width, image_height, gtk.gdk.INTERP_NEAREST)
-                            draw_pixbuf(cr, pixbuf, 
-                                        int(draw_widget.tree_view_item.image_x_padding), 
-                                        temp_height + (self.height - self.normal_pixbuf.get_pixbuf().get_height()) / 2 + draw_widget.tree_view_item.image_y_padding)
                     
                 temp_height += self.height     
                
@@ -452,15 +439,9 @@ class Tree(object):
 gobject.type_register(TreeView)               
 
 class TreeViewItem(object):    
-    def __init__(self, item_title, has_arrow=True, 
-                 item_left_image=None, image_x_padding=0, image_y_padding=0, image_width=0, image_height=0):
+    def __init__(self, item_title, has_arrow=True):
         self.item_title = item_title
         self.has_arrow = has_arrow
-        self.item_left_image = item_left_image
-        self.image_x_padding = image_x_padding
-        self.image_y_padding = image_y_padding
-        self.image_width = image_width
-        self.image_height = image_height
         self.item_id = None
         
     def get_title(self):    
@@ -468,15 +449,12 @@ class TreeViewItem(object):
     
     def get_has_arrow(self):
         return self.has_arrow
-    
-    def get_left_image(self):
-        return self.item_left_image                    
             
-        
     def set_item_id(self, new_id):
         self.item_id = new_id
         
     def get_item_id(self):    
         return self.item_id
+    
     
     
