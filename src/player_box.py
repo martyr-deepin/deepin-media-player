@@ -209,6 +209,7 @@ class PlayerBox(object):
                                      (None, "声音", self.volume_menu),
                                      (None, "字幕", self.subtitle_menu),
                                      (None, "截图", self.sort_menu),                            
+                                     (None, "选项", None),
                                      (None, "总在最前", None),
                                      (None, "自定义换肤", None),
                                      (None, "帮助与反馈", self.help_menu),

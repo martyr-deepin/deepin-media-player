@@ -24,7 +24,6 @@ from skin import app_theme
 from dtk.ui.button import Button
 from dtk.ui.entry import TextEntry
 from dtk.ui.combo import ComboBox,ComboBoxItem
-from dtk.ui.treeview import TreeView, TreeViewItem
 from dtk.ui.titlebar import Titlebar
 from dtk.ui.window import Window 
 from dtk.ui.label import Label
@@ -32,8 +31,13 @@ from dtk.ui.button import CheckButton, RadioButton
 from dtk.ui.line import HSeparator
 from dtk.ui.scrolled_window import ScrolledWindow
 
+from treeview import TreeView, TreeViewItem
+from ini import Config
+from mplayer import get_home_path
 import gtk
 
+DEFAULT_FONT = "文泉驿微米黑"
+config_path = get_home_path() + "/.config/deepin-media-player/deepin_media_config.ini"
 # Ini(configure) window.
 INI_WIDTH = 640
 INI_HEIGHT = 480
@@ -206,7 +210,8 @@ class FilePlay(gtk.VBox):
     def __init__(self):
         gtk.VBox.__init__(self)
         self.fixed = gtk.Fixed()
-        
+        # Init config file.
+        self.ini = Config(config_path)
         self.label = Label("文件播放")        
         self.label.set_size_request(label_width, label_height)
         
@@ -237,11 +242,11 @@ class FilePlay(gtk.VBox):
         self.file_play_postion_btn.set_active(True)
         self.file_play_postion_btn_label = Label("记忆上次关闭播放器时文件的播放位置")
         # play media when find file play in dir.
-        self.find_file_play_btn = CheckButton()        
+        self.find_file_play_btn = CheckButton() 
         self.find_file_play_btn_label = Label("播放连续剧时自动在文件夹里查找关联文件播放")
         # mouse progressbar show preview window.
         self.show_preview_window_btn = CheckButton()
-        self.show_preview_window_btn.set_active(True)
+        self.show_preview_window_btn.set_active(False)
         self.show_preview_window_btn_label = Label("鼠标悬停进度条上显示预览图")
         
         # Video file open.
@@ -758,6 +763,7 @@ class SubSet(gtk.VBox):
         self.heparator.set_size_request(heparator_width, heparator_height)
         # Ai load subtitle.
         self.ai_load_subtitle_checkbtn       = CheckButton()
+        self.ai_load_subtitle_checkbtn.set_active(True)
         self.ai_load_subtitle_checkbtn_label = Label("自动载入字幕")
         # Specified Location Search.
         self.specified_location_search_label = Label("指定位置路径 : ")
