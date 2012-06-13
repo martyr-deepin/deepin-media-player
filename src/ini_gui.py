@@ -221,7 +221,6 @@ class FilePlay(gtk.VBox):
         # Video file open.
         self.video_file_open_label = Label("视频文件打开时 : ")
         self.ai_set_radio_btn       = RadioButton()
-        self.ai_set_radio_btn.set_active(True)        
         self.ai_set_radio_btn_label = Label("智能调整")
         
         self.adapt_video_btn       = RadioButton()
@@ -232,21 +231,46 @@ class FilePlay(gtk.VBox):
 
         self.full_window_radio_btn       = RadioButton()        
         self.full_window_radio_btn_label = Label("自动全屏")                
+        set_num = self.ini.get("FilePlay", "video_file_open")
+        # Set state(1, 2, 3, 4).
+        if 1 == set_num:            
+            self.ai_set_radio_btn.set_active(True)        
+        elif 2 == set_num:
+            self.adapt_video_btn.set_active(True)
+        elif 3 == set_num:    
+            self.close_position_radio_btn.set_active(True)
+        elif 4 == set_num:    
+            self.full_window_radio_btn.set_active(True)
+        else:    
+            self.ai_set_radio_btn.set_active(True) 
         ################################################################
         # open new file clear play list.
-        self.clear_play_list_btn = CheckButton()
-        self.clear_play_list_btn.set_active(True)
+        self.clear_play_list_btn = CheckButton()        
+        if "true" == self.ini.get("FilePlay", "open_new_file_clear_play_list").lower():
+            self.clear_play_list_btn.set_active(True)
+        else:    
+            self.clear_play_list_btn.set_active(False)
         self.clear_play_list_btn_label = Label("打开新文件时清空播放列表")                
         # memory up close media player -> file play postion.
         self.file_play_postion_btn = CheckButton()
-        self.file_play_postion_btn.set_active(True)
+        if "true" == self.ini.get("FilePlay", "memory_up_close_player_file_postion").lower():
+            self.file_play_postion_btn.set_active(True)
+        else:    
+            self.file_play_postion_btn.set_active(False)
         self.file_play_postion_btn_label = Label("记忆上次关闭播放器时文件的播放位置")
         # play media when find file play in dir.
         self.find_file_play_btn = CheckButton() 
+        if "true" == self.ini.get("FilePlay", "find_play_file_relation_file").lower():
+            self.find_file_play_btn.set_active(True)
+        else:    
+            self.find_file_play_btn.set_active(False)
         self.find_file_play_btn_label = Label("播放连续剧时自动在文件夹里查找关联文件播放")
         # mouse progressbar show preview window.
         self.show_preview_window_btn = CheckButton()
-        self.show_preview_window_btn.set_active(False)
+        if "true" == self.ini.get("FilePlay", "mouse_progressbar_show_preview").lower():
+            self.show_preview_window_btn.set_active(True)
+        else:    
+            self.show_preview_window_btn.set_active(False)
         self.show_preview_window_btn_label = Label("鼠标悬停进度条上显示预览图")
         
         # Video file open.
@@ -340,6 +364,8 @@ class FilePlay(gtk.VBox):
 class SystemSet(gtk.VBox):        
     def __init__(self):
         gtk.VBox.__init__(self)
+        # Init config file.
+        self.ini = Config(config_path)
         self.fixed = gtk.Fixed()
         self.label = Label("系统设置")
         self.label.set_size_request(label_width, label_height)
@@ -348,13 +374,21 @@ class SystemSet(gtk.VBox):
         # System setting.
         # Minimize pause plaing.
         self.pause_play_btn = CheckButton()
+        if "true" == self.ini.get("SystemSet", "minimize_pause_play").lower():
+            self.pause_play_btn.set_active(True)
+        else:    
+            self.pause_play_btn.set_active(False)
         self.pause_play_btn_label = Label("最小化时暂停播放")
         # Screen messagebox.
         self.screen_msg_btn = Label("屏幕提示效果")
-        # Font set.
+        # Font set.        
         self.font_set_btn_label = Label("字体")
+        #DEFAULT_FONT
         font_set_items = [ComboBoxItem("华彩")]
-        self.font_set_combo = ComboBox(font_set_items)
+        self.font_set_combo = ComboBox(font_set_items)        
+        font_string = self.ini.get("SystemSet", "font")
+        if font_string:
+            self.font_set_combo.item_label.set_text(font_string)            
         font_set_combo_width = 120
         font_set_combo_height = 40
         self.font_set_combo.set_size_request(font_set_combo_width, font_set_combo_height)
@@ -364,6 +398,9 @@ class SystemSet(gtk.VBox):
         font_size_combo_height = 40        
         font_set_items = [ComboBoxItem("18"),ComboBoxItem("19"),ComboBoxItem("20")]
         self.font_size_btn_combo = ComboBox(font_set_items)
+        font_size_string = self.ini.get("SystemSet", "font_size")
+        if font_size_string:
+            self.font_size_btn_combo.item_label.set_text(font_size_string)            
         self.font_size_btn_combo.set_size_request(font_size_combo_width, font_size_combo_height)
                 
         system_set_x = 20
