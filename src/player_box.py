@@ -25,6 +25,8 @@ from dtk.ui.box import EventBox
 from dtk.ui.draw import draw_pixbuf
 from dtk.ui.frame import HorizontalFrame,VerticalFrame
 from dtk.ui.utils import is_double_click, is_single_click,color_hex_to_cairo
+from dtk.ui.constant import DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT, WIDGET_POS_BOTTOM_LEFT
+from dtk.ui.utils import container_remove_all, get_widget_root_coordinate
 from dtk.ui.menu import Menu
 
 from ini import Config
@@ -138,6 +140,92 @@ class PlayerBox(object):
                                ], 
                               True)                        
                     
+        '''Screen root Meu'''
+        #In screen root menu.
+        self.sort_menu = Menu([(None, "截图", None),      
+                               (None, "打开截图目录", None),   
+                               (None, "设置截图保存目录", None)
+                               ])                
+        # In screen root menu.
+        self.subtitle_menu = Menu([(None, "载入字幕", None),      
+                                   (None, "字幕选择", None),   
+                                   (None, "移除字幕", None), 
+                                   ])                         
+        # In screen root menu.
+        self.volume_menu = Menu([(None, "声道选择", None),      
+                                 (None, "配音选择", None),   
+                                 (None),       
+                                 (None, "增大音量", None), 
+                                 (None, "减小音量", None),
+                                 (None, "静音/还原", None),
+                                 ])         
+        # In screen root menu.
+        self.screen_menu = Menu([(None, "默认值", None),
+                                 (None, "4:3", None),
+                                 (None, "16:9", None),
+                                 (None, "16:10", None),
+                                 (None, "1.85:1", None),
+                                 (None, "2.35:1", None),
+                                 (None),
+                                 (None, "0.5倍尺寸", None),
+                                 (None, "1倍", None),
+                                 (None, "1.5倍", None),
+                                 (None, "2倍", None),
+                                 (None),
+                                 (None, "全屏/退出", None),
+                                 ])
+        # In screen root menu.
+        self.play_state_menu = Menu([(None, "单个播放", None),      
+                                     (None, "顺序播放", None),   
+                                     (None, "随机播放", self.rand_play),       
+                                     (None, "单个循环", self.sigle_loop_play), 
+                                     (None, "列表循环", self.loop_list_play)]  
+                                    ) 
+        # In screen root menu.
+        self.play_menu = Menu([(None, "上一首", None),
+                               (None, "下一首", None),
+                               (None),
+                               (None, "快进5秒", None),
+                               (None, "快退5秒", None),
+                               (None, "播放顺序", self.play_state_menu),
+                               ])
+        # In screen root menu.
+        self.file_menu = Menu([(None, "打开文件", None),
+                               (None, "打开文件夹", None),
+                              (None, "播放光盘", None)])
+        
+        self.screen_root_menu = Menu([(None, "文件", self.file_menu), 
+                                      (None, "播放", self.play_menu),
+                                      (None, "画面", self.screen_menu),
+                                      (None, "声音", None),
+                                      (None, "字幕", None),
+                                      (None, "截图", None),                               
+                                      (None, "总在最前", None),
+                                      (None, "自定义换肤", None),
+                                      (None, "帮助与反馈", None),
+                                      (None, "退出", None)],
+                                     True)                        
+        '''Title root Menu.'''
+        # In title root menu.
+        self.help_menu = Menu([(None, "帮助信息", None),
+                               (None, "问题反馈", None),
+                               (None, "关于软件", None)])        
+
+        # In title root menu.
+        self.play_mode_menu = Menu([(None, "全屏播放", None),
+                                    (None, "窗口模式", None),
+                                    (None, "简洁模式", None)])
+        
+        self.title_root_menu = Menu([(None, "文件", self.file_menu), 
+                                     (None, "播放控制", self.play_menu),
+                                     (None, "播放模式", self.play_mode_menu),
+                                     (None, "画面", None),
+                                     (None, "总在最前", None),
+                                     (None, "自定义换肤", None),
+                                     (None, "声音", None),
+                                     (None, "帮助与反馈", self.help_menu),
+                                     (None, "退出", None)],
+                                    True)                        
         
         '''Tooltip window'''
         # self.tooltip = Tooltip("深度影音", 0, 0)
@@ -147,6 +235,10 @@ class PlayerBox(object):
         
         '''Save app(main.py)[init app].'''
         self.app = app
+        self.app.set_menu_callback(lambda button: self.title_root_menu.show(
+                get_widget_root_coordinate(button, WIDGET_POS_BOTTOM_LEFT),
+                (button.get_allocation().width, 0)))
+    
         self.app_width = 0  # Save media player window width.
         self.app_height = 0 # Save media player window height.
         self.argv_path_list = argv_path_list # command argv.
@@ -419,14 +511,14 @@ class PlayerBox(object):
     '''play list button'''    
     def play_list_button_clicked(self, widget): # play list button signal:clicked.           
         if True == self.play_list_button.button.flags: 
-            self.app.window.resize(self.app.window.allocation.width + self.play_list.play_list_width,
-                                   self.app.window.allocation.height)
+            # self.app.window.resize(self.app.window.allocation.width + self.play_list.play_list_width,
+            #                        self.app.window.allocation.height)
             self.play_list.show_play_list()
             self.show_or_hide_play_list_bool = True
             
         if False == self.play_list_button.button.flags:    
-            self.app.window.resize(self.app.window.allocation.width - self.play_list.play_list_width,
-                                   self.app.window.allocation.height)
+            # self.app.window.resize(self.app.window.allocation.width - self.play_list.play_list_width,
+            #                        self.app.window.allocation.height)
             self.play_list.hide_play_list()
             self.show_or_hide_play_list_bool = False
                     
@@ -999,8 +1091,9 @@ class PlayerBox(object):
             self.pause_y = event.y # Save y postion.
             
         else:
-            gtk.timeout_remove(self.pause_time_id)
-            self.pause_bool = False
+            if self.pause_time_id:
+                gtk.timeout_remove(self.pause_time_id)
+                self.pause_bool = False
         
         # Double clicked full.
         if is_double_click(event):
@@ -1010,6 +1103,10 @@ class PlayerBox(object):
                 gtk.timeout_remove(self.pause_time_id)
                 self.pause_bool = False
                        
+        if 3 == event.button:
+            self.screen_root_menu.show((int(event.x_root), int(event.y_root)),
+                                (0, 0))    
+                
     # Toolbar hide and show.
     def show_and_hide_toolbar(self, widget, event): # screen:motion_notify_event
         '''Show and hide toolbar.'''
