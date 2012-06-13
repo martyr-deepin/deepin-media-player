@@ -198,8 +198,8 @@ class PlayerBox(object):
                                (None, "播放顺序", self.play_state_menu),
                                ])
         # In title root menu.
-        self.file_menu = Menu([(None, "打开文件", None),
-                               (None, "打开文件夹", None),
+        self.file_menu = Menu([(None, "打开文件", self.add_file),
+                               (None, "打开文件夹", self.add_file_dir),
                               (None, "播放光盘", None)])
         
         # In title root menu.
@@ -649,6 +649,19 @@ class PlayerBox(object):
     def open_button_clicked(self, widget):        
         self.show_open_dialog_window()
         
+    def show_open_dir_dialog_window(self):    
+        open_dialog = gtk.FileChooserDialog("深度影音开打对话框",
+                                            None,
+                                            gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER,
+                                            (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, 
+                                             gtk.STOCK_OPEN, gtk.RESPONSE_OK))        
+        res = open_dialog.run()
+        
+        if res == gtk.RESPONSE_OK:
+            path_string = open_dialog.get_filename()
+            self.get_path_name(path_string)                        
+        open_dialog.destroy()                
+
     def show_open_dialog_window(self):    
         # open dialog window.
         # open_dialog = OpenDialog() 
@@ -1496,13 +1509,13 @@ class PlayerBox(object):
                     self.play_list.list_view.set_highlight(item)
                     break                        
                 num += 1
-            self.mp.playListNum = num        
+            self.mp.playListNum = num
                 
     def add_file(self):
         self.show_open_dialog_window()
         
     def add_file_dir(self):
-        self.show_open_dialog_window()
+        self.show_open_dir_dialog_window()
         
     def del_index(self):
         # self.delete_play_list_file(self.play_list.list_view, self.play_list.list_view.items)
