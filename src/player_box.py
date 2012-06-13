@@ -650,26 +650,40 @@ class PlayerBox(object):
         self.show_open_dialog_window()
         
     def show_open_dialog_window(self):    
-        open_dialog = OpenDialog() 
+        # open dialog window.
+        # open_dialog = OpenDialog() 
         
-        open_dialog.connect("get-path-name", self.get_path_name)
-        open_dialog.set_filter({"所有文件":".*",
-                                "音频文件":"audio/mpeg",
-                                "视频文件":"video/x-msvideo|.rmvb",
-                                "播放列表":".dmp"})    
+        # open_dialog.connect("get-path-name", self.get_path_name)
+        # open_dialog.set_filter({"所有文件":".*",
+        #                         "音频文件":"audio/mpeg",
+        #                         "视频文件":"video/x-msvideo|.rmvb",
+        #                         "播放列表":".dmp"})    
         
-        open_dialog.combo_box.item_label.text = "所有文件"
-        open_dialog.set_title("深度影音打开")
-        open_dialog.filter_to_file_type("所有文件")    
-        open_dialog.show_open_window()    
-        open_dialog.set_keep_above(True)
+        # open_dialog.combo_box.item_label.text = "所有文件"
+        # open_dialog.set_title("深度影音打开")
+        # open_dialog.filter_to_file_type("所有文件")    
+        # open_dialog.show_open_window()    
+        # open_dialog.set_keep_above(True)
+        open_dialog = gtk.FileChooserDialog("深度影音开打对话框",
+                                            None,
+                                            gtk.FILE_CHOOSER_ACTION_OPEN,
+                                            (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, 
+                                             gtk.STOCK_OPEN, gtk.RESPONSE_OK))        
+        res = open_dialog.run()
         
-    def get_path_name(self, open_dialog, path_string):    
-        # print path_string
-        if os.path.isdir(path_string):            
+        if res == gtk.RESPONSE_OK:
+            path_string = open_dialog.get_filename()
+            self.get_path_name(path_string)            
+            
+        open_dialog.destroy()                
+        
+    # def get_path_name(self, open_dialog, path_string):    
+    def get_path_name(self, path_string):    
+        # # print path_string
+        if os.path.isdir(path_string):
             path_threads(path_string, self.mp)
 
-        # Add .Dmp.    
+        # # Add .Dmp.    
         if self.mp.findDmp(path_string):
             self.mp.loadPlayList(path_string)
             
