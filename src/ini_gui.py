@@ -63,6 +63,9 @@ class IniGui(Window, gobject.GObject):
         }
     def __init__(self):
         Window.__init__(self)
+        self.set_position(gtk.WIN_POS_CENTER)
+        self.set_modal(True)
+        # self.set_keep_above(True)
         self.ini = Config(config_path)
         # self.ini = config
         # Set configure window.
