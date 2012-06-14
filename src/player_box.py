@@ -1349,7 +1349,7 @@ class PlayerBox(object):
         #print self.input_string + "Linux Deepin Media player...end"
         # Play file modify start_btn.
         self.media_player_midfy_start_bool()
-        if "true" == self.config.get("memory_up_close_player_file_postion").lower():
+        if "true" == self.config.get("FilePlay", "memory_up_close_player_file_postion").lower():
             self.ini.set("PlayMemory", '"%s"' % (mplayer.path), 0)
             if mplayer.posNum < mplayer.lenNum - 10:
                 self.ini.set("PlayMemory", '"%s"' % (mplayer.path), mplayer.posNum)
