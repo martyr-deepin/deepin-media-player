@@ -66,7 +66,7 @@ class IniGui(Window, gobject.GObject):
         self.set_position(gtk.WIN_POS_CENTER)
         self.set_modal(True)
         # self.set_keep_above(True)
-        self.ini = Config(config_path)
+        self.ini = Config(config_path)        
         # self.ini = config
         # Set configure window.
         self.set_size_request(INI_WIDTH, INI_HEIGHT)  
