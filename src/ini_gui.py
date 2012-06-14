@@ -422,7 +422,7 @@ class SystemSet(gtk.VBox):
         if font_string:
             self.font_set_combo.item_label.set_text(font_string)            
         else: # font_string return type None.    
-            self.font_set_combo.item_label.set_text(DEFAULT_FONT)            
+            self.font_set_combo.item_label.set_text(DEFAULT_FONT) 
             
         font_set_combo_width = 120
         font_set_combo_height = 40
@@ -517,6 +517,9 @@ class PlayControl(gtk.VBox):
         text_string = self.ini.get("PlayControl", "pre_a_key")
         if text_string:
             self.pre_a_entry.set_text(text_string)
+        else:    
+            self.pre_a_entry.set_text("Page_Up")
+            
         self.pre_a_entry.set_size(entry_width, entry_height)
         # open file dir.
         self.open_file_dir_entry_label = Label("打开文件夹")
@@ -534,6 +537,9 @@ class PlayControl(gtk.VBox):
         text_string = self.ini.get("PlayControl", "next_a_key")
         if text_string:
             self.next_a_entry.set_text(text_string)
+        else: # Page_Down    
+            self.next_a_entry.set_text("Page_Down")
+            
         self.next_a_entry.set_size(entry_width, entry_height)
         # play or pause.
         self.play_or_pause_entry_label = Label("播放/暂停")
@@ -541,6 +547,9 @@ class PlayControl(gtk.VBox):
         text_string = self.ini.get("PlayControl", "play_or_pause_key")
         if text_string:
             self.play_or_pause_entry.set_text(text_string)        
+        else:#"Space"
+            self.play_or_pause_entry.set_text("Space")
+            
         self.play_or_pause_entry.set_size(entry_width, entry_height)
         # add volume.
         self.add_volume_entry_label = Label("升高音量")
@@ -548,6 +557,9 @@ class PlayControl(gtk.VBox):
         text_string = self.ini.get("PlayControl", "add_volume_key")
         if text_string:
             self.add_volume_entry.set_text(text_string)        
+        else:   # Up 
+            self.add_volume_entry.set_text("Up")
+            
         self.add_volume_entry.set_size(entry_width, entry_height)
         # seek.
         self.seek_entry_label = Label("快进")
@@ -555,6 +567,9 @@ class PlayControl(gtk.VBox):
         text_string = self.ini.get("PlayControl", "seek_key")
         if text_string:
             self.seek_entry.set_text(text_string)        
+        else: # Right    
+            self.seek_entry.set_text("Right")
+            
         self.seek_entry.set_size(entry_width, entry_height)
         # sub volume.
         self.sub_volume_entry_label = Label("降低音量")
@@ -562,6 +577,9 @@ class PlayControl(gtk.VBox):
         text_string = self.ini.get("PlayControl", "sub_volume_key")
         if text_string:
             self.sub_volume_entry.set_text(text_string)        
+        else: # Down
+            self.sub_volume_entry.set_text("Down")
+            
         self.sub_volume_entry.set_size(entry_width, entry_height)
         # back.
         self.back_entry_label = Label("快退")
@@ -569,6 +587,9 @@ class PlayControl(gtk.VBox):
         text_string = self.ini.get("PlayControl", "back_key")
         if text_string:
             self.back_entry.set_text(text_string)        
+        else:    # Left
+            self.back_entry.set_text("Left")
+            
         self.back_entry.set_size(entry_width, entry_height)
         # Mute. 
         self.mute_entry_label = Label("静音")
@@ -576,6 +597,9 @@ class PlayControl(gtk.VBox):
         text_string = self.ini.get("PlayControl", "mute_key")
         if text_string:
             self.mute_entry.set_text(text_string)        
+        else:   # M 
+            self.mute_entry.set_text("M")        
+
         self.mute_entry.set_size(entry_width, entry_height)
         # full.
         self.full_entry_label = Label("全屏")
@@ -583,13 +607,19 @@ class PlayControl(gtk.VBox):
         text_string = self.ini.get("PlayControl", "full_key")
         if text_string:
             self.full_entry.set_text(text_string)        
+        else:    # Return
+            self.full_entry.set_text("Return")        
+            
         self.full_entry.set_size(entry_width, entry_height)
         # Concise mode.
-        self.concise_entry_label = Label("简洁模式/普通模式")
+        self.concise_entry_label = Label("迷你模式")
         self.concise_entry       = TextEntry()
         text_string = self.ini.get("PlayControl", "concise_key")
         if text_string:
             self.concise_entry.set_text(text_string)        
+        else:    #Shift_L/R + Return
+            self.concise_entry.set_text("Shift + Return")        
+            
         self.concise_entry.set_size(entry_width, entry_height)
                         
         play_control_x = 20
@@ -709,6 +739,9 @@ class OtherKey(gtk.VBox):
         text_string = self.ini.get("OtherKey", "add_brightness_key")
         if text_string:
             self.add_bri_entry.set_text(text_string)
+        else: # =   
+            self.add_bri_entry.set_text("=")
+            
         self.add_bri_entry.set_size(entry_width, entry_height)
         # Sub Brightness.
         self.sub_bri_entry_label = Label("减少亮度")
@@ -716,6 +749,9 @@ class OtherKey(gtk.VBox):
         text_string = self.ini.get("OtherKey", "sub_brightness_key")
         if text_string:
             self.sub_bri_entry.set_text(text_string)
+        else:    # -
+            self.sub_bri_entry.set_text("-")
+            
         self.sub_bri_entry.set_size(entry_width, entry_height)
         # Inverse Rotation.
         self.inverse_rotation_entry_label = Label("逆时针旋转")
@@ -723,6 +759,9 @@ class OtherKey(gtk.VBox):
         text_string = self.ini.get("OtherKey", "inverse_rotation_key")
         if text_string:
             self.inverse_rotation_entry.set_text(text_string)
+        else:    # w
+            self.inverse_rotation_entry.set_text("W")
+            
         self.inverse_rotation_entry.set_size(entry_width, entry_height)
         # Clockwise Rotation.
         self.clockwise_entry_label = Label("顺时针旋转")
@@ -730,6 +769,9 @@ class OtherKey(gtk.VBox):
         text_string = self.ini.get("OtherKey", "clockwise_key")
         if text_string:
             self.clockwise_entry.set_text(text_string)
+        else:    # e
+            self.clockwise_entry.set_text("E")
+            
         self.clockwise_entry.set_size(entry_width, entry_height)
         # sort image.
         self.sort_image_entry_label = Label("截图")
@@ -737,6 +779,9 @@ class OtherKey(gtk.VBox):
         text_string = self.ini.get("OtherKey", "sort_image_key")
         if text_string:
             self.sort_image_entry.set_text(text_string)
+        else:    # Alt_L/R A
+            self.sort_image_entry.set_text("Alt + A")
+            
         self.sort_image_entry.set_size(entry_width, entry_height)
         # Switch Audio track.
         self.switch_audio_track_entry_label = Label("切换音轨")
@@ -744,6 +789,9 @@ class OtherKey(gtk.VBox):
         text_string = self.ini.get("OtherKey", "switch_audio_track_key")
         if text_string:
             self.switch_audio_track_entry.set_text(text_string)
+        else:    # 
+            self.switch_audio_track_entry.set_text(text_string)
+            
         self.switch_audio_track_entry.set_size(entry_width, entry_height)
         # Load subtitle.
         self.load_subtitle_entry_label = Label("载入字幕")
@@ -751,6 +799,9 @@ class OtherKey(gtk.VBox):
         text_string = self.ini.get("OtherKey", "load_subtitle_key")
         if text_string:
             self.load_subtitle_entry.set_text(text_string)
+        else:    #Alt_L/R + O
+            self.load_subtitle_entry.set_text("Alt + O")
+            
         self.load_subtitle_entry.set_size(entry_width, entry_height)        
         # subtitle advance 0.5.
         self.subtitle_advance_entry_label = Label("字幕提前0.5秒")
@@ -758,6 +809,9 @@ class OtherKey(gtk.VBox):
         text_string = self.ini.get("OtherKey", "subtitle_advance_key")
         if text_string:
             self.subtitle_advance_entry.set_text(text_string)
+        else:    # [
+            self.subtitle_advance_entry.set_text("[")
+            
         self.subtitle_advance_entry.set_size(entry_width, entry_height)
         # subtitle Delay 0.5.
         self.subtitle_delay_entry_label = Label("字幕延时0.5秒")
@@ -765,14 +819,20 @@ class OtherKey(gtk.VBox):
         text_string = self.ini.get("OtherKey", "subtitle_delay_key")
         if text_string:
             self.subtitle_delay_entry.set_text(text_string)
+        else:    # ]
+            self.subtitle_delay_entry.set_text("]")
+            
         self.subtitle_delay_entry.set_size(entry_width, entry_height)
         # mouse left single clicked.        
         self.mouse_left_single_clicked_combo_label = Label("鼠标左键单击")
         self.mouse_left_single_clicked_combo       = ComboBox()
-        self.mouse_left_single_clicked_combo.add_item(ComboBoxItem("测烙测试"))
+
         text_string = self.ini.get("OtherKey", "mouse_left_single_clicked")
         if text_string:
             self.mouse_left_single_clicked_combo.item_label.set_text(text_string)
+        else:    
+            self.mouse_left_single_clicked_combo.item_label.set_text(text_string)
+            
         self.mouse_left_single_clicked_combo.set_size_request(entry_width, entry_height)
         # mouse left double clicked.
         self.mouse_left_double_clicked_combo_label = Label("鼠标左键双击")
@@ -924,10 +984,12 @@ class SubSet(gtk.VBox):
         self.heparator.set_size_request(heparator_width, heparator_height)
         # Ai load subtitle.
         self.ai_load_subtitle_checkbtn       = CheckButton()
-        if "true" == self.ini.get("SubtitleSet", "ai_load_subtitle").lower():            
-            self.ai_load_subtitle_checkbtn.set_active(True)
-        else:    
-            self.ai_load_subtitle_checkbtn.set_active(False)
+        ini_bool = self.ini.get("SubtitleSet", "ai_load_subtitle")
+        self.ai_load_subtitle_checkbtn.set_active(False)
+        if ini_bool:
+            if "true" == ini_bool.lower():            
+                self.ai_load_subtitle_checkbtn.set_active(True)                
+                
         self.ai_load_subtitle_checkbtn_label = Label("自动载入字幕")
         # Specified Location Search.
         self.specific_location_search_label = Label("指定位置路径 : ")
@@ -935,6 +997,9 @@ class SubSet(gtk.VBox):
         text_string = self.ini.get("SubtitleSet", "specific_location_search")
         if text_string:
             self.specific_location_search_entry.set_text(text_string)
+        else:    
+            self.specific_location_search_entry.set_text("~/.config/deepin-media-player/subtitle")
+            
         self.specific_location_search_entry.set_size(entry_width, entry_height)
         self.specific_location_search_btn   = Button("浏览")
         self.specific_location_search_btn.connect("clicked", self.load_path_to_sls_entry)
@@ -1007,45 +1072,52 @@ class ScreenShot(gtk.VBox):
         # Save path.
         self.save_path_label = Label("保存路径 : ")
         self.save_path_entry = TextEntry()        
-        text_string = self.ini.get("ScreenshotSet", "save_path")
-        if text_string:
-            self.save_path_entry.set_text(text_string)
+        # text_string = self.ini.get("ScreenshotSet", "save_path")
+        # if text_string:
+        #     self.save_path_entry.set_text(text_string)
+        # else:    
+        #     self.save_path_entry.set_text("~/.config/deepin-media-player/image")
+            
         self.save_path_entry.set_size(entry_width, entry_height)                
         self.save_path_button = Button("浏览")
         self.save_path_button.connect("clicked", self.save_path_to_save_path_entry_clicked)
         # Save type.
         self.save_type_label  = Label("保存类型 : ")
         self.save_type_combo  = ComboBox()
-        if "true" == self.ini.get("ScreenshotSet", "save_clipboard").lower():
-            self.save_clipboard_radio.set_active(True)
-        else:    
-            self.save_clipboard_radio.set_active(False)
-            self.save_file_radio.set_active(False)                
-            self.save_path_entry.entry.set_editable(False)            
-            self.save_file_radio.set_active(False)                
-                        
-
-        if "true" == self.ini.get("ScreenshotSet", "save_file").lower():
-            self.save_file_radio.set_active(True)
-            self.save_clipboard_radio.set_active(False)
-            text_string = self.ini.get("ScreenshotSet", "save_path")
+        
+        ini_bool = self.ini.get("ScreenshotSet", "save_clipboard")
+        # Init .
+        self.save_file_radio.set_active(True)
+        self.save_clipboard_radio.set_active(False)
+        
+        text_string = self.ini.get("ScreenshotSet", "save_path")
+        if text_string:
             self.save_path_entry.set_text(text_string)
-            text_string = self.ini.get("ScreenshotSet", "save_type")            
-            self.save_type_combo.item_label.set_text(text_string)
-            self.save_path_entry.entry.set_editable(True)
         else:    
-            self.save_path_entry.entry.set_editable(False)            
-            self.save_path_button.set_clickable(False)
-            self.save_file_radio.set_active(False)                
+            self.save_path_entry.set_text("~/.config/deepin-media-player/image")
             
-        self.save_type_combo.item_label.set_text(".png")
-        self.save_type_combo.add_item(ComboBoxItem(".png"))
+        text_string = self.ini.get("ScreenshotSet", "save_type")            
+        if text_string:
+            self.save_type_combo.item_label.set_text(text_string)
+        else:    
+            self.save_type_combo.item_label.set_text(".png")
+            
+        if ini_bool:
+             if "true" == ini_bool.lower():
+                 self.save_file_radio.set_active(False)
+                 self.save_clipboard_radio.set_active(True)        
+                 self.save_path_entry.entry.set_editable(False)            
+                 self.save_path_button.set_clickable(False)
+                 
         # 
         self.current_show_sort_label = Label("按当前显示的画面尺寸截图")
         self.current_show_sort_check = CheckButton()
         self.current_show_sort_check.set_active(False)
-        if "true" == self.ini.get("ScreenshotSet", "current_show_sort"):
-            self.current_show_sort_check.set_active(True)
+        ini_bool = self.ini.get("ScreenshotSet", "current_show_sort")
+        if ini_bool:
+            if "true" == ini_bool.lower():
+                self.current_show_sort_check.set_active(True)
+                
         ###############################################
         screenshot_x = 20
         screenshot_y = 40        

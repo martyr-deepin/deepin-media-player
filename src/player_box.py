@@ -488,6 +488,8 @@ class PlayerBox(object):
         
     def get_key_event(self, widget, event): # app: key-release-event       
         keyval_name = get_key_name(event.keyval)
+        print keyval_name
+        
         if 32 == event.keyval:
             keyval_name = "Space"
         # print keyval_name        
