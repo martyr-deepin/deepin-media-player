@@ -251,47 +251,55 @@ class FilePlay(gtk.VBox):
         self.close_position_radio_btn_label = Label("应用关闭尺寸位置")
 
         self.full_window_radio_btn       = RadioButton()        
-        self.full_window_radio_btn_label = Label("自动全屏")                
-        set_num = self.ini.get("FilePlay", "video_file_open")
+        self.full_window_radio_btn_label = Label("自动全屏")                        
+        set_num = self.ini.get("FilePlay", "video_file_open")        
+        
         # Set state(1, 2, 3, 4).
-        if 1 == set_num:            
-            self.ai_set_radio_btn.set_active(True)        
-        elif 2 == set_num:
+        if '2' == set_num:
+            self.ai_set_radio_btn.set_active(False)        
             self.adapt_video_btn.set_active(True)
-        elif 3 == set_num:    
+        elif '3' == set_num:    
             self.close_position_radio_btn.set_active(True)
-        elif 4 == set_num:    
+        elif '4' == set_num:    
             self.full_window_radio_btn.set_active(True)
-        else:    
+        else:    # config get None type.
             self.ai_set_radio_btn.set_active(True) 
         ################################################################
         # open new file clear play list.
         self.clear_play_list_btn = CheckButton()        
-        if "true" == self.ini.get("FilePlay", "open_new_file_clear_play_list").lower():
-            self.clear_play_list_btn.set_active(True)
-        else:    
-            self.clear_play_list_btn.set_active(False)
+        ini_bool = self.ini.get("FilePlay", "open_new_file_clear_play_list")
+        self.clear_play_list_btn.set_active(False)
+        if ini_bool:
+            if "true" == ini_bool.lower():
+                self.clear_play_list_btn.set_active(True)
+                
         self.clear_play_list_btn_label = Label("打开新文件时清空播放列表")                
         # memory up close media player -> file play postion.
         self.file_play_postion_btn = CheckButton()
-        if "true" == self.ini.get("FilePlay", "memory_up_close_player_file_postion").lower():
-            self.file_play_postion_btn.set_active(True)
-        else:    
-            self.file_play_postion_btn.set_active(False)
+        ini_bool = self.ini.get("FilePlay", "memory_up_close_player_file_postion")
+        self.file_play_postion_btn.set_active(False)
+        if ini_bool:
+            if "true" == ini_bool.lower():
+                self.file_play_postion_btn.set_active(True)
+                    
         self.file_play_postion_btn_label = Label("记忆上次关闭播放器时文件的播放位置")
         # play media when find file play in dir.
         self.find_file_play_btn = CheckButton() 
-        if "true" == self.ini.get("FilePlay", "find_play_file_relation_file").lower():
-            self.find_file_play_btn.set_active(True)
-        else:    
-            self.find_file_play_btn.set_active(False)
+        ini_bool = self.ini.get("FilePlay", "find_play_file_relation_file")
+        self.find_file_play_btn.set_active(False)
+        if ini_bool:
+            if "true" == ini_bool.lower():
+                self.find_file_play_btn.set_active(True)
+                
         self.find_file_play_btn_label = Label("播放连续剧时自动在文件夹里查找关联文件播放")
         # mouse progressbar show preview window.
         self.show_preview_window_btn = CheckButton()
-        if "true" == self.ini.get("FilePlay", "mouse_progressbar_show_preview").lower():
-            self.show_preview_window_btn.set_active(True)
-        else:    
-            self.show_preview_window_btn.set_active(False)
+        ini_bool = self.ini.get("FilePlay", "mouse_progressbar_show_preview")
+        self.show_preview_window_btn.set_active(False)
+        if ini_bool:
+            if "true" == ini_bool.lower():
+                self.show_preview_window_btn.set_active(True)
+            
         self.show_preview_window_btn_label = Label("鼠标悬停进度条上显示预览图")
         
         # Video file open.
@@ -396,33 +404,43 @@ class SystemSet(gtk.VBox):
         # System setting.
         # Minimize pause plaing.
         self.pause_play_btn = CheckButton()
-        if "true" == self.ini.get("SystemSet", "minimize_pause_play").lower():
-            self.pause_play_btn.set_active(True)
-        else:    
-            self.pause_play_btn.set_active(False)
+        ini_bool = self.ini.get("SystemSet", "minimize_pause_play")
+        self.pause_play_btn.set_active(False)
+        if ini_bool:
+            if "true" == ini_bool.lower():
+                self.pause_play_btn.set_active(True)            
+            
         self.pause_play_btn_label = Label("最小化时暂停播放")
         # Screen messagebox.
         self.screen_msg_btn = Label("屏幕提示效果")
         # Font set.        
         self.font_set_btn_label = Label("字体")
         #DEFAULT_FONT
-        font_set_items = [ComboBoxItem("华彩")]
+        font_set_items = [ComboBoxItem(DEFAULT_FONT), ComboBoxItem("华彩")]
         self.font_set_combo = ComboBox(font_set_items)        
         font_string = self.ini.get("SystemSet", "font")
         if font_string:
             self.font_set_combo.item_label.set_text(font_string)            
+        else: # font_string return type None.    
+            self.font_set_combo.item_label.set_text(DEFAULT_FONT)            
+            
         font_set_combo_width = 120
         font_set_combo_height = 40
         self.font_set_combo.set_size_request(font_set_combo_width, font_set_combo_height)
         # Font size.
         self.font_size_btn_label = Label("字号")
         font_size_combo_width = 120
-        font_size_combo_height = 40        
-        font_set_items = [ComboBoxItem("18"),ComboBoxItem("19"),ComboBoxItem("20")]
+        font_size_combo_height = 40                
+        font_set_items = []
+        for i in range(8, 16):
+            font_set_items.append(ComboBoxItem(str(i)))
         self.font_size_btn_combo = ComboBox(font_set_items)
         font_size_string = self.ini.get("SystemSet", "font_size")
         if font_size_string:
             self.font_size_btn_combo.item_label.set_text(font_size_string)            
+        else:    
+            self.font_size_btn_combo.item_label.set_text("8")
+            
         self.font_size_btn_combo.set_size_request(font_size_combo_width, font_size_combo_height)
                 
         system_set_x = 20
@@ -489,6 +507,9 @@ class PlayControl(gtk.VBox):
         text_string = self.ini.get("PlayControl", "open_file_key")
         if text_string:
             self.open_file_entry.set_text(text_string)
+        else:  # text_string return None type.
+            self.open_file_entry.set_text("Ctrl + O")
+            
         self.open_file_entry.set_size(entry_width, entry_height)
         # pre a.
         self.pre_a_entry_label = Label("上一个")
@@ -503,6 +524,9 @@ class PlayControl(gtk.VBox):
         text_string = self.ini.get("PlayControl", "open_file_dir_key")
         if text_string:
             self.open_file_dir_entry.set_text(text_string)
+        else:    
+            self.open_file_dir_entry.set_text("Ctrl + F")
+            
         self.open_file_dir_entry.set_size(entry_width, entry_height)
         # next a.
         self.next_a_entry_label = Label("下一个")
@@ -628,9 +652,9 @@ class PlayControl(gtk.VBox):
                        play_control_x_padding, play_control_y)
         play_control_y += self.mute_entry_label.get_size_request()[1] + 2
         self.fixed.put(self.back_entry, 
-                       play_control_x_padding, play_control_y)        
-        self.fixed.put(self.mute_entry,                       
-                       play_control_x, play_control_y)
+                       play_control_x, play_control_y)                
+        self.fixed.put(self.mute_entry,  
+                       play_control_x_padding, play_control_y)
         play_control_y += self.mute_entry_label.get_size_request()[1] + 10
         # full and concise mode.
         self.fixed.put(self.full_entry_label,
