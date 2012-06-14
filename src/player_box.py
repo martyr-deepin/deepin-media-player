@@ -650,11 +650,12 @@ class PlayerBox(object):
         self.show_open_dialog_window()
         
     def show_open_dir_dialog_window(self):    
-        open_dialog = gtk.FileChooserDialog("深度影音开打对话框",
+        open_dialog = gtk.FileChooserDialog("深度影音打开文件夹对话框",
                                             None,
                                             gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER,
                                             (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, 
                                              gtk.STOCK_OPEN, gtk.RESPONSE_OK))        
+        open_dialog.set_current_folder(get_home_path())
         res = open_dialog.run()
         
         if res == gtk.RESPONSE_OK:
@@ -677,11 +678,12 @@ class PlayerBox(object):
         # open_dialog.filter_to_file_type("所有文件")    
         # open_dialog.show_open_window()    
         # open_dialog.set_keep_above(True)
-        open_dialog = gtk.FileChooserDialog("深度影音开打对话框",
+        open_dialog = gtk.FileChooserDialog("深度影音打开文件对话框",
                                             None,
                                             gtk.FILE_CHOOSER_ACTION_OPEN,
                                             (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, 
                                              gtk.STOCK_OPEN, gtk.RESPONSE_OK))        
+        open_dialog.set_current_folder(get_home_path())
         res = open_dialog.run()
         
         if res == gtk.RESPONSE_OK:
@@ -1347,12 +1349,13 @@ class PlayerBox(object):
         #print self.input_string + "Linux Deepin Media player...end"
         # Play file modify start_btn.
         self.media_player_midfy_start_bool()
-        self.ini.set("PlayMemory", '"%s"' % (mplayer.path), 0)
-        if mplayer.posNum < mplayer.lenNum - 10:
-            self.ini.set("PlayMemory", '"%s"' % (mplayer.path), mplayer.posNum)
+        if "true" == self.config.get("memory_up_close_player_file_postion").lower():
+            self.ini.set("PlayMemory", '"%s"' % (mplayer.path), 0)
+            if mplayer.posNum < mplayer.lenNum - 10:
+                self.ini.set("PlayMemory", '"%s"' % (mplayer.path), mplayer.posNum)
                         
-        # self.ini.write()        
-        self.ini.save()     
+            # self.ini.write()        
+            self.ini.save()     
                 
         
     def media_player_next(self, mplayer, play_bool):

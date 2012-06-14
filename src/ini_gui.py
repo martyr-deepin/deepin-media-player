@@ -913,7 +913,7 @@ class SubSet(gtk.VBox):
             self.specific_location_search_entry.set_text(text_string)
         self.specific_location_search_entry.set_size(entry_width, entry_height)
         self.specific_location_search_btn   = Button("浏览")
-        
+        self.specific_location_search_btn.connect("clicked", self.load_path_to_sls_entry)
         sub_set_x = 20
         sub_set_y = 40
         self.fixed.put(self.label, sub_set_x, TITLE_HEIGHT_PADDING)
@@ -937,6 +937,20 @@ class SubSet(gtk.VBox):
         
         self.pack_start(self.fixed)
         
+    def load_path_to_sls_entry(self, widget):    
+        open_dialog = gtk.FileChooserDialog("深度影音配置打开文件夹对话框",
+                                            None,
+                                            gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER,
+                                            (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, 
+                                             gtk.STOCK_OPEN, gtk.RESPONSE_OK))        
+        open_dialog.set_current_folder(get_home_path())
+        res = open_dialog.run()
+        
+        if res == gtk.RESPONSE_OK:
+            path_string = open_dialog.get_filename()
+            self.specific_location_search_entry.set_text(path_string)
+        open_dialog.destroy()
+
     def get_subtitle_set_state(self):    
         sub_set_dict = {}
         sub_set_dict["ai_load_subtitle"] = self.ai_load_subtitle_checkbtn.get_active()
@@ -969,8 +983,12 @@ class ScreenShot(gtk.VBox):
         # Save path.
         self.save_path_label = Label("保存路径 : ")
         self.save_path_entry = TextEntry()        
+        text_string = self.ini.get("ScreenshotSet", "save_path")
+        if text_string:
+            self.save_path_entry.set_text(text_string)
         self.save_path_entry.set_size(entry_width, entry_height)                
         self.save_path_button = Button("浏览")
+        self.save_path_button.connect("clicked", self.save_path_to_save_path_entry_clicked)
         # Save type.
         self.save_type_label  = Label("保存类型 : ")
         self.save_type_combo  = ComboBox()
@@ -1046,6 +1064,21 @@ class ScreenShot(gtk.VBox):
         self.fixed.put(self.current_show_sort_label, screenshot_x_padding, screenshot_y)
         
         self.pack_start(self.fixed)
+        
+    def save_path_to_save_path_entry_clicked(self, widget):
+        open_dialog = gtk.FileChooserDialog("深度影音配置打开文件夹对话框",
+                                            None,
+                                            gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER,
+                                            (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, 
+                                             gtk.STOCK_OPEN, gtk.RESPONSE_OK))        
+        open_dialog.set_current_folder(get_home_path())
+        res = open_dialog.run()
+        
+        if res == gtk.RESPONSE_OK:
+            path_string = open_dialog.get_filename()
+            self.save_path_entry.set_text(path_string)
+        open_dialog.destroy()
+
         
     def save_file_radio_clicked(self, widget, event):    
         if 1 == event.button:
