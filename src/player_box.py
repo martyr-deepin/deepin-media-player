@@ -77,6 +77,8 @@ class PlayerBox(object):
         self.show_toolbar_focus_bool = True
         self.clear_play_list_bool = False # drag play file.
         
+        self.minimize_pause_play_bool = False
+        
         # pause setting.
         self.pause_time_id = None
         self.pause_bool = False
@@ -234,6 +236,7 @@ class PlayerBox(object):
         self.app_width = 0  # Save media player window width.
         self.app_height = 0 # Save media player window height.
         self.argv_path_list = argv_path_list # command argv.
+        self.app.titlebar.min_button.connect("clicked", self.min_window_titlebar_min_btn_click)
         self.app.window.connect("destroy", self.quit_player_window)
         self.app.window.connect("configure-event", self.app_configure_hide_tool)
         self.app.window.connect("window-state-event", self.set_toolbar2_position)
@@ -878,7 +881,18 @@ class PlayerBox(object):
             (h - pixbuf.get_height()) / 2)        
         # return True
 
-
+    def min_window_titlebar_min_btn_click(self, widget):    
+        '''app titlebar min_button'''
+        config_bool = self.config.get("SystemSet", "minimize_pause_play")
+        if config_bool:
+            if "true" == config_bool.lower():           
+                self.virtual_set_start_btn_clicked()
+                gtk.timeout_add(500, self.set_min_pause_bool_time)
+                
+    def set_min_pause_bool_time(self):            
+        self.minimize_pause_play_bool = True        
+        return False
+    
     def quit_player_window(self, widget):
         '''Quit player window.'''
         self.app.window.set_opacity(0)
@@ -889,19 +903,18 @@ class PlayerBox(object):
             self.mp.quit()
             
 
-    def set_toolbar2_position(self, widget, event):        
+    def set_toolbar2_position(self, widget, event): #app window-state-event
         self.toolbar2.show_toolbar2()
         self.toolbar.panel.move(self.panel_x + 1, self.panel_y + self.app.titlebar.allocation[3])
         self.toolbar2.panel.move(self.panel_x + 1, self.panel_y + self.screen.allocation.height - 40)
-        self.toolbar2.hide_toolbar2()
+        self.toolbar2.hide_toolbar2()                        
         
     # ToolBar control function.
     def app_configure_hide_tool(self, widget, event): #app: configure-event.
         #Set mute and value.
         
         # if self.mp:
-            # self.screen.queue_draw()    
-            
+            # self.screen.queue_draw()                
         if self.toolbar2.volume_button.mute_bool != self.save_volume_mute_bool:
             self.toolbar2.volume_button.mute_bool = self.save_volume_mute_bool
             self.toolbar2.volume_button.set_value(self.save_volume_value)
@@ -923,12 +936,18 @@ class PlayerBox(object):
             self.toolbar.panel.move(self.panel_x + 1, self.panel_y + self.app.titlebar.allocation[3])
             self.toolbar2.panel.move(self.panel_x + 1, self.panel_y + self.screen.allocation.height - 40)
             
-        self.set_toolbar_show_opsition()    
-            
+        self.set_toolbar_show_opsition()                
         # Hide preview window.
         self.hide_preview_function(widget, event)
         
-        
+        # Set minimize pause play.        
+        if self.minimize_pause_play_bool:
+            config_bool = self.config.get("SystemSet", "minimize_pause_play")
+            if config_bool:
+                if "true" == config_bool.lower():
+                    self.virtual_set_start_btn_clicked()
+                    self.minimize_pause_play_bool = False
+                    
     def configure_hide_tool(self, widget, event): # screen: configure-event.
         if self.mp:
             #self.app.hide_titlebar() # Test hide titlebar.
@@ -1246,15 +1265,17 @@ class PlayerBox(object):
                 self.toolbar2.progressbar.set_pos(0)                            
         # Show preview window.            
         else:
-            if "true" ==  self.config.get("FilePlay", "mouse_progressbar_show_preview").lower():
-                if 1 == self.mp.state:            
-                    if self.play_video_file_bool(self.mp.path):           
-                        self.preview.set_preview_path(self.mp.path)
-                        self.x_root = event.x_root
-                        self.y_root = event.y_root                                                               
-                        save_pos = (float(int(event.x))/ widget.allocation.width* self.progressbar.max)
-                        # preview window show.
-                        self.move_window_time(save_pos, pb_bit)                
+            config_bool = self.config.get("FilePlay", "mouse_progressbar_show_preview")
+            if config_bool:
+                if "true" ==  config_bool.lower():
+                    if 1 == self.mp.state:            
+                        if self.play_video_file_bool(self.mp.path):           
+                            self.preview.set_preview_path(self.mp.path)
+                            self.x_root = event.x_root
+                            self.y_root = event.y_root                                                               
+                            save_pos = (float(int(event.x))/ widget.allocation.width* self.progressbar.max)
+                            # preview window show.
+                            self.move_window_time(save_pos, pb_bit)                
                     
                     
     def move_window_time(self, pos, pb_bit):                    
@@ -1349,13 +1370,15 @@ class PlayerBox(object):
         #print self.input_string + "Linux Deepin Media player...end"
         # Play file modify start_btn.
         self.media_player_midfy_start_bool()
-        if "true" == self.config.get("FilePlay", "memory_up_close_player_file_postion").lower():
-            self.ini.set("PlayMemory", '"%s"' % (mplayer.path), 0)
-            if mplayer.posNum < mplayer.lenNum - 10:
-                self.ini.set("PlayMemory", '"%s"' % (mplayer.path), mplayer.posNum)
+        config_bool = self.config.get("FilePlay", "memory_up_close_player_file_postion")
+        if config_bool:
+            if "true" == config_bool.lower():
+                self.ini.set("PlayMemory", '"%s"' % (mplayer.path), 0)
+                if mplayer.posNum < mplayer.lenNum - 10:
+                    self.ini.set("PlayMemory", '"%s"' % (mplayer.path), mplayer.posNum)
                         
-            # self.ini.write()        
-            self.ini.save()     
+                # self.ini.write()        
+                self.ini.save()     
                 
         
     def media_player_next(self, mplayer, play_bool):
