@@ -164,7 +164,7 @@ class IniGui(Window):
         width_padding = self.scrolled_window_frame.get_allocation()[2]
         cr.rectangle(rect.x + width_padding + 4, 
                      rect.y, 
-                     rect.width - width_padding - 7, 
+                     rect.width - width_padding - 8, 
                      rect.height)
         cr.fill()
         
