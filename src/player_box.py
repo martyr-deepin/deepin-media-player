@@ -78,6 +78,7 @@ class PlayerBox(object):
         self.clear_play_list_bool = False # drag play file.
         
         self.minimize_pause_play_bool = False
+        self.scroll_volume_num = 100
         
         # pause setting.
         self.pause_time_id = None
@@ -247,7 +248,8 @@ class PlayerBox(object):
         #keyboard Quick key.
         # self.app.window.connect("realize", gtk.Widget.grab_focus)
         self.app.window.connect("key-press-event", self.get_key_event)
-                
+        self.app.window.connect("scroll_event", self.app_scroll_event, 1)        
+        
         '''Screen window init.'''
         self.screen = gtk.DrawingArea()
         
@@ -297,6 +299,7 @@ class PlayerBox(object):
         self.toolbar2 = ToolBar2()                
         self.toolbar2.panel.set_size_request(1, toolbar2_height) # Set toolbar2 height.
         # draw resize window.
+        self.toolbar2.panel.connect("scroll-event", self.app_scroll_event, 2)
         self.toolbar2.panel.connect("button-press-event", self.drag_resize_window)
         self.toolbar2.panel.connect("motion-notify-event", self.modify_mouse_icon)
         
@@ -483,6 +486,32 @@ class PlayerBox(object):
         else:        
             widget.window.set_cursor(None)
         
+    def app_scroll_event(self, widget, event, type_bool):        
+        config_type = self.config.get("OtherKey", "mouse_wheel_event")
+        if "" == config_type: # seek back.    
+            pass
+        else: # volume
+            # 获取当前声音控件的音量.
+            if 1 == type_bool:
+                self.scroll_volume_num = self.volume_button.volume_value
+            elif 2 == type_bool:    
+                self.scroll_volume_num = self.toolbar2.volume_button.volume_value
+            # print self.scroll_volume_num
+            if event.direction == gtk.gdk.SCROLL_UP:
+                self.scroll_volume_num = min(self.scroll_volume_num + 1, 100)
+                if self.scroll_volume_num < 5:    
+                    self.scroll_volume_num = 8
+            elif event.direction == gtk.gdk.SCROLL_DOWN:
+                self.scroll_volume_num = max(self.scroll_volume_num - 1, 0)
+                
+            # 最后设置声音控件的音量.
+            if 1 == type_bool:
+                self.volume_button.set_value(self.scroll_volume_num)
+            elif 2 == type_bool:    
+                self.toolbar2.volume_button.set_value(self.scroll_volume_num)
+            # print self.scroll_volume_num 
+            
+            
     def init_config_key(self):
         # Init Config keys.    
         # [PlayControl] Init.
