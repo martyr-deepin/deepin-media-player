@@ -66,8 +66,6 @@ class IniGui(Window):
         Window.__init__(self)
         self.set_position(gtk.WIN_POS_CENTER)
         self.set_modal(True)
-        # Draw background.
-        #self.connect("expose-event", self.ini_gui_draw_backgournd)
         # self.set_keep_above(True)
         self.ini = Config(config_path)        
         # self.ini = config

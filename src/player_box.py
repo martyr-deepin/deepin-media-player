@@ -20,7 +20,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from dtk.ui.keymap import get_key_name
+from dtk.ui.keymap import get_keyevent_name
 from dtk.ui.box import EventBox
 from dtk.ui.draw import draw_pixbuf
 from dtk.ui.frame import HorizontalFrame,VerticalFrame
@@ -421,10 +421,7 @@ class PlayerBox(object):
         '''Hide preview window.'''                        
         self.bottom_play_control_hbox_vframe_event_box.connect("motion-notify-event", self.hide_preview_function)
         
-        self.keymap = {"Right":self.key_right,
-                       "Left":self.key_left,
-                       "Space":self.key_space,
-                       "Return":self.key_return}        
+        self.keymap = {}        
         
     def modify_config_section_value(self, Config, str1, str2, str3):    
         print Config
@@ -486,16 +483,131 @@ class PlayerBox(object):
         else:        
             widget.window.set_cursor(None)
         
+    def init_config_key(self):
+        # Init Config keys.    
+        # [PlayControl] Init.
+        # open file key init.(left)
+        config_key = self.config.get("PlayControl", "open_file_key")            
+        self.keymap[config_key.lower()] = self.show_open_dialog_window
+        # open file dir key init.
+        config_key = self.config.get("PlayControl", "open_file_dir_key")
+        self.keymap[config_key.lower()] = self.show_open_dir_dialog_window
+        # play or pause key init.
+        config_key = self.config.get("PlayControl", "play_or_pause_key")
+        self.keymap[config_key.lower()] = self.virtual_set_start_btn_clicked
+        # seek key init.
+        config_key = self.config.get("PlayControl", "seek_key")
+        self.keymap[config_key.lower()] = self.key_right
+        # back key init.
+        config_key = self.config.get("PlayControl", "back_key")
+        self.keymap[config_key.lower()] = self.key_left
+        # full window init.
+        config_key = self.config.get("PlayControl", "full_key")
+        self.keymap[config_key.lower()] = self.key_return
+        # pre a key init.(right)
+        config_key = self.config.get("PlayControl", "pre_a_key")
+        self.keymap[config_key.lower()] = self.key_pre
+        # next a key init.
+        config_key = self.config.get("PlayControl", "next_a_key")
+        self.keymap[config_key.lower()] = self.key_next
+        # add volume key init.
+        config_key = self.config.get("PlayControl", "add_volume_key")
+        self.keymap[config_key.lower()] = self.key_add_volume
+        # sub volume key init.
+        config_key = self.config.get("PlayControl", "sub_volume_key")
+        self.keymap[config_key.lower()] = self.key_sub_volume
+        # concise key init.
+        config_key = self.config.get("PlayControl", "concise_key")
+        self.keymap[config_key.lower()] = self.key_concise
+        # [OtherKey].
+        # add brightness key init.
+        config_key = self.config.get("OtherKey", "add_brightness_key")
+        self.keymap[config_key.lower()] = self.key_add_brightness
+        # sub brightness key init.
+        config_key = self.config.get("OtherKey", "sub_brightness_key")
+        self.keymap[config_key.lower()] = self.key_sub_brightness
+        # inverse rotation key init.
+        config_key = self.config.get("OtherKey", "inverse_rotation_key")
+        self.keymap[config_key.lower()] = self.key_inverse_rotation_key
+        # clockwise key init.
+        config_key = self.config.get("OtherKey", "clockwise_key")
+        self.keymap[config_key.lower()] = self.key_clockwise
+        # sort image key init.
+        config_key = self.config.get("OtherKey", "sort_image_key")
+        self.keymap[config_key.lower()] = self.key_sort_image
+        # switch audio track key init.
+        config_key = self.config.get("OtherKey", "switch_audio_track_key")
+        self.keymap[config_key.lower()] = self.key_switch_audio_track
+        # load subtitle key init.
+        config_key = self.config.get("OtherKey", "load_subtitle_key")
+        self.keymap[config_key.lower()] = self.key_load_subtitle
+        # subtitle delay key init.
+        config_key = self.config.get("OtherKey", "subtitle_delay_key")
+        self.keymap[config_key.lower()] = self.key_subtitle_delay
+        # subtitle delay key init.
+        config_key = self.config.get("OtherKey", "subtitle_advance_key")
+        self.keymap[config_key.lower()] = self.key_subtitle_advance
+        
+        print config_key                
+        
     def get_key_event(self, widget, event): # app: key-release-event       
-        keyval_name = get_key_name(event.keyval)
-        print keyval_name
+        keyval_name = get_keyevent_name(event)
         
         if 32 == event.keyval:
             keyval_name = "Space"
+        # print keyval_name    
+        # Init config keys.    
+        self.init_config_key()    
+        # self.keymap[""]()        
+        
         # print keyval_name        
+        keyval_name = keyval_name.lower()
         if self.keymap.has_key(keyval_name):
             self.keymap[keyval_name]()
         return True
+    
+    def key_subtitle_advance(self):
+        print "subtitle advance..."
+    
+    def key_subtitle_delay(self):
+        print "subtitle delay..."
+    
+    def key_load_subtitle(self):
+        print "load subtitle..."
+    
+    def key_switch_audio_track(self):
+        print "key switch audio track..."
+    
+    def key_sort_image(self):
+        print "sort image..."
+    
+    def key_clockwise(self):
+        print "clockwise..."
+    
+    def key_inverse_rotation_key(self):
+        print "inverse rotation..."
+    
+    def key_sub_brightness(self):
+        print "sub brightness..."
+            
+    def key_add_brightness(self):
+        print "add brightness..."
+    
+    def key_concise(self):
+        print "concise..."
+    
+    def key_add_volume(self):
+        print "add volume..."
+    
+    def key_sub_volume(self):    
+        print "sub volume..."
+        
+    def key_pre(self):
+        print "pre a key..."
+        pass
+    
+    def key_next(self):
+        print "next a key..."
     
     def key_right(self):            
         self.mp.seek(self.mp.posNum + 5)
