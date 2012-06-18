@@ -171,36 +171,36 @@ class IniGui(Window):
     
     def save_configure_file_ok_clicked(self, widget):    
         # save ini configure file.
-        # print "_____________[FilePlay]________________________"
+        print "_____________[FilePlay]________________________"
         file_play_dict = self.configure.file_play.get_file_play_state()
         for key in file_play_dict.keys():
             self.ini.set("FilePlay", key, file_play_dict[key])
-            # print "%s = %s" % (str(key), str(file_play_dict[key]))
-        # print "_____________[SystemSet]_______________________"
+            print "%s = %s" % (str(key), str(file_play_dict[key]))
+        print "_____________[SystemSet]_______________________"
         system_set_dict = self.configure.system_set.get_system_set_state()
         for key in system_set_dict.keys():
             self.ini.set("SystemSet", key, system_set_dict[key])
-            # print "%s = %s" % (str(key), str(system_set_dict[key]))
-        # print "_____________[PlayControl]_____________________"    
+            print "%s = %s" % (str(key), str(system_set_dict[key]))
+        print "_____________[PlayControl]_____________________"    
         play_control_dict = self.configure.play_control.get_play_control_state()
         for key in play_control_dict.keys():
             self.ini.set("PlayControl", key, play_control_dict[key])
-            # print "%s = %s" % (str(key), str(play_control_dict[key]))
-        # print "_____________[OtherKey]________________________"    
+            print "%s = %s" % (str(key), str(play_control_dict[key]))
+        print "_____________[OtherKey]________________________"    
         other_key_dict = self.configure.other_key.get_other_set_state()
         for key in other_key_dict.keys():
             self.ini.set("OtherKey", key, other_key_dict[key])
-            # print "%s = %s" % (str(key), str(other_key_dict[key]))
-        # print "_____________[SubtitleSet]______________________"                
+            print "%s = %s" % (str(key), str(other_key_dict[key]))
+        print "_____________[SubtitleSet]______________________"                
         sub_set_dict = self.configure.sub_set.get_subtitle_set_state()
         for key in sub_set_dict.keys():
             self.ini.set("SubtitleSet", key, sub_set_dict[key])
-            # print "%s = %s" % (str(key), str(sub_set_dict[key]))
-        # print "_____________[ScreenshotSet]____________________"    
+            print "%s = %s" % (str(key), str(sub_set_dict[key]))
+        print "_____________[ScreenshotSet]____________________"    
         screenshot_dict = self.configure.screen_shot.get_screenshot_state()
         for key in screenshot_dict.keys():
             self.ini.set("ScreenshotSet", key, screenshot_dict[key])
-            # print "%s = %s" % (str(key), str(screenshot_dict[key]))
+            print "%s = %s" % (str(key), str(screenshot_dict[key]))
             
         self.ini.save()    
         self.emit("config-changed", "save_over")

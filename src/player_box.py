@@ -150,8 +150,8 @@ class PlayerBox(object):
         
         '''Title root menu.'''
         #In title root menu.
-        self.sort_menu = Menu([(None, "截图", None),      
-                               (None, "打开截图目录", None),   
+        self.sort_menu = Menu([(None, "截图", self.key_sort_image),      
+                               (None, "打开截图目录", self.open_sort_image_dir),   
                                (None, "设置截图保存目录", None)
                                ])                
         # In title root menu.
@@ -183,21 +183,21 @@ class PlayerBox(object):
                                  (None, "全屏/退出", None),
                                  ])
         # In title root menu.
-        self.play_state_menu = Menu([(None, "单个播放", None),      
-                                     (None, "顺序播放", None),   
+        self.play_state_menu = Menu([(None, "单个播放", self.sigle_play),      
+                                     (None, "顺序播放", self.sequence_play),   
                                      (None, "随机播放", self.rand_play), 
                                      (None, "单个循环", self.sigle_loop_play), 
                                      (None, "列表循环", self.loop_list_play)]  
                                     ) 
         # In title root menu.
-        self.play_menu = Menu([(None, "全屏播放", None),
+        self.play_menu = Menu([(None, "全屏播放", self.key_return),
                                (None, "窗口模式", None),
                                (None, "简洁模式", None),
-                               (None, "上一首", None),
-                               (None, "下一首", None),
+                               (None, "上一首", self.key_pre),
+                               (None, "下一首", self.key_next),
                                (None),
-                               (None, "快进5秒", None),
-                               (None, "快退5秒", None),
+                               (None, "快进5秒", self.key_right),
+                               (None, "快退5秒", self.key_left),
                                (None, "播放顺序", self.play_state_menu),
                                ])
         # In title root menu.
@@ -491,7 +491,7 @@ class PlayerBox(object):
         if "NULL" == config_type: # seek back.    
             pass
         else: # volume
-            # 获取当前声音控件的音量.
+
             if 1 == type_bool:
                 self.scroll_volume_num = self.volume_button.volume_value
             elif 2 == type_bool:    
@@ -504,7 +504,7 @@ class PlayerBox(object):
             elif event.direction == gtk.gdk.SCROLL_DOWN:
                 self.scroll_volume_num = max(self.scroll_volume_num - 1, 0)
                 
-            # 最后设置声音控件的音量.
+
             if 1 == type_bool:
                 self.volume_button.set_value(self.scroll_volume_num)
             elif 2 == type_bool:    
@@ -608,6 +608,10 @@ class PlayerBox(object):
     
     def key_sort_image(self):
         print "sort image..."
+        if 1 == self.mp.state:
+            save_path = self.config.get("ScreenshotSet", "save_path")
+            save_type = self.config.get("ScreenshotSet", "save_type")                        
+            self.mp.scrot(self.mp.posNum, get_home_path() + save_path[1:] + "/%s-%s"%(self.get_player_file_name(self.mp.path), self.mp.posNum) + save_type)
     
     def key_clockwise(self):
         print "clockwise..."
@@ -626,9 +630,25 @@ class PlayerBox(object):
     
     def key_add_volume(self):
         print "add volume..."
-    
+        self.key_set_volume(1)    
+        
     def key_sub_volume(self):    
         print "sub volume..."
+        self.key_set_volume(0)
+        
+    def key_set_volume(self, type_bool):
+        scroll_volume_num = self.scroll_volume_num
+        if 1 == type_bool: # add volume             
+            scroll_volume_num += 1
+        else:    # sub volume
+            scroll_volume_num -= 1
+            
+        if self.mode_state_bool:
+            self.toolbar2.volume_button.set_value(self.scroll_volume_num)            
+        else:    
+            self.volume_button.set_value(self.scroll_volume_num)
+    
+        self.scroll_volume_num = scroll_volume_num
         
     def key_set_mute(self):    
         print "key set mute..."
@@ -1720,7 +1740,15 @@ class PlayerBox(object):
                 if not os.path.exists(path):
                     self.play_list.list_view.items.remove(item)
                     self.mp.delPlayList(path)   
-                                                            
+                                                                                
+    def open_sort_image_dir(self):             
+        file_name = self.config.get("ScreenshotSet", "save_path")
+        
+        if file_name:
+            os.system("nautilus %s" % (file_name))            
+        else:    
+            os.system("nautilus %s" % (get_home_path()))
+    
     def open_current_file_dir(self):            
         try:
             file_name, file_name2 = os.path.split(self.open_file_name)
