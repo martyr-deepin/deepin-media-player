@@ -547,7 +547,6 @@ class PlayControl(gtk.VBox):
         self.open_file_entry_label = Label("打开文件")
         self.open_file_entry       = ShortcutKeyEntry()
         text_string = self.ini.get("PlayControl", "open_file_key")
-        print text_string
         if text_string:
             self.open_file_entry.set_shortcut_key(text_string)
         else:  # text_string return None type.
