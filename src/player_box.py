@@ -523,7 +523,7 @@ class PlayerBox(object):
         self.keymap[config_key.lower()] = self.show_open_dir_dialog_window
         # play or pause key init.
         config_key = self.config.get("PlayControl", "play_or_pause_key")
-        self.keymap[config_key.lower()] = self.virtual_set_start_btn_clicked
+        self.keymap[config_key.lower()] = self.key_space
         # seek key init.
         config_key = self.config.get("PlayControl", "seek_key")
         self.keymap[config_key.lower()] = self.key_right
@@ -545,6 +545,9 @@ class PlayerBox(object):
         # sub volume key init.
         config_key = self.config.get("PlayControl", "sub_volume_key")
         self.keymap[config_key.lower()] = self.key_sub_volume
+        # Set mute key init.
+        config_key = self.config.get("PlayControl", "mute_key")
+        self.keymap[config_key.lower()] = self.key_set_mute
         # concise key init.
         config_key = self.config.get("PlayControl", "concise_key")
         self.keymap[config_key.lower()] = self.key_concise
@@ -576,20 +579,16 @@ class PlayerBox(object):
         # subtitle delay key init.
         config_key = self.config.get("OtherKey", "subtitle_advance_key")
         self.keymap[config_key.lower()] = self.key_subtitle_advance
-        
-        print config_key                
+        # print config_key                
         
     def get_key_event(self, widget, event): # app: key-release-event       
-        keyval_name = get_keyevent_name(event)
-        
-        # if 32 == event.keyval:
-        #     keyval_name = "Space"
-        # print keyval_name    
+        keyval_name = get_keyevent_name(event)        
         # Init config keys.    
         self.init_config_key()    
         # self.keymap[""]()        
-        
-        print keyval_name        
+        if keyval_name == " ":
+            keyval_name = "space"
+        print keyval_name
         keyval_name = keyval_name.lower()
         if self.keymap.has_key(keyval_name):
             self.keymap[keyval_name]()
@@ -631,6 +630,9 @@ class PlayerBox(object):
     def key_sub_volume(self):    
         print "sub volume..."
         
+    def key_set_mute(self):    
+        print "key set mute..."
+        
     def key_pre(self):
         print "pre a key..."
         pass
@@ -639,15 +641,19 @@ class PlayerBox(object):
         print "next a key..."
     
     def key_right(self):            
+        print "right key..."
         self.mp.seek(self.mp.posNum + 5)
         
     def key_left(self):
+        print "left key..."
         self.mp.seek(self.mp.posNum - 5)
         
     def key_space(self):
+        print "space key..."
         self.virtual_set_start_btn_clicked()
     
     def key_return(self):
+        print "return key.."
         self.full_play_window(self.app.window)
         self.toolbar.toolbar_full_button.flags = not self.toolbar.toolbar_full_button.flags
             
