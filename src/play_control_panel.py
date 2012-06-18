@@ -56,14 +56,22 @@ class PlayControlPanel(object):
         
 class StartButton(gtk.Button):
     def __init__(self,
-                 bg_pixbuf=app_theme.get_pixbuf("big_button_background.png"),
-                 button_pixbuf=app_theme.get_pixbuf("play_button.png"),
-                 press_pixbuf=app_theme.get_pixbuf("pause_button.png")):
+                 start_button_normal=app_theme.get_pixbuf("play_button_normal.png"),
+                 start_button_hover=app_theme.get_pixbuf("play_button_hover.png"),
+                 start_button_press=app_theme.get_pixbuf("play_button_press.png"),
+                 pause_button_normal=app_theme.get_pixbuf("pause_button_normal.png"),
+                 pause_button_hover=app_theme.get_pixbuf("pause_button_hover.png"),
+                 pause_button_press=app_theme.get_pixbuf("pause_button_press.png")):
+        
         gtk.Button.__init__(self)
         self.start_bool = True
-        self.bg_pixbuf = bg_pixbuf
-        self.button_pixbuf = button_pixbuf
-        self.press_pixbuf = press_pixbuf
+        self.start_button_normal = start_button_normal
+        self.start_button_hover  = start_button_hover
+        self.start_button_press  = start_button_press
+        
+        self.pause_button_normal = pause_button_normal
+        self.pause_button_hover  = pause_button_hover
+        self.pause_button_press  = pause_button_press
         
         self.connect("expose-event", self.expose_button)
         self.connect("clicked", self.clicked_button)
@@ -77,24 +85,27 @@ class StartButton(gtk.Button):
         rect = widget.allocation
         x,y,w,h = rect.x, rect.y, rect.width, rect.height
         
-        if self.start_bool:
-            image = self.button_pixbuf.get_pixbuf()
-        else:
-            image = self.press_pixbuf.get_pixbuf()
+        if widget.state == gtk.STATE_NORMAL:
+            if self.start_bool:                
+                image = self.start_button_normal.get_pixbuf()
+            else:
+                image = self.pause_button_normal.get_pixbuf()                
+        elif widget.state == gtk.STATE_PRELIGHT:
+            if self.start_bool:
+                image = self.start_button_hover.get_pixbuf()
+            else:    
+                image = self.pause_button_hover.get_pixbuf()
+        elif widget.state == gtk.STATE_ACTIVE:
+            if self.start_bool:
+                image = self.start_button_press.get_pixbuf()
+            else:    
+                image = self.pause_button_press.get_pixbuf()
             
-        if widget.state == gtk.STATE_PRELIGHT:
-            bg_image = self.bg_pixbuf.get_pixbuf()
-            pixbuf = bg_image.scale_simple(image.get_width(),
-                                           image.get_height(),
-                                           gtk.gdk.INTERP_BILINEAR)
-            
-            draw_pixbuf(cr, pixbuf, x, y)
-            
-        widget.set_size_request(image.get_width(), image.get_height())        
         pixbuf = image.scale_simple(image.get_width(),
                                     image.get_height(),
-                                    gtk.gdk.INTERP_BILINEAR)        
-        
+                                    gtk.gdk.INTERP_BILINEAR)               
+        # Set widget size.
+        widget.set_size_request(image.get_width(), image.get_height())
         draw_pixbuf(cr, pixbuf, widget.allocation.x, widget.allocation.y)    
         propagate_expose(widget, event)
         return True
