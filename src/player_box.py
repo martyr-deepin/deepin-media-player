@@ -611,7 +611,11 @@ class PlayerBox(object):
         if 1 == self.mp.state:
             save_path = self.config.get("ScreenshotSet", "save_path")
             save_type = self.config.get("ScreenshotSet", "save_type")                        
-            self.mp.scrot(self.mp.posNum, get_home_path() + save_path[1:] + "/%s-%s"%(self.get_player_file_name(self.mp.path), self.mp.posNum) + save_type)
+            
+            if save_path[0] == "~":
+                save_path = get_home_path() + save_path[1:] 
+                
+            self.mp.scrot(self.mp.posNum, save_path + "/%s-%s"%(self.get_player_file_name(self.mp.path), self.mp.posNum) + save_type)
     
     def key_clockwise(self):
         print "clockwise..."
