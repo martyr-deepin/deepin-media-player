@@ -290,7 +290,11 @@ class  Mplayer(gobject.GObject):
                 CMD = ['mplayer',
                        # '-input',
                        # 'file=/tmp/cmd',
-                       '-fs',
+                       '-vo',
+                       # 'gl,x11',
+                       'vdpau:deint=2,vdpau,gl,x11',
+                       '-zoom',
+                       '-nokeepaspect',
                        '-osdlevel',
                        '0',
                        '-double',
@@ -315,6 +319,7 @@ class  Mplayer(gobject.GObject):
             
             # Get draw screen width height.
             self.vide_bool = get_vide_flags(self.path)                        
+            
             vide_width_1 = 0
             vide_height_1 = 0
             vide_width_2 = 0
@@ -356,8 +361,8 @@ class  Mplayer(gobject.GObject):
             self.state = 1                
             self.get_time_length()
             self.vide_bool = get_vide_flags(self.path)
-          
-    
+            
+            
     ## Cmd control ##    
     def cmd(self, cmdStr):
         '''Mplayer command'''
@@ -533,8 +538,8 @@ class  Mplayer(gobject.GObject):
     ## Play control ##   
     def playwinmax(self):
         '''Filed play window.'''
-        if self.state:
-            self.cmd('vo_fullscreen\n')
+        # if self.state:
+        self.cmd('vo_fullscreen\n')
             
     def seek(self, seekNum):        
         '''Set rate of progress'''

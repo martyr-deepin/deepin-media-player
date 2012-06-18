@@ -250,12 +250,24 @@ class PlayerBox(object):
         self.app.window.connect("key-press-event", self.get_key_event)
         self.app.window.connect("scroll_event", self.app_scroll_event, 1)        
         
-        '''Screen window init.'''
-        self.screen = gtk.DrawingArea()
+        '''Screen window init.'''        
+        self.screen_frame = gtk.Alignment()
+        self.screen_frame.set(0.0, 0.0, 1.0, 1.0)
+        self.screen = gtk.DrawingArea()        
+        self.screen_frame.add(self.screen)
+        
+        # Set background.
+        style = self.screen_frame.get_style()
+        self.screen_frame.connect("expose-event", self.draw_ascept_bg)
+        self.screen_frame.modify_bg(gtk.STATE_NORMAL, style.black)
+        self.screen.modify_bg(gtk.STATE_NORMAL, style.black)
         
         # Screen signal init.
         self.screen.add_events(gtk.gdk.ALL_EVENTS_MASK)
+        self.screen.set_has_window(True)
         self.screen.set_can_focus(True)
+        self.screen.set_can_default(True)
+        self.screen.activate()
         # drag resize window. .grab_focus()
         self.screen.connect("realize", self.init_media_player)
         self.screen.unset_flags(gtk.DOUBLE_BUFFERED) # disable double buffered to avoid video blinking
@@ -332,7 +344,7 @@ class PlayerBox(object):
                         
         
         # Child widget add to vbox.
-        self.vbox.pack_start(self.screen, True, True)
+        self.vbox.pack_start(self.screen_frame, True, True)
         self.vbox.pack_start(self.progressbar.hbox,False, False)
         # Hide playlist and show playlist widget hbox.
         self.hbox.pack_start(self.vbox, True, True)
@@ -966,12 +978,20 @@ class PlayerBox(object):
         # self.play_list.list_view.set_highlight(self.play_list.list_view.items[0])        
         # except:
         #     print "Error:->>Test command: python main.py add file or dir"
-
+                
+        
     def clear_play_list(self, mplayer, mp_bool):        
         self.play_list.list_view.clear()
         self.play_list_dict = {}
         self.clear_play_list_bool = True
         
+    def draw_ascept_bg(self, widget, event):    
+        '''draw screen frame bg'''
+        cr, x, y, w, h = allocation(widget)
+        cr.rectangle(x, y, w, h)
+        cr.fill()
+        return True
+    
     def draw_background(self, widget, event):
         '''Draw screen mplayer view background.'''
         cr, x, y, w, h = allocation(widget)
@@ -979,60 +999,62 @@ class PlayerBox(object):
         if self.mp and (1 == self.mp.state):
             if (self.mp.state) and (self.mp.vide_bool): # vide file.
                 if 0 != self.video_width or 0 != self.video_height:
-                    video_ratio = float(self.video_width) / self.video_height
-                    bit = video_ratio - (float(w) / h)
-                    cr.set_source_rgb(0, 0, 0)
+                    return False
+                #     video_ratio = float(self.video_width) / self.video_height
+                #     bit = video_ratio - (float(w) / h)
+                #     cr.set_source_rgb(0, 0, 0)
                     
-                    if 0 == bit:
-                        return False
-                    elif bit < 0:                             
-                        s = w - h * (video_ratio)
-                        s = s / 2
+                #     if 0 == bit:
+                #         return False
+                #     elif bit < 0:                             
+                #         s = w - h * (video_ratio)
+                #         s = s / 2
                         
-                        left_width = 0
-                        left_x_padding = 0
-                        if self.app.titlebar.allocation.height > 1:                            
-                            left_width       = 2
-                            left_x_padding   = 1
+                #         left_width = 0
+                #         left_x_padding = 0
+                #         if self.app.titlebar.allocation.height > 1:                            
+                #             left_width       = 2
+                #             left_x_padding   = 1
                         
-                        # Draw left.
-                        cr.rectangle(x-left_x_padding, y - self.app.titlebar.allocation.height, 
-                                     s - left_width, h + 1)
-                        cr.fill()
+                #         # Draw left.
+                #         cr.rectangle(x-left_x_padding, y - self.app.titlebar.allocation.height, 
+                #                      s - left_width, h + 1)
+                #         cr.fill()
                         
-                        # Draw right.
-                        cr.rectangle(x + h * (video_ratio) + s,
-                                     y - self.app.titlebar.allocation.height, 
-                                     s, h + 1)
-                        cr.fill()
+                #         # Draw right.
+                #         cr.rectangle(x + h * (video_ratio) + s,
+                #                      y - self.app.titlebar.allocation.height, 
+                #                      s, h + 1)
+                #         cr.fill()
                         
-                    elif bit > 0:
-                        video_ratio = float(self.video_height) / self.video_width                        
-                        s = h - w * video_ratio
-                        s = s / 2
+                #     elif bit > 0:
+                #         video_ratio = float(self.video_height) / self.video_width                        
+                #         s = h - w * video_ratio
+                #         s = s / 2
                                                 
-                        up_x_padding = 0                        
-                        up_width = 0
-                        bottom_width = 0
-                        if self.app.titlebar.allocation.height > 1:
-                            s = s
-                            up_x_padding = 1
-                            up_width = 1
-                            bottom_width = 1
-                        else:    
-                            s = s + 1
+                #         up_x_padding = 0                        
+                #         up_width = 0
+                #         bottom_width = 0
+                #         if self.app.titlebar.allocation.height > 1:
+                #             s = s
+                #             up_x_padding = 1
+                #             up_width = 1
+                #             bottom_width = 1
+                #         else:    
+                #             s = s + 1
                                                         
-                        # Draw UP.                            
-                        cr.rectangle(x - up_x_padding, y - self.app.titlebar.allocation.height, 
-                                     w, s - up_width)
-                        cr.fill()
+                #         # Draw UP.                            
+                #         cr.rectangle(x - up_x_padding, y - self.app.titlebar.allocation.height, 
+                #                      w, s - up_width)
+                #         cr.fill()
                         
-                        # Draw bottom.
-                        cr.rectangle(x - up_x_padding, y + s + w * (video_ratio) - self.app.titlebar.allocation.height + up_width, 
-                                     w, s - bottom_width)
-                        cr.fill()
+                #         # Draw bottom.
+                #         cr.rectangle(x - up_x_padding, y + s + w * (video_ratio) - self.app.titlebar.allocation.height + up_width, 
+                #                      w, s - bottom_width)
+                #         cr.fill()
                         
-                    return True
+                #     return True
+                
             
                 if self.mp.pause_bool: # vide pause.
                     # Draw pause background.
@@ -1516,6 +1538,9 @@ class PlayerBox(object):
         
     def media_player_start(self, mplayer, play_bool, w1, h1, w2, h2):
         '''media player start play.'''                        
+        # full window.
+        self.mp.playwinmax()        
+        
         # Get mplayer play file width and height.
         self.video_width = w1
         self.video_height = h1
@@ -1546,7 +1571,7 @@ class PlayerBox(object):
         self.progressbar.set_pos(0)
         self.toolbar2.progressbar.set_pos(0)        
         
-                
+        
     def media_player_end(self, mplayer, play_bool):
         '''player end.'''        
         # Quit preview window player.
