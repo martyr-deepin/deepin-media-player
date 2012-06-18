@@ -488,7 +488,7 @@ class PlayerBox(object):
         
     def app_scroll_event(self, widget, event, type_bool):        
         config_type = self.config.get("OtherKey", "mouse_wheel_event")
-        if "" == config_type: # seek back.    
+        if "NULL" == config_type: # seek back.    
             pass
         else: # volume
             # 获取当前声音控件的音量.
@@ -1272,25 +1272,35 @@ class PlayerBox(object):
             self.event_y_root = event.y_root
             self.event_time = event.time
             
-        if is_single_click(event):    
-            if not self.pause_bool:    
-                # pause / play. 123456 press.
-                self.pause_bool = True # Save pause bool.
-                self.pause_x = event.x # Save x postion.
-                self.pause_y = event.y # Save y postion.
+        config_string = self.config.get("OtherKey", "mouse_left_single_clicked")    
+        
+        if "NULL" == config_string:
+            pass
+        else:
+            if is_single_click(event):    
+                if not self.pause_bool:    
+                    # pause / play. 123456 press.
+                    self.pause_bool = True # Save pause bool.
+                    self.pause_x = event.x # Save x postion.
+                    self.pause_y = event.y # Save y postion.
             
-            else:
+                else:
+                    if self.pause_time_id:
+                        gtk.timeout_remove(self.pause_time_id)
+                        self.pause_bool = False
+        
+        # Double clicked full.
+        config_string = self.config.get("OtherKey", "mouse_left_double_clicked")                
+        
+        if "NULL" == config_string:
+            pass
+        else:
+            if is_double_click(event):
+                self.full_play_window(widget)
+                self.toolbar.toolbar_full_button.flags = not self.toolbar.toolbar_full_button.flags
                 if self.pause_time_id:
                     gtk.timeout_remove(self.pause_time_id)
                     self.pause_bool = False
-        
-        # Double clicked full.
-        if is_double_click(event):
-            self.full_play_window(widget)
-            self.toolbar.toolbar_full_button.flags = not self.toolbar.toolbar_full_button.flags
-            if self.pause_time_id:
-                gtk.timeout_remove(self.pause_time_id)
-                self.pause_bool = False
                        
     # Toolbar hide and show.
     def show_and_hide_toolbar(self, widget, event): # screen:motion_notify_event

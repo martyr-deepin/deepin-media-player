@@ -24,7 +24,7 @@ from skin import app_theme
 from dtk.ui.utils import propagate_expose, alpha_color_hex_to_cairo
 from dtk.ui.button import Button
 from dtk.ui.entry import TextEntry
-from dtk.ui.combo import ComboBox,ComboBoxItem
+from dtk.ui.combo import ComboBox
 from dtk.ui.titlebar import Titlebar
 from dtk.ui.window import Window 
 from dtk.ui.label import Label
@@ -454,32 +454,36 @@ class SystemSet(gtk.VBox):
         # Font set.        
         self.font_set_btn_label = Label("字体")
         #DEFAULT_FONT
-        font_set_items = [ComboBoxItem(DEFAULT_FONT), ComboBoxItem("华彩")]
+        font_set_items = [(DEFAULT_FONT, 1),
+                          ("华彩", 2)]
         self.font_set_combo = ComboBox(font_set_items)        
         font_string = self.ini.get("SystemSet", "font")
         if font_string:
-            self.font_set_combo.item_label.set_text(font_string)            
+            self.font_set_combo.label.set_text(font_string)            
         else: # font_string return type None.    
-            self.font_set_combo.item_label.set_text(DEFAULT_FONT) 
+            self.font_set_combo.label.set_text(DEFAULT_FONT) 
             
         font_set_combo_width = 120
         font_set_combo_height = 40
-        self.font_set_combo.set_size_request(font_set_combo_width, font_set_combo_height)
+        # self.font_set_combo.set_size_request(font_set_combo_width, font_set_combo_height)
         # Font size.
         self.font_size_btn_label = Label("字号")
         font_size_combo_width = 120
         font_size_combo_height = 40                
         font_set_items = []
+        font_set_items_num = 1
         for i in range(8, 16):
-            font_set_items.append(ComboBoxItem(str(i)))
+            font_set_items.append((str(i), font_set_items_num))
+            font_set_items_num += 1
+            
         self.font_size_btn_combo = ComboBox(font_set_items)
         font_size_string = self.ini.get("SystemSet", "font_size")
         if font_size_string:
-            self.font_size_btn_combo.item_label.set_text(font_size_string)            
+            self.font_size_btn_combo.label.set_text(font_size_string)            
         else:    
-            self.font_size_btn_combo.item_label.set_text("8")
+            self.font_size_btn_combo.label.set_text("8")
             
-        self.font_size_btn_combo.set_size_request(font_size_combo_width, font_size_combo_height)
+        # self.font_size_btn_combo.set_size_request(font_size_combo_width, font_size_combo_height)
                 
         system_set_x = 20
         system_set_y = 40
@@ -506,7 +510,7 @@ class SystemSet(gtk.VBox):
         self.fixed.put(self.font_set_combo, 
                        system_set_x + font_set_x_padding, system_set_y)
         # Font Size.
-        font_size_x_padding = system_set_x + font_set_x_padding + self.font_set_combo.get_size_request()[0] + self.font_set_btn_label.get_size_request()[0] + 10
+        font_size_x_padding = system_set_x + font_set_x_padding + font_set_combo_width + self.font_set_btn_label.get_size_request()[0] + 10
         system_set_y -= 20
         self.fixed.put(self.font_size_btn_label,
                        font_size_x_padding, system_set_y)
@@ -521,8 +525,8 @@ class SystemSet(gtk.VBox):
         system_set_dict = {}
         #
         system_set_dict["minimize_pause_play"] = self.pause_play_btn.get_active()
-        system_set_dict["font"] = self.font_set_combo.item_label.get_text()
-        system_set_dict["font_size"] = self.font_size_btn_combo.item_label.get_text()
+        system_set_dict["font"] = self.font_set_combo.label.get_text()
+        system_set_dict["font_size"] = self.font_size_btn_combo.label.get_text()
         return system_set_dict
         
 class PlayControl(gtk.VBox):       
@@ -863,29 +867,34 @@ class OtherKey(gtk.VBox):
         self.subtitle_delay_entry.set_size(entry_width, entry_height)
         # mouse left single clicked.        
         self.mouse_left_single_clicked_combo_label = Label("鼠标左键单击")
-        self.mouse_left_single_clicked_combo       = ComboBox()
+        self.mouse_left_single_clicked_combo       = ComboBox([("暂停/播放", 1),
+                                                               ("NULL", 2)])
 
         text_string = self.ini.get("OtherKey", "mouse_left_single_clicked")
         if text_string:
-            self.mouse_left_single_clicked_combo.item_label.set_text(text_string)
+            self.mouse_left_single_clicked_combo.label.set_text(text_string)
         else:    
-            self.mouse_left_single_clicked_combo.item_label.set_text(text_string)
+            self.mouse_left_single_clicked_combo.label.set_text(text_string)
             
-        self.mouse_left_single_clicked_combo.set_size_request(entry_width, entry_height)
+        # self.mouse_left_single_clicked_combo.set_size_request(entry_width, entry_height)
         # mouse left double clicked.
         self.mouse_left_double_clicked_combo_label = Label("鼠标左键双击")
-        self.mouse_left_double_clicked_combo       = ComboBox()
+        self.mouse_left_double_clicked_combo       = ComboBox([("全屏", 1),
+                                                               ("NULL", 2)])
         text_string = self.ini.get("OtherKey", "mouse_left_double_clicked")
         if text_string:
-            self.mouse_left_double_clicked_combo.item_label.set_text(text_string)        
-        self.mouse_left_double_clicked_combo.set_size_request(entry_width, entry_height)
+            self.mouse_left_double_clicked_combo.label.set_text(text_string)        
+            
+        # self.mouse_left_double_clicked_combo.set_size_request(entry_width, entry_height)
         # mouse wheel.
         self.mouse_wheel_combo_label = Label("鼠标滚轮")
-        self.mouse_wheel_combo       = ComboBox()
+        self.mouse_wheel_combo       = ComboBox([("音量", 1),
+                                                 ("NULL", 2)])
         text_string = self.ini.get("OtherKey", "mouse_wheel_event")
         if text_string:
-            self.mouse_wheel_combo.item_label.set_text(text_string)        
-        self.mouse_wheel_combo.set_size_request(entry_width, entry_height)
+            self.mouse_wheel_combo.label.set_text(text_string)        
+            
+        # self.mouse_wheel_combo.set_size_request(entry_width, entry_height)
         
         
         other_Key_x = 20
@@ -970,14 +979,14 @@ class OtherKey(gtk.VBox):
         other_Key_y += self.mouse_left_single_clicked_combo_label.get_size_request()[1] + 2
         self.fixed.put(self.mouse_left_single_clicked_combo, 
                        other_Key_x_padding, other_Key_y)
-        other_Key_y += self.mouse_left_single_clicked_combo.get_size_request()[1] + 10
+        other_Key_y += self.mouse_left_single_clicked_combo_label.get_size_request()[1] + 10
         # mouse left double clicked.
         self.fixed.put(self.mouse_left_double_clicked_combo_label, 
                        other_Key_x_padding, other_Key_y)
         other_Key_y += self.mouse_left_double_clicked_combo_label.get_size_request()[1] + 2
         self.fixed.put(self.mouse_left_double_clicked_combo, 
                        other_Key_x_padding, other_Key_y)
-        other_Key_y += self.mouse_left_double_clicked_combo.get_size_request()[1] + 10
+        other_Key_y += self.mouse_left_double_clicked_combo_label.get_size_request()[1] + 10
         # mouse wheel.
         self.fixed.put(self.mouse_wheel_combo_label,
                        other_Key_x_padding, other_Key_y)
@@ -1001,9 +1010,9 @@ class OtherKey(gtk.VBox):
         other_set_dict["load_subtitle_key"] = self.load_subtitle_entry.get_text()
         other_set_dict["subtitle_advance_key"] = self.subtitle_advance_entry.get_text()
         other_set_dict["subtitle_delay_key"] = self.subtitle_delay_entry.get_text()
-        other_set_dict["mouse_left_single_clicked"] = self.mouse_left_single_clicked_combo.item_label.get_text()
-        other_set_dict["mouse_left_double_clicked"] = self.mouse_left_double_clicked_combo.item_label.get_text()
-        other_set_dict["mouse_wheel_event"] = self.mouse_wheel_combo.item_label.get_text()
+        other_set_dict["mouse_left_single_clicked"] = self.mouse_left_single_clicked_combo.label.get_text()
+        other_set_dict["mouse_left_double_clicked"] = self.mouse_left_double_clicked_combo.label.get_text()
+        other_set_dict["mouse_wheel_event"] = self.mouse_wheel_combo.label.get_text()
         
         return other_set_dict
     
@@ -1121,7 +1130,8 @@ class ScreenShot(gtk.VBox):
         self.save_path_button.connect("clicked", self.save_path_to_save_path_entry_clicked)
         # Save type.
         self.save_type_label  = Label("保存类型 : ")
-        self.save_type_combo  = ComboBox()
+        self.save_type_combo  = ComboBox([(".png", 1),
+                                          (".jpeg", 2)])
         
         ini_bool = self.ini.get("ScreenshotSet", "save_clipboard")
         # Init .
@@ -1136,9 +1146,9 @@ class ScreenShot(gtk.VBox):
             
         text_string = self.ini.get("ScreenshotSet", "save_type")            
         if text_string:
-            self.save_type_combo.item_label.set_text(text_string)
+            self.save_type_combo.label.set_text(text_string)
         else:    
-            self.save_type_combo.item_label.set_text(".png")
+            self.save_type_combo.label.set_text(".png")
             
         if ini_bool:
              if "true" == ini_bool.lower():
@@ -1232,7 +1242,7 @@ class ScreenShot(gtk.VBox):
         screenshot_dict["save_clipboard"]   = self.save_clipboard_radio.get_active() 
         screenshot_dict["save_file"]        = self.save_file_radio.get_active()
         screenshot_dict["save_path"]        = self.save_path_entry.get_text()
-        screenshot_dict["save_type"]        = self.save_type_combo.item_label.get_text()            
+        screenshot_dict["save_type"]        = self.save_type_combo.label.get_text()            
         screenshot_dict["current_show_sort"] = self.current_show_sort_check.get_active()
         return screenshot_dict
         

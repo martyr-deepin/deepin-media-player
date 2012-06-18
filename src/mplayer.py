@@ -151,7 +151,7 @@ def init_mplayer_config():
             #[SystemSet]
             config.set("SystemSet", "minimize_pause_play", "False")            
             config.set("SystemSet", "font",                "文泉驿微米黑")
-            config.set("SystemSet", "font_size",           "12")
+            config.set("SystemSet", "font_size",           "8")
             # config.set()
             # config.set()
             # config.set()
@@ -178,9 +178,9 @@ def init_mplayer_config():
             config.set("OtherKey", "load_subtitle_key",      "Alt + O")
             config.set("OtherKey", "subtitle_delay_key",     "]")
             config.set("OtherKey", "subtitle_advance_key",   "[")
-            config.set("OtherKey", "mouse_left_single_clicked", "NULL")
-            config.set("OtherKey", "mouse_left_double_clicked", "NULL")
-            config.set("OtherKey", "mouse_wheel_event", "NULL")
+            config.set("OtherKey", "mouse_left_single_clicked", "暂停/播放")
+            config.set("OtherKey", "mouse_left_double_clicked", "全屏")
+            config.set("OtherKey", "mouse_wheel_event", "音量")
             #[SubtitleSet]
             config.set("SubtitleSet", "ai_load_subtitle", "True")
             config.set("SubtitleSet", "specific_location_search", "~/.config/deepin-media-player/subtitle")
