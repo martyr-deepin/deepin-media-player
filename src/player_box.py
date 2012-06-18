@@ -376,6 +376,7 @@ class PlayerBox(object):
         
         self.play_control_panel_hframe = self.play_control_panel.hbox_hframe
         self.play_control_panel_hframe.set(1, 0.5, 0, 0)
+        self.play_control_panel_hframe.set_padding(0, 2, 0, 0)
         
         self.play_control_panel.stop_btn.connect("clicked", self.stop_button_clicked) # stop play.
         self.play_control_panel.pre_btn.connect("clicked", self.pre_button_clicked) # pre play.
@@ -1743,7 +1744,7 @@ class PlayerBox(object):
                 path = self.play_list_dict[item.title]
                 if not os.path.exists(path):
                     self.play_list.list_view.items.remove(item)
-                    self.mp.delPlayList(path)   
+                    self.mp.delPlayList(path)
                                                                                 
     def open_sort_image_dir(self):             
         file_name = self.config.get("ScreenshotSet", "save_path")

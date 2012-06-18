@@ -36,17 +36,35 @@ class PlayControlPanel(object):
         self.hbox_hframe.add(self.hbox)
         
         
-        self.stop_btn = ImageButton(app_theme.get_pixbuf("big_button_background.png"),
-                                    app_theme.get_pixbuf("stop.png"))
-        self.pre_btn = ImageButton(app_theme.get_pixbuf("big_button_background.png"),
-                                   app_theme.get_pixbuf("pre_button.png"))
+        self.stop_btn = StartButton(app_theme.get_pixbuf("stop_normal.png"),
+                                    app_theme.get_pixbuf("stop_hover.png"),
+                                    app_theme.get_pixbuf("stop_press.png"),
+                                    app_theme.get_pixbuf("stop_normal.png"),
+                                    app_theme.get_pixbuf("stop_hover.png"),
+                                    app_theme.get_pixbuf("stop_press.png")
+                                    )
+        self.pre_btn = StartButton(app_theme.get_pixbuf("pre_button_normal.png"),
+                                   app_theme.get_pixbuf("pre_button_hover.png"),
+                                   app_theme.get_pixbuf("pre_button_press.png"),
+                                   app_theme.get_pixbuf("pre_button_normal.png"),
+                                   app_theme.get_pixbuf("pre_button_hover.png"),
+                                   app_theme.get_pixbuf("pre_button_press.png"))        
         self.start_btn = StartButton()
         
-        self.next_btn = ImageButton(app_theme.get_pixbuf("big_button_background.png"),
-                                     app_theme.get_pixbuf("next_button.png"))
-        self.open_btn = ImageButton(app_theme.get_pixbuf("big_button_background.png"),
-                                    app_theme.get_pixbuf("open.png"))
-                
+        self.next_btn = StartButton(app_theme.get_pixbuf("next_button_normal.png"),
+                                    app_theme.get_pixbuf("next_button_hover.png"),
+                                    app_theme.get_pixbuf("next_button_press.png"),
+                                    app_theme.get_pixbuf("next_button_normal.png"),
+                                    app_theme.get_pixbuf("next_button_hover.png"),
+                                    app_theme.get_pixbuf("next_button_press.png"))
+
+        self.open_btn = StartButton(app_theme.get_pixbuf("open_normal.png"),
+                                    app_theme.get_pixbuf("open_hover.png"),
+                                    app_theme.get_pixbuf("open_press.png"),
+                                    app_theme.get_pixbuf("open_normal.png"),
+                                    app_theme.get_pixbuf("open_hover.png"),
+                                    app_theme.get_pixbuf("open_press.png"))
+
         self.hbox.pack_start(self.stop_btn, False, False)
         self.hbox.pack_start(self.pre_btn, False, False)
         self.hbox.pack_start(self.start_btn, False, False)
