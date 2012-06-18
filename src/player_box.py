@@ -582,14 +582,14 @@ class PlayerBox(object):
     def get_key_event(self, widget, event): # app: key-release-event       
         keyval_name = get_keyevent_name(event)
         
-        if 32 == event.keyval:
-            keyval_name = "Space"
+        # if 32 == event.keyval:
+        #     keyval_name = "Space"
         # print keyval_name    
         # Init config keys.    
         self.init_config_key()    
         # self.keymap[""]()        
         
-        # print keyval_name        
+        print keyval_name        
         keyval_name = keyval_name.lower()
         if self.keymap.has_key(keyval_name):
             self.keymap[keyval_name]()

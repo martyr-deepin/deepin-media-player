@@ -23,7 +23,7 @@ from skin import app_theme
 
 from dtk.ui.utils import propagate_expose, alpha_color_hex_to_cairo
 from dtk.ui.button import Button
-from dtk.ui.entry import TextEntry
+from dtk.ui.entry import TextEntry, ShortcutKeyEntry
 from dtk.ui.combo import ComboBox
 from dtk.ui.titlebar import Titlebar
 from dtk.ui.window import Window 
@@ -545,122 +545,123 @@ class PlayControl(gtk.VBox):
         entry_height = 20
         # open file key.
         self.open_file_entry_label = Label("打开文件")
-        self.open_file_entry       = TextEntry()
+        self.open_file_entry       = ShortcutKeyEntry()
         text_string = self.ini.get("PlayControl", "open_file_key")
+        print text_string
         if text_string:
-            self.open_file_entry.set_text(text_string)
+            self.open_file_entry.set_shortcut_key(text_string)
         else:  # text_string return None type.
-            self.open_file_entry.set_text("Ctrl + O")
+            self.open_file_entry.set_shortcut_key("Ctrl+o")
             
         self.open_file_entry.set_size(entry_width, entry_height)
         # pre a.
         self.pre_a_entry_label = Label("上一个")
-        self.pre_a_entry       = TextEntry()
+        self.pre_a_entry       = ShortcutKeyEntry()
         text_string = self.ini.get("PlayControl", "pre_a_key")
         if text_string:
-            self.pre_a_entry.set_text(text_string)
+            self.pre_a_entry.set_shortcut_key(text_string)
         else:    
-            self.pre_a_entry.set_text("Page_Up")
+            self.pre_a_entry.set_shortcut_key("Page_Up")
             
         self.pre_a_entry.set_size(entry_width, entry_height)
         # open file dir.
         self.open_file_dir_entry_label = Label("打开文件夹")
-        self.open_file_dir_entry       = TextEntry()
+        self.open_file_dir_entry       = ShortcutKeyEntry()
         text_string = self.ini.get("PlayControl", "open_file_dir_key")
         if text_string:
-            self.open_file_dir_entry.set_text(text_string)
+            self.open_file_dir_entry.set_shortcut_key(text_string)
         else:    
-            self.open_file_dir_entry.set_text("Ctrl + F")
+            self.open_file_dir_entry.set_shortcut_key("Ctrl+f")
             
         self.open_file_dir_entry.set_size(entry_width, entry_height)
         # next a.
         self.next_a_entry_label = Label("下一个")
-        self.next_a_entry       = TextEntry()
+        self.next_a_entry       = ShortcutKeyEntry()
         text_string = self.ini.get("PlayControl", "next_a_key")
         if text_string:
-            self.next_a_entry.set_text(text_string)
+            self.next_a_entry.set_shortcut_key(text_string)
         else: # Page_Down    
-            self.next_a_entry.set_text("Page_Down")
+            self.next_a_entry.set_shortcut_key("Page_Down")
             
         self.next_a_entry.set_size(entry_width, entry_height)
         # play or pause.
         self.play_or_pause_entry_label = Label("播放/暂停")
-        self.play_or_pause_entry = TextEntry()
+        self.play_or_pause_entry = ShortcutKeyEntry()
         text_string = self.ini.get("PlayControl", "play_or_pause_key")
         if text_string:
-            self.play_or_pause_entry.set_text(text_string)        
+            self.play_or_pause_entry.set_shortcut_key(text_string)        
         else:#"Space"
-            self.play_or_pause_entry.set_text("Space")
+            self.play_or_pause_entry.set_shortcut_key("Space")
             
         self.play_or_pause_entry.set_size(entry_width, entry_height)
         # add volume.
         self.add_volume_entry_label = Label("升高音量")
-        self.add_volume_entry       = TextEntry()
+        self.add_volume_entry       = ShortcutKeyEntry()
         text_string = self.ini.get("PlayControl", "add_volume_key")
         if text_string:
-            self.add_volume_entry.set_text(text_string)        
+            self.add_volume_entry.set_shortcut_key(text_string)        
         else:   # Up 
-            self.add_volume_entry.set_text("Up")
+            self.add_volume_entry.set_shortcut_key("Up")
             
         self.add_volume_entry.set_size(entry_width, entry_height)
         # seek.
         self.seek_entry_label = Label("快进")
-        self.seek_entry       = TextEntry()
+        self.seek_entry       = ShortcutKeyEntry()
         text_string = self.ini.get("PlayControl", "seek_key")
         if text_string:
-            self.seek_entry.set_text(text_string)        
+            self.seek_entry.set_shortcut_key(text_string)        
         else: # Right    
-            self.seek_entry.set_text("Right")
+            self.seek_entry.set_shortcut_key("Right")
             
         self.seek_entry.set_size(entry_width, entry_height)
         # sub volume.
         self.sub_volume_entry_label = Label("降低音量")
-        self.sub_volume_entry       = TextEntry()
+        self.sub_volume_entry       = ShortcutKeyEntry()
         text_string = self.ini.get("PlayControl", "sub_volume_key")
         if text_string:
-            self.sub_volume_entry.set_text(text_string)        
+            self.sub_volume_entry.set_shortcut_key(text_string)        
         else: # Down
-            self.sub_volume_entry.set_text("Down")
+            self.sub_volume_entry.set_shortcut_key("Down")
             
         self.sub_volume_entry.set_size(entry_width, entry_height)
         # back.
         self.back_entry_label = Label("快退")
-        self.back_entry       = TextEntry()
+        self.back_entry       = ShortcutKeyEntry()
         text_string = self.ini.get("PlayControl", "back_key")
         if text_string:
-            self.back_entry.set_text(text_string)        
+            self.back_entry.set_shortcut_key(text_string)        
         else:    # Left
-            self.back_entry.set_text("Left")
+            self.back_entry.set_shortcut_key("Left")
             
         self.back_entry.set_size(entry_width, entry_height)
         # Mute. 
         self.mute_entry_label = Label("静音")
-        self.mute_entry       = TextEntry()
+        self.mute_entry       = ShortcutKeyEntry()
         text_string = self.ini.get("PlayControl", "mute_key")
         if text_string:
-            self.mute_entry.set_text(text_string)        
+            self.mute_entry.set_shortcut_key(text_string)        
         else:   # M 
-            self.mute_entry.set_text("M")        
+            self.mute_entry.set_shortcut_key("m")        
 
         self.mute_entry.set_size(entry_width, entry_height)
         # full.
         self.full_entry_label = Label("全屏")
-        self.full_entry       = TextEntry()
+        self.full_entry       = ShortcutKeyEntry()
         text_string = self.ini.get("PlayControl", "full_key")
         if text_string:
-            self.full_entry.set_text(text_string)        
+            self.full_entry.set_shortcut_key(text_string)        
         else:    # Return
-            self.full_entry.set_text("Return")        
+            self.full_entry.set_shortcut_key("Return")        
             
         self.full_entry.set_size(entry_width, entry_height)
         # Concise mode.
         self.concise_entry_label = Label("迷你模式")
-        self.concise_entry       = TextEntry()
+        self.concise_entry       = ShortcutKeyEntry()
         text_string = self.ini.get("PlayControl", "concise_key")
         if text_string:
-            self.concise_entry.set_text(text_string)        
+            self.concise_entry.set_shortcut_key(text_string)        
         else:    #Shift_L/R + Return
-            self.concise_entry.set_text("Shift + Return")        
+            self.concise_entry.set_shortcut_key("Shift+Return")        
             
         self.concise_entry.set_size(entry_width, entry_height)
                         
@@ -777,92 +778,92 @@ class OtherKey(gtk.VBox):
         entry_height = 20
         # Add Brightness.
         self.add_bri_entry_label = Label("增加亮度")
-        self.add_bri_entry       = TextEntry()
+        self.add_bri_entry       = ShortcutKeyEntry()
         text_string = self.ini.get("OtherKey", "add_brightness_key")
         if text_string:
-            self.add_bri_entry.set_text(text_string)
+            self.add_bri_entry.set_shortcut_key(text_string)
         else: # =   
-            self.add_bri_entry.set_text("=")
+            self.add_bri_entry.set_shortcut_key("=")
             
         self.add_bri_entry.set_size(entry_width, entry_height)
         # Sub Brightness.
         self.sub_bri_entry_label = Label("减少亮度")
-        self.sub_bri_entry       = TextEntry()
+        self.sub_bri_entry       = ShortcutKeyEntry()
         text_string = self.ini.get("OtherKey", "sub_brightness_key")
         if text_string:
-            self.sub_bri_entry.set_text(text_string)
+            self.sub_bri_entry.set_shortcut_key(text_string)
         else:    # -
-            self.sub_bri_entry.set_text("-")
+            self.sub_bri_entry.set_shortcut_key("-")
             
         self.sub_bri_entry.set_size(entry_width, entry_height)
         # Inverse Rotation.
         self.inverse_rotation_entry_label = Label("逆时针旋转")
-        self.inverse_rotation_entry       = TextEntry()
+        self.inverse_rotation_entry       = ShortcutKeyEntry()
         text_string = self.ini.get("OtherKey", "inverse_rotation_key")
         if text_string:
-            self.inverse_rotation_entry.set_text(text_string)
+            self.inverse_rotation_entry.set_shortcut_key(text_string)
         else:    # w
-            self.inverse_rotation_entry.set_text("W")
+            self.inverse_rotation_entry.set_shortcut_key("w")
             
         self.inverse_rotation_entry.set_size(entry_width, entry_height)
         # Clockwise Rotation.
         self.clockwise_entry_label = Label("顺时针旋转")
-        self.clockwise_entry       = TextEntry()
+        self.clockwise_entry       = ShortcutKeyEntry()
         text_string = self.ini.get("OtherKey", "clockwise_key")
         if text_string:
-            self.clockwise_entry.set_text(text_string)
+            self.clockwise_entry.set_shortcut_key(text_string)
         else:    # e
-            self.clockwise_entry.set_text("E")
+            self.clockwise_entry.set_shortcut_key("e")
             
         self.clockwise_entry.set_size(entry_width, entry_height)
         # sort image.
         self.sort_image_entry_label = Label("截图")
-        self.sort_image_entry       = TextEntry()
+        self.sort_image_entry       = ShortcutKeyEntry()
         text_string = self.ini.get("OtherKey", "sort_image_key")
         if text_string:
-            self.sort_image_entry.set_text(text_string)
+            self.sort_image_entry.set_shortcut_key(text_string)
         else:    # Alt_L/R A
-            self.sort_image_entry.set_text("Alt + A")
+            self.sort_image_entry.set_shortcut_key("Alt+a")
             
         self.sort_image_entry.set_size(entry_width, entry_height)
         # Switch Audio track.
         self.switch_audio_track_entry_label = Label("切换音轨")
-        self.switch_audio_track_entry       = TextEntry()
+        self.switch_audio_track_entry       = ShortcutKeyEntry()
         text_string = self.ini.get("OtherKey", "switch_audio_track_key")
         if text_string:
-            self.switch_audio_track_entry.set_text(text_string)
+            self.switch_audio_track_entry.set_shortcut_key(text_string)
         else:    # 
-            self.switch_audio_track_entry.set_text(text_string)
+            self.switch_audio_track_entry.set_shortcut_key("NULL")
             
         self.switch_audio_track_entry.set_size(entry_width, entry_height)
         # Load subtitle.
         self.load_subtitle_entry_label = Label("载入字幕")
-        self.load_subtitle_entry       = TextEntry()
+        self.load_subtitle_entry       = ShortcutKeyEntry()
         text_string = self.ini.get("OtherKey", "load_subtitle_key")
         if text_string:
-            self.load_subtitle_entry.set_text(text_string)
+            self.load_subtitle_entry.set_shortcut_key(text_string)
         else:    #Alt_L/R + O
-            self.load_subtitle_entry.set_text("Alt + O")
+            self.load_subtitle_entry.set_shortcut_key("Alt+O")
             
         self.load_subtitle_entry.set_size(entry_width, entry_height)        
         # subtitle advance 0.5.
         self.subtitle_advance_entry_label = Label("字幕提前0.5秒")
-        self.subtitle_advance_entry       = TextEntry()
+        self.subtitle_advance_entry       = ShortcutKeyEntry()
         text_string = self.ini.get("OtherKey", "subtitle_advance_key")
         if text_string:
-            self.subtitle_advance_entry.set_text(text_string)
+            self.subtitle_advance_entry.set_shortcut_key(text_string)
         else:    # [
-            self.subtitle_advance_entry.set_text("[")
+            self.subtitle_advance_entry.set_shortcut_key("[")
             
         self.subtitle_advance_entry.set_size(entry_width, entry_height)
         # subtitle Delay 0.5.
         self.subtitle_delay_entry_label = Label("字幕延时0.5秒")
-        self.subtitle_delay_entry       = TextEntry()
+        self.subtitle_delay_entry       = ShortcutKeyEntry()
         text_string = self.ini.get("OtherKey", "subtitle_delay_key")
         if text_string:
-            self.subtitle_delay_entry.set_text(text_string)
+            self.subtitle_delay_entry.set_shortcut_key(text_string)
         else:    # ]
-            self.subtitle_delay_entry.set_text("]")
+            self.subtitle_delay_entry.set_shortcut_key("]")
             
         self.subtitle_delay_entry.set_size(entry_width, entry_height)
         # mouse left single clicked.        
