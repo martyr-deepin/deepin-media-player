@@ -542,7 +542,7 @@ class PlayControl(gtk.VBox):
         self.heparator.set_size_request(heparator_width, heparator_height)
         # setting keys.
         entry_width = 150
-        entry_height = 20
+        entry_height = 28
         # open file key.
         self.open_file_entry_label = Label("打开文件")
         self.open_file_entry       = ShortcutKeyEntry()
@@ -727,13 +727,13 @@ class PlayControl(gtk.VBox):
                        play_control_x, play_control_y)                
         self.fixed.put(self.mute_entry,  
                        play_control_x_padding, play_control_y)
-        play_control_y += self.mute_entry_label.get_size_request()[1] + 10
+        play_control_y += self.mute_entry_label.get_size_request()[1] + 15
         # full and concise mode.
         self.fixed.put(self.full_entry_label,
                        play_control_x, play_control_y)        
         self.fixed.put(self.concise_entry_label,
                        play_control_x_padding, play_control_y)
-        play_control_y += self.concise_entry_label.get_size_request()[1] + 2
+        play_control_y += self.concise_entry_label.get_size_request()[1] + 5
         self.fixed.put(self.full_entry,
                        play_control_x, play_control_y)        
         self.fixed.put(self.concise_entry,
@@ -774,7 +774,7 @@ class OtherKey(gtk.VBox):
         self.heparator.set_size_request(heparator_width, heparator_height)
         
         entry_width  = 150
-        entry_height = 20
+        entry_height = 28
         # Add Brightness.
         self.add_bri_entry_label = Label("增加亮度")
         self.add_bri_entry       = ShortcutKeyEntry()
@@ -976,17 +976,17 @@ class OtherKey(gtk.VBox):
         # mouse left single clicked.        
         self.fixed.put(self.mouse_left_single_clicked_combo_label, 
                        other_Key_x_padding, other_Key_y)
-        other_Key_y += self.mouse_left_single_clicked_combo_label.get_size_request()[1] + 2
+        other_Key_y += self.mouse_left_single_clicked_combo_label.get_size_request()[1] + 5
         self.fixed.put(self.mouse_left_single_clicked_combo, 
                        other_Key_x_padding, other_Key_y)
-        other_Key_y += self.mouse_left_single_clicked_combo_label.get_size_request()[1] + 10
+        other_Key_y += self.mouse_left_single_clicked_combo_label.get_size_request()[1] + 20
         # mouse left double clicked.
         self.fixed.put(self.mouse_left_double_clicked_combo_label, 
                        other_Key_x_padding, other_Key_y)
-        other_Key_y += self.mouse_left_double_clicked_combo_label.get_size_request()[1] + 2
+        other_Key_y += self.mouse_left_double_clicked_combo_label.get_size_request()[1] + 5
         self.fixed.put(self.mouse_left_double_clicked_combo, 
                        other_Key_x_padding, other_Key_y)
-        other_Key_y += self.mouse_left_double_clicked_combo_label.get_size_request()[1] + 10
+        other_Key_y += self.mouse_left_double_clicked_combo_label.get_size_request()[1] + 20
         # mouse wheel.
         self.fixed.put(self.mouse_wheel_combo_label,
                        other_Key_x_padding, other_Key_y)
@@ -1020,7 +1020,7 @@ class SubSet(gtk.VBox):
     def __init__(self):
         gtk.VBox.__init__(self)
         entry_width = 280
-        entry_height = 25
+        entry_height = 28
         self.ini = Config(config_path)
         # self.ini = config
         self.fixed = gtk.Fixed()
@@ -1097,7 +1097,7 @@ class ScreenShot(gtk.VBox):
     def __init__(self):
         gtk.VBox.__init__(self)
         entry_width = 250
-        entry_height = 25
+        entry_height = 28
         self.ini = Config(config_path)
         # self.ini = config
         self.fixed = gtk.Fixed()
