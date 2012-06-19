@@ -832,7 +832,7 @@ class PlayerBox(object):
             
     def start_button_time_pause(self): # start_button_clicked.
         if self.mp.pause_bool:
-            self.mp.seek(int(self.progressbar.pos))
+            # self.mp.seek(int(self.progressbar.pos))
             self.mp.start_play()
         else:
             self.mp.pause()
