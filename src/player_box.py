@@ -1677,7 +1677,7 @@ class PlayerBox(object):
         if config_bool:
             if "true" == config_bool.lower():
                 self.ini.set("PlayMemory", '"%s"' % (mplayer.path), 0)
-                if mplayer.posNum < mplayer.lenNum - 10:
+                if mplayer.posNum < mplayer.lenNum - 100:
                     self.ini.set("PlayMemory", '"%s"' % (mplayer.path), mplayer.posNum)
                         
                 # self.ini.write()        
