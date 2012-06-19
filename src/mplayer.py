@@ -229,7 +229,7 @@ class  Mplayer(gobject.GObject):
         "volume":(gobject.SIGNAL_RUN_LAST,
                   gobject.TYPE_NONE,(gobject.TYPE_INT,)),
         "play-start":(gobject.SIGNAL_RUN_LAST,
-                      gobject.TYPE_NONE,(gobject.TYPE_INT, gobject.TYPE_INT, gobject.TYPE_INT, gobject.TYPE_INT, gobject.TYPE_INT)),
+                      gobject.TYPE_NONE,(gobject.TYPE_INT,)),
         "play-end":(gobject.SIGNAL_RUN_LAST,
                     gobject.TYPE_NONE,(gobject.TYPE_INT,)),
         "play-next":(gobject.SIGNAL_RUN_LAST,
@@ -317,36 +317,7 @@ class  Mplayer(gobject.GObject):
             self.mplayer_pid = self.mpID.pid
             (self.mplayerIn, self.mplayerOut) = (self.mpID.stdin, self.mpID.stdout)
             
-            # Get draw screen width height.
-            self.vide_bool = get_vide_flags(self.path)                        
             
-            vide_width_1 = 0
-            vide_height_1 = 0
-            vide_width_2 = 0
-            vide_height_2 = 0
-            
-            if self.vide_bool:
-                draw_screen_string = ""                
-                while True:
-                    draw_screen_string = self.mplayerOut.readline()
-                    # print draw_screen_string
-                    filter_pattern = re.compile(r"VO:.+")
-                
-                    filter_all = filter_pattern.findall(draw_screen_string)
-                    if filter_all:
-                        break
-                
-                filter_pattern = re.compile(r"(\d+)x(\d+)")   
-                filter_all = str(filter_all[0])
-                filter_all = filter_pattern.findall(str(filter_all))
-                
-                vide_width_1 = int(filter_all[0][0])
-                vide_height_1 = int(filter_all[0][1])
-                vide_width_2 = int(filter_all[1][0])
-                vide_height_2 = int(filter_all[1][1])
-            
-            self.emit("play-start", self.mplayer_pid, 
-                      vide_width_1, vide_height_1, vide_width_2, vide_height_2)
                         
             fcntl.fcntl(self.mplayerOut, 
                         fcntl.F_SETFL, 
@@ -361,8 +332,12 @@ class  Mplayer(gobject.GObject):
             self.state = 1                
             self.get_time_length()
             self.vide_bool = get_vide_flags(self.path)
+            # emit play-start.
+            gobject.timeout_add(400, self.emit_play_start_event)
             
-            
+    def emit_play_start_event(self):        
+        self.emit("play-start", self.mplayer_pid)
+        
     ## Cmd control ##    
     def cmd(self, cmdStr):
         '''Mplayer command'''

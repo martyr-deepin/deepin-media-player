@@ -1067,8 +1067,7 @@ class PlayerBox(object):
                 #         cr.fill()
                         
                 #     return True
-                
-            
+                            
                 if self.mp.pause_bool: # vide pause.
                     # Draw pause background.
                     return False
@@ -1625,7 +1624,7 @@ class PlayerBox(object):
     def get_pos_ste_seek(self, pos):            
         self.mp.seek(int(pos))                                    
         
-    def media_player_start(self, mplayer, play_bool, w1, h1, w2, h2):
+    def media_player_start(self, mplayer, play_bool):
         '''media player start play.'''                        
         # full window.
         if self.playwinmax_bool and self.video_aspect_type == "默认":
@@ -1634,14 +1633,7 @@ class PlayerBox(object):
             self.playwinmax_bool = False
             
         # self.set_ascept_function()
-            
-        # Get mplayer play file width and height.
-        self.video_width = w1
-        self.video_height = h1
-        if w2 > w1:
-            self.video_width = w2
-            self.video_height = h2            
-            
+                        
         # Get mplayer pid.
         self.mplayer_pid = play_bool
         #play memory.                        
