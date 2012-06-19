@@ -148,80 +148,6 @@ class PlayerBox(object):
                               True)                        
                     
         
-        '''Title root menu.'''
-        #In title root menu.
-        self.sort_menu = Menu([(None, "截图", self.key_sort_image),      
-                               (None, "打开截图目录", self.open_sort_image_dir),   
-                               (None, "设置截图保存目录", None)
-                               ])                
-        # In title root menu.
-        self.subtitle_menu = Menu([(None, "载入字幕", None),      
-                                   (None, "字幕选择", None),   
-                                   (None, "移除字幕", None), 
-                                   ])                         
-        # In title root menu.
-        self.volume_menu = Menu([(None, "声道选择", None),      
-                                 (None, "配音选择", None),   
-                                 (None),       
-                                 (None, "增大音量", None), 
-                                 (None, "减小音量", None),
-                                 (None, "静音/还原", None),
-                                 ])         
-        # In title root menu.
-        self.screen_menu = Menu([(None, "默认值",  self.set_restart_aspect),
-                                 (None, "4:3",    self.set_4X3_aspect),
-                                 (None, "16:9",   self.set_16X9_aspect),
-                                 (None, "16:10",  self.set_16X10_aspect),
-                                 (None, "1.85:1", self.set_1_85X1_aspect),
-                                 (None, "2.35:1", self.set_2_35X1_aspect),
-                                 (None),
-                                 (None, "0.5倍尺寸", None),
-                                 (None, "1倍", None),
-                                 (None, "1.5倍", None),
-                                 (None, "2倍", None),
-                                 (None),
-                                 (None, "全屏/退出", None),
-                                 ])
-        # In title root menu.
-        self.play_state_menu = Menu([(None, "单个播放", self.sigle_play),      
-                                     (None, "顺序播放", self.sequence_play),   
-                                     (None, "随机播放", self.rand_play), 
-                                     (None, "单个循环", self.sigle_loop_play), 
-                                     (None, "列表循环", self.loop_list_play)]  
-                                    ) 
-        # In title root menu.
-        self.play_menu = Menu([(None, "全屏播放", self.key_return),
-                               (None, "窗口模式", None),
-                               (None, "简洁模式", None),
-                               (None, "上一首", self.key_pre),
-                               (None, "下一首", self.key_next),
-                               (None),
-                               (None, "快进5秒", self.key_right),
-                               (None, "快退5秒", self.key_left),
-                               (None, "播放顺序", self.play_state_menu),
-                               ])
-        # In title root menu.
-        self.file_menu = Menu([(None, "打开文件", self.add_file),
-                               (None, "打开文件夹", self.add_file_dir),
-                              (None, "播放光盘", None)])
-        
-        # In title root menu.
-        self.help_menu = Menu([(None, "帮助信息", None),
-                               (None, "问题反馈", None),
-                               (None, "关于软件", None)])        
-        #aaaaaa
-        self.title_root_menu = Menu([(None, "文件", self.file_menu), 
-                                     (None, "播放", self.play_menu),
-                                     (None, "画面", self.screen_menu),
-                                     (None, "声音", self.volume_menu),
-                                     (None, "字幕", self.subtitle_menu),
-                                     (None, "截图", self.sort_menu),                            
-                                     (None, "选项", self.config_gui),
-                                     (None, "总在最前", None),
-                                     (None, "自定义换肤", None),
-                                     (None, "帮助与反馈", self.help_menu),
-                                     (None, "退出", None)],
-                                    True)                        
         '''Tooltip window'''
         # self.tooltip = Tooltip("深度影音", 0, 0)
         
@@ -1627,7 +1553,7 @@ class PlayerBox(object):
         '''media player start play.'''                        
         # full window.
         if self.playwinmax_bool and self.video_aspect_type == "默认":
-            print "start media player."
+            # print "start media player."
             self.mp.playwinmax()       
             self.playwinmax_bool = False
             
@@ -1652,7 +1578,9 @@ class PlayerBox(object):
         # if len(file_name) > 25:
         #     file_name = file_name[0:3] + "..."
             
-        self.app.titlebar.change_title(str(file_name))
+
+        self.app.titlebar.title_box.set_text(str(file_name))
+        # self.app.titlebar.change_title(str(file_name))
         # TabPage.
         
         for item in self.play_list.list_view.items:
