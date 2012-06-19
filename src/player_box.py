@@ -1279,6 +1279,7 @@ class PlayerBox(object):
         self.common_window_function()
         self.full_bool = False
         
+        self.set_ascept_function()
 
 
     def full_play_window(self, widget): #full_button
@@ -1598,7 +1599,7 @@ class PlayerBox(object):
         #play memory.                        
         pos = self.ini.get("PlayMemory", '"%s"' % ((mplayer.path)))        
         if pos is not None:
-            gtk.timeout_add(100, self.get_pos_ste_seek, pos)
+            gtk.timeout_add(500, self.get_pos_ste_seek, pos)
 
         # # title show play file name.
         file_name = self.get_player_file_name(mplayer.path)
