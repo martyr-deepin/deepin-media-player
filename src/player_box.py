@@ -1161,10 +1161,12 @@ class PlayerBox(object):
                     
     def set_restart_aspect(self):    
         self.screen_frame.set(0.0, 0.0, 1.0, 1.0)
-        self.video_aspect_type = "默认"
-        if self.playwinmax_bool:
+        if self.playwinmax_bool and self.video_aspect_type != "默认":
             self.mp.playwinmax()
+            self.playwinmax_bool = False
         
+        self.video_aspect_type = "默认"
+            
     def set_4X3_aspect(self):    # munu callback
         self.video_aspect_type = "4:3"
         self.set_ascept_function()
