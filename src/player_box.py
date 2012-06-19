@@ -168,12 +168,12 @@ class PlayerBox(object):
                                  (None, "静音/还原", None),
                                  ])         
         # In title root menu.
-        self.screen_menu = Menu([(None, "默认值", None),
-                                 (None, "4:3", None),
-                                 (None, "16:9", None),
-                                 (None, "16:10", None),
-                                 (None, "1.85:1", None),
-                                 (None, "2.35:1", None),
+        self.screen_menu = Menu([(None, "默认值",  self.set_restart_aspect),
+                                 (None, "4:3",    self.set_4X3_aspect),
+                                 (None, "16:9",   self.set_16X9_aspect),
+                                 (None, "16:10",  self.set_16X10_aspect),
+                                 (None, "1.85:1", self.set_1_85X1_aspect),
+                                 (None, "2.35:1", self.set_2_35X1_aspect),
                                  (None),
                                  (None, "0.5倍尺寸", None),
                                  (None, "1倍", None),
@@ -256,6 +256,8 @@ class PlayerBox(object):
         self.screen = gtk.DrawingArea()        
         self.screen_frame.add(self.screen)
         
+        self.video_aspect_type = "默认"
+        self.playwinmax_bool = True
         # Set background.
         style = self.screen_frame.get_style()
         self.screen_frame.connect("expose-event", self.draw_ascept_bg)
@@ -1143,6 +1145,80 @@ class PlayerBox(object):
                 if "true" == config_bool.lower():
                     self.virtual_set_start_btn_clicked()
                     self.minimize_pause_play_bool = False
+                      
+        self.set_ascept_function()
+                    
+    def set_restart_aspect(self):    
+        self.screen_frame.set(0.0, 0.0, 1.0, 1.0)
+        self.video_aspect_type = "默认"
+        if self.playwinmax_bool:
+            self.mp.playwinmax()
+        
+    def set_4X3_aspect(self):    # munu callback
+        self.video_aspect_type = "4:3"
+        self.set_ascept_function()
+        
+    def set_16X9_aspect(self):    
+        self.video_aspect_type = "16:9"
+        self.set_ascept_function()
+        
+    def set_16X10_aspect(self):    
+        self.video_aspect_type = "16:10"
+        self.set_ascept_function()
+        
+    def set_1_85X1_aspect(self):
+        self.video_aspect_type = "1.85:1"
+        self.set_ascept_function()
+        
+    def set_2_35X1_aspect(self):    
+        self.video_aspect_type = "2.35:1"
+        self.set_ascept_function()
+        
+    def set_ascept_function(self):                    
+        if not self.playwinmax_bool and self.video_aspect_type != "默认":
+            self.mp.playwinmax()
+            self.playwinmax_bool = True
+
+        # Set screen frame ascept.            
+        x, y, w, h = self.screen_frame.allocation
+        video_aspect = 0
+        if self.video_aspect_type == "4:3":
+            video_aspect = round(float(4) / 3, 2)
+        elif self.video_aspect_type == "16:9":
+            video_aspect = round(float(16) / 9, 2)
+        elif self.video_aspect_type == "16:10":    
+            video_aspect = round(float(16) / 10, 2)
+        elif self.video_aspect_type == "1.85:1":
+            video_aspect = round(float(1.85) / 1, 2)
+        elif self.video_aspect_type == "2.35:1":    
+            video_aspect = round(float(2.35) / 1, 2)
+            
+        screen_frame_aspect = round(float(w) / h, 2)
+        
+        if screen_frame_aspect == video_aspect:        
+            self.screen_frame.set(0.0, 0.0, 1.0, 1.0)
+        elif screen_frame_aspect > video_aspect:
+            x = (float(h)* video_aspect) / w            
+            if (x > 0.0):
+                self.screen_frame.set(0.5, 0.0, self.max(x, 0.1, 1.0), 1.0);
+            else:
+                self.screen_frame.set(0.5, 0.0, 1.0, 1.0);
+        elif screen_frame_aspect < video_aspect:    
+            y = (float(w) / video_aspect) / h;            
+            if y > 0.0: 
+                self.screen_frame.set(0.0, 0.5, 1.0, self.max(y, 0.1, 1.0));
+            else: 
+                self.screen_frame.set(0.0, 0.5, 1.0, 1.0); 
+                                
+    def max(self, x, low, high):
+        if low <= x  <= high:
+            return x
+        if low > x:
+            return low
+        if high < x:
+            return high            
+
+
                     
     def configure_hide_tool(self, widget, event): # screen: configure-event.
         if self.mp:
@@ -1539,8 +1615,12 @@ class PlayerBox(object):
     def media_player_start(self, mplayer, play_bool, w1, h1, w2, h2):
         '''media player start play.'''                        
         # full window.
-        self.mp.playwinmax()        
-        
+        if self.playwinmax_bool and self.video_aspect_type == "默认":
+            self.mp.playwinmax()       
+            self.playwinmax_bool = False
+            
+        # self.set_ascept_function()
+            
         # Get mplayer play file width and height.
         self.video_width = w1
         self.video_height = h1
