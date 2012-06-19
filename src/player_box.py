@@ -20,6 +20,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from dtk.ui.utils import cairo_state
 from dtk.ui.keymap import get_keyevent_name
 from dtk.ui.box import EventBox
 from dtk.ui.draw import draw_pixbuf
@@ -32,6 +33,7 @@ from dtk.ui.menu import Menu
 from ini import Config
 from gio_format import format
 from opendialog import OpenDialog
+from dtk.ui.skin_config import skin_config
 from utils import allocation,path_threads
 from show_time import ShowTime
 from progressbar import ProgressBar
@@ -309,6 +311,7 @@ class PlayerBox(object):
         '''Toolbar2 Init.'''
         toolbar2_height = 45
         self.toolbar2 = ToolBar2()                
+        self.toolbar2.panel.connect("expose-event", self.toolbar2_panel_expose)
         self.toolbar2.panel.set_size_request(1, toolbar2_height) # Set toolbar2 height.
         # draw resize window.
         self.toolbar2.panel.connect("scroll-event", self.app_scroll_event, 2)
@@ -439,6 +442,21 @@ class PlayerBox(object):
         
         self.keymap = {}        
         
+    def toolbar2_panel_expose(self, widget, event):    
+        cr = widget.window.cairo_create()
+        rect = widget.allocation
+        x, y, w, h = rect.x, rect.y, rect.width, rect.height
+        # Draw background.
+        
+        window_rect = self.app.window.get_allocation()
+        toolbar_rect = widget.get_toplevel().get_allocation()
+        with cairo_state(cr):
+            cr.translate(0, -(window_rect.height - toolbar_rect.height))
+            skin_config.render_background(cr, widget, x, y)
+        
+        widget.propagate_expose(widget.get_child(), event)
+        return True
+                    
     def modify_config_section_value(self, Config, str1, str2, str3):    
         print Config
         print str1

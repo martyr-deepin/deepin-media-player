@@ -22,7 +22,6 @@
 
 from dtk.ui.frame import HorizontalFrame
 from dtk.ui.panel import Panel
-
 from skin import app_theme
 from constant import APP_WIDTH
 
@@ -42,8 +41,6 @@ class ToolBar2(object):
         self.progressbar = ProgressBar()        
         
         # panel signal.
-        # self.panel.connect("expose-event", self.panel_expose)        
-        
         # self.panel.set_type_hint(gtk.gdk.WINDOW_TYPE_HINT_TOOLBAR)
         # self.panel.set_type_hint(gtk.gdk.WINDOW_TYPE_HINT_POPUP_MENU)
         self.hbox = gtk.HBox()
@@ -77,19 +74,6 @@ class ToolBar2(object):
         
         self.panel.add(self.vbox)        
         
-    def panel_expose(self, widget, event):    
-        cr = widget.window.cairo_create()
-        rect = widget.allocation
-        x, y, w, h = rect.x, rect.y, rect.width, rect.height
-        # Draw background.
-        background_pixbuf = self.background_pixbuf.get_pixbuf()
-        image = background_pixbuf.scale_simple(w, h, gtk.gdk.INTERP_BILINEAR)
-        cr.set_source_pixbuf(image, x, y)
-        cr.paint_with_alpha(1)
-        
-        widget.propagate_expose(widget.get_child(), event)
-        return True
-                    
     def show_time_toolbar2(self):
         self.panel.set_opacity(1)
         return False
