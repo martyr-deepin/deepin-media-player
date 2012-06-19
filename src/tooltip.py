@@ -21,7 +21,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from dtk.ui.constant import DEFAULT_FONT_SIZE
-from dtk.ui.draw import draw_vlinear, draw_font
+from dtk.ui.draw import draw_vlinear, draw_text
 from dtk.ui.theme import ui_theme
 from dtk.ui.utils import get_content_size, propagate_expose
 # from dtk.ui.window import Window
@@ -152,9 +152,11 @@ class Tooltip(gtk.Window):
                      ui_theme.get_shadow_color("tooltipBackground").get_color_info())
         
         # Draw font.
-        draw_font(cr, self.text, self.text_size, 
+        draw_text(cr, self.text, 
+                  rect.x, rect.y, rect.width, rect.height,
+                  self.text_size, 
                   ui_theme.get_color(self.text_color).get_color(),
-                  rect.x, rect.y, rect.width, rect.height)
+                  )
         
         # Propagate expose.
         propagate_expose(widget, event)

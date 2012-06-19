@@ -19,7 +19,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from dtk.ui.draw import draw_line, draw_font
+from dtk.ui.draw import draw_line, draw_text
 from dtk.ui.utils import container_remove_all, color_hex_to_cairo
 from dtk.ui.listview import ListView
 from dtk.ui.listview import get_content_size
@@ -144,13 +144,19 @@ class MediaItem(gobject.GObject):
         '''Render title.'''
         rect.x += self.title_padding_x
         # render_text(cr, rect, self.title)
-        draw_font(cr, self.title, DEFAULT_FONT_SIZE, "#FFFFFF", rect.x, rect.y, rect.width, rect.height, ALIGN_START)
+        draw_text(cr, self.title, 
+                  rect.x, rect.y, rect.width, rect.height, 
+                  DEFAULT_FONT_SIZE, "#FFFFFF", 
+                  alignment=ALIGN_START)
     
     def render_length(self, cr, rect):
         '''Render length.'''
         rect.width -= self.length_padding_x
         # render_text(cr, rect, self.length, ALIGN_END)
-        draw_font(cr, self.length, DEFAULT_FONT_SIZE, "#FFFFFF", rect.x, rect.y, rect.width, rect.height, ALIGN_END)
+        draw_text(cr, self.length, 
+                  rect.x, rect.y, rect.width, rect.height, 
+                  DEFAULT_FONT_SIZE, "#FFFFFF", 
+                  alignment=ALIGN_END)
         
     def get_column_sizes(self):
         '''Get sizes.'''

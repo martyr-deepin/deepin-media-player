@@ -20,7 +20,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from dtk.ui.draw import draw_font
+from dtk.ui.draw import draw_text
 from dtk.ui.utils import get_content_size,propagate_expose
 from dtk.ui.box import EventBox
 
@@ -47,13 +47,17 @@ class ShowTime(object):
         '''Draw media player time.'''
         cr, x, y, w, h = allocation(widget)
         
-        draw_font(cr, self.time_font1, 8, "#45A1CC", 
-                  x - 15, y, w, h)
+        draw_text(cr, self.time_font1, 
+                  x - 15, y, w, h,
+                  8, "#45A1CC", 
+                  )
         
         (font1_width, font1_height) = get_content_size(self.time_font1, 8)
         
-        draw_font(cr, self.time_font2, 9 , "#686868", 
-                  x  - 15 + font1_width, y, w, h)
+        draw_text(cr, self.time_font2, 
+                  x  - 15 + font1_width, y, w, h,
+                  9 , "#686868", 
+                  )
         
         # Propagate expose.
         propagate_expose(widget, event)

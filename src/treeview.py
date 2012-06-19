@@ -27,11 +27,12 @@ import gtk
 import gobject
 from collections import OrderedDict
 
-from draw import draw_pixbuf, draw_vlinear, draw_font
+from draw import draw_pixbuf, draw_vlinear, draw_text
 from utils import (get_content_size, is_single_click, is_double_click, is_right_button, color_hex_to_cairo,
                    cairo_state, get_match_parent)
 from theme import ui_theme
 from skin_config import skin_config
+import pango
 
 
 # (cr, text, font_size, font_color, x, y, width, height, font_align
@@ -44,7 +45,7 @@ class TreeView(gtk.DrawingArea):
         }
     
     def __init__(self, width=20, height = 30,
-                 font_size = 10, font_x_padding=5, font_width=120, font_height = 0,font_align=0,
+                 font_size = 10, font_x_padding=5, font_width=120, font_height = 0,font_align=pango.ALIGN_LEFT,
                  arrow_x_padding = 10, 
                  normal_pixbuf = ui_theme.get_pixbuf("treeview/arrow_right.png"), 
                  press_pixbuf = ui_theme.get_pixbuf("treeview/arrow_down.png")):        
@@ -224,13 +225,15 @@ class TreeView(gtk.DrawingArea):
                         font_color = ui_theme.get_color("treeItemSelectFont").get_color()
                     else:
                         font_color = ui_theme.get_color("treeItemNormalFont").get_color()
-                    draw_font(cr, 
+                    draw_text(cr, 
                               draw_widget.text,
-                              self.font_size,
-                              font_color,
                               self.font_x_padding + draw_widget.width,
                               temp_height + self.height/2, 
-                              self.font_width, self.font_height, self.font_align)                   
+                              self.font_width, self.font_height, 
+                              self.font_size,
+                              font_color,
+                              alignment=self.font_align
+                              )                   
                     
                 font_w, font_h = get_content_size(draw_widget.text, self.font_size)    
                 if draw_widget.tree_view_item.get_has_arrow():

@@ -27,7 +27,7 @@
 import gtk
 from dtk.ui.utils import get_content_size, color_hex_to_cairo
 from skin import app_theme
-from dtk.ui.draw import cairo_state, draw_vlinear, draw_pixbuf, draw_line, draw_font
+from dtk.ui.draw import cairo_state, draw_vlinear, draw_pixbuf, draw_line, draw_text
 import gobject
 
 class Button(gtk.Button):
@@ -86,18 +86,22 @@ class Button(gtk.Button):
                     
         # Draw font.
         if self.label != "":
-            draw_font(cr, self.label, self.font_size,
+            draw_text(cr, self.label, 
+                      x, y, w, h,
+                      self.font_size,
                       app_theme.get_color("buttonFont").get_color(),
-                      x, y, w, h)
+                      )
             
         if self.select_index == self.index:    
             cr.set_source_rgba(0, 0, 0, 0.7)
             cr.rectangle(x, y, w, h)
             cr.fill()
             
-            draw_font(cr, self.label, self.font_size,
+            draw_text(cr, self.label, 
+                      x, y, w, h,
+                      self.font_size,
                       "#FFFFFF",
-                      x, y, w, h)
+                      )
             
         
         return True        
