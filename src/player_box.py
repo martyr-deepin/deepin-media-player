@@ -594,7 +594,10 @@ class PlayerBox(object):
         # subtitle delay key init.
         config_key = self.config.get("OtherKey", "subtitle_advance_key")
         self.keymap[config_key.lower()] = self.key_subtitle_advance
-        # print config_key                
+        # quit full play window.
+        self.keymap["escape".lower()] = self.key_quit_full
+        # print config_key                        
+        
         
     def get_key_event(self, widget, event): # app: key-release-event       
         keyval_name = get_keyevent_name(event)        
@@ -671,31 +674,39 @@ class PlayerBox(object):
         
     def key_set_mute(self):    
         print "key set mute..."
+        pass
         
     def key_pre(self):
         print "pre a key..."
-        pass
+        self.pre_button_clicked(self.play_control_panel.pre_btn)    
     
     def key_next(self):
         print "next a key..."
-    
-    def key_right(self):            
-        print "right key..."
-        self.mp.seek(self.mp.posNum + 5)
+        self.next_button_clicked(self.play_control_panel.next_btn)
         
+    def key_right(self):            
+        # print "right key..."
+        self.mp.seek(self.mp.posNum + 5)
+                
     def key_left(self):
-        print "left key..."
+        # print "left key..."
         self.mp.seek(self.mp.posNum - 5)
         
     def key_space(self):
-        print "space key..."
+        # print "space key..."
         self.virtual_set_start_btn_clicked()
     
     def key_return(self):
-        print "return key.."
+        # print "return key.."
         self.full_play_window(self.app.window)
         self.toolbar.toolbar_full_button.flags = not self.toolbar.toolbar_full_button.flags
             
+    def key_quit_full(self):    
+        # print "quit full key..."
+        self.set_window_quit_full()
+        if not self.toolbar.toolbar_full_button.flags:
+            self.toolbar.toolbar_full_button.flags = not self.toolbar.toolbar_full_button.flags
+        
     '''play list button'''    
     def play_list_button_clicked(self, widget): # play list button signal:clicked.           
         if True == self.play_list_button.button.flags: 
@@ -1616,6 +1627,7 @@ class PlayerBox(object):
         '''media player start play.'''                        
         # full window.
         if self.playwinmax_bool and self.video_aspect_type == "默认":
+            print "start media player."
             self.mp.playwinmax()       
             self.playwinmax_bool = False
             
@@ -1669,7 +1681,8 @@ class PlayerBox(object):
                 # self.ini.write()        
                 self.ini.save()     
                 
-        
+        self.playwinmax_bool = True
+                
     def media_player_next(self, mplayer, play_bool):
         if 1 == play_bool:
             self.media_player_midfy_start_bool()
