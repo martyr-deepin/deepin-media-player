@@ -271,6 +271,7 @@ class  Mplayer(gobject.GObject):
         self.random_num = 0;
         
         self.volumebool = False
+        self.volume     = 100
         # player state.
         # 0: single playing.      
         # 1: order playing.     
@@ -299,9 +300,11 @@ class  Mplayer(gobject.GObject):
                        '0',
                        '-double',
                        '-slave',
-                       '-quiet',
-                       '-wid',
-                       str(self.xid), path]
+                       '-quiet']
+                       
+                CMD.append('-wid')
+                CMD.append('%s'%(str(self.xid)))
+                CMD.append(path)
             else:
                 CMD = ['mplayer',
                        '-double',
@@ -333,11 +336,17 @@ class  Mplayer(gobject.GObject):
             self.get_time_length()
             self.vide_bool = get_vide_flags(self.path)
             # emit play-start.
-            gobject.timeout_add(400, self.emit_play_start_event)
+            gobject.timeout_add(120, self.emit_play_start_event)
             
     def emit_play_start_event(self):        
+        print self.volume
+        print self.volumebool
+        if self.volumebool:
+            self.nomute()
         self.emit("play-start", self.mplayer_pid)
         
+        return False
+    
     ## Cmd control ##    
     def cmd(self, cmdStr):
         '''Mplayer command'''
@@ -459,11 +468,15 @@ class  Mplayer(gobject.GObject):
             self.cmd('af channels=2:2:0:0:1:1\n')
     
     def offmute(self): 
+        self.volumebool = False
         self.cmd('mute 0\n')
-    
+        
+        
     def nomute(self):
         '''Active mute'''
+        self.volumebool = True
         self.cmd('mute 1\n')
+        
         
     ## video Control ##
     # brightness.
