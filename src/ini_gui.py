@@ -64,6 +64,8 @@ class IniGui(Window):
         }
     def __init__(self):
         Window.__init__(self)
+        # Set event.
+        self.connect("motion-notify-event", self.press_save_ini_file)
         self.set_position(gtk.WIN_POS_CENTER)
         self.set_modal(True)
         # self.set_keep_above(True)
@@ -123,7 +125,7 @@ class IniGui(Window):
         
         # bottom button.
         self.ok_btn     = Button("确定")
-        self.cancel_btn = Button("取消")
+        self.cancel_btn = Button("关闭")
         self.ok_btn.connect("clicked", self.save_configure_file_ok_clicked)
         self.cancel_btn.connect("clicked", self.destroy_ini_gui_window_cancel_clicked)
         self.bottom_fixed = gtk.Fixed()
@@ -132,7 +134,7 @@ class IniGui(Window):
         button_x = 440
         button_y = 8
         
-        self.bottom_fixed.put(self.ok_btn, button_x, button_y)
+        # self.bottom_fixed.put(self.ok_btn, button_x, button_y)
         self.bottom_fixed.put(self.cancel_btn, button_x + self.ok_btn.get_size_request()[0] + 20, button_y)
         
         self.main_vbox.pack_start(self.bottom_fixed, False, False)
@@ -140,6 +142,12 @@ class IniGui(Window):
         # Init configure index.
         self.configure.set("文件播放")
         self.show_all()
+        
+    def press_save_ini_file(self, widget, event):    
+        gtk.timeout_add(500, self.press_save_ini_file_time)
+
+    def press_save_ini_file_time(self):    
+        self.save_configure_file_ok_clicked(self.ok_btn)
         
     def draw_scrolled_window_backgournd(self, widget, event):
         cr = widget.window.cairo_create()
@@ -171,41 +179,41 @@ class IniGui(Window):
     
     def save_configure_file_ok_clicked(self, widget):    
         # save ini configure file.
-        print "_____________[FilePlay]________________________"
+        # print "_____________[FilePlay]________________________"
         file_play_dict = self.configure.file_play.get_file_play_state()
         for key in file_play_dict.keys():
             self.ini.set("FilePlay", key, file_play_dict[key])
-            print "%s = %s" % (str(key), str(file_play_dict[key]))
-        print "_____________[SystemSet]_______________________"
+            # print "%s = %s" % (str(key), str(file_play_dict[key]))
+        # print "_____________[SystemSet]_______________________"
         system_set_dict = self.configure.system_set.get_system_set_state()
         for key in system_set_dict.keys():
             self.ini.set("SystemSet", key, system_set_dict[key])
-            print "%s = %s" % (str(key), str(system_set_dict[key]))
-        print "_____________[PlayControl]_____________________"    
+            # print "%s = %s" % (str(key), str(system_set_dict[key]))
+        # print "_____________[PlayControl]_____________________"    
         play_control_dict = self.configure.play_control.get_play_control_state()
         for key in play_control_dict.keys():
             self.ini.set("PlayControl", key, play_control_dict[key])
-            print "%s = %s" % (str(key), str(play_control_dict[key]))
-        print "_____________[OtherKey]________________________"    
+            # print "%s = %s" % (str(key), str(play_control_dict[key]))
+        # print "_____________[OtherKey]________________________"    
         other_key_dict = self.configure.other_key.get_other_set_state()
         for key in other_key_dict.keys():
             self.ini.set("OtherKey", key, other_key_dict[key])
-            print "%s = %s" % (str(key), str(other_key_dict[key]))
-        print "_____________[SubtitleSet]______________________"                
+            # print "%s = %s" % (str(key), str(other_key_dict[key]))
+        # print "_____________[SubtitleSet]______________________"                
         sub_set_dict = self.configure.sub_set.get_subtitle_set_state()
         for key in sub_set_dict.keys():
             self.ini.set("SubtitleSet", key, sub_set_dict[key])
-            print "%s = %s" % (str(key), str(sub_set_dict[key]))
-        print "_____________[ScreenshotSet]____________________"    
+            # print "%s = %s" % (str(key), str(sub_set_dict[key]))
+        # print "_____________[ScreenshotSet]____________________"    
         screenshot_dict = self.configure.screen_shot.get_screenshot_state()
         for key in screenshot_dict.keys():
             self.ini.set("ScreenshotSet", key, screenshot_dict[key])
-            print "%s = %s" % (str(key), str(screenshot_dict[key]))
+            # print "%s = %s" % (str(key), str(screenshot_dict[key]))
             
         self.ini.save()    
         self.emit("config-changed", "save_over")
         # quit configure window.
-        self.destroy()
+        # self.destroy()
     
     def destroy_ini_gui_window_cancel_clicked(self, widget):    
         # quit configure window.
@@ -279,17 +287,17 @@ class FilePlay(gtk.VBox):
         
         # Video file open.
         self.video_file_open_label = Label("视频文件打开时 : ")
-        self.ai_set_radio_btn       = RadioButton()
-        self.ai_set_radio_btn_label = Label("智能调整")
+        self.ai_set_radio_btn       = RadioButton("智能调整")
+        self.ai_set_radio_btn_label = Label("")
         
-        self.adapt_video_btn       = RadioButton()
-        self.adapt_video_btn_label = Label("窗口适应视频")
+        self.adapt_video_btn       = RadioButton("窗口适应视频")
+        self.adapt_video_btn_label = Label("")
 
-        self.close_position_radio_btn       = RadioButton()
-        self.close_position_radio_btn_label = Label("应用关闭尺寸位置")
+        self.close_position_radio_btn       = RadioButton("应用关闭尺寸位置")
+        self.close_position_radio_btn_label = Label("")
 
-        self.full_window_radio_btn       = RadioButton()        
-        self.full_window_radio_btn_label = Label("自动全屏")                        
+        self.full_window_radio_btn       = RadioButton("自动全屏")    
+        self.full_window_radio_btn_label = Label("")            
         set_num = self.ini.get("FilePlay", "video_file_open")        
         
         # Set state(1, 2, 3, 4).
@@ -304,41 +312,44 @@ class FilePlay(gtk.VBox):
             self.ai_set_radio_btn.set_active(True) 
         ################################################################
         # open new file clear play list.
-        self.clear_play_list_btn = CheckButton()        
+        self.clear_play_list_btn = CheckButton("打开新文件时清空播放列表")        
         ini_bool = self.ini.get("FilePlay", "open_new_file_clear_play_list")
         self.clear_play_list_btn.set_active(False)
         if ini_bool:
             if "true" == ini_bool.lower():
                 self.clear_play_list_btn.set_active(True)
                 
-        self.clear_play_list_btn_label = Label("打开新文件时清空播放列表")                
+        self.clear_play_list_btn_label = Label("")
+        
         # memory up close media player -> file play postion.
-        self.file_play_postion_btn = CheckButton()
+        self.file_play_postion_btn = CheckButton("记忆上次关闭播放器时文件的播放位置")
         ini_bool = self.ini.get("FilePlay", "memory_up_close_player_file_postion")
         self.file_play_postion_btn.set_active(False)
         if ini_bool:
             if "true" == ini_bool.lower():
                 self.file_play_postion_btn.set_active(True)
                     
-        self.file_play_postion_btn_label = Label("记忆上次关闭播放器时文件的播放位置")
+        self.file_play_postion_btn_label = Label("")
+        
         # play media when find file play in dir.
-        self.find_file_play_btn = CheckButton() 
+        self.find_file_play_btn = CheckButton("播放连续剧时自动在文件夹里查找关联文件播放") 
         ini_bool = self.ini.get("FilePlay", "find_play_file_relation_file")
         self.find_file_play_btn.set_active(False)
         if ini_bool:
             if "true" == ini_bool.lower():
                 self.find_file_play_btn.set_active(True)
                 
-        self.find_file_play_btn_label = Label("播放连续剧时自动在文件夹里查找关联文件播放")
+        self.find_file_play_btn_label = Label("")
+        
         # mouse progressbar show preview window.
-        self.show_preview_window_btn = CheckButton()
+        self.show_preview_window_btn = CheckButton("鼠标悬停进度条上显示预览图")
         ini_bool = self.ini.get("FilePlay", "mouse_progressbar_show_preview")
         self.show_preview_window_btn.set_active(False)
         if ini_bool:
             if "true" == ini_bool.lower():
                 self.show_preview_window_btn.set_active(True)
             
-        self.show_preview_window_btn_label = Label("鼠标悬停进度条上显示预览图")
+        self.show_preview_window_btn_label = Label("")
         
         # Video file open.
         video_file_open_x = 20
@@ -441,14 +452,15 @@ class SystemSet(gtk.VBox):
         self.heparator.set_size_request(heparator_width, heparator_height)
         # System setting.
         # Minimize pause plaing.
-        self.pause_play_btn = CheckButton()
+        self.pause_play_btn = CheckButton("最小化时暂停播放")
         ini_bool = self.ini.get("SystemSet", "minimize_pause_play")
         self.pause_play_btn.set_active(False)
         if ini_bool:
             if "true" == ini_bool.lower():
                 self.pause_play_btn.set_active(True)            
             
-        self.pause_play_btn_label = Label("最小化时暂停播放")
+        self.pause_play_btn_label = Label("")
+        
         # Screen messagebox.
         self.screen_msg_btn = Label("屏幕提示效果")
         # Font set.        
@@ -1030,14 +1042,14 @@ class SubSet(gtk.VBox):
         self.heparator=HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
         self.heparator.set_size_request(heparator_width, heparator_height)
         # Ai load subtitle.
-        self.ai_load_subtitle_checkbtn       = CheckButton()
+        self.ai_load_subtitle_checkbtn       = CheckButton("自动载入字幕")
         ini_bool = self.ini.get("SubtitleSet", "ai_load_subtitle")
         self.ai_load_subtitle_checkbtn.set_active(False)
         if ini_bool:
             if "true" == ini_bool.lower():            
                 self.ai_load_subtitle_checkbtn.set_active(True)                
                 
-        self.ai_load_subtitle_checkbtn_label = Label("自动载入字幕")
+        self.ai_load_subtitle_checkbtn_label = Label("")
         # Specified Location Search.
         self.specific_location_search_label = Label("指定位置路径 : ")
         self.specific_location_search_entry = TextEntry()
@@ -1106,16 +1118,17 @@ class ScreenShot(gtk.VBox):
         self.heparator=HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
         self.heparator.set_size_request(heparator_width, heparator_height)                
         # Save clipboard.
-        self.save_clipboard_radio = RadioButton()
+        self.save_clipboard_radio = RadioButton("仅保存在剪贴板")
         # save clipboard radio event.
         self.save_clipboard_radio.connect("button-press-event", self.save_clipboard_radio_clicked)
         
-        self.save_clipboard_radio_label = Label("仅保存在剪贴板")
+        self.save_clipboard_radio_label = Label("")
         # Save File.
-        self.save_file_radio = RadioButton()
+        self.save_file_radio = RadioButton("保存成文件")
         self.save_file_radio.connect("button-press-event", self.save_file_radio_clicked)
         self.save_file_radio.set_active(True)
-        self.save_file_radio_label = Label("保存成文件")
+        self.save_file_radio_label = Label("")
+        
         # Save path.
         self.save_path_label = Label("保存路径 : ")
         self.save_path_entry = TextEntry()        
@@ -1158,8 +1171,8 @@ class ScreenShot(gtk.VBox):
                  self.save_path_button.set_clickable(False)
                  
         # 
-        self.current_show_sort_label = Label("按当前显示的画面尺寸截图")
-        self.current_show_sort_check = CheckButton()
+        self.current_show_sort_label = Label("")
+        self.current_show_sort_check = CheckButton("按当前显示的画面尺寸截图")
         self.current_show_sort_check.set_active(False)
         ini_bool = self.ini.get("ScreenshotSet", "current_show_sort")
         if ini_bool:
@@ -1188,7 +1201,7 @@ class ScreenShot(gtk.VBox):
         self.fixed.put(self.save_path_label, screenshot_x_padding, screenshot_y)
         # save type.
         self.fixed.put(self.save_type_label, 
-                       screenshot_x_padding, screenshot_y + self.save_path_label.get_size_request()[1] + 10)        
+                       screenshot_x_padding, screenshot_y + self.save_path_label.get_size_request()[1] + 20)        
         screenshot_x_padding += self.save_path_label.get_size_request()[0] + 10
         # save path entry .
         self.fixed.put(self.save_path_entry, 
@@ -1199,7 +1212,7 @@ class ScreenShot(gtk.VBox):
         screenshot_y += self.save_path_button.get_size_request()[1]
         screenshot_x_padding = screenshot_x + self.save_type_label.get_size_request()[0] + 55
         # save type entry.
-        self.fixed.put(self.save_type_combo, screenshot_x_padding, screenshot_y)                
+        self.fixed.put(self.save_type_combo, screenshot_x_padding, screenshot_y + 10)                
         # 
         screenshot_x = 20
         screenshot_y += self.save_type_combo.get_size_request()[1] + 50
@@ -1295,6 +1308,7 @@ class About(gtk.VBox):
         self.pack_start(self.fixed)
         
         
+
 if __name__ == "__main__":        
     IniGui()
     gtk.main()
