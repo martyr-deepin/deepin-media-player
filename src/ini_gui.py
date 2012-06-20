@@ -106,7 +106,7 @@ class IniGui(Window):
         self.tree_view.add_item(None, TreeViewItem("字幕设置"))
         self.tree_view.add_item(None, TreeViewItem("截图设置"))
         # self.tree_view.add_item(None, TreeViewItem("其它设置"))        
-        self.tree_view.add_item(None, TreeViewItem("关于         "))        
+        # self.tree_view.add_item(None, TreeViewItem("关于         "))        
         
         self.tree_view.add_item(key, TreeViewItem("其它快捷键", has_arrow=False))
         self.tree_view.add_item(key, TreeViewItem("播放控制", has_arrow=False))
@@ -291,10 +291,10 @@ class FilePlay(gtk.VBox):
         self.ai_set_radio_btn       = RadioButton("智能调整")
         self.ai_set_radio_btn_label = Label("")
         
-        self.adapt_video_btn       = RadioButton("窗口适应视频")
+        self.adapt_video_btn       = RadioButton("视频适应窗口")
         self.adapt_video_btn_label = Label("")
 
-        self.close_position_radio_btn       = RadioButton("应用关闭尺寸位置")
+        self.close_position_radio_btn       = RadioButton("上次关闭尺寸")
         self.close_position_radio_btn_label = Label("")
 
         self.full_window_radio_btn       = RadioButton("自动全屏")    
@@ -323,7 +323,7 @@ class FilePlay(gtk.VBox):
         self.clear_play_list_btn_label = Label("")
         
         # memory up close media player -> file play postion.
-        self.file_play_postion_btn = CheckButton("记忆上次关闭播放器时文件的播放位置")
+        self.file_play_postion_btn = CheckButton("自动从上次停止位置播放")
         ini_bool = self.ini.get("FilePlay", "memory_up_close_player_file_postion")
         self.file_play_postion_btn.set_active(False)
         if ini_bool:
@@ -333,7 +333,7 @@ class FilePlay(gtk.VBox):
         self.file_play_postion_btn_label = Label("")
         
         # play media when find file play in dir.
-        self.find_file_play_btn = CheckButton("播放连续剧时自动在文件夹里查找关联文件播放") 
+        self.find_file_play_btn = CheckButton("自动查找相似文件连续播放") 
         ini_bool = self.ini.get("FilePlay", "find_play_file_relation_file")
         self.find_file_play_btn.set_active(False)
         if ini_bool:
@@ -343,7 +343,7 @@ class FilePlay(gtk.VBox):
         self.find_file_play_btn_label = Label("")
         
         # mouse progressbar show preview window.
-        self.show_preview_window_btn = CheckButton("鼠标悬停进度条上显示预览图")
+        self.show_preview_window_btn = CheckButton("鼠标悬停进度条时显示预览图")
         ini_bool = self.ini.get("FilePlay", "mouse_progressbar_show_preview")
         self.show_preview_window_btn.set_active(False)
         if ini_bool:
@@ -1052,7 +1052,7 @@ class SubSet(gtk.VBox):
                 
         self.ai_load_subtitle_checkbtn_label = Label("")
         # Specified Location Search.
-        self.specific_location_search_label = Label("指定位置路径 : ")
+        self.specific_location_search_label = Label("指定位置 : ")
         self.specific_location_search_entry = InputEntry()
         text_string = self.ini.get("SubtitleSet", "specific_location_search")
         if text_string:
@@ -1119,7 +1119,7 @@ class ScreenShot(gtk.VBox):
         self.heparator=HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
         self.heparator.set_size_request(heparator_width, heparator_height)                
         # Save clipboard.
-        self.save_clipboard_radio = RadioButton("仅保存在剪贴板")
+        self.save_clipboard_radio = RadioButton("保存在剪贴板")
         # save clipboard radio event.
         self.save_clipboard_radio.connect("button-press-event", self.save_clipboard_radio_clicked)
         
