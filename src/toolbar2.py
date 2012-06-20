@@ -49,10 +49,11 @@ class ToolBar2(object):
         self.show_time = ShowTime()
         self.show_time.time_font1 = "00 : 00 : 00 / "
         self.show_time.time_font2 = "00 : 00 : 00"
+        self.show_time.set_time_font(self.show_time.time_font1, self.show_time.time_font2)
         self.show_time_hframe.add(self.show_time.time_box)
         self.show_time.time_box.set_size_request(110, -1)
-        self.show_time_hframe.set(0, 0.5, 0, 0)
-        self.show_time_hframe.set_padding(0, 0, 30, 0)
+        self.show_time_hframe.set(0, 0, 1, 1)
+        self.show_time_hframe.set_padding(0, 0, 10, 0)
         
         self.play_control_panel = PlayControlPanel()        
         self.play_control_panel_hframe = self.play_control_panel.hbox_hframe
