@@ -150,8 +150,8 @@ class PlayerBox(object):
         '''Title root menu.'''
         #In title root menu.
         self.sort_menu = Menu([(None, "截图", self.key_sort_image),      
-                               (None, "打开截图目录", self.open_sort_image_dir),   
-                               (None, "设置截图保存目录", None)
+                               (None, "打开截图目录", self.open_sort_image_dir)
+                               # (None, "设置截图保存目录", None)
                                ])                
         # In title root menu.
         self.subtitle_menu = Menu([(None, "载入字幕", None),      
@@ -173,13 +173,13 @@ class PlayerBox(object):
                                  (None, "16:10",  self.set_16X10_aspect),
                                  (None, "1.85:1", self.set_1_85X1_aspect),
                                  (None, "2.35:1", self.set_2_35X1_aspect),
-                                 (None),
-                                 (None, "0.5倍尺寸", None),
-                                 (None, "1倍", None),
-                                 (None, "1.5倍", None),
-                                 (None, "2倍", None),
-                                 (None),
-                                 (None, "全屏/退出", None),
+                                 # (None),
+                                 # (None, "0.5倍尺寸", None),
+                                 # (None, "1倍", None),
+                                 # (None, "1.5倍", None),
+                                 # (None, "2倍", None),
+                                 # (None),
+                                 # (None, "全屏/退出", None),
                                  ])
         # In title root menu.
         self.play_state_menu = Menu([(None, "单个播放", self.sigle_play),      
@@ -201,8 +201,8 @@ class PlayerBox(object):
                                ])
         # In title root menu.
         self.file_menu = Menu([(None, "打开文件", self.add_file),
-                               (None, "打开文件夹", self.add_file_dir),
-                              (None, "播放光盘", None)])
+                               (None, "打开文件夹", self.add_file_dir)])
+                              # (None, "播放光盘", None)])
         
         # In title root menu.
         self.help_menu = Menu([(None, "帮助信息", None),
@@ -213,12 +213,12 @@ class PlayerBox(object):
                                      (None, "播放", self.play_menu),
                                      (None, "画面", self.screen_menu),
                                      (None, "声音", self.volume_menu),
-                                     (None, "字幕", self.subtitle_menu),
+                                     # (None, "字幕", self.subtitle_menu),
                                      (None, "截图", self.sort_menu),                            
                                      (None, "选项", self.config_gui),
-                                     (None, "总在最前", None),
-                                     (None, "自定义换肤", None),
-                                     (None, "帮助与反馈", self.help_menu),
+                                     # (None, "总在最前", None),
+                                     # (None, "自定义换肤", None),
+                                     # (None, "帮助与反馈", self.help_menu),
                                      (None, "退出", None)],
                                     True)                  
         
