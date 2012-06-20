@@ -23,7 +23,7 @@ from skin import app_theme
 
 from dtk.ui.utils import propagate_expose, alpha_color_hex_to_cairo
 from dtk.ui.button import Button
-from dtk.ui.entry import TextEntry, ShortcutKeyEntry
+from dtk.ui.entry import InputEntry, ShortcutKeyEntry
 from dtk.ui.combo import ComboBox
 from dtk.ui.titlebar import Titlebar
 from dtk.ui.window import Window 
@@ -1052,7 +1052,7 @@ class SubSet(gtk.VBox):
         self.ai_load_subtitle_checkbtn_label = Label("")
         # Specified Location Search.
         self.specific_location_search_label = Label("指定位置路径 : ")
-        self.specific_location_search_entry = TextEntry()
+        self.specific_location_search_entry = InputEntry()
         text_string = self.ini.get("SubtitleSet", "specific_location_search")
         if text_string:
             self.specific_location_search_entry.set_text(text_string)
@@ -1131,7 +1131,7 @@ class ScreenShot(gtk.VBox):
         
         # Save path.
         self.save_path_label = Label("保存路径 : ")
-        self.save_path_entry = TextEntry()        
+        self.save_path_entry = InputEntry()
         # text_string = self.ini.get("ScreenshotSet", "save_path")
         # if text_string:
         #     self.save_path_entry.set_text(text_string)

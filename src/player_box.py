@@ -910,6 +910,9 @@ class PlayerBox(object):
             
         open_dialog.destroy()                
         
+        self.clear_play_list_bool = True
+        
+        
     # def get_path_name(self, open_dialog, path_string):    
     def get_path_name(self, path_string):    
         # # print path_string

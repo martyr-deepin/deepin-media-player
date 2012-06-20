@@ -336,7 +336,7 @@ class  Mplayer(gobject.GObject):
             self.get_time_length()
             self.vide_bool = get_vide_flags(self.path)
             # emit play-start.
-            gobject.timeout_add(150, self.emit_play_start_event)
+            gobject.timeout_add(250, self.emit_play_start_event)
             
     def emit_play_start_event(self):        
         self.setvolume(self.volume)
