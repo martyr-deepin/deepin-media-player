@@ -297,7 +297,7 @@ class PlayerBox(object):
         self.progressbar.pb.connect("button-press-event", self.progressbar_player_point_pos_modify, self.progressbar, 1)
         self.progressbar.pb.connect("button-release-event", self.progressbar_set_point_bool, self.progressbar)
         
-        # self.progressbar.pb.connect("enter-notify-event", self.show_preview_enter)
+        self.progressbar.pb.connect("enter-notify-event", self.show_preview_enter)
         self.progressbar.pb.connect("leave-notify-event", self.hide_preview_leave)        
         
         '''Toolbar Init.'''
@@ -329,7 +329,7 @@ class PlayerBox(object):
         self.toolbar2.progressbar.pb.connect("button-release-event",
                                              self.progressbar_set_point_bool,
                                              self.toolbar2.progressbar)
-        # self.toolbar2.progressbar.pb.connect("enter-notify-event", self.show_preview_enter)
+        self.toolbar2.progressbar.pb.connect("enter-notify-event", self.show_preview_enter)
         self.toolbar2.progressbar.pb.connect("leave-notify-event", self.hide_preview_leave)        
         
         # play_control_panel.
@@ -1552,9 +1552,11 @@ class PlayerBox(object):
         self.preview.move_preview(self.x_root - self.preview.bg.get_allocation()[2]/2,
                                   preview_y_padding)
                         
-    # def show_preview_enter(self, widget, event):
-    #     pass
-        
+    def show_preview_enter(self, widget, event):
+        if 0 == self.mp.state:
+            self.progressbar.drag_pixbuf_bool = False
+            self.toolbar2.progressbar.drag_pixbuf_bool = False
+            
     def hide_preview_leave(self, widget, event):
         '''Hide preview window and remove show,read_id'''
         self.preview.hide_preview()
