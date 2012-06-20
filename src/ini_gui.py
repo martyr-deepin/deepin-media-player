@@ -105,7 +105,7 @@ class IniGui(Window):
         key = self.tree_view.add_item(None, TreeViewItem("快捷键    "))
         self.tree_view.add_item(None, TreeViewItem("字幕设置"))
         self.tree_view.add_item(None, TreeViewItem("截图设置"))
-        self.tree_view.add_item(None, TreeViewItem("其它设置"))        
+        # self.tree_view.add_item(None, TreeViewItem("其它设置"))        
         self.tree_view.add_item(None, TreeViewItem("关于         "))        
         
         self.tree_view.add_item(key, TreeViewItem("其它快捷键", has_arrow=False))
