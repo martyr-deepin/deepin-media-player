@@ -1867,4 +1867,53 @@ class PlayerBox(object):
     def set_menu_common(self):                          
         self.show_window_widget(self.toolbar.toolbar_common_button)                         
                               
-                          
+    '''Set channel'''    
+    def normal_channel(self):
+        self.mp.normalchannel
+    def left_channel(self):
+        self.mp.leftchannel()
+        
+    def right_channel(self):
+        self.mp.rightchannel()
+                
+    '''Subtitle.'''    
+    def load_subtitle(self, sub_file): 
+        self.mp.subload(sub_file)
+        
+    def remove_subtitle(self): 
+        self.mp.subremove()
+        
+    def play_win_max(self):    
+        self.mp.playwinmax()
+        
+    ## video Control ##
+    # brightness.        
+    def add_bri(self):
+        self.mp.addbri()
+        
+    def dec_bri(self):    
+        self.mp.decbri()
+        
+    # saturation.    
+    def add_sat(self):
+        self.mp.addsat()
+        
+    def dec_sat(self):
+        self.mp.decsat()
+        
+    # contrast.     
+    def add_con(self):
+        self.mp.addcon()
+        
+    def dec_con(self):    
+        self.mp.deccon()
+        
+    # hue.    
+    def add_hue(self):    
+        self.mp.addhue()
+        
+    def dec_hue(self):    
+        self.mp.dec_hue()
+        
+        
+
