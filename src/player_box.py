@@ -214,7 +214,7 @@ class PlayerBox(object):
         self.title_root_menu = Menu([(None, "文件", self.file_menu),
                                      (None, "播放", self.play_menu),
                                      (None, "画面", self.screen_menu),
-                                     (None, "声音", self.volume_menu),
+                                     # (None, "声音", self.volume_menu),
                                      # (None, "字幕", self.subtitle_menu),
                                      (None, "截图", self.sort_menu),
                                      (None, "选项", self.config_gui),
