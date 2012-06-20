@@ -52,6 +52,7 @@ class ToolBar2(object):
         self.show_time_hframe.add(self.show_time.time_box)
         self.show_time.time_box.set_size_request(110, -1)
         self.show_time_hframe.set(0, 0.5, 0, 0)
+        self.show_time_hframe.set_padding(0, 0, 30, 0)
         
         self.play_control_panel = PlayControlPanel()        
         self.play_control_panel_hframe = self.play_control_panel.hbox_hframe

@@ -382,10 +382,11 @@ class PlayerBox(object):
         self.show_time_label_hframe = HorizontalFrame()        
         self.show_time_label = ShowTime()
         self.show_time_label.time_box.set_size_request(110, -1)
-        self.show_time_label.time_font1 = "00 : 00 : 00  "
-        self.show_time_label.time_font2 = "  / 00 : 00 : 00"
+        self.show_time_label.time_font1 = "00 : 00 : 00"
+        self.show_time_label.time_font2 = " / 00 : 00 : 00"
         self.show_time_label_hframe.add(self.show_time_label.time_box)
         self.show_time_label_hframe.set(0, 0.5, 0, 0)
+        self.show_time_label_hframe.set_padding(0, 0, 30, 0)
         
         self.play_control_panel = PlayControlPanel()
         
@@ -1568,8 +1569,8 @@ class PlayerBox(object):
         self.progressbar.max = length
         self.toolbar2.progressbar.max = length # toolbar2 max value.
         Hour, Min, Sec = self.mp.time(length)
-        self.show_time_label.time_font1 = self.set_time_string(Hour) + " : " + self.set_time_string(Min) + " : "+ self.set_time_string(Sec) + "  /"
-        self.toolbar2.show_time.time_font1 = self.set_time_string(Hour) + " : " + self.set_time_string(Min) + " : "+ self.set_time_string(Sec) + "  /"
+        self.show_time_label.time_font1 = self.set_time_string(Hour) + " : " + self.set_time_string(Min) + " : "+ self.set_time_string(Sec) + " / "
+        self.toolbar2.show_time.time_font1 = self.set_time_string(Hour) + " : " + self.set_time_string(Min) + " : "+ self.set_time_string(Sec) + " / "
 
         
     def get_time_pos(self, mplayer, pos):
@@ -1579,8 +1580,8 @@ class PlayerBox(object):
             if not self.point_bool:
                 self.progressbar.set_pos(pos)
                 self.toolbar2.progressbar.set_pos(pos)
-                self.show_time_label.time_font2 = self.set_time_string(self.mp.timeHour) + ":" + self.set_time_string(self.mp.timeMin) + ":" + self.set_time_string(self.mp.timeSec)
-                self.toolbar2.show_time.time_font2 = self.set_time_string(self.mp.timeHour) + ":" + self.set_time_string(self.mp.timeMin) + ":" + self.set_time_string(self.mp.timeSec)
+                self.show_time_label.time_font2 = self.set_time_string(self.mp.timeHour) + " : " + self.set_time_string(self.mp.timeMin) + " : " + self.set_time_string(self.mp.timeSec)
+                self.toolbar2.show_time.time_font2 = self.set_time_string(self.mp.timeHour) + " : " + self.set_time_string(self.mp.timeMin) + " : " + self.set_time_string(self.mp.timeSec)
                 self.toolbar2.panel.queue_draw()
                 self.app.window.queue_draw()
                 
