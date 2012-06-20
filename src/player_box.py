@@ -120,6 +120,7 @@ class PlayerBox(object):
         self.hbox = gtk.HBox()
         self.vbox = gtk.VBox()
         self.main_vbox_hframe = HorizontalFrame(1)
+        self.main_vbox_hframe.set_padding(0, 0, 2, 2)
         self.main_vbox_hframe.add(self.main_vbox)
 
         '''play list popup menu'''
@@ -1224,7 +1225,7 @@ class PlayerBox(object):
         self.app.show_titlebar() # show titlebar.
         self.progressbar.show_progressbar()
 
-        self.main_vbox_hframe.set_padding(0, 0, 1, 1)
+        self.main_vbox_hframe.set_padding(0, 0, 2, 2)
         self.toolbar.panel.hide_all()
         self.show_toolbar_bool = False
         self.toolbar2.panel.hide_all()
