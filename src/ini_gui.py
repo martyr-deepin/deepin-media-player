@@ -84,8 +84,8 @@ class IniGui(Window):
         self.titlebar.min_button.connect("clicked", lambda w: self.min_window())
         # Tree view window.
         self.scrolled_window_frame  = gtk.Alignment()
-        self.scrolled_window_frame.set(1, 1, 1, 1)
-        self.scrolled_window_frame.set_padding(4, 0, 0, 0)        
+        self.scrolled_window_frame.set(0, 0, 1, 1)
+        self.scrolled_window_frame.set_padding(2, 0, 0, 0)        
         
         self.scrolled_window = ScrolledWindow()
         
@@ -113,8 +113,8 @@ class IniGui(Window):
         
                         
         self.main_hbox_frame = gtk.Alignment()
-        self.main_hbox_frame.set(1, 1, 1, 1)
-        self.main_hbox_frame.set_padding(4, 4, 4, 4)
+        self.main_hbox_frame.set(0, 0, 1, 1)
+        self.main_hbox_frame.set_padding(4, 4, 2, 0)
         
         self.main_hbox_frame.add(self.main_hbox)
         self.main_vbox.pack_start(self.titlebar, False, False)
@@ -126,13 +126,14 @@ class IniGui(Window):
         # bottom button.
         self.ok_btn     = Button("确定")
         self.cancel_btn = Button("关闭")
+        self.cancel_btn.set_size_request(80, 28)
         self.ok_btn.connect("clicked", self.save_configure_file_ok_clicked)
         self.cancel_btn.connect("clicked", self.destroy_ini_gui_window_cancel_clicked)
         self.bottom_fixed = gtk.Fixed()
         bottom_fixed_height = 45
         self.bottom_fixed.set_size_request(1, bottom_fixed_height)
         button_x = 440
-        button_y = 8
+        button_y = 6
         
         # self.bottom_fixed.put(self.ok_btn, button_x, button_y)
         self.bottom_fixed.put(self.cancel_btn, button_x + self.ok_btn.get_size_request()[0] + 20, button_y)
@@ -168,9 +169,9 @@ class IniGui(Window):
         rect = widget.get_allocation()
         cr.set_source_rgba(1, 1, 1, 0.85)
         width_padding = self.scrolled_window_frame.get_allocation()[2]
-        cr.rectangle(rect.x + width_padding + 4, 
+        cr.rectangle(rect.x + width_padding + 2, 
                      rect.y, 
-                     rect.width - width_padding - 7, 
+                     rect.width - width_padding - 4, 
                      rect.height)
         cr.fill()
         
