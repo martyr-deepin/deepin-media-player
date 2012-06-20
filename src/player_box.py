@@ -1637,7 +1637,7 @@ class PlayerBox(object):
         #play memory.
         pos = self.ini.get("PlayMemory", '"%s"' % ((mplayer.path)))
         if pos is not None:
-            gtk.timeout_add(500, self.get_pos_ste_seek, pos)
+            gtk.timeout_add(140, self.get_pos_ste_seek, pos)
 
         # # title show play file name.
         file_name = self.get_player_file_name(mplayer.path)
