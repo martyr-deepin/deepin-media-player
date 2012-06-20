@@ -190,8 +190,8 @@ class PlayerBox(object):
                                     ) 
         # In title root menu.
         self.play_menu = Menu([(None, "全屏播放", self.key_return),
-                               (None, "窗口模式", None),
-                               (None, "简洁模式", None),
+                               # (None, "普通模式", self.set_menu_common),
+                               (None, "简洁模式", self.set_menu_concise),
                                (None, "上一首", self.key_pre),
                                (None, "下一首", self.key_next),
                                (None),
@@ -665,8 +665,12 @@ class PlayerBox(object):
         print "add brightness..."
     
     def key_concise(self):
-        print "concise..."
-    
+        print "concise..."               
+        if self.mode_state_bool:
+            self.show_window_widget(self.toolbar.toolbar_common_button)
+        else:    
+            self.hide_window_widget(self.toolbar.toolbar_concise_button)
+        
     def key_add_volume(self):
         print "add volume..."
         self.key_set_volume(1)    
@@ -1852,3 +1856,13 @@ class PlayerBox(object):
     def config_gui(self):
         ini_gui = IniGui()
         ini_gui.connect("config-changed", self.restart_load_config_file)
+                              
+    # Menu concise.                              
+    def set_menu_concise(self):
+        self.hide_window_widget(self.toolbar.toolbar_concise_button)
+                              
+    # Menu common.                              
+    def set_menu_common(self):                          
+        self.show_window_widget(self.toolbar.toolbar_common_button)                         
+                              
+                          
