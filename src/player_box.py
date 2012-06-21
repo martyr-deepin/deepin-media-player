@@ -1131,7 +1131,8 @@ class PlayerBox(object):
                     self.virtual_set_start_btn_clicked()
                     self.minimize_pause_play_bool = False
 
-        self.set_ascept_function()
+        if 1 == self.mp.state:            
+            self.set_ascept_function()
 
     def set_restart_aspect(self):
         self.screen_frame.set(0.0, 0.0, 1.0, 1.0)
@@ -1629,6 +1630,7 @@ class PlayerBox(object):
 
     def media_player_start(self, mplayer, play_bool):
         '''media player start play.'''
+        self.set_ascept_function()
         # full window.
         if self.playwinmax_bool and self.video_aspect_type == "默认":
             # print "start media player."
