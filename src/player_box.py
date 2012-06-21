@@ -628,7 +628,7 @@ class PlayerBox(object):
         # self.keymap[""]()
         if keyval_name == " ":
             keyval_name = "space"
-        print keyval_name
+        # print keyval_name
         keyval_name = keyval_name.lower()
         if self.keymap.has_key(keyval_name):
             self.keymap[keyval_name]()
@@ -729,10 +729,16 @@ class PlayerBox(object):
 
     def key_quit_full(self):
         # print "quit full key..."
-        self.set_window_quit_full()
+        if self.full_bool: # Full player window.        
+            self.set_window_quit_full()
+        else:    
+            if self.mode_state_bool:
+                self.show_window_widget(self.toolbar.toolbar_common_button)
+        
         if not self.toolbar.toolbar_full_button.flags:
             self.toolbar.toolbar_full_button.flags = not self.toolbar.toolbar_full_button.flags
-
+            
+            
     '''play list button'''
     def play_list_button_clicked(self, widget): # play list button signal:clicked.
         if True == self.play_list_button.button.flags:
