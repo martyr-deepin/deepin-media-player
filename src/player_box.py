@@ -221,7 +221,7 @@ class PlayerBox(object):
                                      # (None, "总在最前", None),
                                      # (None, "自定义换肤", None),
                                      # (None, "帮助与反馈", self.help_menu),
-                                     (None, "退出", None)],
+                                     (None, "退出", self.set_menu_quit)],
                                     True)
 
         '''Tooltip window'''
@@ -1912,6 +1912,10 @@ class PlayerBox(object):
     def set_menu_common(self):
         self.show_window_widget(self.toolbar.toolbar_common_button)
 
+    # quit .    
+    def set_menu_quit(self):    
+        self.app.window.destroy()
+        
     '''Set channel'''
     def normal_channel(self):
         self.mp.normalchannel
