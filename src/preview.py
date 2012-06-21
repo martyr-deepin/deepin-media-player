@@ -31,7 +31,7 @@ class PreView(object):
         self.video_height = 0
         
         self.mp = Mplayer()
-        self.mp.connect("play-start", self.get_video_width_and_height)
+        # self.mp.connect("play-start", self.get_video_width_and_height)
         self.xid = None
         self.pos = pos
         
