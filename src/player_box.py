@@ -1142,24 +1142,29 @@ class PlayerBox(object):
         self.video_aspect_type = "默认"
 
     def set_4X3_aspect(self):    # munu callback
-        self.video_aspect_type = "4:3"
-        self.set_ascept_function()
+        if 1 == self.mp.state:
+            self.video_aspect_type = "4:3"
+            self.set_ascept_function()
 
     def set_16X9_aspect(self):
-        self.video_aspect_type = "16:9"
-        self.set_ascept_function()
+        if 1 == self.mp.state:
+            self.video_aspect_type = "16:9"
+            self.set_ascept_function()
 
     def set_16X10_aspect(self):
-        self.video_aspect_type = "16:10"
-        self.set_ascept_function()
+        if 1 == self.mp.state:
+            self.video_aspect_type = "16:10"
+            self.set_ascept_function()
 
     def set_1_85X1_aspect(self):
-        self.video_aspect_type = "1.85:1"
-        self.set_ascept_function()
+        if 1 == self.mp.state:
+            self.video_aspect_type = "1.85:1"
+            self.set_ascept_function()
 
     def set_2_35X1_aspect(self):
-        self.video_aspect_type = "2.35:1"
-        self.set_ascept_function()
+        if 1 == self.mp.state:
+            self.video_aspect_type = "2.35:1"
+            self.set_ascept_function()
 
     def set_ascept_function(self):
         if not self.playwinmax_bool and self.video_aspect_type != "默认":
@@ -1660,6 +1665,8 @@ class PlayerBox(object):
 
     def media_player_end(self, mplayer, play_bool):
         '''player end.'''
+        # return screen framt.
+        self.screen_frame.set(0.0, 0.0, 1.0, 1.0)
         # Quit preview window player.
         self.preview.quit_preview_player()
         #print self.input_string + "Linux Deepin Media player...end"
