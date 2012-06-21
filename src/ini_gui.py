@@ -103,13 +103,14 @@ class IniGui(Window):
         self.tree_view.add_item(None, TreeViewItem("文件播放"))
         self.tree_view.add_item(None, TreeViewItem("系统设置"))
         key = self.tree_view.add_item(None, TreeViewItem("快捷键    "))
+        self.tree_view.add_item(key, TreeViewItem("播放控制", has_arrow=False))
+        self.tree_view.add_item(key, TreeViewItem("其它快捷键", has_arrow=False))        
+        
         self.tree_view.add_item(None, TreeViewItem("字幕设置"))
         self.tree_view.add_item(None, TreeViewItem("截图设置"))
         # self.tree_view.add_item(None, TreeViewItem("其它设置"))        
         # self.tree_view.add_item(None, TreeViewItem("关于         "))        
         
-        self.tree_view.add_item(key, TreeViewItem("其它快捷键", has_arrow=False))
-        self.tree_view.add_item(key, TreeViewItem("播放控制", has_arrow=False))
         
                         
         self.main_hbox_frame = gtk.Alignment()
@@ -697,12 +698,13 @@ class PlayControl(gtk.VBox):
                        play_control_x_padding, play_control_y)       
         self.fixed.put(self.pre_a_entry_label, play_control_x_padding, play_control_y - self.open_file_entry_label.get_size_request()[1] - 2)
         # open file dir and next a.
+        # play_control_y += self.pre_a_entry.get_size_request()[1] + 10
         play_control_y += self.pre_a_entry.get_size_request()[1] + 10
         self.fixed.put(self.open_file_dir_entry_label,
                        play_control_x, play_control_y)
         self.fixed.put(self.next_a_entry_label,
                        play_control_x_padding, play_control_y)
-        play_control_y += self.next_a_entry.get_size_request()[1] + 2
+        play_control_y += self.next_a_entry.get_size_request()[1] - 10
         self.fixed.put(self.open_file_dir_entry,
                        play_control_x, play_control_y)        
         self.fixed.put(self.next_a_entry,
