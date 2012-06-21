@@ -85,7 +85,7 @@ class OpenItem(gobject.GObject):
         self.modify_date_width = 80
         
         
-    def render_title(self, cr, rect):
+    def render_title(self, cr, rect, in_selection, in_highlight):
         '''Render title.'''
         draw_pixbuf(cr, self.pixbuf, rect.x, rect.y)        
         rect.x += self.title_padding_x + self.pixbuf.get_width() 
@@ -95,7 +95,7 @@ class OpenItem(gobject.GObject):
         
         
     
-    def render_length(self, cr, rect):
+    def render_length(self, cr, rect, in_selection, in_highlight):
         '''Render length.'''
         rect.x += self.title_padding_x
         rect.width -= self.title_padding_x * 2

@@ -140,7 +140,7 @@ class MediaItem(gobject.GObject):
         self.length_width = 80
         
         
-    def render_title(self, cr, rect):
+    def render_title(self, cr, rect, in_selection, in_highlight):
         '''Render title.'''
         rect.x += self.title_padding_x
         # render_text(cr, rect, self.title)
@@ -149,7 +149,7 @@ class MediaItem(gobject.GObject):
                   DEFAULT_FONT_SIZE, "#FFFFFF", 
                   alignment=ALIGN_START)
     
-    def render_length(self, cr, rect):
+    def render_length(self, cr, rect, in_selection, in_highlight):
         '''Render length.'''
         rect.width -= self.length_padding_x
         # render_text(cr, rect, self.length, ALIGN_END)

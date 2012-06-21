@@ -136,12 +136,12 @@ class MediaItem(gobject.GObject):
         (self.length_width, self.length_height) = get_content_size(self.length, 4) #DEFAULT_FONT_SIZE
         
         
-    def render_title(self, cr, rect):
+    def render_title(self, cr, rect, in_selection, in_highlight):
         '''Render title.'''
         rect.x += self.title_padding_x
         render_text(cr, rect, self.title)
     
-    def render_length(self, cr, rect):
+    def render_length(self, cr, rect, in_selection, in_highlight):
         '''Render length.'''
         rect.width -= self.length_padding_x
         render_text(cr, rect, self.length, ALIGN_END)
