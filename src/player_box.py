@@ -1618,7 +1618,7 @@ class PlayerBox(object):
         self.show_time_label.time_font1 = self.set_time_string(Hour) + ":" + self.set_time_string(Min) + ":"+ self.set_time_string(Sec)
         self.toolbar2.show_time.time_font1 = self.set_time_string(Hour) + ":" + self.set_time_string(Min) + ":"+ self.set_time_string(Sec) 
         self.show_time_label.set_time_font(self.show_time_label.time_font2, self.show_time_label.time_font1)
-        self.toolbar2.show_time.set_time_font(self.show_time_label.time_font1, self.toolbar2.show_time.time_font2)
+        self.toolbar2.show_time.set_time_font(self.show_time_label.time_font2, self.toolbar2.show_time.time_font1)
 
     def get_time_pos(self, mplayer, pos):
         '''Get mplayer pos to pos of progressbar.'''
@@ -1632,8 +1632,8 @@ class PlayerBox(object):
                 
                 self.show_time_label.set_time_font(self.show_time_label.time_font2,
                                                    self.show_time_label.time_font1)
-                self.toolbar2.show_time.set_time_font(self.show_time_label.time_font1,
-                                                   self.show_time_label.time_font2)
+                self.toolbar2.show_time.set_time_font(self.show_time_label.time_font2,
+                                                   self.show_time_label.time_font1)
                 
                 self.toolbar2.panel.queue_draw()
                 self.app.window.queue_draw()
