@@ -712,11 +712,11 @@ class PlayerBox(object):
 
     def key_right(self):
         # print "right key..."
-        self.mp.seek(self.mp.posNum + 5)
+        self.mp.seek(self.mp.posNum + 20)
 
     def key_left(self):
         # print "left key..."
-        self.mp.seek(self.mp.posNum - 5)
+        self.mp.seek(self.mp.posNum - 20)
 
     def key_space(self):
         # print "space key..."
