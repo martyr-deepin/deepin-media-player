@@ -39,11 +39,11 @@ class ShowTime(object):
         # self.time_box = EventBox()       
         # self.time_box.connect("expose-event", self.draw_play_time)
         
-    def set_time_font(self, time_font1, time_font2):    
+    def set_time_font(self, time_font2, time_font1):    
         self.time_font1 = str(time_font1)
         self.time_font2 = str(time_font2)
         
-        self.time_box.set_text(self.time_font1 + self.time_font2)
+        self.time_box.set_text(self.time_font2 + self.time_font1)
         # hbox = self.time_box.get_parent()
         # hbox.queue_draw()
         
