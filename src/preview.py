@@ -199,12 +199,12 @@ class PreView(object):
         if 1 == self.mp.state:            
             self.mp.quit()
             
-    def get_video_width_and_height(self, mp, mp_pid, w1, h1, w2, h2):        
-        self.video_width = w1
-        self.video_height = h1
-        if w2 > w1:
-            self.video_width = w2
-            self.video_height = h2
+    # def get_video_width_and_height(self, mp, mp_pid, w1, h1, w2, h2):        
+    #     self.video_width = w1
+    #     self.video_height = h1
+    #     if w2 > w1:
+    #         self.video_width = w2
+    #         self.video_height = h2
         
     def set_preview_path(self, path):        
         if 0 == self.mp.state:

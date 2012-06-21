@@ -882,7 +882,8 @@ class PlayerBox(object):
 
     def open_button_clicked(self, widget):
         self.show_open_dialog_window()
-
+        # self.clear_play_list_bool = True
+        
     def show_open_dir_dialog_window(self):
         open_dialog = gtk.FileChooserDialog("深度影音打开文件夹对话框",
                                             None,
@@ -923,10 +924,11 @@ class PlayerBox(object):
         if res == gtk.RESPONSE_OK:
             path_string = open_dialog.get_filename()
             self.get_path_name(path_string)
-
+            
+        self.clear_play_list_bool = True     
         open_dialog.destroy()
 
-        self.clear_play_list_bool = True
+        
 
 
     # def get_path_name(self, open_dialog, path_string):
