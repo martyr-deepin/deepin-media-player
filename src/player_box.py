@@ -1537,7 +1537,12 @@ class PlayerBox(object):
             else:
                 self.progressbar.set_pos(0)
                 self.toolbar2.progressbar.set_pos(0)
-
+        else:                    
+            progressbar.drag_bool = True
+            
+            # self.point_bool = False
+            
+            
     def progressbar_player_drag_pos_modify(self, widget, event, progressbar, pb_bit):
         '''Set player rate of progress.'''
 
