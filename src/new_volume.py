@@ -34,7 +34,7 @@ import gobject
 100 / 500 = 0.2
 当前高亮位置(x=100) * 0.2 = 20
 x = 500 -> 500 * 0.2 = 100
-x = 100 -> 100 * 0.2 = 20
+x = 100 -> 100 * 0.2 = 20 
 '''
 
 class VolumeButton(gtk.EventBox):
@@ -46,7 +46,7 @@ class VolumeButton(gtk.EventBox):
                  volume_max_value = 100,
                  volume_width     = 500,
                  volume_x         = 50,
-                 volume_y         = 50,
+                 volume_y         = 15,
                  scroll_bool = False,
                  bg_color = app_theme.get_alpha_color("volumebutton_bg"),
                  fg_color = app_theme.get_alpha_color("volumebutton_fg"),
@@ -67,7 +67,8 @@ class VolumeButton(gtk.EventBox):
         self.mute_volume_pixbuf     = mute_volume_pixbuf
         self.point_volume_pixbuf    = point_volume_pixbuf        
         '''Init Set VolumeButton attr.'''
-        self. set_visible_window(True)
+        self.set_size_request(volume_width, 30)
+        self.set_visible_window(True)
         '''Init value.'''
         self.current_value    = 0
         self.mute_bool        = False  # left.
@@ -77,16 +78,16 @@ class VolumeButton(gtk.EventBox):
         self.volume_right_x   = volume_x
         self.volume_right_y   = volume_y
         # bg value.
-        self.bg_x    = 0
-        self.bg_y    = self.volume_right_y
+        self.bg_x         = 0
+        self.bg_y         = self.volume_right_y
         self.bg_padding_x = self.volume_right_x
         # fg value.
-        self.fg_x    = 0
-        self.fg_y    = self.volume_right_y
+        self.fg_x         = 0
+        self.fg_y         = self.volume_right_y
         self.fg_padding_x = self.volume_right_x
         # point value.
-        self.point_x = 0
-        self.point_y = self.volume_right_y
+        self.point_x         = 0
+        self.point_y         = self.volume_right_y
         self.point_padding_x = self.volume_right_x
         
         '''Init VolumeButton event.'''
@@ -97,8 +98,15 @@ class VolumeButton(gtk.EventBox):
         self.connect("button-release-event", self.release_mouse_set_point)
         # scroll event.
         if scroll_bool:
-            self.connect("scroll-event",         self.scroll_mouse_set_point)
+            self.connect("scroll-event",     self.scroll_mouse_set_point)
                 
+    def set_value(self, value):        
+        if 0 <= value <= self.volume_max_value:
+            temp_padding = (float(self.volume_max_value) / self.volume_width)
+            temp_padding_x = value /temp_padding
+            self.point_padding_x = temp_padding_x
+            self.queue_draw()
+            
     def set_volume_position(self, x, y):        
         self.volume_right_x = x
         self.volume_right_y = y
@@ -181,7 +189,7 @@ class VolumeButton(gtk.EventBox):
         if temp_fg_padding_x > self.volume_width:    
             temp_fg_padding_x = self.volume_width
         # Get current value.    
-        self.current_value = temp_fg_padding_x * (float(self.volume_max_value) / self.volume_width)    
+        self.current_value = temp_fg_padding_x * (float(self.volume_max_value) / self.volume_width)
 
         # Draw fg. 
         cr.set_source_rgba(*alpha_color_hex_to_cairo((self.fg_color.get_color_info())))
@@ -210,18 +218,32 @@ class VolumeButton(gtk.EventBox):
 gobject.type_register(VolumeButton)                       
 
 if __name__ == "__main__":        
+    import random
     def set_time_position():
-        volume_button.set_volume_position(100, 100)
+        volume_button.set_value(random.randint(0, 100))
+        return True
+    
     def get_volume_value(volume_button, value, mute_bool):    
         print volume_button
         print value
         print mute_bool
         
+    def set_value_button_clicked(widget):    
+        volume_button.set_value(random.randint(0, 100))
+    
     win = gtk.Window(gtk.WINDOW_TOPLEVEL)
-    volume_button = VolumeButton()
+    win.set_size_request(200, 120)
+    win.set_title("测试音量按钮")
+    main_vbox = gtk.VBox()
+    volume_button = VolumeButton(100, 80)
     volume_button.connect("get-value-event", get_volume_value)
-    win.add(volume_button)
-    gtk.timeout_add(2000, set_time_position)
+    set_value_button = gtk.Button("设置音量的值")
+    set_value_button.connect("clicked", set_value_button_clicked)
+    main_vbox.pack_start(volume_button, False, False)
+    main_vbox.pack_start(set_value_button, True, True)
+    # win.add(volume_button)
+    win.add(main_vbox)
+    # gtk.timeout_add(500, set_time_position)
     win.show_all()
     gtk.main()
 
