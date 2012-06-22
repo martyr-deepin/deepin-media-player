@@ -54,11 +54,11 @@ class VolumeButton(gtk.EventBox):
         }
     def __init__(self,
                  volume_max_value = 100,
-                 volume_width     = 500,
-                 volume_x         = 50,
+                 volume_width     = 52,
+                 volume_x         = 0,
                  volume_y         = 15,
-                 line_width       = 1,
-                 volume_left_right_padding_x = 2,
+                 line_width       = 3,
+                 volume_left_right_padding_x = 3,
                  volume_left_show_value = [(0, 33),(34, 66),(67, 100)],
                  scroll_bool = False,
                  bg_color = app_theme.get_alpha_color("volumebutton_bg"),
@@ -70,7 +70,9 @@ class VolumeButton(gtk.EventBox):
                  point_volume_pixbuf = app_theme.get_pixbuf("volume_button.png")                 
                  ):        
         gtk.EventBox.__init__(self)
-        
+        ###########################
+        if volume_x < max_volume_pixbuf.get_pixbuf().get_width() + 10:
+            volume_x = max_volume_pixbuf.get_pixbuf().get_width() + 10
         '''Init pixbuf.'''
         self.bg_color               = bg_color
         self.fg_color               = fg_color
@@ -337,7 +339,8 @@ if __name__ == "__main__":
     win.set_size_request(200, 120)
     win.set_title("测试音量按钮")
     main_vbox = gtk.VBox()
-    volume_button = VolumeButton(100, 120)
+    # volume_button = VolumeButton(100, 120)
+    volume_button = VolumeButton()
     volume_button.connect("get-value-event", get_volume_value)
     set_value_button = gtk.Button("设置音量的值")
     set_value_button.connect("clicked", set_value_button_clicked)
