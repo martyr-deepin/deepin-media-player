@@ -57,6 +57,7 @@ class VolumeButton(gtk.EventBox):
                  volume_width     = 500,
                  volume_x         = 50,
                  volume_y         = 15,
+                 line_width       = 1,
                  volume_left_right_padding_x = 2,
                  volume_left_show_value = [(0, 33),(34, 66),(67, 100)],
                  scroll_bool = False,
@@ -82,6 +83,7 @@ class VolumeButton(gtk.EventBox):
         self.set_size_request(volume_width, 30)
         self.set_visible_window(True)
         '''Init value.'''
+        self.line_width       = line_width
         self.current_value    = 0
         self.mute_bool        = False
         self.drag             = False 
@@ -136,14 +138,14 @@ class VolumeButton(gtk.EventBox):
             if self.volume_left_x <= temp_x <= temp_min_x:
                 self.mute_bool = not self.mute_bool
                 self.queue_draw()
-            
+                            
     def release_mouse_set_point(self, widget, event):        
         self.drag = False
         
     def motion_mouse_set_point(self, widget, event):
         if self.drag:
             self.set_point_padding_x(event)        
-        
+                
     def expose_draw_volume(self, widget, event):                
         self.draw_volume_right(widget, event)              # 1: get current value.
         self.set_volume_value_to_state(self.current_value) # 2: value to state.
@@ -237,6 +239,10 @@ class VolumeButton(gtk.EventBox):
                     )
     
     '''Right function'''            
+    def set_line_width(self, width):
+        self.line_width = width
+        self.queue_draw()
+        
     def set_value(self, value):        
         if 0 <= value <= self.volume_max_value:
             temp_padding = (float(self.volume_max_value) / self.volume_width)
@@ -261,6 +267,7 @@ class VolumeButton(gtk.EventBox):
                 
     def draw_volume_right(self, widget, event):
         cr = widget.window.cairo_create()
+        cr.set_line_width(self.line_width)
         x, y, w, h = widget.allocation
         point_width_average      = self.point_volume_pixbuf.get_pixbuf().get_width() / 2 
         ##################################################
@@ -322,7 +329,8 @@ if __name__ == "__main__":
         print "volume_state:%s" % volume_state
 
     def set_value_button_clicked(widget):    
-        volume_button.set_value(random.randint(0, 100))        
+        volume_button.set_value(random.randint(0, 100))   
+        # volume_button.set_line_width(4)    # Set draw line width.    
         # volume_button.set_volume_left_show_value([(0,10),(11,80),(81,100)])
         
     win = gtk.Window(gtk.WINDOW_TOPLEVEL)
