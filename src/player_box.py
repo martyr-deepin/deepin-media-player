@@ -400,11 +400,12 @@ class PlayerBox(object):
 
         # Volume button.
         self.volume_button_hframe = HorizontalFrame()
-        self.volume_button = VolumeButton()
-        # self.volume_button_hframe.add(self.volume_button)
-        self.volume_button_hframe.set(0, 0, 0, 0)
-        self.volume_button_hframe.set_padding(0, 5, 0, 10)
-
+        self.volume_button = VolumeButton(volume_y = 10)
+        self.volume_button.set_size_request(92, 40)
+        self.volume_button_hframe.add(self.volume_button)
+        self.volume_button_hframe.set(1, 0, 0, 0)
+        self.volume_button_hframe.set_padding(0, 0, 0, 0)
+        
         # play list button.
         self.play_list_button_hframe = HorizontalFrame()
         self.play_list_button = PlayListButton()
@@ -417,7 +418,7 @@ class PlayerBox(object):
         
         self.bottom_play_control_hbox.pack_start(self.show_time_label_hframe, False, False)
         self.bottom_play_control_hbox.pack_start(self.play_control_panel_hframe, True, True)
-        self.bottom_play_control_hbox.pack_start(self.volume_button, True, True)
+        self.bottom_play_control_hbox.pack_start(self.volume_button_hframe, True, True)
         self.bottom_play_control_hbox.pack_start(self.play_list_button_hframe, False, False)
 
         self.bottom_play_control_hbox_vframe_event_box = EventBox()
