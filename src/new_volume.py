@@ -133,7 +133,7 @@ class VolumeButton(gtk.EventBox):
             self.set_point_padding_x(event)
             self.drag = True
         else:    
-            self.mute_bool = True
+            self.mute_bool = not self.mute_bool
             self.queue_draw()
             
     def release_mouse_set_point(self, widget, event):        
