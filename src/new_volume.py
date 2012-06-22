@@ -133,8 +133,9 @@ class VolumeButton(gtk.EventBox):
             self.set_point_padding_x(event)
             self.drag = True
         else:    
-            self.mute_bool = not self.mute_bool
-            self.queue_draw()
+            if self.volume_left_x <= temp_x <= temp_min_x:
+                self.mute_bool = not self.mute_bool
+                self.queue_draw()
             
     def release_mouse_set_point(self, widget, event):        
         self.drag = False
@@ -328,7 +329,7 @@ if __name__ == "__main__":
     win.set_size_request(200, 120)
     win.set_title("测试音量按钮")
     main_vbox = gtk.VBox()
-    volume_button = VolumeButton(100, 800)
+    volume_button = VolumeButton(100, 120)
     volume_button.connect("get-value-event", get_volume_value)
     set_value_button = gtk.Button("设置音量的值")
     set_value_button.connect("clicked", set_value_button_clicked)
