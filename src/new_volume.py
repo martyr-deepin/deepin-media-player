@@ -42,6 +42,10 @@ MIN_STATE = 1
 MID_STATE = 2
 MAX_STATE = 3
 MUTE_STATE = -1
+# volume type.
+VOLUME_RIGHT = "right"
+VOLUME_LEFT   = "left"
+
 
 class VolumeButton(gtk.EventBox):
     __gsignals__ = {
@@ -79,6 +83,7 @@ class VolumeButton(gtk.EventBox):
         self.set_visible_window(True)
         '''Init value.'''
         self.current_value    = 0
+        self.mute_bool        = False
         self.drag             = False 
         self.volume_max_value = volume_max_value
         self.volume_width     = volume_width
@@ -116,6 +121,7 @@ class VolumeButton(gtk.EventBox):
             self.connect("scroll-event",     self.scroll_mouse_set_point)
             
     def set_point_padding_x(self, event):
+        self.mute_bool = False
         self.point_padding_x = int(event.x)   
         self.queue_draw()        
                             
@@ -126,6 +132,9 @@ class VolumeButton(gtk.EventBox):
         if temp_min_x < temp_x < temp_max_x:            
             self.set_point_padding_x(event)
             self.drag = True
+        else:    
+            self.mute_bool = True
+            self.queue_draw()
             
     def release_mouse_set_point(self, widget, event):        
         self.drag = False
@@ -142,23 +151,32 @@ class VolumeButton(gtk.EventBox):
         return True
     
     def scroll_mouse_set_point(self, widget, event):    
-        point_width_average      = self.point_volume_pixbuf.get_pixbuf().get_width() / 2 
-        temp_min = (self.point_x + 50 - point_width_average)
-        temp_max = (self.point_x + 50 + self.volume_width - point_width_average)
-
         if event.direction == gtk.gdk.SCROLL_UP:
+            self.volume_other_set_value(VOLUME_RIGHT)
+        elif event.direction == gtk.gdk.SCROLL_DOWN:
+            self.volume_other_set_value(VOLUME_LEFT)
+            
+    def volume_other_set_value(self, volume_type):    
+        point_width_average      = self.point_volume_pixbuf.get_pixbuf().get_width() / 2 
+        temp_min = (self.point_x + self.point_padding_x - point_width_average)
+        temp_max = (self.point_x + self.point_padding_x + self.volume_width - point_width_average)
+        
+        self.mute_bool = False
+        
+        if volume_type == VOLUME_RIGHT:
             if self.point_padding_x >= temp_max:
                 self.point_padding_x = temp_max
             else:    
                 self.point_padding_x += 1
-        elif event.direction == gtk.gdk.SCROLL_DOWN:
+        elif volume_type == VOLUME_LEFT:
             if self.point_padding_x <= temp_min:
                 self.point_padding_x = temp_min
             else:    
                 self.point_padding_x -= 1
             
         self.queue_draw()
-            
+        
+        
     '''Left function'''        
     def set_volume_state(self, state):
         if state == MIN_STATE:
@@ -184,15 +202,17 @@ class VolumeButton(gtk.EventBox):
             print "Error show value!!"
         
     def set_volume_value_to_state(self, value):
-        temp_show_value = self.volume_left_show_value
-        if temp_show_value[0][0] <= value <= temp_show_value[0][1]:
-            self.volume_state = MIN_STATE
-        elif temp_show_value[1][0] <= value <= temp_show_value[1][1]:
-            self.volume_state = MID_STATE
-        elif temp_show_value[2][0] <= value <= temp_show_value[2][1]:
-            self.volume_state = MAX_STATE
-            
-        
+        if not self.mute_bool:
+            temp_show_value = self.volume_left_show_value
+            if temp_show_value[0][0] <= value <= temp_show_value[0][1]:
+                self.volume_state = MIN_STATE
+            elif temp_show_value[1][0] <= value <= temp_show_value[1][1]:
+                self.volume_state = MID_STATE
+            elif temp_show_value[2][0] <= value <= temp_show_value[2][1]:
+                self.volume_state = MAX_STATE
+        else:        
+            self.volume_state = MUTE_STATE
+                    
     def set_volume_mute(self):
         self.volume_state = MUTE_STATE
             
@@ -308,7 +328,7 @@ if __name__ == "__main__":
     win.set_size_request(200, 120)
     win.set_title("测试音量按钮")
     main_vbox = gtk.VBox()
-    volume_button = VolumeButton(2000, 800)
+    volume_button = VolumeButton(100, 800)
     volume_button.connect("get-value-event", get_volume_value)
     set_value_button = gtk.Button("设置音量的值")
     set_value_button.connect("clicked", set_value_button_clicked)
