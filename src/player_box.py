@@ -81,7 +81,6 @@ class PlayerBox(object):
         self.clear_play_list_bool = False # drag play file.
 
         self.minimize_pause_play_bool = False
-        self.scroll_volume_num = 100
 
         # pause setting.
         self.pause_time_id = None
@@ -104,9 +103,6 @@ class PlayerBox(object):
         # Preview window.
         self.x_root = 0
         self.y_root = 0
-
-        self.save_volume_mute_bool = False
-        self.save_volume_value = 0
 
         # Screen move window.
         self.event_button = None
@@ -210,7 +206,7 @@ class PlayerBox(object):
         self.help_menu = Menu([(None, "帮助信息", None),
                                (None, "问题反馈", None),
                                (None, "关于软件", None)])
-        #aaaaaa
+        #
         self.title_root_menu = Menu([(None, "文件", self.file_menu),
                                      (None, "播放", self.play_menu),
                                      (None, "画面", self.screen_menu),
@@ -341,11 +337,7 @@ class PlayerBox(object):
         self.toolbar2.play_control_panel.next_btn.connect("clicked", self.next_button_clicked)
         self.toolbar2.play_control_panel.open_btn.connect("clicked", self.open_button_clicked)
 
-        # Toolbar2 volume button.
-        self.toolbar2.volume_button.button_event.connect("button-press-event",
-                                                         self.toolbar2_volume_button_set_mute)
-        self.toolbar2.volume_button.connect("get-value-event",
-                                            self.toolbar2_volume_button_set_volume)
+        # Toolbar2 volume button. 
 
 
         # Child widget add to vbox.
@@ -409,12 +401,9 @@ class PlayerBox(object):
         # Volume button.
         self.volume_button_hframe = HorizontalFrame()
         self.volume_button = VolumeButton()
-        self.volume_button_hframe.add(self.volume_button)
-        self.volume_button_hframe.set(1, 0.5, 0, 0)
+        # self.volume_button_hframe.add(self.volume_button)
+        self.volume_button_hframe.set(0, 0, 0, 0)
         self.volume_button_hframe.set_padding(0, 5, 0, 10)
-
-        self.volume_button.button_event.connect("button-press-event", self.volume_button_set_mute)
-        self.volume_button.connect("get-value-event", self.volume_button_set_volume)
 
         # play list button.
         self.play_list_button_hframe = HorizontalFrame()
@@ -422,13 +411,13 @@ class PlayerBox(object):
         # play_list_button connect signal.
         self.play_list_button.button.connect("clicked", self.play_list_button_clicked)
         self.play_list_button_hframe.add(self.play_list_button.button)
-        self.play_list_button_hframe.set(1, 0, 0, 0)
-        self.play_list_button_hframe.set_padding(0, 0, 0, 10)
+        self.play_list_button_hframe.set(0, 0, 1.0, 1.0)
+        self.play_list_button_hframe.set_padding(0, 0, 0, 20)
 
-
+        
         self.bottom_play_control_hbox.pack_start(self.show_time_label_hframe, False, False)
         self.bottom_play_control_hbox.pack_start(self.play_control_panel_hframe, True, True)
-        self.bottom_play_control_hbox.pack_start(self.volume_button_hframe, True, True)
+        self.bottom_play_control_hbox.pack_start(self.volume_button, True, True)
         self.bottom_play_control_hbox.pack_start(self.play_list_button_hframe, False, False)
 
         self.bottom_play_control_hbox_vframe_event_box = EventBox()
@@ -528,26 +517,8 @@ class PlayerBox(object):
         if "NULL" == config_type: # seek back.
             pass
         else: # volume
-
-            if 1 == type_bool:
-                self.scroll_volume_num = self.volume_button.volume_value
-            elif 2 == type_bool:
-                self.scroll_volume_num = self.toolbar2.volume_button.volume_value
-            # print self.scroll_volume_num
-            if event.direction == gtk.gdk.SCROLL_UP:
-                self.scroll_volume_num = min(self.scroll_volume_num + 1, 100)
-                if self.scroll_volume_num < 5:
-                    self.scroll_volume_num = 8
-            elif event.direction == gtk.gdk.SCROLL_DOWN:
-                self.scroll_volume_num = max(self.scroll_volume_num - 1, 0)
-
-
-            if 1 == type_bool:
-                self.volume_button.set_value(self.scroll_volume_num)
-            elif 2 == type_bool:
-                self.toolbar2.volume_button.set_value(self.scroll_volume_num)
-            # print self.scroll_volume_num
-
+            pass
+            
 
     def init_config_key(self):
         # Init Config keys.
@@ -685,19 +656,8 @@ class PlayerBox(object):
         self.key_set_volume(0)
 
     def key_set_volume(self, type_bool):
-        scroll_volume_num = self.scroll_volume_num
-        if 1 == type_bool: # add volume
-            scroll_volume_num += 1
-        else:    # sub volume
-            scroll_volume_num -= 1
-
-        if self.mode_state_bool:
-            self.toolbar2.volume_button.set_value(self.scroll_volume_num)
-        else:
-            self.volume_button.set_value(self.scroll_volume_num)
-
-        self.scroll_volume_num = scroll_volume_num
-
+        pass
+    
     def key_set_mute(self):
         print "key set mute..."
         pass
@@ -945,37 +905,7 @@ class PlayerBox(object):
         if os.path.isfile(path_string):
             self.mp.addPlayFile(path_string)
 
-    def volume_button_set_mute(self, widget, event):
-        '''Set mute.'''
-        if 1 == event.button:
-            if 1 == self.mp.state:
-                if self.volume_button.mute_bool:
-                    self.mp.nomute()
-                else:
-                    self.mp.offmute()
 
-    def volume_button_set_volume(self, volume_button, value, mute_bool):
-        if self.mp:
-            self.mp.setvolume(value)
-
-            self.save_volume_mute_bool = mute_bool
-            self.save_volume_value = value
-
-    def toolbar2_volume_button_set_mute(self, widget, event):
-        '''Set mute.'''
-        if 1 == event.button:
-            if 1 == self.mp.state:
-                if self.toolbar2.volume_button.mute_bool:
-                    self.mp.nomute()
-                else:
-                    self.mp.offmute()
-
-    def toolbar2_volume_button_set_volume(self, volume_button, value, mute_bool):
-        if self.mp:
-            self.mp.setvolume(value)
-
-            self.save_volume_mute_bool = mute_bool
-            self.save_volume_value = value
 
     def show_bottom(self):
         if [] == self.bottom_main_vbox.get_children():
@@ -990,9 +920,6 @@ class PlayerBox(object):
     def init_media_player(self, widget):
         '''Init deepin media player.'''
         self.play_list.hide_play_list() # Hide play list.
-
-        self.save_volume_value = self.volume_button.volume_value
-        self.save_volume_mute_bool = self.volume_button.mute_bool
 
         self.screen.queue_draw()
         #self.unset_flags()
@@ -1099,20 +1026,8 @@ class PlayerBox(object):
 
     # ToolBar control function.
     def app_configure_hide_tool(self, widget, event): #app: configure-event.
-        #Set mute and value.
 
-        # if self.mp:
-            # self.screen.queue_draw()
-        if self.toolbar2.volume_button.mute_bool != self.save_volume_mute_bool:
-            self.toolbar2.volume_button.mute_bool = self.save_volume_mute_bool
-            self.toolbar2.volume_button.set_value(self.save_volume_value)
-        if self.volume_button.mute_bool != self.save_volume_mute_bool:
-            self.volume_button.mute_bool = self.save_volume_mute_bool
-            self.volume_button.set_value(self.save_volume_value)
-
-        if self.save_volume_mute_bool:
-            self.mp.nomute()
-
+        
         self.toolbar.panel.hide_all()
         self.show_toolbar_bool = False
 
@@ -1256,13 +1171,6 @@ class PlayerBox(object):
         self.show_bottom()
         self.app.window.show_all()
 
-        if self.save_volume_mute_bool:
-            self.volume_button.mute_bool = True
-        else:
-            self.volume_button.mute_bool = False
-
-        # self.volume_button.mute_bool = True if 1 == self.save_volume_mute_bool else False
-        self.volume_button.set_value(self.save_volume_value)
 
     def concise_window_function(self):
         '''full window and concise mode'''
@@ -1275,14 +1183,7 @@ class PlayerBox(object):
         self.toolbar.panel.hide_all() # hide toolbar.
         self.toolbar2.panel.hide_all()
 
-        if self.save_volume_mute_bool:
-            self.toolbar2.volume_button.mute_bool = True
-        else:
-            self.toolbar2.volume_button.mute_bool = False
 
-
-        # self.toolbar2.volume_button.mute_bool = True if 1 == self.save_volume_mute_bool else False
-        self.toolbar2.volume_button.set_value(self.save_volume_value)
 
     def set_window_full(self):
         # if True. play list hide.
@@ -1356,9 +1257,6 @@ class PlayerBox(object):
             # modify full icon.
             self.toolbar.toolbar_full_button.flags = True
 
-        if self.save_volume_mute_bool:
-            if self.mp:
-                self.mp.nomute()
 
 
     def hide_window_widget(self, widget): #concise_button
@@ -1388,9 +1286,6 @@ class PlayerBox(object):
 
             self.toolbar2.panel.hide_all()
 
-        if self.save_volume_mute_bool:
-            if self.mp:
-                self.mp.nomute()
 
 
     def set_window_above(self, widget): #above_button
@@ -1608,9 +1503,6 @@ class PlayerBox(object):
 
     def get_time_length(self, mplayer, length):
         '''Get mplayer length to max of progressbar.'''
-        self.mp.setvolume(self.save_volume_value)
-        if self.save_volume_mute_bool:
-            self.mp.nomute()
 
         self.progressbar.max = length
         self.toolbar2.progressbar.max = length # toolbar2 max value.
