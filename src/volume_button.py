@@ -145,6 +145,7 @@ class VolumeButton(gtk.EventBox):
                             
     def release_mouse_set_point(self, widget, event):        
         self.drag = False
+        self.emit("get-value-event", self.current_value, self.volume_state)        
         
     def motion_mouse_set_point(self, widget, event):
         if self.drag:
@@ -179,8 +180,7 @@ class VolumeButton(gtk.EventBox):
     def expose_draw_volume(self, widget, event):                        
         self.draw_volume_right(widget, event)              # 1: get current value.
         self.set_volume_value_to_state(self.current_value) # 2: value to state.
-        self.draw_volume_left(widget, event)               # 3: draw state pixbuf.
-        self.emit("get-value-event", self.current_value, self.volume_state)        
+        self.draw_volume_left(widget, event)               # 3: draw state pixbuf.        
         # propagate_expose(widget, event)
         return True
 
@@ -251,8 +251,8 @@ class VolumeButton(gtk.EventBox):
     def set_value(self, value):        
         if 0 <= value <= self.volume_max_value:
             temp_padding = (float(self.volume_max_value) / self.volume_width)
-            temp_padding_x = value /temp_padding
-            self.point_padding_x = temp_padding_x
+            temp_padding_x = float(value) / temp_padding            
+            self.point_padding_x = temp_padding_x + ((self.fg_padding_x))
             self.queue_draw()
             
     def set_volume_position(self, x, y):        
@@ -302,7 +302,7 @@ class VolumeButton(gtk.EventBox):
         cr.line_to(x + self.fg_x + self.fg_padding_x + temp_fg_padding_x,
                    y + self.fg_y + point_width_average)
         cr.stroke()        
-        #################################################        
+        #################################################
         # Draw point.                        
         temp_point_padding_x     = (self.point_x + self.point_padding_x - point_width_average)
 
@@ -333,7 +333,7 @@ if __name__ == "__main__":
         print "volume_state:%s" % volume_state
 
     def set_value_button_clicked(widget):    
-        volume_button.set_value(random.randint(0, 100))   
+        volume_button.set_value(100)
         # volume_button.set_line_width(4)    # Set draw line width.    
         # volume_button.set_volume_left_show_value([(0,10),(11,80),(81,100)])
         
@@ -342,8 +342,8 @@ if __name__ == "__main__":
     win.set_size_request(200, 120)
     win.set_title("测试音量按钮")
     main_vbox = gtk.VBox()
-    # volume_button = VolumeButton(100, 120)
-    volume_button = VolumeButton()
+    volume_button = VolumeButton(100,220)
+    # volume_button = VolumeButton()
     volume_button.connect("get-value-event", get_volume_value)
     set_value_button = gtk.Button("设置音量的值")
     set_value_button.connect("clicked", set_value_button_clicked)

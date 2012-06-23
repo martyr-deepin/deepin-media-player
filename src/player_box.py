@@ -337,8 +337,9 @@ class PlayerBox(object):
         self.toolbar2.play_control_panel.next_btn.connect("clicked", self.next_button_clicked)
         self.toolbar2.play_control_panel.open_btn.connect("clicked", self.open_button_clicked)
 
-        # Toolbar2 volume button. 
-
+        # Toolbar2 volume button.
+        self.toolbar2.volume_button.set_value(100)
+        self.toolbar2.volume_button.connect("get-value-event", self.volume_button_get_value_event, 2)
 
         # Child widget add to vbox.
         self.vbox.pack_start(self.screen_frame, True, True)
@@ -400,7 +401,9 @@ class PlayerBox(object):
 
         # Volume button.
         self.volume_button_hframe = HorizontalFrame()
-        self.volume_button = VolumeButton(volume_y = 10)
+        self.volume_button = VolumeButton(volume_y = 14)
+        self.volume_button.set_value(100)
+        self.volume_button.connect("get-value-event", self.volume_button_get_value_event, 1)
         self.volume_button.set_size_request(92, 40)
         self.volume_button_hframe.add(self.volume_button)
         self.volume_button_hframe.set(1, 0, 0, 0)
@@ -413,7 +416,7 @@ class PlayerBox(object):
         self.play_list_button.button.connect("clicked", self.play_list_button_clicked)
         self.play_list_button_hframe.add(self.play_list_button.button)
         self.play_list_button_hframe.set(0, 0, 1.0, 1.0)
-        self.play_list_button_hframe.set_padding(0, 0, 0, 20)
+        self.play_list_button_hframe.set_padding(4, 0, 0, 20)
 
         
         self.bottom_play_control_hbox.pack_start(self.show_time_label_hframe, False, False)
@@ -520,7 +523,22 @@ class PlayerBox(object):
         else: # volume
             pass
             
-
+    def volume_button_get_value_event(self, volume_button, value, volume_state, volume_bit):
+        if -1 == volume_state:
+            if self.mp:
+                if 1 == self.mp.state:
+                    self.mp.nomute()
+        else:
+            if self.mp:
+                if 1 == self.mp.state:                    
+                    self.mp.offmute()
+                    self.mp.setvolume(value) 
+                    
+        if 1 == volume_bit:
+            self.toolbar2.volume_button.set_value(value)
+        else:    
+            self.volume_button.set_value(value)
+                    
     def init_config_key(self):
         # Init Config keys.
         # [PlayControl] Init.
@@ -921,7 +939,7 @@ class PlayerBox(object):
     def init_media_player(self, widget):
         '''Init deepin media player.'''
         self.play_list.hide_play_list() # Hide play list.
-
+        
         self.screen.queue_draw()
         #self.unset_flags()
         self.mp = Mplayer(widget.window.xid)
