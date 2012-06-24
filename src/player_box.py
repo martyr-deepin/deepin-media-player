@@ -529,11 +529,15 @@ class PlayerBox(object):
             if self.mp:
                 if 1 == self.mp.state:
                     self.mp.nomute()
+                else:    
+                    self.mp.volumebool = True
         else:
             if self.mp:
                 if 1 == self.mp.state:                    
                     self.mp.offmute()
                     self.mp.setvolume(value) 
+                else:    
+                    self.mp.volumebool = False
                     
         if 1 == volume_bit:
             self.toolbar2.volume_button.value = value
