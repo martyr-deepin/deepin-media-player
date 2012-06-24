@@ -60,7 +60,7 @@ class ToolBar2(object):
         self.play_control_panel_hframe.set(1, 0.5, 0, 0)
         
         self.volume_hframe = HorizontalFrame()
-        self.volume_button = VolumeButton()
+        self.volume_button = VolumeButton(press_emit_bool = True)
         self.volume_hframe.add(self.volume_button)
         self.volume_hframe.set(0, 0.5, 0.5, 0)
         self.volume_hframe.set_padding(0, 0, 20, 0)

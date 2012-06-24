@@ -63,6 +63,7 @@ class VolumeButton(gtk.EventBox):
                  volume_left_right_padding_x = 3,
                  volume_left_show_value = [(0, 33),(34, 66),(67, 100)],
                  scroll_bool = False,
+                 press_emit_bool = False,
                  bg_color = app_theme.get_alpha_color("volumebutton_bg"),
                  fg_color = app_theme.get_alpha_color("volumebutton_fg"),
                  min_volume_pixbuf   = app_theme.get_pixbuf("min_volume.png"),
@@ -87,6 +88,7 @@ class VolumeButton(gtk.EventBox):
         self.set_size_request(volume_width, 30)
         self.set_visible_window(False)
         '''Init value.'''
+        self.press_emit_bool  = press_emit_bool
         self.line_width       = line_width
         self.current_value    = 0
         self.mute_bool        = False
@@ -145,7 +147,8 @@ class VolumeButton(gtk.EventBox):
                             
     def release_mouse_set_point(self, widget, event):        
         self.drag = False
-        self.emit("get-value-event", self.current_value, self.volume_state)        
+        if self.press_emit_bool:
+            self.emit("get-value-event", self.current_value, self.volume_state)        
         
     def motion_mouse_set_point(self, widget, event):
         if self.drag:
@@ -181,6 +184,8 @@ class VolumeButton(gtk.EventBox):
         self.draw_volume_right(widget, event)              # 1: get current value.
         self.set_volume_value_to_state(self.current_value) # 2: value to state.
         self.draw_volume_left(widget, event)               # 3: draw state pixbuf.        
+        if not self.press_emit_bool:
+            self.emit("get-value-event", self.current_value, self.volume_state)
         # propagate_expose(widget, event)
         return True
 

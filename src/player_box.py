@@ -401,7 +401,7 @@ class PlayerBox(object):
 
         # Volume button.
         self.volume_button_hframe = HorizontalFrame()
-        self.volume_button = VolumeButton(volume_y = 14)
+        self.volume_button = VolumeButton(volume_y = 14, press_emit_bool = True)
         self.volume_button.set_value(100)
         self.volume_button.connect("get-value-event", self.volume_button_get_value_event, 1)
         self.volume_button.set_size_request(92, 40)
