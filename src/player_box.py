@@ -87,6 +87,8 @@ class PlayerBox(object):
         self.pause_bool = False
         self.pause_x = 0
         self.pause_y = 0
+        
+        self.save_pos = 0
         # Init play memory.
         self.ini = Config(get_home_path() + "/.config/deepin-media-player/config.ini")
         # Init deepin media player config gui.
@@ -691,11 +693,13 @@ class PlayerBox(object):
 
     def key_right(self):
         # print "right key..."
-        self.mp.seek(self.mp.posNum + 20)
+        self.save_pos += 10
+        self.mp.seek(self.save_pos)
 
     def key_left(self):
         # print "left key..."
-        self.mp.seek(self.mp.posNum - 20)
+        self.save_pos -= 10
+        self.mp.seek(self.save_pos)
 
     def key_space(self):
         # print "space key..."
@@ -1522,7 +1526,8 @@ class PlayerBox(object):
 
     def get_time_length(self, mplayer, length):
         '''Get mplayer length to max of progressbar.'''
-
+        self.save_pos = mplayer.posNum
+        
         self.progressbar.max = length
         self.toolbar2.progressbar.max = length # toolbar2 max value.
         Hour, Min, Sec = self.mp.time(length)
@@ -1553,7 +1558,7 @@ class PlayerBox(object):
         self.mp.seek(int(pos))
 
     def media_player_start(self, mplayer, play_bool):
-        '''media player start play.'''
+        '''media player start play.'''        
         self.set_ascept_function()
         # full window.
         if self.playwinmax_bool and self.video_aspect_type == "默认":
