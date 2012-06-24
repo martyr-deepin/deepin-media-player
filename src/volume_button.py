@@ -22,7 +22,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # Deein ui.
-from dtk.ui.window import Window
 from dtk.ui.utils import alpha_color_hex_to_cairo
 # from dtk.ui.utils import propagate_expose
 from dtk.ui.draw import draw_pixbuf
@@ -77,115 +76,118 @@ class VolumeButton(gtk.EventBox):
         if volume_x < max_volume_pixbuf.get_pixbuf().get_width() + 10:
             volume_x = max_volume_pixbuf.get_pixbuf().get_width() + 10
         '''Init pixbuf.'''
-        self.bg_color               = bg_color
-        self.fg_color               = fg_color
-        self.min_volume_pixbuf      = min_volume_pixbuf
-        self.mid_volume_pixbuf      = mid_volume_pixbuf
-        self.max_volume_pixbuf      = max_volume_pixbuf
-        self.mute_volume_pixbuf     = mute_volume_pixbuf
-        self.point_volume_pixbuf    = point_volume_pixbuf        
+        self.__bg_color               = bg_color
+        self.__fg_color               = fg_color
+        self.__min_volume_pixbuf      = min_volume_pixbuf
+        self.__mid_volume_pixbuf      = mid_volume_pixbuf
+        self.__max_volume_pixbuf      = max_volume_pixbuf
+        self.__mute_volume_pixbuf     = mute_volume_pixbuf
+        self.__point_volume_pixbuf    = point_volume_pixbuf        
         '''Init Set VolumeButton attr.'''
         self.set_size_request(volume_width, 30)
         self.set_visible_window(False)
         '''Init value.'''
-        self.press_emit_bool  = press_emit_bool
-        self.line_width       = line_width
-        self.current_value    = 0
-        self.mute_bool        = False
-        self.drag             = False 
-        self.volume_max_value = volume_max_value
-        self.volume_width     = volume_width
+        self.__press_emit_bool  = press_emit_bool
+        self.__line_width       = line_width
+        self.__current_value    = 0
+        self.__mute_bool        = False
+        self.__drag             = False 
+        self.__volume_max_value = volume_max_value
+        self.__volume_width     = volume_width
         
-        self.volume_left_x    = volume_x - self.max_volume_pixbuf.get_pixbuf().get_width() - volume_left_right_padding_x
-        self.volume_left_y    = volume_y - self.max_volume_pixbuf.get_pixbuf().get_height()/2 + self.point_volume_pixbuf.get_pixbuf().get_height()/2
-        self.volume_right_x   = volume_x
-        self.volume_right_y   = volume_y
+        self.__volume_left_x    = volume_x - self.__max_volume_pixbuf.get_pixbuf().get_width() - volume_left_right_padding_x
+        self.__volume_left_y    = volume_y - self.__max_volume_pixbuf.get_pixbuf().get_height()/2 + self.__point_volume_pixbuf.get_pixbuf().get_height()/2
+        self.__volume_right_x   = volume_x
+        self.__volume_right_y   = volume_y
         '''Left'''
         self.volume_left_show_value = volume_left_show_value
         self.volume_state = MIN_STATE
         
         '''Right'''
         # bg value.
-        self.bg_x         = 0
-        self.bg_y         = self.volume_right_y
-        self.bg_padding_x = self.volume_right_x
+        self.__bg_x         = 0
+        self.__bg_y         = self.__volume_right_y
+        self.__bg_padding_x = self.__volume_right_x
         # fg value.
-        self.fg_x         = 0
-        self.fg_y         = self.volume_right_y
-        self.fg_padding_x = self.volume_right_x
+        self.__fg_x         = 0
+        self.__fg_y         = self.__volume_right_y
+        self.__fg_padding_x = self.__volume_right_x
         # point value.
-        self.point_x         = 0
-        self.point_y         = self.volume_right_y
-        self.point_padding_x = self.volume_right_x
+        self.__point_x         = 0
+        self.__point_y         = self.__volume_right_y
+        self.__point_padding_x = self.__volume_right_x
         
         '''Init VolumeButton event.'''
         self.add_events(gtk.gdk.ALL_EVENTS_MASK)
-        self.connect("expose-event",         self.expose_draw_volume)
-        self.connect("motion-notify-event",  self.motion_mouse_set_point)
-        self.connect("button-press-event",   self.press_mouse_set_point)
-        self.connect("button-release-event", self.release_mouse_set_point)
+        self.connect("expose-event",         self.__expose_draw_volume)
+        self.connect("motion-notify-event",  self.__motion_mouse_set_point)
+        self.connect("button-press-event",   self.__press_mouse_set_point)
+        self.connect("button-release-event", self.__release_mouse_set_point)
         # scroll event.
         if scroll_bool:
-            self.connect("scroll-event",     self.scroll_mouse_set_point)
+            self.connect("scroll-event",     self.__scroll_mouse_set_point)
             
-    def set_point_padding_x(self, event):
-        self.mute_bool = False
-        self.point_padding_x = int(event.x)   
+    def set_press_emit_bool(self, emit_bool):
+        self.__press_emit_bool = emit_bool
+        
+    def __set_point_padding_x(self, event):
+        self.__mute_bool = False
+        self.__point_padding_x = int(event.x)   
         self.queue_draw()        
                             
-    def press_mouse_set_point(self, widget, event):    
+    def __press_mouse_set_point(self, widget, event):    
         temp_x = int(event.x)
-        temp_min_x = self.bg_x + self.bg_padding_x - self.point_volume_pixbuf.get_pixbuf().get_width()/2
-        temp_max_x = self.bg_x + self.bg_padding_x + self.volume_width + self.point_volume_pixbuf.get_pixbuf().get_width()/2
+        temp_min_x = self.__bg_x + self.__bg_padding_x - self.__point_volume_pixbuf.get_pixbuf().get_width()/2
+        temp_max_x = self.__bg_x + self.__bg_padding_x + self.__volume_width + self.__point_volume_pixbuf.get_pixbuf().get_width()/2
         if temp_min_x < temp_x < temp_max_x:            
-            self.set_point_padding_x(event)
-            self.drag = True
+            self.__set_point_padding_x(event)
+            self.__drag = True
         else:    
-            if self.volume_left_x <= temp_x <= temp_min_x:
-                self.mute_bool = not self.mute_bool
+            if self.__volume_left_x <= temp_x <= temp_min_x:
+                self.__mute_bool = not self.__mute_bool
                 self.queue_draw()
                             
-    def release_mouse_set_point(self, widget, event):        
-        self.drag = False
-        if self.press_emit_bool:
-            self.emit("get-value-event", self.current_value, self.volume_state)        
+    def __release_mouse_set_point(self, widget, event):        
+        self.__drag = False
+        if self.__press_emit_bool:
+            self.emit("get-value-event", self.__current_value, self.volume_state)        
         
-    def motion_mouse_set_point(self, widget, event):
-        if self.drag:
-            self.set_point_padding_x(event)        
+    def __motion_mouse_set_point(self, widget, event):
+        if self.__drag:
+            self.__set_point_padding_x(event)        
                     
-    def scroll_mouse_set_point(self, widget, event):    
+    def __scroll_mouse_set_point(self, widget, event):    
         if event.direction == gtk.gdk.SCROLL_UP:
             self.volume_other_set_value(VOLUME_RIGHT)
         elif event.direction == gtk.gdk.SCROLL_DOWN:
             self.volume_other_set_value(VOLUME_LEFT)
             
     def volume_other_set_value(self, volume_type):    
-        point_width_average      = self.point_volume_pixbuf.get_pixbuf().get_width() / 2 
-        temp_min = (self.point_x + self.point_padding_x - point_width_average)
-        temp_max = (self.point_x + self.point_padding_x + self.volume_width - point_width_average)
+        point_width_average      = self.__point_volume_pixbuf.get_pixbuf().get_width() / 2 
+        temp_min = (self.__point_x + self.__point_padding_x - point_width_average)
+        temp_max = (self.__point_x + self.__point_padding_x + self.__volume_width - point_width_average)
         
-        self.mute_bool = False
+        self.__mute_bool = False
         
         if volume_type == VOLUME_RIGHT:
-            if self.point_padding_x >= temp_max:
-                self.point_padding_x = temp_max
+            if self.__point_padding_x >= temp_max:
+                self.__point_padding_x = temp_max
             else:    
-                self.point_padding_x += 1
+                self.__point_padding_x += 1
         elif volume_type == VOLUME_LEFT:
-            if self.point_padding_x <= temp_min:
-                self.point_padding_x = temp_min
+            if self.__point_padding_x <= temp_min:
+                self.__point_padding_x = temp_min
             else:    
-                self.point_padding_x -= 1
+                self.__point_padding_x -= 1
             
         self.queue_draw()
         
-    def expose_draw_volume(self, widget, event):                        
-        self.draw_volume_right(widget, event)              # 1: get current value.
-        self.set_volume_value_to_state(self.current_value) # 2: value to state.
-        self.draw_volume_left(widget, event)               # 3: draw state pixbuf.        
-        if not self.press_emit_bool:
-            self.emit("get-value-event", self.current_value, self.volume_state)
+    def __expose_draw_volume(self, widget, event):                        
+        self.__draw_volume_right(widget, event)              # 1: get current value.
+        self.__set_volume_value_to_state(self.__current_value) # 2: value to state.
+        self.__draw_volume_left(widget, event)               # 3: draw state pixbuf.        
+        if not self.__press_emit_bool:
+            self.emit("get-value-event", self.__current_value, self.volume_state)
         # propagate_expose(widget, event)
         return True
 
@@ -214,8 +216,8 @@ class VolumeButton(gtk.EventBox):
         except:    
             print "Error show value!!"
         
-    def set_volume_value_to_state(self, value):
-        if not self.mute_bool:
+    def __set_volume_value_to_state(self, value):
+        if not self.__mute_bool:
             temp_show_value = self.volume_left_show_value
             if temp_show_value[0][0] <= value <= temp_show_value[0][1]:
                 self.volume_state = MIN_STATE
@@ -229,104 +231,108 @@ class VolumeButton(gtk.EventBox):
     def set_volume_mute(self):
         self.volume_state = MUTE_STATE
             
-    def draw_volume_left(self, widget, event):
+    def __draw_volume_left(self, widget, event):
         cr = widget.window.cairo_create()
         x, y, w, h = widget.allocation
         
         if self.volume_state == MUTE_STATE:                    
-            pixbuf = self.mute_volume_pixbuf
+            pixbuf = self.__mute_volume_pixbuf
         elif self.volume_state == MIN_STATE:    
-            pixbuf = self.min_volume_pixbuf
+            pixbuf = self.__min_volume_pixbuf
         elif self.volume_state == MID_STATE:        
-            pixbuf = self.mid_volume_pixbuf
+            pixbuf = self.__mid_volume_pixbuf
         elif self.volume_state == MAX_STATE:
-            pixbuf = self.max_volume_pixbuf
+            pixbuf = self.__max_volume_pixbuf
             
         draw_pixbuf(cr,
                     pixbuf.get_pixbuf(),
-                    x + self.volume_left_x,
-                    y + self.volume_left_y,
+                    x + self.__volume_left_x,
+                    y + self.__volume_left_y,
                     )
     
     '''Right function'''            
     def set_line_width(self, width):
-        self.line_width = width
+        self.__line_width = width
         self.queue_draw()
         
     def set_value(self, value):        
-        if 0 <= value <= self.volume_max_value:
-            temp_padding = (float(self.volume_max_value) / self.volume_width)
+        if 0 <= value <= self.__volume_max_value:
+            temp_padding = (float(self.__volume_max_value) / self.__volume_width)
             temp_padding_x = float(value) / temp_padding            
-            self.point_padding_x = temp_padding_x + ((self.fg_padding_x))
+            self.__point_padding_x = temp_padding_x + ((self.__fg_padding_x))
             self.queue_draw()
             
+    def get_value(self):        
+        return self.__current_value
+        
     def set_volume_position(self, x, y):        
-        self.volume_right_x = x
-        self.volume_right_y = y
+        self.__volume_right_x = x
+        self.__volume_right_y = y
         # Set x.
-        self.bg_padding_x    = self.volume_right_x
-        self.fg_padding_x    = self.volume_right_x
-        self.point_padding_x = self.volume_right_x
+        self.__bg_padding_x    = self.__volume_right_x
+        self.__fg_padding_x    = self.__volume_right_x
+        self.__point_padding_x = self.__volume_right_x
         # Set y.
-        self.bg_y    = self.volume_right_y
-        self.fg_y    = self.volume_right_y
-        self.point_y = self.volume_right_y
+        self.__bg_y    = self.__volume_right_y
+        self.__fg_y    = self.__volume_right_y
+        self.__point_y = self.__volume_right_y
         
     def set_volume_max_value(self, value):    
-        self.volume_max_value = value
+        self.__volume_max_value = value
                 
-    def draw_volume_right(self, widget, event):
+    def __draw_volume_right(self, widget, event):
         cr = widget.window.cairo_create()
-        cr.set_line_width(self.line_width)
+        cr.set_line_width(self.__line_width)
         x, y, w, h = widget.allocation
     
-        point_width_average      = self.point_volume_pixbuf.get_pixbuf().get_width() / 2 
+        point_width_average      = self.__point_volume_pixbuf.get_pixbuf().get_width() / 2 
         ##################################################
         # Draw bg.
-        cr.set_source_rgba(*alpha_color_hex_to_cairo(self.bg_color.get_color_info()))
-        cr.move_to(x + self.bg_x + self.bg_padding_x,
-                   y + self.bg_y + point_width_average)
-        cr.line_to(x + self.bg_x + self.bg_padding_x + self.volume_width,
-                   y + self.bg_y + point_width_average)
+        cr.set_source_rgba(*alpha_color_hex_to_cairo(self.__bg_color.get_color_info()))
+        cr.move_to(x + self.__bg_x + self.__bg_padding_x,
+                   y + self.__bg_y + point_width_average)
+        cr.line_to(x + self.__bg_x + self.__bg_padding_x + self.__volume_width,
+                   y + self.__bg_y + point_width_average)
         cr.stroke()
         ##################################################
         
-        temp_fg_padding_x = self.point_padding_x - (self.fg_x + self.fg_padding_x) 
+        temp_fg_padding_x = self.__point_padding_x - (self.__fg_x + self.__fg_padding_x) 
         
         if temp_fg_padding_x < 0:
             temp_fg_padding_x = 0
-        if temp_fg_padding_x > self.volume_width:    
-            temp_fg_padding_x = self.volume_width
+        if temp_fg_padding_x > self.__volume_width:    
+            temp_fg_padding_x = self.__volume_width
         # Get current value.    
-        self.current_value = temp_fg_padding_x * (float(self.volume_max_value) / self.volume_width)
+        self.__current_value = temp_fg_padding_x * (float(self.__volume_max_value) / self.__volume_width)
         
         # Draw fg. 
-        cr.set_source_rgba(*alpha_color_hex_to_cairo((self.fg_color.get_color_info())))
-        cr.move_to(x + self.fg_x + self.fg_padding_x,
-                   y + self.fg_y + point_width_average)
-        cr.line_to(x + self.fg_x + self.fg_padding_x + temp_fg_padding_x,
-                   y + self.fg_y + point_width_average)
+        cr.set_source_rgba(*alpha_color_hex_to_cairo((self.__fg_color.get_color_info())))
+        cr.move_to(x + self.__fg_x + self.__fg_padding_x,
+                   y + self.__fg_y + point_width_average)
+        cr.line_to(x + self.__fg_x + self.__fg_padding_x + temp_fg_padding_x,
+                   y + self.__fg_y + point_width_average)
         cr.stroke()        
         #################################################
         # Draw point.                        
-        temp_point_padding_x     = (self.point_x + self.point_padding_x - point_width_average)
+        temp_point_padding_x     = (self.__point_x + self.__point_padding_x - point_width_average)
 
-        temp_min = (self.point_x + self.volume_right_x - point_width_average)
-        temp_max = (self.point_x + self.volume_right_x + self.volume_width - point_width_average)
+        temp_min = (self.__point_x + self.__volume_right_x - point_width_average)
+        temp_max = (self.__point_x + self.__volume_right_x + self.__volume_width - point_width_average)
         if temp_point_padding_x < temp_min:
             temp_point_padding_x = temp_min
         if temp_point_padding_x > temp_max:    
             temp_point_padding_x = temp_max
             
         draw_pixbuf(cr, 
-                    self.point_volume_pixbuf.get_pixbuf(), 
+                    self.__point_volume_pixbuf.get_pixbuf(), 
                     x + temp_point_padding_x,
-                    y + self.point_y)    
+                    y + self.__point_y)    
         
 gobject.type_register(VolumeButton)                       
 
-if __name__ == "__main__":        
+if __name__ == "__main__":
     import random
+    from dtk.ui.window import Window
     def set_time_position():
         volume_button.set_value(random.randint(0, 100))
         return True
@@ -339,7 +345,7 @@ if __name__ == "__main__":
 
     def set_value_button_clicked(widget):    
         volume_button.set_value(100)
-        # volume_button.set_line_width(4)    # Set draw line width.    
+        volume_button.set_line_width(4)    # Set draw line width.    
         # volume_button.set_volume_left_show_value([(0,10),(11,80),(81,100)])
         
     win = gtk.Window(gtk.WINDOW_TOPLEVEL)
