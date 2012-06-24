@@ -88,7 +88,6 @@ class PlayerBox(object):
         self.pause_x = 0
         self.pause_y = 0
         
-        self.save_pos = 0
         # Init play memory.
         self.ini = Config(get_home_path() + "/.config/deepin-media-player/config.ini")
         # Init deepin media player config gui.
@@ -693,14 +692,14 @@ class PlayerBox(object):
 
     def key_right(self):
         # print "right key..."
-        self.save_pos += 10
-        self.mp.seek(self.save_pos)
-
+        # self.mp.seek()
+        pass
+    
     def key_left(self):
         # print "left key..."
-        self.save_pos -= 10
-        self.mp.seek(self.save_pos)
-
+        # self.mp.seek()
+        pass
+        
     def key_space(self):
         # print "space key..."
         self.virtual_set_start_btn_clicked()
@@ -1526,7 +1525,6 @@ class PlayerBox(object):
 
     def get_time_length(self, mplayer, length):
         '''Get mplayer length to max of progressbar.'''
-        self.save_pos = mplayer.posNum
         
         self.progressbar.max = length
         self.toolbar2.progressbar.max = length # toolbar2 max value.

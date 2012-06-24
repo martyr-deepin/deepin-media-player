@@ -533,6 +533,7 @@ class  Mplayer(gobject.GObject):
             
     def seek(self, seekNum):        
         '''Set rate of progress'''
+        self.posNum = seekNum
         if self.state:
             self.cmd('seek %d 2\n' % (seekNum))   
         
