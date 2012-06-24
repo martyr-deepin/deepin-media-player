@@ -101,7 +101,7 @@ class VolumeButton(gtk.EventBox):
         self.__volume_right_y   = volume_y
         '''Left'''
         self.volume_left_show_value = volume_left_show_value
-        self.volume_state = MIN_STATE
+        self.__volume_state = MIN_STATE
         
         '''Right'''
         # bg value.
@@ -150,7 +150,7 @@ class VolumeButton(gtk.EventBox):
     def __release_mouse_set_point(self, widget, event):        
         self.__drag = False
         if self.__press_emit_bool:
-            self.emit("get-value-event", self.__current_value, self.volume_state)        
+            self.emit("get-value-event", self.__current_value, self.__volume_state)        
         
     def __motion_mouse_set_point(self, widget, event):
         if self.__drag:
@@ -187,24 +187,34 @@ class VolumeButton(gtk.EventBox):
         self.__set_volume_value_to_state(self.__current_value) # 2: value to state.
         self.__draw_volume_left(widget, event)               # 3: draw state pixbuf.        
         if not self.__press_emit_bool:
-            self.emit("get-value-event", self.__current_value, self.volume_state)
+            self.emit("get-value-event", self.__current_value, self.__volume_state)
         # propagate_expose(widget, event)
         return True
 
         
     '''Left function'''        
-    def set_volume_state(self, state):
+    @property
+    def volume_state(self):
+        return self.__volume_state 
+    
+    @volume_state.setter
+    def volume_state(self, state):
         if state == MIN_STATE:
-            self.volume_state = MIN_STATE
+            self.__volume_state = MIN_STATE
         elif state == MID_STATE:    
-            self.volume_state = MID_STATE
+            self.__volume_state = MID_STATE
         elif state == MAX_STATE:    
-            self.volume_state = MAX_STATE
+            self.__volume_state = MAX_STATE
         elif state == MUTE_STATE:    
-            self.volume_state = MUTE_STATE
+            self.__volume_state = MUTE_STATE
             
-    def get_volume_state(self):
-        return self.volume_state
+    @volume_state.getter        
+    def volume_state(self):
+        return self.__volume_state
+        
+    @volume_state.deleter
+    def volume_state(self):
+        del self.__volume_state
         
     def set_volume_left_show_value(self, show_value):
         try:
@@ -220,28 +230,28 @@ class VolumeButton(gtk.EventBox):
         if not self.__mute_bool:
             temp_show_value = self.volume_left_show_value
             if temp_show_value[0][0] <= value <= temp_show_value[0][1]:
-                self.volume_state = MIN_STATE
+                self.__volume_state = MIN_STATE
             elif temp_show_value[1][0] <= value <= temp_show_value[1][1]:
-                self.volume_state = MID_STATE
+                self.__volume_state = MID_STATE
             elif temp_show_value[2][0] <= value <= temp_show_value[2][1]:
-                self.volume_state = MAX_STATE
+                self.__volume_state = MAX_STATE
         else:        
-            self.volume_state = MUTE_STATE
+            self.__volume_state = MUTE_STATE
                     
     def set_volume_mute(self):
-        self.volume_state = MUTE_STATE
+        self.__volume_state = MUTE_STATE
             
     def __draw_volume_left(self, widget, event):
         cr = widget.window.cairo_create()
         x, y, w, h = widget.allocation
         
-        if self.volume_state == MUTE_STATE:                    
+        if self.__volume_state == MUTE_STATE:                    
             pixbuf = self.__mute_volume_pixbuf
-        elif self.volume_state == MIN_STATE:    
+        elif self.__volume_state == MIN_STATE:    
             pixbuf = self.__min_volume_pixbuf
-        elif self.volume_state == MID_STATE:        
+        elif self.__volume_state == MID_STATE:        
             pixbuf = self.__mid_volume_pixbuf
-        elif self.volume_state == MAX_STATE:
+        elif self.__volume_state == MAX_STATE:
             pixbuf = self.__max_volume_pixbuf
             
         draw_pixbuf(cr,
@@ -251,9 +261,22 @@ class VolumeButton(gtk.EventBox):
                     )
     
     '''Right function'''            
-    def set_line_width(self, width):
+    @property
+    def line_width(self):
+        return self.__line_width
+    
+    @line_width.setter
+    def line_width(self, width):
         self.__line_width = width
         self.queue_draw()
+        
+    @line_width.getter    
+    def line_width(self):    
+        return self.__line_width
+    
+    @line_width.deleter
+    def line_width(self):
+        del self.__line_width
         
     @property    
     def value(self):
@@ -271,6 +294,7 @@ class VolumeButton(gtk.EventBox):
     def value(self):        
         return self.__current_value
         
+    
     def set_volume_position(self, x, y):        
         self.__volume_right_x = x
         self.__volume_right_y = y
@@ -283,9 +307,22 @@ class VolumeButton(gtk.EventBox):
         self.__fg_y    = self.__volume_right_y
         self.__point_y = self.__volume_right_y
         
-    def set_volume_max_value(self, value):    
-        self.__volume_max_value = value
-                
+    @property    
+    def max_value(self):    
+        self.__volume_max_value
+        
+    @max_value.setter    
+    def max_value(self, max_value):            
+        self.__volume_max_value = max_value
+        
+    @max_value.getter    
+    def max_value(self):            
+        return self.__volume_max_value
+        
+    @max_value.deleter
+    def max_value(self):
+        del self.__volume_max_value
+        
     def __draw_volume_right(self, widget, event):
         cr = widget.window.cairo_create()
         cr.set_line_width(self.__line_width)
@@ -350,8 +387,10 @@ if __name__ == "__main__":
         print "volume_state:%s" % volume_state
 
     def set_value_button_clicked(widget):    
-        volume_button.value = (100)
-        volume_button.set_line_width(4)    # Set draw line width.    
+        print volume_button.volume_state
+        volume_button.max_value = 200
+        volume_button.value = 100
+        volume_button.line_width = 4    # Set draw line width.    
         # volume_button.set_volume_left_show_value([(0,10),(11,80),(81,100)])
         
     win = gtk.Window(gtk.WINDOW_TOPLEVEL)
@@ -360,6 +399,7 @@ if __name__ == "__main__":
     win.set_title("测试音量按钮")
     main_vbox = gtk.VBox()
     volume_button = VolumeButton(100,220)
+    volume_button.value = 100
     # volume_button = VolumeButton()
     volume_button.connect("get-value-event", get_volume_value)
     set_value_button = gtk.Button("设置音量的值")
