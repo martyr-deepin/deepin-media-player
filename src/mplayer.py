@@ -533,19 +533,18 @@ class  Mplayer(gobject.GObject):
             
     def seek(self, seekNum):        
         '''Set rate of progress'''
-        self.posNum = seekNum
         if self.state:
             self.cmd('seek %d 2\n' % (seekNum))   
         
     def fseek(self, seekNum):
         '''Fast forward'''
         if self.state:
-            self.cmd('seek +%d 2\n' % (seekNum))   
+            self.cmd('seek +%d\n' % (seekNum))   
     
     def bseek(self, seekNum):
         '''backward'''
         if self.state:
-            self.cmd('seek -%d 2\n' % (seekNum))
+            self.cmd('seek -%d\n' % (seekNum))
              
     def pause(self):
         if self.state  and not self.pause_bool:             
