@@ -338,7 +338,7 @@ class PlayerBox(object):
         self.toolbar2.play_control_panel.open_btn.connect("clicked", self.open_button_clicked)
 
         # Toolbar2 volume button.
-        self.toolbar2.volume_button.set_value(100)
+        self.toolbar2.volume_button.value = 100
         self.toolbar2.volume_button.connect("get-value-event", self.volume_button_get_value_event, 2)
 
         # Child widget add to vbox.
@@ -402,7 +402,7 @@ class PlayerBox(object):
         # Volume button.
         self.volume_button_hframe = HorizontalFrame()
         self.volume_button = VolumeButton(volume_y = 14, press_emit_bool = True)
-        self.volume_button.set_value(100)
+        self.volume_button.value = 100
         self.volume_button.connect("get-value-event", self.volume_button_get_value_event, 1)
         self.volume_button.set_size_request(92, 40)
         self.volume_button_hframe.add(self.volume_button)
@@ -535,10 +535,10 @@ class PlayerBox(object):
                     self.mp.setvolume(value) 
                     
         if 1 == volume_bit:
-            self.toolbar2.volume_button.set_value(value)
+            self.toolbar2.volume_button.value = value
         else:    
-            self.volume_button.set_value(value)
-                    
+            self.volume_button.value = value
+            
     def init_config_key(self):
         # Init Config keys.
         # [PlayControl] Init.

@@ -255,14 +255,20 @@ class VolumeButton(gtk.EventBox):
         self.__line_width = width
         self.queue_draw()
         
-    def set_value(self, value):        
+    @property    
+    def value(self):
+        return self.__current_value
+    
+    @value.setter
+    def value(self, value):        
         if 0 <= value <= self.__volume_max_value:
             temp_padding = (float(self.__volume_max_value) / self.__volume_width)
             temp_padding_x = float(value) / temp_padding            
             self.__point_padding_x = temp_padding_x + ((self.__fg_padding_x))
             self.queue_draw()
             
-    def get_value(self):        
+    @value.getter        
+    def value(self):        
         return self.__current_value
         
     def set_volume_position(self, x, y):        
@@ -334,7 +340,7 @@ if __name__ == "__main__":
     import random
     from dtk.ui.window import Window
     def set_time_position():
-        volume_button.set_value(random.randint(0, 100))
+        volume_button.value = (random.randint(0, 100))
         return True
     
     def get_volume_value(volume_button, value, volume_state):    
@@ -344,7 +350,7 @@ if __name__ == "__main__":
         print "volume_state:%s" % volume_state
 
     def set_value_button_clicked(widget):    
-        volume_button.set_value(100)
+        volume_button.value = (100)
         volume_button.set_line_width(4)    # Set draw line width.    
         # volume_button.set_volume_left_show_value([(0,10),(11,80),(81,100)])
         
