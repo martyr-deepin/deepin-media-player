@@ -525,6 +525,7 @@ class PlayerBox(object):
             pass
             
     def volume_button_get_value_event(self, volume_button, value, volume_state, volume_bit):
+        print volume_state
         if -1 == volume_state:
             if self.mp:
                 if 1 == self.mp.state:

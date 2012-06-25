@@ -204,12 +204,16 @@ class VolumeButton(gtk.EventBox):
         temp_min_x = self.__bg_x + self.__bg_padding_x - self.__point_volume_pixbuf.get_pixbuf().get_width()/2
         temp_max_x = self.__bg_x + self.__bg_padding_x + self.__volume_width + self.__point_volume_pixbuf.get_pixbuf().get_width()/2                
         if self.__volume_left_x <= temp_x <= temp_min_x:
-            if self.temp_mute_bool:
+            if self.temp_mute_bool and not self.__mute_bool:
+                # Set mute state.
                 self.__mute_bool = not self.__mute_bool
+                self.__volume_state = MUTE_STATE 
                 self.temp_mute_bool = False
-            # print self.__mute_bool
-            # self.emit("get-value-event", self.__current_value, self.__volume_state)
-            self.queue_draw()
+            else: # modify state.
+                self.__mute_bool = False
+                self.temp_mute_bool = False
+                self.__set_volume_value_to_state(self.__current_value)                
+                self.queue_draw()
             
         if self.__press_emit_bool:
             self.emit("get-value-event", self.__current_value, self.__volume_state)        
