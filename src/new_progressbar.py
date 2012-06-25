@@ -76,10 +76,11 @@ class ProgressBar(gtk.EventBox):
         # Init value.
         self.set_value(0)
         
+    def set_max_value(self, max_value):    
+        self.__max_value = max_value
+        
     def set_value(self, value):    
-        self.__current_value = value
-        self.__fg_padding_x =  round(value / (float(self.__max_value) / self.__progressbar_width), 0)
-        self.__point_padding_x = self.__fg_padding_x
+        self.__current_value   = value
         self.queue_draw()
         
     def get_value(self):    
@@ -88,6 +89,12 @@ class ProgressBar(gtk.EventBox):
     def __get_x(self, event):    
         self.__point_padding_x = event.x        
         self.__fg_padding_x    = event.x
+        self.__current_value = (float(self.__max_value) / self.allocation.width) * self.__fg_padding_x
+        if self.__current_value < 0:
+            self.__current_value = 0
+        elif self.__current_value > self.__max_value:    
+            self.__current_value = self.__max_value
+            
         self.emit("get-value-event", self.__current_value, self.progressbar_state)
         self.queue_draw()
         
@@ -117,14 +124,14 @@ class ProgressBar(gtk.EventBox):
         self.__progressbar_width = w
         
         # Draw progressbar bg.
-        self.__draw_progressbar_bg(cr, x, y, w, h)
-            
+        self.__draw_progressbar_bg(cr, x, y, w, h)            
+        
         if self.progressbar_state:
             # Draw progressbar fg.
             self.__draw_progressbar_fg(cr, x, y, w, h)
+            # Draw progressbar fg hight.            
             # Draw progressbar point.
-            self.__draw_progressbar_point(cr, x, y, w, h)
-            
+            self.__draw_progressbar_point(cr, x, y, w, h)            
         return True
     
     def __draw_progressbar_bg(self, cr, x, y, w, h):
@@ -133,21 +140,17 @@ class ProgressBar(gtk.EventBox):
         cr.move_to(x, 
                    y + self.__progressbar_padding_y)
         cr.line_to(x + w, 
-                   y + self.__progressbar_padding_y)
+                   y + self.__progressbar_padding_y )
         cr.stroke()
         
     def __draw_progressbar_fg(self, cr, x, y, w, h):
         cr.set_line_width(self.__line_width)
-        cr.set_source_rgba(*alpha_color_hex_to_cairo(self.__fg_color.get_color_info()))
-        # Get current value.
-        self.__temp_value = (float(self.__max_value) / w) * self.__fg_padding_x
-        self.__current_value =  int(round(self.__temp_value, 0))
+        cr.set_source_rgba(*alpha_color_hex_to_cairo(self.__fg_color.get_color_info()))                        
+
+        # Get current value.        
+        self.__fg_padding_x = self.__current_value / (float(self.__max_value) / w)
+        self.__point_padding_x = self.__fg_padding_x
         
-        if self.__current_value < 0:
-            self.__current_value = 0
-        elif self.__current_value > self.__max_value:    
-            self.__current_value = self.__max_value
-            
         cr.move_to(x, 
                    y + self.__progressbar_padding_y)
         cr.line_to(x + self.__fg_padding_x, 
@@ -175,18 +178,46 @@ gobject.type_register(ProgressBar)
     
 
 if __name__ == "__main__":
+    from mplayer import Mplayer
+    
+    def play_start(mplayer, mplayer_id):
+        print mplayer_id
+        
+    def play_end(mplayer, mplayer_bool):
+        pb.progressbar_state = mplayer.state
+        
+    def get_time_pos(mplayer, pos):
+        if False:
+            pb.set_value(pos)
+        
+    def get_time_length(mplayer, length):
+        pb.set_max_value(length)
+        
     def test_value(widget, value, state):
-        print widget
-        print value
-        print state
+        mp.seek(value)
+        
+    def init_media_player(widget, event):        
+        mp.connect("play-start", play_start)
+        mp.connect("play-end", play_end)
+        mp.connect("get-time-length", get_time_length)
+        mp.connect("get-time-pos", get_time_pos)
+        mp.play("/home/long/音乐/123.rmvb")
+        mp.setvolume(10)
+        pb.progressbar_state = mp.state   
+        
     win = gtk.Window(gtk.WINDOW_TOPLEVEL)
+    screen = gtk.DrawingArea()
     win.set_size_request(500, 500)
+    
     main_vbox = gtk.VBox()
     pb = ProgressBar()
+    pb.progressbar_state=1
     pb.connect("get-value-event", test_value)    
     win.connect("destroy", gtk.main_quit)
-    main_vbox.pack_start(gtk.Button("确定"), True, True)
+    win.connect("window-state-event", init_media_player)
+    main_vbox.pack_start(screen, True, True)
     main_vbox.pack_start(pb, False, False)
     win.add(main_vbox)
     win.show_all()
+    mp  = Mplayer(screen.window.xid)
     gtk.main()
