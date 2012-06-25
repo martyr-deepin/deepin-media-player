@@ -38,11 +38,16 @@ x = 500 -> 500 * 0.2 = 100
 x = 100 -> 100 * 0.2 = 20 
 '''
 
-#volume state.
+# volume state.
+ZERO_STATE = 0
 MIN_STATE = 1
 MID_STATE = 2
 MAX_STATE = 3
 MUTE_STATE = -1
+# mouse volume state.
+MOUSE_VOLUME_STATE_PRESS  = 1
+MOUSE_VOLUME_STATE_HOVER  = 2
+MOUSE_VOLUME_STATE_NORMAL = -1
 # volume type.
 VOLUME_RIGHT = "right"
 VOLUME_LEFT   = "left"
@@ -60,28 +65,62 @@ class VolumeButton(gtk.EventBox):
                  volume_y         = 15,
                  line_width       = 3,
                  volume_left_right_padding_x = 3,
-                 volume_left_show_value = [(0, 33),(34, 66),(67, 100)],
+                 volume_left_show_value = [(1, 33),(34, 66),(67, 100)],
                  scroll_bool = False,
                  press_emit_bool = False,
                  bg_color = app_theme.get_alpha_color("volumebutton_bg"),
                  fg_color = app_theme.get_alpha_color("volumebutton_fg"),
-                 min_volume_pixbuf   = app_theme.get_pixbuf("min_volume.png"),
-                 mid_volume_pixbuf   = app_theme.get_pixbuf("mid_volume.png"),
-                 max_volume_pixbuf   = app_theme.get_pixbuf("max_volume.png"),
-                 mute_volume_pixbuf  = app_theme.get_pixbuf("mute.png"),
-                 point_volume_pixbuf = app_theme.get_pixbuf("volume_button.png")                 
+                 #=============================================================
+                 zero_volume_normal_pixbuf = app_theme.get_pixbuf("zero_normal.png"),
+                 zero_volume_hover_pixbuf = app_theme.get_pixbuf("zero_hover.png"),
+                 zero_volume_press_pixbuf = app_theme.get_pixbuf("zero_hover.png"),
+                 #=============================================================
+                 min_volume_normal_pixbuf   = app_theme.get_pixbuf("lower_normal.png"),
+                 min_volume_hover_pixbuf    = app_theme.get_pixbuf("lower_hover.png"),
+                 min_volume_press_pixbuf    = app_theme.get_pixbuf("lower_press.png"),
+                 #=============================================================
+                 mid_volume_normal_pixbuf   = app_theme.get_pixbuf("middle_normal.png"),
+                 mid_volume_hover_pixbuf    = app_theme.get_pixbuf("middle_hover.png"),
+                 mid_volume_press_pixbuf    = app_theme.get_pixbuf("middle_press.png"),
+                 #=============================================================
+                 max_volume_normal_pixbuf = app_theme.get_pixbuf("high_normal.png"),
+                 max_volume_hover_pixbuf  = app_theme.get_pixbuf("high_hover.png"),
+                 max_volume_press_pixbuf  = app_theme.get_pixbuf("high_press.png"),
+                 #=============================================================
+                 mute_volume_normal_pixbuf  = app_theme.get_pixbuf("mute_normal.png"),
+                 mute_volume_hover_pixbuf   = app_theme.get_pixbuf("mute_hover.png"),
+                 mute_volume_press_pixbuf   = app_theme.get_pixbuf("mute_press.png"),
+                 #=============================================================
+                 point_volume_pixbuf = app_theme.get_pixbuf("point_normal.png")
                  ):        
         gtk.EventBox.__init__(self)
         ###########################
-        if volume_x < max_volume_pixbuf.get_pixbuf().get_width() + 10:
-            volume_x = max_volume_pixbuf.get_pixbuf().get_width() + 10
+        if volume_x < max_volume_normal_pixbuf.get_pixbuf().get_width() + 10:
+            volume_x = max_volume_normal_pixbuf.get_pixbuf().get_width() + 10
         '''Init pixbuf.'''
         self.__bg_color               = bg_color
         self.__fg_color               = fg_color
-        self.__min_volume_pixbuf      = min_volume_pixbuf
-        self.__mid_volume_pixbuf      = mid_volume_pixbuf
-        self.__max_volume_pixbuf      = max_volume_pixbuf
-        self.__mute_volume_pixbuf     = mute_volume_pixbuf
+        # zero volume pixbuf.
+        self.__zero_volume_normal_pixbuf  = zero_volume_normal_pixbuf
+        self.__zero_volume_hover_pixbuf   = zero_volume_hover_pixbuf
+        self.__zero_volume_press_pixbuf   = zero_volume_press_pixbuf
+        # min volume pixbuf.
+        self.__min_volume_normal_pixbuf  = min_volume_normal_pixbuf
+        self.__min_volume_hover_pixbuf   = min_volume_hover_pixbuf
+        self.__min_volume_press_pixbuf   = min_volume_press_pixbuf
+        # mid volume pixbuf:        
+        self.__mid_volume_normal_pixbuf     = mid_volume_normal_pixbuf
+        self.__mid_volume_hover_pixbuf      = mid_volume_hover_pixbuf
+        self.__mid_volume_press_pixbuf        = mid_volume_press_pixbuf
+        # max volume pixbuf[normal, hover, press].        
+        self.__max_volume_normal_pixbuf  = max_volume_normal_pixbuf
+        self.__max_volume_hover_pixbuf   = max_volume_hover_pixbuf
+        self.__max_volume_press_pixbuf   = max_volume_press_pixbuf
+        # mute volume pixbuf[normal, hover, press].
+        self.__mute_volume_normal_pixbuf    = mute_volume_normal_pixbuf
+        self.__mute_volume_hover_pixbuf     = mute_volume_hover_pixbuf 
+        self.__mute_volume_press_pixbuf     = mute_volume_press_pixbuf
+        # point volume pixbuf.
         self.__point_volume_pixbuf    = point_volume_pixbuf        
         '''Init Set VolumeButton attr.'''
         self.set_size_request(volume_width, 30)
@@ -91,18 +130,19 @@ class VolumeButton(gtk.EventBox):
         self.__line_width       = line_width
         self.__current_value    = 0
         self.__mute_bool        = False
+        self.temp_mute_bool     = False
         self.__drag             = False 
         self.__volume_max_value = volume_max_value
         self.__volume_width     = volume_width
         
-        self.__volume_left_x    = volume_x - self.__max_volume_pixbuf.get_pixbuf().get_width() - volume_left_right_padding_x
-        self.__volume_left_y    = volume_y - self.__max_volume_pixbuf.get_pixbuf().get_height()/2 + self.__point_volume_pixbuf.get_pixbuf().get_height()/2
+        self.__volume_left_x    = volume_x - self.__max_volume_normal_pixbuf.get_pixbuf().get_width() - volume_left_right_padding_x
+        self.__volume_left_y    = volume_y - self.__max_volume_normal_pixbuf.get_pixbuf().get_height()/2 + self.__point_volume_pixbuf.get_pixbuf().get_height()/2
         self.__volume_right_x   = volume_x
         self.__volume_right_y   = volume_y
         '''Left'''
         self.volume_left_show_value = volume_left_show_value
         self.__volume_state = MIN_STATE
-        
+        self.__mouse_state  = MOUSE_VOLUME_STATE_NORMAL
         '''Right'''
         # bg value.
         self.__bg_x         = 0
@@ -123,9 +163,12 @@ class VolumeButton(gtk.EventBox):
         self.connect("motion-notify-event",  self.__motion_mouse_set_point)
         self.connect("button-press-event",   self.__press_mouse_set_point)
         self.connect("button-release-event", self.__release_mouse_set_point)
+        '''Event value'''
+        self.press_bool = False
         # scroll event.
         if scroll_bool:
             self.connect("scroll-event",     self.__scroll_mouse_set_point)
+            
             
     def set_press_emit_bool(self, emit_bool):
         self.__press_emit_bool = emit_bool
@@ -134,28 +177,60 @@ class VolumeButton(gtk.EventBox):
         self.__mute_bool = False
         self.__point_padding_x = int(event.x)   
         self.queue_draw()        
-                            
+        
     def __press_mouse_set_point(self, widget, event):    
         temp_x = int(event.x)
+        
         temp_min_x = self.__bg_x + self.__bg_padding_x - self.__point_volume_pixbuf.get_pixbuf().get_width()/2
         temp_max_x = self.__bg_x + self.__bg_padding_x + self.__volume_width + self.__point_volume_pixbuf.get_pixbuf().get_width()/2
+        self.queue_draw()
         if temp_min_x < temp_x < temp_max_x:            
             self.__set_point_padding_x(event)
             self.__drag = True
         else:    
-            if self.__volume_left_x <= temp_x <= temp_min_x:
-                self.__mute_bool = not self.__mute_bool
-                self.queue_draw()
-                            
+            if self.__volume_left_x <= temp_x <= temp_min_x:                
+                # Set mouse state press.
+                self.__mouse_state = MOUSE_VOLUME_STATE_PRESS
+                self.temp_mute_bool = True
+                self.press_bool = True
+                
     def __release_mouse_set_point(self, widget, event):        
+        # Set mouse state normal.
+        self.__mouse_state = MOUSE_VOLUME_STATE_NORMAL        
         self.__drag = False
+        self.press_bool = False
+        
+        temp_x = int(event.x)
+        temp_min_x = self.__bg_x + self.__bg_padding_x - self.__point_volume_pixbuf.get_pixbuf().get_width()/2
+        temp_max_x = self.__bg_x + self.__bg_padding_x + self.__volume_width + self.__point_volume_pixbuf.get_pixbuf().get_width()/2                
+        if self.__volume_left_x <= temp_x <= temp_min_x:
+            if self.temp_mute_bool:
+                self.__mute_bool = not self.__mute_bool
+                self.temp_mute_bool = False
+            # print self.__mute_bool
+            # self.emit("get-value-event", self.__current_value, self.__volume_state)
+            self.queue_draw()
+            
         if self.__press_emit_bool:
             self.emit("get-value-event", self.__current_value, self.__volume_state)        
         
+        self.queue_draw()    
+        
     def __motion_mouse_set_point(self, widget, event):
+        temp_x = int(event.x)
+        temp_min_x = self.__bg_x + self.__bg_padding_x - self.__point_volume_pixbuf.get_pixbuf().get_width()/2
+        temp_max_x = self.__bg_x + self.__bg_padding_x + self.__volume_width + self.__point_volume_pixbuf.get_pixbuf().get_width()/2        
+        
+        if self.__volume_left_x <= temp_x <= temp_min_x:            
+            self.__mouse_state = MOUSE_VOLUME_STATE_HOVER
+        else:
+            self.__mouse_state = MOUSE_VOLUME_STATE_NORMAL
+        if not self.press_bool:
+            self.queue_draw()
+            
         if self.__drag:
             self.__set_point_padding_x(event)        
-                    
+        
     def __scroll_mouse_set_point(self, widget, event):    
         if event.direction == gtk.gdk.SCROLL_UP:
             self.volume_other_set_value(VOLUME_RIGHT)
@@ -186,6 +261,7 @@ class VolumeButton(gtk.EventBox):
         self.__draw_volume_right(widget, event)              # 1: get current value.
         self.__set_volume_value_to_state(self.__current_value) # 2: value to state.
         self.__draw_volume_left(widget, event)               # 3: draw state pixbuf.        
+        
         if not self.__press_emit_bool:
             self.emit("get-value-event", self.__current_value, self.__volume_state)
         # propagate_expose(widget, event)
@@ -201,12 +277,15 @@ class VolumeButton(gtk.EventBox):
     def volume_state(self, state):
         if state == MIN_STATE:
             self.__volume_state = MIN_STATE
+        elif state == ZERO_STATE:    
+            self.__volume_state = ZERO_STATE
         elif state == MID_STATE:    
             self.__volume_state = MID_STATE
         elif state == MAX_STATE:    
             self.__volume_state = MAX_STATE
         elif state == MUTE_STATE:    
             self.__volume_state = MUTE_STATE
+            
             
     @volume_state.getter        
     def volume_state(self):
@@ -235,6 +314,8 @@ class VolumeButton(gtk.EventBox):
                 self.__volume_state = MID_STATE
             elif temp_show_value[2][0] <= value <= temp_show_value[2][1]:
                 self.__volume_state = MAX_STATE
+            elif 0 == value:    
+                self.__volume_state = ZERO_STATE
         else:        
             self.__volume_state = MUTE_STATE
                     
@@ -245,14 +326,42 @@ class VolumeButton(gtk.EventBox):
         cr = widget.window.cairo_create()
         x, y, w, h = widget.allocation
         
-        if self.__volume_state == MUTE_STATE:                    
-            pixbuf = self.__mute_volume_pixbuf
-        elif self.__volume_state == MIN_STATE:    
-            pixbuf = self.__min_volume_pixbuf
-        elif self.__volume_state == MID_STATE:        
-            pixbuf = self.__mid_volume_pixbuf
-        elif self.__volume_state == MAX_STATE:
-            pixbuf = self.__max_volume_pixbuf
+        if self.__volume_state == MUTE_STATE: # mute state.           
+            if self.__mouse_state == MOUSE_VOLUME_STATE_NORMAL:                
+                pixbuf = self.__mute_volume_normal_pixbuf
+            elif self.__mouse_state == MOUSE_VOLUME_STATE_HOVER:        
+                pixbuf = self.__mute_volume_hover_pixbuf            
+            elif self.__mouse_state == MOUSE_VOLUME_STATE_PRESS:
+                pixbuf = self.__mute_volume_press_pixbuf                
+        elif self.__volume_state == ZERO_STATE: # zero state.
+            if self.__mouse_state == MOUSE_VOLUME_STATE_NORMAL:                
+                pixbuf = self.__zero_volume_normal_pixbuf
+            elif self.__mouse_state == MOUSE_VOLUME_STATE_HOVER:        
+                pixbuf = self.__zero_volume_hover_pixbuf            
+            elif self.__mouse_state == MOUSE_VOLUME_STATE_PRESS:
+                pixbuf = self.__zero_volume_press_pixbuf                        
+        elif self.__volume_state == MIN_STATE: # min state.
+            if self.__mouse_state == MOUSE_VOLUME_STATE_NORMAL:                
+                pixbuf = self.__min_volume_normal_pixbuf
+            elif self.__mouse_state == MOUSE_VOLUME_STATE_HOVER:        
+                pixbuf = self.__min_volume_hover_pixbuf            
+            elif self.__mouse_state == MOUSE_VOLUME_STATE_PRESS:
+                pixbuf = self.__min_volume_press_pixbuf                        
+        elif self.__volume_state == MID_STATE: # mid state.
+            if self.__mouse_state == MOUSE_VOLUME_STATE_NORMAL:                
+                pixbuf = self.__mid_volume_normal_pixbuf
+            elif self.__mouse_state == MOUSE_VOLUME_STATE_HOVER:        
+                pixbuf = self.__mid_volume_hover_pixbuf            
+            elif self.__mouse_state == MOUSE_VOLUME_STATE_PRESS:
+                pixbuf = self.__mid_volume_press_pixbuf                        
+        elif self.__volume_state == MAX_STATE: # max state.
+            if self.__mouse_state == MOUSE_VOLUME_STATE_NORMAL:                
+                pixbuf = self.__max_volume_normal_pixbuf
+            elif self.__mouse_state == MOUSE_VOLUME_STATE_HOVER:        
+                pixbuf = self.__max_volume_hover_pixbuf            
+            elif self.__mouse_state == MOUSE_VOLUME_STATE_PRESS:
+                pixbuf = self.__max_volume_press_pixbuf            
+            
             
         draw_pixbuf(cr,
                     pixbuf.get_pixbuf(),
