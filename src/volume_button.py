@@ -73,7 +73,7 @@ class VolumeButton(gtk.EventBox):
                  #=============================================================
                  zero_volume_normal_pixbuf = app_theme.get_pixbuf("zero_normal.png"),
                  zero_volume_hover_pixbuf = app_theme.get_pixbuf("zero_hover.png"),
-                 zero_volume_press_pixbuf = app_theme.get_pixbuf("zero_hover.png"),
+                 zero_volume_press_pixbuf = app_theme.get_pixbuf("zero_press.png"),
                  #=============================================================
                  min_volume_normal_pixbuf   = app_theme.get_pixbuf("lower_normal.png"),
                  min_volume_hover_pixbuf    = app_theme.get_pixbuf("lower_hover.png"),
