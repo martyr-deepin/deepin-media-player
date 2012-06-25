@@ -182,9 +182,8 @@ if __name__ == "__main__":
     win = gtk.Window(gtk.WINDOW_TOPLEVEL)
     win.set_size_request(500, 500)
     main_vbox = gtk.VBox()
-    pb = ProgressBar(width=500)
-    pb.connect("get-value-event", test_value)
-    
+    pb = ProgressBar()
+    pb.connect("get-value-event", test_value)    
     win.connect("destroy", gtk.main_quit)
     main_vbox.pack_start(gtk.Button("确定"), True, True)
     main_vbox.pack_start(pb, False, False)
