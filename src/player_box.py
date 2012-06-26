@@ -120,107 +120,6 @@ class PlayerBox(object):
         self.main_vbox_hframe = HorizontalFrame(1)
         self.main_vbox_hframe.set_padding(0, 0, 2, 2)
         self.main_vbox_hframe.add(self.main_vbox)
-
-        '''play list popup menu'''
-        self.menu = Menu([(None, "单个播放", self.sigle_play),      # 0
-                          (None, "顺序播放", self.sequence_play),   # 1
-                          (None, "随机播放", self.rand_play),       # 2
-                          (None, "单个循环", self.sigle_loop_play), # 3
-                          (None, "列表循环", self.loop_list_play)]  # 4
-                         )
-
-        self.menu2 = Menu([(None, "按名称", self.name_sort),
-                           (None, "按类型", self.type_sort)])
-
-        self.root_menu = Menu([(None, "添加文件", self.add_file),
-                               (None, "添加文件夹", self.add_file_dir),
-                               (None),
-                               (None, "删除选中项", self.del_index),
-                               (None, "清空播放列表", self.clear_list),
-                               (None, "删除无效文件", self.del_error_file),
-                               (None),
-                               (None, "播放顺序", self.menu),
-                               (None, "排序", self.menu2),
-                               (None),
-                               (None, "打开所在文件夹", self.open_current_file_dir)
-                               ],
-                              True)
-
-        '''Title root menu.'''
-        #In title root menu.
-        self.sort_menu = Menu([(None, "截图", self.key_sort_image),
-                               (None, "打开截图目录", self.open_sort_image_dir)
-                               # (None, "设置截图保存目录", None)
-                               ])
-        # In title root menu.
-        self.subtitle_menu = Menu([(None, "载入字幕", None),
-                                   (None, "字幕选择", None),
-                                   (None, "移除字幕", None),
-                                   ])
-        # In title root menu.
-        self.volume_menu = Menu([(None, "声道选择", None),
-                                 (None, "配音选择", None),
-                                 (None),
-                                 (None, "增大音量", None),
-                                 (None, "减小音量", None),
-                                 (None, "静音/还原", None),
-                                 ])
-        # In title root menu.
-        self.screen_menu = Menu([(None, "默认值",  self.set_restart_aspect),
-                                 (None, "4:3",    self.set_4X3_aspect),
-                                 (None, "16:9",   self.set_16X9_aspect),
-                                 (None, "16:10",  self.set_16X10_aspect),
-                                 (None, "1.85:1", self.set_1_85X1_aspect),
-                                 (None, "2.35:1", self.set_2_35X1_aspect),
-                                 # (None),
-                                 # (None, "0.5倍尺寸", None),
-                                 # (None, "1倍", None),
-                                 # (None, "1.5倍", None),
-                                 # (None, "2倍", None),
-                                 # (None),
-                                 # (None, "全屏/退出", None),
-                                 ])
-        # In title root menu.
-        self.play_state_menu = Menu([(None, "单个播放", self.sigle_play),
-                                     (None, "顺序播放", self.sequence_play),
-                                     (None, "随机播放", self.rand_play),
-                                     (None, "单个循环", self.sigle_loop_play),
-                                     (None, "列表循环", self.loop_list_play)]
-                                    )
-        # In title root menu.
-        self.play_menu = Menu([(None, "全屏播放", self.key_return),
-                               # (None, "普通模式", self.set_menu_common),
-                               (None, "简洁模式", self.set_menu_concise),
-                               (None, "上一首", self.key_pre),
-                               (None, "下一首", self.key_next),
-                               (None),
-                               (None, "快进5秒", self.key_right),
-                               (None, "快退5秒", self.key_left),
-                               (None, "播放顺序", self.play_state_menu),
-                               ])
-        # In title root menu.
-        self.file_menu = Menu([(None, "打开文件", self.add_file),
-                               (None, "打开文件夹", self.add_file_dir)])
-                              # (None, "播放光盘", None)])
-
-        # In title root menu.
-        self.help_menu = Menu([(None, "帮助信息", None),
-                               (None, "问题反馈", None),
-                               (None, "关于软件", None)])
-        #
-        self.title_root_menu = Menu([(None, "文件", self.file_menu),
-                                     (None, "播放", self.play_menu),
-                                     (None, "画面", self.screen_menu),
-                                     # (None, "声音", self.volume_menu),
-                                     # (None, "字幕", self.subtitle_menu),
-                                     (None, "截图", self.sort_menu),
-                                     (None, "选项", self.config_gui),
-                                     # (None, "总在最前", None),
-                                     # (None, "自定义换肤", None),
-                                     # (None, "帮助与反馈", self.help_menu),
-                                     (None, "退出", self.set_menu_quit)],
-                                    True)
-
         '''Tooltip window'''
         # self.tooltip = Tooltip("深度影音", 0, 0)
 
@@ -229,9 +128,7 @@ class PlayerBox(object):
 
         '''Save app(main.py)[init app].'''
         self.app = app
-        self.app.set_menu_callback(lambda button: self.title_root_menu.show(
-                get_widget_root_coordinate(button, WIDGET_POS_BOTTOM_LEFT),
-                (button.get_allocation().width, 0)))
+        self.app.set_menu_callback(lambda button: self.theme_menu_show(button))
 
         self.app_width = 0  # Save media player window width.
         self.app_height = 0 # Save media player window height.
@@ -442,6 +339,85 @@ class PlayerBox(object):
 
         self.keymap = {}
 
+    def theme_menu_show(self, button):    
+        '''Title root menu.'''
+        #In title root menu.
+        self.sort_menu = Menu([(None, "截图", self.key_sort_image),
+                               (None, "打开截图目录", self.open_sort_image_dir)
+                               # (None, "设置截图保存目录", None)
+                               ])
+        # In title root menu.
+        self.subtitle_menu = Menu([(None, "载入字幕", None),
+                                   (None, "字幕选择", None),
+                                   (None, "移除字幕", None),
+                                   ])
+        # In title root menu.
+        self.volume_menu = Menu([(None, "声道选择", None),
+                                 (None, "配音选择", None),
+                                 (None),
+                                 (None, "增大音量", None),
+                                 (None, "减小音量", None),
+                                 (None, "静音/还原", None),
+                                 ])
+        # In title root menu.
+        self.screen_menu = Menu([(None, "默认值",  self.set_restart_aspect),
+                                 (None, "4:3",    self.set_4X3_aspect),
+                                 (None, "16:9",   self.set_16X9_aspect),
+                                 (None, "16:10",  self.set_16X10_aspect),
+                                 (None, "1.85:1", self.set_1_85X1_aspect),
+                                 (None, "2.35:1", self.set_2_35X1_aspect),
+                                 # (None),
+                                 # (None, "0.5倍尺寸", None),
+                                 # (None, "1倍", None),
+                                 # (None, "1.5倍", None),
+                                 # (None, "2倍", None),
+                                 # (None),
+                                 # (None, "全屏/退出", None),
+                                 ])
+        # In title root menu.
+        self.play_state_menu = Menu([(None, "单个播放", self.sigle_play),
+                                     (None, "顺序播放", self.sequence_play),
+                                     (None, "随机播放", self.rand_play),
+                                     (None, "单个循环", self.sigle_loop_play),
+                                     (None, "列表循环", self.loop_list_play)]
+                                    )
+        # In title root menu.
+        self.play_menu = Menu([(None, "全屏播放", self.key_return),
+                               # (None, "普通模式", self.set_menu_common),
+                               (None, "简洁模式", self.set_menu_concise),
+                               (None, "上一首", self.key_pre),
+                               (None, "下一首", self.key_next),
+                               (None),
+                               (None, "快进5秒", self.key_right),
+                               (None, "快退5秒", self.key_left),
+                               (None, "播放顺序", self.play_state_menu),
+                               ])
+        # In title root menu.
+        self.file_menu = Menu([(None, "打开文件", self.add_file),
+                               (None, "打开文件夹", self.add_file_dir)])
+                              # (None, "播放光盘", None)])
+
+        # In title root menu.
+        self.help_menu = Menu([(None, "帮助信息", None),
+                               (None, "问题反馈", None),
+                               (None, "关于软件", None)])
+        #
+        self.title_root_menu = Menu([(None, "文件", self.file_menu),
+                                     (None, "播放", self.play_menu),
+                                     (None, "画面", self.screen_menu),
+                                     # (None, "声音", self.volume_menu),
+                                     # (None, "字幕", self.subtitle_menu),
+                                     (None, "截图", self.sort_menu),
+                                     (None, "选项", self.config_gui),
+                                     # (None, "总在最前", None),
+                                     # (None, "自定义换肤", None),
+                                     # (None, "帮助与反馈", self.help_menu),
+                                     (None, "退出", self.set_menu_quit)],
+                                    True)
+        self.title_root_menu.show(
+            get_widget_root_coordinate(button, WIDGET_POS_BOTTOM_LEFT),
+            (button.get_allocation().width, 0))       
+
     def toolbar2_panel_expose(self, widget, event):
         cr = widget.window.cairo_create()
         rect = widget.allocation
@@ -525,7 +501,6 @@ class PlayerBox(object):
             pass
             
     def volume_button_get_value_event(self, volume_button, value, volume_state, volume_bit):
-        print volume_state
         if -1 == volume_state:
             if self.mp:
                 if 1 == self.mp.state:
@@ -1657,7 +1632,34 @@ class PlayerBox(object):
     '''play list menu signal.'''
     def show_popup_menu(self, widget, event):
         if 3 == event.button:
-            self.root_menu.show((int(event.x_root), int(event.y_root)),
+            
+            '''play list popup menu'''
+            self.menu = Menu([(None, "单个播放", self.sigle_play),      # 0
+                              (None, "顺序播放", self.sequence_play),   # 1
+                              (None, "随机播放", self.rand_play),       # 2
+                              (None, "单个循环", self.sigle_loop_play), # 3
+                              (None, "列表循环", self.loop_list_play)]  # 4
+                             )
+
+            self.menu2 = Menu([(None, "按名称", self.name_sort),
+                               (None, "按类型", self.type_sort)])
+
+            self.play_list_root_menu = Menu([(None, "添加文件", self.add_file),
+                                             (None, "添加文件夹", self.add_file_dir),
+                                             (None),
+                                             (None, "删除选中项", self.del_index),
+                                             (None, "清空播放列表", self.clear_list),
+                                             (None, "删除无效文件", self.del_error_file),
+                                             (None),
+                                             (None, "播放顺序", self.menu),
+                                             (None, "排序", self.menu2),
+                                             (None),
+                                             (None, "打开所在文件夹", self.open_current_file_dir)
+                                             ],
+                                            True)
+
+
+            self.play_list_root_menu.show((int(event.x_root), int(event.y_root)),
                                 (0, 0))
 
     def sigle_play(self):
