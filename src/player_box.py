@@ -20,6 +20,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from dtk.ui.osd_tooltip import OSDTooltip
 from dtk.ui.utils import cairo_state
 from dtk.ui.keymap import get_keyevent_name
 from dtk.ui.box import EventBox
@@ -120,9 +121,7 @@ class PlayerBox(object):
         self.main_vbox_hframe = HorizontalFrame(1)
         self.main_vbox_hframe.set_padding(0, 0, 2, 2)
         self.main_vbox_hframe.add(self.main_vbox)
-        '''Tooltip window'''
-        # self.tooltip = Tooltip("深度影音", 0, 0)
-
+        
         '''Preview window'''
         self.preview = PreView()
 
@@ -152,6 +151,10 @@ class PlayerBox(object):
         self.screen = gtk.DrawingArea()
         self.screen_frame.add(self.screen)
 
+        '''Tooltip window'''
+        self.window_tool_tip = OSDTooltip(self.screen_frame, offset_x=20, offset_y=20)
+        self.concise_tool_tip = OSDTooltip(self.screen_frame, offset_x=20, offset_y=20)
+        
         self.video_aspect_type = "默认"
         self.playwinmax_bool = True
         # Set background.
@@ -315,7 +318,7 @@ class PlayerBox(object):
         self.play_list_button_hframe.add(self.play_list_button.button)
         self.play_list_button_hframe.set(0, 0, 1.0, 1.0)
         self.play_list_button_hframe.set_padding(4, 0, 0, 20)
-
+        
         
         self.bottom_play_control_hbox.pack_start(self.show_time_label_hframe, False, False)
         self.bottom_play_control_hbox.pack_start(self.play_control_panel_hframe, True, True)
@@ -343,8 +346,8 @@ class PlayerBox(object):
         '''Title root menu.'''
         #In title root menu.
         self.sort_menu = Menu([(None, "截图", self.key_sort_image),
-                               (None, "打开截图目录", self.open_sort_image_dir)
-                               # (None, "设置截图保存目录", None)
+                               (None, "打开截图目录", self.open_sort_image_dir),
+                               (None, "设置截图保存目录", self.open_sort_image_ini_gui)
                                ])
         # In title root menu.
         self.subtitle_menu = Menu([(None, "载入字幕", None),
@@ -619,14 +622,25 @@ class PlayerBox(object):
 
     def key_sort_image(self):
         print "sort image..."
-        if 1 == self.mp.state:
+        if 1 == self.mp.state: 
+            save_clipboard_bool =  self.config.get("ScreenshotSet", "save_clipboard")        
+            save_file_bool =  self.config.get("ScreenshotSet", "save_file")
+
             save_path = self.config.get("ScreenshotSet", "save_path")
             save_type = self.config.get("ScreenshotSet", "save_type")
-
+            
             if save_path[0] == "~":
-                save_path = get_home_path() + save_path[1:]
-
-            self.mp.scrot(self.mp.posNum, save_path + "/%s-%s"%(self.get_player_file_name(self.mp.path), self.mp.posNum) + save_type)
+                    save_path = get_home_path() + save_path[1:]                    
+                    
+            if save_file_bool == "True":                                
+                self.mp.preview_scrot(self.mp.posNum, save_path + "/%s-%s"%(self.get_player_file_name(self.mp.path), self.mp.posNum) + save_type)
+            if save_clipboard_bool == "True": # save clipboard
+                clipboard_path = "/tmp" + "/%s-%s"%(self.get_player_file_name(self.mp.path), self.mp.posNum) + save_type
+                self.mp.preview_scrot(self.mp.posNum, clipboard_path)
+                pixbuf_clipboard = gtk.gdk.pixbuf_new_from_file(clipboard_path)                                
+                clipboard = gtk.Clipboard()
+                clipboard.set_image(pixbuf_clipboard)
+                
 
     def key_clockwise(self):
         print "clockwise..."
@@ -827,6 +841,7 @@ class PlayerBox(object):
             # self.mp.seek(int(self.progressbar.pos))
             self.mp.start_play()
         else:
+            self.window_tool_tip.show("暂停")
             self.mp.pause()
         return  False
 
@@ -1807,6 +1822,13 @@ class PlayerBox(object):
         else:
             os.system("nautilus %s" % (get_home_path()))
 
+    def open_sort_image_ini_gui(self):  #menu
+        ini_gui = IniGui()
+        ini_gui.set("截图设置")
+        ini_gui.connect("config-changed", self.restart_load_config_file)
+
+        
+        
     def open_current_file_dir(self):
         try:
             file_name, file_name2 = os.path.split(self.open_file_name)
@@ -1819,6 +1841,7 @@ class PlayerBox(object):
     def open_current_file_dir_path(self, list_view, list_item, column, offset_x, offset_y):
         self.open_file_name = self.play_list_dict[list_item.title]
 
+        
     '''config gui window'''
     def restart_load_config_file(self, IniGui, string):
         self.config = Config(get_home_path() + "/.config/deepin-media-player/deepin_media_config.ini")

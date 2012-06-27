@@ -68,7 +68,6 @@ class PreView(object):
         self.pv.connect("enter-notify-event", self.motion_hide_preview)
         # self.pv.connect("window-state-event", self.init_mplayer_window)
         
-        
     def draw_preview_video_background(self, widget, event):    
         cr = widget.window.cairo_create()
         x, y, w, h = widget.get_allocation()

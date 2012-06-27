@@ -142,8 +142,13 @@ class IniGui(Window):
         self.main_vbox.pack_start(self.bottom_fixed, False, False)
         self.window_frame.add(self.main_vbox)
         # Init configure index.
-        self.configure.set("文件播放")
+        self.set("文件播放")        
         self.show_all()
+        
+    def set(self, type_str):    
+        index = self.configure.set(type_str)[1]
+        if index is not None:
+            self.tree_view.set_highlight_index(index)
         
     def press_save_ini_file(self, widget, event):    
         gtk.timeout_add(500, self.press_save_ini_file_time)
@@ -245,12 +250,14 @@ class Configure(gtk.VBox):
         
     def set(self, class_name):
         class_name = class_name.strip()
+        index = None
         if class_name in self.class_list:
             
             for widget in self.get_children():
                 self.remove(widget)
             
             if "文件播放" == class_name:
+                index = 0
                 self.pack_start(self.file_play)
             elif "系统设置" == class_name:
                 self.pack_start(self.system_set)
@@ -261,6 +268,7 @@ class Configure(gtk.VBox):
             elif "字幕设置" == class_name:
                 self.pack_start(self.sub_set)
             elif "截图设置" == class_name:
+                index = 4
                 self.pack_start(self.screen_shot)
             elif "其它设置" == class_name:
                 self.pack_start(self.other_set)
@@ -270,8 +278,8 @@ class Configure(gtk.VBox):
             for widget in self.get_children(): 
                 if widget:
                     self.show_all()
-                    return True                
-        return None        
+                    return True,index                
+        return None       
     
 
 class FilePlay(gtk.VBox):    

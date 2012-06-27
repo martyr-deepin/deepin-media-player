@@ -97,6 +97,7 @@ class VolumeButton(gtk.EventBox):
         ###########################
         if volume_x < max_volume_normal_pixbuf.get_pixbuf().get_width() + 10:
             volume_x = max_volume_normal_pixbuf.get_pixbuf().get_width() + 10
+            
         '''Init pixbuf.'''
         self.__bg_color               = bg_color
         self.__fg_color               = fg_color

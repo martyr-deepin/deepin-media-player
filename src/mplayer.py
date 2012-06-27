@@ -420,13 +420,53 @@ class  Mplayer(gobject.GObject):
         '''Load subtitle'''
         if self.state:
             self.cmd('sub_load %s\n' % (subFile))
-            self.cmd('sub_select 1\n')
+            # self.cmd('sub_select 1\n')
             
     def subremove(self):
         '''Remove subtitle'''
         if self.state:
             self.cmd('sub_remove\n')
-                    
+            
+    # subtitle alignment. # 0 top 1 center 2 bottom       
+    # def sub_alignment_top(self):
+    # def sub_alignment_center(self):
+    # def sub_alignment_bottom(self):        
+            
+    # subtitle delay(+/-[abs]).
+    # def sub_add_delay(self):       
+    # def sub_sub_delay(self):    
+            
+    # subtitles load.
+    # def sub_load(self, sub_file)
+            
+    # subtitle log.
+    # def sub_log(self)
+            
+    # subtitle pos.    
+    # def sub_pos(self)
+            
+    # subtitle remove(value).
+    # def sub_remove(self, value)
+            
+    # subtitle select(value).  -1 close subtitle. 1 ... 2..3.select subtitle
+    # def sub_select(self, value):
+            
+    # subtitle source(source).    
+    # def sub_source(self):         
+            
+    # subtitle file(value).        
+    # def sub_file(self, value):
+            
+    # subtitle vob(value).        
+    # def sub_vob(self, value)        
+            
+    # subtitle demux(value).        
+    # def sub_demux(self, value):        
+            
+    # subtitle scale(+/-[abs])
+    # def sub_scale(self):                                
+        
+            
     ## Volume Control ##
     def addvolume(self, volumeNum):
         '''Add volume'''
@@ -738,8 +778,8 @@ class  Mplayer(gobject.GObject):
                     # preview window show image.
                     try:
                         pixbuf = gtk.gdk.pixbuf_new_from_file(save_image_path + "00000001.png")
-                        image = pixbuf.scale_simple(120, 60, gtk.gdk.INTERP_BILINEAR)
-                        image.save(scrot_save_path, "jpeg")
+                        # image = pixbuf.scale_simple(120, 60, gtk.gdk.INTERP_BILINEAR)
+                        pixbuf.save(scrot_save_path, "png")
                     except:    
                         break
                     break
