@@ -477,7 +477,7 @@ class PlayerBox(object):
 
         w = widget.allocation.width
         h = widget.allocation.height
-        bottom_padding = 5
+        bottom_padding = 10
         drag_bool = False
 
         if (w - bottom_padding <= event.x <= w) and (h - bottom_padding <= event.y <= h):
