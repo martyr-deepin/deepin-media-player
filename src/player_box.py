@@ -56,6 +56,7 @@ from mplayer import length_to_time
 from playlist import PlayList
 from playlist import MediaItem
 from sort import Sort
+from open_button import OpenButton
 
 import threading
 import gtk
@@ -151,8 +152,10 @@ class PlayerBox(object):
         self.screen = gtk.DrawingArea()
         self.screen_frame.add(self.screen)
 
-        '''Tooltip window'''
+        '''Tooltip window.'''
         self.window_tool_tip = OSDTooltip(self.screen_frame, offset_x=20, offset_y=20)
+        '''mid open button.'''
+        self.open_button = OpenButton(self.screen_frame)
         
         self.video_aspect_type = "默认"
         self.playwinmax_bool = True
@@ -1021,7 +1024,8 @@ class PlayerBox(object):
             pixbuf,
             x + (w - pixbuf.get_width()) / 2,
             (h - pixbuf.get_height()) / 2)
-        # return True
+        self.open_button.draw_open_button(widget, event)
+        return True
 
     def min_window_titlebar_min_btn_click(self, widget):
         '''app titlebar min_button'''
@@ -1335,11 +1339,11 @@ class PlayerBox(object):
         else:
             if is_single_click(event):
                 if not self.pause_bool:
-                    # pause / play. 123456 press.
-                    self.pause_bool = True # Save pause bool.
-                    self.pause_x = event.x # Save x postion.
-                    self.pause_y = event.y # Save y postion.
-
+                    if not self.open_button.leave_bool:
+                        # pause / play. 123456 press.
+                        self.pause_bool = True # Save pause bool.
+                        self.pause_x = event.x # Save x postion.
+                        self.pause_y = event.y # Save y postion.
                 else:
                     if self.pause_time_id:
                         gtk.timeout_remove(self.pause_time_id)
@@ -1352,12 +1356,13 @@ class PlayerBox(object):
             pass
         else:
             if is_double_click(event):
-                self.full_play_window(widget)
-                self.toolbar.toolbar_full_button.flags = not self.toolbar.toolbar_full_button.flags
-                if self.pause_time_id:
-                    gtk.timeout_remove(self.pause_time_id)
-                    self.pause_bool = False
-
+                if not self.open_button.leave_bool:
+                    self.full_play_window(widget)
+                    self.toolbar.toolbar_full_button.flags = not self.toolbar.toolbar_full_button.flags
+                    if self.pause_time_id:
+                        gtk.timeout_remove(self.pause_time_id)
+                        self.pause_bool = False
+                    
     # Toolbar hide and show.
     def show_and_hide_toolbar(self, widget, event): # screen:motion_notify_event
         '''Show and hide toolbar.'''
