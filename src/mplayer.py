@@ -236,11 +236,14 @@ class  Mplayer(gobject.GObject):
                      gobject.TYPE_NONE,(gobject.TYPE_INT,)),
         "play-pre":(gobject.SIGNAL_RUN_LAST,
                     gobject.TYPE_NONE,(gobject.TYPE_INT,)),
+        "play-fseek":(gobject.SIGNAL_RUN_LAST,
+                      gobject.TYPE_NONE,(gobject.TYPE_INT,)),
+        "play-bseek":(gobject.SIGNAL_RUN_LAST,
+                      gobject.TYPE_NONE,(gobject.TYPE_INT,)),
         "add-path":(gobject.SIGNAL_RUN_LAST,
                     gobject.TYPE_NONE,(gobject.TYPE_STRING,)),
         "clear-play-list":(gobject.SIGNAL_RUN_LAST,
                     gobject.TYPE_NONE,(gobject.TYPE_INT,))
-
         }
     def __init__(self, xid = None):
         
@@ -574,18 +577,20 @@ class  Mplayer(gobject.GObject):
     def seek(self, seekNum):        
         '''Set rate of progress'''
         if self.state:
-            self.cmd('seek %d 2\n' % (seekNum))   
-        
+            self.cmd('seek %d 2\n' % (seekNum))               
+            
     def fseek(self, seekNum):
         '''Fast forward'''
         if self.state:
             self.cmd('seek +%d\n' % (seekNum))   
-    
+            self.emit("play-fseek", seekNum)
+            
     def bseek(self, seekNum):
         '''backward'''
         if self.state:
             self.cmd('seek -%d\n' % (seekNum))
-             
+            self.emit("play-bseek", seekNum)
+            
     def pause(self):
         if self.state  and not self.pause_bool:             
             self.pause_bool = True

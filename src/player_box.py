@@ -153,7 +153,7 @@ class PlayerBox(object):
 
         '''Tooltip window'''
         self.window_tool_tip = OSDTooltip(self.screen_frame, offset_x=20, offset_y=20)
-        self.concise_tool_tip = OSDTooltip(self.screen_frame, offset_x=20, offset_y=20)
+        self.concise_tool_tip = OSDTooltip(self.screen_frame, offset_x=20, offset_y=20,window_type=gtk.WINDOW_POPUP)
         
         self.video_aspect_type = "默认"
         self.playwinmax_bool = True
@@ -513,8 +513,12 @@ class PlayerBox(object):
         else:
             if self.mp:
                 if 1 == self.mp.state:                    
-                    self.mp.offmute()
-                    self.mp.setvolume(value) 
+                    if self.mp.volumebool == True:
+                        self.mp.offmute()
+                        print "*****************"
+                    else:    
+                        self.mp.setvolume(value) 
+                        print "*********@!@!@!@!@!@!@!"
                 else:    
                     self.mp.volumebool = False
                     
@@ -811,6 +815,7 @@ class PlayerBox(object):
 
     '''play control panel.'''
     def stop_button_clicked(self, widget):
+        self.window_tool_tip.show("停止")
         self.mp.quit()
 
     def start_button_clicked(self, widget, start_bit):
@@ -839,7 +844,8 @@ class PlayerBox(object):
     def start_button_time_pause(self): # start_button_clicked.
         if self.mp.pause_bool:
             # self.mp.seek(int(self.progressbar.pos))
-            self.mp.start_play()
+            self.window_tool_tip.show("播放")
+            self.mp.start_play()            
         else:
             self.window_tool_tip.show("暂停")
             self.mp.pause()
@@ -949,6 +955,8 @@ class PlayerBox(object):
         self.mp.connect("play-end", self.media_player_end)
         self.mp.connect("play-next", self.media_player_next)
         self.mp.connect("play-pre", self.media_player_pre)
+        self.mp.connect("play-fseek", self.media_player_fseek)
+        self.mp.connect("play-bseek", self.media_player_bseek)
         self.mp.connect("add-path", self.add_play_list)
         self.mp.connect("clear-play-list", self.clear_play_list)
 
@@ -1614,6 +1622,27 @@ class PlayerBox(object):
     def media_player_pre(self, mplayer, play_bool):
         self.media_player_midfy_start_bool()
 
+    def media_player_fseek(self, mplayer, fseek_num):    
+        posNum = self.mp.posNum
+        pre_num = 0
+        if posNum == 0:
+            pre_num = 0
+        else:    
+            pre_num = float(posNum) / self.mp.lenNum * 100
+            
+        self.window_tool_tip.show('快进%s秒 %s(%s%s)'%(fseek_num, length_to_time(self.mp.posNum), "%", int(pre_num)))
+
+        
+    def media_player_bseek(self, mplayer, bseek_num):         
+        posNum = self.mp.posNum
+        pre_num = 0
+        if posNum == 0:
+            pre_num = 0
+        else:    
+            pre_num = float(posNum) / self.mp.lenNum * 100
+            
+        self.window_tool_tip.show('快退%s秒 %s(%s%s)'%(bseek_num, length_to_time(self.mp.posNum), "%", int(pre_num)))
+    
     def media_player_midfy_start_bool(self):  # media_player_end and media_player_next and media_player_pre.
         self.progressbar.set_pos(0)
         self.toolbar2.progressbar.set_pos(0)

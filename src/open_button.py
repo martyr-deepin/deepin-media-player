@@ -141,8 +141,8 @@ class OpenButton(gobject.GObject):
                                                                 gtk.gdk.INTERP_NEAREST)
                 
             cr.set_source_pixbuf(pixbuf, 
-                                 self.__x,
-                                 self.__y)
+                                 self.__x + self.__padding_x,
+                                 self.__y + self.__padding_y)
             cr.paint_with_alpha(1)
         
     
@@ -153,6 +153,8 @@ if __name__ == "__main__":
     
     def draw_expose_event(widget, event):
         open_button.draw_open_button(widget, event)        
+        open_button2.draw_open_button(widget, event)
+        open_button3.draw_open_button(widget, event)
         return True
     
     def test_openbutton_clicked_event(widget, event):        
@@ -177,6 +179,10 @@ if __name__ == "__main__":
     win.connect("destroy", gtk.main_quit)    
     screen = gtk.DrawingArea()
     open_button = OpenButton(screen)
+    open_button2 = OpenButton(screen)
+    open_button3 = OpenButton(screen)
+    open_button2.move(130, 100)
+    open_button3.move(50, 100)
     # open_button.connect("openbutton-press-event", test_openbutton_press_event)
     # open_button.connect("openbutton-release-event", test_openbutton_release_event)
     # open_button.connect("openbutton-motion-event", test_openbutton_motion_event)
