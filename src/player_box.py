@@ -342,8 +342,9 @@ class PlayerBox(object):
 
         self.keymap = {}
 
-    def messagebox(self, text):    
-        if self.full_bool:
+    def messagebox(self, text):            
+        if self.full_bool:            
+            self.window_tool_tip.hide_immediately()
             self.concise_tool_tip.show(text)
         else:    
             self.window_tool_tip.show(text)
@@ -1226,7 +1227,8 @@ class PlayerBox(object):
         self.toolbar2.panel.set_keep_above(True)
         self.app.window.fullscreen()
         self.full_bool = True
-
+        # hide Tooltip.
+        self.window_tool_tip.hide_immediately()
 
     def set_window_quit_full(self):
         # # if True. play list show.
