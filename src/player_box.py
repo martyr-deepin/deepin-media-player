@@ -837,6 +837,7 @@ class PlayerBox(object):
                 self.play_control_panel.start_btn.queue_draw()
                 self.toolbar2.play_control_panel.start_btn.start_bool = True
                 self.toolbar2.play_control_panel.start_btn.queue_draw()
+                self.messagebox("没有可播放文件")
         else:
             if 1 == start_bit:
                 self.toolbar2.play_control_panel.start_btn.start_bool = self.play_control_panel.start_btn.start_bool
@@ -861,11 +862,13 @@ class PlayerBox(object):
         '''prev.'''
         if (len(self.mp.playList) > 1):
             self.mp.pre()
-
+            self.messagebox("上一首")
+            
     def next_button_clicked(self, widget):
         '''next'''
         if (len(self.mp.playList) > 1):
             self.mp.next()
+            self.messagebox("下一首")
 
     def open_button_clicked(self, widget):
         self.show_open_dialog_window()
