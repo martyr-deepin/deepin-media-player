@@ -342,6 +342,12 @@ class PlayerBox(object):
 
         self.keymap = {}
 
+    def messagebox(self, text):    
+        if self.full_bool:
+            self.concise_tool_tip.show(text)
+        else:    
+            self.window_tool_tip.show(text)
+        
     def theme_menu_show(self, button):    
         '''Title root menu.'''
         #In title root menu.
@@ -503,24 +509,23 @@ class PlayerBox(object):
         else: # volume
             pass
             
-    def volume_button_get_value_event(self, volume_button, value, volume_state, volume_bit):
+    def volume_button_get_value_event(self, volume_button, value, volume_state, volume_bit):        
         if -1 == volume_state:
             if self.mp:
                 if 1 == self.mp.state:
-                    self.mp.nomute()
+                    self.mp.nomute()                                       
                 else:    
-                    self.mp.volumebool = True
+                    self.mp.volumebool = True # mute: True  no mute: False.
+                self.messagebox("开启静音")    
         else:
             if self.mp:
                 if 1 == self.mp.state:                    
-                    if self.mp.volumebool == True:
-                        self.mp.offmute()
-                        print "*****************"
-                    else:    
-                        self.mp.setvolume(value) 
-                        print "*********@!@!@!@!@!@!@!"
+                    self.mp.offmute()                                     
+                    self.mp.setvolume(value)
+                    self.messagebox("音量:%s"%(str(value)))
                 else:    
                     self.mp.volumebool = False
+                    self.messagebox("音量:%s"%(str(value)))
                     
         if 1 == volume_bit:
             self.toolbar2.volume_button.value = value
@@ -815,7 +820,7 @@ class PlayerBox(object):
 
     '''play control panel.'''
     def stop_button_clicked(self, widget):
-        self.window_tool_tip.show("停止")
+        self.messagebox("停止")
         self.mp.quit()
 
     def start_button_clicked(self, widget, start_bit):
@@ -844,10 +849,10 @@ class PlayerBox(object):
     def start_button_time_pause(self): # start_button_clicked.
         if self.mp.pause_bool:
             # self.mp.seek(int(self.progressbar.pos))
-            self.window_tool_tip.show("播放")
+            self.messagebox("播放")
             self.mp.start_play()            
         else:
-            self.window_tool_tip.show("暂停")
+            self.messagebox("暂停")
             self.mp.pause()
         return  False
 
@@ -1629,9 +1634,7 @@ class PlayerBox(object):
             pre_num = 0
         else:    
             pre_num = float(posNum) / self.mp.lenNum * 100
-            
-        self.window_tool_tip.show('快进%s秒 %s(%s%s)'%(fseek_num, length_to_time(self.mp.posNum), "%", int(pre_num)))
-
+        self.messagebox('快进%s秒 %s(%s%s)'%(fseek_num, length_to_time(self.mp.posNum), "%", int(pre_num)))    
         
     def media_player_bseek(self, mplayer, bseek_num):         
         posNum = self.mp.posNum
@@ -1640,8 +1643,7 @@ class PlayerBox(object):
             pre_num = 0
         else:    
             pre_num = float(posNum) / self.mp.lenNum * 100
-            
-        self.window_tool_tip.show('快退%s秒 %s(%s%s)'%(bseek_num, length_to_time(self.mp.posNum), "%", int(pre_num)))
+        self.messagebox('快退%s秒 %s(%s%s)'%(bseek_num, length_to_time(self.mp.posNum), "%", int(pre_num)))    
     
     def media_player_midfy_start_bool(self):  # media_player_end and media_player_next and media_player_pre.
         self.progressbar.set_pos(0)
