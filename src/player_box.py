@@ -156,6 +156,13 @@ class PlayerBox(object):
         self.window_tool_tip = OSDTooltip(self.screen_frame, offset_x=20, offset_y=20)
         '''mid open button.'''
         self.open_button = OpenButton(self.screen_frame)
+        self.open_button.move(-20, 30)
+        self.open_button_right = OpenButton(self.screen_frame, 
+                                            50, 40,
+                                            app_theme.get_pixbuf("normal_button_right.png"),
+                                            app_theme.get_pixbuf("hover_button_right.png"),
+                                            app_theme.get_pixbuf("press_button_right.png"))
+        self.open_button_right.move(65, 30)
         
         self.video_aspect_type = "默认"
         self.playwinmax_bool = True
@@ -1029,8 +1036,11 @@ class PlayerBox(object):
         
         if not self.mp.state:
             self.open_button.visible_bool = False
+            self.open_button.visible_bool = False
             self.open_button.draw_open_button(widget, event)
+            self.open_button_right.draw_open_button(widget, event)
         else:    
+            self.open_button.visible_bool = True
             self.open_button.visible_bool = True
 
         return True
@@ -1347,7 +1357,7 @@ class PlayerBox(object):
         else:
             if is_single_click(event):
                 if not self.pause_bool:
-                    if not self.open_button.leave_bool:
+                    if not self.open_button.leave_bool and not self.open_button_right.leave_bool:
                         # pause / play. 123456 press.
                         self.pause_bool = True # Save pause bool.
                         self.pause_x = event.x # Save x postion.
@@ -1364,7 +1374,7 @@ class PlayerBox(object):
             pass
         else:
             if is_double_click(event):
-                if not self.open_button.leave_bool:
+                if not self.open_button.leave_bool and not self.open_button_right.leave_bool:
                     self.full_play_window(widget)
                     self.toolbar.toolbar_full_button.flags = not self.toolbar.toolbar_full_button.flags
                     if self.pause_time_id:
