@@ -153,7 +153,6 @@ class PlayerBox(object):
 
         '''Tooltip window'''
         self.window_tool_tip = OSDTooltip(self.screen_frame, offset_x=20, offset_y=20)
-        self.concise_tool_tip = OSDTooltip(self.screen_frame, offset_x=20, offset_y=20,window_type=gtk.WINDOW_POPUP)
         
         self.video_aspect_type = "默认"
         self.playwinmax_bool = True
@@ -343,11 +342,7 @@ class PlayerBox(object):
         self.keymap = {}
 
     def messagebox(self, text):            
-        if self.full_bool:            
-            self.window_tool_tip.hide_immediately()
-            self.concise_tool_tip.show(text)
-        else:    
-            self.window_tool_tip.show(text)
+        self.window_tool_tip.show(text)
         
     def theme_menu_show(self, button):    
         '''Title root menu.'''
@@ -1185,7 +1180,8 @@ class PlayerBox(object):
             #                           widget.allocation[3])
             self.toolbar.panel.hide_all()
             # if widget.window.get_state() == gtk.gdk.WINDOW_STATE_MAXIMIZED:
-            self.toolbar2.panel.resize(self.screen_frame.get_allocation()[2], 1)
+            self.toolbar2.panel.resize(self.screen_frame.get_allocation()[2], 1)            
+            # self.toolbar.panel.resize(self.screen_frame.get_allocation()[2], 1)            
             self.toolbar2.panel.move(self.panel_x, self.panel_y + (widget.allocation[3] - self.toolbar2.panel.allocation[3]))
             self.toolbar2.panel.hide_all()
 
@@ -1230,8 +1226,6 @@ class PlayerBox(object):
         self.toolbar2.panel.set_keep_above(True)
         self.app.window.fullscreen()
         self.full_bool = True
-        # hide Tooltip.
-        self.window_tool_tip.hide_immediately()
 
     def set_window_quit_full(self):
         # # if True. play list show.
