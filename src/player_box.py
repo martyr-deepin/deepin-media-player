@@ -1003,8 +1003,10 @@ class PlayerBox(object):
         '''Draw screen mplayer view background.'''
         cr, x, y, w, h = allocation(widget)
 
+      
         if self.mp and (1 == self.mp.state):
             if (self.mp.state) and (self.mp.vide_bool): # vide file.
+                self.open_button.visible_bool = True
                 if self.mp.pause_bool: # vide pause.
                     # Draw pause background.
                     return False
@@ -1024,7 +1026,13 @@ class PlayerBox(object):
             pixbuf,
             x + (w - pixbuf.get_width()) / 2,
             (h - pixbuf.get_height()) / 2)
-        self.open_button.draw_open_button(widget, event)
+        
+        if not self.mp.state:
+            self.open_button.visible_bool = False
+            self.open_button.draw_open_button(widget, event)
+        else:    
+            self.open_button.visible_bool = True
+
         return True
 
     def min_window_titlebar_min_btn_click(self, widget):

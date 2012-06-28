@@ -58,7 +58,7 @@ class OpenButton(gobject.GObject):
         self.width  = width
         self.height = height
         
-        self.__visible_bool = False
+        self.visible_bool = False
         
         self.leave_bool = False
         self.clicked_bool = False
@@ -71,7 +71,7 @@ class OpenButton(gobject.GObject):
         self.draw_window.queue_draw()
         
     def set_visible(self, visible_bool):    
-        self.__visible_bool = visible_bool        
+        self.visible_bool = visible_bool        
         self.draw_window.queue_draw()
         
     def set_size(self, w, h):    
@@ -86,7 +86,8 @@ class OpenButton(gobject.GObject):
         if (self.__x + self.__padding_x <= temp_x <= self.__x + self.width + self.__padding_x) and (self.__y + self.__padding_y <= temp_y <= self.__y + self.__padding_y + self.height):        
             if not self.leave_bool:
                 self.emit("openbutton-enter-event", event)                
-            self.leave_bool = True
+            if not self.visible_bool:    
+                self.leave_bool = True
             self.emit("openbutton-motion-event", event)
             
         else:    
@@ -100,7 +101,8 @@ class OpenButton(gobject.GObject):
         
         if (self.__x + self.__padding_x <= temp_x <= self.__x + self.width + self.__padding_x) and (self.__y + self.__padding_y <= temp_y <= self.__y + self.__padding_y + self.height):
             self.emit("openbutton-press-event", event)
-            self.press_bool = True
+            if not self.visible_bool:
+                self.press_bool = True
             self.draw_window.queue_draw()
             
     def emit_open_button_release(self, widget, event):        
@@ -117,7 +119,7 @@ class OpenButton(gobject.GObject):
         self.draw_window.queue_draw()        
                                 
     def draw_open_button(self, widget, event):
-        if not self.__visible_bool:
+        if not self.visible_bool:
             cr = widget.window.cairo_create()
             x, y, w, h = widget.allocation
         
