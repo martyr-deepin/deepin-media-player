@@ -162,7 +162,7 @@ class OpenButton(gobject.GObject):
                 pixbuf  = self.hover_button_pixbuf
             elif self.state == OPEN_BUTTON_STATE_PRESS:                            
                 pixbuf  = self.press_button_pixbuf
-            print self.state    
+
             image = pixbuf.get_pixbuf().scale_simple(self.width,
                                         self.height,
                                         gtk.gdk.INTERP_NEAREST)
@@ -175,55 +175,130 @@ class OpenButton(gobject.GObject):
 gobject.type_register(OpenButton)        
 
 
-if __name__ == "__main__":
     
-    def draw_expose_event(widget, event):
+
+class ScreenMenu(object):
+    def __init__(self,
+                 draw_window,                 
+                 menu_item = [],
+                 x = 0, y = 0,
+                 menu_bg_pixbuf=app_theme.get_pixbuf("menu_bg_normal.png")
+                 ):
+        '''Init pixbuf.'''
+        self.menu_bg_pixbuf = menu_bg_pixbuf
+        '''Init value.'''
+        self.draw_window = draw_window
+        self.menu_item = menu_item                
+        self.menu_list = []
+        
+        self.x      = x
+        self.y      = y
+        self.save_x = 0
+        self.save_y = 0
+        self.width  = self.menu_bg_pixbuf.get_pixbuf().get_width()
+        self.height = self.menu_bg_pixbuf.get_pixbuf().get_height()        
+        self.__padding_x    = 0
+        self.__padding_y    = 0
+        # show and hide menu value.
+        self.show_menu_bool = False
+        # icon value.
+        self.icon_padding_x = 2
+        self.icon_padding_y = 2
+        self.icon_padding_height = 26
+        self.index = 0
+        for item in self.menu_item:
+            self.menu_list.append([item[0], item[1], item[2]])
+        '''Init events'''        
+        if draw_window:
+            self.draw_window.add_events(gtk.gdk.ALL_EVENTS_MASK)
+            self.draw_window.connect("motion-notify-event", self.motion_move_fg)
+            # self.draw_window.connect("button-press-event",  self.press_widget_)
+            
+    def show_menu(self, x, y):        
+        self.x = x
+        self.y = y
+        self.show_menu_bool = True
+        self.queue_draw()
+        
+    def hide_menu(self):
+        self.show_menu_bool = False
+    
+    def queue_draw(self):        
+        self.draw_window.queue_draw_area(self.x, self.y, self.x + self.width, self.y + self.height)
+        
+    def motion_move_fg(self, widget, event):
+         temp_x = int(event.x)
+         temp_y = int(event.y)         
+         # 
+         if self.show_menu_bool:
+             if (self.x  <= temp_x <= self.x + self.width) and (self.y  <= temp_y <= self.y + self.height):
+                 index_y = int(event.y)
+                 if index_y < self.y + self.icon_padding_height * len(self.menu_list)-1:
+                     self.index = int((index_y-self.y)/ self.icon_padding_height)
+                     self.queue_draw()
+             
+    def draw_move_rectagnle(self, cr, x, y):     
+        cr.set_source_rgba(1, 1, 1, 0.1)
+        cr.rectangle(self.x + self.icon_padding_x, 
+                     self.y + self.icon_padding_y + self.icon_padding_height * self.index, self.width-4,
+                     self.icon_padding_height)
+        cr.fill()
+        
+    def draw_screen_menu(self, widget, event):
+        cr = widget.window.cairo_create()
+        x, y, w, h = widget.allocation
+        if self.show_menu_bool:
+            self.draw_background(cr, x, y)
+            # Draw menu rectangle.
+            self.draw_move_rectagnle(cr, x, y)
+            self.draw_menu_left_icon(cr, x, y)    
+        
+    def draw_background(self, cr, x, y):    
+        # Draw background.
+        cr.set_source_pixbuf(self.menu_bg_pixbuf.get_pixbuf(),
+                             self.x,
+                             self.y)
+        cr.paint_with_alpha(1)    
+        
+    def draw_menu_left_icon(self, cr, x, y):    
+        # Draw menu left icon.
+        temp_icon_height = 0
+        for item in self.menu_list:
+            cr.set_source_pixbuf(item[0].get_pixbuf(),
+                                 self.x + self.icon_padding_x*2 + 7,
+                                 self.y + temp_icon_height + item[0].get_pixbuf().get_height()/2
+                                 )
+            cr.paint_with_alpha(1)
+            temp_icon_height += self.icon_padding_height 
+
+# gobject.type_register(ScreenMenu)        
+
+
+if __name__ == "__main__":
+    menu_item = [(app_theme.get_pixbuf("screen_menu_open_cdrom.png"),"打开光盘", None),
+                 (app_theme.get_pixbuf("screen_menu_open_dir.png"), "打开url", None),
+                 (app_theme.get_pixbuf("screen_menu_open_url.png"), "打开url", None),
+                 ]
+    
+    def draw_background(widget, event):
         cr = widget.window.cairo_create()
         x, y, w, h = widget.allocation
         cr.rectangle(x, y, w, h)
         cr.fill()
-        open_button.draw_open_button(widget, event)        
-        open_button2.draw_open_button(widget, event)
-        open_button3.draw_open_button(widget, event)
+        screen_menu.draw_screen_menu(widget, event)
         return True
     
-    def test_openbutton_clicked_event(widget, event):        
-        print "单击事件"
-    
-    def test_openbutton_press_event(widget, event):        
-        print "print 你触发按下事件"
+    def popup_menu(widget, event):
+        screen_menu.show_menu(int(event.x), 
+                              int(event.y))
+        win.queue_draw()
         
-    def test_openbutton_release_event(widget, event):    
-        print "print 松开了"
-        
-    def test_openbutton_motion_event(widget, event):    
-        print "你处罚了 移动时间"
-        
-    def test_openbutton_enter_event(widget, event):    
-        print "鼠标进入了"
-        
-    def test_openbutton_leave_event(widget, event):    
-        print "鼠标离开了"
-        
-    
     win = gtk.Window(gtk.WINDOW_TOPLEVEL)
-    win.connect("destroy", gtk.main_quit)    
-    screen = gtk.DrawingArea()
-    open_button = OpenButton(screen)
-    open_button2 = OpenButton(screen)
-    open_button3 = OpenButton(screen)
-    open_button2.move(130, 100)
-    open_button3.move(50, 100)
-    open_button.connect("openbutton-press-event", test_openbutton_press_event)
-    open_button.connect("openbutton-release-event", test_openbutton_release_event)
-    open_button.connect("openbutton-motion-event", test_openbutton_motion_event)
-    open_button.connect("openbutton-enter-event", test_openbutton_enter_event)
-    open_button.connect("openbutton-leave-event",  test_openbutton_leave_event)
-    open_button.connect("openbutton-clicked-event", test_openbutton_clicked_event)
-    
-    screen.connect("expose-event", draw_expose_event)
-    
-    win.add(screen)
+    screen_menu = ScreenMenu(win, menu_item)
+    # screen_menu.show_menu(30, 40)
+    win.add_events(gtk.gdk.ALL_EVENTS_MASK)
+    win.connect("expose-event", draw_background)
+    win.connect("button-press-event", popup_menu)
     win.show_all()
     gtk.main()
     

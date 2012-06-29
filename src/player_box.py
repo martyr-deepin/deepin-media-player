@@ -56,7 +56,7 @@ from mplayer import length_to_time
 from playlist import PlayList
 from playlist import MediaItem
 from sort import Sort
-from open_button import OpenButton
+from open_button import OpenButton,ScreenMenu
 
 import threading
 import gtk
@@ -155,14 +155,21 @@ class PlayerBox(object):
         '''Tooltip window.'''
         self.window_tool_tip = OSDTooltip(self.screen_frame, offset_x=20, offset_y=20)
         '''mid open button.'''
-        self.open_button = OpenButton(self.screen_frame)
-        self.open_button.move(-20, 30)
+        self.open_button = OpenButton(self.screen_frame, 108, 40)
+        self.open_button.move(-14, 30)
         self.open_button_right = OpenButton(self.screen_frame, 
-                                            50, 40,
+                                            32, 40,
                                             app_theme.get_pixbuf("normal_button_right.png"),
                                             app_theme.get_pixbuf("hover_button_right.png"),
                                             app_theme.get_pixbuf("press_button_right.png"))
-        self.open_button_right.move(65, 30)
+        self.open_button_right.connect("openbutton-clicked-event", self.open_button_popup_screen_menu)
+        self.open_button_right.move(56, 30)
+        menu_item = [(app_theme.get_pixbuf("screen_menu_open_cdrom.png"),"打开光盘", None),
+                     (app_theme.get_pixbuf("screen_menu_open_dir.png"), "打开url", None),
+                     (app_theme.get_pixbuf("screen_menu_open_url.png"), "打开url", None),
+                     ]
+        self.screen_pop_menu = ScreenMenu(self.screen_frame, menu_item)        
+        
         
         self.video_aspect_type = "默认"
         self.playwinmax_bool = True
@@ -351,6 +358,17 @@ class PlayerBox(object):
 
         self.keymap = {}
 
+    def open_button_popup_screen_menu(self, widget, event):
+        x, y, w, h = self.screen_frame.allocation
+        
+        width = w/2 - self.screen_pop_menu.width/2 + 4
+        height = h/2 + self.screen_pop_menu.height /2 + 37
+        if self.full_bool:
+            height -= 26
+            width  -= 2
+            
+        self.screen_pop_menu.show_menu(int(width), int(height))
+        
     def messagebox(self, text):            
         self.window_tool_tip.show(text)
         
@@ -1039,10 +1057,11 @@ class PlayerBox(object):
             self.open_button.visible_bool = False
             self.open_button.draw_open_button(widget, event)
             self.open_button_right.draw_open_button(widget, event)
+            self.screen_pop_menu.draw_screen_menu(widget, event)
         else:    
             self.open_button.visible_bool = True
             self.open_button.visible_bool = True
-
+            
         return True
 
     def min_window_titlebar_min_btn_click(self, widget):
