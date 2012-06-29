@@ -155,19 +155,21 @@ class PlayerBox(object):
         '''Tooltip window.'''
         self.window_tool_tip = OSDTooltip(self.screen_frame, offset_x=20, offset_y=20)
         '''mid open button.'''
-        self.open_button = OpenButton(self.screen_frame, 108, 40)
+        self.open_button = OpenButton(self.screen_frame, "打开文件", 108, 40)
+        self.open_button.connect("openbutton-clicked-event", lambda w, e: self.add_file())
         self.open_button.move(-14, 30)
-        self.open_button_right = OpenButton(self.screen_frame, 
+        self.open_button_right = OpenButton(self.screen_frame, "",
                                             32, 40,
                                             app_theme.get_pixbuf("normal_button_right.png"),
                                             app_theme.get_pixbuf("hover_button_right.png"),
                                             app_theme.get_pixbuf("press_button_right.png"))
         self.open_button_right.connect("openbutton-clicked-event", self.open_button_popup_screen_menu)
         self.open_button_right.move(56, 30)
-        menu_item = [(app_theme.get_pixbuf("screen_menu_open_cdrom.png"),"打开光盘", None),
-                     (app_theme.get_pixbuf("screen_menu_open_dir.png"), "打开url", None),
-                     (app_theme.get_pixbuf("screen_menu_open_url.png"), "打开url", None),
-                     ]
+        menu_item = [
+            (app_theme.get_pixbuf("screen_menu_open_dir.png"), "打开文件夹", self.add_file_dir),
+            (app_theme.get_pixbuf("screen_menu_open_cdrom.png"),"打开光盘", None),                     
+            (app_theme.get_pixbuf("screen_menu_open_url.png"), "打开URL", None),
+            ]
         self.screen_pop_menu = ScreenMenu(self.screen_frame, menu_item)        
         
         
@@ -363,11 +365,14 @@ class PlayerBox(object):
         
         width = w/2 - self.screen_pop_menu.width/2 + 4
         height = h/2 + self.screen_pop_menu.height /2 + 37
-        if self.full_bool:
-            height -= 26
-            width  -= 2
+        if self.full_bool:            
+            width  -= 2                        
             
-        self.screen_pop_menu.show_menu(int(width), int(height))
+        if not self.screen_pop_menu.show_menu_bool:    
+            self.screen_pop_menu.show_menu(int(width), int(height))
+        else:
+            self.screen_pop_menu.hide_menu()
+        
         
     def messagebox(self, text):            
         self.window_tool_tip.show(text)
@@ -1094,8 +1099,7 @@ class PlayerBox(object):
 
     # ToolBar control function.
     def app_configure_hide_tool(self, widget, event): #app: configure-event.
-
-        
+                
         self.toolbar.panel.hide_all()
         self.show_toolbar_bool = False
 
@@ -1205,6 +1209,15 @@ class PlayerBox(object):
 
 
     def configure_hide_tool(self, widget, event): # screen: configure-event.
+
+        self.screen_pop_menu.hide_menu()
+        if self.full_bool:            
+            self.open_button.move(-14, 30+26)
+            self.open_button_right.move(56, 30+26)
+        else:    
+            self.open_button.move(-14, 30)
+            self.open_button_right.move(56, 30)
+
         if self.mp:
             #self.app.hide_titlebar() # Test hide titlebar.
             # Toolbar position.
