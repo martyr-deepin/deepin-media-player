@@ -1038,7 +1038,11 @@ class PlayerBox(object):
       
         if self.mp and (1 == self.mp.state):
             if (self.mp.state) and (self.mp.vide_bool): # vide file.
-                self.open_button.visible_bool = True
+                self.open_button.visible_bool = False
+                self.open_button.visible_bool = False
+                self.screen_pop_menu.visible_bool = False            
+                self.screen_pop_menu.leave_bool = False
+            
                 if self.mp.pause_bool: # vide pause.
                     # Draw pause background.
                     return False
@@ -1062,7 +1066,9 @@ class PlayerBox(object):
         if not self.mp.state:
             self.open_button.visible_bool = False
             self.open_button.visible_bool = False
-            self.screen_pop_menu.visible_bool = False
+            self.screen_pop_menu.visible_bool = False            
+            # self.open_button.leave_bool = False
+            self.screen_pop_menu.leave_bool = False
             self.open_button.draw_open_button(widget, event)
             self.open_button_right.draw_open_button(widget, event)
             self.screen_pop_menu.draw_screen_menu(widget, event)

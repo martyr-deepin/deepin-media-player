@@ -323,50 +323,14 @@ class ScreenMenu(gobject.GObject):
 gobject.type_register(ScreenMenu)        
 
 
-if __name__ == "__main__":
-    menu_item = [(app_theme.get_pixbuf("screen_menu_open_cdrom.png"),"打开光盘", None),
-                 (app_theme.get_pixbuf("screen_menu_open_dir.png"), "打开文件夹", None),
-                 (app_theme.get_pixbuf("screen_menu_open_url.png"), "打开url", None),
-                 ]
+
+class OpenUrl(gobject.GObject):
+    __gsignals__ = {
+        "openurl-url-name":(gobject.SIGNAL_RUN_LAST,
+                                    gobject.TYPE_NONE,(gobject.TYPE_PYOBJECT,)),        
+        }    
+    def __init__(self):
+        pass
     
-    def draw_background(widget, event):
-        cr = widget.window.cairo_create()
-        x, y, w, h = widget.allocation
-               
-        # Draw background.        
-        background_pixbuf = app_theme.get_pixbuf("my_background.jpg")
-        cr.set_source_pixbuf(background_pixbuf.get_pixbuf(),
-                             x, y)
-        cr.paint_with_alpha(1)
         
-        # Draw toolbar.
-        toolbar_pixbuf = app_theme.get_pixbuf("menu_bg_normal.png")
-        image = toolbar_pixbuf.get_pixbuf().scale_simple(w, 30, gtk.gdk.INTERP_NEAREST)
-        cr.set_source_pixbuf(image,
-                             x, y)
-        cr.paint_with_alpha(1)
-        # Draw logo.
-        logo_pixbuf = app_theme.get_pixbuf("deepin_player_icon.png")
-        
-        image = logo_pixbuf.get_pixbuf().scale_simple(20, 20, gtk.gdk.INTERP_NEAREST)
-        cr.set_source_pixbuf(image,
-                             x + 5, y)
-        cr.paint_with_alpha(1)        
-        
-        screen_menu.draw_screen_menu(widget, event)
-        return True
-    
-    def popup_menu(widget, event):
-        screen_menu.show_menu(int(event.x), 
-                              int(event.y))
-        win.queue_draw()
-        
-    win = gtk.Window(gtk.WINDOW_TOPLEVEL)
-    # win.fullscreen()
-    screen_menu = ScreenMenu(win, menu_item)
-    win.add_events(gtk.gdk.ALL_EVENTS_MASK)
-    win.connect("expose-event", draw_background)
-    win.connect("button-press-event", popup_menu)
-    win.show_all()
-    gtk.main()
-    
+gobject.type_register(OpenUrl)    
