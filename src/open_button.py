@@ -64,9 +64,10 @@ class OpenButton(gobject.GObject):
         self.press_button_pixbuf = press_button_pixbuf
         '''Init events.'''
         self.draw_window.add_events(gtk.gdk.ALL_EVENTS_MASK)
-        self.draw_window.connect("button-press-event", self.emit_open_button_press)
+        self.draw_window.connect("button-press-event",   self.emit_open_button_press)
         self.draw_window.connect("button-release-event", self.emit_open_button_release)
-        self.draw_window.connect("motion-notify-event", self.emit_open_button_motion)
+        self.draw_window.connect("motion-notify-event",  self.emit_open_button_motion)
+
         '''Init state'''
         self.state = OPEN_BUTTON_STATE_NORMAL
         '''Init value.'''
@@ -145,8 +146,8 @@ class OpenButton(gobject.GObject):
             self.queue_draw()
         if (self.__x + self.__padding_x <= temp_x <= self.__x + self.width + self.__padding_x) and (self.__y + self.__padding_y <= temp_y <= self.__y + self.__padding_y + self.height):           
             if self.press_bool:
-                self.emit("openbutton-clicked-event", event)
-                self.state = OPEN_BUTTON_STATE_HOVER                
+                self.state = OPEN_BUTTON_STATE_HOVER
+                self.emit("openbutton-clicked-event", event)                
         else:        
             self.state = OPEN_BUTTON_STATE_NORMAL
 
@@ -217,6 +218,7 @@ class ScreenMenu(gobject.GObject):
         # show and hide menu value.
         self.show_menu_bool = False
         self.move_bool = False
+        self.leave_bool = False
         # icon value.
         self.icon_padding_x = 2
         self.icon_padding_y = 2
@@ -248,6 +250,7 @@ class ScreenMenu(gobject.GObject):
          # 
          if self.show_menu_bool:             
              if (self.x  <= temp_x <= self.x + self.width) and (self.y  <= temp_y <= self.y + self.height):
+                 
                  self.hide_menu()
                  if self.menu_list[self.index][2]:
                      self.menu_list[self.index][2]()
@@ -262,6 +265,7 @@ class ScreenMenu(gobject.GObject):
              
              if (self.x  <= temp_x <= self.x + self.width) and (self.y  <= temp_y <= self.y + self.height):
                  index_y = int(event.y)
+                 self.leave_bool = True
                  if index_y < self.y + self.icon_padding_height * len(self.menu_list)-1:
                      index = int((index_y-self.y)/ self.icon_padding_height)
                      if self.index != index:
@@ -270,6 +274,7 @@ class ScreenMenu(gobject.GObject):
                          self.queue_draw()
              else:
                  self.move_bool = False
+                 self.leave_bool = False
                  
     def draw_move_rectagnle(self, cr, x, y):     
         cr.set_source_rgba(1, 1, 1, 0.1)

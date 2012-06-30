@@ -377,6 +377,7 @@ class PlayerBox(object):
     def messagebox(self, text):            
         self.window_tool_tip.show(text)
         
+        
     def theme_menu_show(self, button):    
         '''Title root menu.'''
         #In title root menu.
@@ -982,6 +983,7 @@ class PlayerBox(object):
         self.screen.queue_draw()
         #self.unset_flags()
         self.mp = Mplayer(widget.window.xid)
+        # self.mp.play("http://zhangmenshiting2.baidu.com/data2/music/1401172/1401172.mp3?xcode=1db45cfc05179fb379614d12dac32591&mid=0.99612208501499")
         # Init darg file signal.
         drag_connect(self.screen, self.mp, self.play_list.list_view, True)
         drag_connect(self.play_list.list_view, self.mp, self.play_list.list_view, False)
@@ -1060,13 +1062,14 @@ class PlayerBox(object):
         if not self.mp.state:
             self.open_button.visible_bool = False
             self.open_button.visible_bool = False
+            self.screen_pop_menu.visible_bool = False
             self.open_button.draw_open_button(widget, event)
             self.open_button_right.draw_open_button(widget, event)
             self.screen_pop_menu.draw_screen_menu(widget, event)
         else:    
             self.open_button.visible_bool = True
-            self.open_button.visible_bool = True
-            
+            self.open_button_right.visible_bool = True
+            self.screen_pop_menu.visible_bool = True
         return True
 
     def min_window_titlebar_min_btn_click(self, widget):
@@ -1389,7 +1392,7 @@ class PlayerBox(object):
         else:
             if is_single_click(event):
                 if not self.pause_bool:
-                    if not self.open_button.leave_bool and not self.open_button_right.leave_bool:
+                    if not self.open_button.leave_bool and not self.open_button_right.leave_bool and not self.screen_pop_menu.leave_bool:
                         # pause / play. 123456 press.
                         self.pause_bool = True # Save pause bool.
                         self.pause_x = event.x # Save x postion.
@@ -1406,7 +1409,7 @@ class PlayerBox(object):
             pass
         else:
             if is_double_click(event):
-                if not self.open_button.leave_bool and not self.open_button_right.leave_bool:
+                if not self.open_button.leave_bool and not self.open_button_right.leave_bool and not self.screen_pop_menu.leave_bool:
                     self.full_play_window(widget)
                     self.toolbar.toolbar_full_button.flags = not self.toolbar.toolbar_full_button.flags
                     if self.pause_time_id:
@@ -1729,6 +1732,24 @@ class PlayerBox(object):
         return os.path.splitext(file2)[0]
 
 
+    '''Screen right key menu.'''
+    def screen_right_key_menu(self, widget, event):
+        
+        self.screen_right_root_menu = Menu([
+                (None, "打开文件", None),
+                (None, "打开", None),
+                (None, None, None),
+                (None, "全屏", None),
+                (None, "普通模式", None),
+                (None, "简洁模式", None),
+                (None, "播放顺序", None),
+                (None, "播放", None),
+                (None, "画面", None),
+                (None, "声音", None),
+                (None, "字幕", None),
+                (None, "播放器设置", None)
+                ], True)
+        
     '''play list menu signal.'''
     def show_popup_menu(self, widget, event):
         if 3 == event.button:
