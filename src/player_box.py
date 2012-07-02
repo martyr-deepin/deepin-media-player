@@ -160,7 +160,10 @@ class PlayerBox(object):
         self.app.window.connect("scroll_event", self.app_scroll_event, 1)
 
         '''Screen window init.'''
+        self.screen_frame_event = gtk.EventBox()
         self.screen_frame = gtk.Alignment()
+        self.screen_frame_event.add(self.screen_frame)
+        self.screen_frame_event.add_events(gtk.gdk.ALL_EVENTS_MASK)
         self.screen_frame.set(0.0, 0.0, 1.0, 1.0)
         self.screen = gtk.DrawingArea()
         self.screen_frame.add(self.screen)
@@ -212,9 +215,12 @@ class PlayerBox(object):
         self.screen.connect("motion-notify-event", self.modify_mouse_icon)
 
         self.screen.connect_after("expose-event", self.draw_background)
-        self.screen.connect("button-press-event", self.move_media_player_window)
-        self.screen.connect("button-release-event", self.screen_media_player_clear)
-        self.screen.connect("motion-notify-event", self.show_and_hide_toolbar)
+        # self.screen.connect("button-press-event", self.move_media_player_window)
+        self.screen_frame_event.connect("button-press-event", self.move_media_player_window)
+        # self.screen.connect("button-release-event", self.screen_media_player_clear)
+        self.screen_frame_event.connect("button-release-event", self.screen_media_player_clear)
+        # self.screen.connect("motion-notify-event", self.show_and_hide_toolbar)
+        self.screen_frame_event.connect("motion-notify-event", self.show_and_hide_toolbar)
         self.screen.connect("configure-event", self.configure_hide_tool)
         # self.screen.connect("leave-notify-event", self.hide_all_toolbars)
         # self.screen.connect("get-xid", self.init_media_player)
@@ -274,7 +280,7 @@ class PlayerBox(object):
         self.toolbar2.volume_button.connect("get-value-event", self.volume_button_get_value_event, 2)
 
         # Child widget add to vbox.
-        self.vbox.pack_start(self.screen_frame, True, True)
+        self.vbox.pack_start(self.screen_frame_event, True, True)
         self.vbox.pack_start(self.progressbar.hbox,False, False)
         # Hide playlist and show playlist widget hbox.
         self.hbox.pack_start(self.vbox, True, True)
@@ -764,7 +770,8 @@ class PlayerBox(object):
         # print "return key.."
         self.full_play_window(self.app.window)
         self.toolbar.toolbar_full_button.flags = not self.toolbar.toolbar_full_button.flags
-
+        print self.app.window.allocation
+        
     def key_quit_full(self):
         # print "quit full key..."
         if self.full_bool: # Full player window.        
@@ -1254,26 +1261,30 @@ class PlayerBox(object):
     def set_0_5x_video_play(self):
         print "0.5x video play."
         if self.video_play_flags():
+            self.video_play_state = X_VIDEO_PLAY_0_5
             self.set_video_play(self.video_width*0.5, self.video_height*0.5)
-            self.set_video_play_state = X_VIDEO_PLAY_0_5
+            
             
     def set_1x_video_play(self):
         print "1x video play."
         if self.video_play_flags():
+            self.video_play_state = X_VIDEO_PLAY_1
             self.set_video_play(self.video_width, self.video_height)
-            self.set_video_play_state = X_VIDEO_PLAY_1
+            
         
     def set_1_5x_video_play(self):
         print "1.5x video play" 
         if self.video_play_flags():
+            self.video_play_state = X_VIDEO_PLAY_1_5
             self.set_video_play(self.video_width*1.5, self.video_height*1.5)
-            self.set_video_play_state = X_VIDEO_PLAY_1_5
+            
         
     def set_2x_video_play(self):
         print "2x video play"
         if self.video_play_flags():
-            self.set_video_play(self.video_width*2, self.video_height*2)
             self.set_video_play_state = X_VIDEO_PLAY_2
+            self.set_video_play(self.video_width*2, self.video_height*2)
+            
         
     def video_play_flags(self):    
         if self.mp.state:
@@ -1306,15 +1317,16 @@ class PlayerBox(object):
             # Set media player size and position.
             self.app.window.resize(int(temp_video_width), int(temp_video_height))                                    
             self.app.window.set_position(gtk.WIN_POS_CENTER_ALWAYS)                        
-        # else:
-        #     if self.video_play_state   == X_VIDEO_PLAY_0_5:                
-        #         pass
-        #     elif self.video_play_state == X_VIDEO_PLAY_1:
-        #         pass
-        #     elif self.video_play_state == X_VIDEO_PLAY_1_5:
-        #         pass
-        #     elif self.video_play_state == X_VIDEO_PLAY_2:                          
-        #         pass
+        else:
+            if self.video_play_state   == X_VIDEO_PLAY_0_5:                
+                self.screen_frame.set(0.5, 0.5, 0, 0)
+                self.screen.set_size_request(int(video_width), int(video_height))                
+            elif self.video_play_state == X_VIDEO_PLAY_1:
+                pass
+            elif self.video_play_state == X_VIDEO_PLAY_1_5:
+                pass
+            elif self.video_play_state == X_VIDEO_PLAY_2:                          
+                pass
         
     def configure_hide_tool(self, widget, event): # screen: configure-event.
         self.screen_pop_menu.hide_menu()
@@ -1343,7 +1355,8 @@ class PlayerBox(object):
             # if widget.window.get_state() == gtk.gdk.WINDOW_STATE_MAXIMIZED:
             self.toolbar2.panel.resize(self.screen_frame.get_allocation()[2], 1)            
             # self.toolbar.panel.resize(self.screen_frame.get_allocation()[2], 1)            
-            self.toolbar2.panel.move(self.panel_x, self.panel_y + (widget.allocation[3] - self.toolbar2.panel.allocation[3]))
+            # self.toolbar2.panel.move(self.panel_x, self.panel_y + (widget.allocation[3] - self.toolbar2.panel.allocation[3]))
+            self.toolbar2.panel.move(self.panel_x, self.panel_y + (self.screen_frame.allocation[3] - self.toolbar2.panel.allocation[3]))
             self.toolbar2.panel.hide_all()
 
 
@@ -1555,7 +1568,8 @@ class PlayerBox(object):
 
         # Show toolbar2.
         if self.mode_state_bool or self.full_bool: # concise mode.
-            if widget.allocation[3]-20 <= event.y < widget.allocation[3]:
+            # if widget.allocation[3]-20 <= event.y < widget.allocation[3]:
+            if self.screen_frame.allocation[3]-20 <= event.y < self.screen_frame.allocation[3]:
                 if self.show_toolbar_focus_bool:
                     self.toolbar2.show_toolbar2()
                     self.show_toolbar_bool = True
@@ -1855,7 +1869,7 @@ class PlayerBox(object):
                 (None, "播放", None),
                 (None, "画面", None),
                 (None, "声音", None),
-                (None, "字幕", None),
+                (None, "字幕", self.set_0_5x_video_play),
                 (None, "播放器设置", None)
                 ], True)
         
