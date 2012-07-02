@@ -125,7 +125,8 @@ class OpenButton(gobject.GObject):
                 
                                 
     def queue_draw(self):            
-        self.draw_window.queue_draw_area(self.__x, self.__x, self.width, self.height)
+        self.draw_window.queue_draw()
+        # self.draw_window.queue_draw_area(self.__x, self.__x, self.width, self.height)
         
     def emit_open_button_press(self, widget, event):    
         temp_x = event.x
@@ -242,7 +243,8 @@ class ScreenMenu(gobject.GObject):
         self.show_menu_bool = False
     
     def queue_draw(self):        
-        self.draw_window.queue_draw_area(self.x, self.y, self.x + self.width, self.y + self.height)
+        self.draw_window.queue_draw()
+        # self.draw_window.queue_draw_area(self.x, self.y, self.x + self.width, self.y + self.height)
         
     def press_widget_emit_active(self, widget, event):    
          temp_x = int(event.x)

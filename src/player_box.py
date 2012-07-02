@@ -189,7 +189,7 @@ class PlayerBox(object):
         self.screen.activate()
         # drag resize window. .grab_focus()
         self.screen.connect("realize", self.init_media_player)
-        self.screen.unset_flags(gtk.DOUBLE_BUFFERED) # disable double buffered to avoid video blinking
+        # self.screen.unset_flags(gtk.DOUBLE_BUFFERED) # disable double buffered to avoid video blinking
 
         # Handle signal.
         # self.connect("realize", self.realize_mplayer_view)
@@ -1037,18 +1037,22 @@ class PlayerBox(object):
 
       
         if self.mp and (1 == self.mp.state):
-            if (self.mp.state) and (self.mp.vide_bool): # vide file.
-                self.open_button.visible_bool = False
-                self.open_button.visible_bool = False
-                self.screen_pop_menu.visible_bool = False            
+            if (self.mp.state) and (self.mp.vide_bool): # vide file.                
+                self.unset_flags()
+                self.open_button.visible_bool = True
+                self.open_button.visible_bool = True
+                self.screen_pop_menu.visible_bool = True
+                                
+                self.open_button.leave_bool = False
+                self.open_button_right.leave_bool = False
                 self.screen_pop_menu.leave_bool = False
-            
+                
                 if self.mp.pause_bool: # vide pause.
                     # Draw pause background.
                     return False
                 else:
                     return False
-
+        self.set_flags()        
         # if no player vide file or no player.
         cr.set_source_rgb(*color_hex_to_cairo("#1f1f1f"))
         cr.rectangle(0, 0, w, h)
@@ -1065,8 +1069,9 @@ class PlayerBox(object):
         
         if not self.mp.state:
             self.open_button.visible_bool = False
-            self.open_button.visible_bool = False
+            self.open_button_right.visible_bool = False
             self.screen_pop_menu.visible_bool = False            
+
             # self.open_button.leave_bool = False
             self.screen_pop_menu.leave_bool = False
             self.open_button.draw_open_button(widget, event)
