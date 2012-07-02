@@ -64,6 +64,12 @@ import os
 # import random
 
 
+X_VIDEO_PLAY_0_5 = 1 << 0
+X_VIDEO_PLAY_1   = 1 << 1
+X_VIDEO_PLAY_1_5 = 1 << 2
+X_VIDEO_PLAY_2   = 1 << 3
+
+
 class PlayerBox(object):
     def __init__ (self, app, argv_path_list):
         # signal and double.
@@ -85,6 +91,7 @@ class PlayerBox(object):
         self.minimize_pause_play_bool = False
 
         # video width_height.
+        self.video_play_state = None
         self.video_width = None
         self.video_height = None
         # root window width_height.
@@ -1246,16 +1253,69 @@ class PlayerBox(object):
         
     def set_0_5x_video_play(self):
         print "0.5x video play."
-        
+        if self.video_play_flags():
+            self.set_video_play(self.video_width*0.5, self.video_height*0.5)
+            self.set_video_play_state = X_VIDEO_PLAY_0_5
+            
     def set_1x_video_play(self):
         print "1x video play."
+        if self.video_play_flags():
+            self.set_video_play(self.video_width, self.video_height)
+            self.set_video_play_state = X_VIDEO_PLAY_1
         
     def set_1_5x_video_play(self):
         print "1.5x video play" 
+        if self.video_play_flags():
+            self.set_video_play(self.video_width*1.5, self.video_height*1.5)
+            self.set_video_play_state = X_VIDEO_PLAY_1_5
         
     def set_2x_video_play(self):
         print "2x video play"
-    
+        if self.video_play_flags():
+            self.set_video_play(self.video_width*2, self.video_height*2)
+            self.set_video_play_state = X_VIDEO_PLAY_2
+        
+    def video_play_flags(self):    
+        if self.mp.state:
+            if self.video_width and self.video_height:
+                return True
+        return False    
+        
+    def set_video_play(self, video_width, video_height):
+        self.screen_frame.set_padding(0, 0, 0, 0)        
+        if not self.full_bool: # full bool. True -> full False -> quit full.
+            temp_video_width = 0
+            temp_video_height = 0
+            
+            if video_height > self.root_window_height:
+                temp_video_height = self.root_window_height - 30
+            else:    
+                if video_height < APP_HEIGHT:
+                    temp_video_height = APP_HEIGHT
+                else:    
+                    temp_video_height = video_height
+                
+            if video_width > self.root_window_width:
+                temp_video_width = self.root_window_width - 200
+            else:    
+                if video_width < APP_WIDTH:
+                    temp_video_width = APP_WIDTH
+                else:    
+                    temp_video_width = video_width
+                
+            # Set media player size and position.
+            self.app.window.resize(int(temp_video_width), int(temp_video_height))                                    
+            self.app.window.set_position(gtk.WIN_POS_CENTER_ALWAYS)                        
+        # else:
+        #     if self.video_play_state   == X_VIDEO_PLAY_0_5:                
+        #         pass
+        #     elif self.video_play_state == X_VIDEO_PLAY_1:
+        #         pass
+        #     elif self.video_play_state == X_VIDEO_PLAY_1_5:
+        #         pass
+        #     elif self.video_play_state == X_VIDEO_PLAY_2:                          
+        #         pass
+        
     def configure_hide_tool(self, widget, event): # screen: configure-event.
         self.screen_pop_menu.hide_menu()
         if self.full_bool:            
