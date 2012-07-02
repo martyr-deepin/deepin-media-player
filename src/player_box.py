@@ -26,7 +26,7 @@ from dtk.ui.keymap import get_keyevent_name
 from dtk.ui.box import EventBox
 from dtk.ui.draw import draw_pixbuf
 from dtk.ui.frame import HorizontalFrame,VerticalFrame
-from dtk.ui.utils import is_double_click, is_single_click,color_hex_to_cairo
+from dtk.ui.utils import is_double_click, is_single_click, is_right_button, color_hex_to_cairo
 from dtk.ui.constant import DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT, WIDGET_POS_BOTTOM_LEFT
 from dtk.ui.utils import container_remove_all, get_widget_root_coordinate
 from dtk.ui.menu import Menu
@@ -515,7 +515,12 @@ class PlayerBox(object):
         h = widget.allocation.height
         bottom_padding = 10
         drag_bool = False
-
+        
+        # show scrren right menu.        
+        if is_right_button(event):
+            if not self.open_button.leave_bool and not self.open_button_right.leave_bool and not self.screen_pop_menu.leave_bool:
+                self.screen_right_key_menu(event)
+        
         if (w - bottom_padding <= event.x <= w) and (h - bottom_padding <= event.y <= h):
             if "MplayerView" != type(widget).__name__:
                 drag = gtk.gdk.WINDOW_EDGE_SOUTH_EAST
@@ -1751,12 +1756,12 @@ class PlayerBox(object):
 
 
     '''Screen right key menu.'''
-    def screen_right_key_menu(self, widget, event):
+    def screen_right_key_menu(self, event):
         
         self.screen_right_root_menu = Menu([
                 (None, "打开文件", None),
                 (None, "打开", None),
-                (None, None, None),
+                (None),
                 (None, "全屏", None),
                 (None, "普通模式", None),
                 (None, "简洁模式", None),
@@ -1767,6 +1772,9 @@ class PlayerBox(object):
                 (None, "字幕", None),
                 (None, "播放器设置", None)
                 ], True)
+        
+        self.screen_right_root_menu.show((int(event.x_root), int(event.y_root)),
+                                (0, 0))
         
     '''play list menu signal.'''
     def show_popup_menu(self, widget, event):

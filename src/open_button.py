@@ -135,8 +135,9 @@ class OpenButton(gobject.GObject):
         if (self.__x + self.__padding_x <= temp_x <= self.__x + self.width + self.__padding_x) and (self.__y + self.__padding_y <= temp_y <= self.__y + self.__padding_y + self.height):
             self.emit("openbutton-press-event", event)
             if not self.visible_bool:
-                self.press_bool = True                                
-                self.state = OPEN_BUTTON_STATE_PRESS
+                if event.button == 1:
+                    self.press_bool = True                                
+                    self.state = OPEN_BUTTON_STATE_PRESS
             self.queue_draw()    
             
     def emit_open_button_release(self, widget, event):        
@@ -252,10 +253,10 @@ class ScreenMenu(gobject.GObject):
          # 
          if self.show_menu_bool:             
              if (self.x  <= temp_x <= self.x + self.width) and (self.y  <= temp_y <= self.y + self.height):
-                 
-                 self.hide_menu()
-                 if self.menu_list[self.index][2]:
-                     self.menu_list[self.index][2]()
+                 if event.button == 1: # Left clicked.
+                     self.hide_menu()
+                     if self.menu_list[self.index][2]:
+                         self.menu_list[self.index][2]()
                      
                      
         
