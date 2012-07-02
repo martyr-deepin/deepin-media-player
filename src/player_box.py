@@ -31,7 +31,7 @@ from dtk.ui.constant import DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT, WIDGET_
 from dtk.ui.utils import container_remove_all, get_widget_root_coordinate
 from dtk.ui.menu import Menu
 
-from constant import APP_WIDTH,PANEL_HEIGHT
+from constant import APP_WIDTH, APP_HEIGHT, PANEL_HEIGHT
 from ini import Config
 from gio_format import format
 from opendialog import OpenDialog
@@ -52,7 +52,7 @@ from mplayer import Mplayer
 # from mplayer import get_vide_width_height
 from mplayer import get_length
 from mplayer import get_home_path
-from mplayer import length_to_time
+from mplayer import length_to_time, get_vide_width_height
 from playlist import PlayList
 from playlist import MediaItem
 from sort import Sort
@@ -84,6 +84,12 @@ class PlayerBox(object):
 
         self.minimize_pause_play_bool = False
 
+        # video width_height.
+        self.video_width = None
+        self.video_height = None
+        # root window width_height.
+        self.root_window_width = None
+        self.root_window_height = None
         # pause setting.
         self.pause_time_id = None
         self.pause_bool = False
@@ -405,11 +411,11 @@ class PlayerBox(object):
                                  (None, "16:10",  self.set_16X10_aspect),
                                  (None, "1.85:1", self.set_1_85X1_aspect),
                                  (None, "2.35:1", self.set_2_35X1_aspect),
-                                 # (None),
-                                 # (None, "0.5倍尺寸", None),
-                                 # (None, "1倍", None),
-                                 # (None, "1.5倍", None),
-                                 # (None, "2倍", None),
+                                 (None),
+                                 (None, "0.5倍尺寸", self.set_0_5x_video_play),
+                                 (None, "1倍",      self.set_1x_video_play),
+                                 (None, "1.5倍",    self.set_1_5x_video_play),
+                                 (None, "2倍",      self.set_2x_video_play),
                                  # (None),
                                  # (None, "全屏/退出", None),
                                  ])
@@ -990,6 +996,12 @@ class PlayerBox(object):
     '''Init media player.'''
     def init_media_player(self, widget):
         '''Init deepin media player.'''
+        # Init root window width_height.
+        self.app_width   = self.app.window.get_allocation()[2]
+        self.app_height  = self.app.window.get_allocation()[3]
+        self.root_window_width   =  self.app.window.get_screen().get_width() # save root widnwo screen width.
+        self.root_window_height  =  self.app.window.get_screen().get_height() # save roo widnow screen height.
+
         self.play_list.hide_play_list() # Hide play list.
         
         self.screen.queue_draw()
@@ -1231,11 +1243,20 @@ class PlayerBox(object):
             return low
         if high < x:
             return high
-
-
-
+        
+    def set_0_5x_video_play(self):
+        print "0.5x video play."
+        
+    def set_1x_video_play(self):
+        print "1x video play."
+        
+    def set_1_5x_video_play(self):
+        print "1.5x video play" 
+        
+    def set_2x_video_play(self):
+        print "2x video play"
+    
     def configure_hide_tool(self, widget, event): # screen: configure-event.
-
         self.screen_pop_menu.hide_menu()
         if self.full_bool:            
             self.open_button.move(-14, 30+26)
@@ -1643,6 +1664,8 @@ class PlayerBox(object):
 
     def media_player_start(self, mplayer, play_bool):
         '''media player start play.'''        
+        self.video_width, self.video_height = get_vide_width_height(mplayer.path)
+        print self.video_width, self.video_height
         self.set_ascept_function()
         # full window.
         if self.playwinmax_bool and self.video_aspect_type == "默认":
@@ -1680,6 +1703,9 @@ class PlayerBox(object):
 
     def media_player_end(self, mplayer, play_bool):
         '''player end.'''
+        # video width_height = None.
+        self.video_width = self.video_height = None
+        
         # return screen framt.
         self.screen_frame.set(0.0, 0.0, 1.0, 1.0)
         # Quit preview window player.

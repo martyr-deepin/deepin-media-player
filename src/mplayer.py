@@ -70,18 +70,22 @@ def get_length(file_path):
 
 def get_vide_width_height(file_path):
     try:
-        cmd = "mplayer -vo null -ao null -frames 0 -identify '%s' 2>&1" % (file_path)
-        fp = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)    
-        cmd_str = fp.communicate()[0]
-        length_compile = re.compile(r"VIDEO:.+") 
-        length = length_compile.findall(cmd_str)
-        length = length[0][16:]
-        width_compile = re.compile(r"\d+x")
-        height_compile = re.compile(r"x\d+")
+        if get_vide_flags(file_path):
+            cmd = "mplayer -vo null -ao null -frames 0 -identify '%s' 2>&1" % (file_path)
+            fp = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)    
+            cmd_str = fp.communicate()[0]
+            length_compile = re.compile(r"VIDEO:.+") 
+            length = length_compile.findall(cmd_str)
+            length = length[0][16:]
+            width_compile = re.compile(r"\d+x")
+            height_compile = re.compile(r"x\d+")
     
-        video_width = width_compile.findall(length)[0][:-1]
-        video_height = height_compile.findall(length)[0][1:]
-        return float(video_width), float(video_height)
+            video_width = width_compile.findall(length)[0][:-1]
+            video_height = height_compile.findall(length)[0][1:]
+
+            return float(video_width), float(video_height)
+        else:
+            return None, None
     except:
         return float(0), float(0)
 
