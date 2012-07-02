@@ -537,7 +537,14 @@ class PlayerBox(object):
         if "NULL" == config_type: # seek back.
             pass
         else: # volume
-            pass
+            if event.direction == gtk.gdk.SCROLL_UP:
+                self.volume_button.volume_other_set_value("right", 5)
+                self.mp.setvolume(self.mp.volume+5)
+                self.messagebox("音量:%s"%(str(self.mp.volume)))
+            elif event.direction == gtk.gdk.SCROLL_DOWN:
+                self.volume_button.volume_other_set_value("left", 5)
+                self.mp.setvolume(self.mp.volume-5)
+                self.messagebox("音量:%s"%(str(self.mp.volume)))
             
     def volume_button_get_value_event(self, volume_button, value, volume_state, volume_bit):        
         if -1 == volume_state:

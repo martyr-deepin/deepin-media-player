@@ -241,28 +241,17 @@ class VolumeButton(gtk.EventBox):
         
     def __scroll_mouse_set_point(self, widget, event):    
         if event.direction == gtk.gdk.SCROLL_UP:
-            self.volume_other_set_value(VOLUME_RIGHT)
+            self.volume_other_set_value(VOLUME_RIGHT, 5)
         elif event.direction == gtk.gdk.SCROLL_DOWN:
-            self.volume_other_set_value(VOLUME_LEFT)
+            self.volume_other_set_value(VOLUME_LEFT, 5)
             
-    def volume_other_set_value(self, volume_type):    
-        point_width_average      = self.__point_volume_pixbuf.get_pixbuf().get_width() / 2 
-        temp_min = (self.__point_x + self.__point_padding_x - point_width_average)
-        temp_max = (self.__point_x + self.__point_padding_x + self.__volume_width - point_width_average)
-        
-        self.__mute_bool = False
+    def volume_other_set_value(self, volume_type, value_padding):    
+        self.__mute_bool = False        
         
         if volume_type == VOLUME_RIGHT:
-            if self.__point_padding_x >= temp_max:
-                self.__point_padding_x = temp_max
-            else:    
-                self.__point_padding_x += 1
+            self.value = self.__current_value + value_padding
         elif volume_type == VOLUME_LEFT:
-            if self.__point_padding_x <= temp_min:
-                self.__point_padding_x = temp_min
-            else:    
-                self.__point_padding_x -= 1
-            
+            self.value = self.__current_value - value_padding
         self.queue_draw()
         
     def __expose_draw_volume(self, widget, event):                        

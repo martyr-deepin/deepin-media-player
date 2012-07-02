@@ -493,7 +493,9 @@ class  Mplayer(gobject.GObject):
         self.volume = volumeNum
         if self.volume > 100:
             self.volume = 100
-
+        if self.volume < 0:    
+            self.volume = 0
+            
         if self.state:
             self.cmd('volume %s 1\n' % str(self.volume))
             
