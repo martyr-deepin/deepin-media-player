@@ -791,7 +791,6 @@ class PlayerBox(object):
         # print "return key.."
         self.full_play_window(self.app.window)
         self.toolbar.toolbar_full_button.flags = not self.toolbar.toolbar_full_button.flags
-        print self.app.window.allocation
         
     def key_quit_full(self):
         # print "quit full key..."
@@ -1156,6 +1155,9 @@ class PlayerBox(object):
         '''Quit player window.'''
         self.app.window.set_opacity(0)
         self.app.window.set_visible(True)
+        self.config.set("Window", "width", self.app.window.allocation.width)
+        self.config.set("Window", "height", self.app.window.allocation.height)
+        self.config.save()
         if self.mp:
             if self.mplayer_pid:
                 os.system("kill %s" %(self.mplayer_pid))
@@ -1756,17 +1758,38 @@ class PlayerBox(object):
 
     def media_player_start(self, mplayer, play_bool):
         '''media player start play.'''        
+        # Get video width and height.
         self.video_width, self.video_height = get_vide_width_height(mplayer.path)
-        print self.video_width, self.video_height
-        self.set_ascept_function()
+
+        # config gui -> [Fileplay] video_file_open = ?
+        video_open_type = self.config.get("FilePlay", "video_file_open")                            
+        
+        if video_open_type:
+            if "1" == video_open_type: 
+                pass
+            elif "2" == video_open_type:
+                self.video_aspect_type = "默认"        
+                self.mp.playwinmax()
+                self.mp.playwinmax_bool = False
+            elif "3" == video_open_type:
+                width = self.config.get("Window", "width")
+                height = self.config.get("Window", "height")
+                if width > APP_WIDTH:
+                    self.app.window.resize(int(width), int(height))
+                    self.app.window.set_position(gtk.WIN_POS_CENTER_ALWAYS)
+            elif "4" == video_open_type:
+                self.key_return()                
+        # self.set_ascept_function()
+         
+        # aspect set.                                    
+        if self.video_aspect_type != "默认":        
+            self.set_ascept_function()
         # full window.
         if self.playwinmax_bool and self.video_aspect_type == "默认":
             # print "start media player."
             self.mp.playwinmax()
             self.playwinmax_bool = False
-
-        # self.set_ascept_function()
-
+        
         # Get mplayer pid.
         self.mplayer_pid = play_bool
         #play memory.
