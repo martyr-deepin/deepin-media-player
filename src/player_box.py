@@ -34,7 +34,7 @@ from dtk.ui.menu import Menu
 from constant import APP_WIDTH, APP_HEIGHT, PANEL_HEIGHT
 from ini import Config
 from gio_format import format
-from opendialog import OpenDialog
+# from opendialog import OpenDialog
 from dtk.ui.skin_config import skin_config
 from utils import allocation,path_threads
 from show_time import ShowTime
@@ -188,7 +188,7 @@ class PlayerBox(object):
             ]
         self.screen_pop_menu = ScreenMenu(self.screen_frame, menu_item)        
         
-        
+        self.video_aspect_pixbuf = app_theme.get_pixbuf("max_volume.png") # aspect state pixbuf.
         self.video_aspect_type = "默认"
         self.playwinmax_bool = True
         # Set background.
@@ -211,7 +211,7 @@ class PlayerBox(object):
         # self.connect("realize", self.realize_mplayer_view)
 
         # self.screen.connect("key-press-event", self.get_key_event)
-        self.screen.connect("button-press-event", self.drag_resize_window)
+        self.screen_frame_event.connect("button-press-event", self.drag_resize_window)
         self.screen.connect("motion-notify-event", self.modify_mouse_icon)
 
         self.screen.connect_after("expose-event", self.draw_background)
@@ -382,10 +382,10 @@ class PlayerBox(object):
     def open_button_popup_screen_menu(self, widget, event):
         x, y, w, h = self.screen_frame.allocation
         
-        width = w/2 - self.screen_pop_menu.width/2 + 4
+        width = w/2 - self.screen_pop_menu.width/2 + 2
         height = h/2 + self.screen_pop_menu.height /2 + 37
-        if self.full_bool:            
-            width  -= 2                        
+        # if self.full_bool:
+        #     width  -= 4
             
         if not self.screen_pop_menu.show_menu_bool:    
             self.screen_pop_menu.show_menu(int(width), int(height))
@@ -418,17 +418,36 @@ class PlayerBox(object):
                                  (None, "静音/还原", None),
                                  ])
         # In title root menu.
-        self.screen_menu = Menu([(None, "默认值",  self.set_restart_aspect),
-                                 (None, "4:3",    self.set_4X3_aspect),
-                                 (None, "16:9",   self.set_16X9_aspect),
-                                 (None, "16:10",  self.set_16X10_aspect),
-                                 (None, "1.85:1", self.set_1_85X1_aspect),
-                                 (None, "2.35:1", self.set_2_35X1_aspect),
+        pixbuf_normal    = None
+        pixbuf_4X3       = None
+        pixbuf_16X9      = None
+        pixbuf_16X10     = None
+        pixbuf_1_85X1    = None
+        pixbuf_2_35X1    = None
+        if "默认" == self.video_aspect_type:
+            pixbuf_normal = (self.video_aspect_pixbuf, app_theme.get_pixbuf("lower_press.png"))
+        elif "4:3" == self.video_aspect_type:
+            pixbuf_4X3 = (self.video_aspect_pixbuf, app_theme.get_pixbuf("lower_press.png"))
+        elif "16:9" == self.video_aspect_type:
+            pixbuf_16X9 = (self.video_aspect_pixbuf, app_theme.get_pixbuf("lower_press.png"))
+        elif "16:10" == self.video_aspect_type:    
+            pixbuf_16X10 = (self.video_aspect_pixbuf, app_theme.get_pixbuf("lower_press.png"))
+        elif "1.85:1" == self.video_aspect_type:    
+            pixbuf_1_85X1 = (self.video_aspect_pixbuf, app_theme.get_pixbuf("lower_press.png"))
+        elif "2.35:1" == self.video_aspect_type:
+            pixbuf_2_35X1 = (self.video_aspect_pixbuf, app_theme.get_pixbuf("lower_press.png"))
+        
+        self.screen_menu = Menu([(pixbuf_normal, "默认值",  self.set_restart_aspect),
+                                 (pixbuf_4X3,    "4:3",    self.set_4X3_aspect),
+                                 (pixbuf_16X9,   "16:9",   self.set_16X9_aspect),
+                                 (pixbuf_16X10,  "16:10",  self.set_16X10_aspect),
+                                 (pixbuf_1_85X1, "1.85:1", self.set_1_85X1_aspect),
+                                 (pixbuf_2_35X1, "2.35:1", self.set_2_35X1_aspect),
                                  (None),
-                                 (None, "0.5倍尺寸", self.set_0_5x_video_play),
-                                 (None, "1倍",      self.set_1x_video_play),
-                                 (None, "1.5倍",    self.set_1_5x_video_play),
-                                 (None, "2倍",      self.set_2x_video_play),
+                                 (None,  "0.5倍尺寸",  self.set_0_5x_video_play),
+                                 (None,  "1倍",       self.set_1x_video_play),
+                                 (None,  "1.5倍",     self.set_1_5x_video_play),
+                                 (None,  "2倍",       self.set_2x_video_play),
                                  # (None),
                                  # (None, "全屏/退出", None),
                                  ])
@@ -979,8 +998,6 @@ class PlayerBox(object):
         self.clear_play_list_bool = True     
         open_dialog.destroy()
 
-        
-
 
     # def get_path_name(self, open_dialog, path_string):
     def get_path_name(self, path_string):
@@ -1263,29 +1280,25 @@ class PlayerBox(object):
         if self.video_play_flags():
             self.video_play_state = X_VIDEO_PLAY_0_5
             self.set_video_play(self.video_width*0.5, self.video_height*0.5)
-            
-            
+                        
     def set_1x_video_play(self):
         print "1x video play."
         if self.video_play_flags():
             self.video_play_state = X_VIDEO_PLAY_1
-            self.set_video_play(self.video_width, self.video_height)
-            
+            self.set_video_play(self.video_width, self.video_height)            
         
     def set_1_5x_video_play(self):
         print "1.5x video play" 
         if self.video_play_flags():
             self.video_play_state = X_VIDEO_PLAY_1_5
-            self.set_video_play(self.video_width*1.5, self.video_height*1.5)
-            
+            self.set_video_play(self.video_width*1.5, self.video_height*1.5)            
         
     def set_2x_video_play(self):
         print "2x video play"
         if self.video_play_flags():
             self.set_video_play_state = X_VIDEO_PLAY_2
             self.set_video_play(self.video_width*2, self.video_height*2)
-            
-        
+                    
     def video_play_flags(self):    
         if self.mp.state:
             if self.video_width and self.video_height:
@@ -1318,15 +1331,18 @@ class PlayerBox(object):
             self.app.window.resize(int(temp_video_width), int(temp_video_height))                                    
             self.app.window.set_position(gtk.WIN_POS_CENTER_ALWAYS)                        
         else:
-            if self.video_play_state   == X_VIDEO_PLAY_0_5:                
-                self.screen_frame.set(0.5, 0.5, 0, 0)
-                self.screen.set_size_request(int(video_width), int(video_height))                
+            if self.video_play_state   == X_VIDEO_PLAY_0_5:                    
+                self.full_set_video_play(video_width, video_height)
             elif self.video_play_state == X_VIDEO_PLAY_1:
-                pass
+                self.full_set_video_play(video_width, video_height)
             elif self.video_play_state == X_VIDEO_PLAY_1_5:
-                pass
-            elif self.video_play_state == X_VIDEO_PLAY_2:                          
-                pass
+                self.full_set_video_play(video_width, video_height)
+            elif self.video_play_state == X_VIDEO_PLAY_2:                        
+                self.full_set_video_play(video_width, video_height)
+        
+    def full_set_video_play(self, video_width, video_height):            
+        self.screen_frame.set(0.5, 0.5, 0, 0)
+        self.screen.set_size_request(int(video_width), int(video_height))
         
     def configure_hide_tool(self, widget, event): # screen: configure-event.
         self.screen_pop_menu.hide_menu()
@@ -1334,8 +1350,8 @@ class PlayerBox(object):
             self.open_button.move(-14, 30+26)
             self.open_button_right.move(56, 30+26)
         else:    
-            self.open_button.move(-14, 30)
-            self.open_button_right.move(56, 30)
+            self.open_button.move(-14, 30 + 26)
+            self.open_button_right.move(56, 30 + 26)
 
         if self.mp:
             #self.app.hide_titlebar() # Test hide titlebar.
@@ -1868,7 +1884,7 @@ class PlayerBox(object):
                 (None, "播放顺序", None),
                 (None, "播放", None),
                 (None, "画面", None),
-                (None, "声音", None),
+                (None, "声音", self.set_2x_video_play),
                 (None, "字幕", self.set_0_5x_video_play),
                 (None, "播放器设置", None)
                 ], True)
