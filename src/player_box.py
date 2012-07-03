@@ -388,12 +388,11 @@ class PlayerBox(object):
         # if self.full_bool:
         #     width  -= 4
             
-        if not self.screen_pop_menu.show_menu_bool:    
+        if not self.screen_pop_menu.show_menu_bool:
             self.screen_pop_menu.show_menu(int(width), int(height))
         else:
             self.screen_pop_menu.hide_menu()
-        
-        
+                            
     def messagebox(self, text):            
         self.window_tool_tip.show(text)
         

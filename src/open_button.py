@@ -27,6 +27,11 @@ import gtk
 import pango
 import pangocairo
 
+
+# x, y, width, height
+widget_save_attr = []
+widget_save_num  = 1
+
 # open button state.
 OPEN_BUTTON_STATE_NORMAL = 0
 OPEN_BUTTON_STATE_PRESS  = 1
@@ -84,11 +89,22 @@ class OpenButton(gobject.GObject):
         self.clicked_bool = False
         self.press_bool = False        
         
+        global widget_save_num
+        self.widget_num = widget_save_num
+        widget_save_num += 1
+        # save widget type attr.
+        widget_save_attr.append((self.__x, self.__y, self.width, self.height))
                 
+    def __set_widget_save_attr(self):    
+        global widget_save_attr
+        widget_save_attr[self.widget_num-1] = (self.__x, self.__y, self.width, self.height)
+
+        
     def move(self, x, y):    
         self.__padding_x = x
         self.__padding_y = y
         self.draw_window.queue_draw()
+        self.__set_widget_save_attr()
         
     def set_visible(self, visible_bool):    
         self.visible_bool = visible_bool        
@@ -97,6 +113,7 @@ class OpenButton(gobject.GObject):
     def set_size(self, w, h):    
         self.width = w
         self.height = h
+        self.__set_widget_save_attr()
         
     def emit_open_button_motion(self, widget, event):    
         temp_x = event.x
@@ -126,6 +143,7 @@ class OpenButton(gobject.GObject):
                                 
     def queue_draw(self):            
         self.draw_window.queue_draw()
+        self.__set_widget_save_attr()
         # self.draw_window.queue_draw_area(self.__x, self.__x, self.width, self.height)
         
     def emit_open_button_press(self, widget, event):    
@@ -219,6 +237,7 @@ class ScreenMenu(gobject.GObject):
         self.__padding_y    = 0
         # show and hide menu value.
         self.show_menu_bool = False
+        self.show_bool = False
         self.move_bool = False
         self.leave_bool = False
         # icon value.
@@ -234,17 +253,29 @@ class ScreenMenu(gobject.GObject):
             self.draw_window.connect("motion-notify-event", self.motion_move_fg)
             self.draw_window.connect("button-press-event",  self.press_widget_emit_active)
             
+        global widget_save_num
+        self.widget_num = widget_save_num
+        widget_save_num += 1
+        # save widget type attr.
+        widget_save_attr.append((self.x, self.y, self.width, self.height))
+                
+    def __set_widget_save_attr(self):    
+        global widget_save_attr
+        widget_save_attr[self.widget_num-1] = (self.x, self.y, self.width, self.height)
+        
     def show_menu(self, x, y):        
         self.x = x
         self.y = y
         self.show_menu_bool = True
         self.queue_draw()
+        self.__set_widget_save_attr()
         
     def hide_menu(self):
-        self.show_menu_bool = False
-    
+        self.show_menu_bool = False        
+        
     def queue_draw(self):        
         self.draw_window.queue_draw()
+        self.__set_widget_save_attr()
         # self.draw_window.queue_draw_area(self.x, self.y, self.x + self.width, self.y + self.height)
         
     def press_widget_emit_active(self, widget, event):    
@@ -257,6 +288,15 @@ class ScreenMenu(gobject.GObject):
                      self.hide_menu()
                      if self.menu_list[self.index][2]:
                          self.menu_list[self.index][2]()
+             else:
+                 temp_clicked_bool = True
+                 global widget_save_attr
+                 for widget in widget_save_attr:
+                     if (widget[0] <= temp_x <= widget[0] + widget[2]):
+                         temp_clicked_bool = False
+                         
+                 if temp_clicked_bool:
+                     self.hide_menu()
                      
                      
         
