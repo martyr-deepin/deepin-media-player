@@ -71,6 +71,8 @@ class IniGui(DialogBox):
                            window_pos=gtk.WIN_POS_CENTER)
         # Set event.
         self.ini = Config(config_path)        
+        # Set event.
+        self.connect("motion-notify-event", self.press_save_ini_file)
         
         self.main_vbox = gtk.VBox()
         self.main_hbox = gtk.HBox()
@@ -125,6 +127,7 @@ class IniGui(DialogBox):
     def press_save_ini_file(self, widget, event):    
         gtk.timeout_add(500, self.save_configure_file_ok_clicked)
         
+        
     def draw_scrolled_window_backgournd(self, widget, event):
         cr = widget.window.cairo_create()
         rect = widget.allocation
@@ -161,38 +164,45 @@ class IniGui(DialogBox):
         # print "_____________[FilePlay]________________________"
         file_play_dict = self.configure.file_play.get_file_play_state()
         for key in file_play_dict.keys():
-            self.ini.set("FilePlay", key, file_play_dict[key])
+            if self.ini.get("FilePlay", key) != str(file_play_dict[key]):
+                self.ini.set("FilePlay", key, file_play_dict[key])
             # print "%s = %s" % (str(key), str(file_play_dict[key]))
         # print "_____________[SystemSet]_______________________"
         system_set_dict = self.configure.system_set.get_system_set_state()
         for key in system_set_dict.keys():
-            self.ini.set("SystemSet", key, system_set_dict[key])
+            if self.ini.get("SystemSet", key) != str(system_set_dict[key]):
+                self.ini.set("SystemSet", key, system_set_dict[key])
             # print "%s = %s" % (str(key), str(system_set_dict[key]))
         # print "_____________[PlayControl]_____________________"    
         play_control_dict = self.configure.play_control.get_play_control_state()
         for key in play_control_dict.keys():
-            self.ini.set("PlayControl", key, play_control_dict[key])
+            if self.ini.get("PlayControl", key) != str(play_control_dict[key]):
+                self.ini.set("PlayControl", key, play_control_dict[key])
             # print "%s = %s" % (str(key), str(play_control_dict[key]))
         # print "_____________[OtherKey]________________________"    
         other_key_dict = self.configure.other_key.get_other_set_state()
         for key in other_key_dict.keys():
-            self.ini.set("OtherKey", key, other_key_dict[key])
+            if self.ini.get("OtherKey", key) != str(other_key_dict[key]):
+                self.ini.set("OtherKey", key, other_key_dict[key])
             # print "%s = %s" % (str(key), str(other_key_dict[key]))
         # print "_____________[SubtitleSet]______________________"                
         sub_set_dict = self.configure.sub_set.get_subtitle_set_state()
         for key in sub_set_dict.keys():
-            self.ini.set("SubtitleSet", key, sub_set_dict[key])
+            if self.ini.get("SubtitleSet", key) != str(sub_set_dict[key]):
+                self.ini.set("SubtitleSet", key, sub_set_dict[key])
             # print "%s = %s" % (str(key), str(sub_set_dict[key]))
         # print "_____________[ScreenshotSet]____________________"    
         screenshot_dict = self.configure.screen_shot.get_screenshot_state()
         for key in screenshot_dict.keys():
-            self.ini.set("ScreenshotSet", key, screenshot_dict[key])
+            if self.ini.get("ScreenshotSet", key) != str(screenshot_dict[key]):
+                self.ini.set("ScreenshotSet", key, screenshot_dict[key])
             # print "%s = %s" % (str(key), str(screenshot_dict[key]))
             
-        self.ini.save()    
+        # self.ini.save()    
         self.emit("config-changed", "save_over")
         # quit configure window.
         # self.destroy()
+        return False
     
     def destroy_ini_gui_window_cancel_clicked(self, widget):    
         # quit configure window.
@@ -296,6 +306,7 @@ class FilePlay(gtk.VBox):
         # open new file clear play list.
         self.clear_play_list_btn = CheckButton("打开新文件时清空播放列表")        
         ini_bool = self.ini.get("FilePlay", "open_new_file_clear_play_list")
+        print ini_bool
         self.clear_play_list_btn.set_active(False)
         if ini_bool:
             if "true" == ini_bool.lower():

@@ -513,10 +513,11 @@ class PlayerBox(object):
         return True
 
     def modify_config_section_value(self, Config, str1, str2, str3):
-        print Config
-        print str1
-        print str2
-
+        # print Config
+        # print str1
+        # print str2
+        pass
+    
     def set_show_toolbar_function_true(self, widget, event):
         self.show_toolbar_focus_bool = True
 
@@ -2116,14 +2117,17 @@ class PlayerBox(object):
 
         
     '''config gui window'''
-    def restart_load_config_file(self, IniGui, string):
-        self.config = Config(get_home_path() + "/.config/deepin-media-player/deepin_media_config.ini")
+    def restart_load_config_file(self, IniGui, sec_root, sec_argv, sec_value):
+        # print sec_root, sec_argv, sec_value
+        self.config.set(sec_root, sec_argv, sec_value)
+        self.config.save()
+        # self.config = Config(get_home_path() + "/.config/deepin-media-player/deepin_media_config.ini")
         # self.config.connect("config-changed", self.modify_config_section_value)
 
     def config_gui(self):
         ini_gui = IniGui()
-        ini_gui.connect("config-changed", self.restart_load_config_file)
-
+        ini_gui.ini.connect("config-changed", self.restart_load_config_file)
+        
     # Menu concise.
     def set_menu_concise(self):
         self.hide_window_widget(self.toolbar.toolbar_concise_button)
