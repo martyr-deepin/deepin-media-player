@@ -189,6 +189,7 @@ class PlayerBox(object):
         self.screen_pop_menu = ScreenMenu(self.screen_frame, menu_item)        
         
         self.video_aspect_pixbuf = app_theme.get_pixbuf("max_volume.png") # aspect state pixbuf.
+        self.video_aspect_select_pixbuf = app_theme.get_pixbuf("lower_press.png")
         self.video_aspect_type = "默认"
         self.playwinmax_bool = True
         # Set background.
@@ -424,18 +425,19 @@ class PlayerBox(object):
         pixbuf_16X10     = None
         pixbuf_1_85X1    = None
         pixbuf_2_35X1    = None
+        
         if "默认" == self.video_aspect_type:
-            pixbuf_normal = (self.video_aspect_pixbuf, app_theme.get_pixbuf("lower_press.png"))
+            pixbuf_normal = (self.video_aspect_pixbuf, self.video_aspect_select_pixbuf)
         elif "4:3" == self.video_aspect_type:
-            pixbuf_4X3 = (self.video_aspect_pixbuf, app_theme.get_pixbuf("lower_press.png"))
+            pixbuf_4X3 = (self.video_aspect_pixbuf, self.video_aspect_select_pixbuf)
         elif "16:9" == self.video_aspect_type:
-            pixbuf_16X9 = (self.video_aspect_pixbuf, app_theme.get_pixbuf("lower_press.png"))
+            pixbuf_16X9 = (self.video_aspect_pixbuf, self.video_aspect_select_pixbuf)
         elif "16:10" == self.video_aspect_type:    
-            pixbuf_16X10 = (self.video_aspect_pixbuf, app_theme.get_pixbuf("lower_press.png"))
+            pixbuf_16X10 = (self.video_aspect_pixbuf, self.video_aspect_select_pixbuf)
         elif "1.85:1" == self.video_aspect_type:    
-            pixbuf_1_85X1 = (self.video_aspect_pixbuf, app_theme.get_pixbuf("lower_press.png"))
+            pixbuf_1_85X1 = (self.video_aspect_pixbuf, self.video_aspect_select_pixbuf)
         elif "2.35:1" == self.video_aspect_type:
-            pixbuf_2_35X1 = (self.video_aspect_pixbuf, app_theme.get_pixbuf("lower_press.png"))
+            pixbuf_2_35X1 = (self.video_aspect_pixbuf, self.video_aspect_select_pixbuf)
         
         self.screen_menu = Menu([(pixbuf_normal, "默认值",  self.set_restart_aspect),
                                  (pixbuf_4X3,    "4:3",    self.set_4X3_aspect),

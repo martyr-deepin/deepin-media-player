@@ -297,7 +297,7 @@ class FilePlay(gtk.VBox):
         
         # Video file open.
         self.video_file_open_label = Label("视频文件打开时 : ")
-        self.ai_set_radio_btn       = RadioButton("智能调整")
+        self.ai_set_radio_btn       = RadioButton("窗口适应视频")
         self.ai_set_radio_btn_label = Label("")
         
         self.adapt_video_btn       = RadioButton("视频适应窗口")
