@@ -22,11 +22,14 @@
 from skin import app_theme
 
 from dtk.ui.utils import propagate_expose, alpha_color_hex_to_cairo
+from dtk.ui.box import BackgroundBox
+from dtk.ui.dialog import DialogBox, DIALOG_MASK_MULTIPLE_PAGE
 from dtk.ui.button import Button
 from dtk.ui.entry import InputEntry, ShortcutKeyEntry
 from dtk.ui.combo import ComboBox
 from dtk.ui.titlebar import Titlebar
 from dtk.ui.window import Window 
+from dtk.ui.draw import draw_vlinear
 from dtk.ui.label import Label
 from dtk.ui.button import CheckButton, RadioButton
 from dtk.ui.line import HSeparator
@@ -57,41 +60,24 @@ heparator_height = 5
 
 import gobject
 
-class IniGui(Window):
+class IniGui(DialogBox):
     __gsignals__ = {
         "config-changed" : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE,
                             (gobject.TYPE_STRING, ))
         }
     def __init__(self):
-        Window.__init__(self)
+        DialogBox.__init__(self, "深度影音配置", INI_WIDTH, INI_HEIGHT,
+                           mask_type=DIALOG_MASK_MULTIPLE_PAGE,
+                           window_pos=gtk.WIN_POS_CENTER)
         # Set event.
-        self.connect("motion-notify-event", self.press_save_ini_file)
-        self.set_position(gtk.WIN_POS_CENTER)
-        self.set_modal(True)
-        # self.set_keep_above(True)
         self.ini = Config(config_path)        
-        # self.ini = config
-        # Set configure window.
-        self.set_size_request(INI_WIDTH, INI_HEIGHT)  
         
         self.main_vbox = gtk.VBox()
         self.main_hbox = gtk.HBox()
         self.configure = Configure()
-        self.titlebar = Titlebar(["min", "close"], app_name="深度影音配置")
-        # move open window.
-        self.add_move_event(self.titlebar.drag_box)
-        self.titlebar.close_button.connect("clicked", lambda w:self.destroy())
-        self.titlebar.min_button.connect("clicked", lambda w: self.min_window())
-        # Tree view window.
-        self.scrolled_window_frame  = gtk.Alignment()
-        self.scrolled_window_frame.set(0, 0, 1, 1)
-        self.scrolled_window_frame.set_padding(2, 0, 0, 0)        
-        
         self.scrolled_window = ScrolledWindow()
         
-        self.scrolled_window_frame.add(self.scrolled_window)
-        self.scrolled_window_frame.connect("expose-event", self.draw_scrolled_window_backgournd) 
-        self.scrolled_window.set_size_request(130, 1)        
+        self.scrolled_window.set_size_request(132, 1)        
         self.tree_view = TreeView(font_x_padding=15, arrow_x_padding=35, height = 40)
         self.tree_view.draw_mask = self.draw_treeview_mask
         
@@ -108,39 +94,25 @@ class IniGui(Window):
         
         self.tree_view.add_item(None, TreeViewItem("字幕设置"))
         self.tree_view.add_item(None, TreeViewItem("截图设置"))
-        # self.tree_view.add_item(None, TreeViewItem("其它设置"))        
-        # self.tree_view.add_item(None, TreeViewItem("关于         "))        
+
+        category_box = gtk.VBox()
+        background_box = BackgroundBox()
+        background_box.set_size_request(132, 11)
+        background_box.draw_mask = self.draw_treeview_mask
+        category_box.pack_start(background_box, False, False)
         
+        category_box.pack_start(self.scrolled_window, True, True)
         
-                        
-        self.main_hbox_frame = gtk.Alignment()
-        self.main_hbox_frame.set(0, 0, 1, 1)
-        self.main_hbox_frame.set_padding(4, 4, 2, 0)
-        
-        self.main_hbox_frame.add(self.main_hbox)
-        self.main_vbox.pack_start(self.titlebar, False, False)
-        self.main_vbox.pack_start(self.main_hbox_frame, True, True)
-        self.main_hbox_frame.connect("expose-event", self.draw_backgournd)        
-        self.main_hbox.pack_start(self.scrolled_window_frame, False, False)
+        self.main_hbox.pack_start(category_box, False, False)
         self.main_hbox.pack_start(self.configure)
         
         # bottom button.
-        self.ok_btn     = Button("确定")
         self.cancel_btn = Button("关闭")
-        self.cancel_btn.set_size_request(80, 28)
-        self.ok_btn.connect("clicked", self.save_configure_file_ok_clicked)
         self.cancel_btn.connect("clicked", self.destroy_ini_gui_window_cancel_clicked)
-        self.bottom_fixed = gtk.Fixed()
-        bottom_fixed_height = 45
-        self.bottom_fixed.set_size_request(1, bottom_fixed_height)
-        button_x = 440
-        button_y = 6
         
-        # self.bottom_fixed.put(self.ok_btn, button_x, button_y)
-        self.bottom_fixed.put(self.cancel_btn, button_x + self.ok_btn.get_size_request()[0] + 20, button_y)
+        self.body_box.pack_start(self.main_hbox, True, True)
+        self.right_button_box.set_buttons([self.cancel_btn])
         
-        self.main_vbox.pack_start(self.bottom_fixed, False, False)
-        self.window_frame.add(self.main_vbox)
         # Init configure index.
         self.set("文件播放")        
         self.show_all()
@@ -151,10 +123,7 @@ class IniGui(Window):
             self.tree_view.set_highlight_index(index)
         
     def press_save_ini_file(self, widget, event):    
-        gtk.timeout_add(500, self.press_save_ini_file_time)
-
-    def press_save_ini_file_time(self):    
-        self.save_configure_file_ok_clicked(self.ok_btn)
+        gtk.timeout_add(500, self.save_configure_file_ok_clicked)
         
     def draw_scrolled_window_backgournd(self, widget, event):
         cr = widget.window.cairo_create()
@@ -163,7 +132,10 @@ class IniGui(Window):
         return True
         
     def draw_treeview_mask(self, cr, x, y, width, height):
-        self.draw_single_mask(cr, x, y, width, height)
+        draw_vlinear(
+            cr, x, y, width, height,
+            [(0, ("#FFFFFF", 0.9)),
+             (1, ("#FFFFFF", 0.9))])
         
     def draw_single_mask(self, cr, x, y, width, height):
         cr.set_source_rgba(1, 1, 1, 0.7)
@@ -184,7 +156,7 @@ class IniGui(Window):
         propagate_expose(widget, event)
         return True
     
-    def save_configure_file_ok_clicked(self, widget):    
+    def save_configure_file_ok_clicked(self):    
         # save ini configure file.
         # print "_____________[FilePlay]________________________"
         file_play_dict = self.configure.file_play.get_file_play_state()
@@ -797,7 +769,7 @@ class OtherKey(gtk.VBox):
         self.heparator.set_size_request(heparator_width, heparator_height)
         
         entry_width  = 150
-        entry_height = 28
+        entry_height = 24
         # Add Brightness.
         self.add_bri_entry_label = Label("增加亮度")
         self.add_bri_entry       = ShortcutKeyEntry()
