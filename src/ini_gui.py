@@ -73,6 +73,7 @@ class IniGui(DialogBox):
         self.ini = Config(config_path)        
         # Set event.
         self.connect("motion-notify-event", self.press_save_ini_file)
+        self.connect("destroy", lambda w:self.save_configure_file_ok_clicked())
         
         self.main_vbox = gtk.VBox()
         self.main_hbox = gtk.HBox()
@@ -118,7 +119,7 @@ class IniGui(DialogBox):
         # Init configure index.
         self.set("文件播放")        
         self.show_all()
-        
+                
     def set(self, type_str):    
         index = self.configure.set(type_str)[1]
         if index is not None:

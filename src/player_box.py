@@ -2124,7 +2124,7 @@ class PlayerBox(object):
         # self.config = Config(get_home_path() + "/.config/deepin-media-player/deepin_media_config.ini")
         # self.config.connect("config-changed", self.modify_config_section_value)
 
-    def config_gui(self):
+    def config_gui(self):        
         ini_gui = IniGui()
         ini_gui.ini.connect("config-changed", self.restart_load_config_file)
         
