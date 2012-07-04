@@ -38,26 +38,43 @@ class ProgressBar(gtk.EventBox):
     def __init__(self,                 
                  max_value = 100,
                  progressbar_padding_y = 4,
-                 line_width = 6,
+                 line_width = 5,
                  width = 100,
                  bg_color = app_theme.get_alpha_color("progressbar_bg"),
                  fg_color = app_theme.get_alpha_color("progressbar_fg"),
-                 point_pixbuf = app_theme.get_pixbuf("slide_block.png")
+                 bg_pixbuf = app_theme.get_pixbuf("progressbar_bg.png"),       
+                 fg_pixbuf = app_theme.get_pixbuf("progressbar_fg.png"),
+                 point_pixbuf = app_theme.get_pixbuf("slide_block.png"),
+                 hight_pixbuf = app_theme.get_pixbuf("progressbar_hight.png"),
+                 cache_fg_pixbuf = app_theme.get_pixbuf("progressbar_hight.png")
                  ):
         gtk.EventBox.__init__(self)
         '''Set progresbar attr.'''
         self.set_visible_window(False)
         self.set_size_request(width, point_pixbuf.get_pixbuf().get_height() + progressbar_padding_y)
+        '''Init pixbuf.'''
+        self.__bg_color     = bg_color
+        self.__fg_color     = fg_color                
+        self.__bg_pixbuf    = bg_pixbuf.get_pixbuf()
+        self.__bg_pixbuf    = self.__bg_pixbuf.scale_simple(self.__bg_pixbuf.get_width(), line_width,
+                                                            gtk.gdk.INTERP_BILINEAR)
+        self.__fg_pixbuf    = fg_pixbuf.get_pixbuf()
+        self.__fg_pixbuf    = self.__fg_pixbuf.scale_simple(self.__fg_pixbuf.get_width(), line_width,
+                                                            gtk.gdk.INTERP_BILINEAR)
+        self.__point_pixbuf = point_pixbuf
+        self.__hight_pixbuf = hight_pixbuf
+        self.__cache_fg_pixbuf = cache_fg_pixbuf
         '''Init value.'''        
+        self.cache_list = []
+        for i in range(0, int(max_value)):
+            self.cache_list.append(0) 
+            
         self.progressbar_state = False
         self.__max_value  = max_value
         self.__current_valeu  =  0
         self.__temp_value     = 0
         self.__drag_bool        = False
         self.__line_width     = line_width
-        self.__bg_color     = bg_color
-        self.__fg_color     = fg_color
-        self.__point_pixbuf = point_pixbuf
         self.__progressbar_padding_y = progressbar_padding_y
         self.__progressbar_width = width
         '''Init point value.'''
@@ -87,12 +104,12 @@ class ProgressBar(gtk.EventBox):
         return self.__current_valeu
     
     def __get_x(self, event):    
-        self.__point_padding_x = event.x        
+        self.__point_padding_x = event.x
         self.__fg_padding_x    = event.x
         self.__current_value = (float(self.__max_value) / self.allocation.width) * self.__fg_padding_x
         if self.__current_value < 0:
             self.__current_value = 0
-        elif self.__current_value > self.__max_value:    
+        elif self.__current_value > self.__max_value:
             self.__current_value = self.__max_value
             
         self.emit("get-value-event", self.__current_value, self.progressbar_state)
@@ -124,39 +141,71 @@ class ProgressBar(gtk.EventBox):
         self.__progressbar_width = w
         
         # Draw progressbar bg.
-        self.__draw_progressbar_bg(cr, x, y, w, h)            
+        self.__draw_progressbar_bg(cr, x, y, w, h)     
         
         if self.progressbar_state:
+            # Draw progressbar fg cache.
+            self.__draw_progressbar_cache(cr, x, y, w, h)
             # Draw progressbar fg.
             self.__draw_progressbar_fg(cr, x, y, w, h)
             # Draw progressbar fg hight.            
+            self.__draw_progressbar_hight(cr, x, y, w, h)
             # Draw progressbar point.
-            self.__draw_progressbar_point(cr, x, y, w, h)            
+            self.__draw_progressbar_point(cr, x, y, w, h)
         return True
     
-    def __draw_progressbar_bg(self, cr, x, y, w, h):
-        cr.set_line_width(self.__line_width)
-        cr.set_source_rgba(*alpha_color_hex_to_cairo(self.__bg_color.get_color_info()))
-        cr.move_to(x, 
-                   y + self.__progressbar_padding_y)
-        cr.line_to(x + w, 
-                   y + self.__progressbar_padding_y )
-        cr.stroke()
+    def __draw_progressbar_cache(self, cr, x, y, w, h):
         
-    def __draw_progressbar_fg(self, cr, x, y, w, h):
-        cr.set_line_width(self.__line_width)
-        cr.set_source_rgba(*alpha_color_hex_to_cairo(self.__fg_color.get_color_info()))                        
+        cr.set_line_width(self.__line_width-1)
+        cr.set_source_rgba(*alpha_color_hex_to_cairo(self.__fg_color.get_color_info()))                                        
+        
+        for i in range(0, 100):            
+            if self.cache_list[i]:
+                cache_padding_x = i / (float(self.__max_value) / w)
+                # cr.move_to(x, 
+                #            y + self.__progressbar_padding_y)
+                # cr.line_to(x  + self.__fg_padding_x , 
+                #            y + self.__progressbar_padding_y)
+                cr.move_to(x+ cache_padding_x, y + self.__progressbar_padding_y)
+                cr.line_to(x + cache_padding_x+5, 
+                           y + self.__progressbar_padding_y)
+                cr.stroke()        
 
-        # Get current value.        
-        self.__fg_padding_x = self.__current_value / (float(self.__max_value) / w)
-        self.__point_padding_x = self.__fg_padding_x
-        
-        cr.move_to(x, 
-                   y + self.__progressbar_padding_y)
-        cr.line_to(x + self.__fg_padding_x, 
-                   y + self.__progressbar_padding_y)
-        cr.stroke()        
     
+    def __draw_progressbar_bg(self, cr, x, y, w, h):
+        # cr.set_line_width(self.__line_width)
+        # cr.set_source_rgba(*alpha_color_hex_to_cairo(self.__bg_color.get_color_info()))
+        # cr.move_to(x, 
+        #            y + self.__progressbar_padding_y)
+        # cr.line_to(x + w, 
+        #            y + self.__progressbar_padding_y )
+        # cr.stroke()
+        self.__bg_pixbuf = self.__bg_pixbuf.scale_simple(x + w, self.__line_width,
+                                                          gtk.gdk.INTERP_BILINEAR)
+        cr.set_source_pixbuf(self.__bg_pixbuf,
+                             x,
+                             y + self.__progressbar_padding_y - self.__bg_pixbuf.get_height()/2)
+        cr.paint_with_alpha(1)        
+        
+    def __draw_progressbar_hight(self, cr, x, y, w, h):    
+        hight_pixbuf = self.__hight_pixbuf.get_pixbuf()
+        cr.set_source_pixbuf(hight_pixbuf,
+                             x + self.__fg_padding_x - hight_pixbuf.get_width(), 
+                             y + self.__progressbar_padding_y - hight_pixbuf.get_height()/2)
+        cr.paint_with_alpha(1)                                
+    
+    def __draw_progressbar_fg(self, cr, x, y, w, h):
+        self.__fg_padding_x = self.__current_value / (float(self.__max_value) / w)
+        
+        self.__point_padding_x = self.__fg_padding_x
+        if self.__fg_padding_x >= 0:
+            fg_scale_pixbuf = self.__fg_pixbuf
+            for i in range(0, int(x + self.__fg_padding_x)):
+                cr.set_source_pixbuf(fg_scale_pixbuf,
+                                     i,
+                                     y + self.__progressbar_padding_y - fg_scale_pixbuf.get_height()/2)
+                cr.paint_with_alpha(1)        
+        
     def __draw_progressbar_point(self, cr, x, y, w, h):
         if self.__point_show_bool:
             point_pixbuf_height = self.__point_pixbuf.get_pixbuf().get_height() / 2
@@ -187,8 +236,8 @@ if __name__ == "__main__":
         pb.progressbar_state = mplayer.state
         
     def get_time_pos(mplayer, pos):
-        if False:
-            pb.set_value(pos)
+        # if False:
+        pb.set_value(pos)
         
     def get_time_length(mplayer, length):
         pb.set_max_value(length)
@@ -197,13 +246,15 @@ if __name__ == "__main__":
         mp.seek(value)
         
     def init_media_player(widget, event):        
-        mp.connect("play-start", play_start)
-        mp.connect("play-end", play_end)
-        mp.connect("get-time-length", get_time_length)
-        mp.connect("get-time-pos", get_time_pos)
-        mp.play("/home/long/音乐/123.rmvb")
-        mp.setvolume(10)
-        pb.progressbar_state = mp.state   
+        # mp.connect("play-start", play_start)
+        # mp.connect("play-end", play_end)
+        # mp.connect("get-time-length", get_time_length)
+        # mp.connect("get-time-pos", get_time_pos)
+        # mp.play("/home/long/音乐/如果你冷-张旋.mp3")
+        # mp.play("/home/long/音乐/123.rmvb")
+        # mp.setvolume(10)
+        # pb.progressbar_state = mp.state   
+        pass
         
     win = gtk.Window(gtk.WINDOW_TOPLEVEL)
     screen = gtk.DrawingArea()
@@ -212,7 +263,7 @@ if __name__ == "__main__":
     main_vbox = gtk.VBox()
     pb = ProgressBar()
     pb.progressbar_state=1
-    pb.connect("get-value-event", test_value)    
+    pb.connect("get-value-event", test_value)
     win.connect("destroy", gtk.main_quit)
     win.connect("window-state-event", init_media_player)
     main_vbox.pack_start(screen, True, True)
