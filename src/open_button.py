@@ -381,9 +381,14 @@ class OpenUrl(gobject.GObject):
         }    
     def __init__(self):
         gobject.GObject.__init__(self)
-        
-    
+        # url window dialog.
         self.url_win = Window()
+        # Set url window dialog.
+        self.url_win.set_type_hint(gtk.gdk.WINDOW_TYPE_HINT_DIALOG)
+        self.url_win.set_skip_taskbar_hint(True)
+        self.url_win.set_resizable(False)
+        self.url_win.set_modal(True)
+        
         self.url_win.set_position(gtk.WIN_POS_CENTER)
         # url entry init.
         self.url_text = Entry()
