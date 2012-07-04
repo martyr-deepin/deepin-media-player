@@ -45,7 +45,7 @@ class PlayList(object):
     def __init__(self):
         self.vbox = gtk.VBox()
         self.playlist_vbox = gtk.VBox()
-        self.play_list_width = 220
+        self.play_list_width = 160
         self.play_list_height = 50
         self.playlist_vbox.set_size_request(self.play_list_width, self.play_list_height)
         self.vbox_vframe = gtk.Alignment()
@@ -53,6 +53,7 @@ class PlayList(object):
         self.vbox_vframe.set_padding(0, 2, 0, 0)
                 
         self.scrolled_window = ScrolledWindow()    
+        self.scrolled_window.set_policy(gtk.POLICY_NEVER, gtk.POLICY_AUTOMATIC)
         # self.list_view = ListView(background_pixbuf=app_theme.get_pixbuf("play_list_bg.jpg"))
         self.list_view = ListView()
         self.list_view.draw_mask = self.draw_mask
@@ -73,7 +74,7 @@ class PlayList(object):
         
         
     def draw_mask(self, cr, x, y, w, h):    
-        cr.set_source_rgb(*color_hex_to_cairo("#101112"))
+        cr.set_source_rgb(*color_hex_to_cairo("#1F1F1F"))# 101112
         cr.rectangle(x, y, w, h)
         cr.fill()
         
@@ -132,12 +133,12 @@ class MediaItem(gobject.GObject):
         self.title_padding_x = 10
         self.title_padding_y = 5
         (self.title_width, self.title_height) = get_content_size(self.title, DEFAULT_FONT_SIZE) #DEFAULT_FONT_SIZE
-        self.title_width = 90
+        self.title_width = 60
         
-        self.length_padding_x = 10
+        self.length_padding_x = 75
         self.length_padding_y = 5
         (self.length_width, self.length_height) = get_content_size(self.length, DEFAULT_FONT_SIZE) #DEFAULT_FONT_SIZE
-        self.length_width = 80
+        self.length_width = 10
         
         
     def render_title(self, cr, rect, in_selection, in_highlight):

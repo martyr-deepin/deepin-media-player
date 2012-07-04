@@ -1110,7 +1110,7 @@ class PlayerBox(object):
                     return False
         self.set_flags()        
         # if no player vide file or no player.
-        cr.set_source_rgb(*color_hex_to_cairo("#1f1f1f"))
+        cr.set_source_rgb(*color_hex_to_cairo("#0D0D0D")) # 1f1f1f
         cr.rectangle(0, 0, w, h)
         cr.fill()
 

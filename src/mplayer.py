@@ -103,18 +103,19 @@ def length_to_time(length):
         timeMin  = int(timeSec / 60)
         timeSec -= int(timeMin * 60)         
         
-    if timeHour > 0:    
-        # return str("%s时%s分%s秒"%(str(time_add_zero(timeHour)), 
-        #                            str(time_add_zero(timeMin)), 
-        #                            str(time_add_zero(timeSec))))
-        return str("%s时%s分"%(str(time_add_zero(timeHour)), 
-                                   str(time_add_zero(timeMin))))
+    # if timeHour > 0:    
+    return str("%s:%s:%s"%(str(time_add_zero(timeHour)), 
+                           str(time_add_zero(timeMin)), 
+                           str(time_add_zero(timeSec))))
+    
+        # return str("%s时%s分"%(str(time_add_zero(timeHour)), 
+        #                            str(time_add_zero(timeMin))))
 
-    if timeMin > 0:
-        return str("%s分%s秒"%(str(time_add_zero(timeMin)), 
-                               str(time_add_zero(timeSec))))
-    if timeSec > 0:
-        return str("%s秒"%(str(time_add_zero(timeSec))))
+    # if timeMin > 0:
+    #     return str("%s分%s秒"%(str(time_add_zero(timeMin)), 
+    #                            str(time_add_zero(timeSec))))
+    # if timeSec > 0:
+    #     return str("%s秒"%(str(time_add_zero(timeSec))))
     
 def time_add_zero(time_to):    
     if 0 <= time_to <= 9:
