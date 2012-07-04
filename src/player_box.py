@@ -56,7 +56,7 @@ from mplayer import length_to_time, get_vide_width_height
 from playlist import PlayList
 from playlist import MediaItem
 from sort import Sort
-from open_button import OpenButton,ScreenMenu
+from open_button import OpenButton, ScreenMenu, OpenUrl
 
 import threading
 import gtk
@@ -184,7 +184,7 @@ class PlayerBox(object):
         menu_item = [
             (app_theme.get_pixbuf("screen_menu_open_dir.png"), "打开文件夹", self.add_file_dir),
             (app_theme.get_pixbuf("screen_menu_open_cdrom.png"),"打开光盘", None),                     
-            (app_theme.get_pixbuf("screen_menu_open_url.png"), "打开URL", None),
+            (app_theme.get_pixbuf("screen_menu_open_url.png"), "打开URL", self.open_url_dialog_window),
             ]
         self.screen_pop_menu = ScreenMenu(self.screen_frame, menu_item)        
         
@@ -1892,6 +1892,8 @@ class PlayerBox(object):
         return format.get_video_bool(vide_path)
 
     def get_player_file_name(self, pathfile2):
+        if pathfile2[0:4].lower() == "http":
+            return pathfile2
         file1, file2 = os.path.split(pathfile2)
         return os.path.splitext(file2)[0]
 
@@ -2062,11 +2064,22 @@ class PlayerBox(object):
                 num += 1
             self.mp.playListNum = num
 
-    def add_file(self):
+    def add_file(self):        
         self.show_open_dialog_window()
 
     def add_file_dir(self):
         self.show_open_dir_dialog_window()
+        
+    def get_url_name(self, open_url, url_name, url_bool):
+        if url_bool:
+            self.mp.addPlayFile(url_name) # play list add url name.
+            # self.mp.play(url_name)            
+        else:    
+            self.messagebox(str(url_name))
+        
+    def open_url_dialog_window(self):    
+        open_url = OpenUrl()
+        open_url.connect("openurl-url-name", self.get_url_name)
 
     def del_index(self):
         # self.delete_play_list_file(self.play_list.list_view, self.play_list.list_view.items)

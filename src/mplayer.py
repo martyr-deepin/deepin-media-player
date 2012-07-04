@@ -833,11 +833,13 @@ class  Mplayer(gobject.GObject):
         
     def addPlayFile(self, path):    
         if self.findFile(path): # play file.
-            go = True
+            go = True           
             for i in self.playList:
                 if self.get_player_file_name(i) == self.get_player_file_name(path):
                     go = False
                     break
+            if path[0:4].lower() == "http":
+                go = True
             if go:        
                 self.playList.append(path)
                 self.emit("add-path", path)

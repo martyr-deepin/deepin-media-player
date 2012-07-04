@@ -365,15 +365,62 @@ class ScreenMenu(gobject.GObject):
 
 gobject.type_register(ScreenMenu)        
 
+####################################################
+#  open dialog url window.
+####################################################
 
+from dtk.ui.entry import Entry
+from dtk.ui.window import Window
+
+import urllib
 
 class OpenUrl(gobject.GObject):
     __gsignals__ = {
         "openurl-url-name":(gobject.SIGNAL_RUN_LAST,
-                                    gobject.TYPE_NONE,(gobject.TYPE_PYOBJECT,)),        
+                                    gobject.TYPE_NONE,(gobject.TYPE_STRING, gobject.TYPE_INT)),        
         }    
     def __init__(self):
-        pass
-    
+        gobject.GObject.__init__(self)
         
-gobject.type_register(OpenUrl)    
+    
+        self.url_win = Window()
+        self.url_win.set_position(gtk.WIN_POS_CENTER)
+        # url entry init.
+        self.url_text = Entry()
+        self.url_text.set_size_request(300, 40)
+        # Init url text events.
+        self.url_text.connect("key-press-event", self.get_url_text_name)
+        # add url text.
+        self.url_win.window_frame.add(self.url_text)
+        self.url_win.show_all()
+        
+    def get_url_text_name(self, url_text, event):        
+        if event.keyval == 65293: # Enter.
+            self.url_win.set_opacity(0)
+            # get url_name.
+            url_name = self.url_text.get_text()
+            # emit url_text url name.            
+            if len(url_name) > 0:
+                if url_name[0:5] != "https":
+                    try:                        
+                        test_url = urllib.urlopen(url_name)
+                        self.emit("openurl-url-name", "%s"%(url_name), True)
+                    except:
+                        self.emit("openurl-url-name", '%s'%("connect url Error!!"), False)
+                else:        
+                    self.emit("openurl-url-name", "%s"%("Input url name no :https!!"), False)
+            else:        
+                self.emit("openurl-url-name", "%s"%("Input url Empty!!"), False)
+            # destroy window.
+            self.url_win.destroy()
+            
+    
+gobject.type_register(OpenUrl)
+
+if __name__ == "__main__":
+    def get_url_name(openurl, url_name, url_bool):
+        print url_name, url_bool
+        
+    open_url = OpenUrl()
+    open_url.connect("openurl-url-name", get_url_name)
+    gtk.main()

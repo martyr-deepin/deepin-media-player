@@ -27,7 +27,7 @@ class Format(object):
         self.video_foramt = ["video", 
                              "application/vnd.rn-realmedia"]
         self.audio_format = ["audio"]
-        
+        self.url_format   = ["http", "https", "mms"]
         
     def get_video_bool(self, file_path):
         file_format = self.format_function(file_path)
@@ -45,7 +45,7 @@ class Format(object):
         
     def get_play_bool(self, file_path):    
         file_format = self.format_function(file_path)
-        if (file_format.split("/")[0] in self.audio_format) or (file_format in self.video_foramt) or (file_format.split("/")[0] in self.video_foramt):
+        if (file_format.split("/")[0] in self.audio_format) or (file_format in self.video_foramt) or (file_format.split("/")[0] in self.video_foramt) or (file_path[0:4] in self.url_format):
             return True
         else:
             return False
