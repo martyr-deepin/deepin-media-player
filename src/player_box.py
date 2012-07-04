@@ -1766,7 +1766,10 @@ class PlayerBox(object):
         
         if video_open_type:
             if "1" == video_open_type: 
-                pass
+                if format.get_video_bool(mplayer.path):                    
+                    self.app.window.resize(int(self.video_width), 
+                                           int(self.video_height))
+                    self.app.window.set_position(gtk.WIN_POS_CENTER_ALWAYS)
             elif "2" == video_open_type:
                 self.video_aspect_type = "默认"        
                 self.mp.playwinmax()
