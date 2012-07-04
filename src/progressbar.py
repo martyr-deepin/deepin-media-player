@@ -49,6 +49,7 @@ class ProgressBar(object):
         self.hight_pixbuf = hight_pixbuf
         self.drag_pixbuf = drag_pixbuf
         
+        self.window_mode_state = 1
         self.max = max
         self.pos = 0
         self.show_bool = False
@@ -121,13 +122,22 @@ class ProgressBar(object):
                         y + 2)
 
         # Draw fg.
-        pos = int(float(self.pos)/self.max * w)    
+        pos = int(float(self.pos)/self.max * w)
         for i in range(0, pos):    
             draw_pixbuf(cr, 
                         fg_pixbuf,
                         x + i, 
                         y + 2)
             
+        # Draw bottom 2 pix.            
+        cr.set_source_rgb(*color_hex_to_cairo('#0D0D0D'))
+        if self.window_mode_state:                
+            cr.rectangle(x, y, x + w, 2)            
+        else:
+            w_padding = 2
+            cr.rectangle(x, y, x + w - w_padding, 2)
+        cr.fill()    
+        
         # Draw hight point.    
         if pos > hight_pixbuf.get_width():    
             draw_pixbuf(cr, 

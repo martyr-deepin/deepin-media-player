@@ -229,6 +229,7 @@ class PlayerBox(object):
 
         '''Progressbar Init.'''
         self.progressbar = ProgressBar()
+        self.progressbar.window_mode_state = 0
         # Progressbar signal init.
         self.progressbar.pb.connect("motion-notify-event", self.progressbar_player_drag_pos_modify, self.progressbar, 1)
         self.progressbar.pb.connect("button-press-event", self.progressbar_player_point_pos_modify, self.progressbar, 1)
