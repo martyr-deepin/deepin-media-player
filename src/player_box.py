@@ -41,7 +41,7 @@ from show_time import ShowTime
 from progressbar import ProgressBar
 from skin import app_theme
 from toolbar import ToolBar
-from toolbar2 import ToolBar2
+from bottom_toolbar import BottomToolBar
 from play_control_panel import PlayControlPanel
 from play_list_button import PlayListButton
 from volume_button import VolumeButton
@@ -253,40 +253,40 @@ class PlayerBox(object):
         self.toolbar.toolbar_concise_button.connect("clicked", self.hide_window_widget)
         self.toolbar.toolbar_above_button.connect("clicked", self.set_window_above)
 
-        '''Toolbar2 Init.'''
-        toolbar2_height = 45
-        self.toolbar2 = ToolBar2()
-        self.toolbar2.panel.connect("expose-event", self.toolbar2_panel_expose)
-        self.toolbar2.panel.set_size_request(1, toolbar2_height) # Set toolbar2 height.
+        '''Bottom Toolbar Init.'''
+        bottom_toolbar_height = 50
+        self.bottom_toolbar = BottomToolBar()
+        self.bottom_toolbar.panel.connect("expose-event", self.toolbar2_panel_expose)
+        self.bottom_toolbar.panel.set_size_request(1, bottom_toolbar_height) # Set bottom_toolbar height.
         # draw resize window.
-        self.toolbar2.panel.connect("scroll-event", self.app_scroll_event, 2)
-        self.toolbar2.panel.connect("button-press-event", self.drag_resize_window)
-        self.toolbar2.panel.connect("motion-notify-event", self.modify_mouse_icon)
+        self.bottom_toolbar.panel.connect("scroll-event", self.app_scroll_event, 2)
+        self.bottom_toolbar.panel.connect("button-press-event", self.drag_resize_window)
+        self.bottom_toolbar.panel.connect("motion-notify-event", self.modify_mouse_icon)
 
-        self.toolbar2.panel.connect("motion-notify-event", self.set_keep_window_toolbar2)
+        self.bottom_toolbar.panel.connect("motion-notify-event", self.set_keep_window_toolbar2)
         #self.toolbar2.show_toolbar2() Test function.
-        self.toolbar2.progressbar.pb.connect("motion-notify-event",
+        self.bottom_toolbar.progressbar.pb.connect("motion-notify-event",
                                              self.progressbar_player_drag_pos_modify,
-                                             self.toolbar2.progressbar, 2)
-        self.toolbar2.progressbar.pb.connect("button-press-event",
+                                             self.bottom_toolbar.progressbar, 2)
+        self.bottom_toolbar.progressbar.pb.connect("button-press-event",
                                              self.progressbar_player_point_pos_modify,
-                                             self.toolbar2.progressbar, 2)
-        self.toolbar2.progressbar.pb.connect("button-release-event",
+                                             self.bottom_toolbar.progressbar, 2)
+        self.bottom_toolbar.progressbar.pb.connect("button-release-event",
                                              self.progressbar_set_point_bool,
-                                             self.toolbar2.progressbar)
-        self.toolbar2.progressbar.pb.connect("enter-notify-event", self.show_preview_enter)
-        self.toolbar2.progressbar.pb.connect("leave-notify-event", self.hide_preview_leave)
+                                             self.bottom_toolbar.progressbar)
+        self.bottom_toolbar.progressbar.pb.connect("enter-notify-event", self.show_preview_enter)
+        self.bottom_toolbar.progressbar.pb.connect("leave-notify-event", self.hide_preview_leave)
 
         # play_control_panel.
-        self.toolbar2.play_control_panel.stop_btn.connect("clicked", self.stop_button_clicked)
-        self.toolbar2.play_control_panel.pre_btn.connect("clicked", self.pre_button_clicked)
-        self.toolbar2.play_control_panel.start_btn.connect("clicked", self.start_button_clicked, 2)
-        self.toolbar2.play_control_panel.next_btn.connect("clicked", self.next_button_clicked)
-        self.toolbar2.play_control_panel.open_btn.connect("clicked", self.open_button_clicked)
+        self.bottom_toolbar.play_control_panel.stop_btn.connect("clicked", self.stop_button_clicked)
+        self.bottom_toolbar.play_control_panel.pre_btn.connect("clicked", self.pre_button_clicked)
+        self.bottom_toolbar.play_control_panel.start_btn.connect("clicked", self.start_button_clicked, 2)
+        self.bottom_toolbar.play_control_panel.next_btn.connect("clicked", self.next_button_clicked)
+        self.bottom_toolbar.play_control_panel.open_btn.connect("clicked", self.open_button_clicked)
 
         # Toolbar2 volume button.
-        self.toolbar2.volume_button.value = 100
-        self.toolbar2.volume_button.connect("get-value-event", self.volume_button_get_value_event, 2)
+        self.bottom_toolbar.volume_button.value = 100
+        self.bottom_toolbar.volume_button.connect("get-value-event", self.volume_button_get_value_event, 2)
 
         # Child widget add to vbox.
         self.vbox.pack_start(self.screen_frame_event, True, True)
@@ -538,7 +538,7 @@ class PlayerBox(object):
     def set_show_toolbar_function_false(self, widget, event):
         self.show_toolbar_focus_bool = False
         self.toolbar.hide_toolbar()
-        self.toolbar2.hide_toolbar2()
+        self.bottom_toolbar.hide_toolbar2()
 
     def set_show_toolbar_bool(self, widget, event):
         self.show_toolbar_bool = False
@@ -548,7 +548,7 @@ class PlayerBox(object):
             # if not self.above_bool:
             #     self.app.window.set_keep_above(False)
             self.toolbar.hide_toolbar()
-            self.toolbar2.hide_toolbar2()
+            self.bottom_toolbar.hide_toolbar2()
 
     def modify_mouse_icon(self, widget, event): # screen: motion-notify-event
         w = widget.allocation.width
@@ -625,7 +625,7 @@ class PlayerBox(object):
                     self.messagebox("音量:%s"%(str(value)))
                     
         if 1 == volume_bit:
-            self.toolbar2.volume_button.value = value
+            self.bottom_toolbar.volume_button.value = value
         else:    
             self.volume_button.value = value
             
@@ -905,8 +905,8 @@ class PlayerBox(object):
 
         self.play_control_panel.start_btn.start_bool = False
         self.play_control_panel.start_btn.queue_draw()
-        self.toolbar2.play_control_panel.start_btn.start_bool = False
-        self.toolbar2.play_control_panel.start_btn.queue_draw()
+        self.bottom_toolbar.play_control_panel.start_btn.start_bool = False
+        self.bottom_toolbar.play_control_panel.start_btn.queue_draw()
 
         self.play_list.list_view.set_highlight(list_item)
 
@@ -926,20 +926,20 @@ class PlayerBox(object):
             self.mp.next() # Test pause.
             self.play_control_panel.start_btn.start_bool = False
             self.play_control_panel.start_btn.queue_draw()
-            self.toolbar2.play_control_panel.start_btn.start_bool = False
-            self.toolbar2.play_control_panel.start_btn.queue_draw()
+            self.bottom_toolbar.play_control_panel.start_btn.start_bool = False
+            self.bottom_toolbar.play_control_panel.start_btn.queue_draw()
             if 0 == self.mp.state: # NO player file.
                 self.play_control_panel.start_btn.start_bool = True # start_btn modify play state.
                 self.play_control_panel.start_btn.queue_draw()
-                self.toolbar2.play_control_panel.start_btn.start_bool = True
-                self.toolbar2.play_control_panel.start_btn.queue_draw()
+                self.bottom_toolbar.play_control_panel.start_btn.start_bool = True
+                self.bottom_toolbar.play_control_panel.start_btn.queue_draw()
                 self.messagebox("没有可播放文件")
         else:
             if 1 == start_bit:
-                self.toolbar2.play_control_panel.start_btn.start_bool = self.play_control_panel.start_btn.start_bool
-                self.toolbar2.play_control_panel.start_btn.queue_draw()
+                self.bottom_toolbar.play_control_panel.start_btn.start_bool = self.play_control_panel.start_btn.start_bool
+                self.bottom_toolbar.play_control_panel.start_btn.queue_draw()
             if 2 == start_bit:
-                self.play_control_panel.start_btn.start_bool = self.toolbar2.play_control_panel.start_btn.start_bool
+                self.play_control_panel.start_btn.start_bool = self.bottom_toolbar.play_control_panel.start_btn.start_bool
                 self.play_control_panel.start_btn.queue_draw()
 
             gtk.timeout_add(50, self.start_button_time_pause)
@@ -1183,10 +1183,10 @@ class PlayerBox(object):
 
 
     def set_toolbar2_position(self, widget, event): #app window-state-event
-        self.toolbar2.show_toolbar2()
+        self.bottom_toolbar.show_toolbar2()
         self.toolbar.panel.move(self.panel_x + 1, self.panel_y + self.app.titlebar.allocation[3])
-        self.toolbar2.panel.move(self.panel_x + 1, self.panel_y + self.screen_frame.allocation.height - 40)
-        self.toolbar2.hide_toolbar2()
+        self.bottom_toolbar.panel.move(self.panel_x + 1, self.panel_y + self.screen_frame.allocation.height - 40)
+        self.bottom_toolbar.hide_toolbar2()
 
     # ToolBar control function.
     def app_configure_hide_tool(self, widget, event): #app: configure-event.
@@ -1197,10 +1197,10 @@ class PlayerBox(object):
         self.panel_x, self.panel_y = self.screen_frame.window.get_root_origin()
         if self.mode_state_bool: # Concise mode.
             self.toolbar.panel.move(self.panel_x, self.panel_y)
-            self.toolbar2.panel.move(self.panel_x, self.panel_y + (widget.allocation[3] - self.toolbar2.panel.allocation[3]))
+            self.bottom_toolbar.panel.move(self.panel_x, self.panel_y + (widget.allocation[3] - self.bottom_toolbar.panel.allocation[3]))
         else:    # common mode.
             self.toolbar.panel.move(self.panel_x + 1, self.panel_y + self.app.titlebar.allocation[3])
-            self.toolbar2.panel.move(self.panel_x + 1, self.panel_y + self.screen_frame.allocation.height - 40)
+            self.bottom_toolbar.panel.move(self.panel_x + 1, self.panel_y + self.screen_frame.allocation.height - 40)
 
         if self.full_bool:
             self.toolbar.panel.move(self.panel_x - 4, self.panel_y)
@@ -1391,11 +1391,11 @@ class PlayerBox(object):
             #                           widget.allocation[3])
             self.toolbar.panel.hide_all()
             # if widget.window.get_state() == gtk.gdk.WINDOW_STATE_MAXIMIZED:
-            self.toolbar2.panel.resize(self.screen_frame.get_allocation()[2], 1)            
+            self.bottom_toolbar.panel.resize(self.screen_frame.get_allocation()[2], 1)            
             # self.toolbar.panel.resize(self.screen_frame.get_allocation()[2], 1)            
             # self.toolbar2.panel.move(self.panel_x, self.panel_y + (widget.allocation[3] - self.toolbar2.panel.allocation[3]))
-            self.toolbar2.panel.move(self.panel_x, self.panel_y + (self.screen_frame.allocation[3] - self.toolbar2.panel.allocation[3]))
-            self.toolbar2.panel.hide_all()
+            self.bottom_toolbar.panel.move(self.panel_x, self.panel_y + (self.screen_frame.allocation[3] - self.bottom_toolbar.panel.allocation[3]))
+            self.bottom_toolbar.panel.hide_all()
 
 
     '''Toolbar button.'''
@@ -1407,7 +1407,7 @@ class PlayerBox(object):
         self.main_vbox_hframe.set_padding(0, 0, 2, 2)
         self.toolbar.panel.hide_all()
         self.show_toolbar_bool = False
-        self.toolbar2.panel.hide_all()
+        self.bottom_toolbar.panel.hide_all()
         self.show_bottom()
         self.app.window.show_all()
 
@@ -1421,7 +1421,7 @@ class PlayerBox(object):
         #self.app.window.set_keep_above(True) # Window above.
         self.main_vbox_hframe.set_padding(0, 0, 0, 0) # Set window border.
         self.toolbar.panel.hide_all() # hide toolbar.
-        self.toolbar2.panel.hide_all()
+        self.bottom_toolbar.panel.hide_all()
 
 
 
@@ -1435,7 +1435,7 @@ class PlayerBox(object):
         #self.toolbar2.panel.fullscreen()
         #self.app.window.set_keep_above(True)
         self.toolbar.panel.set_keep_above(True)
-        self.toolbar2.panel.set_keep_above(True)
+        self.bottom_toolbar.panel.set_keep_above(True)
         self.app.window.fullscreen()
         self.full_bool = True
 
@@ -1518,12 +1518,12 @@ class PlayerBox(object):
             # window Angle.
             self.app.window.set_window_shape(False)
             self.mode_state_bool = True
-            self.toolbar2.panel.show_all()
+            self.bottom_toolbar.panel.show_all()
             # Set toolbar2 panel position.
-            self.toolbar2.panel.move(self.panel_x,
-                                     self.panel_y + (widget.allocation[3] - self.toolbar2.panel.allocation[3]) - self.app.titlebar.allocation[3])
+            self.bottom_toolbar.panel.move(self.panel_x,
+                                     self.panel_y + (widget.allocation[3] - self.bottom_toolbar.panel.allocation[3]) - self.app.titlebar.allocation[3])
 
-            self.toolbar2.panel.hide_all()
+            self.bottom_toolbar.panel.hide_all()
 
 
 
@@ -1600,7 +1600,7 @@ class PlayerBox(object):
         else:
             if not self.above_bool:
                 self.app.window.set_keep_above(False)
-                self.toolbar2.panel.set_keep_above(False)
+                self.bottom_toolbar.panel.set_keep_above(False)
             self.toolbar.hide_toolbar()
             self.show_toolbar_bool = False
 
@@ -1609,10 +1609,10 @@ class PlayerBox(object):
             # if widget.allocation[3]-20 <= event.y < widget.allocation[3]:
             if self.screen_frame.allocation[3]-20 <= event.y < self.screen_frame.allocation[3]:
                 if self.show_toolbar_focus_bool:
-                    self.toolbar2.show_toolbar2()
+                    self.bottom_toolbar.show_toolbar2()
                     self.show_toolbar_bool = True
             else:
-                self.toolbar2.hide_toolbar2()
+                self.bottom_toolbar.hide_toolbar2()
 
         # hide preview window.
         self.hide_preview_leave(widget, event)
@@ -1635,9 +1635,9 @@ class PlayerBox(object):
 
     def virtual_set_start_btn_clicked(self):
         if self.mode_state_bool:
-            self.toolbar2.play_control_panel.start_btn.start_bool = not self.toolbar2.play_control_panel.start_btn.start_bool
-            self.toolbar2.play_control_panel.start_btn.queue_draw()
-            self.start_button_clicked(self.toolbar2.play_control_panel.start_btn, 2)
+            self.bottom_toolbar.play_control_panel.start_btn.start_bool = not self.bottom_toolbar.play_control_panel.start_btn.start_bool
+            self.bottom_toolbar.play_control_panel.start_btn.queue_draw()
+            self.start_button_clicked(self.bottom_toolbar.play_control_panel.start_btn, 2)
         else:
             self.play_control_panel.start_btn.start_bool = not self.play_control_panel.start_btn.start_bool
             self.play_control_panel.start_btn.queue_draw()
@@ -1672,7 +1672,7 @@ class PlayerBox(object):
                 self.point_bool = True
             else:
                 self.progressbar.set_pos(0)
-                self.toolbar2.progressbar.set_pos(0)
+                self.bottom_toolbar.progressbar.set_pos(0)
         else:                    
             progressbar.drag_bool = True
             
@@ -1687,7 +1687,7 @@ class PlayerBox(object):
             self.hide_preview_function(widget, event)
             if 1 == self.mp.state:
                 if 1 == pb_bit:
-                    self.toolbar2.progressbar.set_pos(progressbar.pos)
+                    self.bottom_toolbar.progressbar.set_pos(progressbar.pos)
                 elif 2 == pb_bit:
                     self.progressbar.set_pos(progressbar.pos)
 
@@ -1695,12 +1695,12 @@ class PlayerBox(object):
                     if 1 == self.mp.state:
                         self.mp.seek(int(progressbar.pos))
                         self.show_time_label.time_font2 = self.set_time_string(self.mp.timeHour) + ":" + self.set_time_string(self.mp.timeMin) + ":" + self.set_time_string(self.mp.timeSec)
-                        self.toolbar2.show_time.time_font2 = self.set_time_string(self.mp.timeHour) + ":" + self.set_time_string(self.mp.timeMin) + ":" + self.set_time_string(self.mp.timeSec)
-                        self.toolbar2.panel.queue_draw()
+                        self.bottom_toolbar.show_time.time_font2 = self.set_time_string(self.mp.timeHour) + ":" + self.set_time_string(self.mp.timeMin) + ":" + self.set_time_string(self.mp.timeSec)
+                        self.bottom_toolbar.panel.queue_draw()
                         self.app.window.queue_draw()
             else:
                 self.progressbar.set_pos(0)
-                self.toolbar2.progressbar.set_pos(0)
+                self.bottom_toolbar.progressbar.set_pos(0)
         # Show preview window.
         else:
             config_bool = self.config.get("FilePlay", "mouse_progressbar_show_preview")
@@ -1721,7 +1721,7 @@ class PlayerBox(object):
         if 1 == pb_bit:
             preview_y_padding = self.app.window.get_position()[1] + self.screen_frame.allocation.height + self.app.titlebar.allocation.height - self.preview.bg.get_allocation()[3]
         elif 2 == pb_bit:
-            preview_y_padding = self.toolbar2.panel.get_position()[1] - self.preview.bg.get_allocation()[3]
+            preview_y_padding = self.bottom_toolbar.panel.get_position()[1] - self.preview.bg.get_allocation()[3]
 
         self.preview.show_preview(pos)
         # previwe window show position.
@@ -1731,7 +1731,7 @@ class PlayerBox(object):
     def show_preview_enter(self, widget, event):
         if 0 == self.mp.state:
             self.progressbar.drag_pixbuf_bool = False
-            self.toolbar2.progressbar.drag_pixbuf_bool = False
+            self.bottom_toolbar.progressbar.drag_pixbuf_bool = False
 
     def hide_preview_leave(self, widget, event):
         '''Hide preview window and remove show,read_id'''
@@ -1746,12 +1746,12 @@ class PlayerBox(object):
         '''Get mplayer length to max of progressbar.'''
         
         self.progressbar.max = length
-        self.toolbar2.progressbar.max = length # toolbar2 max value.
+        self.bottom_toolbar.progressbar.max = length # toolbar2 max value.
         Hour, Min, Sec = self.mp.time(length)
         self.show_time_label.time_font1 = self.set_time_string(Hour) + ":" + self.set_time_string(Min) + ":"+ self.set_time_string(Sec)
-        self.toolbar2.show_time.time_font1 = self.set_time_string(Hour) + ":" + self.set_time_string(Min) + ":"+ self.set_time_string(Sec) 
+        self.bottom_toolbar.show_time.time_font1 = self.set_time_string(Hour) + ":" + self.set_time_string(Min) + ":"+ self.set_time_string(Sec) 
         self.show_time_label.set_time_font(self.show_time_label.time_font2, self.show_time_label.time_font1)
-        self.toolbar2.show_time.set_time_font(self.show_time_label.time_font2, self.toolbar2.show_time.time_font1)
+        self.bottom_toolbar.show_time.set_time_font(self.show_time_label.time_font2, self.bottom_toolbar.show_time.time_font1)
 
     def get_time_pos(self, mplayer, pos):
         '''Get mplayer pos to pos of progressbar.'''
@@ -1759,16 +1759,16 @@ class PlayerBox(object):
         if not self.progressbar.drag_bool:
             if not self.point_bool:
                 self.progressbar.set_pos(pos)
-                self.toolbar2.progressbar.set_pos(pos)
+                self.bottom_toolbar.progressbar.set_pos(pos)
                 self.show_time_label.time_font2 = self.set_time_string(self.mp.timeHour) + ":" + self.set_time_string(self.mp.timeMin) + ":" + self.set_time_string(self.mp.timeSec) + " / "
-                self.toolbar2.show_time.time_font2 = self.set_time_string(self.mp.timeHour) + ":" + self.set_time_string(self.mp.timeMin) + ":" + self.set_time_string(self.mp.timeSec) + " / "
+                self.bottom_toolbar.show_time.time_font2 = self.set_time_string(self.mp.timeHour) + ":" + self.set_time_string(self.mp.timeMin) + ":" + self.set_time_string(self.mp.timeSec) + " / "
                 
                 self.show_time_label.set_time_font(self.show_time_label.time_font2,
                                                    self.show_time_label.time_font1)
-                self.toolbar2.show_time.set_time_font(self.show_time_label.time_font2,
+                self.bottom_toolbar.show_time.set_time_font(self.show_time_label.time_font2,
                                                    self.show_time_label.time_font1)
                 
-                self.toolbar2.panel.queue_draw()
+                self.bottom_toolbar.panel.queue_draw()
                 self.app.window.queue_draw()
 
     def get_pos_ste_seek(self, pos):
@@ -1846,7 +1846,7 @@ class PlayerBox(object):
                 break
 
         self.progressbar.set_pos(0)
-        self.toolbar2.progressbar.set_pos(0)
+        self.bottom_toolbar.progressbar.set_pos(0)
 
 
     def media_player_end(self, mplayer, play_bool):
@@ -1903,12 +1903,12 @@ class PlayerBox(object):
     
     def media_player_midfy_start_bool(self):  # media_player_end and media_player_next and media_player_pre.
         self.progressbar.set_pos(0)
-        self.toolbar2.progressbar.set_pos(0)
+        self.bottom_toolbar.progressbar.set_pos(0)
         self.screen.queue_draw()
         self.play_control_panel.start_btn.start_bool = True
         self.play_control_panel.start_btn.queue_draw()
-        self.toolbar2.play_control_panel.start_btn.start_bool = True
-        self.toolbar2.play_control_panel.start_btn.queue_draw()
+        self.bottom_toolbar.play_control_panel.start_btn.start_bool = True
+        self.bottom_toolbar.play_control_panel.start_btn.queue_draw()
 
     # Double buffer set.
     def unset_flags(self):
