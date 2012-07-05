@@ -116,6 +116,7 @@ class PlayerBox(object):
         
         # play list menu.
         self.last_new_play_file_function = LastNewPlayFile()
+        self.last_new_play_file_function.connect("get-file-name", self.get_last_new_play_file_name)
         self.the_last_new_play_file_list = []
         
         # playlist.
@@ -386,6 +387,10 @@ class PlayerBox(object):
 
         self.keymap = {}
 
+    def get_last_new_play_file_name(self, LastNewPlayFile, file_name):    
+        self.mp.addPlayFile(file_name)        
+        self.clear_play_list_bool = True
+        
     def open_button_popup_screen_menu(self, widget, event):
         x, y, w, h = self.screen_frame.allocation
         

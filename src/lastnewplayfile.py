@@ -23,9 +23,15 @@ from ini import Config
 
 import os
 import time
+import gobject
 
-class LastNewPlayFile(object):
+class LastNewPlayFile(gobject.GObject):
+    __gsignals__ = {
+        "get-file-name":(gobject.SIGNAL_RUN_LAST,
+                           gobject.TYPE_NONE,(gobject.TYPE_STRING,))
+        }
     def __init__(self):
+        gobject.GObject.__init__(self)
         self.ini = Config(self.get_home_path() + "/.config/deepin-media-player/config.ini")
         
         # Init time.
@@ -41,7 +47,6 @@ class LastNewPlayFile(object):
         self.argvs_num  = 0
         if self.argvs_list:            
             self.argvs_num  = len(self.argvs_list.keys())
-            print "*******"
         self.table_list = []
         
     def get_current_time(self):
@@ -80,13 +85,13 @@ class LastNewPlayFile(object):
         temp_last_list = []
         try:
             for argv in self.ini.get_argvs("LastNewPlayFile"):
-                temp_last_list.append((None, (argv[1:])[:-1], None))
+                argv_name = (argv[1:])[:-1]
+                temp_last_list.append((None, argv_name, lambda : self.emit("get-file-name","%s" % (argv_name))))
         except:        
             pass
-            
-            
+                        
         return temp_last_list
-    
+            
     def get_modify_argv(self):    
         return self.create_table()
     
