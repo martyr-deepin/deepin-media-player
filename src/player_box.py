@@ -27,11 +27,11 @@ from dtk.ui.box import EventBox
 from dtk.ui.draw import draw_pixbuf
 from dtk.ui.frame import HorizontalFrame,VerticalFrame
 from dtk.ui.utils import is_double_click, is_single_click, is_right_button, color_hex_to_cairo
-from dtk.ui.constant import DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT, WIDGET_POS_BOTTOM_LEFT
-from dtk.ui.utils import container_remove_all, get_widget_root_coordinate
+from dtk.ui.constant import WIDGET_POS_BOTTOM_LEFT
+from dtk.ui.utils import get_widget_root_coordinate
 from dtk.ui.menu import Menu
 
-from constant import APP_WIDTH, APP_HEIGHT, PANEL_HEIGHT
+from constant import APP_WIDTH, APP_HEIGHT
 from ini import Config
 from gio_format import format
 # from opendialog import OpenDialog
@@ -58,7 +58,6 @@ from playlist import MediaItem
 from sort import Sort
 from open_button import OpenButton, ScreenMenu, OpenUrl
 from lastnewplayfile import LastNewPlayFile
-from service import download_shooter_subtitle
 
 import threading
 import gtk
@@ -1133,7 +1132,6 @@ class PlayerBox(object):
         cr.fill()
 
         # Draw player image.
-        rect = widget.allocation
         pixbuf = app_theme.get_pixbuf("player.png").get_pixbuf()
         draw_pixbuf(
             cr,

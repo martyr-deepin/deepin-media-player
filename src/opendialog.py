@@ -21,7 +21,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from skin import app_theme
 from dtk.ui.entry import TextEntry
 from dtk.ui.titlebar import Titlebar
 from dtk.ui.listview import ListView

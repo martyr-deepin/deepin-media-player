@@ -205,7 +205,6 @@ class VolumeButton(gtk.EventBox):
         temp_y = int(event.y)
         
         temp_min_x = self.__bg_x + self.__bg_padding_x - self.__point_volume_pixbuf.get_pixbuf().get_width()/2
-        temp_max_x = self.__bg_x + self.__bg_padding_x + self.__volume_width + self.__point_volume_pixbuf.get_pixbuf().get_width()/2                
         if self.__volume_left_x <= temp_x <= temp_min_x  and ( self.__volume_left_y <=temp_y < (self.__volume_left_y + self.__mute_volume_hover_pixbuf.get_pixbuf().get_height())):
             if self.temp_mute_bool and not self.__mute_bool:
                 # Set mute state.
@@ -227,7 +226,6 @@ class VolumeButton(gtk.EventBox):
         temp_x = int(event.x)
         temp_y = int(event.y)
         temp_min_x = self.__bg_x + self.__bg_padding_x - self.__point_volume_pixbuf.get_pixbuf().get_width()/2
-        temp_max_x = self.__bg_x + self.__bg_padding_x + self.__volume_width + self.__point_volume_pixbuf.get_pixbuf().get_width()/2        
         
         if (self.__volume_left_x <= temp_x <= temp_min_x) and ( self.__volume_left_y <=temp_y < (self.__volume_left_y + self.__mute_volume_hover_pixbuf.get_pixbuf().get_height())):
             self.__mouse_state = MOUSE_VOLUME_STATE_HOVER

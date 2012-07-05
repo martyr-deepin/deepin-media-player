@@ -22,7 +22,6 @@
 
 from dtk.ui.frame import HorizontalFrame
 from dtk.ui.panel import Panel
-from skin import app_theme
 from constant import APP_WIDTH
 
 from progressbar import ProgressBar

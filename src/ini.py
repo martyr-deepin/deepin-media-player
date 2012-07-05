@@ -173,8 +173,6 @@ class Config(gobject.GObject):
                                 self.section_save_ch += ch
                             
     def split(self, string, token):        
-        split_lsit = [] 
-        temp_str = ""
         temp_save_num = []
         temp_num = 0
         # scan token.

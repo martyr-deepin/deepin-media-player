@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 # Shooter.cn subtitles
-import sys,os
+import os
 import hashlib
 from httplib import HTTPConnection, OK
 
@@ -135,6 +135,7 @@ def downloadSubs(fpath, lang):
                     else:
                         return ''
                 except Exception, e:
+                    print e
                     traceback.print_exc()
     return ''
 

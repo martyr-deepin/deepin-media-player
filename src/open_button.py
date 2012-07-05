@@ -25,8 +25,6 @@ from dtk.ui.cache_pixbuf import CachePixbuf
 from skin import app_theme
 import gobject
 import gtk
-import pango
-import pangocairo
 
 
 # x, y, width, height
@@ -371,7 +369,6 @@ gobject.type_register(ScreenMenu)
 from dtk.ui.entry import Entry
 from dtk.ui.window import Window
 
-import urllib
 
 class OpenUrl(gobject.GObject):
     __gsignals__ = {
@@ -407,7 +404,6 @@ class OpenUrl(gobject.GObject):
             if len(url_name) > 0:
                 if url_name[0:5] != "https":
                     try:                        
-                        test_url = urllib.urlopen(url_name)
                         self.emit("openurl-url-name", "%s"%(url_name), True)
                     except:
                         self.emit("openurl-url-name", '%s'%("connect url Error!!"), False)
