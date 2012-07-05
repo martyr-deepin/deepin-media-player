@@ -58,6 +58,13 @@ heparator_y = 35
 heparator_width = INI_WIDTH - 143
 heparator_height = 5
 
+# video open state.
+VIDEO_ADAPT_WINDOW_STATE = "1"
+WINDOW_ADAPT_VIDEO_STATE = "2"
+UP_CLOSE_VIDEO_STATE     = "3"
+AI_FULL_VIDEO_STATE      = "4"
+
+
 import gobject
 
 class IniGui(DialogBox):

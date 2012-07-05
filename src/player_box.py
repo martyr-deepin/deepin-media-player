@@ -47,7 +47,7 @@ from play_list_button import PlayListButton
 from volume_button import VolumeButton
 from drag import drag_connect
 from preview import PreView
-from ini_gui import IniGui
+from ini_gui import IniGui,VIDEO_ADAPT_WINDOW_STATE,WINDOW_ADAPT_VIDEO_STATE,UP_CLOSE_VIDEO_STATE,AI_FULL_VIDEO_STATE
 from mplayer import Mplayer
 # from mplayer import get_vide_width_height
 from mplayer import get_length
@@ -1785,30 +1785,32 @@ class PlayerBox(object):
         video_open_type = self.config.get("FilePlay", "video_file_open")                            
         
         if video_open_type:
-            if "1" == video_open_type: 
+            if VIDEO_ADAPT_WINDOW_STATE == video_open_type: 
                 if format.get_video_bool(mplayer.path):
                     screen_frame_height = self.screen_frame.allocation.height
                     modify_window_width = float(self.video_width)/self.video_height * screen_frame_height
                     video_padding_height = 4
-                    if self.show_or_hide_play_list_bool:                     
-                        modify_window_width += self.play_list.play_list_width
-                        video_padding_height = 8
+                    # play list.
+                    if self.show_or_hide_play_list_bool:
+                        modify_window_width += self.play_list.play_list_width + 4
+                        # video_padding_height = 4
                         
+                    # Set window size.    
                     self.app.window.resize(int(round(round(modify_window_width, 1), 0)), 
                                            int(self.app.window.allocation.height) - video_padding_height)
                     self.app.window.set_position(gtk.WIN_POS_CENTER_ALWAYS)
-            elif "2" == video_open_type:
+            elif WINDOW_ADAPT_VIDEO_STATE == video_open_type:
                 # self.video_aspect_type = "默认"
                 # self.mp.playwinmax()
                 # self.mp.playwinmax_bool = False
                 pass
-            elif "3" == video_open_type:
+            elif UP_CLOSE_VIDEO_STATE == video_open_type:
                 width = self.config.get("Window", "width")
                 height = self.config.get("Window", "height")
                 if width > APP_WIDTH:
                     self.app.window.resize(int(width), int(height))
                     self.app.window.set_position(gtk.WIN_POS_CENTER_ALWAYS)
-            elif "4" == video_open_type:
+            elif AI_FULL_VIDEO_STATE == video_open_type:
                 self.key_return()                
         # self.set_ascept_function()
          
