@@ -21,14 +21,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from skin import app_theme
 
-from dtk.ui.utils import propagate_expose, alpha_color_hex_to_cairo
+from dtk.ui.utils import propagate_expose
 from dtk.ui.box import BackgroundBox
 from dtk.ui.dialog import DialogBox, DIALOG_MASK_MULTIPLE_PAGE
 from dtk.ui.button import Button
 from dtk.ui.entry import InputEntry, ShortcutKeyEntry
 from dtk.ui.combo import ComboBox
-from dtk.ui.titlebar import Titlebar
-from dtk.ui.window import Window 
 from dtk.ui.draw import draw_vlinear
 from dtk.ui.label import Label
 from dtk.ui.button import CheckButton, RadioButton
@@ -478,12 +476,9 @@ class SystemSet(gtk.VBox):
             self.font_set_combo.label.set_text(DEFAULT_FONT) 
             
         font_set_combo_width = 120
-        font_set_combo_height = 40
         # self.font_set_combo.set_size_request(font_set_combo_width, font_set_combo_height)
         # Font size.
         self.font_size_btn_label = Label("字号")
-        font_size_combo_width = 120
-        font_size_combo_height = 40                
         font_set_items = []
         font_set_items_num = 1
         for i in range(8, 16):
@@ -1273,7 +1268,6 @@ class OtherSet(gtk.VBox):
         self.heparator.set_size_request(heparator_width, heparator_height)                
         
         otherset_x = 20
-        otherset_y = 40
         #################################
         self.fixed.put(self.label, otherset_x, TITLE_HEIGHT_PADDING)
         self.fixed.put(self.heparator, heparator_x, heparator_y)
@@ -1298,7 +1292,6 @@ class About(gtk.VBox):
         self.heparator.set_size_request(heparator_width, heparator_height)
         
         about_x = 20
-        about_y = 40
         label_x_padding = about_x + 30
         label_y_padding = TITLE_HEIGHT_PADDING + 25
         ####################################

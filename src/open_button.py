@@ -20,12 +20,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from dtk.ui.draw import draw_text
+from dtk.ui.draw import draw_text, draw_pixbuf
+from dtk.ui.cache_pixbuf import CachePixbuf
 from skin import app_theme
 import gobject
 import gtk
-import pango
-import pangocairo
 
 
 # x, y, width, height
@@ -88,6 +87,8 @@ class OpenButton(gobject.GObject):
         self.leave_bool = False
         self.clicked_bool = False
         self.press_bool = False        
+        
+        self.cache_pixbuf = CachePixbuf()
         
         global widget_save_num
         self.widget_num = widget_save_num
@@ -189,14 +190,10 @@ class OpenButton(gobject.GObject):
             elif self.state == OPEN_BUTTON_STATE_PRESS:                            
                 pixbuf  = self.press_button_pixbuf
 
-            image = pixbuf.get_pixbuf().scale_simple(self.width,
-                                        self.height,
-                                        gtk.gdk.INTERP_NEAREST)
-                
-            cr.set_source_pixbuf(image,
-                                 self.__x + self.__padding_x,
-                                 self.__y + self.__padding_y)
-            cr.paint_with_alpha(1)        
+            self.cache_pixbuf.scale(pixbuf.get_pixbuf(), self.width, self.height)    
+            draw_pixbuf(cr, self.cache_pixbuf.get_cache(), 
+                        self.__x + self.__padding_x, 
+                        self.__y + self.__padding_y)
     
             # Dra open buton font.
             draw_text(cr, self.text, 
@@ -372,7 +369,6 @@ gobject.type_register(ScreenMenu)
 from dtk.ui.entry import Entry
 from dtk.ui.window import Window
 
-import urllib
 
 class OpenUrl(gobject.GObject):
     __gsignals__ = {
@@ -408,7 +404,6 @@ class OpenUrl(gobject.GObject):
             if len(url_name) > 0:
                 if url_name[0:5] != "https":
                     try:                        
-                        test_url = urllib.urlopen(url_name)
                         self.emit("openurl-url-name", "%s"%(url_name), True)
                     except:
                         self.emit("openurl-url-name", '%s'%("connect url Error!!"), False)

@@ -23,6 +23,7 @@
 
 from dtk.ui.draw import draw_pixbuf
 from dtk.ui.utils import propagate_expose
+from dtk.ui.cache_pixbuf import CachePixbuf
 from skin import app_theme
 import gtk
 
@@ -41,6 +42,8 @@ class ImageButton(gtk.Button):
         self.flags = False
         self.bg_pixbuf = bg_pixbuf
         self.button_pixbuf = button_pixbuf
+        self.bg_cache_pixbuf = CachePixbuf()
+        self.button_cache_pixbuf = CachePixbuf()
         
         self.connect("clicked", self.show_play_list)
         self.connect("expose-event", self.expose_button)
@@ -59,21 +62,15 @@ class ImageButton(gtk.Button):
         bg_image = self.bg_pixbuf.get_pixbuf()
         if self.flags:
             bg_border_height = bg_image.get_height()/2 - 5
-            # bg_border_width  = 2
-            pixbuf = bg_image.scale_simple(bg_image.get_width(),
-                                           bg_image.get_height(),
-                                           gtk.gdk.INTERP_BILINEAR)
             
-            draw_pixbuf(cr, pixbuf, x - 2, y + bg_border_height)
-                   
+            self.bg_cache_pixbuf.scale(bg_image, bg_image.get_width(), bg_image.get_height())
+            draw_pixbuf(cr, self.bg_cache_pixbuf.get_cache(), x - 2, y + bg_border_height)
+            
         # Draw foreground image.
         button_image = self.button_pixbuf.get_pixbuf()
-        pixbuf = button_image.scale_simple(button_image.get_width(),
-                                           button_image.get_height(),
-                                           gtk.gdk.INTERP_BILINEAR)        
-        
+        self.button_cache_pixbuf.scale(button_image, button_image.get_width(), button_image.get_height())
         button_border = button_image.get_height()/2
-        draw_pixbuf(cr, pixbuf, x, y + button_border)    
+        draw_pixbuf(cr, self.button_cache_pixbuf.get_cache(), x, y + button_border)
         
         # Set button size.    
         widget.set_size_request(button_image.get_width(), bg_image.get_height())        

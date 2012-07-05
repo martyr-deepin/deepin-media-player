@@ -22,6 +22,7 @@
 
 from dtk.ui.draw import draw_pixbuf
 from dtk.ui.utils import propagate_expose
+from dtk.ui.cache_pixbuf import CachePixbuf
 from skin import app_theme
 import gtk
 import gobject
@@ -40,6 +41,7 @@ class ToggleHoverButton(gtk.Button):
         self.hover_pixbuf_2 = hover_pixbuf_2
         self.add_events(gtk.gdk.ALL_EVENTS_MASK)
         self.togglehoverbutton_event(self)
+        self.cache_pixbuf = CachePixbuf()
         
     def togglehoverbutton_event(self, widget):    
         widget.connect("clicked", self.button_flags)
@@ -63,11 +65,10 @@ class ToggleHoverButton(gtk.Button):
                 image = self.hover_pixbuf_2.get_pixbuf()
                 
         widget.set_size_request(image.get_width(), image.get_height())        
-        pixbuf = image.scale_simple(image.get_width(),
-                                    image.get_height(),
-                                    gtk.gdk.INTERP_BILINEAR)        
+        
+        self.cache_pixbuf.scale(image, image.get_width(), image.get_height())
         cr = widget.window.cairo_create()
-        draw_pixbuf(cr, pixbuf, widget.allocation.x, widget.allocation.y)    
+        draw_pixbuf(cr, self.cache_pixbuf.get_cache(), widget.allocation.x, widget.allocation.y)
         propagate_expose(widget, event)
         return True    
         

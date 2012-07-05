@@ -21,6 +21,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from dtk.ui.draw import draw_pixbuf
+from dtk.ui.cache_pixbuf import CachePixbuf
 from dtk.ui.utils import propagate_expose
 from skin import app_theme
 import gtk
@@ -41,6 +42,9 @@ class MutualButton(object):
         self.button1_pixbuf_2 = button1_pixbuf_2
         self.button2_pixbuf_1 = button2_pixbuf_1
         self.button2_pixbuf_2 = button2_pixbuf_2
+        
+        self.button1_cache_pixbuf = CachePixbuf()
+        self.button2_cache_pixbuf = CachePixbuf()
         
         self.draw_button(self.button1, self.button2)
         
@@ -72,11 +76,9 @@ class MutualButton(object):
             image = self.button1_pixbuf_1.get_pixbuf()
             
         widget.set_size_request(image.get_width(), image.get_height())        
-        pixbuf = image.scale_simple(image.get_width(),
-                                    image.get_height(),
-                                    gtk.gdk.INTERP_BILINEAR)        
+        self.button1_cache_pixbuf.scale(image, image.get_width(), image.get_height())
         cr = widget.window.cairo_create()
-        draw_pixbuf(cr, pixbuf, widget.allocation.x, widget.allocation.y)    
+        draw_pixbuf(cr, self.button1_cache_pixbuf.get_cache(), widget.allocation.x, widget.allocation.y)
         propagate_expose(widget, event)
         
         return True
@@ -95,11 +97,9 @@ class MutualButton(object):
             image = self.button2_pixbuf_1.get_pixbuf()
             
         widget.set_size_request(image.get_width(), image.get_height())        
-        pixbuf = image.scale_simple(image.get_width(),
-                                    image.get_height(),
-                                    gtk.gdk.INTERP_BILINEAR)        
+        self.button2_cache_pixbuf.scale(image, image.get_width(), image.get_height())
         cr = widget.window.cairo_create()
-        draw_pixbuf(cr, pixbuf, widget.allocation.x, widget.allocation.y)    
+        draw_pixbuf(cr, self.button2_cache_pixbuf.get_cache(), widget.allocation.x, widget.allocation.y)
         propagate_expose(widget, event)    
         
         return True

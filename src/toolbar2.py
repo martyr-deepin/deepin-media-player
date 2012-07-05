@@ -32,10 +32,10 @@ from volume_button import VolumeButton
 import gtk
 # import cairo
 
-class BottomToolBar(object):            
+class ToolBar2(object):            
     def __init__(self):#, background_pixbuf = app_theme.get_pixbuf("my_bg2.jpg")):
         # self.background_pixbuf = background_pixbuf
-        self.panel = Panel(APP_WIDTH, 60, window_type=gtk.WINDOW_POPUP)
+        self.panel = Panel(APP_WIDTH, 45, window_type=gtk.WINDOW_POPUP)
         self.vbox = gtk.VBox()
         self.progressbar = ProgressBar()        
         
@@ -52,25 +52,23 @@ class BottomToolBar(object):
         self.show_time_hframe.add(self.show_time.time_box)
         self.show_time.time_box.set_size_request(110, -1)
         self.show_time_hframe.set(0, 0, 1, 1)
-        self.show_time_hframe.set_padding(2, 0, 10, 0)
+        self.show_time_hframe.set_padding(0, 0, 10, 0)
         
         self.play_control_panel = PlayControlPanel()        
         self.play_control_panel_hframe = self.play_control_panel.hbox_hframe
-        self.play_control_panel_hframe.set(0, 0, 0, 0)
-        self.play_control_panel_hframe.set_padding(2, 0, 0, 0)
+        self.play_control_panel_hframe.set(1, 0.5, 0, 0)
         
         self.volume_hframe = HorizontalFrame()
         self.volume_button = VolumeButton(press_emit_bool = True)
-        # self.volume_button.set_size_request(120, 50)
         self.volume_hframe.add(self.volume_button)
-        # self.volume_hframe.set(0, 0.5, 0, 0)
-        self.volume_hframe.set_padding(0, 0, 5, 0)
+        self.volume_hframe.set(0, 0.5, 0.5, 0)
+        self.volume_hframe.set_padding(0, 0, 20, 0)
         
         
         self.hbox.pack_start(self.show_time_hframe, True, True)                
         self.hbox.pack_start(self.play_control_panel.hbox_hframe, False, False)
         self.hbox.pack_start(self.volume_hframe, True, True)
-        self.hbox.pack_start(gtk.Label(), True, True)
+   
         
         self.vbox.pack_start(self.progressbar.hbox, False, False)
         self.vbox.pack_start(self.hbox, True, True)
@@ -100,7 +98,7 @@ if __name__ == "__main__":
             tb.hide_toolbar2()
             
     win = gtk.Window(gtk.WINDOW_TOPLEVEL)
-    tb = BottomToolBar()
+    tb = ToolBar2()
     win.connect("destroy", gtk.main_quit)
     win.add_events(gtk.gdk.ALL_EVENTS_MASK)
     win.connect("motion-notify-event", show_toolbar)

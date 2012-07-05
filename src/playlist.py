@@ -23,13 +23,11 @@ from dtk.ui.draw import draw_line, draw_text
 from dtk.ui.utils import container_remove_all, color_hex_to_cairo
 from dtk.ui.listview import ListView
 from dtk.ui.listview import get_content_size
-from dtk.ui.listview import render_text
 from dtk.ui.scrolled_window import ScrolledWindow
 from dtk.ui.box import EventBox
 # from dtk.ui.frame import VerticalFrame
 from dtk.ui.constant import DEFAULT_FONT_SIZE,ALIGN_END, ALIGN_START
 from mplayer import Mplayer    
-from skin import app_theme
 from utils import allocation
 from play_list_control_panel import PlayListControlPanel
 import gtk
