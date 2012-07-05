@@ -1789,10 +1789,13 @@ class PlayerBox(object):
                 if format.get_video_bool(mplayer.path):
                     screen_frame_height = self.screen_frame.allocation.height
                     modify_window_width = float(self.video_width)/self.video_height * screen_frame_height
+                    video_padding_height = 4
                     if self.show_or_hide_play_list_bool:                     
                         modify_window_width += self.play_list.play_list_width
+                        video_padding_height = 8
+                        
                     self.app.window.resize(int(round(round(modify_window_width, 1), 0)), 
-                                           int(self.app.window.allocation.height))
+                                           int(self.app.window.allocation.height) - video_padding_height)
                     self.app.window.set_position(gtk.WIN_POS_CENTER_ALWAYS)
             elif "2" == video_open_type:
                 # self.video_aspect_type = "默认"
