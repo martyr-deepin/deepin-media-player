@@ -58,6 +58,7 @@ from playlist import MediaItem
 from sort import Sort
 from open_button import OpenButton, ScreenMenu, OpenUrl
 from lastnewplayfile import LastNewPlayFile
+from service import download_shooter_subtitle
 
 import threading
 import gtk
@@ -1790,7 +1791,7 @@ class PlayerBox(object):
                     modify_window_width = float(self.video_width)/self.video_height * screen_frame_height
                     if self.show_or_hide_play_list_bool:                     
                         modify_window_width += self.play_list.play_list_width
-                    self.app.window.resize(int(modify_window_width), 
+                    self.app.window.resize(int(round(round(modify_window_width, 1), 0)), 
                                            int(self.app.window.allocation.height))
                     self.app.window.set_position(gtk.WIN_POS_CENTER_ALWAYS)
             elif "2" == video_open_type:
