@@ -209,7 +209,32 @@ class Config(gobject.GObject):
         if self.section_dict.has_key(section):
             if self.section_dict[section].has_key(argv):                
                 return self.section_dict[section][argv] 
+            
+    def get_argvs(self, section):    
+        section = str(section)
         
+        if self.section_dict.has_key(section):
+            return self.section_dict[section]
+        
+    def get_argv_bool(self, section, argv):    
+        section = str(section)
+        argv    = str(argv)
+        if self.section_dict.has_key(section):
+            if self.section_dict[section].has_key(argv):
+                return True
+        return None    
+    
+    def modify_argv(self, section, argv, new_argv, new_value):
+        section = str(section)
+        argv    = str(argv)
+        
+        if self.section_dict.has_key(section):
+            if self.section_dict[section].has_key(argv):
+                del self.section_dict[section][argv]
+                self.section_dict[section][new_argv] = new_value
+                return True
+        return None    
+    
     def save(self):
         fp = open(self.ini_path, "w")
         for section_key in self.section_dict.keys():

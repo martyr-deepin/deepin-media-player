@@ -57,6 +57,7 @@ from playlist import PlayList
 from playlist import MediaItem
 from sort import Sort
 from open_button import OpenButton, ScreenMenu, OpenUrl
+from lastnewplayfile import LastNewPlayFile
 
 import threading
 import gtk
@@ -112,7 +113,11 @@ class PlayerBox(object):
 
         # screen draw borde video width and height.
         #get_vide_width_height (function return value)
-
+        
+        # play list menu.
+        self.last_new_play_file_function = LastNewPlayFile()
+        self.the_last_new_play_file_list = []
+        
         # playlist.
         self.add_play_list_length_id = None
         self.show_or_hide_play_list_bool = False
@@ -1058,6 +1063,9 @@ class PlayerBox(object):
 
         self.mp.playListState = 1 # play mode.
 
+        # Init last new play file.
+        self.the_last_new_play_file_list = self.last_new_play_file_function.set_file_time(self.mp.path)
+
         # try:
         # argv path list.
         for file_path in self.argv_path_list:
@@ -1759,6 +1767,8 @@ class PlayerBox(object):
 
     def media_player_start(self, mplayer, play_bool):
         '''media player start play.'''        
+        self.the_last_new_play_file_list = self.last_new_play_file_function.set_file_time(mplayer.path)
+        # print self.last_new_play_file_function.ini.argvs_list
         # Get video width and height.
         self.video_width, self.video_height = get_vide_width_height(mplayer.path)
 
@@ -1822,7 +1832,9 @@ class PlayerBox(object):
 
 
     def media_player_end(self, mplayer, play_bool):
-        '''player end.'''
+        '''player end.'''        
+        
+        
         # video width_height = None.
         self.video_width = self.video_height = None
         
@@ -1938,16 +1950,25 @@ class PlayerBox(object):
 
             self.menu2 = Menu([(None, "按名称", self.name_sort),
                                (None, "按类型", self.type_sort)])
-
+            
+            
+            if self.the_last_new_play_file_list == []:
+                self.the_last_new_play_file = None
+            else:    
+                self.the_last_new_play_file = Menu(self.the_last_new_play_file_list)
+                
             self.play_list_root_menu = Menu([(None, "添加文件", self.add_file),
                                              (None, "添加文件夹", self.add_file_dir),
+                                             (None, "添加URL", self.open_url_dialog_window),
                                              (None),
                                              (None, "删除选中项", self.del_index),
                                              (None, "清空播放列表", self.clear_list),
                                              (None, "删除无效文件", self.del_error_file),
                                              (None),
+                                             (None, "最近播放文件", self.the_last_new_play_file),
                                              (None, "播放顺序", self.menu),
                                              (None, "排序", self.menu2),
+                                             (None, "视图", None),
                                              (None),
                                              (None, "打开所在文件夹", self.open_current_file_dir)
                                              ],
