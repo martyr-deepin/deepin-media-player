@@ -388,8 +388,11 @@ class PlayerBox(object):
         self.keymap = {}
 
     def get_last_new_play_file_name(self, LastNewPlayFile, file_name):    
-        self.mp.addPlayFile(file_name)        
-        self.clear_play_list_bool = True
+        if file_name in self.mp.playList:
+            pass
+        else:    
+            self.mp.addPlayFile(file_name)        
+            self.clear_play_list_bool = True
         
     def open_button_popup_screen_menu(self, widget, event):
         x, y, w, h = self.screen_frame.allocation
@@ -1782,12 +1785,16 @@ class PlayerBox(object):
         
         if video_open_type:
             if "1" == video_open_type: 
-                if format.get_video_bool(mplayer.path):                    
-                    self.app.window.resize(int(self.video_width), 
-                                           int(self.video_height))
+                if format.get_video_bool(mplayer.path):
+                    screen_frame_height = self.screen_frame.allocation.height
+                    modify_window_width = float(self.video_width)/self.video_height * screen_frame_height
+                    if self.show_or_hide_play_list_bool:                     
+                        modify_window_width += self.play_list.play_list_width
+                    self.app.window.resize(int(modify_window_width), 
+                                           int(self.app.window.allocation.height))
                     self.app.window.set_position(gtk.WIN_POS_CENTER_ALWAYS)
             elif "2" == video_open_type:
-                # self.video_aspect_type = "默认"        
+                # self.video_aspect_type = "默认"
                 # self.mp.playwinmax()
                 # self.mp.playwinmax_bool = False
                 pass
