@@ -41,7 +41,7 @@ class LastNewPlayFile(object):
         self.argvs_num  = 0
         if self.argvs_list:            
             self.argvs_num  = len(self.argvs_list.keys())
-            
+            print "*******"
         self.table_list = []
         
     def get_current_time(self):
@@ -70,15 +70,20 @@ class LastNewPlayFile(object):
         # Save and get argv kyes.    
         self.argvs_list = self.ini.get_argvs("LastNewPlayFile")
         # print self.argvs_list
-        self.argvs_num = len(self.argvs_list.keys())
+        if self.argvs_list:
+            self.argvs_num = len(self.argvs_list.keys())
         self.ini.save()
         
         return self.argvs_to_menu()
     
     def argvs_to_menu(self):
         temp_last_list = []
-        for argv in self.ini.get_argvs("LastNewPlayFile"):
-            temp_last_list.append((None, (argv[1:])[:-1], None))
+        try:
+            for argv in self.ini.get_argvs("LastNewPlayFile"):
+                temp_last_list.append((None, (argv[1:])[:-1], None))
+        except:        
+            pass
+            
             
         return temp_last_list
     
