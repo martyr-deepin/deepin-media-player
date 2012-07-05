@@ -1772,9 +1772,10 @@ class PlayerBox(object):
                                            int(self.video_height))
                     self.app.window.set_position(gtk.WIN_POS_CENTER_ALWAYS)
             elif "2" == video_open_type:
-                self.video_aspect_type = "默认"        
-                self.mp.playwinmax()
-                self.mp.playwinmax_bool = False
+                # self.video_aspect_type = "默认"        
+                # self.mp.playwinmax()
+                # self.mp.playwinmax_bool = False
+                pass
             elif "3" == video_open_type:
                 width = self.config.get("Window", "width")
                 height = self.config.get("Window", "height")

@@ -280,12 +280,13 @@ class FilePlay(gtk.VBox):
         
         # Video file open.
         self.video_file_open_label = Label("视频文件打开时 : ")
-        self.ai_set_radio_btn       = RadioButton("窗口适应视频")
-        self.ai_set_radio_btn_label = Label("")
         
         self.adapt_video_btn       = RadioButton("视频适应窗口")
         self.adapt_video_btn_label = Label("")
 
+        self.ai_set_radio_btn       = RadioButton("窗口适应视频")
+        self.ai_set_radio_btn_label = Label("")
+        
         self.close_position_radio_btn       = RadioButton("上次关闭尺寸")
         self.close_position_radio_btn_label = Label("")
 
@@ -295,7 +296,7 @@ class FilePlay(gtk.VBox):
         
         # Set state(1, 2, 3, 4).
         if '2' == set_num:
-            self.ai_set_radio_btn.set_active(False)        
+            self.ai_set_radio_btn.set_active(False)
             self.adapt_video_btn.set_active(True)
         elif '3' == set_num:    
             self.close_position_radio_btn.set_active(True)
@@ -353,16 +354,16 @@ class FilePlay(gtk.VBox):
         self.fixed.put(self.video_file_open_label, 
                        video_file_open_x + 8, video_file_open_y)        
         video_file_open_y += 30
-        self.fixed.put(self.ai_set_radio_btn,
+        self.fixed.put(self.adapt_video_btn,
                        video_file_open_x, video_file_open_y)
-        video_file_width = self.ai_set_radio_btn.get_size_request()[0]        
-        self.fixed.put(self.ai_set_radio_btn_label, 
+        video_file_width = self.adapt_video_btn.get_size_request()[0]        
+        self.fixed.put(self.adapt_video_btn_label, 
                        video_file_open_x + video_file_width, video_file_open_y)
         video_file_width += self.ai_set_radio_btn_label.get_size_request()[0]
-        self.fixed.put(self.adapt_video_btn, 
+        self.fixed.put(self.ai_set_radio_btn, 
                        video_file_open_x + video_file_width, video_file_open_y)        
-        video_file_width += self.adapt_video_btn.get_size_request()[0]
-        self.fixed.put(self.adapt_video_btn_label,
+        video_file_width += self.ai_set_radio_btn.get_size_request()[0]
+        self.fixed.put(self.ai_set_radio_btn_label,
                        video_file_open_x + video_file_width, video_file_open_y)
         video_file_width += self.adapt_video_btn_label.get_size_request()[0]
         self.fixed.put(self.close_position_radio_btn, 

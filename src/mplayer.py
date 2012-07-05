@@ -148,7 +148,7 @@ def init_mplayer_config():
             # Init config.ini            
             config = Config(path + "/deepin_media_config.ini")
             #[FilePlay]
-            config.set("FilePlay", "video_file_open",                     1)
+            config.set("FilePlay", "video_file_open",                     2)
             config.set("FilePlay", "open_new_file_clear_play_list",       "True")
             config.set("FilePlay", "memory_up_close_player_file_postion", "True")
             config.set("FilePlay", "find_play_file_relation_file",        "False")
