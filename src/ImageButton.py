@@ -24,6 +24,7 @@
 
 from dtk.ui.draw import draw_pixbuf
 from dtk.ui.utils import propagate_expose
+from dtk.ui.cache_pixbuf import CachePixbuf
 from skin import app_theme
 import gtk
 
@@ -37,26 +38,23 @@ class ImageButton(gtk.Button):
         self.button_pixbuf = button_pixbuf
         self.connect("expose-event", self.expose_button)
         
+        self.cache_pixbuf = CachePixbuf()
+        self.bg_cache_pixbuf = CachePixbuf()
+        
     def expose_button(self, widget, event):
         cr = widget.window.cairo_create()
         rect = widget.allocation
         x,y,w,h = rect.x, rect.y, rect.width, rect.height
-        
 
         image = self.button_pixbuf.get_pixbuf()
         if widget.state == gtk.STATE_PRELIGHT:
             bg_image = self.bg_pixbuf.get_pixbuf()
-            pixbuf = bg_image.scale_simple(image.get_width(),
-                                           image.get_height(),
-                                           gtk.gdk.INTERP_BILINEAR)
-            
-            draw_pixbuf(cr, pixbuf, x, y)
+            self.bg_cache_pixbuf.scale(bg_image, image.get_width(), image.get_height())
+            draw_pixbuf(cr, self.bg_cache_pixbuf.get_cache(), x, y)
             
         widget.set_size_request(image.get_width(), image.get_height())        
-        pixbuf = image.scale_simple(image.get_width(),
-                                    image.get_height(),
-                                    gtk.gdk.INTERP_BILINEAR)        
+        self.cache_pixbuf.scale(image, image.get_width(), image.get_height())
+        draw_pixbuf(cr, self.cache_pixbuf.get_cache(), widget.allocation.x, widget.allocation.y)
         
-        draw_pixbuf(cr, pixbuf, widget.allocation.x, widget.allocation.y)    
         propagate_expose(widget, event)
         return True

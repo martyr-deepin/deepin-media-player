@@ -790,7 +790,6 @@ class  Mplayer(gobject.GObject):
                     # preview window show image.
                     try:
                         pixbuf = gtk.gdk.pixbuf_new_from_file(save_image_path + "00000001.png")
-                        # image = pixbuf.scale_simple(120, 60, gtk.gdk.INTERP_BILINEAR)
                         pixbuf.save(scrot_save_path, "png")
                     except:    
                         break

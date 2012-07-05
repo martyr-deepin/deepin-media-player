@@ -23,6 +23,7 @@
 from dtk.ui.frame import HorizontalFrame
 from dtk.ui.draw import draw_pixbuf
 from dtk.ui.utils import propagate_expose
+from dtk.ui.cache_pixbuf import CachePixbuf
 from skin import app_theme
 from ImageButton import ImageButton
 import gtk
@@ -94,6 +95,8 @@ class StartButton(gtk.Button):
         self.connect("expose-event", self.expose_button)
         self.connect("clicked", self.clicked_button)
         
+        self.cache_pixbuf = CachePixbuf()
+        
     def clicked_button(self, widget):
         self.start_bool = not self.start_bool
         self.queue_draw()
@@ -118,13 +121,12 @@ class StartButton(gtk.Button):
                 image = self.start_button_press.get_pixbuf()
             else:    
                 image = self.pause_button_press.get_pixbuf()
-            
-        pixbuf = image.scale_simple(image.get_width(),
-                                    image.get_height(),
-                                    gtk.gdk.INTERP_BILINEAR)               
-        # Set widget size.
+
         widget.set_size_request(image.get_width(), image.get_height())
-        draw_pixbuf(cr, pixbuf, widget.allocation.x, widget.allocation.y)    
+        self.cache_pixbuf.scale(image, image.get_width(), image.get_height())        
+        draw_pixbuf(cr, self.cache_pixbuf.get_cache(), widget.allocation.x, widget.allocation.y)
+        
+        # Set widget size.
         propagate_expose(widget, event)
         return True
 
