@@ -71,7 +71,7 @@ class BottomToolBar(object):
         self.hbox.pack_start(self.show_time_hframe, True, True)                
         self.hbox.pack_start(self.play_control_panel.hbox_hframe, False, False)
         self.hbox.pack_start(self.volume_hframe, True, True)
-   
+        self.hbox.pack_start(gtk.Label(), True, True)
         
         self.vbox.pack_start(self.progressbar.hbox, False, False)
         self.vbox.pack_start(self.hbox, True, True)
@@ -101,7 +101,7 @@ if __name__ == "__main__":
             tb.hide_toolbar2()
             
     win = gtk.Window(gtk.WINDOW_TOPLEVEL)
-    tb = ToolBar2()
+    tb = BottomToolBar()
     win.connect("destroy", gtk.main_quit)
     win.add_events(gtk.gdk.ALL_EVENTS_MASK)
     win.connect("motion-notify-event", show_toolbar)
