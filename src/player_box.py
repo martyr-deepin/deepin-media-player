@@ -1774,8 +1774,41 @@ class PlayerBox(object):
     def get_pos_ste_seek(self, pos):
         self.mp.seek(int(pos))
 
+    def down_subtitle_threading(self, play_name, save_subtitle_path):    
+        down_bool = True
+        if save_subtitle_path[0:1] == "~":
+            save_subtitle_path = get_home_path() + save_subtitle_path[1:]
+            
+        temp_path_file = os.path.splitext(os.path.split(play_name)[1])[0]
+        temp_path_file_list = os.listdir(save_subtitle_path)
+        
+        for file_name in temp_path_file_list:
+            if os.path.splitext(file_name)[0] == temp_path_file:
+                down_bool = False
+            
+        if os.path.exists(save_subtitle_path):    
+            if down_bool:
+                path_thread_id = threading.Thread(target=self.down_subtitle_threading_function,args=(play_name,save_subtitle_path,))
+                path_thread_id.start()        
+            else:    
+                print "存在相同文件名"
+        else:        
+            print "Dir error!"
+        return False
+    
+    def down_subtitle_threading_function(self, play_name, save_subtitle_path):
+        if download_shooter_subtitle(play_name, save_subtitle_path):
+            print "下载成功"
+        else:    
+            print "下载失败"
+            
     def media_player_start(self, mplayer, play_bool):
         '''media player start play.'''        
+        # down subtitle.
+        save_subtitle_path = self.config.get("SubtitleSet","specific_location_search")
+        gtk.timeout_add(500, self.down_subtitle_threading, mplayer.path, save_subtitle_path)
+        
+        # Init last new play file menu.
         self.the_last_new_play_file_list = self.last_new_play_file_function.set_file_time(mplayer.path)
         # print self.last_new_play_file_function.ini.argvs_list
         # Get video width and height.

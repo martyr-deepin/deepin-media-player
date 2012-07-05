@@ -86,12 +86,14 @@ class LastNewPlayFile(gobject.GObject):
         try:
             for argv in self.ini.get_argvs("LastNewPlayFile"):
                 argv_name = (argv[1:])[:-1]
-                temp_last_list.append((None, argv_name, lambda : self.emit("get-file-name","%s" % (argv_name))))
+                # print argv_name
+                temp_last_list.append((None, argv_name, lambda :self.emit("get-file-name","%s" % (argv_name))))
         except:        
             pass
                         
         return temp_last_list
             
+        
     def get_modify_argv(self):    
         return self.create_table()
     
