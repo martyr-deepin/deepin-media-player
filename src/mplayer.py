@@ -294,6 +294,7 @@ class  Mplayer(gobject.GObject):
         self.path = path
         if not self.state:
             self.lenState = 1 
+            volume = self.volume
             # -input fil.. streme player.
             if self.xid:
                 CMD = ['mplayer',
@@ -350,9 +351,10 @@ class  Mplayer(gobject.GObject):
             gobject.timeout_add(250, self.emit_play_start_event)
             
     def emit_play_start_event(self):        
-        self.setvolume(self.volume)
         if self.volumebool:
             self.nomute()
+        else:    
+            self.setvolume(self.volume)
         self.emit("play-start", self.mplayer_pid)
         
         return False

@@ -58,6 +58,7 @@ from playlist import MediaItem
 from sort import Sort
 from open_button import OpenButton, ScreenMenu, OpenUrl
 from lastnewplayfile import LastNewPlayFile
+from service import download_shooter_subtitle
 
 import threading
 import gtk
