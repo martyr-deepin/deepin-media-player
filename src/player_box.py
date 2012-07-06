@@ -1039,7 +1039,7 @@ class PlayerBox(object):
         if [] != self.bottom_main_vbox.get_children():
             self.bottom_main_vbox.foreach(self.bottom_main_vbox.remove(self.bottom_play_control_hbox_vframe_event_box))
 
-
+                
     '''Init media player.'''
     def init_media_player(self, widget):
         '''Init deepin media player.'''
@@ -1061,6 +1061,7 @@ class PlayerBox(object):
 
         self.mp.connect("get-time-pos", self.get_time_pos)
         self.mp.connect("get-time-length", self.get_time_length)
+        self.mp.connect("play-init", self.init_video_setting)
         self.mp.connect("play-start", self.media_player_start)
         self.mp.connect("play-end", self.media_player_end)
         self.mp.connect("play-next", self.media_player_next)
@@ -1804,8 +1805,9 @@ class PlayerBox(object):
     def media_player_start(self, mplayer, play_bool):
         '''media player start play.'''        
         # down subtitle.
-        save_subtitle_path = self.config.get("SubtitleSet","specific_location_search")
-        gtk.timeout_add(500, self.down_subtitle_threading, mplayer.path, save_subtitle_path)
+        if format.get_video_bool(mplayer.path):
+            save_subtitle_path = self.config.get("SubtitleSet","specific_location_search")        
+            gtk.timeout_add(500, self.down_subtitle_threading, mplayer.path, save_subtitle_path)
         
         # Init last new play file menu.
         self.the_last_new_play_file_list = self.last_new_play_file_function.set_file_time(mplayer.path)
@@ -1907,6 +1909,9 @@ class PlayerBox(object):
 
         self.playwinmax_bool = True
 
+    def init_video_setting(self, mplayer, flags):    
+        print "init_video_setting"
+        
     def media_player_next(self, mplayer, play_bool):
         if 1 == play_bool:
             self.media_player_midfy_start_bool()

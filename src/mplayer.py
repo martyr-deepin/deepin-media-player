@@ -233,6 +233,8 @@ class  Mplayer(gobject.GObject):
                            gobject.TYPE_NONE,(gobject.TYPE_INT,)),
         "volume":(gobject.SIGNAL_RUN_LAST,
                   gobject.TYPE_NONE,(gobject.TYPE_INT,)),
+        "play-init":(gobject.SIGNAL_RUN_LAST,
+                      gobject.TYPE_NONE,(gobject.TYPE_INT,)),
         "play-start":(gobject.SIGNAL_RUN_LAST,
                       gobject.TYPE_NONE,(gobject.TYPE_INT,)),
         "play-end":(gobject.SIGNAL_RUN_LAST,
@@ -295,6 +297,8 @@ class  Mplayer(gobject.GObject):
         if not self.state:
             self.lenState = 1 
             volume = self.volume
+            print self.volumebool
+            print self.volume
             # -input fil.. streme player.
             if self.xid:
                 CMD = ['mplayer',
@@ -331,32 +335,30 @@ class  Mplayer(gobject.GObject):
             
             self.mplayer_pid = self.mpID.pid
             (self.mplayerIn, self.mplayerOut) = (self.mpID.stdin, self.mpID.stdout)
-            
-            
-                        
+                                                
             fcntl.fcntl(self.mplayerOut, 
                         fcntl.F_SETFL, 
                         os.O_NONBLOCK)
             
+            self.emit("play-init", True)
             # get lenght size.
             self.getPosID = gobject.timeout_add(400, self.get_time_pos) 
-            
-                    
+                                
             # IO_HUP[Monitor the pipeline is disconnected].
             self.eofID = gobject.io_add_watch(self.mplayerOut, gobject.IO_HUP, self.mplayerEOF)
             self.state = 1                
             self.get_time_length()
             self.vide_bool = get_vide_flags(self.path)
+            # Set volume.
+            if self.volumebool:
+                self.nomute()
+            else:    
+                self.setvolume(self.volume)
             # emit play-start.
             gobject.timeout_add(250, self.emit_play_start_event)
             
-    def emit_play_start_event(self):        
-        if self.volumebool:
-            self.nomute()
-        else:    
-            self.setvolume(self.volume)
-        self.emit("play-start", self.mplayer_pid)
-        
+    def emit_play_start_event(self):
+        self.emit("play-start", self.mplayer_pid)        
         return False
     
     ## Cmd control ##    
@@ -367,8 +369,7 @@ class  Mplayer(gobject.GObject):
             self.mplayerIn.flush()
         except StandardError, e:
             print 'command error %s' % (e)
-        
-  
+          
     def get_time_length(self):
         '''Get the total length'''
         self.cmd('get_time_length\n')
@@ -881,4 +882,5 @@ class  Mplayer(gobject.GObject):
     def get_player_file_name(self, pathfile2):     
         file1, file2 = os.path.split(pathfile2)
         return os.path.splitext(file2)[0]
-       
+    
+    
