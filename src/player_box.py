@@ -199,7 +199,7 @@ class PlayerBox(object):
             (app_theme.get_pixbuf("screen_menu_open_url.png"), "打开URL", self.open_url_dialog_window),
             ]
         self.screen_pop_menu = ScreenMenu(self.screen_frame, menu_item)        
-        # menu icon pixbuf. menupixbuf
+        # menu icon pixbuf. menupixbuf ..
         self.video_aspect_pixbuf = app_theme.get_pixbuf("screen/check_normal.png") # aspect state pixbuf.
         self.video_aspect_select_pixbuf = app_theme.get_pixbuf("screen/check_hover.png")
         self.video_aspect_type = "默认"
