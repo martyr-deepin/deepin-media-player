@@ -181,13 +181,17 @@ class PlayerBox(object):
         self.open_button = OpenButton(self.screen_frame, "打开文件", 108, 40)
         self.open_button.connect("openbutton-clicked-event", lambda w, e: self.add_file())
         self.open_button.move(-14, 30)
+        open_button_right_width = 32
+        open_button_right_height = 40
+        open_button_right_x = 56
+        open_button_right_y = 30
         self.open_button_right = OpenButton(self.screen_frame, "",
-                                            32, 40,
+                                            open_button_right_width, open_button_right_height,
                                             app_theme.get_pixbuf("normal_button_right.png"),
                                             app_theme.get_pixbuf("hover_button_right.png"),
                                             app_theme.get_pixbuf("press_button_right.png"))
-        self.open_button_right.connect("openbutton-clicked-event", self.open_button_popup_screen_menu)
-        self.open_button_right.move(56, 30)
+        self.open_button_right.connect("openbutton-clicked-event", self.open_button_popup_screen_menu)        
+        self.open_button_right.move(open_button_right_x, open_button_right_y)
         menu_item = [
             (app_theme.get_pixbuf("screen_menu_open_dir.png"), "打开文件夹", self.add_file_dir),
             (app_theme.get_pixbuf("screen_menu_open_cdrom.png"),"打开光盘", None),                     
@@ -259,7 +263,7 @@ class PlayerBox(object):
         self.bottom_toolbar.panel.connect("expose-event", self.toolbar2_panel_expose)
         self.bottom_toolbar.panel.set_size_request(1, bottom_toolbar_height) # Set bottom_toolbar height.
         # draw resize window.
-        self.bottom_toolbar.panel.connect("scroll-event", self.app_scroll_event, 2)
+        self.bottom_toolbar.panel.connect("scroll-event", self.app_scroll_event, 2) # 2->bottom_toolbar
         self.bottom_toolbar.panel.connect("button-press-event", self.drag_resize_window)
         self.bottom_toolbar.panel.connect("motion-notify-event", self.modify_mouse_icon)
 
@@ -341,6 +345,7 @@ class PlayerBox(object):
 
         self.play_control_panel.stop_btn.connect("clicked", self.stop_button_clicked) # stop play.
         self.play_control_panel.pre_btn.connect("clicked", self.pre_button_clicked) # pre play.
+        # 1 -> play_control_panel
         self.play_control_panel.start_btn.connect("clicked", self.start_button_clicked, 1) # start play or pause play.
         self.play_control_panel.next_btn.connect("clicked", self.next_button_clicked) # next play.
         self.play_control_panel.open_btn.connect("clicked", self.open_button_clicked) # show open window.
@@ -350,7 +355,7 @@ class PlayerBox(object):
         self.volume_button_hframe = HorizontalFrame()
         self.volume_button = VolumeButton(volume_y = 14, press_emit_bool = True)
         self.volume_button.value = 100
-        self.volume_button.connect("get-value-event", self.volume_button_get_value_event, 1)
+        self.volume_button.connect("get-value-event", self.volume_button_get_value_event, 1) # 1 -> play_control_panel
         self.volume_button.set_size_request(92, 40)
         self.volume_button_hframe.add(self.volume_button)
         self.volume_button_hframe.set(1, 0, 0, 0)
@@ -521,7 +526,7 @@ class PlayerBox(object):
         toolbar_rect = widget.get_toplevel().get_allocation()
         with cairo_state(cr):
             cr.translate(0, -(window_rect.height - toolbar_rect.height))
-            skin_config.render_background(cr, widget, x, y)
+            skin_config.render_background(cr, widget, x, y, 0, window_rect.height - toolbar_rect.height)
 
         widget.propagate_expose(widget.get_child(), event)
         return True
@@ -597,19 +602,20 @@ class PlayerBox(object):
         if "NULL" == config_type: # seek back.
             pass
         else: # volume
-            if event.direction == gtk.gdk.SCROLL_UP:
-                self.volume_button.volume_other_set_value("right", 5)
-                self.mp.setvolume(self.mp.volume+5)
+            volume_value = 5
+            if event.direction == gtk.gdk.SCROLL_UP:                
+                self.volume_button.volume_other_set_value("right", volume_value)
+                self.mp.setvolume(self.mp.volume + volume_value)
                 self.messagebox("音量:%s"%(str(self.mp.volume)))
             elif event.direction == gtk.gdk.SCROLL_DOWN:
-                self.volume_button.volume_other_set_value("left", 5)
-                self.mp.setvolume(self.mp.volume-5)
+                self.volume_button.volume_other_set_value("left", volume_value)
+                self.mp.setvolume(self.mp.volume - volume_value)
                 self.messagebox("音量:%s"%(str(self.mp.volume)))
             
     def volume_button_get_value_event(self, volume_button, value, volume_state, volume_bit):        
-        if -1 == volume_state:
+        if -1 == volume_state: # -1 -> stop play
             if self.mp:
-                if 1 == self.mp.state:
+                if 1 == self.mp.state: # 1 -> start play
                     self.mp.nomute()                                       
                 else:    
                     self.mp.volumebool = True # mute: True  no mute: False.
@@ -624,7 +630,7 @@ class PlayerBox(object):
                     self.mp.volumebool = False
                     self.messagebox("音量:%s"%(str(value)))
                     
-        if 1 == volume_bit:
+        if 1 == volume_bit: # volume_bit: 1-> volume_button , 2-> volume_button of bottom_toolbar 
             self.bottom_toolbar.volume_button.value = value
         else:    
             self.volume_button.value = value
@@ -769,15 +775,31 @@ class PlayerBox(object):
 
     def key_add_volume(self):
         print "add volume..."
-        self.key_set_volume(1)
+        self.key_set_volume(1) # 1-> add volume.
 
     def key_sub_volume(self):
         print "sub volume..."
-        self.key_set_volume(0)
+        self.key_set_volume(0) # 0 -> sub volume.
 
     def key_set_volume(self, type_bool):
-        pass
-    
+        add_volume_state = 1
+        sub_volume_state = 0
+        volume_value     = 5
+        if type_bool == add_volume_state:
+            self.volume_button.volume_other_set_value("right", volume_value)
+            # self.mp.volume = self.mp.volume + volume_value
+        elif type_bool == sub_volume_state:    
+            self.volume_button.volume_other_set_value("left", volume_value)
+            # self.mp.volume = self.mp.volume - volume_value
+            # self.mp.setvolume()
+            self.messagebox("音量:%s"%(str(self.mp.volume)))
+            
+    #     gtk.timeout_add(500, self.key_set_volume_timeout)    
+        
+    # def key_set_volume_timeout(self, volume_value):    
+    #     self.mp.setvolume(self.mp.volume + volume_value)
+    #     self.messagebox("音量:%s"%(str(self.mp.volume)))
+
     def key_set_mute(self):
         print "key set mute..."
         pass
