@@ -199,11 +199,34 @@ class PlayerBox(object):
             (app_theme.get_pixbuf("screen_menu_open_url.png"), "打开URL", self.open_url_dialog_window),
             ]
         self.screen_pop_menu = ScreenMenu(self.screen_frame, menu_item)        
-        
-        self.video_aspect_pixbuf = app_theme.get_pixbuf("max_volume.png") # aspect state pixbuf.
-        self.video_aspect_select_pixbuf = app_theme.get_pixbuf("lower_press.png")
+        # menu icon pixbuf. menupixbuf
+        self.video_aspect_pixbuf = app_theme.get_pixbuf("screen/check_normal.png") # aspect state pixbuf.
+        self.video_aspect_select_pixbuf = app_theme.get_pixbuf("screen/check_hover.png")
         self.video_aspect_type = "默认"
         self.playwinmax_bool = True
+        self.menu_concie_normal_pixbuf = app_theme.get_pixbuf("screen/menu_concise_normal.png")
+        self.menu_concie_hover_pixbuf = app_theme.get_pixbuf("screen/menu_concise_hover.png")
+        self.menu_window_mode_normal_pixbuf = app_theme.get_pixbuf("screen/menu_window_mode_normal.png")
+        self.menu_window_mode_hover_pixbuf = app_theme.get_pixbuf("screen/menu_window_mode_hover.png")
+        self.menu_play_sequence_normal_pixbuf = app_theme.get_pixbuf("screen/menu_play_sequence_normal.png")
+        self.menu_play_sequence_hover_pixbuf  = app_theme.get_pixbuf("screen/menu_play_sequence_hover.png")
+        self.menu_full_normal_pixbuf = app_theme.get_pixbuf("screen/menu_full_normal.png") 
+        self.menu_full_hover_pixbuf  = app_theme.get_pixbuf("screen/menu_full_hover.png")
+        self.menu_pre_normal_pixbuf = app_theme.get_pixbuf("screen/menu_pre_normal.png")
+        self.menu_pre_hover_pixbuf  = app_theme.get_pixbuf("screen/menu_pre_hover.png")
+        self.menu_next_normal_pixbuf = app_theme.get_pixbuf("screen/menu_next_normal.png")
+        self.menu_next_hover_pixbuf  = app_theme.get_pixbuf("screen/menu_next_hover.png")        
+        self.menu_f_seek_5_normal_pixbuf   = app_theme.get_pixbuf("screen/menu_f_seek_5_normal.png")
+        self.menu_f_seek_5_hover_pixbuf    = app_theme.get_pixbuf("screen/menu_f_seek_5_hover.png")
+        self.menu_b_seek_5_normal_pixbuf   = app_theme.get_pixbuf("screen/menu_b_seek_5_normal.png")
+        self.menu_b_seek_5_hover_pixbuf   = app_theme.get_pixbuf("screen/menu_b_seek_5_hover.png")
+        self.menu_volume_normal_pixbuf  = app_theme.get_pixbuf("screen/menu_volume_normal.png")
+        self.menu_volume_hover_pixbuf   = app_theme.get_pixbuf("screen/menu_volume_hover.png")
+        self.menu_setting_normal_pixbuf = app_theme.get_pixbuf("screen/menu_setting_normal.png")
+        self.menu_setting_hover_pixbuf  = app_theme.get_pixbuf("screen/menu_setting_hover.png")
+        self.menu_quit_normal_pixbuf = app_theme.get_pixbuf("screen/menu_quit_normal.png")
+        self.menu_quit_hover_pixbuf  = app_theme.get_pixbuf("screen/menu_quit_hover.png")
+        
         # Set background.
         style = self.screen_frame.get_style()
         self.screen_frame.connect("expose-event", self.draw_ascept_bg)
@@ -1952,7 +1975,7 @@ class PlayerBox(object):
                                    ])
         
         self.channel_select_menu = Menu([
-                (None, "正常声道", self.normal_channel),
+                (None, "立体声道", self.normal_channel),
                 (None, "左声道",   self.left_channel),
                 (None, "右声道",   self.right_channel)
                 ])
@@ -1994,9 +2017,9 @@ class PlayerBox(object):
                                  (pixbuf_2_35X1, "2.35:1", self.set_2_35X1_aspect),
                                  (None),
                                  (None,  "0.5倍尺寸",  self.set_0_5x_video_play),
-                                 (None,  "1倍",       self.set_1x_video_play),
-                                 (None,  "1.5倍",     self.set_1_5x_video_play),
-                                 (None,  "2倍",       self.set_2x_video_play),
+                                 (None,  "1倍尺寸",       self.set_1x_video_play),
+                                 (None,  "1.5倍尺寸",     self.set_1_5x_video_play),
+                                 (None,  "2倍尺寸",       self.set_2x_video_play),
                                  # (None),
                                  # (None, "全屏/退出", None),
                                  ])
@@ -2008,15 +2031,15 @@ class PlayerBox(object):
                                      (None, "列表循环", self.loop_list_play)]
                                     )
         # In title root menu.
-        self.play_menu = Menu([(None, "全屏播放", self.key_return),
-                               (None, "普通模式", self.set_menu_common),
-                               (None, "简洁模式", self.set_menu_concise),
-                               (None, "上一首", self.key_pre),
-                               (None, "下一首", self.key_next),
+        self.play_menu = Menu([((self.menu_full_normal_pixbuf, self.menu_full_hover_pixbuf), "全屏播放", self.key_return),
+                               ((self.menu_window_mode_normal_pixbuf, self.menu_window_mode_hover_pixbuf), "普通模式", self.set_menu_common),
+                               ((self.menu_concie_normal_pixbuf, self.menu_concie_hover_pixbuf), "简洁模式", self.set_menu_concise),
+                               ((self.menu_pre_normal_pixbuf, self.menu_pre_hover_pixbuf), "上一首", self.key_pre),
+                               ((self.menu_next_normal_pixbuf, self.menu_next_hover_pixbuf), "下一首", self.key_next),
                                (None),
-                               (None, "快进5秒", self.key_right),
-                               (None, "快退5秒", self.key_left),
-                               (None, "播放顺序", self.play_state_menu),
+                               ((self.menu_f_seek_5_normal_pixbuf, self.menu_f_seek_5_hover_pixbuf), "快进5秒", self.key_right),
+                               ((self.menu_b_seek_5_normal_pixbuf, self.menu_b_seek_5_hover_pixbuf), "快退5秒", self.key_left),
+                               ((self.menu_play_sequence_normal_pixbuf, self.menu_play_sequence_hover_pixbuf), "播放顺序", self.play_state_menu),
                                ])
         # In title root menu.
         self.file_menu = Menu([(None, "打开文件", self.add_file),
@@ -2032,14 +2055,14 @@ class PlayerBox(object):
         self.title_root_menu = Menu([(None, "文件", self.file_menu),
                                      (None, "播放", self.play_menu),
                                      (None, "画面", self.screen_menu),
-                                     (None, "声音", self.volume_menu),
+                                     ((self.menu_volume_normal_pixbuf, self.menu_volume_hover_pixbuf), "声音", self.volume_menu),
                                      # (None, "字幕", self.subtitle_menu),
                                      (None, "截图", self.sort_menu),
-                                     (None, "选项", self.config_gui),
+                                     ((self.menu_setting_normal_pixbuf, self.menu_setting_hover_pixbuf), "选项", self.config_gui),
                                      # (None, "总在最前", None),
                                      # (None, "自定义换肤", None),
                                      # (None, "帮助与反馈", self.help_menu),
-                                     (None, "退出", self.set_menu_quit)],
+                                     ((self.menu_quit_normal_pixbuf, self.menu_quit_hover_pixbuf), "退出", self.set_menu_quit)],
                                     True)
         self.title_root_menu.show(
             get_widget_root_coordinate(button, WIDGET_POS_BOTTOM_LEFT),
@@ -2057,11 +2080,11 @@ class PlayerBox(object):
                                )
         
         play_menu = Menu([                                                    
-                          (None, "上一首", self.key_pre),
-                          (None, "下一首", self.key_next),
+                          ((self.menu_pre_normal_pixbuf, self.menu_pre_hover_pixbuf), "上一首", self.key_pre),
+                          ((self.menu_next_normal_pixbuf, self.menu_next_hover_pixbuf), "下一首", self.key_next),
                           (None),
-                          (None, "快进5秒", self.key_right),
-                          (None, "快退5秒", self.key_left),
+                          ((self.menu_f_seek_5_normal_pixbuf, self.menu_f_seek_5_hover_pixbuf), "快进5秒", self.key_right),
+                          ((self.menu_b_seek_5_normal_pixbuf, self.menu_b_seek_5_hover_pixbuf), "快退5秒", self.key_left),
                           ])
 
         # aspect.
@@ -2093,15 +2116,15 @@ class PlayerBox(object):
                             (pixbuf_2_35X1, "2.35:1", self.set_2_35X1_aspect),
                             (None),
                             (None,  "0.5倍尺寸",  self.set_0_5x_video_play),
-                            (None,  "1倍",       self.set_1x_video_play),
-                            (None,  "1.5倍",     self.set_1_5x_video_play),
-                            (None,  "2倍",       self.set_2x_video_play),
+                            (None,  "1倍尺寸",       self.set_1x_video_play),
+                            (None,  "1.5倍尺寸",     self.set_1_5x_video_play),
+                            (None,  "2倍尺寸",       self.set_2x_video_play),
                             # (None),
                             # (None, "全屏/退出", None),
                             ])
 
         channel_select = Menu([
-                (None, "正常声道", self.normal_channel),
+                (None, "立体声道", self.normal_channel),
                 (None, "左声道",   self.left_channel),
                 (None, "右声道",   self.right_channel)
                 ])
@@ -2110,15 +2133,15 @@ class PlayerBox(object):
                 (None, "打开文件",  self.add_file),
                 (None, "打开文件夹",self.add_file_dir ),
                 (None),
-                (None, "全屏/退出",    self.key_return),
-                (None, "普通模式", self.set_menu_common),
-                (None, "简洁模式", self.set_menu_concise),
-                (None, "播放顺序", play_state_menu),
+                ((self.menu_full_normal_pixbuf, self.menu_full_hover_pixbuf), "全屏/退出",    self.key_return),
+                ((self.menu_window_mode_normal_pixbuf, self.menu_window_mode_hover_pixbuf), "普通模式", self.set_menu_common),
+                ((self.menu_concie_normal_pixbuf, self.menu_concie_hover_pixbuf), "简洁模式", self.set_menu_concise),
+                ((self.menu_play_sequence_normal_pixbuf, self.menu_play_sequence_hover_pixbuf), "播放顺序", play_state_menu),
                 (None, "播放", play_menu),
                 (None, "画面", screen_menu),
-                (None, "声音", channel_select),
+                ((self.menu_volume_normal_pixbuf, self.menu_volume_hover_pixbuf), "声音", channel_select),
                 (None, "字幕", None),
-                (None, "播放器设置", None)
+                ((self.menu_setting_normal_pixbuf, self.menu_setting_hover_pixbuf), "播放器设置", None)
                 ], True)
         
         self.screen_right_root_menu.show((int(event.x_root), int(event.y_root)),
