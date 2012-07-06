@@ -54,22 +54,22 @@ class BottomToolBar(object):
         self.show_time_hframe.set(0, 0, 1, 1)
         self.show_time_hframe.set_padding(2, 0, 10, 0)
         
-        self.play_control_panel = PlayControlPanel()        
+        self.play_control_panel = PlayControlPanel()      
         self.play_control_panel_hframe = self.play_control_panel.hbox_hframe
         self.play_control_panel_hframe.set(0, 0, 0, 0)
         self.play_control_panel_hframe.set_padding(2, 0, 0, 0)
         
         self.volume_hframe = HorizontalFrame()
         self.volume_button = VolumeButton(press_emit_bool = True)
-        # self.volume_button.set_size_request(120, 50)
+        self.volume_button.set_size_request(120, 50)
         self.volume_hframe.add(self.volume_button)
-        # self.volume_hframe.set(0, 0.5, 0, 0)
-        self.volume_hframe.set_padding(0, 0, 5, 0)
+        self.volume_hframe.set(0, 0, 0, 0)
+        self.volume_hframe.set_padding(0, 0, 5, 5)
         
         
-        self.hbox.pack_start(self.show_time_hframe, True, True)                
+        self.hbox.pack_start(self.show_time_hframe, True, True)
         self.hbox.pack_start(self.play_control_panel.hbox_hframe, False, False)
-        self.hbox.pack_start(self.volume_hframe, True, True)
+        self.hbox.pack_start(self.volume_hframe, False, False)
         self.hbox.pack_start(gtk.Label(), True, True)
         
         self.vbox.pack_start(self.progressbar.hbox, False, False)

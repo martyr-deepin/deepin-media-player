@@ -1185,7 +1185,7 @@ class PlayerBox(object):
     def set_toolbar2_position(self, widget, event): #app window-state-event
         self.bottom_toolbar.show_toolbar2()
         self.toolbar.panel.move(self.panel_x + 1, self.panel_y + self.app.titlebar.allocation[3])
-        self.bottom_toolbar.panel.move(self.panel_x + 1, self.panel_y + self.screen_frame.allocation.height - 40)
+        self.bottom_toolbar.panel.move(self.panel_x + 1, self.panel_y + self.screen_frame.allocation.height - self.bottom_toolbar.panel.allocation.height)
         self.bottom_toolbar.hide_toolbar2()
 
     # ToolBar control function.
@@ -1200,7 +1200,7 @@ class PlayerBox(object):
             self.bottom_toolbar.panel.move(self.panel_x, self.panel_y + (widget.allocation[3] - self.bottom_toolbar.panel.allocation[3]))
         else:    # common mode.
             self.toolbar.panel.move(self.panel_x + 1, self.panel_y + self.app.titlebar.allocation[3])
-            self.bottom_toolbar.panel.move(self.panel_x + 1, self.panel_y + self.screen_frame.allocation.height - 40)
+            self.bottom_toolbar.panel.move(self.panel_x + 1, self.panel_y + self.screen_frame.allocation.height - self.bottom_toolbar.panel.allocation.height)
 
         if self.full_bool:
             self.toolbar.panel.move(self.panel_x - 4, self.panel_y)
@@ -1789,6 +1789,7 @@ class PlayerBox(object):
         if os.path.exists(save_subtitle_path):    
             if down_bool:
                 path_thread_id = threading.Thread(target=self.down_subtitle_threading_function,args=(play_name,save_subtitle_path,))
+                path_thread_id.setDaemon(True)
                 path_thread_id.start()        
             else:    
                 print "存在相同文件名"
