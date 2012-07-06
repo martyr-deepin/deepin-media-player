@@ -91,6 +91,11 @@ class IniGui(DialogBox):
         
         # TreeView event.
         self.tree_view.connect("single-click-item", self.set_con_widget)
+        
+        self.scrolled_window_align = gtk.Alignment()
+        self.scrolled_window_align.set(0, 0, 1, 1)
+        self.scrolled_window_align.set_padding(0, 1, 0, 0)
+        self.scrolled_window_align.add(self.scrolled_window)
         self.scrolled_window.add_child(self.tree_view)
         
         # TreeView add node.
@@ -109,7 +114,7 @@ class IniGui(DialogBox):
         background_box.draw_mask = self.draw_treeview_mask
         category_box.pack_start(background_box, False, False)
         
-        category_box.pack_start(self.scrolled_window, True, True)
+        category_box.pack_start(self.scrolled_window_align, True, True)
         
         self.main_hbox.pack_start(category_box, False, False)
         self.main_hbox.pack_start(self.configure)
