@@ -164,6 +164,7 @@ class PlayerBox(object):
         #keyboard Quick key.
         # self.app.window.connect("realize", gtk.Widget.grab_focus)
         self.app.window.connect("key-press-event", self.get_key_event)
+        self.app.window.connect("key-release-event", self.get_release_key_event)
         self.app.window.connect("scroll_event", self.app_scroll_event, 1)
 
         '''Screen window init.'''
@@ -601,16 +602,47 @@ class PlayerBox(object):
         config_type = self.config.get("OtherKey", "mouse_wheel_event")
         if "NULL" == config_type: # seek back.
             pass
-        else: # volume
+        else: # Set volume.
             volume_value = 5
-            if event.direction == gtk.gdk.SCROLL_UP:                
-                self.volume_button.volume_other_set_value("right", volume_value)
-                self.mp.setvolume(self.mp.volume + volume_value)
-                self.messagebox("音量:%s"%(str(self.mp.volume)))
+            if event.direction == gtk.gdk.SCROLL_UP:                              
+                temp_value = 0
+                if self.mode_state_bool:                    
+                    temp_value = self.mp.volume + volume_value
+                    if (temp_value + volume_value) > 100:
+                        temp_value = 100                    
+                        
+                    self.bottom_toolbar.volume_button.value = temp_value
+                    self.volume_button.value = temp_value
+                    
+                else:    
+                    temp_value = self.volume_button.value + volume_value
+                    if (temp_value + volume_value) > 100:
+                        temp_value = 100                    
+
+                    self.volume_button.value = temp_value
+                    self.bottom_toolbar.volume_button.value = temp_value
+                                    
             elif event.direction == gtk.gdk.SCROLL_DOWN:
-                self.volume_button.volume_other_set_value("left", volume_value)
-                self.mp.setvolume(self.mp.volume - volume_value)
-                self.messagebox("音量:%s"%(str(self.mp.volume)))
+                temp_value = 0
+                if self.mode_state_bool:                    
+                    temp_value = self.mp.volume - volume_value
+                    if (temp_value - volume_value) < 0:
+                        temp_value = 0                
+                    self.bottom_toolbar.volume_button.value = temp_value    
+                    self.volume_button.value = temp_value                    
+                else:    
+                    temp_value = self.volume_button.value - volume_value
+                    if (temp_value - volume_value) < 0:
+                        temp_value = 0                                    
+                    self.volume_button.value = self.volume_button.value - volume_value
+                    self.bottom_toolbar.volume_button.value = self.volume_button.value
+                    temp_value = self.volume_button.value
+                    
+                
+            if temp_value != self.mp.volume:
+                self.mp.setvolume(temp_value)
+                    
+            self.messagebox("音量:%s"%(str(int(temp_value))))
             
     def volume_button_get_value_event(self, volume_button, value, volume_state, volume_bit):        
         if -1 == volume_state: # -1 -> stop play
@@ -720,6 +752,7 @@ class PlayerBox(object):
             self.keymap[keyval_name]()
         return True
 
+        
     def key_subtitle_advance(self):
         print "subtitle advance..."
 
@@ -780,26 +813,37 @@ class PlayerBox(object):
     def key_sub_volume(self):
         print "sub volume..."
         self.key_set_volume(0) # 0 -> sub volume.
-
+        
     def key_set_volume(self, type_bool):
         add_volume_state = 1
         sub_volume_state = 0
-        volume_value     = 5
+        volume_value     = 5        
+        # Set volume.
         if type_bool == add_volume_state:
-            self.volume_button.volume_other_set_value("right", volume_value)
-            # self.mp.volume = self.mp.volume + volume_value
-        elif type_bool == sub_volume_state:    
-            self.volume_button.volume_other_set_value("left", volume_value)
-            # self.mp.volume = self.mp.volume - volume_value
-            # self.mp.setvolume()
-            self.messagebox("音量:%s"%(str(self.mp.volume)))
+            if (self.volume_button.value + volume_value) > 100:
+                self.volume_button.value = 100
+            self.volume_button.value = self.volume_button.value + volume_value
+        elif type_bool == sub_volume_state:                
+            if (self.volume_button.value - volume_value) < 0:
+                self.volume_button.value = 0
+            self.volume_button.value = self.volume_button.value - volume_value
             
-    #     gtk.timeout_add(500, self.key_set_volume_timeout)    
+    def get_release_key_event(self, widget, event):
+        keyval_name = get_keyevent_name(event)
+        # add volume key init.
+        add_volume_key = self.config.get("PlayControl", "add_volume_key")
+        if add_volume_key == keyval_name:
+            self.mp.setvolume(self.volume_button.value)            
+            self.messagebox("音量:%s"%(int(self.volume_button.value)))    
+                        
+        # sub volume key init.
+        sub_volume_key = self.config.get("PlayControl", "sub_volume_key")
+        if sub_volume_key == keyval_name:
+            self.mp.setvolume(self.volume_button.value)
+            self.messagebox("音量:%s"%(int(self.volume_button.value)))    
         
-    # def key_set_volume_timeout(self, volume_value):    
-    #     self.mp.setvolume(self.mp.volume + volume_value)
-    #     self.messagebox("音量:%s"%(str(self.mp.volume)))
-
+        print self.volume_button.value
+        
     def key_set_mute(self):
         print "key set mute..."
         pass

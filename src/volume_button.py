@@ -392,6 +392,7 @@ class VolumeButton(gtk.EventBox):
             temp_padding = (float(self.__volume_max_value) / self.__volume_width)
             temp_padding_x = float(value) / temp_padding            
             self.__point_padding_x = temp_padding_x + ((self.__fg_padding_x))
+            self.__set_volume_value_to_state(int(self.__current_value))
             self.queue_draw()
             
     @value.getter        
