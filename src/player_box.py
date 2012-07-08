@@ -226,6 +226,10 @@ class PlayerBox(object):
         self.menu_setting_hover_pixbuf  = app_theme.get_pixbuf("screen/menu_setting_hover.png")
         self.menu_quit_normal_pixbuf = app_theme.get_pixbuf("screen/menu_quit_normal.png")
         self.menu_quit_hover_pixbuf  = app_theme.get_pixbuf("screen/menu_quit_hover.png")
+        self.menu_subtitle_normal_pixbuf = app_theme.get_pixbuf("screen/menu_subtitle_normal.png")
+        self.menu_subtitle_hover_pixbuf  = app_theme.get_pixbuf("screen/menu_subtitle_hover.png")
+        
+        
         
         # Set background.
         style = self.screen_frame.get_style()
@@ -765,9 +769,8 @@ class PlayerBox(object):
         sub_volume_key = self.config.get("PlayControl", "sub_volume_key")
         if sub_volume_key == keyval_name:
             self.mp.setvolume(self.volume_button.value)
-            self.messagebox("音量:%s"%(int(self.volume_button.value)))    
-        
-        print self.volume_button.value
+            self.messagebox("音量:%s"%(int(self.volume_button.value)))            
+        # print self.volume_button.value
         
     def key_set_mute(self):
         print "key set mute..."
@@ -1039,17 +1042,18 @@ class PlayerBox(object):
         self.app_height  = self.app.window.get_allocation()[3]
         self.root_window_width   =  self.app.window.get_screen().get_width() # save root widnwo screen width.
         self.root_window_height  =  self.app.window.get_screen().get_height() # save roo widnow screen height.
-
-        self.play_list.hide_play_list() # Hide play list.
+                                
+        self.init_play_list_state()        
         
         self.screen.queue_draw()
         #self.unset_flags()
         self.mp = Mplayer(widget.window.xid)
-        # self.mp.play("http://zhangmenshiting2.baidu.com/data2/music/1401172/1401172.mp3?xcode=1db45cfc05179fb379614d12dac32591&mid=0.99612208501499")
+        self.init_volume_value()  # init volume.
+        
         # Init darg file signal.
         drag_connect(self.screen, self.mp, self.play_list.list_view, True)
         drag_connect(self.play_list.list_view, self.mp, self.play_list.list_view, False)
-
+        
         self.mp.connect("get-time-pos", self.get_time_pos)
         self.mp.connect("get-time-length", self.get_time_length)
         self.mp.connect("play-init", self.init_video_setting)
@@ -1062,11 +1066,11 @@ class PlayerBox(object):
         self.mp.connect("add-path", self.add_play_list)
         self.mp.connect("clear-play-list", self.clear_play_list)
 
-        self.mp.playListState = 1 # play mode.
-
+        self.mp.playListState = 1 # init play mode.
+                
         # Init last new play file.
         self.the_last_new_play_file_list = self.last_new_play_file_function.set_file_time(self.mp.path)
-
+        
         # try:
         # argv path list.
         for file_path in self.argv_path_list:
@@ -1083,8 +1087,34 @@ class PlayerBox(object):
         # self.play_list.list_view.set_highlight(self.play_list.list_view.items[0])
         # except:
         #     print "Error:->>Test command: python main.py add file or dir"
-
-
+   
+    def init_play_list_state(self):            
+        play_list_bool = self.config.get("Window", "playlist")
+        
+        self.play_list.hide_play_list() # Hide play list.
+        if play_list_bool:
+            if "true" == play_list_bool.lower() :
+                self.play_list.show_play_list()
+                self.play_list_button.button.flags      = True
+                self.play_list_button_clicked(self.play_list_button.button)
+        
+    def init_volume_value(self):            
+        volume_value = self.config.get("Window", "volume")
+        volume_mute_bool = self.config.get("Window", "mute")
+        # MUTE_STATE = "-1"
+        # print volume_mute_bool
+        if volume_value:            
+            self.volume_button.value = int(volume_value)
+            self.bottom_toolbar.volume_button.value = int(volume_value)                        
+            self.mp.setvolume(self.volume_button.value)
+        # if volume_mute_bool == MUTE_STATE: # set mute.
+        #     print "mute volume."
+        #     self.volume_button.set_volume_mute()
+        #     self.volume_button.queue_draw()
+            # self.bottom_toolbar.volume_button.set_volume_mute()
+            # self.mp.volumebool = True
+            # self.mp.nomute()
+                
     def clear_play_list(self, mplayer, mp_bool):
         self.play_list.list_view.clear()
         self.play_list_dict = {}
@@ -1164,14 +1194,24 @@ class PlayerBox(object):
         '''Quit player window.'''
         self.app.window.set_opacity(0)
         self.app.window.set_visible(True)
-        self.config.set("Window", "width", self.app.window.allocation.width)
-        self.config.set("Window", "height", self.app.window.allocation.height)
-        self.config.save()
+        self.quit_window_save_config()
         if self.mp:
             if self.mplayer_pid:
                 os.system("kill %s" %(self.mplayer_pid))
             self.mp.quit()
 
+    def quit_window_save_config(self):
+        # save config section value.
+        # print self.show_or_hide_play_list_bool        
+        # print self.volume_button.volume_state
+        self.config.set("Window", "playlist", self.show_or_hide_play_list_bool) # save open play list state.
+        self.config.set("Window", "width",    self.app.window.allocation.width) # save app window height.
+        self.config.set("Window", "height",   self.app.window.allocation.height) # save app window width.
+        self.config.set("Window", "volume",   int(self.volume_button.value)) # save volume value.        
+        self.config.set("Window", "mute",     self.volume_button.volume_state) # save volume mute state.
+            
+        # self.config.set("")
+        self.config.save()
 
     def set_toolbar2_position(self, widget, event): #app window-state-event
         self.bottom_toolbar.show_toolbar2()
@@ -2130,8 +2170,9 @@ class PlayerBox(object):
                 ])
         
         self.screen_right_root_menu = Menu([
-                (None, "打开文件",  self.add_file),
-                (None, "打开文件夹",self.add_file_dir ),
+                (None, "打开文件",   self.add_file),
+                (None, "打开文件夹", self.add_file_dir ),
+                (None, "打开URL",   self.open_url_dialog_window),
                 (None),
                 ((self.menu_full_normal_pixbuf, self.menu_full_hover_pixbuf), "全屏/退出",    self.key_return),
                 ((self.menu_window_mode_normal_pixbuf, self.menu_window_mode_hover_pixbuf), "普通模式", self.set_menu_common),
@@ -2140,7 +2181,7 @@ class PlayerBox(object):
                 (None, "播放", play_menu),
                 (None, "画面", screen_menu),
                 ((self.menu_volume_normal_pixbuf, self.menu_volume_hover_pixbuf), "声音", channel_select),
-                (None, "字幕", None),
+                ((self.menu_subtitle_normal_pixbuf, self.menu_subtitle_hover_pixbuf), "字幕", None),
                 ((self.menu_setting_normal_pixbuf, self.menu_setting_hover_pixbuf), "播放器设置", None)
                 ], True)
         
