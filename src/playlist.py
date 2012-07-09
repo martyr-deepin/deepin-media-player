@@ -27,6 +27,8 @@ from dtk.ui.scrolled_window import ScrolledWindow
 from dtk.ui.box import EventBox
 # from dtk.ui.frame import VerticalFrame
 from dtk.ui.constant import DEFAULT_FONT_SIZE,ALIGN_END, ALIGN_START
+
+from skin import app_theme
 from mplayer import Mplayer    
 from utils import allocation
 from play_list_control_panel import PlayListControlPanel
@@ -53,7 +55,7 @@ class PlayList(object):
         self.scrolled_window = ScrolledWindow()    
         self.scrolled_window.set_policy(gtk.POLICY_NEVER, gtk.POLICY_AUTOMATIC)
         # self.list_view = ListView(background_pixbuf=app_theme.get_pixbuf("play_list_bg.jpg"))
-        self.list_view = ListView()
+        self.list_view = ListView(drag_icon_pixbuf=app_theme.get_pixbuf("playlist/drag_video.png"))
         self.list_view.draw_mask = self.draw_mask
         self.item_array = []
         # self.list_view.connect("configure-event", self.init_playlist_path)

@@ -698,7 +698,9 @@ class PlayerBox(object):
     def key_sort_image(self):
         print "sort image..."
         if 1 == self.mp.state: 
-            save_clipboard_bool =  self.config.get("ScreenshotSet", "save_clipboard")        
+            scrot_bool = self.config.get("ScreenshotSet", "current_show_sort")
+            
+            save_clipboard_bool =  self.config.get("ScreenshotSet", "save_clipboard")
             save_file_bool =  self.config.get("ScreenshotSet", "save_file")
 
             save_path = self.config.get("ScreenshotSet", "save_path")
@@ -707,12 +709,21 @@ class PlayerBox(object):
             if save_path[0] == "~":
                     save_path = get_home_path() + save_path[1:]                    
                     
-            if save_file_bool == "True":                                
-                self.mp.preview_scrot(self.mp.posNum, save_path + "/%s-%s"%(self.get_player_file_name(self.mp.path), self.mp.posNum) + save_type)
+            if save_file_bool == "True":
+                if scrot_bool.lower() == "true":
+                    self.scrot_current_screen_pixbuf(save_path + "/%s-%s"%(self.get_player_file_name(self.mp.path), self.mp.posNum), save_type)
+                else:    
+                    self.mp.preview_scrot(self.mp.posNum, save_path + "/%s-%s"%(self.get_player_file_name(self.mp.path), self.mp.posNum) + save_type)
             if save_clipboard_bool == "True": # save clipboard
                 clipboard_path = "/tmp" + "/%s-%s"%(self.get_player_file_name(self.mp.path), self.mp.posNum) + save_type
-                self.mp.preview_scrot(self.mp.posNum, clipboard_path)
-                pixbuf_clipboard = gtk.gdk.pixbuf_new_from_file(clipboard_path)                                
+                if scrot_bool.lower() == "true":
+                    clipboard_path = "/tmp" + "/%s-%s"%(self.get_player_file_name(self.mp.path), self.mp.posNum)
+                    self.scrot_current_screen_pixbuf(clipboard_path, save_type)
+                    clipboard_path += save_type
+                else:
+                    self.mp.preview_scrot(self.mp.posNum, clipboard_path)
+                    
+                pixbuf_clipboard = gtk.gdk.pixbuf_new_from_file(clipboard_path)
                 clipboard = gtk.Clipboard()
                 clipboard.set_image(pixbuf_clipboard)
                 
@@ -2480,3 +2491,12 @@ class PlayerBox(object):
 
     def dec_hue(self):
         self.mp.dec_hue()
+
+    def scrot_current_screen_pixbuf(self, save_path_save_name, save_file_type=".png"):
+        x, y, w, h = self.screen_frame.get_allocation()
+        screen_pixbuf = gtk.gdk.Pixbuf(gtk.gdk.COLORSPACE_RGB, False, 8, w, h)
+        save_pixbuf = screen_pixbuf.get_from_drawable(self.screen_frame.window, 
+                                                      self.screen_frame.get_colormap(),
+                                                      0, 0, 0, 0, w, h)
+        save_pixbuf.save(save_path_save_name + save_file_type, save_file_type[1:])
+        
