@@ -161,6 +161,7 @@ def init_mplayer_config():
             # config.set()
             # config.set()
             #[PlayControl]
+            config.set("PlayControl", "play_control_bool", "True")
             config.set("PlayControl", "open_file_key",     "Ctrl + o")
             config.set("PlayControl", "open_file_dir_key", "Ctrl + f")
             config.set("PlayControl", "play_or_pause_key", "Space")

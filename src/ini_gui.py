@@ -193,7 +193,7 @@ class IniGui(DialogBox):
         # print "_____________[OtherKey]________________________"    
         other_key_dict = self.configure.other_key.get_other_set_state()
         for key in other_key_dict.keys():
-            if self.ini.get("OtherKey", key) != str(other_key_dict[key]):
+            if self.ini.get("OtherKey",  key) != str(other_key_dict[key]):
                 self.ini.set("OtherKey", key, other_key_dict[key])
             # print "%s = %s" % (str(key), str(other_key_dict[key]))
         # print "_____________[SubtitleSet]______________________"                
@@ -318,7 +318,7 @@ class FilePlay(gtk.VBox):
         # open new file clear play list.
         self.clear_play_list_btn = CheckButton("打开新文件时清空播放列表")        
         ini_bool = self.ini.get("FilePlay", "open_new_file_clear_play_list")
-        print ini_bool
+        # print ini_bool
         self.clear_play_list_btn.set_active(False)
         if ini_bool:
             if "true" == ini_bool.lower():
@@ -559,6 +559,11 @@ class PlayControl(gtk.VBox):
         entry_height = 24
         # entry_width = 150
         # entry_height = 28
+        # set PlayControl bool.
+        self.play_control_bool_checkbtn = CheckButton("启动热键")
+        # self.play_control_bool_checkbtn.set_active(True)
+        self.play_control_bool_checkbtn.connect("button-press-event", self.set_play_control_all_sensitive)
+                
         # open file key.
         self.open_file_entry_label = Label("打开文件")
         self.open_file_entry       = ShortcutKeyEntry()
@@ -680,6 +685,20 @@ class PlayControl(gtk.VBox):
             
         self.concise_entry.set_size(entry_width, entry_height)
                         
+        
+        # set PlayControl bool.
+        self.play_control_bool_checkbtn.set_active(True)
+        self.set_play_control_true()
+        
+        play_control_bool = self.ini.get("PlayControl", "play_control_bool")
+        # print play_control_bool
+        if play_control_bool:
+            if play_control_bool.lower() == "true":
+                pass
+            else:    
+                self.play_control_bool_checkbtn.set_active(False)
+                self.set_play_control_false()                
+
         play_control_x = 20
         play_control_y = 40
         # label.
@@ -687,7 +706,12 @@ class PlayControl(gtk.VBox):
         # heparator.
         self.fixed.put(self.heparator, 0, heparator_y)
         # open file key.
+        # play_control_bool_checkbtn.
+        
+        self.fixed.put(self.play_control_bool_checkbtn, play_control_x, play_control_y)
+        
         play_control_x += 10
+        play_control_y += self.play_control_bool_checkbtn.get_size_request()[1] + 10
         self.fixed.put(self.open_file_entry_label,
                        play_control_x, play_control_y)        
         
@@ -760,8 +784,39 @@ class PlayControl(gtk.VBox):
         
         self.pack_start(self.fixed)
         
+    def set_play_control_all_sensitive(self, widget, event):    
+        if 1 == event.button:
+            checkbtn_bool = self.play_control_bool_checkbtn.get_active()
+            if checkbtn_bool:
+                self.set_play_control_false()
+            else:
+                self.set_play_control_true()
+                
+                
+    def set_play_control_true(self):        
+        self.set_play_control_function(True)
+        
+    def set_play_control_false(self):
+        self.set_play_control_function(False)
+        
+    def set_play_control_function(self, type_bool):
+        self.open_file_entry.set_sensitive(type_bool)
+        self.open_file_dir_entry.set_sensitive(type_bool)
+        self.play_or_pause_entry.set_sensitive(type_bool)
+        self.seek_entry.set_sensitive(type_bool)
+        self.back_entry.set_sensitive(type_bool)
+        self.full_entry.set_sensitive(type_bool)
+        self.pre_a_entry.set_sensitive(type_bool)
+        self.next_a_entry.set_sensitive(type_bool)
+        self.add_volume_entry.set_sensitive(type_bool)
+        self.sub_volume_entry.set_sensitive(type_bool)
+        self.mute_entry.set_sensitive(type_bool)
+        self.concise_entry.set_sensitive(type_bool)
+
+        
     def get_play_control_state(self):    
         play_control_dict = {}
+        play_control_dict["play_control_bool"] = self.play_control_bool_checkbtn.get_active()
         # Left.
         play_control_dict["open_file_key"] =  self.open_file_entry.get_text()
         play_control_dict["open_file_dir_key"] = self.open_file_dir_entry.get_text()
@@ -792,6 +847,8 @@ class OtherKey(gtk.VBox):
         
         entry_width  = 150
         entry_height = 24
+        # set other_key bool.
+        
         # Add Brightness.
         self.add_bri_entry_label = Label("增加亮度")
         self.add_bri_entry       = ShortcutKeyEntry()

@@ -1067,7 +1067,7 @@ class PlayerBox(object):
         
         self.mp.connect("get-time-pos", self.get_time_pos)
         self.mp.connect("get-time-length", self.get_time_length)
-        self.mp.connect("play-init", self.init_video_setting)
+        # self.mp.connect("play-init", self.init_video_setting)
         self.mp.connect("play-start", self.media_player_start)
         self.mp.connect("play-end", self.media_player_end)
         self.mp.connect("play-next", self.media_player_next)
