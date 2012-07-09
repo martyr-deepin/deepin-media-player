@@ -1011,20 +1011,6 @@ class PlayerBox(object):
         open_dialog.destroy()
 
     def show_open_dialog_window(self):
-        # open dialog window.
-        # open_dialog = OpenDialog()
-
-        # open_dialog.connect("get-path-name", self.get_path_name)
-        # open_dialog.set_filter({"所有文件":".*",
-        #                         "音频文件":"audio/mpeg",
-        #                         "视频文件":"video/x-msvideo|.rmvb",
-        #                         "播放列表":".dmp"})
-
-        # open_dialog.combo_box.item_label.text = "所有文件"
-        # open_dialog.set_title("深度影音打开")
-        # open_dialog.filter_to_file_type("所有文件")
-        # open_dialog.show_open_window()
-        # open_dialog.set_keep_above(True)
         open_dialog = gtk.FileChooserDialog("深度影音打开文件对话框",
                                             None,
                                             gtk.FILE_CHOOSER_ACTION_OPEN,
@@ -1053,8 +1039,10 @@ class PlayerBox(object):
 
         # Add play file.
         if os.path.isfile(path_string):
-            self.mp.addPlayFile(path_string)
-        
+            if self.mp.findFile(path_string):                
+                self.mp.addPlayFile(path_string)
+            else:    
+                self.messagebox("无效的文件")
 
 
     def show_bottom(self):
