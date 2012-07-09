@@ -1172,8 +1172,10 @@ class ScreenShot(gtk.VBox):
              if "true" == ini_bool.lower():
                  self.save_file_radio.set_active(False)
                  self.save_clipboard_radio.set_active(True)        
-                 self.save_path_entry.entry.set_editable(False)            
-                 self.save_path_button.set_clickable(False)
+                 self.save_path_entry.set_editable(False)
+                 self.save_path_entry.set_sensitive(False)
+                 self.save_path_button.set_sensitive(False)
+                 self.save_type_combo.set_sensitive(False)                 
                  
         # 
         self.current_show_sort_label = Label("")
@@ -1245,15 +1247,18 @@ class ScreenShot(gtk.VBox):
     def save_file_radio_clicked(self, widget, event):    
         if 1 == event.button:
             self.save_path_entry.entry.set_editable(True)
-            self.save_path_button.set_clickable(True)
-
+            self.save_path_entry.entry.set_sensitive(True)            
+            self.save_path_button.set_sensitive(True)            
+            self.save_path_entry.set_sensitive(True)
+            self.save_type_combo.set_sensitive(True)
         
     def save_clipboard_radio_clicked(self, widget, event):    
         # self.save_path_entry.entry.set_editable(False)            
         if 1 == event.button:
             self.save_path_entry.entry.set_editable(False)
-            self.save_path_button.set_clickable(False)
-            #
+            self.save_path_entry.entry.set_sensitive(False)            
+            self.save_path_button.set_sensitive(False) 
+            self.save_type_combo.set_sensitive(False)
         
     def get_screenshot_state(self):     
         screenshot_dict = {}
