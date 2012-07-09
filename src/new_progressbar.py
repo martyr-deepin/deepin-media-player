@@ -23,7 +23,7 @@
 
 
 # Deein ui.
-from dtk.ui.utils import alpha_color_hex_to_cairo
+from dtk.ui.utils import alpha_color_hex_to_cairo,color_hex_to_cairo
 from dtk.ui.draw import draw_pixbuf
 
 import gtk
@@ -46,7 +46,7 @@ class ProgressBar(gtk.EventBox):
                  fg_pixbuf = app_theme.get_pixbuf("progressbar_fg.png"),
                  point_pixbuf = app_theme.get_pixbuf("slide_block.png"),
                  hight_pixbuf = app_theme.get_pixbuf("progressbar_hight.png"),
-                 cache_fg_pixbuf = app_theme.get_pixbuf("progressbar_hight.png")
+                 cache_fg_pixbuf = app_theme.get_pixbuf("progressbar/cache_fg_pixbuf.png")
                  ):
         gtk.EventBox.__init__(self)
         '''Set progresbar attr.'''
@@ -68,6 +68,9 @@ class ProgressBar(gtk.EventBox):
         self.cache_list = []
         for i in range(0, int(max_value)):
             self.cache_list.append(0) 
+            
+        for i in range(0, 20):    
+            self.cache_list[i] = 1
             
         self.progressbar_state = False
         self.__max_value  = max_value
@@ -157,7 +160,8 @@ class ProgressBar(gtk.EventBox):
     def __draw_progressbar_cache(self, cr, x, y, w, h):
         
         cr.set_line_width(self.__line_width-1)
-        cr.set_source_rgba(*alpha_color_hex_to_cairo(self.__fg_color.get_color_info()))                                        
+        # cr.set_source_rgba(*alpha_color_hex_to_cairo(self.__fg_color.get_color_info()))                                        
+        cr.set_source_rgb(*color_hex_to_cairo("#8c8c8c"))                                        
         
         for i in range(0, 100):            
             if self.cache_list[i]:
@@ -166,6 +170,12 @@ class ProgressBar(gtk.EventBox):
                 #            y + self.__progressbar_padding_y)
                 # cr.line_to(x  + self.__fg_padding_x , 
                 #            y + self.__progressbar_padding_y)
+                # cache_pixbuf = self.__cache_fg_pixbuf.get_pixbuf()
+                # cr.set_source_pixbuf(cache_pixbuf, 
+                #                      x + cache_padding_x ,
+                #                      y + self.__progressbar_padding_y)
+                # cr.paint_with_alpha(1)
+                
                 cr.move_to(x+ cache_padding_x, y + self.__progressbar_padding_y)
                 cr.line_to(x + cache_padding_x+5, 
                            y + self.__progressbar_padding_y)

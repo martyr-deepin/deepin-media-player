@@ -519,12 +519,11 @@ class PlayerBox(object):
         h = widget.allocation.height
         bottom_padding = 10
         drag_bool = False
-        
+
         # show scrren right menu.        
         if is_right_button(event):
             if not self.open_button.leave_bool and not self.open_button_right.leave_bool and not self.screen_pop_menu.leave_bool:
                 self.screen_right_key_menu(event)
-        
         if (w - bottom_padding <= event.x <= w) and (h - bottom_padding <= event.y <= h):
             if "MplayerView" != type(widget).__name__:
                 drag = gtk.gdk.WINDOW_EDGE_SOUTH_EAST
@@ -544,6 +543,7 @@ class PlayerBox(object):
     def app_scroll_event(self, widget, event, type_bool):
         config_type = self.config.get("OtherKey", "mouse_wheel_event")
         other_key_bool = self.config.get("OtherKey", "other_key_bool")
+        
         if "禁用" == config_type or other_key_bool.lower() == "false": # seek back.
             pass
         else: # Set volume.
@@ -1597,9 +1597,10 @@ class PlayerBox(object):
         config_string = self.config.get("OtherKey", "mouse_left_single_clicked")
         
         
-        if "禁用" == config_string:
-            pass
-        else:
+        # if "禁用" == config_string:
+        #     pass
+        # else:
+        if True:
             if is_single_click(event):
                 if not self.pause_bool:
                     if not self.open_button.leave_bool and not self.open_button_right.leave_bool and not self.screen_pop_menu.leave_bool:
@@ -1608,9 +1609,10 @@ class PlayerBox(object):
                         self.pause_x = event.x # Save x postion.
                         self.pause_y = event.y # Save y postion.
                 else:
-                    if self.pause_time_id:
-                        gtk.timeout_remove(self.pause_time_id)
-                        self.pause_bool = False
+                    if not ("禁用" == config_string):
+                        if self.pause_time_id:
+                            gtk.timeout_remove(self.pause_time_id)
+                            self.pause_bool = False
 
         # Double clicked full.
         config_string = self.config.get("OtherKey", "mouse_left_double_clicked")
@@ -1674,7 +1676,7 @@ class PlayerBox(object):
         self.hide_preview_leave(widget, event)
 
         # pause /play. 123456 motion.
-        if self.pause_bool:
+        if self.pause_bool:            
             if abs(self.pause_x - event.x) > 5 or abs(self.pause_y - event.y) > 5:
                 self.pause_bool = False
                 self.app.window.begin_move_drag(self.event_button,
@@ -1685,6 +1687,7 @@ class PlayerBox(object):
     def screen_media_player_clear(self, widget, event): # screen: button-release-event
         # pause / play 123456 release.
         other_key_bool = self.config.get("OtherKey", "other_key_bool")
+        
         if other_key_bool.lower() == "true":
             if self.pause_bool:
                 if 1 == self.mp.state:
