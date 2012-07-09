@@ -232,6 +232,9 @@ class PlayerBox(object):
         self.menu_subtitle_normal_pixbuf = app_theme.get_pixbuf("screen/menu_subtitle_normal.png")
         self.menu_subtitle_hover_pixbuf  = app_theme.get_pixbuf("screen/menu_subtitle_hover.png")
         
+        # play sequence pixbuf.
+        self.play_sequence_select_normal_pixbuf   =  app_theme.get_pixbuf("screen/check_normal.png")
+        self.play_sequence_select_hover_pixbuf    =  app_theme.get_pixbuf("screen/check_hover.png")
         
         
         # Set background.
@@ -2093,13 +2096,43 @@ class PlayerBox(object):
                                  (None,  "2倍尺寸",       self.set_2x_video_play),
                                  # (None),
                                  # (None, "全屏/退出", None),
-                                 ])
+                                 ])        
+        
+        # 0: single playing.      
+        single_play_state       = 0
+        # 1: order playing.     
+        order_play_state        = 1
+        # 2: random player.      
+        random_play_state       = 2
+        # 3: single cycle player. 
+        signle_cycle_play_state = 3
+        # 4: list recycle play. 
+        list_recycle_play_state = 4
+        
+        play_sequence_pixbuf = (self.play_sequence_select_normal_pixbuf, self.play_sequence_select_hover_pixbuf)
+        single_pixbuf = None
+        order_pixbuf  = None
+        random_pixbuf = None
+        signle_cycle_pixbuf = None
+        list_recycle_pixbuf = None
+        
+        if self.mp.playListState   == single_play_state:
+            single_pixbuf = play_sequence_pixbuf
+        elif self.mp.playListState == order_play_state:    
+            order_pixbuf  = play_sequence_pixbuf
+        elif self.mp.playListState == random_play_state:
+            random_pixbuf = play_sequence_pixbuf
+        elif self.mp.playListState == signle_cycle_play_state:    
+            signle_cycle_pixbuf = play_sequence_pixbuf
+        elif self.mp.playListState == list_recycle_play_state:    
+            list_recycle_pixbuf = play_sequence_pixbuf
+
         # In title root menu.
-        self.play_state_menu = Menu([(None, "单个播放", self.sigle_play),
-                                     (None, "顺序播放", self.sequence_play),
-                                     (None, "随机播放", self.rand_play),
-                                     (None, "单个循环", self.sigle_loop_play),
-                                     (None, "列表循环", self.loop_list_play)]
+        self.play_state_menu = Menu([(single_pixbuf, "单个播放", self.sigle_play),
+                                     (order_pixbuf, "顺序播放", self.sequence_play),
+                                     (random_pixbuf, "随机播放", self.rand_play),
+                                     (signle_cycle_pixbuf, "单个循环", self.sigle_loop_play),
+                                     (list_recycle_pixbuf, "列表循环", self.loop_list_play)]
                                     )
         # In title root menu.
         self.play_menu = Menu([((self.menu_full_normal_pixbuf, self.menu_full_hover_pixbuf), "全屏播放", self.key_return),
@@ -2142,12 +2175,41 @@ class PlayerBox(object):
     '''Screen right key menu.'''
     def screen_right_key_menu(self, event):
         
+        # 0: single playing.      
+        single_play_state       = 0
+        # 1: order playing.     
+        order_play_state        = 1
+        # 2: random player.      
+        random_play_state       = 2
+        # 3: single cycle player. 
+        signle_cycle_play_state = 3
+        # 4: list recycle play. 
+        list_recycle_play_state = 4
+        
+        play_sequence_pixbuf = (self.play_sequence_select_normal_pixbuf, self.play_sequence_select_hover_pixbuf)
+        single_pixbuf = None
+        order_pixbuf  = None
+        random_pixbuf = None
+        signle_cycle_pixbuf = None
+        list_recycle_pixbuf = None
+        
+        if self.mp.playListState   == single_play_state:
+            single_pixbuf = play_sequence_pixbuf
+        elif self.mp.playListState == order_play_state:    
+            order_pixbuf  = play_sequence_pixbuf
+        elif self.mp.playListState == random_play_state:
+            random_pixbuf = play_sequence_pixbuf
+        elif self.mp.playListState == signle_cycle_play_state:    
+            signle_cycle_pixbuf = play_sequence_pixbuf
+        elif self.mp.playListState == list_recycle_play_state:    
+            list_recycle_pixbuf = play_sequence_pixbuf
+
         # screen right menu set mplayer play state.
-        play_state_menu = Menu([(None, "单个播放", self.sigle_play),
-                                (None, "顺序播放", self.sequence_play),
-                                (None, "随机播放", self.rand_play),
-                                (None, "单个循环", self.sigle_loop_play),
-                                (None, "列表循环", self.loop_list_play)]
+        play_state_menu = Menu([(single_pixbuf, "单个播放", self.sigle_play),
+                                (order_pixbuf, "顺序播放", self.sequence_play),
+                                (random_pixbuf, "随机播放", self.rand_play),
+                                (signle_cycle_pixbuf, "单个循环", self.sigle_loop_play),
+                                (list_recycle_pixbuf, "列表循环", self.loop_list_play)]
                                )
         
         play_menu = Menu([                                                    
