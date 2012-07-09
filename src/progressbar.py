@@ -139,11 +139,18 @@ class ProgressBar(object):
         cr.fill()    
         
         # Draw hight point.    
-        if pos > hight_pixbuf.get_width():    
+        if pos > hight_pixbuf.get_width():            
             draw_pixbuf(cr, 
                         hight_pixbuf, 
                         x + pos - hight_pixbuf.get_width(), 
                         y + 2)
+        else:    
+            if pos:
+                hight_scale_pixbuf = hight_pixbuf.scale_simple(pos ,hight_pixbuf.get_height(), gtk.gdk.INTERP_BILINEAR)
+                draw_pixbuf(cr, 
+                            hight_scale_pixbuf, 
+                            x + pos - hight_scale_pixbuf.get_width(), 
+                            y + 2)
             
         # Draw line.        
         cr.set_source_rgba(1, 1, 1, 0.1) # 10% #FFFFFF.
