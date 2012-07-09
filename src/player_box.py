@@ -2221,7 +2221,7 @@ class PlayerBox(object):
                                              (None, "最近播放文件", self.the_last_new_play_file),
                                              (None, "播放顺序", self.menu),
                                              (None, "排序", self.menu2),
-                                             (None, "视图", None),
+                                             # (None, "视图", None),
                                              (None),
                                              (None, "打开所在文件夹", self.open_current_file_dir)
                                              ],
