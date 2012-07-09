@@ -78,6 +78,7 @@ def init_config():
             config.set("PlayControl", "mute_key",          "m")
             config.set("PlayControl", "concise_key",       "Shift+Return")
             #[OtherKey]
+            config.set("OtherKey", "other_key_bool",         "True")
             config.set("OtherKey", "add_brightness_key",     "=")
             config.set("OtherKey", "sub_brightness_key",     "-")
             config.set("OtherKey", "inverse_rotation_key",   "w")

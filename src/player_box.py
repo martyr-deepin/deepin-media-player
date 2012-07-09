@@ -532,7 +532,8 @@ class PlayerBox(object):
 
     def app_scroll_event(self, widget, event, type_bool):
         config_type = self.config.get("OtherKey", "mouse_wheel_event")
-        if "NULL" == config_type: # seek back.
+        other_key_bool = self.config.get("OtherKey", "other_key_bool")
+        if "禁用" == config_type or other_key_bool.lower() == "false": # seek back.
             pass
         else: # Set volume.
             volume_value = 5
@@ -600,9 +601,14 @@ class PlayerBox(object):
             self.volume_button.value = value
             
     def init_config_key(self):
-        # Init Config keys.
-        # [PlayControl] Init.
-        # open file key init.(left)
+      self.keymap = {}
+      # Init Config keys.
+      # [PlayControl] Init.
+      # open file key init.(left)        
+      play_control_bool = self.config.get("PlayControl", "play_control_bool")
+      other_key_bool    = self.config.get("OtherKey",    "other_key_bool")
+      
+      if play_control_bool.lower() == "true":    
         config_key = self.config.get("PlayControl", "open_file_key")
         self.keymap[config_key.lower()] = self.show_open_dialog_window
         # open file dir key init.
@@ -639,6 +645,7 @@ class PlayerBox(object):
         config_key = self.config.get("PlayControl", "concise_key")
         self.keymap[config_key.lower()] = self.key_concise
         # [OtherKey].
+      if other_key_bool.lower == "true":  
         # add brightness key init.
         config_key = self.config.get("OtherKey", "add_brightness_key")
         self.keymap[config_key.lower()] = self.key_add_brightness
@@ -668,9 +675,8 @@ class PlayerBox(object):
         self.keymap[config_key.lower()] = self.key_subtitle_advance
         # quit full play window.
         self.keymap["escape".lower()] = self.key_quit_full
-        # print config_key
-
-
+        # print config_key        
+        
     def get_key_event(self, widget, event): # app: key-release-event
         keyval_name = get_keyevent_name(event)
         # Init config keys.
@@ -1257,7 +1263,7 @@ class PlayerBox(object):
 
         # Set minimize pause play.
         if self.minimize_pause_play_bool:
-            config_bool = self.config.get("SystemSet", "minimize_pause_play")
+            config_bool = self.config.get("SystemSet", "minimize_pause_play")            
             if config_bool:
                 if "true" == config_bool.lower():
                     self.virtual_set_start_btn_clicked()
@@ -1587,14 +1593,15 @@ class PlayerBox(object):
             self.event_time = event.time
 
         config_string = self.config.get("OtherKey", "mouse_left_single_clicked")
-
-        if "NULL" == config_string:
+        
+        
+        if "禁用" == config_string:
             pass
         else:
             if is_single_click(event):
                 if not self.pause_bool:
                     if not self.open_button.leave_bool and not self.open_button_right.leave_bool and not self.screen_pop_menu.leave_bool:
-                        # pause / play. 123456 press.
+                        # pause / play. 123456 press.                        
                         self.pause_bool = True # Save pause bool.
                         self.pause_x = event.x # Save x postion.
                         self.pause_y = event.y # Save y postion.
@@ -1605,8 +1612,9 @@ class PlayerBox(object):
 
         # Double clicked full.
         config_string = self.config.get("OtherKey", "mouse_left_double_clicked")
-
-        if "NULL" == config_string:
+        other_key_bool = self.config.get("OtherKey", "other_key_bool")
+                
+        if "禁用" == config_string or other_key_bool.lower() == "false":
             pass
         else:
             if is_double_click(event):
@@ -1674,10 +1682,12 @@ class PlayerBox(object):
 
     def screen_media_player_clear(self, widget, event): # screen: button-release-event
         # pause / play 123456 release.
-        if self.pause_bool:
-            if 1 == self.mp.state:
-                self.pause_time_id = gtk.timeout_add(250, self.virtual_set_start_btn_clicked)
-                self.pause_bool = False
+        other_key_bool = self.config.get("OtherKey", "other_key_bool")
+        if other_key_bool.lower() == "true":
+            if self.pause_bool:
+                if 1 == self.mp.state:
+                    self.pause_time_id = gtk.timeout_add(250, self.virtual_set_start_btn_clicked)
+                    self.pause_bool = False
 
     def virtual_set_start_btn_clicked(self):
         if self.mode_state_bool:

@@ -838,7 +838,7 @@ class OtherKey(gtk.VBox):
     def __init__(self):
         gtk.VBox.__init__(self)
         self.ini = Config(config_path)
-        # self.ini = config
+        # self.ini = config                
         self.fixed = gtk.Fixed()
         self.label = Label("其它快捷键")
         self.label.set_size_request(label_width, label_height)                
@@ -848,6 +848,9 @@ class OtherKey(gtk.VBox):
         entry_width  = 150
         entry_height = 24
         # set other_key bool.
+        
+        self.other_key_bool_checkbtn = CheckButton("开启热键")
+        self.other_key_bool_checkbtn.connect("button-press-event", self.set_other_key_bool_checkbtn_press)
         
         # Add Brightness.
         self.add_bri_entry_label = Label("增加亮度")
@@ -906,7 +909,7 @@ class OtherKey(gtk.VBox):
         if text_string:
             self.switch_audio_track_entry.set_shortcut_key(text_string)
         else:    # 
-            self.switch_audio_track_entry.set_shortcut_key("NULL")
+            self.switch_audio_track_entry.set_shortcut_key("禁用")
             
         self.switch_audio_track_entry.set_size(entry_width, entry_height)
         # Load subtitle.
@@ -942,7 +945,7 @@ class OtherKey(gtk.VBox):
         # mouse left single clicked.        
         self.mouse_left_single_clicked_combo_label = Label("鼠标左键单击")
         self.mouse_left_single_clicked_combo       = ComboBox([("暂停/播放", 1),
-                                                               ("NULL", 2)])
+                                                               ("禁用", 2)])
 
         text_string = self.ini.get("OtherKey", "mouse_left_single_clicked")
         if text_string:
@@ -954,23 +957,35 @@ class OtherKey(gtk.VBox):
         # mouse left double clicked.
         self.mouse_left_double_clicked_combo_label = Label("鼠标左键双击")
         self.mouse_left_double_clicked_combo       = ComboBox([("全屏", 1),
-                                                               ("NULL", 2)])
+                                                               ("禁用", 2)])
         text_string = self.ini.get("OtherKey", "mouse_left_double_clicked")
         if text_string:
-            self.mouse_left_double_clicked_combo.label.set_text(text_string)        
+            self.mouse_left_double_clicked_combo.label.set_text(text_string)
             
         # self.mouse_left_double_clicked_combo.set_size_request(entry_width, entry_height)
         # mouse wheel.
         self.mouse_wheel_combo_label = Label("鼠标滚轮")
         self.mouse_wheel_combo       = ComboBox([("音量", 1),
-                                                 ("NULL", 2)])
+                                                 ("禁用", 2)])
         text_string = self.ini.get("OtherKey", "mouse_wheel_event")
         if text_string:
             self.mouse_wheel_combo.label.set_text(text_string)        
             
         # self.mouse_wheel_combo.set_size_request(entry_width, entry_height)
         
+        # Set other key bool.
+        other_key_bool = self.ini.get("OtherKey", "other_key_bool")    
         
+        self.other_key_bool_checkbtn.set_active(True)
+        self.set_other_key_true()
+        
+        if other_key_bool:    
+            if "true" == other_key_bool.lower():
+                pass
+            else:
+                self.other_key_bool_checkbtn.set_active(False)
+                self.set_other_key_false()
+            
         other_Key_x = 20
         other_Key_y = 40
         # label.
@@ -978,6 +993,10 @@ class OtherKey(gtk.VBox):
         # heparator.
         self.fixed.put(self.heparator, heparator_x, heparator_y)
         ########################################################
+        self.fixed.put(self.other_key_bool_checkbtn,
+                       other_Key_x, other_Key_y)
+        
+        other_Key_y += self.other_key_bool_checkbtn.get_size_request()[1] + 10
         other_Key_x += 10        
         # Add Brightness.
         self.fixed.put(self.add_bri_entry_label, 
@@ -1024,7 +1043,7 @@ class OtherKey(gtk.VBox):
         ##############################################
         # Load subtitle.
         other_Key_x_padding = other_Key_x + self.switch_audio_track_entry.get_size_request()[0] + self.switch_audio_track_entry_label.get_size_request()[0]
-        other_Key_y = 40
+        other_Key_y = 40 + self.other_key_bool_checkbtn.get_size_request()[1] + 10
         self.fixed.put(self.load_subtitle_entry_label,
                        other_Key_x_padding,  other_Key_y)
         other_Key_y += self.load_subtitle_entry_label.get_size_request()[1] + 2
@@ -1071,9 +1090,38 @@ class OtherKey(gtk.VBox):
                 
         self.pack_start(self.fixed)
     
+    def set_other_key_bool_checkbtn_press(self, widget, event):
+        if 1 == event.button:
+            if self.other_key_bool_checkbtn.get_active():
+                self.set_other_key_false()
+            else:
+                self.set_other_key_true()
+                
+            
+    def set_other_key_false(self):    
+        self.set_other_key_bool_function(False)
+    
+    def set_other_key_true(self):
+        self.set_other_key_bool_function(True)
+    
+    def set_other_key_bool_function(self, type_bool):    
+        self.add_bri_entry.set_sensitive(type_bool)
+        self.sub_bri_entry.set_sensitive(type_bool)
+        self.inverse_rotation_entry.set_sensitive(type_bool)
+        self.clockwise_entry.set_sensitive(type_bool)
+        self.sort_image_entry.set_sensitive(type_bool)
+        self.switch_audio_track_entry.set_sensitive(type_bool)
+        self.load_subtitle_entry.set_sensitive(type_bool)
+        self.subtitle_advance_entry.set_sensitive(type_bool)
+        self.subtitle_delay_entry.set_sensitive(type_bool)
+        self.mouse_left_single_clicked_combo.set_sensitive(type_bool)
+        self.mouse_left_double_clicked_combo.set_sensitive(type_bool)        
+        self.mouse_wheel_combo.set_sensitive(type_bool)
+        
     def get_other_set_state(self):
         other_set_dict = {}
         # Left.
+        other_set_dict["other_key_bool"]     = self.other_key_bool_checkbtn.get_active()
         other_set_dict["add_brightness_key"] = self.add_bri_entry.get_text()
         other_set_dict["sub_brightness_key"] = self.sub_bri_entry.get_text()
         other_set_dict["inverse_rotation_key"] = self.inverse_rotation_entry.get_text()
