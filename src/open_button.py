@@ -368,7 +368,7 @@ gobject.type_register(ScreenMenu)
 
 from dtk.ui.entry import Entry
 from dtk.ui.window import Window
-
+from dtk.ui.dialog          import InputDialog
 
 class OpenUrl(gobject.GObject):
     __gsignals__ = {
@@ -378,43 +378,49 @@ class OpenUrl(gobject.GObject):
     def __init__(self):
         gobject.GObject.__init__(self)
         # url window dialog.
-        self.url_win = Window()
+        self.url_win = InputDialog("输入URL地址","请输入有效的HTML地址", confirm_callback = self.get_url_name)
+
         # Set url window dialog.
-        self.url_win.set_type_hint(gtk.gdk.WINDOW_TYPE_HINT_DIALOG)
-        self.url_win.set_skip_taskbar_hint(True)
-        self.url_win.set_resizable(False)
-        self.url_win.set_modal(True)
-        
+        # self.url_win.set_type_hint(gtk.gdk.WINDOW_TYPE_HINT_DIALOG)
+        # self.url_win.set_skip_taskbar_hint(True)
+        # self.url_win.set_resizable(False)
+        # self.url_win.set_modal(True)        
         self.url_win.set_position(gtk.WIN_POS_CENTER)
-        # url entry init.
-        self.url_text = Entry()
-        self.url_text.set_size_request(300, 40)
-        # Init url text events.
-        self.url_text.connect("key-press-event", self.get_url_text_name)
-        # add url text.
-        self.url_win.window_frame.add(self.url_text)
+        # # url entry init.
+        # self.url_text = Entry()
+        # self.url_text.set_size_request(300, 40)
+        # # Init url text events.
+        self.url_win.entry.connect("key-press-event", self.get_url_text_name)
+        # # add url text.
+        # self.url_win.window_frame.add(self.url_text)
         self.url_win.show_all()
+        
+    def get_url_name(self, url_name):    
+        self.get_url_text_name_function(url_name)
         
     def get_url_text_name(self, url_text, event):        
         if event.keyval == 65293: # Enter.
-            self.url_win.set_opacity(0)
-            # get url_name.
-            url_name = self.url_text.get_text()
-            # emit url_text url name.            
-            if len(url_name) > 0:
-                if url_name[0:5] != "https":
-                    try:                        
-                        self.emit("openurl-url-name", "%s"%(url_name), True)
-                    except:
-                        self.emit("openurl-url-name", '%s'%("connect url Error!!"), False)
-                else:        
-                    self.emit("openurl-url-name", "%s"%("Input url name no :https!!"), False)
-            else:        
-                self.emit("openurl-url-name", "%s"%("Input url Empty!!"), False)
-            # destroy window.
-            self.url_win.destroy()
+            self.get_url_text_name_function(self.url_win.entry.get_text())
             
-    
+    def get_url_text_name_function(self, url_name):        
+        self.url_win.set_opacity(0)
+        # get url_name.
+        url_name = url_name
+        # emit url_text url name.            
+        if len(url_name) > 0:
+            if url_name[0:5] != "https":
+                try:                        
+                    self.emit("openurl-url-name", "%s"%(url_name), True)
+                except:
+                    self.emit("openurl-url-name", '%s'%("connect url Error!!"), False)
+            else:        
+                self.emit("openurl-url-name", "%s"%("Input url name no :https!!"), False)
+        else:        
+            self.emit("openurl-url-name", "%s"%("Input url Empty!!"), False)
+            
+        # destroy window.
+        self.url_win.destroy()
+        
 gobject.type_register(OpenUrl)
 
 if __name__ == "__main__":

@@ -297,8 +297,8 @@ class  Mplayer(gobject.GObject):
         if not self.state:
             self.lenState = 1 
             volume = self.volume
-            print self.volumebool
-            print self.volume
+            # print self.volumebool
+            # print self.volume
             # -input fil.. streme player.
             if self.xid:
                 CMD = ['mplayer',

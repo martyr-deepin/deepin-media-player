@@ -1048,8 +1048,7 @@ class PlayerBox(object):
         
         self.screen.queue_draw()
         #self.unset_flags()
-        self.mp = Mplayer(widget.window.xid)
-        self.init_volume_value()  # init volume.
+        self.mp = Mplayer(widget.window.xid)        
         
         # Init darg file signal.
         drag_connect(self.screen, self.mp, self.play_list.list_view, True)
@@ -1068,7 +1067,9 @@ class PlayerBox(object):
         self.mp.connect("clear-play-list", self.clear_play_list)
 
         self.mp.playListState = 1 # init play mode.
-                
+        
+        self.init_volume_value()  # init volume.
+        
         # Init last new play file.
         self.the_last_new_play_file_list = self.last_new_play_file_function.set_file_time(self.mp.path)
         
@@ -1100,14 +1101,14 @@ class PlayerBox(object):
                 self.play_list_button_clicked(self.play_list_button.button)
         
     def init_volume_value(self):            
-        volume_value = self.config.get("Window", "volume")
+        volume_value = self.config.get("Window",     "volume")
         volume_mute_bool = self.config.get("Window", "mute")
         # MUTE_STATE = "-1"
         # print volume_mute_bool
         if volume_value:            
             self.volume_button.value = int(volume_value)
-            self.bottom_toolbar.volume_button.value = int(volume_value)                        
-            self.mp.setvolume(self.volume_button.value)
+            self.bottom_toolbar.volume_button.value = int(volume_value)
+            self.mp.volume = int(volume_value)
         # if volume_mute_bool == MUTE_STATE: # set mute.
         #     print "mute volume."
         #     self.volume_button.set_volume_mute()
@@ -2359,7 +2360,7 @@ class PlayerBox(object):
     def open_url_dialog_window(self):    
         open_url = OpenUrl()
         open_url.connect("openurl-url-name", self.get_url_name)
-
+                
     def del_index(self):
         # self.delete_play_list_file(self.play_list.list_view, self.play_list.list_view.items)
         self.play_list.list_view.delete_select_items()
