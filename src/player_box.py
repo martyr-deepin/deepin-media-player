@@ -112,7 +112,9 @@ class PlayerBox(object):
         self.config = Config(get_home_path() + "/.config/deepin-media-player/deepin_media_config.ini")
         self.config.connect("config-changed", self.modify_config_section_value)
         # self.ini.load()
-
+        
+        # same name id init.
+        self.get_same_name_id = None
         # screen draw borde video width and height.
         #get_vide_width_height (function return value)
         
@@ -120,7 +122,7 @@ class PlayerBox(object):
         self.last_new_play_file_function = LastNewPlayFile()
         self.last_new_play_file_function.connect("get-file-name", self.get_last_new_play_file_name)
         self.the_last_new_play_file_list = []
-        
+                
         # playlist.
         self.add_play_list_length_id = None
         self.show_or_hide_play_list_bool = False
@@ -181,7 +183,7 @@ class PlayerBox(object):
         self.window_tool_tip = OSDTooltip(self.screen_frame, offset_x=20, offset_y=20)
         '''mid open button.'''
         self.open_button = OpenButton(self.screen_frame, "打开文件", 108, 40)
-        self.open_button.connect("openbutton-clicked-event", lambda w, e: self.add_file())
+        self.open_button.connect("openbutton-clicked-event", lambda w, e: self.add_file_clear())
         self.open_button.move(-14, 30)
         open_button_right_width = 32
         open_button_right_height = 40
@@ -195,7 +197,7 @@ class PlayerBox(object):
         self.open_button_right.connect("openbutton-clicked-event", self.open_button_popup_screen_menu)        
         self.open_button_right.move(open_button_right_x, open_button_right_y)
         menu_item = [
-            (app_theme.get_pixbuf("screen_menu_open_dir.png"), "打开文件夹", self.add_file_dir),
+            (app_theme.get_pixbuf("screen_menu_open_dir.png"), "打开文件夹", self.add_file_dir_clear),
             # (app_theme.get_pixbuf("screen_menu_open_cdrom.png"),"打开光盘", None),
             (app_theme.get_pixbuf("screen_menu_open_url.png"), "打开URL", self.open_url_dialog_window),
             ]
@@ -990,6 +992,7 @@ class PlayerBox(object):
             self.messagebox("下一首")
 
     def open_button_clicked(self, widget):
+        self.mp.clearPlayList()
         self.show_open_dialog_window()
         # self.clear_play_list_bool = True
         
@@ -1051,7 +1054,7 @@ class PlayerBox(object):
         # Add play file.
         if os.path.isfile(path_string):
             self.mp.addPlayFile(path_string)
-
+        
 
 
     def show_bottom(self):
@@ -1082,6 +1085,7 @@ class PlayerBox(object):
         drag_connect(self.screen, self.mp, self.play_list.list_view, True)
         drag_connect(self.play_list.list_view, self.mp, self.play_list.list_view, False)
         
+        # Init media player event.
         self.mp.connect("get-time-pos", self.get_time_pos)
         self.mp.connect("get-time-length", self.get_time_length)
         # self.mp.connect("play-init", self.init_video_setting)
@@ -1093,7 +1097,8 @@ class PlayerBox(object):
         self.mp.connect("play-bseek", self.media_player_bseek)
         self.mp.connect("add-path", self.add_play_list)
         self.mp.connect("clear-play-list", self.clear_play_list)
-
+        self.mp.connect("same-name-event", self.get_same_name_event)
+        
         self.mp.playListState = 1 # init play mode.
         
         self.init_volume_value()  # init volume.
@@ -2146,8 +2151,8 @@ class PlayerBox(object):
                                ((self.menu_play_sequence_normal_pixbuf, self.menu_play_sequence_hover_pixbuf), "播放顺序", self.play_state_menu),
                                ])
         # In title root menu.
-        self.file_menu = Menu([(None, "打开文件", self.add_file),
-                               (None, "打开文件夹", self.add_file_dir)])
+        self.file_menu = Menu([(None, "打开文件", self.add_file_clear),
+                               (None, "打开文件夹", self.add_file_dir_clear)])
                               # (None, "播放光盘", None)])
 
         # In title root menu.
@@ -2263,8 +2268,8 @@ class PlayerBox(object):
                 ])
         
         self.screen_right_root_menu = Menu([
-                (None, "打开文件",   self.add_file),
-                (None, "打开文件夹", self.add_file_dir ),
+                (None, "打开文件",   self.add_file_clear),
+                (None, "打开文件夹", self.add_file_dir_clear),
                 (None, "打开URL",   self.open_url_dialog_window),
                 (None),
                 ((self.menu_full_normal_pixbuf, self.menu_full_hover_pixbuf), "全屏/退出",    self.key_return),
@@ -2284,13 +2289,41 @@ class PlayerBox(object):
     '''play list menu signal.'''
     def show_popup_menu(self, widget, event):
         if 3 == event.button:
-            
+            # 0: single playing.      
+            single_play_state       = 0
+            # 1: order playing.     
+            order_play_state        = 1
+            # 2: random player.      
+            random_play_state       = 2
+            # 3: single cycle player. 
+            signle_cycle_play_state = 3
+            # 4: list recycle play. 
+            list_recycle_play_state = 4
+        
+            play_sequence_pixbuf = (self.play_sequence_select_normal_pixbuf, self.play_sequence_select_hover_pixbuf)
+            single_pixbuf = None
+            order_pixbuf  = None
+            random_pixbuf = None
+            signle_cycle_pixbuf = None
+            list_recycle_pixbuf = None
+        
+            if self.mp.playListState   == single_play_state:
+                single_pixbuf = play_sequence_pixbuf
+            elif self.mp.playListState == order_play_state:    
+                order_pixbuf  = play_sequence_pixbuf
+            elif self.mp.playListState == random_play_state:
+                random_pixbuf = play_sequence_pixbuf
+            elif self.mp.playListState == signle_cycle_play_state:    
+                signle_cycle_pixbuf = play_sequence_pixbuf
+            elif self.mp.playListState == list_recycle_play_state:    
+                list_recycle_pixbuf = play_sequence_pixbuf
+
             '''play list popup menu'''
-            self.menu = Menu([(None, "单个播放", self.sigle_play),      # 0
-                              (None, "顺序播放", self.sequence_play),   # 1
-                              (None, "随机播放", self.rand_play),       # 2
-                              (None, "单个循环", self.sigle_loop_play), # 3
-                              (None, "列表循环", self.loop_list_play)]  # 4
+            self.menu = Menu([(single_pixbuf, "单个播放", self.sigle_play),      # 0
+                              (order_pixbuf, "顺序播放", self.sequence_play),   # 1
+                              (random_pixbuf, "随机播放", self.rand_play),       # 2
+                              (signle_cycle_pixbuf, "单个循环", self.sigle_loop_play), # 3
+                              (list_recycle_pixbuf, "列表循环", self.loop_list_play)]  # 4
                              )
 
             self.menu2 = Menu([(None, "按名称", self.name_sort),
@@ -2437,8 +2470,16 @@ class PlayerBox(object):
 
     def add_file(self):        
         self.show_open_dialog_window()
-
+        
     def add_file_dir(self):
+        self.show_open_dir_dialog_window()
+        
+    def add_file_clear(self):    
+        self.mp.clearPlayList()
+        self.show_open_dialog_window()
+        
+    def add_file_dir_clear(self):    
+        self.mp.clearPlayList()
         self.show_open_dir_dialog_window()
         
     def get_url_name(self, open_url, url_name, url_bool):
@@ -2579,4 +2620,25 @@ class PlayerBox(object):
                                                       self.screen_frame.get_colormap(),
                                                       0, 0, 0, 0, w, h)
         save_pixbuf.save(save_path_save_name + save_file_type, save_file_type[1:])
+        
+    def get_same_name_event(self, mplayer, path):
+        # if self.get_same_name_id:
+        #     gtk.timeout_remove(self.get_same_name_id)
+
+        # self.get_same_name_id = gtk.timeout_add(1000, self.play_same_name_file, path)
+        pass
+        
+    def play_same_name_file(self, path):    
+        # self.mp.play(path)        
+        
+        # self.play_control_panel.start_btn.start_bool = False
+        # self.play_control_panel.start_btn.queue_draw()
+        # self.bottom_toolbar.play_control_panel.start_btn.start_bool = False
+        # self.bottom_toolbar.play_control_panel.start_btn.queue_draw()
+
+        # # self.virtual_set_start_btn_clicked()
+        # print path        
+        # self.get_same_name_id = None
+        # return False
+        pass
         

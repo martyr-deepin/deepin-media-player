@@ -252,7 +252,9 @@ class  Mplayer(gobject.GObject):
         "add-path":(gobject.SIGNAL_RUN_LAST,
                     gobject.TYPE_NONE,(gobject.TYPE_STRING,)),
         "clear-play-list":(gobject.SIGNAL_RUN_LAST,
-                    gobject.TYPE_NONE,(gobject.TYPE_INT,))
+                    gobject.TYPE_NONE,(gobject.TYPE_INT,)),
+        "same-name-event":(gobject.SIGNAL_RUN_LAST,
+                    gobject.TYPE_NONE,(gobject.TYPE_STRING,))
         }
     def __init__(self, xid = None):
         
@@ -841,6 +843,7 @@ class  Mplayer(gobject.GObject):
             go = True           
             for i in self.playList:
                 if self.get_player_file_name(i) == self.get_player_file_name(path):
+                    self.emit("same-name-event", i)
                     go = False
                     break
             if path[0:4].lower() == "http":
