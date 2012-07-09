@@ -37,10 +37,10 @@ class ProgressBar(object):
 	
     def __init__(self,
                  max = 100,
-                 bg_pixbuf=app_theme.get_pixbuf("progressbar_bg.png"),
-                 fg_pixbuf=app_theme.get_pixbuf("progressbar_fg.png"),
-                 hight_pixbuf=app_theme.get_pixbuf("progressbar_hight.png"),
-                 drag_pixbuf=app_theme.get_pixbuf("slide_block.png")):
+                 bg_pixbuf=app_theme.get_pixbuf("progressbar/progressbar_bg.png"),
+                 fg_pixbuf=app_theme.get_pixbuf("progressbar/progressbar_fg.png"),
+                 hight_pixbuf=app_theme.get_pixbuf("progressbar/progressbar_hight.png"),
+                 drag_pixbuf=app_theme.get_pixbuf("progressbar/slide_block.png")):
         '''Init progressbar.'''
         self.pv = None
         # Init pixbuf.
