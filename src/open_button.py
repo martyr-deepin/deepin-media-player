@@ -56,9 +56,9 @@ class OpenButton(gobject.GObject):
                  draw_window,
                  text = "openbutton",
                  width=120, height=40,  
-                 normal_pixbuf = app_theme.get_pixbuf("normal_button_left.png"),
-                 hover_button_pixbuf = app_theme.get_pixbuf("hover_button_left.png"),
-                 press_button_pixbuf = app_theme.get_pixbuf("press_button_left.png")):
+                 normal_pixbuf = app_theme.get_pixbuf("screen_mid/normal_button_left.png"),
+                 hover_button_pixbuf = app_theme.get_pixbuf("screen_mid/hover_button_left.png"),
+                 press_button_pixbuf = app_theme.get_pixbuf("screen_mid/press_button_left.png")):
         gobject.GObject.__init__(self)
         '''Init set openbutton attr.'''
         self.draw_window = draw_window
@@ -214,7 +214,7 @@ class ScreenMenu(gobject.GObject):
                  draw_window,                 
                  menu_item = [],
                  x = 0, y = 0,
-                 menu_bg_pixbuf=app_theme.get_pixbuf("menu_bg_normal.png")
+                 menu_bg_pixbuf=app_theme.get_pixbuf("screen_mid/menu_bg_normal.png")
                  ):
         gobject.GObject.__init__(self)
         '''Init pixbuf.'''
@@ -379,7 +379,7 @@ from dtk.ui.dialog          import InputDialog
 class OpenUrl(gobject.GObject):
     __gsignals__ = {
         "openurl-url-name":(gobject.SIGNAL_RUN_LAST,
-                                    gobject.TYPE_NONE,(gobject.TYPE_STRING, gobject.TYPE_INT)),        
+                            gobject.TYPE_NONE,(gobject.TYPE_STRING, gobject.TYPE_INT)),
         }    
     def __init__(self):
         gobject.GObject.__init__(self)

@@ -191,15 +191,15 @@ class PlayerBox(object):
         open_button_right_y = 30
         self.open_button_right = OpenButton(self.screen_frame, "",
                                             open_button_right_width, open_button_right_height,
-                                            app_theme.get_pixbuf("normal_button_right.png"),
-                                            app_theme.get_pixbuf("hover_button_right.png"),
-                                            app_theme.get_pixbuf("press_button_right.png"))
+                                            app_theme.get_pixbuf("screen_mid/normal_button_right.png"),
+                                            app_theme.get_pixbuf("screen_mid/hover_button_right.png"),
+                                            app_theme.get_pixbuf("screen_mid/press_button_right.png"))
         self.open_button_right.connect("openbutton-clicked-event", self.open_button_popup_screen_menu)        
         self.open_button_right.move(open_button_right_x, open_button_right_y)
         menu_item = [
-            (app_theme.get_pixbuf("screen_menu_open_dir.png"), "打开文件夹", self.add_file_dir_clear),
-            # (app_theme.get_pixbuf("screen_menu_open_cdrom.png"),"打开光盘", None),
-            (app_theme.get_pixbuf("screen_menu_open_url.png"), "打开URL", self.open_url_dialog_window),
+            (app_theme.get_pixbuf("screen_mid/screen_menu_open_dir.png"), "打开文件夹", self.add_file_dir_clear),
+            # (app_theme.get_pixbuf("screen_mid/screen_menu_open_cdrom.png"),"打开光盘", None),
+            (app_theme.get_pixbuf("screen_mid/screen_menu_open_url.png"), "打开URL", self.open_url_dialog_window),
             ]
         self.screen_pop_menu = ScreenMenu(self.screen_frame, menu_item)
         self.screen_pop_menu.size(self.screen_pop_menu.width, self.screen_pop_menu.height - 26)
