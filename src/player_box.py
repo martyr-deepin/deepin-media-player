@@ -423,6 +423,8 @@ class PlayerBox(object):
         self.bottom_play_control_hbox_vframe_event_box.connect("motion-notify-event", self.hide_preview_function)
 
         self.keymap = {}
+        
+        self.cursor_type = None
 
     def get_last_new_play_file_name(self, LastNewPlayFile, file_name):    
         if file_name in self.mp.playList:
@@ -497,9 +499,13 @@ class PlayerBox(object):
             if "MplayerView" != type(widget).__name__:
                 drag = gtk.gdk.BOTTOM_RIGHT_CORNER
                 widget.window.set_cursor(gtk.gdk.Cursor(drag))
-        else:
+                
+                self.cursor_type = drag
+        elif self.cursor_type != None:
             widget.window.set_cursor(None)
             self.app.window.window.set_cursor(None)
+            
+            self.cursor_type = None
 
     def drag_resize_window(self, widget, event): # screen: button-press-event -> drag resize window.
         self.screen.grab_focus()
