@@ -86,11 +86,7 @@ class IniGui(DialogBox):
         self.scrolled_window = ScrolledWindow()
         
         self.scrolled_window.set_size_request(132, 1)        
-<<<<<<< HEAD
-        self.tree_view = TreeView(font_x_padding=15, arrow_x_padding=35, height = 30)
-=======
         self.tree_view = TreeView(font_x_padding=15, arrow_x_padding=35)
->>>>>>> f7d556314e618b785e5141d733203ff7f450a23a
         self.tree_view.draw_mask = self.draw_treeview_mask
         
         # TreeView event.
