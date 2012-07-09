@@ -20,16 +20,17 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from dtk.ui.osd_tooltip import OSDTooltip
-from dtk.ui.utils import cairo_state
-from dtk.ui.keymap import get_keyevent_name
-from dtk.ui.box import EventBox
-from dtk.ui.draw import draw_pixbuf
-from dtk.ui.frame import HorizontalFrame,VerticalFrame
-from dtk.ui.utils import is_double_click, is_single_click, is_right_button, color_hex_to_cairo
-from dtk.ui.constant import WIDGET_POS_BOTTOM_LEFT
-from dtk.ui.utils import get_widget_root_coordinate
-from dtk.ui.menu import Menu
+from dtk.ui.osd_tooltip     import OSDTooltip
+from dtk.ui.utils           import cairo_state
+from dtk.ui.keymap          import get_keyevent_name
+from dtk.ui.box             import EventBox
+from dtk.ui.draw            import draw_pixbuf
+from dtk.ui.frame           import HorizontalFrame,VerticalFrame
+from dtk.ui.utils           import is_double_click, is_single_click, is_right_button, color_hex_to_cairo
+from dtk.ui.constant        import WIDGET_POS_BOTTOM_LEFT
+from dtk.ui.utils           import get_widget_root_coordinate
+from dtk.ui.menu            import Menu
+from dtk.ui.volume_button   import VolumeButton
 
 from constant import APP_WIDTH, APP_HEIGHT
 from ini import Config
@@ -44,7 +45,7 @@ from toolbar import ToolBar
 from bottom_toolbar import BottomToolBar
 from play_control_panel import PlayControlPanel
 from play_list_button import PlayListButton
-from volume_button import VolumeButton
+# from volume_button import VolumeButton
 from drag import drag_connect
 from preview import PreView
 from ini_gui import IniGui,VIDEO_ADAPT_WINDOW_STATE,WINDOW_ADAPT_VIDEO_STATE,UP_CLOSE_VIDEO_STATE,AI_FULL_VIDEO_STATE
@@ -195,7 +196,7 @@ class PlayerBox(object):
         self.open_button_right.move(open_button_right_x, open_button_right_y)
         menu_item = [
             (app_theme.get_pixbuf("screen_menu_open_dir.png"), "打开文件夹", self.add_file_dir),
-            (app_theme.get_pixbuf("screen_menu_open_cdrom.png"),"打开光盘", None),                     
+            # (app_theme.get_pixbuf("screen_menu_open_cdrom.png"),"打开光盘", None),
             (app_theme.get_pixbuf("screen_menu_open_url.png"), "打开URL", self.open_url_dialog_window),
             ]
         self.screen_pop_menu = ScreenMenu(self.screen_frame, menu_item)        
@@ -318,7 +319,7 @@ class PlayerBox(object):
 
         # Toolbar2 volume button.
         self.bottom_toolbar.volume_button.value = 100
-        self.bottom_toolbar.volume_button.connect("get-value-event", self.volume_button_get_value_event, 2)
+        self.bottom_toolbar.volume_button.connect("volume-state-changed", self.volume_button_get_value_event, 2)
 
         # Child widget add to vbox.
         self.vbox.pack_start(self.screen_frame_event, True, True)
@@ -383,7 +384,7 @@ class PlayerBox(object):
         self.volume_button_hframe = HorizontalFrame()
         self.volume_button = VolumeButton(volume_y = 14, press_emit_bool = True)
         self.volume_button.value = 100
-        self.volume_button.connect("get-value-event", self.volume_button_get_value_event, 1) # 1 -> play_control_panel
+        self.volume_button.connect("volume-state-changed", self.volume_button_get_value_event, 1) # 1 -> play_control_panel
         self.volume_button.set_size_request(92, 40)
         self.volume_button_hframe.add(self.volume_button)
         self.volume_button_hframe.set(1, 0, 0, 0)
@@ -2022,7 +2023,7 @@ class PlayerBox(object):
 
         # In title root menu.
         self.volume_menu = Menu([(None, "声道选择", self.channel_select_menu),
-                                 (None, "配音选择", None),
+                                 # (None, "配音选择", None),
                                  (None),
                                  (None, "增大音量", None),
                                  (None, "减小音量", None),
@@ -2182,7 +2183,7 @@ class PlayerBox(object):
                 (None, "画面", screen_menu),
                 ((self.menu_volume_normal_pixbuf, self.menu_volume_hover_pixbuf), "声音", channel_select),
                 ((self.menu_subtitle_normal_pixbuf, self.menu_subtitle_hover_pixbuf), "字幕", None),
-                ((self.menu_setting_normal_pixbuf, self.menu_setting_hover_pixbuf), "播放器设置", None)
+                ((self.menu_setting_normal_pixbuf, self.menu_setting_hover_pixbuf), "播放器设置", self.config_gui) 
                 ], True)
         
         self.screen_right_root_menu.show((int(event.x_root), int(event.y_root)),
@@ -2220,7 +2221,7 @@ class PlayerBox(object):
                                              (None, "最近播放文件", self.the_last_new_play_file),
                                              (None, "播放顺序", self.menu),
                                              (None, "排序", self.menu2),
-                                             (None, "视图", None),
+                                             # (None, "视图", None),
                                              (None),
                                              (None, "打开所在文件夹", self.open_current_file_dir)
                                              ],

@@ -555,8 +555,10 @@ class PlayControl(gtk.VBox):
         self.heparator=HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
         self.heparator.set_size_request(heparator_width, heparator_height)
         # setting keys.
-        entry_width = 150
-        entry_height = 28
+        entry_width  = 150
+        entry_height = 24
+        # entry_width = 150
+        # entry_height = 28
         # open file key.
         self.open_file_entry_label = Label("打开文件")
         self.open_file_entry       = ShortcutKeyEntry()
@@ -704,7 +706,7 @@ class PlayControl(gtk.VBox):
                        play_control_x, play_control_y)
         self.fixed.put(self.next_a_entry_label,
                        play_control_x_padding, play_control_y)
-        play_control_y += self.next_a_entry.get_size_request()[1] - 10
+        play_control_y += self.next_a_entry.get_size_request()[1] - 8
         self.fixed.put(self.open_file_dir_entry,
                        play_control_x, play_control_y)        
         self.fixed.put(self.next_a_entry,

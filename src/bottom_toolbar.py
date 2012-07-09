@@ -22,12 +22,13 @@
 
 from dtk.ui.frame import HorizontalFrame
 from dtk.ui.panel import Panel
-from constant import APP_WIDTH
+from dtk.ui.volume_button import VolumeButton
 
+from constant import APP_WIDTH
 from progressbar import ProgressBar
 from show_time import ShowTime
 from play_control_panel import PlayControlPanel
-from volume_button import VolumeButton
+# from volume_button import VolumeButton
 
 import gtk
 # import cairo

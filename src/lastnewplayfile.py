@@ -86,8 +86,7 @@ class LastNewPlayFile(gobject.GObject):
         try:
             for argv in self.ini.get_argvs("LastNewPlayFile"):
                 argv_name = (argv[1:])[:-1]
-                # print argv_name
-                temp_last_list.append((None, argv_name, lambda :self.emit("get-file-name","%s" % (argv_name))))
+                temp_last_list.append((None, argv_name, lambda filepath:self.emit("get-file-name","%s" % filepath), argv_name))
         except:        
             pass
                         
