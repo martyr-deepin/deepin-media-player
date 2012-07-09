@@ -36,34 +36,34 @@ class PlayControlPanel(object):
         self.hbox_hframe.add(self.hbox)
         
         
-        self.stop_btn = StartButton(app_theme.get_pixbuf("stop_normal.png"),
-                                    app_theme.get_pixbuf("stop_hover.png"),
-                                    app_theme.get_pixbuf("stop_press.png"),
-                                    app_theme.get_pixbuf("stop_normal.png"),
-                                    app_theme.get_pixbuf("stop_hover.png"),
-                                    app_theme.get_pixbuf("stop_press.png")
+        self.stop_btn = StartButton(app_theme.get_pixbuf("bottom_buttons/stop_normal.png"),
+                                    app_theme.get_pixbuf("bottom_buttons/stop_hover.png"),
+                                    app_theme.get_pixbuf("bottom_buttons/stop_press.png"),
+                                    app_theme.get_pixbuf("bottom_buttons/stop_normal.png"),
+                                    app_theme.get_pixbuf("bottom_buttons/stop_hover.png"),
+                                    app_theme.get_pixbuf("bottom_buttons/stop_press.png")
                                     )
-        self.pre_btn = StartButton(app_theme.get_pixbuf("pre_button_normal.png"),
-                                   app_theme.get_pixbuf("pre_button_hover.png"),
-                                   app_theme.get_pixbuf("pre_button_press.png"),
-                                   app_theme.get_pixbuf("pre_button_normal.png"),
-                                   app_theme.get_pixbuf("pre_button_hover.png"),
-                                   app_theme.get_pixbuf("pre_button_press.png"))        
+        self.pre_btn = StartButton(app_theme.get_pixbuf("bottom_buttons/pre_button_normal.png"),
+                                   app_theme.get_pixbuf("bottom_buttons/pre_button_hover.png"),
+                                   app_theme.get_pixbuf("bottom_buttons/pre_button_press.png"),
+                                   app_theme.get_pixbuf("bottom_buttons/pre_button_normal.png"),
+                                   app_theme.get_pixbuf("bottom_buttons/pre_button_hover.png"),
+                                   app_theme.get_pixbuf("bottom_buttons/pre_button_press.png"))        
         self.start_btn = StartButton()
         
-        self.next_btn = StartButton(app_theme.get_pixbuf("next_button_normal.png"),
-                                    app_theme.get_pixbuf("next_button_hover.png"),
-                                    app_theme.get_pixbuf("next_button_press.png"),
-                                    app_theme.get_pixbuf("next_button_normal.png"),
-                                    app_theme.get_pixbuf("next_button_hover.png"),
-                                    app_theme.get_pixbuf("next_button_press.png"))
+        self.next_btn = StartButton(app_theme.get_pixbuf("bottom_buttons/next_button_normal.png"),
+                                    app_theme.get_pixbuf("bottom_buttons/next_button_hover.png"),
+                                    app_theme.get_pixbuf("bottom_buttons/next_button_press.png"),
+                                    app_theme.get_pixbuf("bottom_buttons/next_button_normal.png"),
+                                    app_theme.get_pixbuf("bottom_buttons/next_button_hover.png"),
+                                    app_theme.get_pixbuf("bottom_buttons/next_button_press.png"))
 
-        self.open_btn = StartButton(app_theme.get_pixbuf("open_normal.png"),
-                                    app_theme.get_pixbuf("open_hover.png"),
-                                    app_theme.get_pixbuf("open_press.png"),
-                                    app_theme.get_pixbuf("open_normal.png"),
-                                    app_theme.get_pixbuf("open_hover.png"),
-                                    app_theme.get_pixbuf("open_press.png"))
+        self.open_btn = StartButton(app_theme.get_pixbuf("bottom_buttons/open_normal.png"),
+                                    app_theme.get_pixbuf("bottom_buttons/open_hover.png"),
+                                    app_theme.get_pixbuf("bottom_buttons/open_press.png"),
+                                    app_theme.get_pixbuf("bottom_buttons/open_normal.png"),
+                                    app_theme.get_pixbuf("bottom_buttons/open_hover.png"),
+                                    app_theme.get_pixbuf("bottom_buttons/open_press.png"))
 
         self.hbox.pack_start(self.stop_btn, False, False)
         self.hbox.pack_start(self.pre_btn, False, False)
@@ -74,12 +74,12 @@ class PlayControlPanel(object):
         
 class StartButton(gtk.Button):
     def __init__(self,
-                 start_button_normal=app_theme.get_pixbuf("play_button_normal.png"),
-                 start_button_hover=app_theme.get_pixbuf("play_button_hover.png"),
-                 start_button_press=app_theme.get_pixbuf("play_button_press.png"),
-                 pause_button_normal=app_theme.get_pixbuf("pause_button_normal.png"),
-                 pause_button_hover=app_theme.get_pixbuf("pause_button_hover.png"),
-                 pause_button_press=app_theme.get_pixbuf("pause_button_press.png")):
+                 start_button_normal=app_theme.get_pixbuf("bottom_buttons/play_button_normal.png"),
+                 start_button_hover=app_theme.get_pixbuf("bottom_buttons/play_button_hover.png"),
+                 start_button_press=app_theme.get_pixbuf("bottom_buttons/play_button_press.png"),
+                 pause_button_normal=app_theme.get_pixbuf("bottom_buttons/pause_button_normal.png"),
+                 pause_button_hover=app_theme.get_pixbuf("bottom_buttons/pause_button_hover.png"),
+                 pause_button_press=app_theme.get_pixbuf("bottom_buttons/pause_button_press.png")):
         
         gtk.Button.__init__(self)
         self.start_bool = True

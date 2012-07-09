@@ -28,13 +28,13 @@ import gtk
 class PlayListControlPanel(gtk.HBox):
     def __init__(self):
         gtk.HBox.__init__(self)
-        self.add_btn = ImageButton(app_theme.get_pixbuf("play_list_add_file.png"),
-                                   app_theme.get_pixbuf("play_list_add_file.png"))
+        self.add_btn = ImageButton(app_theme.get_pixbuf("bottom_buttons/play_list_add_file.png"),
+                                   app_theme.get_pixbuf("bottom_buttons/play_list_add_file.png"))
         
         self.del_btn_frame = gtk.Alignment()        
         self.del_btn_frame.set_padding(0, 0, 10, 10)
-        self.del_btn = ImageButton(app_theme.get_pixbuf("play_list_del_file.png"),
-                                   app_theme.get_pixbuf("play_list_del_file.png"))
+        self.del_btn = ImageButton(app_theme.get_pixbuf("bottom_buttons/play_list_del_file.png"),
+                                   app_theme.get_pixbuf("bottom_buttons/play_list_del_file.png"))
         self.del_btn_frame.add(self.del_btn)        
         
         self.hbox = gtk.HBox()

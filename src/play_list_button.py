@@ -35,8 +35,8 @@ class PlayListButton(object):
         
 class ImageButton(gtk.Button):
     def __init__(self, 
-                 bg_pixbuf=app_theme.get_pixbuf("list_button_background.png"),
-                 button_pixbuf=app_theme.get_pixbuf("play_list_button.png")):
+                 bg_pixbuf=app_theme.get_pixbuf("bottom_buttons/list_button_background.png"),
+                 button_pixbuf=app_theme.get_pixbuf("bottom_buttons/play_list_button.png")):
         gtk.Button.__init__(self)
         #input_string = "play_list_button" # Input test string.
         self.flags = False

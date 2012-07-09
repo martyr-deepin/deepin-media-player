@@ -31,8 +31,8 @@ import gtk
 
 class ImageButton(gtk.Button):
     def __init__(self, 
-                 bg_pixbuf=app_theme.get_pixbuf("big_button_background.png"),
-                 button_pixbuf=app_theme.get_pixbuf("play_button.png")):
+                 bg_pixbuf=app_theme.get_pixbuf("bottom_buttons/big_button_background.png"),
+                 button_pixbuf=app_theme.get_pixbuf("bottom_buttons/play_button.png")):
         gtk.Button.__init__(self)
         self.bg_pixbuf = bg_pixbuf
         self.button_pixbuf = button_pixbuf
