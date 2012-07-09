@@ -199,7 +199,9 @@ class PlayerBox(object):
             # (app_theme.get_pixbuf("screen_menu_open_cdrom.png"),"打开光盘", None),
             (app_theme.get_pixbuf("screen_menu_open_url.png"), "打开URL", self.open_url_dialog_window),
             ]
-        self.screen_pop_menu = ScreenMenu(self.screen_frame, menu_item)        
+        self.screen_pop_menu = ScreenMenu(self.screen_frame, menu_item)
+        self.screen_pop_menu.size(self.screen_pop_menu.width, self.screen_pop_menu.height - 26)
+        
         # menu icon pixbuf. menupixbuf ..
         self.video_aspect_pixbuf = app_theme.get_pixbuf("screen/check_normal.png") # aspect state pixbuf.
         self.video_aspect_select_pixbuf = app_theme.get_pixbuf("screen/check_hover.png")
@@ -433,7 +435,7 @@ class PlayerBox(object):
         x, y, w, h = self.screen_frame.allocation
         
         width = w/2 - self.screen_pop_menu.width/2 + 2
-        height = h/2 + self.screen_pop_menu.height /2 + 37
+        height = h/2 + self.screen_pop_menu.height /2 + 50
         # if self.full_bool:
         #     width  -= 4
             

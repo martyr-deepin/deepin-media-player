@@ -229,7 +229,7 @@ class ScreenMenu(gobject.GObject):
         self.save_x = 0
         self.save_y = 0
         self.width  = self.menu_bg_pixbuf.get_pixbuf().get_width()
-        self.height = self.menu_bg_pixbuf.get_pixbuf().get_height()        
+        self.height = self.menu_bg_pixbuf.get_pixbuf().get_height()
         self.__padding_x    = 0
         self.__padding_y    = 0
         # show and hide menu value.
@@ -256,6 +256,11 @@ class ScreenMenu(gobject.GObject):
         # save widget type attr.
         widget_save_attr.append((self.x, self.y, self.width, self.height))
                 
+    def size(self, w, h):    
+        self.width = w
+        self.height = h
+        self.queue_draw()
+        
     def __set_widget_save_attr(self):    
         global widget_save_attr
         widget_save_attr[self.widget_num-1] = (self.x, self.y, self.width, self.height)
@@ -336,7 +341,8 @@ class ScreenMenu(gobject.GObject):
         
     def draw_background(self, cr, x, y):    
         # Draw background.
-        cr.set_source_pixbuf(self.menu_bg_pixbuf.get_pixbuf(),
+        menu_bg_pixbuf = self.menu_bg_pixbuf.get_pixbuf().scale_simple(self.width, self.height, gtk.gdk.INTERP_BILINEAR)
+        cr.set_source_pixbuf(menu_bg_pixbuf,
                              self.x,
                              self.y)
         cr.paint_with_alpha(1)    
@@ -344,7 +350,7 @@ class ScreenMenu(gobject.GObject):
     def draw_menu_left_icon(self, cr, x, y):    
         # Draw menu left icon.
         temp_icon_height = 0
-        for item in self.menu_list:
+        for item in self.menu_list:            
             # Draw menu left icon.
             cr.set_source_pixbuf(item[0].get_pixbuf(),
                                  self.x + self.icon_padding_x*2 + 7,
