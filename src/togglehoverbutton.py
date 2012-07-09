@@ -29,10 +29,10 @@ import gobject
 
 class ToggleHoverButton(gtk.Button):
     def __init__(self, 
-                 normal_pixbuf_1 = app_theme.get_pixbuf("Sticky1.png"), 
-                 hover_pixbuf_1 = app_theme.get_pixbuf("Sticky.png"), 
-                 normal_pixbuf_2 = app_theme.get_pixbuf("noSticky1.png"), 
-                 hover_pixbuf_2 = app_theme.get_pixbuf("noSticky.png")):
+                 normal_pixbuf_1 = app_theme.get_pixbuf("top_buttons/Sticky1.png"), 
+                 hover_pixbuf_1 = app_theme.get_pixbuf("top_buttons/Sticky.png"), 
+                 normal_pixbuf_2 = app_theme.get_pixbuf("top_buttons/noSticky1.png"), 
+                 hover_pixbuf_2 = app_theme.get_pixbuf("top_buttons/noSticky.png")):
         gtk.Button.__init__(self)
         self.flags = True
         self.normal_pixbuf_1 = normal_pixbuf_1

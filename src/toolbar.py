@@ -50,10 +50,10 @@ class ToolBar(object):
         
         self.toolbar_full_hframe = HorizontalFrame(7)
         self.toolbar_full_button = ToggleHoverButton(
-            app_theme.get_pixbuf("full1.png"),
-            app_theme.get_pixbuf("full.png"),
-            app_theme.get_pixbuf("Recovery1.png"),
-            app_theme.get_pixbuf("Recovery.png")
+            app_theme.get_pixbuf("top_buttons/full1.png"),
+            app_theme.get_pixbuf("top_buttons/full.png"),
+            app_theme.get_pixbuf("top_buttons/Recovery1.png"),
+            app_theme.get_pixbuf("top_buttons/Recovery.png")
             )
         
         self.toolbar_full_hframe.add(self.toolbar_full_button)
