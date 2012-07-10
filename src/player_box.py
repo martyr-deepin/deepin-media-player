@@ -183,7 +183,7 @@ class PlayerBox(object):
         self.screen_frame.add(self.screen)
 
         '''Tooltip window.'''
-        self.window_tool_tip = OSDTooltip(self.screen_frame, offset_x=20, offset_y=20)
+        self.window_tool_tip = OSDTooltip(self.screen_frame, offset_x=12, offset_y=0)
         '''mid open button.'''
         self.open_button = OpenButton(self.screen_frame, "打开文件", 108, 40)
         self.open_button.connect("openbutton-clicked-event", lambda w, e: self.add_file_clear())
@@ -580,13 +580,17 @@ class PlayerBox(object):
                     temp_value = self.mp.volume - volume_value
                     if (temp_value - volume_value) < 0:
                         temp_value = 0                
+                    if temp_value < 0:    
+                        temp_value = 0
+                        
                     self.bottom_toolbar.volume_button.value = temp_value    
                     self.volume_button.value = temp_value                    
                 else:    
                     temp_value = self.volume_button.value - volume_value
                     if (temp_value - volume_value) < 0:
                         temp_value = 0                                    
-                    self.volume_button.value = self.volume_button.value - volume_value
+                        
+                    self.volume_button.value = temp_value
                     self.bottom_toolbar.volume_button.value = self.volume_button.value
                     temp_value = self.volume_button.value
                     
@@ -594,7 +598,7 @@ class PlayerBox(object):
             if temp_value != self.mp.volume:
                 self.mp.setvolume(temp_value)
                     
-            self.messagebox("音量:%s"%(str(int(temp_value))))
+            self.messagebox("音量:%s%s"%(str(int(temp_value)), "%"))
             
     def volume_button_get_value_event(self, volume_button, value, volume_state, volume_bit):        
         if -1 == volume_state: # -1 -> stop play
@@ -609,10 +613,10 @@ class PlayerBox(object):
                 if 1 == self.mp.state:                    
                     self.mp.offmute()                                     
                     self.mp.setvolume(value)
-                    self.messagebox("音量:%s"%(str(value)))
+                    self.messagebox("音量:%s%s"%(str(value), "%"))
                 else:    
                     self.mp.volumebool = False
-                    self.messagebox("音量:%s"%(str(value)))
+                    self.messagebox("音量:%s%s"%(str(value), "%"))
                     
         if 1 == volume_bit: # volume_bit: 1-> volume_button , 2-> volume_button of bottom_toolbar 
             self.bottom_toolbar.volume_button.value = value
@@ -804,13 +808,13 @@ class PlayerBox(object):
         add_volume_key = self.config.get("PlayControl", "add_volume_key")
         if add_volume_key == keyval_name:
             self.mp.setvolume(self.volume_button.value)
-            self.messagebox("音量:%s"%(int(self.volume_button.value)))    
+            self.messagebox("音量:%s%s"%(int(self.volume_button.value), "%"))    
                         
         # sub volume key init.
         sub_volume_key = self.config.get("PlayControl", "sub_volume_key")
         if sub_volume_key == keyval_name:
             self.mp.setvolume(self.volume_button.value)
-            self.messagebox("音量:%s"%(int(self.volume_button.value)))            
+            self.messagebox("音量:%s%s"%(int(self.volume_button.value), "%"))            
         # print self.volume_button.value
         
     def key_set_mute(self):
@@ -821,7 +825,7 @@ class PlayerBox(object):
                 self.mp.offmute()
             else:    
                 self.mp.volumebool = False
-            self.messagebox("音量:%s"%(str(int(self.mp.volume))))
+            self.messagebox("音量:%s%s"%(str(int(self.mp.volume)), "%"))
         else:
             self.volume_button.set_volume_mute()
             
@@ -2714,8 +2718,7 @@ class PlayerBox(object):
     
     def menu_sub_volume(self):
         self.menu_set_volume(0)
-    
-    
+        
     def menu_set_volume(self, type_bool):            
         add_volume_state = 1
         sub_volume_state = 0
@@ -2733,5 +2736,5 @@ class PlayerBox(object):
             
             
         self.mp.setvolume(self.volume_button.value)
-        self.messagebox("音量:%s"%(int(self.volume_button.value)))                            
+        self.messagebox("音量:%s%s"%(int(self.volume_button.value), "%"))                            
         
