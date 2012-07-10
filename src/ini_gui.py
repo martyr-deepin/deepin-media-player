@@ -107,6 +107,7 @@ class IniGui(DialogBox):
         
         self.tree_view.add_item(None, TreeViewItem("字幕设置"))
         self.tree_view.add_item(None, TreeViewItem("截图设置"))
+        self.tree_view.add_item(None, TreeViewItem("关于"))
 
         category_box = gtk.VBox()
         background_box = BackgroundBox()
@@ -1398,11 +1399,11 @@ class About(gtk.VBox):
         self.fixed = gtk.Fixed()
         self.label = Label("深度影音", text_size=12)        
         self.label.set_size_request(label_width, label_height)
-        self.version_label = Label("版本:D1.02.3           发布时间:2012.06.31")
+        self.version_label = Label("版本: 1.0")
         #
-        self.label_text_about = Label("　　深度影音是中国最大的网络电影平台，是中国互联网领域领先的正版数字电影服务提供商，始终走在电影潮流最前端，向广大用户提供方便流畅的在线电影和丰富多彩的电影社区服务。")
+        self.label_text_about = Label("深度影音播放器是Linux Deepin团队开发的一款操作方便的影音播放软件。\n支持 avi、wma、wmv、mp4 等多种视频格式，具有视频预览、自动搜索字幕、视频画面截图、自定义换肤等功能。\n深度音乐播放器是自由软件，遵循自由软件基金会发布的GNU通用公共许可证第三版。\n")
         
-        self.index_label = Label("官方主页:")
+        self.index_label = Label("项目主页：http://www.linuxdeepin.com")
         # self.
         
         self.heparator=HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
