@@ -27,7 +27,7 @@ from dtk.ui.utils import propagate_expose
 from skin import app_theme
 from utils import allocation
 from constant import APP_WIDTH,PANEL_HEIGHT
-from togglehoverbutton import ToggleHoverButton
+from togglehoverbutton import ToggleHoverButton, ToolbarRadioButton
 from mutualbutton import MutualButton
 import gtk
 import cairo
@@ -48,33 +48,44 @@ class ToolBar(object):
         self.panel.add_events(gtk.gdk.ALL_EVENTS_MASK)
         self.panel.connect("expose-event", self.draw_panel_background)
         
-        self.toolbar_full_hframe = HorizontalFrame(7)
-        self.toolbar_full_button = ToggleHoverButton(
-            app_theme.get_pixbuf("top_buttons/full1.png"),
-            app_theme.get_pixbuf("top_buttons/full.png"),
-            app_theme.get_pixbuf("top_buttons/Recovery1.png"),
-            app_theme.get_pixbuf("top_buttons/Recovery.png")
+        
+        self.toolbar_radio_button = ToolbarRadioButton()
+        # full buton.
+        self.toolbar_full_hframe  = self.toolbar_radio_button.full_btn_ali
+        self.toolbar_full_button  = self.toolbar_radio_button.full_btn
+        #
+        self.toolbar_common_hframe  = self.toolbar_radio_button.win_mode_btn_ali
+        self.toolbar_common_button  = self.toolbar_radio_button.win_mode_btn
+        # 
+        self.toolbar_concise_hframe = self.toolbar_radio_button.concise_btn_ali
+        self.toolbar_concise_button = self.toolbar_radio_button.concise_btn
+        # 1X conect-> self.set_2x_video_play        
+        self.toolbar_1X_hframe   =  HorizontalFrame(5) 
+        self.toolbar_1X_button   =  ToggleHoverButton(
+            app_theme.get_pixbuf("top_toolbar/1_window_normal.png"),
+            app_theme.get_pixbuf("top_toolbar/1_window_hover.png"),
+            app_theme.get_pixbuf("top_toolbar/1_window_normal.png"),
+            app_theme.get_pixbuf("top_toolbar/1_window_hover.png"),
             )
-        
-        self.toolbar_full_hframe.add(self.toolbar_full_button)
-        
-        self.mutualbutton = MutualButton()
-        self.toolbar_common_hframe = HorizontalFrame(9)
-        self.toolbar_common_button = self.mutualbutton.button1
-        self.toolbar_common_hframe.add(self.toolbar_common_button)
-        
-        self.toolbar_concise_hframe = HorizontalFrame(6)
-        self.toolbar_concise_button = self.mutualbutton.button2
-        self.toolbar_concise_hframe.add(self.toolbar_concise_button)
-        
-        self.toolbar_above_hframe = HorizontalFrame(7) 
+        self.toolbar_1X_hframe.add(self.toolbar_1X_button)        
+        # 2X conect-> self.set_2x_video_play
+        self.toolbar_2X_hframe   =  HorizontalFrame(5) 
+        self.toolbar_2X_button   =  ToggleHoverButton(
+            app_theme.get_pixbuf("top_toolbar/2_window_normal.png"),
+            app_theme.get_pixbuf("top_toolbar/2_window_hover.png"),
+            app_theme.get_pixbuf("top_toolbar/2_window_normal.png"),
+            app_theme.get_pixbuf("top_toolbar/2_window_hover.png"),
+            )
+        self.toolbar_2X_hframe.add(self.toolbar_2X_button)
+                       
+        self.toolbar_above_hframe = HorizontalFrame(5) 
         self.toolbar_above_button = ToggleHoverButton()
         self.toolbar_above_hframe.add(self.toolbar_above_button)
         
-        self.hbox.pack_start(self.toolbar_full_hframe, False)    # full_button
-        self.hbox.pack_start(self.toolbar_common_hframe, False)  # common_button
-        self.hbox.pack_start(self.toolbar_concise_hframe, False) # concise_button
-        self.hbox.pack_start(self.toolbar_above_hframe, False)   # above_button
+        self.hbox.pack_start(self.toolbar_radio_button, False, False)        
+        self.hbox.pack_start(self.toolbar_1X_hframe,    False, False)
+        self.hbox.pack_start(self.toolbar_2X_hframe,    False, False)
+        self.hbox.pack_start(self.toolbar_above_hframe, False, False)   # above_button                
         
         self.hbox_hframe = VerticalFrame(padding=4)
         self.hbox_hframe.add(self.hbox)

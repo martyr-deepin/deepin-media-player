@@ -23,16 +23,18 @@
 from dtk.ui.draw import draw_pixbuf
 from dtk.ui.utils import propagate_expose
 from dtk.ui.cache_pixbuf import CachePixbuf
+
 from skin import app_theme
+from tooltip import tooltip_text 
 import gtk
 import gobject
 
 class ToggleHoverButton(gtk.Button):
     def __init__(self, 
-                 normal_pixbuf_1 = app_theme.get_pixbuf("top_buttons/Sticky1.png"), 
-                 hover_pixbuf_1 = app_theme.get_pixbuf("top_buttons/Sticky.png"), 
-                 normal_pixbuf_2 = app_theme.get_pixbuf("top_buttons/noSticky1.png"), 
-                 hover_pixbuf_2 = app_theme.get_pixbuf("top_buttons/noSticky.png")):
+                 normal_pixbuf_1 = app_theme.get_pixbuf("top_toolbar/cacel_window_above_normal.png"), 
+                 hover_pixbuf_1 = app_theme.get_pixbuf("top_toolbar/cacel_window_above_hover.png"), 
+                 normal_pixbuf_2 = app_theme.get_pixbuf("top_toolbar/window_above_normal.png"), 
+                 hover_pixbuf_2 = app_theme.get_pixbuf("top_toolbar/window_above_hover.png")):
         gtk.Button.__init__(self)
         self.flags = True
         self.normal_pixbuf_1 = normal_pixbuf_1
@@ -75,12 +77,136 @@ class ToggleHoverButton(gtk.Button):
     def button_flags(self, widget):
         self.flags = not self.flags
         
-if __name__ == "__main__":    
-    win = gtk.Window(gtk.WINDOW_TOPLEVEL)    
-    win.connect("destroy", gtk.main_quit)
-    button = ToggleHoverButton()
-    win.add(button)
-    win.show_all()
-    gtk.main()
-
 gobject.type_register(ToggleHoverButton)
+
+
+class ToolbarRadioButton(gtk.HBox):
+    def __init__(self,
+                 ##############
+                 full_normal_pixbuf = app_theme.get_pixbuf("top_toolbar/full_window_normal.png"),
+                 full_hover_pixbuf  = app_theme.get_pixbuf("top_toolbar/full_window_hover.png"),                 
+                 ##########################
+                 window_mode_normal_pixbuf = app_theme.get_pixbuf("top_toolbar/window_mode_normal.png"),
+                 window_mode_hover_pixbuf  = app_theme.get_pixbuf("top_toolbar/window_mode_hover.png"),
+                 ###########################################
+                 concise_normal_pixbuf     = app_theme.get_pixbuf("top_toolbar/concise_window_normal.png"),
+                 concise_hover_pixbuf      = app_theme.get_pixbuf("top_toolbar/concise_hover.png")
+                 ):
+        gtk.HBox.__init__(self)        
+        # Init pixbuf.
+        self.full_normal_pixbuf = full_normal_pixbuf
+        self.full_hover_pixbuf  = full_hover_pixbuf
+        self.window_mode_normal_pixbuf = window_mode_normal_pixbuf
+        self.window_mode_hover_pixbuf  = window_mode_hover_pixbuf
+        self.concise_normal_pixbuf   = concise_normal_pixbuf
+        self.concise_hover_pixbuf    = concise_hover_pixbuf
+        # Init value.
+        self.window_state = 0   # 0-> window mode state; 1-> concise state.
+        self.full_state   = 0   # 0-> quit full state; 1-> full state.
+        
+        # Init buttons.
+        self.full_btn_ali = gtk.Alignment()
+        self.full_btn_ali.set_padding(0, 0, 5, 5)
+        self.full_btn     = gtk.Button()
+        self.full_btn_ali.add(self.full_btn)
+        tooltip_text(self.full_btn, "全屏")
+        self.full_btn.connect("expose-event",     self.expose_draw_full_btn)
+        
+        self.win_mode_btn_ali = gtk.Alignment()
+        self.win_mode_btn_ali.set_padding(0, 0, 5, 5)
+        self.win_mode_btn = gtk.Button()
+        self.win_mode_btn_ali.add(self.win_mode_btn)        
+        tooltip_text(self.win_mode_btn, "普通模式")
+        self.win_mode_btn.connect("expose-event", self.expose_draw_win_mode_btn)
+        
+        self.concise_btn_ali = gtk.Alignment()
+        self.concise_btn_ali.set_padding(0, 0, 5, 5)
+        self.concise_btn  = gtk.Button()
+        self.concise_btn_ali.add(self.concise_btn)
+        tooltip_text(self.concise_btn, "简洁模式")
+        
+        self.concise_btn.connect("expose-event",  self.expose_draw_concise_btn)
+        
+        # add buttons.
+        self.pack_start(self.full_btn_ali, False, False)
+        self.pack_start(self.win_mode_btn_ali, False, False)
+        self.pack_start(self.concise_btn_ali, False, False)        
+        
+
+    def expose_draw_full_btn(self, widget, event):
+        cr = widget.window.cairo_create()
+        x, y, w, h = widget.allocation
+        # widget.state        
+        
+        draw_pixbuf = self.full_normal_pixbuf
+        
+        if widget.state    ==   gtk.STATE_NORMAL:
+            draw_pixbuf = self.full_normal_pixbuf
+        elif widget.state == gtk.STATE_PRELIGHT:
+            draw_pixbuf = self.full_hover_pixbuf
+        
+        image_w = draw_pixbuf.get_pixbuf().get_width()
+        image_h = draw_pixbuf.get_pixbuf().get_height()
+        widget.set_size_request(image_w, image_h)
+        
+        if self.full_state:
+            draw_pixbuf = self.full_hover_pixbuf
+            
+        cr.set_source_pixbuf(draw_pixbuf.get_pixbuf(), x, y)
+        cr.paint_with_alpha(1)
+    
+        return True
+    
+    def expose_draw_win_mode_btn(self, widget, event):
+        cr = widget.window.cairo_create()
+        x, y, w, h = widget.allocation
+        
+        draw_pixbuf = self.window_mode_normal_pixbuf
+        
+        if widget.state    ==   gtk.STATE_NORMAL:
+            draw_pixbuf = self.window_mode_normal_pixbuf
+        elif widget.state == gtk.STATE_PRELIGHT:
+            draw_pixbuf = self.window_mode_hover_pixbuf
+        
+        image_w = draw_pixbuf.get_pixbuf().get_width()
+        image_h = draw_pixbuf.get_pixbuf().get_height()
+        widget.set_size_request(image_w, image_h)
+        
+        if not self.full_state:
+            if not self.window_state:
+                draw_pixbuf = self.window_mode_hover_pixbuf
+                
+        cr.set_source_pixbuf(draw_pixbuf.get_pixbuf(), x, y)    
+        cr.paint_with_alpha(1)
+        
+        
+        return True
+    
+    def expose_draw_concise_btn(self, widget, event):
+        cr = widget.window.cairo_create()
+        x, y, w, h = widget.allocation
+        
+        draw_pixbuf = self.concise_normal_pixbuf
+        
+        if widget.state    ==   gtk.STATE_NORMAL:
+            draw_pixbuf = self.concise_normal_pixbuf
+        elif widget.state == gtk.STATE_PRELIGHT:
+            draw_pixbuf = self.concise_hover_pixbuf
+        
+        image_w = draw_pixbuf.get_pixbuf().get_width()
+        image_h = draw_pixbuf.get_pixbuf().get_height()
+        widget.set_size_request(image_w, image_h)
+        
+        if not self.full_state:
+            if self.window_state:
+                draw_pixbuf = self.concise_hover_pixbuf
+                
+        cr.set_source_pixbuf(draw_pixbuf.get_pixbuf(), x, y)    
+        cr.paint_with_alpha(1)        
+        
+        
+        return True
+
+        
+        
+        

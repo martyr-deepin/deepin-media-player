@@ -32,6 +32,8 @@ from skin import app_theme
 from mplayer import Mplayer    
 from utils import allocation
 from play_list_control_panel import PlayListControlPanel
+from tooltip import tooltip_text
+
 import gtk
 
 # from constant import *
@@ -56,6 +58,7 @@ class PlayList(object):
         self.scrolled_window.set_policy(gtk.POLICY_NEVER, gtk.POLICY_AUTOMATIC)
         # self.list_view = ListView(background_pixbuf=app_theme.get_pixbuf("play_list_bg.jpg"))
         self.list_view = ListView(drag_icon_pixbuf=app_theme.get_pixbuf("playlist/drag_video.png"))
+        self.list_view.connect("motion-notify-item", self.motion_mouse_move_event)
         self.list_view.draw_mask = self.draw_mask
         self.item_array = []
         # self.list_view.connect("configure-event", self.init_playlist_path)
@@ -73,6 +76,10 @@ class PlayList(object):
         self.vbox.pack_start(self.draw_line_event_box, False, False)
         
         
+    def motion_mouse_move_event(self, listview, list_item, colume, offset_x, offset_y):
+        tooltip_text(listview, list_item.title)
+        
+    
     def draw_mask(self, cr, x, y, w, h):    
         cr.set_source_rgb(*color_hex_to_cairo("#1F1F1F"))# 101112
         cr.rectangle(x, y, w, h)

@@ -256,11 +256,12 @@ class PlayerBox(object):
         '''Toolbar Init.'''
         self.toolbar = ToolBar()
         # self.toolbar.panel.connect("leave-notify-event", self.set_show_toolbar_bool)
-        self.toolbar.toolbar_full_button.connect("clicked", self.full_play_window)
-        self.toolbar.toolbar_common_button.connect("clicked", self.show_window_widget)
+        self.toolbar.toolbar_full_button.connect("clicked",    self.full_play_window)
+        self.toolbar.toolbar_common_button.connect("clicked",  self.show_window_widget)
         self.toolbar.toolbar_concise_button.connect("clicked", self.hide_window_widget)
-        self.toolbar.toolbar_above_button.connect("clicked", self.set_window_above)
-
+        self.toolbar.toolbar_above_button.connect("clicked",   self.set_window_above)
+        self.toolbar.toolbar_1X_button.connect("clicked", lambda w: self.set_1x_video_play())
+        self.toolbar.toolbar_2X_button.connect("clicked", lambda w: self.set_2x_video_play())
         '''Bottom Toolbar Init.'''
         bottom_toolbar_height = 50
         self.bottom_toolbar = BottomToolBar()
@@ -771,7 +772,7 @@ class PlayerBox(object):
         if self.mode_state_bool:
             self.show_window_widget(self.toolbar.toolbar_common_button)
         else:
-            self.hide_window_widget(self.toolbar.toolbar_concise_button)
+            self.hide_window_widget(self.toolbar.toolbar_concise_button)                        
 
     def key_add_volume(self):
         print "add volume..."
@@ -1517,6 +1518,8 @@ class PlayerBox(object):
         self.bottom_toolbar.panel.set_keep_above(True)
         self.app.window.fullscreen()
         self.full_bool = True
+        # Set toolbar state.
+        self.set_toolbar_state()
 
     def set_window_quit_full(self):
         # # if True. play list show.
@@ -1530,10 +1533,22 @@ class PlayerBox(object):
         self.app.window.unfullscreen()
         self.common_window_function()
         self.full_bool = False
-
+        # Set toolbar state.
+        self.set_toolbar_state()
         self.set_ascept_function()
 
-
+    def set_toolbar_state(self):        
+        # Set toolbar full state.
+        if self.full_bool:
+            self.toolbar.toolbar_radio_button.full_state = 1
+        else:
+            self.toolbar.toolbar_radio_button.full_state = 0
+            
+        if self.mode_state_bool:
+            self.toolbar.toolbar_radio_button.window_state = 1
+        else:    
+            self.toolbar.toolbar_radio_button.window_state = 0
+            
     def full_play_window(self, widget): #full_button
         '''Full player window.'''
         if not self.full_bool: # Full player window.
@@ -1575,7 +1590,9 @@ class PlayerBox(object):
             # modify full icon.
             self.toolbar.toolbar_full_button.flags = True
 
-
+        # Set toolbar state.
+        self.set_toolbar_state()
+    
 
     def hide_window_widget(self, widget): #concise_button
         '''Hide widnow titlebar and play control panel.
@@ -1584,6 +1601,7 @@ class PlayerBox(object):
         Hide border of window.
         [concise mode:]
         '''
+        
         if self.show_or_hide_play_list_bool:
             self.play_list.hide_play_list()
 
@@ -1604,7 +1622,8 @@ class PlayerBox(object):
 
             self.bottom_toolbar.panel.hide_all()
 
-
+        # Set toolbar state.
+        self.set_toolbar_state()    
 
     def set_window_above(self, widget): #above_button
         self.above_bool = not self.above_bool
