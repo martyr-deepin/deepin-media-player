@@ -1066,25 +1066,25 @@ class OtherKey(gtk.VBox):
         other_Key_y += self.subtitle_delay_entry_label.get_size_request()[1] + 2
         self.fixed.put(self.subtitle_delay_entry,
                        other_Key_x_padding, other_Key_y)
-        other_Key_y += self.subtitle_delay_entry.get_size_request()[1] + 10
+        other_Key_y += self.subtitle_delay_entry.get_size_request()[1] + 11
         # mouse left single clicked.        
         self.fixed.put(self.mouse_left_single_clicked_combo_label, 
                        other_Key_x_padding, other_Key_y)
-        other_Key_y += self.mouse_left_single_clicked_combo_label.get_size_request()[1] + 5
+        other_Key_y += self.mouse_left_single_clicked_combo_label.get_size_request()[1] + 1
         self.fixed.put(self.mouse_left_single_clicked_combo, 
                        other_Key_x_padding, other_Key_y)
-        other_Key_y += self.mouse_left_single_clicked_combo_label.get_size_request()[1] + 20
+        other_Key_y += self.mouse_left_single_clicked_combo_label.get_size_request()[1] + 21
         # mouse left double clicked.
         self.fixed.put(self.mouse_left_double_clicked_combo_label, 
                        other_Key_x_padding, other_Key_y)
-        other_Key_y += self.mouse_left_double_clicked_combo_label.get_size_request()[1] + 5
+        other_Key_y += self.mouse_left_double_clicked_combo_label.get_size_request()[1] + 1
         self.fixed.put(self.mouse_left_double_clicked_combo, 
                        other_Key_x_padding, other_Key_y)
         other_Key_y += self.mouse_left_double_clicked_combo_label.get_size_request()[1] + 20
         # mouse wheel.
         self.fixed.put(self.mouse_wheel_combo_label,
                        other_Key_x_padding, other_Key_y)
-        other_Key_y += self.mouse_wheel_combo_label.get_size_request()[1] + 2
+        other_Key_y += self.mouse_wheel_combo_label.get_size_request()[1] + 1
         self.fixed.put(self.mouse_wheel_combo,
                        other_Key_x_padding, other_Key_y)
         other_Key_y += self.mouse_wheel_combo_label.get_size_request()[1] + 10
