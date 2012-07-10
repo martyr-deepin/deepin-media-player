@@ -987,6 +987,7 @@ class PlayerBox(object):
                 self.bottom_toolbar.play_control_panel.start_btn.start_bool = True
                 self.bottom_toolbar.play_control_panel.start_btn.queue_draw()
                 self.messagebox("没有可播放文件")
+                self.show_open_dialog_window()
         else:
             if 1 == start_bit:
                 self.bottom_toolbar.play_control_panel.start_btn.start_bool = self.play_control_panel.start_btn.start_bool
