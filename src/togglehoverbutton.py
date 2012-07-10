@@ -31,11 +31,15 @@ import gobject
 
 class ToggleHoverButton(gtk.Button):
     def __init__(self, 
+                 connect_function, argv,
                  normal_pixbuf_1 = app_theme.get_pixbuf("top_toolbar/cacel_window_above_normal.png"), 
                  hover_pixbuf_1 = app_theme.get_pixbuf("top_toolbar/cacel_window_above_hover.png"), 
                  normal_pixbuf_2 = app_theme.get_pixbuf("top_toolbar/window_above_normal.png"), 
                  hover_pixbuf_2 = app_theme.get_pixbuf("top_toolbar/window_above_hover.png")):
         gtk.Button.__init__(self)
+        self.connect_function = connect_function
+        self.argv             = argv
+        
         self.flags = True
         self.normal_pixbuf_1 = normal_pixbuf_1
         self.normal_pixbuf_2 = normal_pixbuf_2
@@ -48,6 +52,7 @@ class ToggleHoverButton(gtk.Button):
     def togglehoverbutton_event(self, widget):    
         widget.connect("clicked", self.button_flags)
         widget.connect("expose-event", self.draw_button)
+        widget.connect("motion-notify-event", self.show_toolbar)
         
     def draw_button(self, widget, event):
         if widget.state == gtk.STATE_NORMAL:
@@ -74,14 +79,18 @@ class ToggleHoverButton(gtk.Button):
         propagate_expose(widget, event)
         return True    
         
-    def button_flags(self, widget):
+    def button_flags(self, widget):        
         self.flags = not self.flags
+        
+    def show_toolbar(self, widget, event):    
+        self.connect_function(self.argv[0], self.argv[1])
         
 gobject.type_register(ToggleHoverButton)
 
 
 class ToolbarRadioButton(gtk.HBox):
     def __init__(self,
+                 connect_function, argv,
                  ##############
                  full_normal_pixbuf = app_theme.get_pixbuf("top_toolbar/full_window_normal.png"),
                  full_hover_pixbuf  = app_theme.get_pixbuf("top_toolbar/full_window_hover.png"),                 
@@ -93,6 +102,9 @@ class ToolbarRadioButton(gtk.HBox):
                  concise_hover_pixbuf      = app_theme.get_pixbuf("top_toolbar/concise_hover.png")
                  ):
         gtk.HBox.__init__(self)        
+        
+        self.connect_function = connect_function
+        self.argv  =  argv
         # Init pixbuf.
         self.full_normal_pixbuf = full_normal_pixbuf
         self.full_hover_pixbuf  = full_hover_pixbuf
@@ -110,28 +122,35 @@ class ToolbarRadioButton(gtk.HBox):
         self.full_btn     = gtk.Button()
         self.full_btn_ali.add(self.full_btn)
         tooltip_text(self.full_btn, "全屏")
+        self.full_btn.add_events(gtk.gdk.ALL_EVENTS_MASK)
         self.full_btn.connect("expose-event",     self.expose_draw_full_btn)
+        self.full_btn.connect("motion-notify-event", self.show_toolbar)
         
         self.win_mode_btn_ali = gtk.Alignment()
         self.win_mode_btn_ali.set_padding(0, 0, 5, 5)
         self.win_mode_btn = gtk.Button()
         self.win_mode_btn_ali.add(self.win_mode_btn)        
         tooltip_text(self.win_mode_btn, "普通模式")
+        self.win_mode_btn.add_events(gtk.gdk.ALL_EVENTS_MASK)
         self.win_mode_btn.connect("expose-event", self.expose_draw_win_mode_btn)
+        self.win_mode_btn.connect("motion-notify-event", self.show_toolbar)
         
         self.concise_btn_ali = gtk.Alignment()
         self.concise_btn_ali.set_padding(0, 0, 5, 5)
         self.concise_btn  = gtk.Button()
         self.concise_btn_ali.add(self.concise_btn)
         tooltip_text(self.concise_btn, "简洁模式")
-        
+        self.concise_btn.add_events(gtk.gdk.ALL_EVENTS_MASK)
         self.concise_btn.connect("expose-event",  self.expose_draw_concise_btn)
+        self.concise_btn.connect("motion-notify-event", self.show_toolbar)
         
         # add buttons.
         self.pack_start(self.full_btn_ali, False, False)
         self.pack_start(self.win_mode_btn_ali, False, False)
-        self.pack_start(self.concise_btn_ali, False, False)        
+        self.pack_start(self.concise_btn_ali, False, False)
         
+    def show_toolbar(self, widget, event):
+        self.connect_function(self.argv[0], self.argv[1])
 
     def expose_draw_full_btn(self, widget, event):
         cr = widget.window.cairo_create()

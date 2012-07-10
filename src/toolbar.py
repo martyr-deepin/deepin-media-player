@@ -49,7 +49,7 @@ class ToolBar(object):
         self.panel.connect("expose-event", self.draw_panel_background)
         
         
-        self.toolbar_radio_button = ToolbarRadioButton()
+        self.toolbar_radio_button = ToolbarRadioButton(self.show_panel_toolbar, [self.panel, self.panel.event])
         # full buton.
         self.toolbar_full_hframe  = self.toolbar_radio_button.full_btn_ali
         self.toolbar_full_button  = self.toolbar_radio_button.full_btn
@@ -61,7 +61,7 @@ class ToolBar(object):
         self.toolbar_concise_button = self.toolbar_radio_button.concise_btn
         # 1X conect-> self.set_2x_video_play        
         self.toolbar_1X_hframe   =  HorizontalFrame(5) 
-        self.toolbar_1X_button   =  ToggleHoverButton(
+        self.toolbar_1X_button   =  ToggleHoverButton(self.show_panel_toolbar, [self.panel, self.panel.event],
             app_theme.get_pixbuf("top_toolbar/1_window_normal.png"),
             app_theme.get_pixbuf("top_toolbar/1_window_hover.png"),
             app_theme.get_pixbuf("top_toolbar/1_window_normal.png"),
@@ -70,7 +70,7 @@ class ToolBar(object):
         self.toolbar_1X_hframe.add(self.toolbar_1X_button)        
         # 2X conect-> self.set_2x_video_play
         self.toolbar_2X_hframe   =  HorizontalFrame(5) 
-        self.toolbar_2X_button   =  ToggleHoverButton(
+        self.toolbar_2X_button   =  ToggleHoverButton(self.show_panel_toolbar, [self.panel, self.panel.event],
             app_theme.get_pixbuf("top_toolbar/2_window_normal.png"),
             app_theme.get_pixbuf("top_toolbar/2_window_hover.png"),
             app_theme.get_pixbuf("top_toolbar/2_window_normal.png"),
@@ -79,7 +79,7 @@ class ToolBar(object):
         self.toolbar_2X_hframe.add(self.toolbar_2X_button)
                        
         self.toolbar_above_hframe = HorizontalFrame(5) 
-        self.toolbar_above_button = ToggleHoverButton()
+        self.toolbar_above_button = ToggleHoverButton(self.show_panel_toolbar, [self.panel, self.panel.event])
         self.toolbar_above_hframe.add(self.toolbar_above_button)
         
         self.hbox.pack_start(self.toolbar_radio_button, False, False)        
@@ -93,7 +93,7 @@ class ToolBar(object):
 
         # Mouse peneration.
         # self.input_mask = gtk.gdk.Region()
-        # self.panel.window.input_shape_combine_region(self.input_mask, 0, 0)                           
+        # self.panel.window.input_shape_combine_region(self.input_mask, 0, 0)
         
         self.show_time_id = None
         
