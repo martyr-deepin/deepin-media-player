@@ -24,9 +24,10 @@ from dtk.ui.frame import HorizontalFrame
 from dtk.ui.draw import draw_pixbuf
 from dtk.ui.utils import propagate_expose
 from dtk.ui.cache_pixbuf import CachePixbuf
+
+from tooltip import tooltip_text
 from skin import app_theme
 import gtk
-
 
 class PlayControlPanel(object):    
     def __init__(self):
@@ -43,13 +44,18 @@ class PlayControlPanel(object):
                                     app_theme.get_pixbuf("bottom_buttons/stop_hover.png"),
                                     app_theme.get_pixbuf("bottom_buttons/stop_press.png")
                                     )
+        tooltip_text(self.stop_btn, "停止")        
+        
         self.pre_btn = StartButton(app_theme.get_pixbuf("bottom_buttons/pre_button_normal.png"),
                                    app_theme.get_pixbuf("bottom_buttons/pre_button_hover.png"),
                                    app_theme.get_pixbuf("bottom_buttons/pre_button_press.png"),
                                    app_theme.get_pixbuf("bottom_buttons/pre_button_normal.png"),
                                    app_theme.get_pixbuf("bottom_buttons/pre_button_hover.png"),
                                    app_theme.get_pixbuf("bottom_buttons/pre_button_press.png"))        
+        tooltip_text(self.pre_btn, "上一首")
+        
         self.start_btn = StartButton()
+        tooltip_text(self.start_btn, "播放")
         
         self.next_btn = StartButton(app_theme.get_pixbuf("bottom_buttons/next_button_normal.png"),
                                     app_theme.get_pixbuf("bottom_buttons/next_button_hover.png"),
@@ -57,13 +63,15 @@ class PlayControlPanel(object):
                                     app_theme.get_pixbuf("bottom_buttons/next_button_normal.png"),
                                     app_theme.get_pixbuf("bottom_buttons/next_button_hover.png"),
                                     app_theme.get_pixbuf("bottom_buttons/next_button_press.png"))
-
+        tooltip_text(self.next_btn, "下一首")
+        
         self.open_btn = StartButton(app_theme.get_pixbuf("bottom_buttons/open_normal.png"),
                                     app_theme.get_pixbuf("bottom_buttons/open_hover.png"),
                                     app_theme.get_pixbuf("bottom_buttons/open_press.png"),
                                     app_theme.get_pixbuf("bottom_buttons/open_normal.png"),
                                     app_theme.get_pixbuf("bottom_buttons/open_hover.png"),
                                     app_theme.get_pixbuf("bottom_buttons/open_press.png"))
+        tooltip_text(self.open_btn, "打开文件")
 
         self.hbox.pack_start(self.stop_btn, False, False)
         self.hbox.pack_start(self.pre_btn, False, False)

@@ -321,7 +321,7 @@ class VolumeButton(gtk.EventBox):
         cr = widget.window.cairo_create()
         x, y, w, h = widget.allocation
         
-        if self.__volume_state == MUTE_STATE: # mute state.           
+        if self.__volume_state == MUTE_STATE: # mute state.
             if self.__mouse_state == MOUSE_VOLUME_STATE_NORMAL:                
                 pixbuf = self.__mute_volume_normal_pixbuf
             elif self.__mouse_state == MOUSE_VOLUME_STATE_HOVER:        
