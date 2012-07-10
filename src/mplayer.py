@@ -275,6 +275,9 @@ class  Mplayer(gobject.GObject):
         self.lenNum      = 0
         self.posNum      = 0
         
+        # select channel state.
+        self.channel_state = 0
+        
         # player list.
         self.playList      = [] 
         # player list sum. 
@@ -362,6 +365,7 @@ class  Mplayer(gobject.GObject):
             gobject.timeout_add(250, self.emit_play_start_event)
             
     def emit_play_start_event(self):
+        self.channel_state = 0
         self.emit("play-start", self.mplayer_pid)        
         return False
     
@@ -514,18 +518,21 @@ class  Mplayer(gobject.GObject):
     def leftchannel(self):
         '''The left channel'''
         if self.state:
-            self.cmd('af channels=2:2:0:1:1:1\n') 
+            self.cmd('af channels=2:2:0:0:0:0\n')
+            self.channel_state = 1
     
     def rightchannel(self):
         '''The right channel'''
         if self.state:
-            self.cmd('af channels=2:2:0:0:0:0\n')
-    
+            self.cmd('af channels=2:2:0:1:1:1\n')             
+            self.channel_state = 2
+            
     def normalchannel(self):
         '''Normal channel'''
         if self.state:
             self.cmd('af channels=2:2:0:0:1:1\n')
-    
+            self.channel_state = 0
+            
     def offmute(self): 
         self.volumebool = False
         self.cmd('mute 0\n')

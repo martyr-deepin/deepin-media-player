@@ -75,6 +75,9 @@ X_VIDEO_PLAY_2   = 1 << 3
 
 class PlayerBox(object):
     def __init__ (self, app, argv_path_list):
+        # Init pixuf.
+        self.init_system_pixbuf()
+        
         # signal and double.
         self.double_bool = False
         self.signal_timeout = []
@@ -104,8 +107,8 @@ class PlayerBox(object):
         self.pause_time_id = None
         self.pause_bool = False
         self.pause_x = 0
-        self.pause_y = 0
-        
+        self.pause_y = 0                
+
         # Init play memory.
         self.ini = Config(get_home_path() + "/.config/deepin-media-player/config.ini")
         # Init deepin media player config gui.
@@ -203,41 +206,6 @@ class PlayerBox(object):
             ]
         self.screen_pop_menu = ScreenMenu(self.screen_frame, menu_item)
         self.screen_pop_menu.size(self.screen_pop_menu.width, self.screen_pop_menu.height - 26)
-        
-        # menu icon pixbuf. menupixbuf ..
-        self.video_aspect_pixbuf = app_theme.get_pixbuf("screen/check_normal.png") # aspect state pixbuf.
-        self.video_aspect_select_pixbuf = app_theme.get_pixbuf("screen/check_hover.png")
-        self.video_aspect_type = "默认"
-        self.playwinmax_bool = True
-        self.menu_concie_normal_pixbuf = app_theme.get_pixbuf("screen/menu_concise_normal.png")
-        self.menu_concie_hover_pixbuf = app_theme.get_pixbuf("screen/menu_concise_hover.png")
-        self.menu_window_mode_normal_pixbuf = app_theme.get_pixbuf("screen/menu_window_mode_normal.png")
-        self.menu_window_mode_hover_pixbuf = app_theme.get_pixbuf("screen/menu_window_mode_hover.png")
-        self.menu_play_sequence_normal_pixbuf = app_theme.get_pixbuf("screen/menu_play_sequence_normal.png")
-        self.menu_play_sequence_hover_pixbuf  = app_theme.get_pixbuf("screen/menu_play_sequence_hover.png")
-        self.menu_full_normal_pixbuf = app_theme.get_pixbuf("screen/menu_full_normal.png") 
-        self.menu_full_hover_pixbuf  = app_theme.get_pixbuf("screen/menu_full_hover.png")
-        self.menu_pre_normal_pixbuf = app_theme.get_pixbuf("screen/menu_pre_normal.png")
-        self.menu_pre_hover_pixbuf  = app_theme.get_pixbuf("screen/menu_pre_hover.png")
-        self.menu_next_normal_pixbuf = app_theme.get_pixbuf("screen/menu_next_normal.png")
-        self.menu_next_hover_pixbuf  = app_theme.get_pixbuf("screen/menu_next_hover.png")        
-        self.menu_f_seek_5_normal_pixbuf   = app_theme.get_pixbuf("screen/menu_f_seek_5_normal.png")
-        self.menu_f_seek_5_hover_pixbuf    = app_theme.get_pixbuf("screen/menu_f_seek_5_hover.png")
-        self.menu_b_seek_5_normal_pixbuf   = app_theme.get_pixbuf("screen/menu_b_seek_5_normal.png")
-        self.menu_b_seek_5_hover_pixbuf   = app_theme.get_pixbuf("screen/menu_b_seek_5_hover.png")
-        self.menu_volume_normal_pixbuf  = app_theme.get_pixbuf("screen/menu_volume_normal.png")
-        self.menu_volume_hover_pixbuf   = app_theme.get_pixbuf("screen/menu_volume_hover.png")
-        self.menu_setting_normal_pixbuf = app_theme.get_pixbuf("screen/menu_setting_normal.png")
-        self.menu_setting_hover_pixbuf  = app_theme.get_pixbuf("screen/menu_setting_hover.png")
-        self.menu_quit_normal_pixbuf = app_theme.get_pixbuf("screen/menu_quit_normal.png")
-        self.menu_quit_hover_pixbuf  = app_theme.get_pixbuf("screen/menu_quit_hover.png")
-        self.menu_subtitle_normal_pixbuf = app_theme.get_pixbuf("screen/menu_subtitle_normal.png")
-        self.menu_subtitle_hover_pixbuf  = app_theme.get_pixbuf("screen/menu_subtitle_hover.png")
-        
-        # play sequence pixbuf.
-        self.play_sequence_select_normal_pixbuf   =  app_theme.get_pixbuf("screen/check_normal.png")
-        self.play_sequence_select_hover_pixbuf    =  app_theme.get_pixbuf("screen/check_hover.png")
-        
         
         # Set background.
         style = self.screen_frame.get_style()
@@ -431,6 +399,45 @@ class PlayerBox(object):
         
         self.cursor_type = None
 
+    def init_system_pixbuf(self):    
+        # menu icon pixbuf. menupixbuf ..
+        self.video_aspect_pixbuf = app_theme.get_pixbuf("screen/check_normal.png") # aspect state pixbuf.
+        self.video_aspect_select_pixbuf = app_theme.get_pixbuf("screen/check_hover.png")
+        self.video_aspect_type = "默认"
+        self.playwinmax_bool = True
+        self.menu_concie_normal_pixbuf = app_theme.get_pixbuf("screen/menu_concise_normal.png")
+        self.menu_concie_hover_pixbuf = app_theme.get_pixbuf("screen/menu_concise_hover.png")
+        self.menu_window_mode_normal_pixbuf = app_theme.get_pixbuf("screen/menu_window_mode_normal.png")
+        self.menu_window_mode_hover_pixbuf = app_theme.get_pixbuf("screen/menu_window_mode_hover.png")
+        self.menu_play_sequence_normal_pixbuf = app_theme.get_pixbuf("screen/menu_play_sequence_normal.png")
+        self.menu_play_sequence_hover_pixbuf  = app_theme.get_pixbuf("screen/menu_play_sequence_hover.png")
+        self.menu_full_normal_pixbuf = app_theme.get_pixbuf("screen/menu_full_normal.png") 
+        self.menu_full_hover_pixbuf  = app_theme.get_pixbuf("screen/menu_full_hover.png")
+        self.menu_pre_normal_pixbuf = app_theme.get_pixbuf("screen/menu_pre_normal.png")
+        self.menu_pre_hover_pixbuf  = app_theme.get_pixbuf("screen/menu_pre_hover.png")
+        self.menu_next_normal_pixbuf = app_theme.get_pixbuf("screen/menu_next_normal.png")
+        self.menu_next_hover_pixbuf  = app_theme.get_pixbuf("screen/menu_next_hover.png")        
+        self.menu_f_seek_5_normal_pixbuf   = app_theme.get_pixbuf("screen/menu_f_seek_5_normal.png")
+        self.menu_f_seek_5_hover_pixbuf    = app_theme.get_pixbuf("screen/menu_f_seek_5_hover.png")
+        self.menu_b_seek_5_normal_pixbuf   = app_theme.get_pixbuf("screen/menu_b_seek_5_normal.png")
+        self.menu_b_seek_5_hover_pixbuf   = app_theme.get_pixbuf("screen/menu_b_seek_5_hover.png")
+        self.menu_volume_normal_pixbuf  = app_theme.get_pixbuf("screen/menu_volume_normal.png")
+        self.menu_volume_hover_pixbuf   = app_theme.get_pixbuf("screen/menu_volume_hover.png")
+        self.menu_setting_normal_pixbuf = app_theme.get_pixbuf("screen/menu_setting_normal.png")
+        self.menu_setting_hover_pixbuf  = app_theme.get_pixbuf("screen/menu_setting_hover.png")
+        self.menu_quit_normal_pixbuf = app_theme.get_pixbuf("screen/menu_quit_normal.png")
+        self.menu_quit_hover_pixbuf  = app_theme.get_pixbuf("screen/menu_quit_hover.png")
+        self.menu_subtitle_normal_pixbuf = app_theme.get_pixbuf("screen/menu_subtitle_normal.png")
+        self.menu_subtitle_hover_pixbuf  = app_theme.get_pixbuf("screen/menu_subtitle_hover.png")
+        
+        # play sequence pixbuf.
+        self.play_sequence_select_normal_pixbuf   =  app_theme.get_pixbuf("screen/check_normal.png")
+        self.play_sequence_select_hover_pixbuf    =  app_theme.get_pixbuf("screen/check_hover.png")
+
+        # channel_select pixbuf.
+        self.select_channel_normal_pixbuf  =  app_theme.get_pixbuf("screen/check_normal.png")
+        self.select_channel_hover_pixbuf   =  app_theme.get_pixbuf("screen/check_hover.png")        
+        
     def get_last_new_play_file_name(self, LastNewPlayFile, file_name):    
         if file_name in self.mp.playList:
             pass
@@ -2044,10 +2051,26 @@ class PlayerBox(object):
                                    (None, "移除字幕", None),
                                    ])
         
+        normal_channel_state  =  0
+        left_channel_state    =  1
+        right_channel_state   =  2
+        normal_channel_pixbuf = None
+        left_channel_pixbuf   = None
+        right_channel_pixbuf  = None
+        
+        channel_pixbuf = (self.select_channel_normal_pixbuf, self.select_channel_hover_pixbuf)
+        
+        if self.mp.channel_state == normal_channel_state:
+            normal_channel_pixbuf = channel_pixbuf
+        elif self.mp.channel_state == left_channel_state:    
+            left_channel_pixbuf = channel_pixbuf
+        elif self.mp.channel_state == right_channel_state:    
+            right_channel_pixbuf = channel_pixbuf        
+            
         self.channel_select_menu = Menu([
-                (None, "立体声道", self.normal_channel),
-                (None, "左声道",   self.left_channel),
-                (None, "右声道",   self.right_channel)
+                (normal_channel_pixbuf, "立体声道", self.normal_channel),
+                (left_channel_pixbuf, "左声道",   self.left_channel),
+                (right_channel_pixbuf, "右声道",   self.right_channel)
                 ])
 
         # In title root menu.
@@ -2252,10 +2275,26 @@ class PlayerBox(object):
                             # (None, "全屏/退出", None),
                             ])
 
+        normal_channel_state  =  0
+        left_channel_state    =  1
+        right_channel_state   =  2
+        normal_channel_pixbuf = None
+        left_channel_pixbuf   = None
+        right_channel_pixbuf  = None
+        
+        channel_pixbuf = (self.select_channel_normal_pixbuf, self.select_channel_hover_pixbuf)
+        
+        if self.mp.channel_state == normal_channel_state:
+            normal_channel_pixbuf = channel_pixbuf
+        elif self.mp.channel_state == left_channel_state:    
+            left_channel_pixbuf = channel_pixbuf
+        elif self.mp.channel_state == right_channel_state:    
+            right_channel_pixbuf = channel_pixbuf        
+        
         channel_select = Menu([
-                (None, "立体声道", self.normal_channel),
-                (None, "左声道",   self.left_channel),
-                (None, "右声道",   self.right_channel)
+                (normal_channel_pixbuf, "立体声道",  self.normal_channel),
+                (left_channel_pixbuf,   "左声道",    self.left_channel),
+                (right_channel_pixbuf,  "右声道",    self.right_channel)
                 ])
         
         self.screen_right_root_menu = Menu([
