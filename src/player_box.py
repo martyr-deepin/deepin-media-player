@@ -1933,7 +1933,7 @@ class PlayerBox(object):
             if VIDEO_ADAPT_WINDOW_STATE == video_open_type: 
                 if format.get_video_bool(mplayer.path):
                     screen_frame_height = self.screen_frame.allocation.height
-                    modify_window_width = float(self.video_width)/self.video_height * screen_frame_height
+                    modify_window_width = float(self.video_width)/self.video_height * screen_frame_height + 2
                     video_padding_height = 4
                     # play list.
                     if self.show_or_hide_play_list_bool:

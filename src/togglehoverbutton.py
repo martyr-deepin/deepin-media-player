@@ -149,6 +149,8 @@ class ToolbarRadioButton(gtk.HBox):
         self.pack_start(self.win_mode_btn_ali, False, False)
         self.pack_start(self.concise_btn_ali, False, False)
         
+        self.show_all()
+        
     def show_toolbar(self, widget, event):
         self.connect_function(self.argv[0], self.argv[1])
 
