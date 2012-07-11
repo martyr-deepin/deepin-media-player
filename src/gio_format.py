@@ -19,15 +19,16 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
+from formencode.validators import URL
 import gio
 
 class Format(object):
     def __init__(self):
         self.video_foramt = ["video", 
                              "application/vnd.rn-realmedia"]
-        self.audio_format = ["audio"]
-        self.url_format   = ["http", "https", "mms"]
+        self.audio_format = ["audio"]        
+        
+        self.html_format  = ["http", "https", "mms"]
         
     def get_video_bool(self, file_path):
         file_format = self.format_function(file_path)
@@ -43,26 +44,50 @@ class Format(object):
         else:
             return False
         
-    def get_play_bool(self, file_path):    
-        file_format = self.format_function(file_path)
-        if (file_format.split("/")[0] in self.audio_format) or (file_format in self.video_foramt) or (file_format.split("/")[0] in self.video_foramt) or (file_path[0:4] in self.url_format):
+    def get_html_bool(self, file_path):    
+        if file_path[0:4] in self.html_format or file_path[0:3] in self.html_format:
             return True
-        else:
+        return False
+    
+    def is_valid_url(self, url):
+        '''Is valid url.'''
+        try:
+            url_checker = URL()
+            url_checker.to_python(url)
+            return True
+        except Exception, e:
+            print e
             return False
         
+    def get_play_bool(self, file_path):    
+        if self.get_html_bool(file_path):
+            if self.is_valid_url(file_path):
+                return True
+        else:    
+            file_format = self.format_function(file_path)
+            if file_format:
+                if (file_format.split("/")[0] in self.audio_format) or (file_format in self.video_foramt) or (file_format.split("/")[0] in self.video_foramt):
+                    return True
+                else:
+                    return False
+        
     def format_function(self, file_path):
-        gio_file = gio.File(file_path)
-        file_atrr = ",".join([gio.FILE_ATTRIBUTE_STANDARD_CONTENT_TYPE,
-                              gio.FILE_ATTRIBUTE_STANDARD_TYPE, 
-                              gio.FILE_ATTRIBUTE_STANDARD_NAME,
-                              gio.FILE_ATTRIBUTE_STANDARD_SIZE,
-                              gio.FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME,
-                              gio.FILE_ATTRIBUTE_TIME_MODIFIED,
-                              gio.FILE_ATTRIBUTE_STANDARD_ICON,
-                              ])
-        gio_file_info = gio_file.query_info(file_atrr)
-        file_format = gio_file_info.get_attribute_as_string(gio.FILE_ATTRIBUTE_STANDARD_CONTENT_TYPE)
-        return file_format
+        try:
+            gio_file = gio.File(file_path)
+            file_atrr = ",".join([gio.FILE_ATTRIBUTE_STANDARD_CONTENT_TYPE,
+                                  gio.FILE_ATTRIBUTE_STANDARD_TYPE, 
+                                  gio.FILE_ATTRIBUTE_STANDARD_NAME,
+                                  gio.FILE_ATTRIBUTE_STANDARD_SIZE,
+                                  gio.FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME,
+                                  gio.FILE_ATTRIBUTE_TIME_MODIFIED,
+                                  gio.FILE_ATTRIBUTE_STANDARD_ICON,
+                                  ])
+            gio_file_info = gio_file.query_info(file_atrr)
+            file_format = gio_file_info.get_attribute_as_string(gio.FILE_ATTRIBUTE_STANDARD_CONTENT_TYPE)
+            return file_format
+        except Exception, e:
+            print e
+            return None
 
     
 format = Format()

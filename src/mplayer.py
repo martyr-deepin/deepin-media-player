@@ -847,6 +847,7 @@ class  Mplayer(gobject.GObject):
         self.playList.intert(index, path)        
         self.playListSum += 1
         
+        
     def addPlayFile(self, path):    
         if self.findFile(path): # play file.
             go = True           
@@ -855,8 +856,6 @@ class  Mplayer(gobject.GObject):
                     self.emit("same-name-event", i)
                     go = False
                     break
-            if path[0:4].lower() == "http":
-                go = True
             if go:        
                 self.playList.append(path)
                 self.emit("add-path", path)

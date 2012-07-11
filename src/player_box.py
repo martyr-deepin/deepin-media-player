@@ -49,6 +49,7 @@ from play_list_button import PlayListButton
 from drag import drag_connect
 from preview import PreView
 from ini_gui import IniGui,VIDEO_ADAPT_WINDOW_STATE,WINDOW_ADAPT_VIDEO_STATE,UP_CLOSE_VIDEO_STATE,AI_FULL_VIDEO_STATE
+from gio_format import Format
 from mplayer import Mplayer
 # from mplayer import get_vide_width_height
 from mplayer import get_length
@@ -1117,18 +1118,21 @@ class PlayerBox(object):
         # Init last new play file.
         self.the_last_new_play_file_list = self.last_new_play_file_function.set_file_time(self.mp.path)
         
+        gio_format = Format()
         # try:
         # argv path list.
         for file_path in self.argv_path_list:
-            if self.mp.findDmp(file_path): # .dmp add play file.
-                self.mp.loadPlayList(file_path)
-            elif os.path.isfile(file_path): # add play file.
-                self.mp.addPlayFile(file_path)
-            elif os.path.isdir(file_path): # add dir.
-                path_threads(file_path, self.mp)
-
-            if len(self.argv_path_list) > 1: # Set play bool.
-                self.clear_play_list_bool = True
+            if file_path != "main.py":
+                if self.mp.findDmp(file_path): # .dmp add play file.
+                    self.mp.loadPlayList(file_path)                    
+                elif os.path.isfile(file_path): # add play file.
+                    self.mp.addPlayFile(file_path)
+                elif os.path.isdir(file_path): # add dir.
+                    path_threads(file_path, self.mp)
+                elif gio_format.get_html_bool(file_path):
+                    self.mp.addPlayFile(file_path)
+                if len(self.argv_path_list) > 1: # Set play bool.
+                    self.clear_play_list_bool = True
 
         # self.play_list.list_view.set_highlight(self.play_list.list_view.items[0])
         # except:
@@ -2603,6 +2607,7 @@ class PlayerBox(object):
         
     def get_url_name(self, open_url, url_name, url_bool):
         if url_bool:
+            self.mp.clearPlayList()
             self.mp.addPlayFile(url_name) # play list add url name.
             # self.mp.play(url_name)            
         else:    

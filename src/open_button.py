@@ -402,31 +402,14 @@ class OpenUrl(gobject.GObject):
         self.url_win.show_all()
         
     def get_url_name(self, url_name):    
-        self.get_url_text_name_function(url_name)
+        # self.get_url_text_name_function(url_name)
+        self.emit("openurl-url-name", "%s"%(url_name), True)
         
     def get_url_text_name(self, url_text, event):        
         if event.keyval == 65293: # Enter.
-            self.get_url_text_name_function(self.url_win.entry.get_text())
+            self.emit("openurl-url-name", "%s"%(self.url_win.entry.get_text()), True)
+            self.url_win.destroy()
             
-    def get_url_text_name_function(self, url_name):        
-        self.url_win.set_opacity(0)
-        # get url_name.
-        url_name = url_name
-        # emit url_text url name.            
-        if len(url_name) > 0:
-            if url_name[0:5] != "https":
-                try:                        
-                    self.emit("openurl-url-name", "%s"%(url_name), True)
-                except:
-                    self.emit("openurl-url-name", '%s'%("connect url Error!!"), False)
-            else:        
-                self.emit("openurl-url-name", "%s"%("Input url name no :https!!"), False)
-        else:        
-            self.emit("openurl-url-name", "%s"%("Input url Empty!!"), False)
-            
-        # destroy window.
-        self.url_win.destroy()
-        
 gobject.type_register(OpenUrl)
 
 if __name__ == "__main__":
