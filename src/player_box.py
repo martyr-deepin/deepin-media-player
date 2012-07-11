@@ -183,7 +183,7 @@ class PlayerBox(object):
         self.screen_frame.add(self.screen)
 
         '''Tooltip window.'''
-        self.window_tool_tip = OSDTooltip(self.screen_frame, offset_x=12, offset_y=0)
+        self.window_tool_tip = OSDTooltip(self.screen_frame, offset_x=12, offset_y=30)
         '''mid open button.'''
         self.open_button = OpenButton(self.screen_frame, "打开文件", 108, 40)
         self.open_button.connect("openbutton-clicked-event", lambda w, e: self.add_file_clear())
@@ -632,6 +632,14 @@ class PlayerBox(object):
       other_key_bool    = self.config.get("OtherKey",    "other_key_bool")
       
       if play_control_bool.lower() == "true":    
+        for section, argv in [("PlayControl", "open_file_key"),
+                              ("PlayControl", "open_file_dir_key"),
+                              ("PlayControl", "play_or_pause_key"),
+                              ("PlayControl", "seek_key"),
+                              ("PlayControl", "back_key")
+                              ]:   
+            print section, argv
+            
         config_key = self.config.get("PlayControl", "open_file_key")
         self.keymap[config_key.lower()] = self.show_open_dialog_window
         # open file dir key init.
