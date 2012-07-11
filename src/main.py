@@ -27,12 +27,23 @@ from mplayer import init_mplayer_config
 # import os
 import sys
 import gtk
+from user_guide import init_user_guide
+from ini import Config
+import os
 
 # Thread init. 
 gtk.gdk.threads_init()
 
 class MediaPlayer(object):
-    def __init__ (self):
+    def __init__ (self):            
+        path = os.path.expanduser("~") + "/.config"
+        config_path = path + "/deepin-media-player" + "/deepin_media_config.ini"
+        
+        if not os.path.exists(config_path):
+            init_user_guide()
+            init_mplayer_config()
+            gtk.main()
+            
         argv_path_list = sys.argv
         # Init emdia player config.
         init_mplayer_config()
@@ -47,8 +58,7 @@ class MediaPlayer(object):
         # Add app titlebar.
         self.app.add_titlebar(["theme", "menu", "max", "min", "close"],
                               app_theme.get_pixbuf("logo.png"),
-                              "深度影音", " ", add_separator = True)
-        
+                              "深度影音", " ", add_separator = True)        
         # Topbox init.
         self.player_box = PlayerBox(self.app, argv_path_list)
         # # Add child widget to app. 
@@ -56,6 +66,7 @@ class MediaPlayer(object):
         # drag function.
         self.app.window.show_all()
         
+
         
 MediaPlayer()        
 
