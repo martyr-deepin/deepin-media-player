@@ -211,7 +211,7 @@ class IniGui(DialogBox):
             # print "%s = %s" % (str(key), str(screenshot_dict[key]))
             
         # self.ini.save()    
-        self.emit("config-changed", "save_over")
+        # self.emit("config-changed", "save_over")
         # quit configure window.
         # self.destroy()
         return False

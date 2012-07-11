@@ -697,19 +697,23 @@ class PlayerBox(object):
 
         
     def key_subtitle_advance(self):
-        print "subtitle advance..."
+        # print "subtitle advance..."
+        pass
 
     def key_subtitle_delay(self):
-        print "subtitle delay..."
+        # print "subtitle delay..."
+        pass
 
     def key_load_subtitle(self):
-        print "load subtitle..."
+        # print "load subtitle..."
+        pass
 
     def key_switch_audio_track(self):
-        print "key switch audio track..."
+        # print "key switch audio track..."
+        pass
 
     def key_sort_image(self):
-        print "sort image..."
+        # print "sort image..."
         if 1 == self.mp.state: 
             scrot_bool = self.config.get("ScreenshotSet", "current_show_sort")
             
@@ -725,8 +729,11 @@ class PlayerBox(object):
             if save_file_bool == "True":
                 if scrot_bool.lower() == "true":
                     self.scrot_current_screen_pixbuf(save_path + "/%s-%s"%(self.get_player_file_name(self.mp.path), self.mp.posNum), save_type)
+                    self.messagebox("截图已保存")
                 else:    
                     self.mp.preview_scrot(self.mp.posNum, save_path + "/%s-%s"%(self.get_player_file_name(self.mp.path), self.mp.posNum) + save_type)
+                    self.messagebox("截图已保存")
+                    
             if save_clipboard_bool == "True": # save clipboard
                 clipboard_path = "/tmp" + "/%s-%s"%(self.get_player_file_name(self.mp.path), self.mp.posNum) + save_type
                 if scrot_bool.lower() == "true":
@@ -739,33 +746,38 @@ class PlayerBox(object):
                 pixbuf_clipboard = gtk.gdk.pixbuf_new_from_file(clipboard_path)
                 clipboard = gtk.Clipboard()
                 clipboard.set_image(pixbuf_clipboard)
-                
+                self.messagebox("截图已保存到剪贴板")
 
     def key_clockwise(self):
-        print "clockwise..."
+        # print "clockwise..."
+        pass
 
     def key_inverse_rotation_key(self):
-        print "inverse rotation..."
+        # print "inverse rotation..."
+        pass
+        
 
     def key_sub_brightness(self):
-        print "sub brightness..."
+        # print "sub brightness..."
+        pass
 
     def key_add_brightness(self):
-        print "add brightness..."
+        # print "add brightness..."
+        pass
 
     def key_concise(self):
-        print "concise..."
+        # print "concise..."
         if self.mode_state_bool:
             self.show_window_widget(self.toolbar.toolbar_common_button)
         else:
             self.hide_window_widget(self.toolbar.toolbar_concise_button)                        
 
     def key_add_volume(self):
-        print "add volume..."
+        # print "add volume..."
         self.key_set_volume(1) # 1-> add volume.
 
     def key_sub_volume(self):
-        print "sub volume..."
+        # print "sub volume..."
         self.key_set_volume(0) # 0 -> sub volume.
         
     def key_set_volume(self, type_bool):
@@ -800,7 +812,7 @@ class PlayerBox(object):
         # print self.volume_button.value
         
     def key_set_mute(self):
-        print "key set mute..."        
+        # print "key set mute..."        
         if self.mp.volumebool:
             self.volume_button.set_volume_mute(False)            
             if self.mp.state:
@@ -818,11 +830,11 @@ class PlayerBox(object):
             self.messagebox("开启静音")
 
     def key_pre(self):
-        print "pre a key..."
+        # print "pre a key..."
         self.pre_button_clicked(self.play_control_panel.pre_btn)
 
     def key_next(self):
-        print "next a key..."
+        # print "next a key..."
         self.next_button_clicked(self.play_control_panel.next_btn)
 
     def key_right(self):
@@ -2042,7 +2054,8 @@ class PlayerBox(object):
         self.playwinmax_bool = True
 
     def init_video_setting(self, mplayer, flags):    
-        print "init_video_setting"
+        # print "init_video_setting"
+        pass
         
     def media_player_next(self, mplayer, play_bool):
         if 1 == play_bool:
@@ -2629,7 +2642,7 @@ class PlayerBox(object):
     def open_sort_image_ini_gui(self):  #menu
         ini_gui = IniGui()
         ini_gui.set("截图设置")
-        ini_gui.connect("config-changed", self.restart_load_config_file)
+        ini_gui.ini.connect("config-changed", self.restart_load_config_file)
 
         
         
