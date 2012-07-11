@@ -183,7 +183,7 @@ class PlayerBox(object):
         self.screen_frame.add(self.screen)
 
         '''Tooltip window.'''
-        self.window_tool_tip = OSDTooltip(self.screen_frame, offset_x=12, offset_y=30)
+        self.window_tool_tip = OSDTooltip(self.screen_frame, offset_x=20, offset_y=26)
         '''mid open button.'''
         self.open_button = OpenButton(self.screen_frame, "打开文件", 108, 40)
         self.open_button.connect("openbutton-clicked-event", lambda w, e: self.add_file_clear())
@@ -626,99 +626,56 @@ class PlayerBox(object):
     def init_config_key(self):
       self.keymap = {}
       # Init Config keys.
-      # [PlayControl] Init.
+      
       # open file key init.(left)        
       play_control_bool = self.config.get("PlayControl", "play_control_bool")
       other_key_bool    = self.config.get("OtherKey",    "other_key_bool")
       
+      # [PlayControl] Init.
       if play_control_bool.lower() == "true":    
-        for section, argv in [("PlayControl", "open_file_key"),
-                              ("PlayControl", "open_file_dir_key"),
-                              ("PlayControl", "play_or_pause_key"),
-                              ("PlayControl", "seek_key"),
-                              ("PlayControl", "back_key")
-                              ]:   
-            print section, argv
+          for section, argv, connect_fun in [
+              ("PlayControl", "open_file_key", self.show_open_dialog_window),
+              ("PlayControl", "open_file_dir_key", self.show_open_dir_dialog_window),
+              ("PlayControl", "play_or_pause_key", self.key_space),
+              ("PlayControl", "seek_key",  self.key_right),
+              ("PlayControl", "back_key",  self.key_left),
+              ("PlayControl", "full_key",  self.key_return),
+              ("PlayControl", "pre_a_key",  self.key_pre),
+              ("PlayControl", "next_a_key", self.key_next),
+              ("PlayControl", "add_volume_key", self.key_add_volume),
+              ("PlayControl", "sub_volume_key", self.key_sub_volume),
+              ("PlayControl", "mute_key",       self.key_set_mute),
+              ("PlayControl", "concise_key",    self.key_concise)
+              ]:    
+            config_key = self.config.get(section, argv)
+            self.keymap[config_key] = connect_fun        
             
-        config_key = self.config.get("PlayControl", "open_file_key")
-        self.keymap[config_key.lower()] = self.show_open_dialog_window
-        # open file dir key init.
-        config_key = self.config.get("PlayControl", "open_file_dir_key")
-        self.keymap[config_key.lower()] = self.show_open_dir_dialog_window
-        # play or pause key init.
-        config_key = self.config.get("PlayControl", "play_or_pause_key")
-        self.keymap[config_key.lower()] = self.key_space
-        # seek key init.
-        config_key = self.config.get("PlayControl", "seek_key")
-        self.keymap[config_key.lower()] = self.key_right
-        # back key init.
-        config_key = self.config.get("PlayControl", "back_key")
-        self.keymap[config_key.lower()] = self.key_left
-        # full window init.
-        config_key = self.config.get("PlayControl", "full_key")
-        self.keymap[config_key.lower()] = self.key_return
-        # pre a key init.(right)
-        config_key = self.config.get("PlayControl", "pre_a_key")
-        self.keymap[config_key.lower()] = self.key_pre
-        # next a key init.
-        config_key = self.config.get("PlayControl", "next_a_key")
-        self.keymap[config_key.lower()] = self.key_next
-        # add volume key init.
-        config_key = self.config.get("PlayControl", "add_volume_key")
-        self.keymap[config_key.lower()] = self.key_add_volume
-        # sub volume key init.
-        config_key = self.config.get("PlayControl", "sub_volume_key")
-        self.keymap[config_key.lower()] = self.key_sub_volume
-        # Set mute key init.
-        config_key = self.config.get("PlayControl", "mute_key")
-        self.keymap[config_key.lower()] = self.key_set_mute
-        # concise key init.
-        config_key = self.config.get("PlayControl", "concise_key")
-        self.keymap[config_key.lower()] = self.key_concise
-        # [OtherKey].
-      if other_key_bool.lower == "true":  
-        # add brightness key init.
-        config_key = self.config.get("OtherKey", "add_brightness_key")
-        self.keymap[config_key.lower()] = self.key_add_brightness
-        # sub brightness key init.
-        config_key = self.config.get("OtherKey", "sub_brightness_key")
-        self.keymap[config_key.lower()] = self.key_sub_brightness
-        # inverse rotation key init.
-        config_key = self.config.get("OtherKey", "inverse_rotation_key")
-        self.keymap[config_key.lower()] = self.key_inverse_rotation_key
-        # clockwise key init.
-        config_key = self.config.get("OtherKey", "clockwise_key")
-        self.keymap[config_key.lower()] = self.key_clockwise
-        # sort image key init.
-        config_key = self.config.get("OtherKey", "sort_image_key")
-        self.keymap[config_key.lower()] = self.key_sort_image
-        # switch audio track key init.
-        config_key = self.config.get("OtherKey", "switch_audio_track_key")
-        self.keymap[config_key.lower()] = self.key_switch_audio_track
-        # load subtitle key init.
-        config_key = self.config.get("OtherKey", "load_subtitle_key")
-        self.keymap[config_key.lower()] = self.key_load_subtitle
-        # subtitle delay key init.
-        config_key = self.config.get("OtherKey", "subtitle_delay_key")
-        self.keymap[config_key.lower()] = self.key_subtitle_delay
-        # subtitle delay key init.
-        config_key = self.config.get("OtherKey", "subtitle_advance_key")
-        self.keymap[config_key.lower()] = self.key_subtitle_advance
-        # quit full play window.
-        self.keymap["escape".lower()] = self.key_quit_full
-        # print config_key        
-        
+          self.keymap["Escape"] = self.key_quit_full        
+            
+      # [OtherKey].
+      if other_key_bool.lower() == "true":  
+          for section, argv, connect_fun in [
+              ("OtherKey", "add_brightness_key", self.key_add_brightness),
+              ("OtherKey", "sub_brightness_key", self.key_sub_brightness),
+              ("OtherKey", "inverse_rotation_key", self.key_inverse_rotation_key),
+              ("OtherKey", "clockwise_key",   self.key_clockwise),
+              ("OtherKey", "sort_image_key",  self.key_sort_image),
+              ("OtherKey", "switch_audio_track_key",  self.key_switch_audio_track),
+              ("OtherKey", "load_subtitle_key",  self.key_load_subtitle),
+              ("OtherKey", "subtitle_delay_key", self.key_subtitle_delay),
+              ("OtherKey", "subtitle_advance_key", self.key_subtitle_advance),
+              ]:
+              config_key = self.config.get(section, argv)
+              self.keymap[config_key] = connect_fun                                    
+          
     def get_key_event(self, widget, event): # app: key-release-event
         keyval_name = get_keyevent_name(event)
         # Init config keys.
         self.init_config_key()
-        # self.keymap[""]()
-        if keyval_name == " ":
-            keyval_name = "space"
-        # print keyval_name
-        keyval_name = keyval_name.lower()
+        
         if self.keymap.has_key(keyval_name):
             self.keymap[keyval_name]()
+            
         return True
 
         
