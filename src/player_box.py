@@ -439,6 +439,17 @@ class PlayerBox(object):
         self.select_channel_normal_pixbuf  =  app_theme.get_pixbuf("screen/check_normal.png")
         self.select_channel_hover_pixbuf   =  app_theme.get_pixbuf("screen/check_hover.png")        
         
+        # mute/add/sub volume pixbuf.
+        self.mute_normal_pixbuf = app_theme.get_pixbuf("screen/menu_volume_menu_normal.png")
+        self.mute_hover_pixbuf = app_theme.get_pixbuf("screen/menu_volume_menu_hover.png")
+        self.mute_volume_pixbuf = (self.mute_normal_pixbuf, self.mute_hover_pixbuf)
+        self.add_volume_normal_pixbuf = app_theme.get_pixbuf("screen/menu_volume_normal.png")
+        self.add_volume_hover_pixbuf  = app_theme.get_pixbuf("screen/menu_volume_add_hover.png")
+        self.add_volume_pixbuf = (self.add_volume_normal_pixbuf, self.add_volume_hover_pixbuf)
+        self.sub_volume_normal_pixbuf = app_theme.get_pixbuf("screen/menu_volume_sub_normal.png")
+        self.sub_volume_hover_pixbuf = app_theme.get_pixbuf("screen/menu_volume_sub_hover.png")
+        self.sub_volume_pixbuf = (self.sub_volume_normal_pixbuf, self.sub_volume_hover_pixbuf)
+        
     def get_last_new_play_file_name(self, LastNewPlayFile, file_name):    
         if file_name in self.mp.playList:
             pass
@@ -2085,9 +2096,9 @@ class PlayerBox(object):
         self.volume_menu = Menu([(None, "声道选择", self.channel_select_menu),
                                  # (None, "配音选择", None),
                                  (None),
-                                 (None, "增大音量",  self.menu_add_volume),
-                                 (None, "减小音量",  self.menu_sub_volume),
-                                 (None, "静音/还原", self.key_set_mute),
+                                 (self.add_volume_pixbuf, "增大音量",  self.menu_add_volume),
+                                 (self.sub_volume_pixbuf, "减小音量",  self.menu_sub_volume),
+                                 (self.mute_volume_pixbuf, "静音/还原", self.key_set_mute),
                                  ])
         # In title root menu.
         pixbuf_normal    = None
