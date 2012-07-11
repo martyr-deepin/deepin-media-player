@@ -44,9 +44,11 @@ class ToolBar(object):
         self.panel.connect("leave-notify-event", self.hide_panel_toolbar)
         self.panel.connect("focus-out-event", self.focus_hide_toolbar)
         
-        self.panel.set_opacity(0.7)
+        self.default_opacity = 0.9
+        self.panel.set_opacity(self.default_opacity)
         self.panel.add_events(gtk.gdk.ALL_EVENTS_MASK)
         self.panel.connect("expose-event", self.draw_panel_background)
+        self.panel.connect("size-allocate", lambda w, e: w.queue_draw())
         
         
         self.toolbar_radio_button = ToolbarRadioButton(self.show_panel_toolbar, [self.panel, self.panel.event])
@@ -103,7 +105,7 @@ class ToolBar(object):
         cr.set_operator(cairo.OPERATOR_SOURCE)
         cr.paint()
         
-        cr.set_source_rgba(0, 0, 0, 0.7)
+        cr.set_source_rgba(0, 0, 0, self.default_opacity)
         cr.rectangle(x,y,w,h)
         cr.fill()
         
@@ -114,7 +116,7 @@ class ToolBar(object):
         self.panel.hide_all()
         
     def show_time(self):        
-        self.panel.set_opacity(0.7)
+        self.panel.set_opacity(self.default_opacity)
         
     def show_panel_toolbar(self, widget, event):    
         self.show = 0
