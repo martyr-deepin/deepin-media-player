@@ -60,6 +60,7 @@ from sort import Sort
 from open_button import OpenButton, ScreenMenu, OpenUrl
 from lastnewplayfile import LastNewPlayFile
 from service import download_shooter_subtitle
+from user_guide import init_user_guide
 
 import threading
 import gtk
@@ -2243,10 +2244,12 @@ class PlayerBox(object):
                                      ((self.menu_volume_normal_pixbuf, self.menu_volume_hover_pixbuf), "声音", self.volume_menu),
                                      # (None, "字幕", self.subtitle_menu),
                                      (None, "截图", self.sort_menu),
+                                     (None, "查看新特性", init_user_guide),
                                      ((self.menu_setting_normal_pixbuf, self.menu_setting_hover_pixbuf), "选项", self.config_gui),
                                      # (None, "总在最前", None),
                                      # (None, "自定义换肤", None),
                                      # (None, "帮助与反馈", self.help_menu),
+                                     (None),
                                      ((self.menu_quit_normal_pixbuf, self.menu_quit_hover_pixbuf), "退出", self.set_menu_quit)],
                                     True)
         self.title_root_menu.show(
