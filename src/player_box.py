@@ -1244,14 +1244,15 @@ class PlayerBox(object):
 
     def quit_player_window(self, widget):
         '''Quit player window.'''
-        self.app.window.set_opacity(0)
-        self.app.window.set_visible(True)
         self.quit_window_save_config()
         if self.mp:
             if self.mplayer_pid:
                 os.system("kill %s" %(self.mplayer_pid))
             self.mp.quit()
-
+            
+        self.app.window.set_opacity(0)
+        self.app.window.set_visible(True)
+            
     def quit_window_save_config(self):
         # save config section value.
         # print self.show_or_hide_play_list_bool        
