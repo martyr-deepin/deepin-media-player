@@ -1288,7 +1288,7 @@ class PlayerBox(object):
             self.bottom_toolbar.panel.move(self.panel_x + 1, self.panel_y + self.screen_frame.allocation.height - self.bottom_toolbar.panel.allocation.height)
 
         if self.full_bool:
-            self.toolbar.panel.move(self.panel_x - 4, self.panel_y)
+            self.toolbar.panel.move(self.panel_x, self.panel_y)
         
         self.set_toolbar_show_opsition()
         # Hide preview window.
@@ -1701,7 +1701,7 @@ class PlayerBox(object):
                     self.toolbar.panel.move(self.panel_x + 2, self.panel_y + self.app.titlebar.allocation[3])
 
                 if self.full_bool:
-                    self.toolbar.panel.move(self.panel_x - 4, self.panel_y)
+                    self.toolbar.panel.move(self.panel_x, self.panel_y)
     
             # self.toolbar.panel.set_keep_above(True)
         else:
