@@ -1,4 +1,5 @@
 {"colors" : {
+ "labelText" : "#4D5154",
  "recommend" : "#FF0000",
  "windowMask" : "#FFFFFF",
  "menuFont" : "#000000",

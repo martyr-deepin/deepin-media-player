@@ -22,7 +22,7 @@
 from skin import app_theme
 
 from dtk.ui.utils import propagate_expose
-from dtk.ui.box import BackgroundBox
+from dtk.ui.box import BackgroundBox, ImageBox
 from dtk.ui.dialog import DialogBox, DIALOG_MASK_MULTIPLE_PAGE
 from dtk.ui.button import Button
 from dtk.ui.entry import InputEntry, ShortcutKeyEntry
@@ -107,7 +107,7 @@ class IniGui(DialogBox):
         
         self.tree_view.add_item(None, TreeViewItem("字幕设置"))
         self.tree_view.add_item(None, TreeViewItem("截图设置"))
-        self.tree_view.add_item(None, TreeViewItem("关于"))
+        self.tree_view.add_item(None, TreeViewItem("关于我们"))
 
         category_box = gtk.VBox()
         background_box = BackgroundBox()
@@ -229,7 +229,7 @@ class Configure(gtk.VBox):
     def __init__(self):
         gtk.VBox.__init__(self)
         self.class_list = ["文件播放", "系统设置", "播放控制", "其它快捷键",
-                           "字幕设置", "截图设置", "其它设置", "关于"]
+                           "字幕设置", "截图设置", "其它设置", "关于我们"]
         # Init all configure gui class.
         self.file_play = FilePlay()
         self.system_set = SystemSet()
@@ -266,7 +266,7 @@ class Configure(gtk.VBox):
                 self.pack_start(self.screen_shot)
             elif "其它设置" == class_name:
                 self.pack_start(self.other_set)
-            elif "关于" == class_name:
+            elif "关于我们" == class_name:
                 self.pack_start(self.about)
                 
             for widget in self.get_children(): 
@@ -1393,35 +1393,50 @@ class OtherSet(gtk.VBox):
         self.pack_start(self.fixed)
         
         
+def create_separator_box(padding_x=0, padding_y=0):    
+    separator_box = HSeparator(
+        app_theme.get_shadow_color("hSeparator").get_color_info(),
+        padding_x, padding_y)
+    return separator_box
+
 class About(gtk.VBox):    
     def __init__(self):
         gtk.VBox.__init__(self)
-        self.fixed = gtk.Fixed()
-        self.label = Label("深度影音", text_size=12)        
-        self.label.set_size_request(label_width, label_height)
-        self.version_label = Label("版本: 1.0")
-        #
-        self.label_text_about = Label("深度影音播放器是Linux Deepin团队开发的一款操作方便的影音播放软件。\n支持 avi、wma、wmv、mp4 等多种视频格式，具有视频预览、自动搜索字幕、视频画面截图、自定义换肤等功能。\n深度音乐播放器是自由软件，遵循自由软件基金会发布的GNU通用公共许可证第三版。\n")
+        main_box = gtk.VBox(spacing=15)
+        logo_image = ImageBox(app_theme.get_pixbuf("logo.png"))
+        light_color = app_theme.get_color("labelText")
+        logo_name = Label("深度影音", text_size=10)
+        logo_box = gtk.HBox(spacing=2)
+        logo_box.pack_start(logo_image, False, False)
+        logo_box.pack_start(logo_name, False, False)
         
-        self.index_label = Label("项目主页：http://www.linuxdeepin.com")
-        # self.
+        version_label = Label("版本: ")
+        version_content = Label("V1.0", light_color)
+        publish_label = Label("  发布时间: ")
+        publish_content = Label("2012.07.12    ", light_color)
+        info_box = gtk.HBox(spacing=5)
+        info_box.pack_start(version_label, False, False)
+        info_box.pack_start(version_content, False, False)
+        info_box.pack_start(publish_label, False, False)
+        info_box.pack_start(publish_content, False, False)
         
-        self.heparator=HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
-        self.heparator.set_size_request(heparator_width, heparator_height)
+        title_box = gtk.HBox(spacing=140)
+        title_box.pack_start(logo_box, False, False)
+        title_box.pack_start(info_box, False, False)
         
-        about_x = 20
-        label_x_padding = about_x + 30
-        label_y_padding = TITLE_HEIGHT_PADDING + 25
-        ####################################
-        self.fixed.put(self.label, label_x_padding, label_y_padding)
-        label_x_padding += self.label.get_size_request()[0] + 30
-        self.fixed.put(self.version_label, label_x_padding, label_y_padding + 6)
+        describe = '''       ﻿ 深度影音播放器是Linux Deepin团队为广大linux用户量身开发的一款影音播放软件。支持多种视频格式，支持多模式切换，具有播放预览、在线字幕、视频截图、自定义换肤等几大特点。\n\n深度音乐播放器是自由软件，遵循自由软件基金会发布的GNU通用公共许可证第三版'''
         
-        self.fixed.put(self.heparator, heparator_x, heparator_y + 30)
+        describe_label = Label(describe, enable_select=False, wrap_width=457)
+        main_box.pack_start(title_box, False, False)
+        main_box.pack_start(create_separator_box(), False, True)
+        main_box.pack_start(describe_label, False, False)
         
-        self.pack_start(self.fixed)
+        main_align = gtk.Alignment()
+        main_align.set_padding(25, 0, 20, 0)
+        main_align.set(0, 0, 1, 1)
+        main_align.add(main_box)
         
-        
+        self.add(main_align)
 
 if __name__ == "__main__":        
     IniGui()
