@@ -53,7 +53,7 @@ class BottomToolBar(object):
         self.show_time_hframe.add(self.show_time.time_box)
         self.show_time.time_box.set_size_request(110, -1)
         self.show_time_hframe.set(0, 0, 1, 1)
-        self.show_time_hframe.set_padding(2, 0, 10, 0)
+        self.show_time_hframe.set_padding(2, 0, 10, 40)
         
         self.play_control_panel = PlayControlPanel()      
         self.play_control_panel_hframe = self.play_control_panel.hbox_hframe
@@ -64,14 +64,16 @@ class BottomToolBar(object):
         self.volume_button = VolumeButton(press_emit_bool = True)
         self.volume_button.set_size_request(120, 50)
         self.volume_hframe.add(self.volume_button)
-        self.volume_hframe.set(0, 0, 0, 0)
-        self.volume_hframe.set_padding(0, 0, 5, 5)
+        self.volume_hframe.set(1, 0, 0, 0)
+        self.volume_hframe.set_padding(0, 0, 0, 0)
         
         
         self.hbox.pack_start(self.show_time_hframe, True, True)
-        self.hbox.pack_start(self.play_control_panel.hbox_hframe, False, False)
+        self.hbox.pack_start(self.play_control_panel.hbox_hframe, True, True)
         self.hbox.pack_start(self.volume_hframe, False, False)
-        self.hbox.pack_start(gtk.Label(), True, True)
+        label = gtk.Label()
+        label.set_size_request(10, 1)
+        self.hbox.pack_start(label, False, False)
         
         self.vbox.pack_start(self.progressbar.hbox, False, False)
         self.vbox.pack_start(self.hbox, True, True)
