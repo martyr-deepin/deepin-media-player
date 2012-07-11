@@ -39,11 +39,13 @@ class MediaPlayer(object):
         path = os.path.expanduser("~") + "/.config"
         config_path = path + "/deepin-media-player" + "/deepin_media_config.ini"
         
+        self.first_run = False
         if not os.path.exists(config_path):
-            init_user_guide()
+            init_user_guide(self.start)
             init_mplayer_config()
-            gtk.main()
+            self.first_run = True
             
+        '''Start.'''
         argv_path_list = sys.argv
         # Init emdia player config.
         init_mplayer_config()
@@ -63,10 +65,13 @@ class MediaPlayer(object):
         self.player_box = PlayerBox(self.app, argv_path_list)
         # # Add child widget to app. 
         self.app.main_box.pack_start(self.player_box.main_vbox_hframe)
+        
+        if not self.first_run:
+            self.start()
+        
+    def start(self):
         # drag function.
         self.app.window.show_all()
-        
-
         
 MediaPlayer()        
 
