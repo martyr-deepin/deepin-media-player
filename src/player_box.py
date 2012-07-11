@@ -443,12 +443,17 @@ class PlayerBox(object):
         self.mute_normal_pixbuf = app_theme.get_pixbuf("screen/menu_volume_menu_normal.png")
         self.mute_hover_pixbuf = app_theme.get_pixbuf("screen/menu_volume_menu_hover.png")
         self.mute_volume_pixbuf = (self.mute_normal_pixbuf, self.mute_hover_pixbuf)
-        self.add_volume_normal_pixbuf = app_theme.get_pixbuf("screen/menu_volume_normal.png")
+        self.add_volume_normal_pixbuf = app_theme.get_pixbuf("screen/menu_volume_add_normal.png")
         self.add_volume_hover_pixbuf  = app_theme.get_pixbuf("screen/menu_volume_add_hover.png")
         self.add_volume_pixbuf = (self.add_volume_normal_pixbuf, self.add_volume_hover_pixbuf)
         self.sub_volume_normal_pixbuf = app_theme.get_pixbuf("screen/menu_volume_sub_normal.png")
         self.sub_volume_hover_pixbuf = app_theme.get_pixbuf("screen/menu_volume_sub_hover.png")
         self.sub_volume_pixbuf = (self.sub_volume_normal_pixbuf, self.sub_volume_hover_pixbuf)
+        
+        # down subtitle pixbuf.
+        self.down_sub_title_bool = False
+        self.down_sub_title_norma_pixbuf = app_theme.get_pixbuf("screen/check_normal.png")
+        self.down_sub_title_hover_pixbuf = app_theme.get_pixbuf("screen/check_hover.png")
         
     def get_last_new_play_file_name(self, LastNewPlayFile, file_name):    
         if file_name in self.mp.playList:
@@ -1359,25 +1364,25 @@ class PlayerBox(object):
             return high
         
     def set_0_5x_video_play(self):
-        print "0.5x video play."
+        # print "0.5x video play."
         if self.video_play_flags():
             self.video_play_state = X_VIDEO_PLAY_0_5
             self.set_video_play(self.video_width*0.5, self.video_height*0.5)
                         
     def set_1x_video_play(self):
-        print "1x video play."
+        # print "1x video play."
         if self.video_play_flags():
             self.video_play_state = X_VIDEO_PLAY_1
             self.set_video_play(self.video_width, self.video_height)            
         
     def set_1_5x_video_play(self):
-        print "1.5x video play" 
+        # print "1.5x video play" 
         if self.video_play_flags():
             self.video_play_state = X_VIDEO_PLAY_1_5
             self.set_video_play(self.video_width*1.5, self.video_height*1.5)            
         
     def set_2x_video_play(self):
-        print "2x video play"
+        # print "2x video play"
         if self.video_play_flags():
             self.set_video_play_state = X_VIDEO_PLAY_2
             self.set_video_play(self.video_width*2, self.video_height*2)
@@ -1867,10 +1872,11 @@ class PlayerBox(object):
             
         temp_path_file = os.path.splitext(os.path.split(play_name)[1])[0]
         temp_path_file_list = os.listdir(save_subtitle_path)
-        
+        save_down_file = None
         for file_name in temp_path_file_list:
             if os.path.splitext(file_name)[0] == temp_path_file:
                 down_bool = False
+                save_down_file = save_subtitle_path + "/" + file_name
             
         if os.path.exists(save_subtitle_path):    
             if down_bool:
@@ -1878,24 +1884,61 @@ class PlayerBox(object):
                 path_thread_id.setDaemon(True)
                 path_thread_id.start()        
             else:    
-                print "存在相同文件名"
+                if "True" == self.config.get("SubtitleSet", "ai_load_subtitle"):
+                    # print "存在的文件:"
+                    # print save_down_file
+                    self.load_subtitle(save_down_file)
+                # print "存在相同文件名"
         else:        
             print "Dir error!"
         return False
     
     def down_subtitle_threading_function(self, play_name, save_subtitle_path):
         if download_shooter_subtitle(play_name, save_subtitle_path):
-            print "下载成功"
+            # self.load_subtitle(save_down_file)
+            temp_path_file = os.path.splitext(os.path.split(play_name)[1])[0]
+            temp_path_file_list = os.listdir(save_subtitle_path)
+            save_down_file = None
+            for file_name in temp_path_file_list:
+                if os.path.splitext(file_name)[0] == temp_path_file:
+                    save_down_file = save_subtitle_path + "/" + file_name
+                    
+            if save_down_file:        
+                if "True" == self.config.get("SubtitleSet", "ai_load_subtitle"):
+                    # print "下载成功"
+                    # print save_down_file
+                    self.load_subtitle(save_down_file)        
+                    
+            # print "下载成功"
         else:    
-            print "下载失败"
+            pass
+            # print "下载失败"
             
     def media_player_start(self, mplayer, play_bool):
         '''media player start play.'''        
         # down subtitle.
-        if format.get_video_bool(mplayer.path):
-            save_subtitle_path = self.config.get("SubtitleSet","specific_location_search")        
-            gtk.timeout_add(500, self.down_subtitle_threading, mplayer.path, save_subtitle_path)
-        
+        save_subtitle_path = self.config.get("SubtitleSet","specific_location_search")        
+        if save_subtitle_path:
+            if save_subtitle_path[0:1] == "~":
+                save_subtitle_path = get_home_path() + save_subtitle_path[1:]
+        if save_subtitle_path:
+            if self.down_sub_title_bool:            
+                if format.get_video_bool(mplayer.path):                
+                    gtk.timeout_add(500, self.down_subtitle_threading, mplayer.path, save_subtitle_path)
+            else:                        
+                temp_path_file = os.path.splitext(os.path.split(mplayer.path)[1])[0]
+                temp_path_file_list = os.listdir(save_subtitle_path)
+                save_down_file = None
+                for file_name in temp_path_file_list:
+                    if os.path.splitext(file_name)[0] == temp_path_file:
+                        save_down_file = save_subtitle_path + "/" + file_name
+                        
+                if "True" == self.config.get("SubtitleSet", "ai_load_subtitle"):
+                    # print "本地夹在:"
+                    # print save_down_file
+                    self.load_subtitle(save_down_file)        
+
+
         # Init last new play file menu.
         self.the_last_new_play_file_list = self.last_new_play_file_function.set_file_time(mplayer.path)
         # print self.last_new_play_file_function.ini.argvs_list
@@ -2316,6 +2359,14 @@ class PlayerBox(object):
                 (right_channel_pixbuf,  "右声道",    self.right_channel)
                 ])
         
+        down_sub_title_pixbuf = None
+        if self.down_sub_title_bool:
+            down_sub_title_pixbuf = (self.down_sub_title_norma_pixbuf, self.down_sub_title_hover_pixbuf)
+            
+        down_sub_title_menu = Menu([
+                (down_sub_title_pixbuf, "自动下载字幕", self.set_down_sub_title_bool)
+                ])
+        
         self.screen_right_root_menu = Menu([
                 (None, "打开文件",   self.add_file_clear),
                 (None, "打开文件夹", self.add_file_dir_clear),
@@ -2328,12 +2379,15 @@ class PlayerBox(object):
                 (None, "播放", play_menu),
                 (None, "画面", screen_menu),
                 ((self.menu_volume_normal_pixbuf, self.menu_volume_hover_pixbuf), "声音", channel_select),
-                ((self.menu_subtitle_normal_pixbuf, self.menu_subtitle_hover_pixbuf), "字幕", None),
+                ((self.menu_subtitle_normal_pixbuf, self.menu_subtitle_hover_pixbuf), "字幕", down_sub_title_menu),
                 ((self.menu_setting_normal_pixbuf, self.menu_setting_hover_pixbuf), "播放器设置", self.config_gui) 
                 ], True)
         
         self.screen_right_root_menu.show((int(event.x_root), int(event.y_root)),
                                 (0, 0))
+        
+    def set_down_sub_title_bool(self):    
+        self.down_sub_title_bool = not self.down_sub_title_bool
         
     '''play list menu signal.'''
     def show_popup_menu(self, widget, event):
