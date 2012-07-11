@@ -1130,7 +1130,7 @@ class PlayerBox(object):
                 elif os.path.isdir(file_path): # add dir.
                     path_threads(file_path, self.mp)
                 elif gio_format.get_html_bool(file_path):
-                    self.mp.addPlayFile(file_path)
+                    self.mp.addPlayFile('%s'%(file_path))
                 if len(self.argv_path_list) > 1: # Set play bool.
                     self.clear_play_list_bool = True
 
