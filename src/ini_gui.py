@@ -1242,7 +1242,7 @@ class ScreenShot(gtk.VBox):
         self.save_file_radio_label = Label("")
         
         # Save path.
-        self.save_path_label = Label(_("Screenshot Directory:"))
+        self.save_path_label = Label(_("Screenshot directory:"))
         self.save_path_entry = InputEntry()
         # text_string = self.ini.get("ScreenshotSet", "save_path")
         # if text_string:
