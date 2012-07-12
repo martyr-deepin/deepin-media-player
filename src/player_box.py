@@ -185,7 +185,10 @@ class PlayerBox(object):
         self.screen_frame.add(self.screen)
 
         '''Tooltip window.'''
+        font = self.config.get("SystemSet", "font")
+        font_size = self.config.get("SystemSet", "font_size")
         self.window_tool_tip = OSDTooltip(self.screen_frame, offset_x=20, offset_y=26)
+        self.window_tool_tip.change_style(font, int(font_size))
         '''mid open button.'''
         self.open_button = OpenButton(self.screen_frame, _("Open File"), 108, 40)
         self.open_button.connect("openbutton-clicked-event", lambda w, e: self.add_file_clear())
@@ -497,12 +500,12 @@ class PlayerBox(object):
         widget.propagate_expose(widget.get_child(), event)
         return True
 
-    def modify_config_section_value(self, Config, str1, str2, str3):
-        # print Config
-        # print str1
-        # print str2
-        pass
-    
+    def modify_config_section_value(self, Config, section, argv, value):
+        if section == "SystemSet" and (argv in ["font", "font_size"]):
+            font = Config.get(section, "font")
+            font_size = Config.get(section, "font_size")
+            self.window_tool_tip.change_style(font, int(font_size))
+        
     def set_show_toolbar_function_true(self, widget, event):
         self.show_toolbar_focus_bool = True
 
