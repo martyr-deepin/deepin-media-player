@@ -26,6 +26,7 @@ from dtk.ui.cache_pixbuf import CachePixbuf
 
 from skin import app_theme
 from tooltip import tooltip_text 
+from locales import _
 import gtk
 import gobject
 
@@ -121,7 +122,7 @@ class ToolbarRadioButton(gtk.HBox):
         self.full_btn_ali.set_padding(0, 0, 5, 5)
         self.full_btn     = gtk.Button()
         self.full_btn_ali.add(self.full_btn)
-        tooltip_text(self.full_btn, "全屏")
+        tooltip_text(self.full_btn, _("全屏"))
         self.full_btn.add_events(gtk.gdk.ALL_EVENTS_MASK)
         self.full_btn.connect("expose-event",     self.expose_draw_full_btn)
         self.full_btn.connect("motion-notify-event", self.show_toolbar)
@@ -130,7 +131,7 @@ class ToolbarRadioButton(gtk.HBox):
         self.win_mode_btn_ali.set_padding(0, 0, 5, 5)
         self.win_mode_btn = gtk.Button()
         self.win_mode_btn_ali.add(self.win_mode_btn)        
-        tooltip_text(self.win_mode_btn, "普通模式")
+        tooltip_text(self.win_mode_btn, _("普通模式"))
         self.win_mode_btn.add_events(gtk.gdk.ALL_EVENTS_MASK)
         self.win_mode_btn.connect("expose-event", self.expose_draw_win_mode_btn)
         self.win_mode_btn.connect("motion-notify-event", self.show_toolbar)
@@ -139,7 +140,7 @@ class ToolbarRadioButton(gtk.HBox):
         self.concise_btn_ali.set_padding(0, 0, 5, 5)
         self.concise_btn  = gtk.Button()
         self.concise_btn_ali.add(self.concise_btn)
-        tooltip_text(self.concise_btn, "简洁模式")
+        tooltip_text(self.concise_btn, _("简洁模式"))
         self.concise_btn.add_events(gtk.gdk.ALL_EVENTS_MASK)
         self.concise_btn.connect("expose-event",  self.expose_draw_concise_btn)
         self.concise_btn.connect("motion-notify-event", self.show_toolbar)

@@ -30,7 +30,7 @@
 #   .bseek()
 #   .addvolume()
 ########################################################
-
+from locales import _
 import random
 import gtk
 import os
@@ -183,13 +183,13 @@ def init_mplayer_config():
             config.set("OtherKey", "inverse_rotation_key",   "w")
             config.set("OtherKey", "clockwise_key",          "e")
             config.set("OtherKey", "sort_image_key",         "Alt + a")
-            config.set("OtherKey", "switch_audio_track_key", "禁用")
+            config.set("OtherKey", "switch_audio_track_key", _("禁用"))
             config.set("OtherKey", "load_subtitle_key",      "Alt + o")
             config.set("OtherKey", "subtitle_delay_key",     "]")
             config.set("OtherKey", "subtitle_advance_key",   "[")
-            config.set("OtherKey", "mouse_left_single_clicked", "暂停/播放")
-            config.set("OtherKey", "mouse_left_double_clicked", "全屏")
-            config.set("OtherKey", "mouse_wheel_event", "音量")
+            config.set("OtherKey", "mouse_left_single_clicked", _("暂停/播放"))
+            config.set("OtherKey", "mouse_left_double_clicked", _("全屏"))
+            config.set("OtherKey", "mouse_wheel_event", _("音量"))
             #[SubtitleSet]
             config.set("SubtitleSet", "ai_load_subtitle", "True")
             config.set("SubtitleSet", "specific_location_search", "~/.config/deepin-media-player/subtitle")

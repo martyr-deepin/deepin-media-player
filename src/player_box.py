@@ -62,7 +62,7 @@ from open_button import OpenButton, ScreenMenu, OpenUrl
 from lastnewplayfile import LastNewPlayFile
 from service import download_shooter_subtitle
 from user_guide import init_user_guide
-
+from locales import _
 import threading
 import gtk
 import os
@@ -187,7 +187,7 @@ class PlayerBox(object):
         '''Tooltip window.'''
         self.window_tool_tip = OSDTooltip(self.screen_frame, offset_x=20, offset_y=26)
         '''mid open button.'''
-        self.open_button = OpenButton(self.screen_frame, "打开文件", 108, 40)
+        self.open_button = OpenButton(self.screen_frame, _("打开文件"), 108, 40)
         self.open_button.connect("openbutton-clicked-event", lambda w, e: self.add_file_clear())
         self.open_button.move(-14, 30)
         open_button_right_width = 32
@@ -202,9 +202,9 @@ class PlayerBox(object):
         self.open_button_right.connect("openbutton-clicked-event", self.open_button_popup_screen_menu)        
         self.open_button_right.move(open_button_right_x, open_button_right_y)
         menu_item = [
-            (app_theme.get_pixbuf("screen_mid/screen_menu_open_dir.png"), "打开文件夹", self.add_file_dir_clear),
+            (app_theme.get_pixbuf("screen_mid/screen_menu_open_dir.png"), _("打开文件夹"), self.add_file_dir_clear),
             # (app_theme.get_pixbuf("screen_mid/screen_menu_open_cdrom.png"),"打开光盘", None),
-            (app_theme.get_pixbuf("screen_mid/screen_menu_open_url.png"), "打开URL", self.open_url_dialog_window),
+            (app_theme.get_pixbuf("screen_mid/screen_menu_open_url.png"), _("打开URL"), self.open_url_dialog_window),
             ]
         self.screen_pop_menu = ScreenMenu(self.screen_frame, menu_item)
         self.screen_pop_menu.size(self.screen_pop_menu.width, self.screen_pop_menu.height - 26)
@@ -570,7 +570,7 @@ class PlayerBox(object):
         config_type = self.config.get("OtherKey", "mouse_wheel_event")
         other_key_bool = self.config.get("OtherKey", "other_key_bool")
         
-        if "禁用" == config_type or other_key_bool.lower() == "false": # seek back.
+        if _("禁用") == config_type or other_key_bool.lower() == "false": # seek back.
             pass
         else: # Set volume.
             volume_value = 5
@@ -616,7 +616,7 @@ class PlayerBox(object):
             if temp_value != self.mp.volume:
                 self.mp.setvolume(temp_value)
                     
-            self.messagebox("音量:%s%s"%(str(int(temp_value)), "%"))
+            self.messagebox("%s:%s%s"%(_("音量"), str(int(temp_value)), "%"))
             
     def volume_button_get_value_event(self, volume_button, value, volume_state, volume_bit):        
         if -1 == volume_state: # -1 -> stop play
@@ -625,16 +625,16 @@ class PlayerBox(object):
                     self.mp.nomute()                                       
                 else:    
                     self.mp.volumebool = True # mute: True  no mute: False.
-                self.messagebox("开启静音")    
+                self.messagebox(_("开启静音"))    
         else:
             if self.mp:
                 if 1 == self.mp.state:                    
                     self.mp.offmute()                                     
                     self.mp.setvolume(value)
-                    self.messagebox("音量:%s%s"%(str(value), "%"))
+                    self.messagebox("%s:%s%s"%(_("音量"), str(value), "%"))
                 else:    
                     self.mp.volumebool = False
-                    self.messagebox("音量:%s%s"%(str(value), "%"))
+                    self.messagebox("%s:%s%s"%(_("音量"), str(value), "%"))
                     
         if 1 == volume_bit: # volume_bit: 1-> volume_button , 2-> volume_button of bottom_toolbar 
             self.bottom_toolbar.volume_button.value = value
@@ -730,10 +730,10 @@ class PlayerBox(object):
             if save_file_bool == "True":
                 if scrot_bool.lower() == "true":
                     self.scrot_current_screen_pixbuf(save_path + "/%s-%s"%(self.get_player_file_name(self.mp.path), self.mp.posNum), save_type)
-                    self.messagebox("截图已保存")
+                    self.messagebox(_("截图已保存"))
                 else:    
                     self.mp.preview_scrot(self.mp.posNum, save_path + "/%s-%s"%(self.get_player_file_name(self.mp.path), self.mp.posNum) + save_type)
-                    self.messagebox("截图已保存")
+                    self.messagebox(_("截图已保存"))
                     
             if save_clipboard_bool == "True": # save clipboard
                 clipboard_path = "/tmp" + "/%s-%s"%(self.get_player_file_name(self.mp.path), self.mp.posNum) + save_type
@@ -747,7 +747,7 @@ class PlayerBox(object):
                 pixbuf_clipboard = gtk.gdk.pixbuf_new_from_file(clipboard_path)
                 clipboard = gtk.Clipboard()
                 clipboard.set_image(pixbuf_clipboard)
-                self.messagebox("截图已保存到剪贴板")
+                self.messagebox(_("截图已保存到剪贴板"))
 
     def key_clockwise(self):
         # print "clockwise..."
@@ -803,13 +803,13 @@ class PlayerBox(object):
         add_volume_key = self.config.get("PlayControl", "add_volume_key")
         if add_volume_key == keyval_name:
             self.mp.setvolume(self.volume_button.value)
-            self.messagebox("音量:%s%s"%(int(self.volume_button.value), "%"))    
+            self.messagebox("%s:%s%s"%(_("音量"), int(self.volume_button.value), "%"))    
                         
         # sub volume key init.
         sub_volume_key = self.config.get("PlayControl", "sub_volume_key")
         if sub_volume_key == keyval_name:
             self.mp.setvolume(self.volume_button.value)
-            self.messagebox("音量:%s%s"%(int(self.volume_button.value), "%"))            
+            self.messagebox("%s:%s%s"%(_("音量"),int(self.volume_button.value), "%"))            
         # print self.volume_button.value
         
     def key_set_mute(self):
@@ -820,7 +820,7 @@ class PlayerBox(object):
                 self.mp.offmute()
             else:    
                 self.mp.volumebool = False
-            self.messagebox("音量:%s%s"%(str(int(self.mp.volume)), "%"))
+            self.messagebox("%s:%s%s"%(_("音量"), str(int(self.mp.volume)), "%"))
         else:
             self.volume_button.set_volume_mute()
             
@@ -828,7 +828,7 @@ class PlayerBox(object):
                 self.mp.nomute()
             else:    
                 self.mp.volumebool = True
-            self.messagebox("开启静音")
+            self.messagebox(_("开启静音"))
 
     def key_pre(self):
         # print "pre a key..."
@@ -965,7 +965,7 @@ class PlayerBox(object):
 
     '''play control panel.'''
     def stop_button_clicked(self, widget):
-        self.messagebox("停止")
+        self.messagebox(_("停止"))
         self.mp.quit()
 
     def start_button_clicked(self, widget, start_bit):
@@ -981,7 +981,7 @@ class PlayerBox(object):
                 self.play_control_panel.start_btn.queue_draw()
                 self.bottom_toolbar.play_control_panel.start_btn.start_bool = True
                 self.bottom_toolbar.play_control_panel.start_btn.queue_draw()
-                self.messagebox("没有可播放文件")
+                self.messagebox(_("没有可播放文件"))
                 self.show_open_dialog_window()
         else:
             if 1 == start_bit:
@@ -996,10 +996,10 @@ class PlayerBox(object):
     def start_button_time_pause(self): # start_button_clicked.
         if self.mp.pause_bool:
             # self.mp.seek(int(self.progressbar.pos))
-            self.messagebox("播放")
+            self.messagebox(_("播放"))
             self.mp.start_play()            
         else:
-            self.messagebox("暂停")
+            self.messagebox(_("暂停"))
             self.mp.pause()
         return  False
 
@@ -1007,20 +1007,20 @@ class PlayerBox(object):
         '''prev.'''
         if (len(self.mp.playList) > 1):
             self.mp.pre()
-            self.messagebox("上一首")
+            self.messagebox(_("上一首"))
             
     def next_button_clicked(self, widget):
         '''next'''
         if (len(self.mp.playList) > 1):
             self.mp.next()
-            self.messagebox("下一首")
+            self.messagebox(_("下一首"))
 
     def open_button_clicked(self, widget):        
         self.show_open_dialog_window(open_button=False)
         # self.clear_play_list_bool = True
         
     def show_open_dir_dialog_window(self, open_button=True):
-        open_dialog = gtk.FileChooserDialog("深度影音打开文件夹对话框",
+        open_dialog = gtk.FileChooserDialog(_("深度影音打开文件夹对话框"),
                                             None,
                                             gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER,
                                             (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
@@ -1038,7 +1038,7 @@ class PlayerBox(object):
         open_dialog.destroy()
 
     def show_open_dialog_window(self, open_button=True):
-        open_dialog = gtk.FileChooserDialog("深度影音打开文件对话框",
+        open_dialog = gtk.FileChooserDialog(_("深度影音打开文件对话框"),
                                             None,
                                             gtk.FILE_CHOOSER_ACTION_OPEN,
                                             (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
@@ -1073,7 +1073,7 @@ class PlayerBox(object):
             if self.mp.findFile(path_string):                
                 self.mp.addPlayFile(path_string)
             else:    
-                self.messagebox("无效的文件")
+                self.messagebox(_("无效的文件"))
 
 
     def show_bottom(self):
@@ -1665,7 +1665,7 @@ class PlayerBox(object):
                         self.pause_x = event.x # Save x postion.
                         self.pause_y = event.y # Save y postion.
                 else:
-                    if not ("禁用" == config_string):
+                    if not (_("禁用") == config_string):
                         if self.pause_time_id:
                             gtk.timeout_remove(self.pause_time_id)
                             self.pause_bool = False
@@ -1674,7 +1674,7 @@ class PlayerBox(object):
         config_string = self.config.get("OtherKey", "mouse_left_double_clicked")
         other_key_bool = self.config.get("OtherKey", "other_key_bool")
                 
-        if "禁用" == config_string or other_key_bool.lower() == "false":
+        if _("禁用") == config_string or other_key_bool.lower() == "false":
             pass
         else:
             if is_double_click(event):
@@ -2085,7 +2085,7 @@ class PlayerBox(object):
             pre_num = 0
         else:    
             pre_num = float(posNum) / self.mp.lenNum * 100
-        self.messagebox('快进%s秒 %s(%s%s)'%(fseek_num, length_to_time(self.mp.posNum), "%", int(pre_num)))    
+        self.messagebox('%s%s%s %s(%s%s)'%(_("快进"), fseek_num, _("秒"),length_to_time(self.mp.posNum), "%", int(pre_num)))    
         
     def media_player_bseek(self, mplayer, bseek_num):         
         posNum = self.mp.posNum
@@ -2094,7 +2094,7 @@ class PlayerBox(object):
             pre_num = 0
         else:    
             pre_num = float(posNum) / self.mp.lenNum * 100
-        self.messagebox('快退%s秒 %s(%s%s)'%(bseek_num, length_to_time(self.mp.posNum), "%", int(pre_num)))    
+        self.messagebox('%s%s%s %s(%s%s)'%(_("快退"), bseek_num, _("秒"),length_to_time(self.mp.posNum), "%", int(pre_num)))    
     
     def media_player_midfy_start_bool(self):  # media_player_end and media_player_next and media_player_pre.
         self.progressbar.set_pos(0)
@@ -2130,14 +2130,14 @@ class PlayerBox(object):
     def theme_menu_show(self, button):    
         '''Title root menu.'''
         #In title root menu.
-        self.sort_menu = Menu([(None, "截图", self.key_sort_image),
-                               (None, "打开截图目录", self.open_sort_image_dir),
-                               (None, "设置截图保存目录", self.open_sort_image_ini_gui)
+        self.sort_menu = Menu([(None, _("截图"), self.key_sort_image),
+                               (None, _("打开截图目录"), self.open_sort_image_dir),
+                               (None, _("设置截图保存目录"), self.open_sort_image_ini_gui)
                                ])
         # In title root menu.
-        self.subtitle_menu = Menu([(None, "载入字幕", None),
-                                   (None, "字幕选择", None),
-                                   (None, "移除字幕", None),
+        self.subtitle_menu = Menu([(None, _("载入字幕"), None),
+                                   (None, _("字幕选择"), None),
+                                   (None, _("移除字幕"), None),
                                    ])
         
         normal_channel_state  =  0
@@ -2157,18 +2157,18 @@ class PlayerBox(object):
             right_channel_pixbuf = channel_pixbuf        
             
         self.channel_select_menu = Menu([
-                (normal_channel_pixbuf, "立体声道", self.normal_channel),
-                (left_channel_pixbuf, "左声道",   self.left_channel),
-                (right_channel_pixbuf, "右声道",   self.right_channel)
+                (normal_channel_pixbuf, _("立体声道"), self.normal_channel),
+                (left_channel_pixbuf,   _("左声道"),   self.left_channel),
+                (right_channel_pixbuf,  _("右声道"),   self.right_channel)
                 ])
 
         # In title root menu.
-        self.volume_menu = Menu([(None, "声道选择", self.channel_select_menu),
+        self.volume_menu = Menu([(None, _("声道选择"), self.channel_select_menu),
                                  # (None, "配音选择", None),
                                  (None),
-                                 (self.add_volume_pixbuf, "增大音量",  self.menu_add_volume),
-                                 (self.sub_volume_pixbuf, "减小音量",  self.menu_sub_volume),
-                                 (self.mute_volume_pixbuf, "静音/还原", self.key_set_mute),
+                                 (self.add_volume_pixbuf, _("增大音量"),  self.menu_add_volume),
+                                 (self.sub_volume_pixbuf, _("减小音量"),  self.menu_sub_volume),
+                                 (self.mute_volume_pixbuf, _("静音/还原"), self.key_set_mute),
                                  ])
         # In title root menu.
         pixbuf_normal    = None
@@ -2191,17 +2191,17 @@ class PlayerBox(object):
         elif "2.35:1" == self.video_aspect_type:
             pixbuf_2_35X1 = (self.video_aspect_pixbuf, self.video_aspect_select_pixbuf)
         
-        self.screen_menu = Menu([(pixbuf_normal, "默认值",  self.set_restart_aspect),
+        self.screen_menu = Menu([(pixbuf_normal, _("默认值"),  self.set_restart_aspect),
                                  (pixbuf_4X3,    "4:3",    self.set_4X3_aspect),
                                  (pixbuf_16X9,   "16:9",   self.set_16X9_aspect),
                                  (pixbuf_16X10,  "16:10",  self.set_16X10_aspect),
                                  (pixbuf_1_85X1, "1.85:1", self.set_1_85X1_aspect),
                                  (pixbuf_2_35X1, "2.35:1", self.set_2_35X1_aspect),
                                  (None),
-                                 (None,  "0.5倍尺寸",  self.set_0_5x_video_play),
-                                 (None,  "1倍尺寸",       self.set_1x_video_play),
-                                 (None,  "1.5倍尺寸",     self.set_1_5x_video_play),
-                                 (None,  "2倍尺寸",       self.set_2x_video_play),
+                                 (None,  _("0.5倍尺寸"),  self.set_0_5x_video_play),
+                                 (None,  _("1倍尺寸"),       self.set_1x_video_play),
+                                 (None,  _("1.5倍尺寸"),     self.set_1_5x_video_play),
+                                 (None,  _("2倍尺寸"),       self.set_2x_video_play),
                                  # (None),
                                  # (None, "全屏/退出", None),
                                  ])        
@@ -2236,47 +2236,47 @@ class PlayerBox(object):
             list_recycle_pixbuf = play_sequence_pixbuf
 
         # In title root menu.
-        self.play_state_menu = Menu([(single_pixbuf, "单个播放", self.sigle_play),
-                                     (order_pixbuf, "顺序播放", self.sequence_play),
-                                     (random_pixbuf, "随机播放", self.rand_play),
-                                     (signle_cycle_pixbuf, "单个循环", self.sigle_loop_play),
-                                     (list_recycle_pixbuf, "列表循环", self.loop_list_play)]
+        self.play_state_menu = Menu([(single_pixbuf, _("单个播放"), self.sigle_play),
+                                     (order_pixbuf,  _("顺序播放"), self.sequence_play),
+                                     (random_pixbuf, _("随机播放"), self.rand_play),
+                                     (signle_cycle_pixbuf, _("单个循环"), self.sigle_loop_play),
+                                     (list_recycle_pixbuf, _("列表循环"), self.loop_list_play)]
                                     )
         # In title root menu.
-        self.play_menu = Menu([((self.menu_full_normal_pixbuf, self.menu_full_hover_pixbuf), "全屏播放", self.key_return),
-                               ((self.menu_window_mode_normal_pixbuf, self.menu_window_mode_hover_pixbuf), "普通模式", self.set_menu_common),
-                               ((self.menu_concie_normal_pixbuf, self.menu_concie_hover_pixbuf), "简洁模式", self.set_menu_concise),
-                               ((self.menu_pre_normal_pixbuf, self.menu_pre_hover_pixbuf), "上一首", self.key_pre),
-                               ((self.menu_next_normal_pixbuf, self.menu_next_hover_pixbuf), "下一首", self.key_next),
+        self.play_menu = Menu([((self.menu_full_normal_pixbuf, self.menu_full_hover_pixbuf), _("全屏播放"), self.key_return),
+                               ((self.menu_window_mode_normal_pixbuf, self.menu_window_mode_hover_pixbuf), _("普通模式"), self.set_menu_common),
+                               ((self.menu_concie_normal_pixbuf, self.menu_concie_hover_pixbuf), _("简洁模式"), self.set_menu_concise),
+                               ((self.menu_pre_normal_pixbuf, self.menu_pre_hover_pixbuf), _("上一首"), self.key_pre),
+                               ((self.menu_next_normal_pixbuf, self.menu_next_hover_pixbuf), _("下一首"), self.key_next),
                                (None),
-                               ((self.menu_f_seek_5_normal_pixbuf, self.menu_f_seek_5_hover_pixbuf), "快进5秒", self.key_right),
-                               ((self.menu_b_seek_5_normal_pixbuf, self.menu_b_seek_5_hover_pixbuf), "快退5秒", self.key_left),
-                               ((self.menu_play_sequence_normal_pixbuf, self.menu_play_sequence_hover_pixbuf), "播放顺序", self.play_state_menu),
+                               ((self.menu_f_seek_5_normal_pixbuf, self.menu_f_seek_5_hover_pixbuf), _("快进5秒"), self.key_right),
+                               ((self.menu_b_seek_5_normal_pixbuf, self.menu_b_seek_5_hover_pixbuf), _("快退5秒"), self.key_left),
+                               ((self.menu_play_sequence_normal_pixbuf, self.menu_play_sequence_hover_pixbuf), _("播放顺序"), self.play_state_menu),
                                ])
         # In title root menu.
-        self.file_menu = Menu([(None, "打开文件", self.add_file_clear),
-                               (None, "打开文件夹", self.add_file_dir_clear)])
+        self.file_menu = Menu([(None, _("打开文件"), self.add_file_clear),
+                               (None, _("打开文件夹"), self.add_file_dir_clear)])
                               # (None, "播放光盘", None)])
 
         # In title root menu.
-        self.help_menu = Menu([(None, "帮助信息", None),
-                               (None, "问题反馈", None),
-                               (None, "关于软件", None)])
+        self.help_menu = Menu([(None, _("帮助信息"), None),
+                               (None, _("问题反馈"), None),
+                               (None, _("关于软件"), None)])
         
         #
-        self.title_root_menu = Menu([(None, "文件", self.file_menu),
-                                     (None, "播放", self.play_menu),
-                                     (None, "画面", self.screen_menu),
-                                     ((self.menu_volume_normal_pixbuf, self.menu_volume_hover_pixbuf), "声音", self.volume_menu),
+        self.title_root_menu = Menu([(None, _("文件"), self.file_menu),
+                                     (None, _("播放"), self.play_menu),
+                                     (None, _("画面"), self.screen_menu),
+                                     ((self.menu_volume_normal_pixbuf, self.menu_volume_hover_pixbuf), _("声音"), self.volume_menu),
                                      # (None, "字幕", self.subtitle_menu),
-                                     (None, "截图", self.sort_menu),
-                                     (None, "查看新特性", init_user_guide),
-                                     ((self.menu_setting_normal_pixbuf, self.menu_setting_hover_pixbuf), "选项", self.config_gui),
+                                     (None, _("截图"), self.sort_menu),
+                                     (None, _("查看新特性"), init_user_guide),
+                                     ((self.menu_setting_normal_pixbuf, self.menu_setting_hover_pixbuf), _("选项"), self.config_gui),
                                      # (None, "总在最前", None),
                                      # (None, "自定义换肤", None),
                                      # (None, "帮助与反馈", self.help_menu),
                                      (None),
-                                     ((self.menu_quit_normal_pixbuf, self.menu_quit_hover_pixbuf), "退出", self.set_menu_quit)],
+                                     ((self.menu_quit_normal_pixbuf, self.menu_quit_hover_pixbuf), _("退出"), self.set_menu_quit)],
                                     True)
         self.title_root_menu.show(
             get_widget_root_coordinate(button, WIDGET_POS_BOTTOM_LEFT),
@@ -2315,19 +2315,19 @@ class PlayerBox(object):
             list_recycle_pixbuf = play_sequence_pixbuf
 
         # screen right menu set mplayer play state.
-        play_state_menu = Menu([(single_pixbuf, "单个播放", self.sigle_play),
-                                (order_pixbuf, "顺序播放", self.sequence_play),
-                                (random_pixbuf, "随机播放", self.rand_play),
-                                (signle_cycle_pixbuf, "单个循环", self.sigle_loop_play),
-                                (list_recycle_pixbuf, "列表循环", self.loop_list_play)]
+        play_state_menu = Menu([(single_pixbuf, _("单个播放"), self.sigle_play),
+                                (order_pixbuf,  _("顺序播放"), self.sequence_play),
+                                (random_pixbuf, _("随机播放"), self.rand_play),
+                                (signle_cycle_pixbuf, _("单个循环"), self.sigle_loop_play),
+                                (list_recycle_pixbuf, _("列表循环"), self.loop_list_play)]
                                )
         
         play_menu = Menu([                                                    
-                          ((self.menu_pre_normal_pixbuf, self.menu_pre_hover_pixbuf), "上一首", self.key_pre),
-                          ((self.menu_next_normal_pixbuf, self.menu_next_hover_pixbuf), "下一首", self.key_next),
+                          ((self.menu_pre_normal_pixbuf, self.menu_pre_hover_pixbuf), _("上一首"), self.key_pre),
+                          ((self.menu_next_normal_pixbuf, self.menu_next_hover_pixbuf), _("下一首"), self.key_next),
                           (None),
-                          ((self.menu_f_seek_5_normal_pixbuf, self.menu_f_seek_5_hover_pixbuf), "快进5秒", self.key_right),
-                          ((self.menu_b_seek_5_normal_pixbuf, self.menu_b_seek_5_hover_pixbuf), "快退5秒", self.key_left),
+                          ((self.menu_f_seek_5_normal_pixbuf, self.menu_f_seek_5_hover_pixbuf), _("快进5秒"), self.key_right),
+                          ((self.menu_b_seek_5_normal_pixbuf, self.menu_b_seek_5_hover_pixbuf), _("快退5秒"), self.key_left),
                           ])
 
         # aspect.
@@ -2351,17 +2351,17 @@ class PlayerBox(object):
         elif "2.35:1" == self.video_aspect_type:
             pixbuf_2_35X1 = (self.video_aspect_pixbuf, self.video_aspect_select_pixbuf)
         
-        screen_menu = Menu([(pixbuf_normal, "默认值",  self.set_restart_aspect),
+        screen_menu = Menu([(pixbuf_normal, _("默认值"),  self.set_restart_aspect),
                             (pixbuf_4X3,    "4:3",    self.set_4X3_aspect),
                             (pixbuf_16X9,   "16:9",   self.set_16X9_aspect),
                             (pixbuf_16X10,  "16:10",  self.set_16X10_aspect),
                             (pixbuf_1_85X1, "1.85:1", self.set_1_85X1_aspect),
                             (pixbuf_2_35X1, "2.35:1", self.set_2_35X1_aspect),
                             (None),
-                            (None,  "0.5倍尺寸",  self.set_0_5x_video_play),
-                            (None,  "1倍尺寸",       self.set_1x_video_play),
-                            (None,  "1.5倍尺寸",     self.set_1_5x_video_play),
-                            (None,  "2倍尺寸",       self.set_2x_video_play),
+                            (None,  _("0.5倍尺寸"),  self.set_0_5x_video_play),
+                            (None,  _("1倍尺寸"),       self.set_1x_video_play),
+                            (None,  _("1.5倍尺寸"),     self.set_1_5x_video_play),
+                            (None,  _("2倍尺寸"),       self.set_2x_video_play),
                             # (None),
                             # (None, "全屏/退出", None),
                             ])
@@ -2383,9 +2383,9 @@ class PlayerBox(object):
             right_channel_pixbuf = channel_pixbuf        
         
         channel_select = Menu([
-                (normal_channel_pixbuf, "立体声道",  self.normal_channel),
-                (left_channel_pixbuf,   "左声道",    self.left_channel),
-                (right_channel_pixbuf,  "右声道",    self.right_channel)
+                (normal_channel_pixbuf, _("立体声道"),  self.normal_channel),
+                (left_channel_pixbuf,   _("左声道"),    self.left_channel),
+                (right_channel_pixbuf,  _("右声道"),    self.right_channel)
                 ])
         
         down_sub_title_pixbuf = None
@@ -2393,23 +2393,23 @@ class PlayerBox(object):
             down_sub_title_pixbuf = (self.down_sub_title_norma_pixbuf, self.down_sub_title_hover_pixbuf)
             
         down_sub_title_menu = Menu([
-                (down_sub_title_pixbuf, "自动下载字幕", self.set_down_sub_title_bool)
+                (down_sub_title_pixbuf, _("自动下载字幕"), self.set_down_sub_title_bool)
                 ])
         
         self.screen_right_root_menu = Menu([
-                (None, "打开文件",   self.add_file_clear),
-                (None, "打开文件夹", self.add_file_dir_clear),
-                (None, "打开URL",   self.open_url_dialog_window),
+                (None, _("打开文件"),   self.add_file_clear),
+                (None, _("打开文件夹"), self.add_file_dir_clear),
+                (None, _("打开URL"),   self.open_url_dialog_window),
                 (None),
-                ((self.menu_full_normal_pixbuf, self.menu_full_hover_pixbuf), "全屏/退出",    self.key_return),
-                ((self.menu_window_mode_normal_pixbuf, self.menu_window_mode_hover_pixbuf), "普通模式", self.set_menu_common),
-                ((self.menu_concie_normal_pixbuf, self.menu_concie_hover_pixbuf), "简洁模式", self.set_menu_concise),
-                ((self.menu_play_sequence_normal_pixbuf, self.menu_play_sequence_hover_pixbuf), "播放顺序", play_state_menu),
-                (None, "播放", play_menu),
-                (None, "画面", screen_menu),
-                ((self.menu_volume_normal_pixbuf, self.menu_volume_hover_pixbuf), "声音", channel_select),
-                ((self.menu_subtitle_normal_pixbuf, self.menu_subtitle_hover_pixbuf), "字幕", down_sub_title_menu),
-                ((self.menu_setting_normal_pixbuf, self.menu_setting_hover_pixbuf), "播放器设置", self.config_gui) 
+                ((self.menu_full_normal_pixbuf, self.menu_full_hover_pixbuf), _("全屏/退出"),    self.key_return),
+                ((self.menu_window_mode_normal_pixbuf, self.menu_window_mode_hover_pixbuf), _("普通模式"), self.set_menu_common),
+                ((self.menu_concie_normal_pixbuf, self.menu_concie_hover_pixbuf), _("简洁模式"), self.set_menu_concise),
+                ((self.menu_play_sequence_normal_pixbuf, self.menu_play_sequence_hover_pixbuf), _("播放顺序"), play_state_menu),
+                (None, _("播放"), play_menu),
+                (None, _("画面"), screen_menu),
+                ((self.menu_volume_normal_pixbuf, self.menu_volume_hover_pixbuf), _("声音"), channel_select),
+                ((self.menu_subtitle_normal_pixbuf, self.menu_subtitle_hover_pixbuf), _("字幕"), down_sub_title_menu),
+                ((self.menu_setting_normal_pixbuf, self.menu_setting_hover_pixbuf), _("播放器设置"), self.config_gui) 
                 ], True)
         
         self.screen_right_root_menu.show((int(event.x_root), int(event.y_root)),
@@ -2451,15 +2451,15 @@ class PlayerBox(object):
                 list_recycle_pixbuf = play_sequence_pixbuf
 
             '''play list popup menu'''
-            self.menu = Menu([(single_pixbuf, "单个播放", self.sigle_play),      # 0
-                              (order_pixbuf, "顺序播放", self.sequence_play),   # 1
-                              (random_pixbuf, "随机播放", self.rand_play),       # 2
-                              (signle_cycle_pixbuf, "单个循环", self.sigle_loop_play), # 3
-                              (list_recycle_pixbuf, "列表循环", self.loop_list_play)]  # 4
+            self.menu = Menu([(single_pixbuf, _("单个播放"), self.sigle_play),         # 0
+                              (order_pixbuf, _("顺序播放"), self.sequence_play),       # 1
+                              (random_pixbuf, _("随机播放"), self.rand_play),          # 2
+                              (signle_cycle_pixbuf, _("单个循环"), self.sigle_loop_play), # 3
+                              (list_recycle_pixbuf, _("列表循环"), self.loop_list_play)]  # 4
                              )
 
-            self.menu2 = Menu([(None, "按名称", self.name_sort),
-                               (None, "按类型", self.type_sort)])
+            self.menu2 = Menu([(None, _("按名称"), self.name_sort),
+                               (None, _("按类型"), self.type_sort)])
             
             
             if self.the_last_new_play_file_list == []:
@@ -2467,20 +2467,20 @@ class PlayerBox(object):
             else:    
                 self.the_last_new_play_file = Menu(self.the_last_new_play_file_list)
                 
-            self.play_list_root_menu = Menu([(None, "添加文件", self.add_file),
-                                             (None, "添加文件夹", self.add_file_dir),
-                                             (None, "添加URL", self.open_url_dialog_window),
+            self.play_list_root_menu = Menu([(None, _("添加文件"), self.add_file),
+                                             (None, _("添加文件夹"), self.add_file_dir),
+                                             (None, _("添加URL"), self.open_url_dialog_window),
                                              (None),
-                                             (None, "删除选中项", self.del_index),
-                                             (None, "清空播放列表", self.clear_list),
-                                             (None, "删除无效文件", self.del_error_file),
+                                             (None, _("删除选中项"), self.del_index),
+                                             (None, _("清空播放列表"), self.clear_list),
+                                             (None, _("删除无效文件"), self.del_error_file),
                                              (None),
-                                             (None, "最近播放文件", self.the_last_new_play_file),
-                                             (None, "播放顺序", self.menu),
-                                             (None, "排序", self.menu2),
+                                             (None, _("最近播放文件"), self.the_last_new_play_file),
+                                             (None, _("播放顺序"), self.menu),
+                                             (None, _("排序"), self.menu2),
                                              # (None, "视图", None),
                                              (None),
-                                             (None, "打开所在文件夹", self.open_current_file_dir)
+                                             (None, _("打开所在文件夹"), self.open_current_file_dir)
                                              ],
                                             True)
 
@@ -2653,7 +2653,7 @@ class PlayerBox(object):
 
     def open_sort_image_ini_gui(self):  #menu
         ini_gui = IniGui()
-        ini_gui.set("截图设置")
+        ini_gui.set("%s"%(_("截图设置")))
         ini_gui.ini.connect("config-changed", self.restart_load_config_file)
 
         
@@ -2796,5 +2796,5 @@ class PlayerBox(object):
             
             
         self.mp.setvolume(self.volume_button.value)
-        self.messagebox("音量:%s%s"%(int(self.volume_button.value), "%"))                            
+        self.messagebox("%s:%s%s"%(_("音量"), int(self.volume_button.value), "%"))                            
         

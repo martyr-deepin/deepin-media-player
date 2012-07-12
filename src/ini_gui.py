@@ -32,8 +32,9 @@ from dtk.ui.label import Label
 from dtk.ui.button import CheckButton, RadioButton
 from dtk.ui.line import HSeparator
 from dtk.ui.scrolled_window import ScrolledWindow
-
+from locales import _
 from dtk.ui.treeview import TreeView, TreeViewItem
+
 from ini import Config
 from mplayer import get_home_path
 import gtk
@@ -71,7 +72,7 @@ class IniGui(DialogBox):
                             (gobject.TYPE_STRING, ))
         }
     def __init__(self):
-        DialogBox.__init__(self, "深度影音配置", INI_WIDTH, INI_HEIGHT,
+        DialogBox.__init__(self, _("深度影音配置"), INI_WIDTH, INI_HEIGHT,
                            mask_type=DIALOG_MASK_MULTIPLE_PAGE,
                            window_pos=gtk.WIN_POS_CENTER)
         # Set event.
@@ -99,15 +100,15 @@ class IniGui(DialogBox):
         self.scrolled_window.add_child(self.tree_view)
         
         # TreeView add node.
-        self.tree_view.add_item(None, TreeViewItem("文件播放"))
-        self.tree_view.add_item(None, TreeViewItem("系统设置"))
-        key = self.tree_view.add_item(None, TreeViewItem("快捷键    "))
-        self.tree_view.add_item(key, TreeViewItem("播放控制", has_arrow=False))
-        self.tree_view.add_item(key, TreeViewItem("其它快捷键", has_arrow=False))        
+        self.tree_view.add_item(None, TreeViewItem(_("文件播放")))
+        self.tree_view.add_item(None, TreeViewItem(_("系统设置")))
+        key = self.tree_view.add_item(None, TreeViewItem(_("快捷键    ")))
+        self.tree_view.add_item(key, TreeViewItem(_("播放控制"), has_arrow=False))
+        self.tree_view.add_item(key, TreeViewItem(_("其它快捷键"), has_arrow=False))        
         
-        self.tree_view.add_item(None, TreeViewItem("字幕设置"))
-        self.tree_view.add_item(None, TreeViewItem("截图设置"))
-        self.tree_view.add_item(None, TreeViewItem("关于我们"))
+        self.tree_view.add_item(None, TreeViewItem(_("字幕设置")))
+        self.tree_view.add_item(None, TreeViewItem(_("截图设置")))
+        self.tree_view.add_item(None, TreeViewItem(_("关于我们")))
 
         category_box = gtk.VBox()
         background_box = BackgroundBox()
@@ -121,14 +122,14 @@ class IniGui(DialogBox):
         self.main_hbox.pack_start(self.configure)
         
         # bottom button.
-        self.cancel_btn = Button("关闭")
+        self.cancel_btn = Button(_("关闭"))
         self.cancel_btn.connect("clicked", self.destroy_ini_gui_window_cancel_clicked)
         
         self.body_box.pack_start(self.main_hbox, True, True)
         self.right_button_box.set_buttons([self.cancel_btn])
         
         # Init configure index.
-        self.set("文件播放")        
+        self.set(_("文件播放"))        
         self.show_all()
                 
     def set(self, type_str):    
@@ -228,8 +229,8 @@ class IniGui(DialogBox):
 class Configure(gtk.VBox):
     def __init__(self):
         gtk.VBox.__init__(self)
-        self.class_list = ["文件播放", "系统设置", "播放控制", "其它快捷键",
-                           "字幕设置", "截图设置", "其它设置", "关于我们"]
+        self.class_list = [_("文件播放"), _("系统设置"), _("播放控制"), _("其它快捷键"),
+                           _("字幕设置"), _("截图设置"), _("其它设置"), _("关于我们")]
         # Init all configure gui class.
         self.file_play = FilePlay()
         self.system_set = SystemSet()
@@ -250,23 +251,23 @@ class Configure(gtk.VBox):
             for widget in self.get_children():
                 self.remove(widget)
             
-            if "文件播放" == class_name:
+            if _("文件播放") == class_name:
                 index = 0
                 self.pack_start(self.file_play)
-            elif "系统设置" == class_name:
+            elif _("系统设置") == class_name:
                 self.pack_start(self.system_set)
-            elif "播放控制" == class_name:
+            elif _("播放控制") == class_name:
                 self.pack_start(self.play_control)
-            elif "其它快捷键" == class_name:
+            elif _("其它快捷键") == class_name:
                 self.pack_start(self.other_key)
-            elif "字幕设置" == class_name:
+            elif _("字幕设置") == class_name:
                 self.pack_start(self.sub_set)
-            elif "截图设置" == class_name:
+            elif _("截图设置") == class_name:
                 index = 4
                 self.pack_start(self.screen_shot)
-            elif "其它设置" == class_name:
+            elif _("其它设置") == class_name:
                 self.pack_start(self.other_set)
-            elif "关于我们" == class_name:
+            elif _("关于我们") == class_name:
                 self.pack_start(self.about)
                 
             for widget in self.get_children(): 
@@ -283,25 +284,25 @@ class FilePlay(gtk.VBox):
         # Init config file.
         self.ini = Config(config_path)
         # self.ini = config
-        self.label = Label("文件播放")        
+        self.label = Label(_("文件播放"))        
         self.label.set_size_request(label_width, label_height)
         
         self.heparator = HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
         self.heparator.set_size_request(heparator_width, heparator_height)
         
         # Video file open.
-        self.video_file_open_label = Label("视频文件打开时 : ")
+        self.video_file_open_label = Label(_("视频文件打开时 : "))
         
-        self.adapt_video_btn       = RadioButton("视频适应窗口")
+        self.adapt_video_btn       = RadioButton(_("视频适应窗口"))
         self.adapt_video_btn_label = Label("")
 
-        self.ai_set_radio_btn       = RadioButton("窗口适应视频")
+        self.ai_set_radio_btn       = RadioButton(_("窗口适应视频"))
         self.ai_set_radio_btn_label = Label("")
         
-        self.close_position_radio_btn       = RadioButton("上次关闭尺寸")
+        self.close_position_radio_btn       = RadioButton(_("上次关闭尺寸"))
         self.close_position_radio_btn_label = Label("")
 
-        self.full_window_radio_btn       = RadioButton("自动全屏")    
+        self.full_window_radio_btn       = RadioButton(_("自动全屏"))    
         self.full_window_radio_btn_label = Label("")            
         set_num = self.ini.get("FilePlay", "video_file_open")        
         
@@ -317,7 +318,7 @@ class FilePlay(gtk.VBox):
             self.ai_set_radio_btn.set_active(True) 
         ################################################################
         # open new file clear play list.
-        self.clear_play_list_btn = CheckButton("打开新文件时清空播放列表")        
+        self.clear_play_list_btn = CheckButton(_("打开新文件时清空播放列表"))        
         ini_bool = self.ini.get("FilePlay", "open_new_file_clear_play_list")
         # print ini_bool
         self.clear_play_list_btn.set_active(False)
@@ -328,7 +329,7 @@ class FilePlay(gtk.VBox):
         self.clear_play_list_btn_label = Label("")
         
         # memory up close media player -> file play postion.
-        self.file_play_postion_btn = CheckButton("自动从上次停止位置播放")
+        self.file_play_postion_btn = CheckButton(_("自动从上次停止位置播放"))
         ini_bool = self.ini.get("FilePlay", "memory_up_close_player_file_postion")
         self.file_play_postion_btn.set_active(False)
         if ini_bool:
@@ -338,7 +339,7 @@ class FilePlay(gtk.VBox):
         self.file_play_postion_btn_label = Label("")
         
         # play media when find file play in dir.
-        self.find_file_play_btn = CheckButton("自动查找相似文件连续播放") 
+        self.find_file_play_btn = CheckButton(_("自动查找相似文件连续播放")) 
         ini_bool = self.ini.get("FilePlay", "find_play_file_relation_file")
         self.find_file_play_btn.set_active(False)
         if ini_bool:
@@ -348,7 +349,7 @@ class FilePlay(gtk.VBox):
         self.find_file_play_btn_label = Label("")
         
         # mouse progressbar show preview window.
-        self.show_preview_window_btn = CheckButton("鼠标悬停进度条时显示预览图")
+        self.show_preview_window_btn = CheckButton(_("鼠标悬停进度条时显示预览图"))
         ini_bool = self.ini.get("FilePlay", "mouse_progressbar_show_preview")
         self.show_preview_window_btn.set_active(False)
         if ini_bool:
@@ -452,13 +453,13 @@ class SystemSet(gtk.VBox):
         self.ini = Config(config_path)
         # self.ini = config
         self.fixed = gtk.Fixed()
-        self.label = Label("系统设置")
+        self.label = Label(_("系统设置"))
         self.label.set_size_request(label_width, label_height)
         self.heparator=HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
         self.heparator.set_size_request(heparator_width, heparator_height)
         # System setting.
         # Minimize pause plaing.
-        self.pause_play_btn = CheckButton("最小化时暂停播放")
+        self.pause_play_btn = CheckButton(_("最小化时暂停播放"))
         ini_bool = self.ini.get("SystemSet", "minimize_pause_play")
         self.pause_play_btn.set_active(False)
         if ini_bool:
@@ -468,12 +469,12 @@ class SystemSet(gtk.VBox):
         self.pause_play_btn_label = Label("")
         
         # Screen messagebox.
-        self.screen_msg_btn = Label("屏幕提示效果")
+        self.screen_msg_btn = Label(_("屏幕提示效果"))
         # Font set.        
-        self.font_set_btn_label = Label("字体")
+        self.font_set_btn_label = Label(_("字体"))
         #DEFAULT_FONT
         font_set_items = [(DEFAULT_FONT, 1),
-                          ("华彩", 2)]
+                          (_("华彩"), 2)]
         self.font_set_combo = ComboBox(font_set_items)        
         font_string = self.ini.get("SystemSet", "font")
         if font_string:
@@ -484,7 +485,7 @@ class SystemSet(gtk.VBox):
         font_set_combo_width = 120
         # self.font_set_combo.set_size_request(font_set_combo_width, font_set_combo_height)
         # Font size.
-        self.font_size_btn_label = Label("字号")
+        self.font_size_btn_label = Label(_("字号"))
         font_set_items = []
         font_set_items_num = 1
         for i in range(8, 16):
@@ -550,7 +551,7 @@ class PlayControl(gtk.VBox):
         self.ini = Config(config_path)
         # self.ini = config
         self.fixed = gtk.Fixed()
-        self.label = Label("播放控制")
+        self.label = Label(_("播放控制"))
         self.label.set_size_request(label_width, label_height)        
         # heparator.
         self.heparator=HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
@@ -561,12 +562,12 @@ class PlayControl(gtk.VBox):
         # entry_width = 150
         # entry_height = 28
         # set PlayControl bool.
-        self.play_control_bool_checkbtn = CheckButton("启动热键")
+        self.play_control_bool_checkbtn = CheckButton(_("启动热键"))
         # self.play_control_bool_checkbtn.set_active(True)
         self.play_control_bool_checkbtn.connect("button-press-event", self.set_play_control_all_sensitive)
                 
         # open file key.
-        self.open_file_entry_label = Label("打开文件")
+        self.open_file_entry_label = Label(_("打开文件"))
         self.open_file_entry       = ShortcutKeyEntry()
         text_string = self.ini.get("PlayControl", "open_file_key")
         if text_string:
@@ -576,7 +577,7 @@ class PlayControl(gtk.VBox):
             
         self.open_file_entry.set_size(entry_width, entry_height)
         # pre a.
-        self.pre_a_entry_label = Label("上一个")
+        self.pre_a_entry_label = Label(_("上一个"))
         self.pre_a_entry       = ShortcutKeyEntry()
         text_string = self.ini.get("PlayControl", "pre_a_key")
         if text_string:
@@ -586,7 +587,7 @@ class PlayControl(gtk.VBox):
             
         self.pre_a_entry.set_size(entry_width, entry_height)
         # open file dir.
-        self.open_file_dir_entry_label = Label("打开文件夹")
+        self.open_file_dir_entry_label = Label(_("打开文件夹"))
         self.open_file_dir_entry       = ShortcutKeyEntry()
         text_string = self.ini.get("PlayControl", "open_file_dir_key")
         if text_string:
@@ -596,7 +597,7 @@ class PlayControl(gtk.VBox):
             
         self.open_file_dir_entry.set_size(entry_width, entry_height)
         # next a.
-        self.next_a_entry_label = Label("下一个")
+        self.next_a_entry_label = Label(_("下一个"))
         self.next_a_entry       = ShortcutKeyEntry()
         text_string = self.ini.get("PlayControl", "next_a_key")
         if text_string:
@@ -606,7 +607,7 @@ class PlayControl(gtk.VBox):
             
         self.next_a_entry.set_size(entry_width, entry_height)
         # play or pause.
-        self.play_or_pause_entry_label = Label("播放/暂停")
+        self.play_or_pause_entry_label = Label(_("播放/暂停"))
         self.play_or_pause_entry = ShortcutKeyEntry()
         text_string = self.ini.get("PlayControl", "play_or_pause_key")
         if text_string:
@@ -616,7 +617,7 @@ class PlayControl(gtk.VBox):
             
         self.play_or_pause_entry.set_size(entry_width, entry_height)
         # add volume.
-        self.add_volume_entry_label = Label("升高音量")
+        self.add_volume_entry_label = Label(_("升高音量"))
         self.add_volume_entry       = ShortcutKeyEntry()
         text_string = self.ini.get("PlayControl", "add_volume_key")
         if text_string:
@@ -626,7 +627,7 @@ class PlayControl(gtk.VBox):
             
         self.add_volume_entry.set_size(entry_width, entry_height)
         # seek.
-        self.seek_entry_label = Label("快进")
+        self.seek_entry_label = Label(_("快进"))
         self.seek_entry       = ShortcutKeyEntry()
         text_string = self.ini.get("PlayControl", "seek_key")
         if text_string:
@@ -636,7 +637,7 @@ class PlayControl(gtk.VBox):
             
         self.seek_entry.set_size(entry_width, entry_height)
         # sub volume.
-        self.sub_volume_entry_label = Label("降低音量")
+        self.sub_volume_entry_label = Label(_("降低音量"))
         self.sub_volume_entry       = ShortcutKeyEntry()
         text_string = self.ini.get("PlayControl", "sub_volume_key")
         if text_string:
@@ -646,7 +647,7 @@ class PlayControl(gtk.VBox):
             
         self.sub_volume_entry.set_size(entry_width, entry_height)
         # back.
-        self.back_entry_label = Label("快退")
+        self.back_entry_label = Label(_("快退"))
         self.back_entry       = ShortcutKeyEntry()
         text_string = self.ini.get("PlayControl", "back_key")
         if text_string:
@@ -656,7 +657,7 @@ class PlayControl(gtk.VBox):
             
         self.back_entry.set_size(entry_width, entry_height)
         # Mute. 
-        self.mute_entry_label = Label("静音")
+        self.mute_entry_label = Label(_("静音"))
         self.mute_entry       = ShortcutKeyEntry()
         text_string = self.ini.get("PlayControl", "mute_key")
         if text_string:
@@ -666,7 +667,7 @@ class PlayControl(gtk.VBox):
 
         self.mute_entry.set_size(entry_width, entry_height)
         # full.
-        self.full_entry_label = Label("全屏")
+        self.full_entry_label = Label(_("全屏"))
         self.full_entry       = ShortcutKeyEntry()
         text_string = self.ini.get("PlayControl", "full_key")
         if text_string:
@@ -676,7 +677,7 @@ class PlayControl(gtk.VBox):
             
         self.full_entry.set_size(entry_width, entry_height)
         # Concise mode.
-        self.concise_entry_label = Label("迷你模式")
+        self.concise_entry_label = Label(_("迷你模式"))
         self.concise_entry       = ShortcutKeyEntry()
         text_string = self.ini.get("PlayControl", "concise_key")
         if text_string:
@@ -841,7 +842,7 @@ class OtherKey(gtk.VBox):
         self.ini = Config(config_path)
         # self.ini = config                
         self.fixed = gtk.Fixed()
-        self.label = Label("其它快捷键")
+        self.label = Label(_("其它快捷键"))
         self.label.set_size_request(label_width, label_height)                
         self.heparator=HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
         self.heparator.set_size_request(heparator_width, heparator_height)
@@ -850,11 +851,11 @@ class OtherKey(gtk.VBox):
         entry_height = 24
         # set other_key bool.
         
-        self.other_key_bool_checkbtn = CheckButton("开启热键")
+        self.other_key_bool_checkbtn = CheckButton(_("开启热键"))
         self.other_key_bool_checkbtn.connect("button-press-event", self.set_other_key_bool_checkbtn_press)
         
         # Add Brightness.
-        self.add_bri_entry_label = Label("增加亮度")
+        self.add_bri_entry_label = Label(_("增加亮度"))
         self.add_bri_entry       = ShortcutKeyEntry()
         text_string = self.ini.get("OtherKey", "add_brightness_key")
         if text_string:
@@ -864,7 +865,7 @@ class OtherKey(gtk.VBox):
             
         self.add_bri_entry.set_size(entry_width, entry_height)
         # Sub Brightness.
-        self.sub_bri_entry_label = Label("减少亮度")
+        self.sub_bri_entry_label = Label(_("减少亮度"))
         self.sub_bri_entry       = ShortcutKeyEntry()
         text_string = self.ini.get("OtherKey", "sub_brightness_key")
         if text_string:
@@ -874,7 +875,7 @@ class OtherKey(gtk.VBox):
             
         self.sub_bri_entry.set_size(entry_width, entry_height)
         # Inverse Rotation.
-        self.inverse_rotation_entry_label = Label("逆时针旋转")
+        self.inverse_rotation_entry_label = Label(_("逆时针旋转"))
         self.inverse_rotation_entry       = ShortcutKeyEntry()
         text_string = self.ini.get("OtherKey", "inverse_rotation_key")
         if text_string:
@@ -884,7 +885,7 @@ class OtherKey(gtk.VBox):
             
         self.inverse_rotation_entry.set_size(entry_width, entry_height)
         # Clockwise Rotation.
-        self.clockwise_entry_label = Label("顺时针旋转")
+        self.clockwise_entry_label = Label(_("顺时针旋转"))
         self.clockwise_entry       = ShortcutKeyEntry()
         text_string = self.ini.get("OtherKey", "clockwise_key")
         if text_string:
@@ -894,7 +895,7 @@ class OtherKey(gtk.VBox):
             
         self.clockwise_entry.set_size(entry_width, entry_height)
         # sort image.
-        self.sort_image_entry_label = Label("截图")
+        self.sort_image_entry_label = Label(_("截图"))
         self.sort_image_entry       = ShortcutKeyEntry()
         text_string = self.ini.get("OtherKey", "sort_image_key")
         if text_string:
@@ -904,17 +905,17 @@ class OtherKey(gtk.VBox):
             
         self.sort_image_entry.set_size(entry_width, entry_height)
         # Switch Audio track.
-        self.switch_audio_track_entry_label = Label("切换音轨")
+        self.switch_audio_track_entry_label = Label(_("切换音轨"))
         self.switch_audio_track_entry       = ShortcutKeyEntry()
         text_string = self.ini.get("OtherKey", "switch_audio_track_key")
         if text_string:
             self.switch_audio_track_entry.set_shortcut_key(text_string)
         else:    # 
-            self.switch_audio_track_entry.set_shortcut_key("禁用")
+            self.switch_audio_track_entry.set_shortcut_key(_("禁用"))
             
         self.switch_audio_track_entry.set_size(entry_width, entry_height)
         # Load subtitle.
-        self.load_subtitle_entry_label = Label("载入字幕")
+        self.load_subtitle_entry_label = Label(_("载入字幕"))
         self.load_subtitle_entry       = ShortcutKeyEntry()
         text_string = self.ini.get("OtherKey", "load_subtitle_key")
         if text_string:
@@ -924,7 +925,7 @@ class OtherKey(gtk.VBox):
             
         self.load_subtitle_entry.set_size(entry_width, entry_height)        
         # subtitle advance 0.5.
-        self.subtitle_advance_entry_label = Label("字幕提前0.5秒")
+        self.subtitle_advance_entry_label = Label(_("字幕提前0.5秒"))
         self.subtitle_advance_entry       = ShortcutKeyEntry()
         text_string = self.ini.get("OtherKey", "subtitle_advance_key")
         if text_string:
@@ -934,7 +935,7 @@ class OtherKey(gtk.VBox):
             
         self.subtitle_advance_entry.set_size(entry_width, entry_height)
         # subtitle Delay 0.5.
-        self.subtitle_delay_entry_label = Label("字幕延时0.5秒")
+        self.subtitle_delay_entry_label = Label(_("字幕延时0.5秒"))
         self.subtitle_delay_entry       = ShortcutKeyEntry()
         text_string = self.ini.get("OtherKey", "subtitle_delay_key")
         if text_string:
@@ -944,9 +945,9 @@ class OtherKey(gtk.VBox):
             
         self.subtitle_delay_entry.set_size(entry_width, entry_height)
         # mouse left single clicked.        
-        self.mouse_left_single_clicked_combo_label = Label("鼠标左键单击")
-        self.mouse_left_single_clicked_combo       = ComboBox([("暂停/播放", 1),
-                                                               ("禁用", 2)])
+        self.mouse_left_single_clicked_combo_label = Label(_("鼠标左键单击"))
+        self.mouse_left_single_clicked_combo       = ComboBox([(_("暂停/播放"), 1),
+                                                               (_("禁用"), 2)])
 
         text_string = self.ini.get("OtherKey", "mouse_left_single_clicked")
         if text_string:
@@ -956,18 +957,18 @@ class OtherKey(gtk.VBox):
             
         # self.mouse_left_single_clicked_combo.set_size_request(entry_width, entry_height)
         # mouse left double clicked.
-        self.mouse_left_double_clicked_combo_label = Label("鼠标左键双击")
-        self.mouse_left_double_clicked_combo       = ComboBox([("全屏", 1),
-                                                               ("禁用", 2)])
+        self.mouse_left_double_clicked_combo_label = Label(_("鼠标左键双击"))
+        self.mouse_left_double_clicked_combo       = ComboBox([(_("全屏"), 1),
+                                                               (_("禁用"), 2)])
         text_string = self.ini.get("OtherKey", "mouse_left_double_clicked")
         if text_string:
             self.mouse_left_double_clicked_combo.label.set_text(text_string)
             
         # self.mouse_left_double_clicked_combo.set_size_request(entry_width, entry_height)
         # mouse wheel.
-        self.mouse_wheel_combo_label = Label("鼠标滚轮")
-        self.mouse_wheel_combo       = ComboBox([("音量", 1),
-                                                 ("禁用", 2)])
+        self.mouse_wheel_combo_label = Label(_("鼠标滚轮"))
+        self.mouse_wheel_combo       = ComboBox([(_("音量"), 1),
+                                                 (_("禁用"), 2)])
         text_string = self.ini.get("OtherKey", "mouse_wheel_event")
         if text_string:
             self.mouse_wheel_combo.label.set_text(text_string)        
@@ -1147,13 +1148,13 @@ class SubSet(gtk.VBox):
         self.ini = Config(config_path)
         # self.ini = config
         self.fixed = gtk.Fixed()
-        self.label = Label("字幕设置")
+        self.label = Label(_("字幕设置"))
         self.label.set_size_request(label_width, label_height)
 
         self.heparator=HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
         self.heparator.set_size_request(heparator_width, heparator_height)
         # Ai load subtitle.
-        self.ai_load_subtitle_checkbtn       = CheckButton("自动载入字幕")
+        self.ai_load_subtitle_checkbtn       = CheckButton(_("自动载入字幕"))
         ini_bool = self.ini.get("SubtitleSet", "ai_load_subtitle")
         self.ai_load_subtitle_checkbtn.set_active(False)
         if ini_bool:
@@ -1162,7 +1163,7 @@ class SubSet(gtk.VBox):
                 
         self.ai_load_subtitle_checkbtn_label = Label("")
         # Specified Location Search.
-        self.specific_location_search_label = Label("指定位置 : ")
+        self.specific_location_search_label = Label(_("指定位置 : "))
         self.specific_location_search_entry = InputEntry()
         text_string = self.ini.get("SubtitleSet", "specific_location_search")
         if text_string:
@@ -1171,7 +1172,7 @@ class SubSet(gtk.VBox):
             self.specific_location_search_entry.set_text("~/.config/deepin-media-player/subtitle")
             
         self.specific_location_search_entry.set_size(entry_width, entry_height)
-        self.specific_location_search_btn   = Button("浏览")
+        self.specific_location_search_btn   = Button(_("浏览"))
         self.specific_location_search_btn.connect("clicked", self.load_path_to_sls_entry)
         sub_set_x = 20
         sub_set_y = 40
@@ -1197,7 +1198,7 @@ class SubSet(gtk.VBox):
         self.pack_start(self.fixed)
         
     def load_path_to_sls_entry(self, widget):    
-        open_dialog = gtk.FileChooserDialog("深度影音配置打开文件夹对话框",
+        open_dialog = gtk.FileChooserDialog(_("深度影音配置打开文件夹对话框"),
                                             None,
                                             gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER,
                                             (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, 
@@ -1224,24 +1225,24 @@ class ScreenShot(gtk.VBox):
         self.ini = Config(config_path)
         # self.ini = config
         self.fixed = gtk.Fixed()
-        self.label = Label("截图设置")
+        self.label = Label(_("截图设置"))
         self.label.set_size_request(label_width, label_height)
         self.heparator=HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
         self.heparator.set_size_request(heparator_width, heparator_height)                
         # Save clipboard.
-        self.save_clipboard_radio = RadioButton("保存在剪贴板")
+        self.save_clipboard_radio = RadioButton(_("保存在剪贴板"))
         # save clipboard radio event.
         self.save_clipboard_radio.connect("button-press-event", self.save_clipboard_radio_clicked)
         
         self.save_clipboard_radio_label = Label("")
         # Save File.
-        self.save_file_radio = RadioButton("保存成文件")
+        self.save_file_radio = RadioButton(_("保存成文件"))
         self.save_file_radio.connect("button-press-event", self.save_file_radio_clicked)
         self.save_file_radio.set_active(True)
         self.save_file_radio_label = Label("")
         
         # Save path.
-        self.save_path_label = Label("保存路径 : ")
+        self.save_path_label = Label(_("保存路径 : "))
         self.save_path_entry = InputEntry()
         # text_string = self.ini.get("ScreenshotSet", "save_path")
         # if text_string:
@@ -1250,10 +1251,10 @@ class ScreenShot(gtk.VBox):
         #     self.save_path_entry.set_text("~/.config/deepin-media-player/image")
             
         self.save_path_entry.set_size(entry_width, entry_height)                
-        self.save_path_button = Button("浏览")
+        self.save_path_button = Button(_("浏览"))
         self.save_path_button.connect("clicked", self.save_path_to_save_path_entry_clicked)
         # Save type.
-        self.save_type_label  = Label("保存类型 : ")
+        self.save_type_label  = Label(_("保存类型 : "))
         self.save_type_combo  = ComboBox([(".png", 1),
                                           (".jpeg", 2)])
         
@@ -1285,7 +1286,7 @@ class ScreenShot(gtk.VBox):
                  
         # 
         self.current_show_sort_label = Label("")
-        self.current_show_sort_check = CheckButton("按当前显示的画面尺寸截图")
+        self.current_show_sort_check = CheckButton(_("按当前显示的画面尺寸截图"))
         self.current_show_sort_check.set_active(False)
         ini_bool = self.ini.get("ScreenshotSet", "current_show_sort")
         if ini_bool:
@@ -1336,7 +1337,7 @@ class ScreenShot(gtk.VBox):
         self.pack_start(self.fixed)
         
     def save_path_to_save_path_entry_clicked(self, widget):
-        open_dialog = gtk.FileChooserDialog("深度影音配置打开文件夹对话框",
+        open_dialog = gtk.FileChooserDialog(_("深度影音配置打开文件夹对话框"),
                                             None,
                                             gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER,
                                             (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, 
@@ -1380,7 +1381,7 @@ class OtherSet(gtk.VBox):
     def __init__(self):
         gtk.VBox.__init__(self)
         self.fixed = gtk.Fixed()
-        self.label = Label("其它设置")
+        self.label = Label(_("其它设置"))
         self.label.set_size_request(label_width, label_height)
         self.heparator=HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
         self.heparator.set_size_request(heparator_width, heparator_height)                
@@ -1405,14 +1406,14 @@ class About(gtk.VBox):
         main_box = gtk.VBox(spacing=15)
         logo_image = ImageBox(app_theme.get_pixbuf("logo.png"))
         light_color = app_theme.get_color("labelText")
-        logo_name = Label("深度影音", text_size=10)
+        logo_name = Label(_("深度影音"), text_size=10)
         logo_box = gtk.HBox(spacing=2)
         logo_box.pack_start(logo_image, False, False)
         logo_box.pack_start(logo_name, False, False)
         
-        version_label = Label("版本: ")
+        version_label = Label(_("版本: "))
         version_content = Label("V1.0", light_color)
-        publish_label = Label("  发布时间: ")
+        publish_label = Label(_("  发布时间: "))
         publish_content = Label("2012.07.12    ", light_color)
         info_box = gtk.HBox(spacing=5)
         info_box.pack_start(version_label, False, False)

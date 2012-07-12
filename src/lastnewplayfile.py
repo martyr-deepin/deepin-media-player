@@ -118,9 +118,6 @@ class Table(object):
         self.argv     = None
         self.value    = None
         
-if __name__ == "__main__":        
-    last_new_play_file = LastNewPlayFile()
-    last_new_play_file.set_file_time("/media/文档/电影/守望者~罪恶迷途-MP4/守望者~罪恶迷途B123123.mp4")
     
 
 

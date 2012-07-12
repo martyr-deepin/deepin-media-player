@@ -92,6 +92,3 @@ class Format(object):
     
 format = Format()
 
-if __name__ == "__main__":
-    print format.get_play_bool("/home/long/bin/源码世界/音频和视频格式/format.py")
-    print format.get_play_bool

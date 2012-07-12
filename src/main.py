@@ -30,6 +30,7 @@ import gtk
 from user_guide import init_user_guide
 from ini import Config
 import os
+from locales import _
 
 # Thread init. 
 gtk.gdk.threads_init()
@@ -60,7 +61,7 @@ class MediaPlayer(object):
         # Add app titlebar.
         self.app.add_titlebar(["theme", "menu", "max", "min", "close"],
                               app_theme.get_pixbuf("logo.png"),
-                              "深度影音", " ", add_separator = True)        
+                              _("深度影音"), " ", add_separator = True)        
         # Topbox init.
         self.player_box = PlayerBox(self.app, argv_path_list)
         # # Add child widget to app. 

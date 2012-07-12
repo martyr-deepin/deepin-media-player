@@ -142,29 +142,3 @@ def clicked_button(widget, list_view):
     
 def double_click_item(list_view, list_item, colume, offset_x, offset_y):    
     print "* Button press: %s" % (str((list_item.title, list_item.length)))
-
-
-if __name__ == "__main__":        
-    win = gtk.Window(gtk.WINDOW_TOPLEVEL)
-    win.set_size_request(500, 500)
-    win.connect("destroy", gtk.main_quit)
-    vbox = gtk.VBox()
-    
-    scrolled_window = ScrolledWindow()
-    list_item = [OpenItem("你是子厚道的,这个非常好看的电影.rmvb", "120小时30分40秒", "fdsfd", "fsdf"),
-                 OpenItem("测试二你是的附近的看附近思考的了附近哭附近的思考了附近的死了看法.rmvb", "120小时30分40秒", "fsfdsf", "fsdfdsf")]
-    
-    list_view = ListView()
-    list_view.add_titles(["名称", "大小", "类型", "修改日期"])
-    list_view.add_items(list_item)
-            
-    list_view.set_size_request(500, 500)
-    list_view.connect("double-click-item", double_click_item)
-    scrolled_window.add_child(list_view)    
-    vbox.pack_start(scrolled_window, True,True)
-    btn = gtk.Button()
-    btn.connect("clicked", clicked_button, list_view)
-    vbox.pack_start(btn, False, False)
-    win.add(vbox)
-    win.show_all()
-    gtk.main()

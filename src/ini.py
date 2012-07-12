@@ -21,6 +21,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import gobject    
+from locales import _
 
 def get_home_path():
     return os.path.expanduser("~")
@@ -88,9 +89,9 @@ def init_config():
             config.set("OtherKey", "load_subtitle_key",      "Alt + o")
             config.set("OtherKey", "subtitle_delay_key",     "]")
             config.set("OtherKey", "subtitle_advance_key",   "[")
-            config.set("OtherKey", "mouse_left_single_clicked", "暂停/播放")
-            config.set("OtherKey", "mouse_left_double_clicked", "全屏")
-            config.set("OtherKey", "mouse_wheel_event", "音量")
+            config.set("OtherKey", "mouse_left_single_clicked", _("暂停/播放"))
+            config.set("OtherKey", "mouse_left_double_clicked", _("全屏"))
+            config.set("OtherKey", "mouse_wheel_event", _("音量"))
             #[SubtitleSet]
             config.set("SubtitleSet", "ai_load_subtitle", "True")
             config.set("SubtitleSet", "specific_location_search", "~/.config/deepin-media-player/subtitle")

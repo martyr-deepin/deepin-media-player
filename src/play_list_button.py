@@ -27,12 +27,12 @@ from dtk.ui.cache_pixbuf import CachePixbuf
 from skin import app_theme
 from tooltip import tooltip_text
 import gtk
-
+from locales import _
 
 class PlayListButton(object):
     def __init__(self):
         self.button = ImageButton()        
-        tooltip_text(self.button, "播放列表")
+        tooltip_text(self.button, _("播放列表"))
         
 class ImageButton(gtk.Button):
     def __init__(self, 

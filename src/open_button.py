@@ -22,6 +22,7 @@
 
 from dtk.ui.draw import draw_text, draw_pixbuf
 from dtk.ui.cache_pixbuf import CachePixbuf
+from locales import _
 from skin import app_theme
 import gobject
 import gtk
@@ -384,7 +385,7 @@ class OpenUrl(gobject.GObject):
     def __init__(self):
         gobject.GObject.__init__(self)
         # url window dialog.
-        self.url_win = InputDialog("输入URL地址","请输入有效的HTML地址", confirm_callback = self.get_url_name)
+        self.url_win = InputDialog(_("输入URL地址"), _("请输入有效的HTML地址"), confirm_callback = self.get_url_name)
 
         # Set url window dialog.
         # self.url_win.set_type_hint(gtk.gdk.WINDOW_TYPE_HINT_DIALOG)
