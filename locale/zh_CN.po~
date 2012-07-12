@@ -1,18 +1,18 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# Chinese translations for PACKAGE package
+# PACKAGE 软件包的简体中文翻译.
+# Copyright (C) 2012 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Automatically generated, 2012.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-12 16:56+0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2012-07-12 16:50+0800\n"
+"PO-Revision-Date: 2012-07-12 15:53+0800\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -21,517 +21,511 @@ msgstr ""
 #: ../src/player_box.py:2400 ../src/ini_gui.py:570
 #: ../src/play_control_panel.py:75
 msgid "Open File"
-msgstr ""
+msgstr "打开文件"
 
 #: ../src/player_box.py:205 ../src/player_box.py:2258
 #: ../src/player_box.py:2401 ../src/ini_gui.py:590 ../src/ini_gui.py:1201
 #: ../src/ini_gui.py:1340
 msgid "Open Directory"
-msgstr ""
+msgstr "打开文件夹"
 
 #: ../src/player_box.py:207 ../src/player_box.py:2402
 msgid "Open URL"
-msgstr ""
+msgstr "打开网址"
 
 #: ../src/player_box.py:573 ../src/player_box.py:1668
 #: ../src/player_box.py:1677 ../src/mplayer.py:186 ../src/ini_gui.py:914
 #: ../src/ini_gui.py:950 ../src/ini_gui.py:962 ../src/ini_gui.py:971
 msgid "Disabled"
-msgstr ""
+msgstr "禁用"
 
 #: ../src/player_box.py:619 ../src/player_box.py:634 ../src/player_box.py:637
 #: ../src/player_box.py:806 ../src/player_box.py:812 ../src/player_box.py:823
 #: ../src/player_box.py:2799 ../src/mplayer.py:192 ../src/ini_gui.py:970
 #: ../src/ini.py:94
 msgid "Volumn"
-msgstr ""
+msgstr "音量"
 
 #: ../src/player_box.py:628 ../src/player_box.py:831
 msgid "Mute: enabled"
-msgstr ""
+msgstr "开启静音"
 
 #: ../src/player_box.py:733 ../src/player_box.py:736
 msgid "Screenshot Saved"
-msgstr ""
+msgstr "截图已保存"
 
 #: ../src/player_box.py:750
 msgid "Screenshot Copied to Clipboard"
-msgstr ""
+msgstr "截图已保存到剪贴板"
 
 #: ../src/player_box.py:968 ../src/play_control_panel.py:48
 msgid "Stop"
-msgstr ""
+msgstr "停止"
 
 #: ../src/player_box.py:984
 msgid "No Media Selected"
-msgstr ""
+msgstr "没有可播放文件"
 
 #: ../src/player_box.py:999 ../src/player_box.py:2268
 #: ../src/player_box.py:2408 ../src/play_control_panel.py:59
 msgid "Play"
-msgstr ""
+msgstr "播放"
 
 #: ../src/player_box.py:1002
 msgid "Pause"
-msgstr ""
+msgstr "暂停"
 
 #: ../src/player_box.py:1010 ../src/player_box.py:2249
 #: ../src/player_box.py:2326 ../src/play_control_panel.py:56
 msgid "Prev"
-msgstr ""
+msgstr "上一首"
 
 #: ../src/player_box.py:1016 ../src/player_box.py:2250
 #: ../src/player_box.py:2327 ../src/play_control_panel.py:67
 msgid "Next"
-msgstr ""
+msgstr "下一首"
 
 #: ../src/player_box.py:1023
 msgid "Select Directory"
-msgstr ""
+msgstr "深度影音打开文件夹对话框"
 
 #: ../src/player_box.py:1041
 msgid "Select Files"
-msgstr ""
+msgstr "深度影音打开文件对话框"
 
 #: ../src/player_box.py:1076
 msgid "Failed to Open Selected Fil"
-msgstr ""
+msgstr "无效的文件"
 
 #: ../src/player_box.py:2088 ../src/ini_gui.py:630
 msgid "Forward"
-msgstr ""
+msgstr "快进"
 
 #: ../src/player_box.py:2088 ../src/player_box.py:2097
 msgid "s"
-msgstr ""
+msgstr "秒"
 
 #: ../src/player_box.py:2097 ../src/ini_gui.py:650
 msgid "Rewind"
-msgstr ""
+msgstr "快退"
 
 #: ../src/player_box.py:2133 ../src/player_box.py:2272 ../src/ini_gui.py:898
 msgid "Take Screenshots"
-msgstr ""
+msgstr "截图"
 
 #: ../src/player_box.py:2134
 msgid "Open Screenshot Directory"
-msgstr ""
+msgstr "打开截图目录"
 
 #: ../src/player_box.py:2135
 msgid "Set Screenshot Directory"
-msgstr ""
+msgstr "设置截图保存目录"
 
 #: ../src/player_box.py:2138 ../src/ini_gui.py:918
 msgid "Import Subtitles"
-msgstr ""
+msgstr "载入字幕"
 
 #: ../src/player_box.py:2139
 msgid "Select Subtitles"
-msgstr ""
+msgstr "字幕选择"
 
 #: ../src/player_box.py:2140
 msgid "Remove Subtitles"
-msgstr ""
+msgstr "移除字幕"
 
 #: ../src/player_box.py:2160 ../src/player_box.py:2386
 msgid "Stereo"
-msgstr ""
+msgstr "立体声道"
 
 #: ../src/player_box.py:2161 ../src/player_box.py:2387
 msgid "Left"
-msgstr ""
+msgstr "左声道"
 
 #: ../src/player_box.py:2162 ../src/player_box.py:2388
 msgid "Right"
-msgstr ""
+msgstr "右声道"
 
 #: ../src/player_box.py:2166
 msgid "Channels"
-msgstr ""
+msgstr "声道选择"
 
 #: ../src/player_box.py:2169 ../src/ini_gui.py:620
 msgid "Volumn Up"
-msgstr ""
+msgstr "增大音量"
 
 #: ../src/player_box.py:2170 ../src/ini_gui.py:640
 msgid "Volumn Down"
-msgstr ""
+msgstr "减小音量"
 
 #: ../src/player_box.py:2171
 msgid "Mute/Umute"
-msgstr ""
+msgstr "静音/还原"
 
 #: ../src/player_box.py:2194 ../src/player_box.py:2354
 msgid "Original"
-msgstr ""
+msgstr "默认值"
 
 #: ../src/player_box.py:2201 ../src/player_box.py:2361
 msgid "50%"
-msgstr ""
+msgstr "0.5倍尺寸"
 
 #: ../src/player_box.py:2202 ../src/player_box.py:2362
 msgid "100%"
-msgstr ""
+msgstr "1倍尺寸"
 
 #: ../src/player_box.py:2203 ../src/player_box.py:2363
 msgid "150%"
-msgstr ""
+msgstr "1.5倍尺寸"
 
 #: ../src/player_box.py:2204 ../src/player_box.py:2364
 msgid "200%"
-msgstr ""
+msgstr "2倍尺寸"
 
 #: ../src/player_box.py:2239 ../src/player_box.py:2318
 #: ../src/player_box.py:2454
 msgid "Play (single)"
-msgstr ""
+msgstr "单个播放"
 
 #: ../src/player_box.py:2240 ../src/player_box.py:2319
 #: ../src/player_box.py:2455
 msgid "Play (ordered)"
-msgstr ""
+msgstr "顺序播放"
 
 #: ../src/player_box.py:2241 ../src/player_box.py:2320
 #: ../src/player_box.py:2456
 msgid "Shuffle"
-msgstr ""
+msgstr "随机播放"
 
 #: ../src/player_box.py:2242 ../src/player_box.py:2321
 #: ../src/player_box.py:2457
 msgid "Repeat"
-msgstr ""
+msgstr "单个循环"
 
 #: ../src/player_box.py:2243 ../src/player_box.py:2322
 #: ../src/player_box.py:2458
 msgid "Repeat List"
-msgstr ""
+msgstr "列表循环"
 
 #: ../src/player_box.py:2246 ../src/mplayer.py:191 ../src/ini_gui.py:305
 #: ../src/ini_gui.py:670 ../src/ini_gui.py:961 ../src/togglehoverbutton.py:125
 #: ../src/ini.py:93
 msgid "Full Screen"
-msgstr ""
+msgstr "全屏"
 
 #: ../src/player_box.py:2247 ../src/player_box.py:2405
 #: ../src/togglehoverbutton.py:134
 msgid "Standard Mode"
-msgstr ""
+msgstr "普通模式"
 
 #: ../src/player_box.py:2248 ../src/player_box.py:2406 ../src/ini_gui.py:680
 #: ../src/togglehoverbutton.py:143
 msgid "Concise Mode"
-msgstr ""
+msgstr "简洁模式"
 
 #: ../src/player_box.py:2252 ../src/player_box.py:2329
 msgid "Forward 5s"
-msgstr ""
+msgstr "快进5秒"
 
 #: ../src/player_box.py:2253 ../src/player_box.py:2330
 msgid "Rewind 5s"
-msgstr ""
+msgstr "快退5秒"
 
 #: ../src/player_box.py:2254 ../src/player_box.py:2407
 #: ../src/player_box.py:2479
 msgid "Play Order"
-msgstr ""
+msgstr "播放顺序"
 
 #: ../src/player_box.py:2262
 msgid "Help"
-msgstr ""
+msgstr "帮助信息"
 
 #: ../src/player_box.py:2263
 msgid "Issues"
-msgstr ""
+msgstr "问题反馈"
 
 #: ../src/player_box.py:2264 ../src/ini_gui.py:111 ../src/ini_gui.py:233
 #: ../src/ini_gui.py:270
 msgid "About us"
-msgstr ""
+msgstr "关于我们"
 
 #: ../src/player_box.py:2267
 msgid "File"
-msgstr ""
+msgstr "文件"
 
 #: ../src/player_box.py:2269 ../src/player_box.py:2409 ../src/ini_gui.py:106
 msgid "Video"
-msgstr ""
+msgstr "画面"
 
 #: ../src/player_box.py:2270 ../src/player_box.py:2410
 msgid "Audio"
-msgstr ""
+msgstr "声音"
 
 #: ../src/player_box.py:2273
 msgid "New Features"
-msgstr ""
+msgstr "查看新特性"
 
 #: ../src/player_box.py:2274 ../src/player_box.py:2412 ../src/ini_gui.py:75
 msgid "Preferences"
-msgstr ""
+msgstr "选项"
 
 #: ../src/player_box.py:2279
 msgid "Quit"
-msgstr ""
+msgstr "退出"
 
 #: ../src/player_box.py:2396
 msgid "Auto-download Subtitles"
-msgstr ""
+msgstr "自动下载字幕"
 
 #: ../src/player_box.py:2404
 msgid "Full Screen On/Off"
-msgstr ""
+msgstr "全屏/退出"
 
 #: ../src/player_box.py:2411 ../src/ini_gui.py:109 ../src/ini_gui.py:233
 #: ../src/ini_gui.py:263 ../src/ini_gui.py:1151
 msgid "Subtitles"
-msgstr ""
+msgstr "字幕"
 
 #: ../src/player_box.py:2461
 msgid "By Name"
-msgstr ""
+msgstr "按名称"
 
 #: ../src/player_box.py:2462
 msgid "By Type"
-msgstr ""
+msgstr "按类型"
 
 #: ../src/player_box.py:2470
 msgid "Add File"
-msgstr ""
+msgstr "添加文件"
 
 #: ../src/player_box.py:2471
 msgid "Add Directory"
-msgstr ""
+msgstr "添加文件夹"
 
 #: ../src/player_box.py:2472
 msgid "Add URL"
-msgstr ""
+msgstr "添加URL"
 
 #: ../src/player_box.py:2474
 msgid "Remove Selected"
-msgstr ""
+msgstr "删除选中项"
 
 #: ../src/player_box.py:2475
 msgid "Clear Playlist"
-msgstr ""
+msgstr "清空播放列表"
 
 #: ../src/player_box.py:2476
 msgid "Remove Unavailable Files"
-msgstr ""
+msgstr "删除无效文件"
 
 #: ../src/player_box.py:2478
 msgid "Recent Played"
-msgstr ""
+msgstr "最近播放文件"
 
 #: ../src/player_box.py:2480
 msgid "Sort"
-msgstr ""
+msgstr "排序"
 
 #: ../src/player_box.py:2483
 msgid "Open Containing Directory"
-msgstr ""
+msgstr "打开所在文件夹"
 
 #: ../src/player_box.py:2656 ../src/ini_gui.py:110 ../src/ini_gui.py:233
 #: ../src/ini_gui.py:265 ../src/ini_gui.py:1228
 msgid "Screenshot"
-msgstr ""
+msgstr "截图设置"
 
 #: ../src/mplayer.py:190 ../src/ini_gui.py:610 ../src/ini_gui.py:949
 #: ../src/ini.py:92
 msgid "Pause/Play"
-msgstr ""
+msgstr "暂停/播放"
 
 #: ../src/play_list_button.py:35
 msgid "Playlist"
-msgstr ""
+msgstr "播放列表"
 
 #: ../src/ini_gui.py:103 ../src/ini_gui.py:132 ../src/ini_gui.py:232
 #: ../src/ini_gui.py:254 ../src/ini_gui.py:287
 msgid "Playback"
-msgstr ""
+msgstr "播放设置"
 
 #: ../src/ini_gui.py:104 ../src/ini_gui.py:232 ../src/ini_gui.py:257
 #: ../src/ini_gui.py:456
 msgid "Genera"
-msgstr ""
+msgstr "系统设置"
 
 #: ../src/ini_gui.py:105
 msgid "Keyboard"
-msgstr ""
+msgstr "快捷键"
 
 #: ../src/ini_gui.py:107 ../src/ini_gui.py:232 ../src/ini_gui.py:233
 #: ../src/ini_gui.py:261 ../src/ini_gui.py:268 ../src/ini_gui.py:845
 #: ../src/ini_gui.py:1384
 msgid "Other"
-msgstr ""
+msgstr "其它快捷键"
 
 #: ../src/ini_gui.py:125
 msgid "Close"
-msgstr ""
+msgstr "关闭"
 
 #: ../src/ini_gui.py:232 ../src/ini_gui.py:259 ../src/ini_gui.py:554
 msgid "Video Control"
-msgstr ""
+msgstr "播放控制"
 
 #: ../src/ini_gui.py:294
 msgid "On Opening:"
-msgstr ""
+msgstr "视频文件打开时: "
 
 #: ../src/ini_gui.py:296
 msgid "Fit to Window Size"
-msgstr ""
+msgstr "视频适应窗口"
 
 #: ../src/ini_gui.py:299
 msgid "Resize Window"
-msgstr ""
+msgstr "窗口适应视频"
 
 #: ../src/ini_gui.py:302
 msgid "Last Closed Size"
-msgstr ""
+msgstr "上次关闭尺寸"
 
 #: ../src/ini_gui.py:321
 msgid "Clear Playlist On Opening New Media"
-msgstr ""
+msgstr "打开新文件时清空播放列表"
 
 #: ../src/ini_gui.py:332
 msgid "Resume Playing"
-msgstr ""
+msgstr "自动从上次停止位置播放"
 
 #: ../src/ini_gui.py:342
 msgid "Search for Similar Media and Continue Playing"
-msgstr ""
+msgstr "自动查找相似文件连续播放"
 
 #: ../src/ini_gui.py:352
 msgid "Show Preview on Placing Cursor on Progress Bar"
-msgstr ""
+msgstr "鼠标悬停进度条时显示预览图"
 
 #: ../src/ini_gui.py:462
 msgid "Pause When Minimized"
-msgstr ""
+msgstr "最小化时暂停播放"
 
 #: ../src/ini_gui.py:472
 msgid "Pop-up Messages"
-msgstr ""
+msgstr "屏幕提示效果"
 
 #: ../src/ini_gui.py:474
 msgid "Font"
-msgstr ""
+msgstr "字体"
 
 #: ../src/ini_gui.py:477
 msgid "华彩"
-msgstr ""
+msgstr "华彩"
 
 #: ../src/ini_gui.py:488
 msgid "Size"
-msgstr ""
+msgstr "字号"
 
 #: ../src/ini_gui.py:565 ../src/ini_gui.py:854
 msgid "Hotkeys Enabled"
-msgstr ""
+msgstr "开启热键"
 
 #: ../src/ini_gui.py:580 ../src/ini_gui.py:600
 msgid "Previous"
-msgstr ""
+msgstr "上一个"
 
 #: ../src/ini_gui.py:660
 msgid "Mute"
-msgstr ""
+msgstr "静音"
 
 #: ../src/ini_gui.py:858
 msgid "Increse Brightness"
-msgstr ""
+msgstr "升高音量"
 
 #: ../src/ini_gui.py:868
 msgid "Decrease Brightness"
-msgstr ""
+msgstr "降低音量"
 
 #: ../src/ini_gui.py:878
 msgid "Rotate Conterclockwise"
-msgstr ""
+msgstr "逆时针旋转"
 
 #: ../src/ini_gui.py:888
 msgid "Rotate Clockwise"
-msgstr ""
+msgstr "顺时针旋转"
 
 #: ../src/ini_gui.py:908
 msgid "Switch Audio Tracks"
-msgstr ""
+msgstr "切换音轨"
 
 #: ../src/ini_gui.py:928
 msgid "Subtitle Advance 0.5s"
-msgstr ""
+msgstr "字幕提前0.5秒"
 
 #: ../src/ini_gui.py:938
 msgid "Subtitle Delay 0.5s"
-msgstr ""
+msgstr "字幕延时0.5秒"
 
 #: ../src/ini_gui.py:948
 msgid "Left Click"
-msgstr ""
+msgstr "鼠标左键单击"
 
 #: ../src/ini_gui.py:960
 msgid "Double Click"
-msgstr ""
+msgstr "鼠标左键双击"
 
 #: ../src/ini_gui.py:969
 msgid "Scroll"
-msgstr ""
+msgstr "鼠标滚轮"
 
 #: ../src/ini_gui.py:1157
 msgid "Auto-load Subtitles"
-msgstr ""
+msgstr "自动载入字幕"
 
 #: ../src/ini_gui.py:1166
 msgid "Subtitle Directory:"
-msgstr ""
+msgstr "指定位置： "
 
 #: ../src/ini_gui.py:1175 ../src/ini_gui.py:1254
 msgid "View"
-msgstr ""
+msgstr "浏览"
 
 #: ../src/ini_gui.py:1233
 msgid "Copy to Clipboard"
-msgstr ""
+msgstr "保存在剪贴板"
 
 #: ../src/ini_gui.py:1239
 msgid "Save File"
-msgstr ""
+msgstr "保存成文件"
 
 #: ../src/ini_gui.py:1245
 msgid "Screenshot Directory:"
-msgstr ""
+msgstr "保存路径： "
 
 #: ../src/ini_gui.py:1257
 msgid "File Type:"
-msgstr ""
+msgstr "保存类型： "
 
 #: ../src/ini_gui.py:1289
 msgid "Keep Current Aspect Ratio"
-msgstr ""
+msgstr "按当前显示的画面尺寸截图"
 
 #: ../src/ini_gui.py:1409 ../src/main.py:64
 msgid "Deepin Media Player"
-msgstr ""
+msgstr "深度影音"
 
 #: ../src/ini_gui.py:1414
 msgid "Version:"
-msgstr ""
+msgstr "版本："
 
 #: ../src/ini_gui.py:1416
 msgid "Release Date: "
-msgstr ""
-
-#: ../src/ini_gui.py:1428
-msgid ""
-"Deepin Media Player is a video player designed for Linux users.\n"
-"It support a variety of video formats, and features mode switching,\n"
-"Video preview, online subtitles, screenshot taking and skin selection.\n"
-"\n"
-"Deepin Media Player is free software licensed under GNU GPLv3.\n"
-msgstr ""
+msgstr " 发布时间："
 
 #: ../src/open_button.py:388
 msgid "Enter URL"
-msgstr ""
+msgstr "输入网址"
 
 #: ../src/open_button.py:388
 msgid "Please Enter a Valid URL"
-msgstr ""
+msgstr "请输入有效的网址"
+
+#~ msgid "About"
+#~ msgstr "关于软件"

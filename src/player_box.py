@@ -2261,7 +2261,7 @@ class PlayerBox(object):
         # In title root menu.
         self.help_menu = Menu([(None, _("Help"), None),
                                (None, _("Issues"), None),
-                               (None, _("About"), None)])
+                               (None, _("About us"), None)])
         
         #
         self.title_root_menu = Menu([(None, _("File"), self.file_menu),
