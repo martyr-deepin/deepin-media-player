@@ -211,7 +211,8 @@ class PreView(object):
             self.pv.set_opacity(0)
             self.mp.xid = self.pv.window.xid
             self.mp.path = path
-            self.mp.play(self.mp.path)             
+            self.mp.volumebool = True
+            self.mp.play(self.mp.path)                         
             self.mp.pause()
             self.mp.pause_bool = False
             self.pv.hide_all()
