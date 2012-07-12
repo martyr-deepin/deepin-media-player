@@ -1019,7 +1019,7 @@ class PlayerBox(object):
         self.show_open_dialog_window(open_button=False)
         # self.clear_play_list_bool = True
         
-    def show_open_dir_dialog_window(self):
+    def show_open_dir_dialog_window(self, open_button=True):
         open_dialog = gtk.FileChooserDialog("深度影音打开文件夹对话框",
                                             None,
                                             gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER,
@@ -1030,8 +1030,10 @@ class PlayerBox(object):
 
         if res == gtk.RESPONSE_OK:
             path_string = open_dialog.get_filename()
-            print path_string
             if path_string:
+                if not open_button:
+                    self.mp.clearPlayList()
+                    self.clear_play_list_bool = True 
                 self.get_path_name(path_string)
         open_dialog.destroy()
 
@@ -1049,9 +1051,10 @@ class PlayerBox(object):
             if path_string:
                 if not open_button:
                     self.mp.clearPlayList()
+                    self.clear_play_list_bool = True 
                 self.get_path_name(path_string)
             
-        self.clear_play_list_bool = True     
+                
         open_dialog.destroy()
 
 
@@ -2604,12 +2607,10 @@ class PlayerBox(object):
         self.show_open_dir_dialog_window()
         
     def add_file_clear(self):    
-        self.mp.clearPlayList()
-        self.show_open_dialog_window()
+        self.show_open_dialog_window(False)
         
-    def add_file_dir_clear(self):    
-        self.mp.clearPlayList()
-        self.show_open_dir_dialog_window()
+    def add_file_dir_clear(self):            
+        self.show_open_dir_dialog_window(False)
         
     def get_url_name(self, open_url, url_name, url_bool):
         if url_bool:
