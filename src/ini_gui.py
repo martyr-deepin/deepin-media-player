@@ -67,6 +67,12 @@ UP_CLOSE_VIDEO_STATE     = "3"
 AI_FULL_VIDEO_STATE      = "4"
 
 
+def create_separator_box(padding_x=0, padding_y=0):    
+    separator_box = HSeparator(
+        app_theme.get_shadow_color("hSeparator").get_color_info(),
+        padding_x, padding_y)
+    return separator_box
+
 import gobject
 
 class IniGui(DialogBox):
@@ -283,30 +289,25 @@ class Configure(gtk.VBox):
 class FilePlay(gtk.VBox):    
     def __init__(self):
         gtk.VBox.__init__(self)
-        self.fixed = gtk.Fixed()
+        
+        radio_table = gtk.Table(2, 2)
         # Init config file.
         self.ini = Config(config_path)
         # self.ini = config
         self.label = Label(_("Playback"))        
         self.label.set_size_request(label_width, label_height)
         
-        self.heparator = HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
-        self.heparator.set_size_request(heparator_width, heparator_height)
-        
         # Video file open.
         self.video_file_open_label = Label(_("On Opening:"))
         
         self.adapt_video_btn       = RadioButton(_("Fit to Window Size"))
-        self.adapt_video_btn_label = Label("")
 
         self.ai_set_radio_btn       = RadioButton(_("Resize Window"))
-        self.ai_set_radio_btn_label = Label("")
         
         self.close_position_radio_btn       = RadioButton(_("Last Closed Size"))
-        self.close_position_radio_btn_label = Label("")
 
         self.full_window_radio_btn       = RadioButton(_("Full Screen"))    
-        self.full_window_radio_btn_label = Label("")            
+
         set_num = self.ini.get("FilePlay", "video_file_open")        
         
         # Set state(1, 2, 3, 4).
@@ -329,7 +330,6 @@ class FilePlay(gtk.VBox):
             if "true" == ini_bool.lower():
                 self.clear_play_list_btn.set_active(True)
                 
-        self.clear_play_list_btn_label = Label("")
         
         # memory up close media player -> file play postion.
         self.file_play_postion_btn = CheckButton(_("Resume Playing"))
@@ -339,7 +339,6 @@ class FilePlay(gtk.VBox):
             if "true" == ini_bool.lower():
                 self.file_play_postion_btn.set_active(True)
                     
-        self.file_play_postion_btn_label = Label("")
         
         # play media when find file play in dir.
         self.find_file_play_btn = CheckButton(_("Search for Similar Media and Continue Playing")) 
@@ -349,8 +348,6 @@ class FilePlay(gtk.VBox):
             if "true" == ini_bool.lower():
                 self.find_file_play_btn.set_active(True)
                 
-        self.find_file_play_btn_label = Label("")
-        
         # mouse progressbar show preview window.
         self.show_preview_window_btn = CheckButton(_("Show Preview on Placing Cursor on Progress Bar"))
         ini_bool = self.ini.get("FilePlay", "mouse_progressbar_show_preview")
@@ -359,73 +356,31 @@ class FilePlay(gtk.VBox):
             if "true" == ini_bool.lower():
                 self.show_preview_window_btn.set_active(True)
             
-        self.show_preview_window_btn_label = Label("")
+        title_box = gtk.VBox(spacing=5)
+        title_box.pack_start(self.label, False, False)
+        title_box.pack_start(create_separator_box(), False, True)
+        title_box.pack_start(self.video_file_open_label, False, False)
+        title_box_align = gtk.Alignment()
+        title_box_align.set_padding(10, 0, 10, 0)
+        title_box_align.set(0, 0, 1, 1)
+        title_box_align.add(title_box)
         
-        # Video file open.
-        video_file_open_x = 20
-        video_file_open_y = 40
-        self.fixed.put(self.label, video_file_open_x, TITLE_HEIGHT_PADDING)
-        self.fixed.put(self.heparator, heparator_x, heparator_y)                
-        self.fixed.put(self.video_file_open_label, 
-                       video_file_open_x + 8, video_file_open_y)        
-        video_file_open_y += 30
-        self.fixed.put(self.adapt_video_btn,
-                       video_file_open_x, video_file_open_y)
-        video_file_width = self.adapt_video_btn.get_size_request()[0]        
-        self.fixed.put(self.adapt_video_btn_label, 
-                       video_file_open_x + video_file_width, video_file_open_y)
-        video_file_width += self.ai_set_radio_btn_label.get_size_request()[0]
-        self.fixed.put(self.ai_set_radio_btn, 
-                       video_file_open_x + video_file_width, video_file_open_y)        
-        video_file_width += self.ai_set_radio_btn.get_size_request()[0]
-        self.fixed.put(self.ai_set_radio_btn_label,
-                       video_file_open_x + video_file_width, video_file_open_y)
-        video_file_width += self.adapt_video_btn_label.get_size_request()[0]
-        self.fixed.put(self.close_position_radio_btn, 
-                       video_file_open_x + video_file_width, video_file_open_y)
-        video_file_width += self.close_position_radio_btn.get_size_request()[0]
-        self.fixed.put(self.close_position_radio_btn_label, 
-                       video_file_open_x + video_file_width, video_file_open_y)
-        video_file_width += self.close_position_radio_btn_label.get_size_request()[0]
-        self.fixed.put(self.full_window_radio_btn, 
-                       video_file_open_x + video_file_width, video_file_open_y)
-        video_file_width += self.full_window_radio_btn.get_size_request()[0]
-        self.fixed.put(self.full_window_radio_btn_label, 
-                       video_file_open_x + video_file_width, video_file_open_y)
-        # open new file clear play list.        
-        clear_play_list_x = video_file_open_x
-        clear_play_list_y = video_file_open_y + 40
-        self.fixed.put(self.clear_play_list_btn,
-                       clear_play_list_x, clear_play_list_y)        
-        clear_play_list_width = self.clear_play_list_btn.get_size_request()[0]
-        self.fixed.put(self.clear_play_list_btn_label,
-                       clear_play_list_x + clear_play_list_width, clear_play_list_y)               
-        # memory up close media player -> file play postion.
-        file_play_postion_x = clear_play_list_x
-        file_play_postion_y = clear_play_list_y + 40
-        self.fixed.put(self.file_play_postion_btn,
-                       file_play_postion_x, file_play_postion_y)        
-        file_play_postion_width = self.file_play_postion_btn.get_size_request()[0]
-        self.fixed.put(self.file_play_postion_btn_label,
-                       file_play_postion_x + file_play_postion_width, file_play_postion_y)
-        # play media when find file play in dir.
-        find_file_play_x = file_play_postion_x
-        find_file_play_y = file_play_postion_y + 40
-        self.fixed.put(self.find_file_play_btn,
-                       find_file_play_x, find_file_play_y)
-        find_file_play_width = self.find_file_play_btn.get_size_request()[0]
-        self.fixed.put(self.find_file_play_btn_label,
-                       find_file_play_x + find_file_play_width, find_file_play_y)
-        # mouse progressbar show preview window.
-        show_preview_window_x = find_file_play_x
-        show_preview_window_y = find_file_play_y + 40        
-        self.fixed.put(self.show_preview_window_btn,
-                       show_preview_window_x, show_preview_window_y)
-        show_preview_window_width = self.show_preview_window_btn.get_size_request()[0]
-        self.fixed.put(self.show_preview_window_btn_label,
-                       show_preview_window_x + show_preview_window_width, show_preview_window_y)
+        radio_table.set_row_spacings(15)        
+        radio_table.attach(self.adapt_video_btn, 0, 1, 0, 1, yoptions=gtk.FILL)
+        radio_table.attach(self.ai_set_radio_btn, 1, 2, 0, 1, yoptions=gtk.FILL)
+        radio_table.attach(self.close_position_radio_btn, 0, 1, 1, 2, yoptions=gtk.FILL)
+        radio_table.attach(self.full_window_radio_btn, 1, 2, 1, 2, yoptions=gtk.FILL)
         
-        self.pack_start(self.fixed)
+        check_box = gtk.VBox(spacing=15)
+        check_box.pack_start(self.clear_play_list_btn, False, False)
+        check_box.pack_start(self.file_play_postion_btn, False, False)
+        check_box.pack_start(self.find_file_play_btn, False, False)
+        check_box.pack_start(self.show_preview_window_btn, False, False)
+        
+        self.set_spacing(15)
+        self.pack_start(title_box_align, False, True)
+        self.pack_start(radio_table, False, True)
+        self.pack_start(check_box, False, False)
         
     def get_file_play_state(self):           
         video_file_dict = {}
@@ -1273,6 +1228,7 @@ class ScreenShot(gtk.VBox):
         
         ini_bool = self.ini.get("ScreenshotSet", "save_clipboard")
         # Init .
+        
         self.save_file_radio.set_active(True)
         self.save_clipboard_radio.set_active(False)
         
@@ -1297,7 +1253,6 @@ class ScreenShot(gtk.VBox):
                  self.save_path_button.set_sensitive(False)
                  self.save_type_combo.set_sensitive(False)                 
                  
-        # 
         self.current_show_sort_label = Label("")
         self.current_show_sort_check = CheckButton(_("Keep Current Aspect Ratio"))
         self.current_show_sort_check.set_active(False)
@@ -1306,48 +1261,33 @@ class ScreenShot(gtk.VBox):
             if "true" == ini_bool.lower():
                 self.current_show_sort_check.set_active(True)
                 
-        ###############################################
-        screenshot_x = 20
-        screenshot_y = 40        
-        self.fixed.put(self.label, screenshot_x, TITLE_HEIGHT_PADDING)
-        self.fixed.put(self.heparator, heparator_x, heparator_y)
-        # Save clipboard.
-        self.fixed.put(self.save_clipboard_radio,
-                       screenshot_x, screenshot_y)
-        self.fixed.put(self.save_clipboard_radio_label,
-                       screenshot_x + self.save_clipboard_radio.get_size_request()[0], screenshot_y)
-        screenshot_y += self.save_clipboard_radio.get_size_request()[1] + 5
-        # Save file.
-        self.fixed.put(self.save_file_radio,
-                       screenshot_x, screenshot_y)
-        self.fixed.put(self.save_file_radio_label,
-                       screenshot_x + self.save_file_radio.get_size_request()[0], screenshot_y)        
-        screenshot_x_padding = screenshot_x + 45
-        screenshot_y += self.save_file_radio.get_size_request()[1] + 15
-        # save path.
-        self.fixed.put(self.save_path_label, screenshot_x_padding, screenshot_y)
-        # save type.
-        self.fixed.put(self.save_type_label, 
-                       screenshot_x_padding, screenshot_y + self.save_path_label.get_size_request()[1] + 20)        
-        screenshot_x_padding += self.save_path_label.get_size_request()[0] + 10
-        # save path entry .
-        self.fixed.put(self.save_path_entry, 
-                       screenshot_x_padding, screenshot_y - 2)
-        screenshot_x_padding += self.save_path_entry.get_size_request()[0]
-        self.fixed.put(self.save_path_button, 
-                       screenshot_x_padding + 10, screenshot_y - 3)
-        screenshot_y += self.save_path_button.get_size_request()[1]
-        screenshot_x_padding = screenshot_x + self.save_type_label.get_size_request()[0] + 55
-        # save type entry.
-        self.fixed.put(self.save_type_combo, screenshot_x_padding, screenshot_y + 10)                
-        # 
-        screenshot_x = 20
-        screenshot_y += self.save_type_combo.get_size_request()[1] + 50
-        self.fixed.put(self.current_show_sort_check, screenshot_x, screenshot_y)
-        screenshot_x_padding = screenshot_x + self.current_show_sort_check.get_size_request()[0]
-        self.fixed.put(self.current_show_sort_label, screenshot_x_padding, screenshot_y)
+        title_box = gtk.VBox(spacing=5)
+        title_box.pack_start(self.label, False, False)
+        title_box.pack_start(create_separator_box(), False, True)
+        title_box_align = gtk.Alignment()
+        title_box_align.set_padding(10, 0, 10, 0)
+        title_box_align.set(0, 0, 1, 1)
+        title_box_align.add(title_box)
         
-        self.pack_start(self.fixed)
+        path_box = gtk.HBox(spacing=5)
+        path_box.pack_start(self.save_path_entry, False, False)
+        path_box.pack_start(self.save_path_button, False, False)
+        type_box = gtk.HBox(spacing=5)
+        type_box.pack_start(self.save_type_label, False, False)
+        type_box.pack_start(self.save_type_combo, False, False)
+        save_box = gtk.VBox(spacing=5)
+        save_box.pack_start(path_box, False, True)
+        save_box.pack_start(type_box, False, True)
+        save_box_align = gtk.Alignment()
+        save_box_align.set_padding(0, 0, 40, 0)
+        save_box_align.add(save_box)
+        
+        self.set_spacing(10)
+        self.pack_start(title_box_align, False, True)
+        self.pack_start(self.save_clipboard_radio, False, False)
+        self.pack_start(self.save_file_radio, False, False)
+        self.pack_start(save_box_align, False, True)
+        self.pack_start(self.current_show_sort_check, False, False)
         
     def save_path_to_save_path_entry_clicked(self, widget):
         open_dialog = gtk.FileChooserDialog(_("Open Directory"),
@@ -1406,12 +1346,6 @@ class OtherSet(gtk.VBox):
         
         self.pack_start(self.fixed)
         
-        
-def create_separator_box(padding_x=0, padding_y=0):    
-    separator_box = HSeparator(
-        app_theme.get_shadow_color("hSeparator").get_color_info(),
-        padding_x, padding_y)
-    return separator_box
 
 class About(gtk.VBox):    
     def __init__(self):
