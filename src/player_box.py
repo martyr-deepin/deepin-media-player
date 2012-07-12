@@ -1015,9 +1015,8 @@ class PlayerBox(object):
             self.mp.next()
             self.messagebox("下一首")
 
-    def open_button_clicked(self, widget):
-        self.mp.clearPlayList()
-        self.show_open_dialog_window()
+    def open_button_clicked(self, widget):        
+        self.show_open_dialog_window(open_button=False)
         # self.clear_play_list_bool = True
         
     def show_open_dir_dialog_window(self):
@@ -1031,10 +1030,12 @@ class PlayerBox(object):
 
         if res == gtk.RESPONSE_OK:
             path_string = open_dialog.get_filename()
-            self.get_path_name(path_string)
+            print path_string
+            if path_string:
+                self.get_path_name(path_string)
         open_dialog.destroy()
 
-    def show_open_dialog_window(self):
+    def show_open_dialog_window(self, open_button=True):
         open_dialog = gtk.FileChooserDialog("深度影音打开文件对话框",
                                             None,
                                             gtk.FILE_CHOOSER_ACTION_OPEN,
@@ -1045,7 +1046,10 @@ class PlayerBox(object):
 
         if res == gtk.RESPONSE_OK:
             path_string = open_dialog.get_filename()
-            self.get_path_name(path_string)
+            if path_string:
+                if not open_button:
+                    self.mp.clearPlayList()
+                self.get_path_name(path_string)
             
         self.clear_play_list_bool = True     
         open_dialog.destroy()
@@ -1130,7 +1134,8 @@ class PlayerBox(object):
                 elif os.path.isdir(file_path): # add dir.
                     path_threads(file_path, self.mp)
                 elif gio_format.get_html_bool(file_path):
-                    self.mp.addPlayFile('%s'%(file_path))
+                    # self.mp.addPlayFile('%s'%(file_path))
+                    break
                 if len(self.argv_path_list) > 1: # Set play bool.
                     self.clear_play_list_bool = True
 

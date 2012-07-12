@@ -46,7 +46,7 @@ class MediaPlayer(object):
             self.first_run = True
             
         '''Start.'''
-        argv_path_list = sys.argv
+        argv_path_list = sys.argv[1::]
         # Init emdia player config.
         init_mplayer_config()
         self.app = Application(False)
