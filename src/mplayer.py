@@ -158,7 +158,7 @@ def init_mplayer_config():
             #[SystemSet]
             config.set("SystemSet", "minimize_pause_play", "False")            
             config.set("SystemSet", "font",                "文泉驿微米黑")
-            config.set("SystemSet", "font_size",           "8")
+            config.set("SystemSet", "font_size",           "16")
             # config.set()
             # config.set()
             # config.set()

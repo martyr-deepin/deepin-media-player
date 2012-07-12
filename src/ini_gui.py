@@ -456,11 +456,11 @@ class SystemSet(gtk.VBox):
         self.font_size_btn_label = Label(_("Size"))
         font_set_items = []
         font_set_items_num = 1
-        for i in range(8, 16):
+        for i in range(8, 32):
             font_set_items.append((str(i), font_set_items_num))
             font_set_items_num += 1
             
-        self.font_size_btn_combo = ComboBox(font_set_items)
+        self.font_size_btn_combo = ComboBox(font_set_items, 160)
         font_size_string = self.ini.get("SystemSet", "font_size")
         if font_size_string:
             self.font_size_btn_combo.label.set_text(font_size_string)            
