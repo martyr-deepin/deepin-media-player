@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-12 16:56+0800\n"
+"POT-Creation-Date: 2012-07-12 17:38+0800\n"
 "PO-Revision-Date: 2012-07-12 15:53+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -495,7 +495,7 @@ msgid "Save File"
 msgstr "保存成文件"
 
 #: ../src/ini_gui.py:1245
-msgid "Screenshot Directory:"
+msgid "Screenshot directory:"
 msgstr "保存路徑： "
 
 #: ../src/ini_gui.py:1257
@@ -525,10 +525,11 @@ msgid ""
 "Video preview, online subtitles, screenshot taking and skin selection.\n"
 "\n"
 "Deepin Media Player is free software licensed under GNU GPLv3.\n"
-msgstr "﻿深度影音播放器是Linux Deepin團隊為廣大linux用戶量身開發的一款影音播放軟件。\n"
+msgstr ""
+"﻿深度影音播放器是Linux Deepin團隊為廣大linux用戶量身開發的一款影音播放軟件。\n"
 "支持多種視頻格式，支持多模式切換，具有播放預覽、\n"
-"在線字幕、視頻截圖、自定義換膚等幾大特點。"
-"\n\n"
+"在線字幕、視頻截圖、自定義換膚等幾大特點。\n"
+"\n"
 "深度音樂播放器是自由軟件，遵循自由軟件基金會發布的GNU通用公共許可證第三版。\n"
 
 #: ../src/open_button.py:388

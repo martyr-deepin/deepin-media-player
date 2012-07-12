@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-12 17:38+0800\n"
+"POT-Creation-Date: 2012-07-12 17:48+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -169,7 +169,7 @@ msgstr ""
 msgid "50%"
 msgstr ""
 
-#: ../src/player_box.py:2202 ../src/player_box.py:2362
+#: ../src/player_box.py:2202 ../src/player_box.py:2362 ../src/toolbar.py:74
 msgid "100%"
 msgstr ""
 
@@ -177,7 +177,7 @@ msgstr ""
 msgid "150%"
 msgstr ""
 
-#: ../src/player_box.py:2204 ../src/player_box.py:2364
+#: ../src/player_box.py:2204 ../src/player_box.py:2364 ../src/toolbar.py:84
 msgid "200%"
 msgstr ""
 
@@ -526,6 +526,10 @@ msgid ""
 "Video preview, online subtitles, screenshot taking and skin selection.\n"
 "\n"
 "Deepin Media Player is free software licensed under GNU GPLv3.\n"
+msgstr ""
+
+#: ../src/toolbar.py:89
+msgid "Keep above"
 msgstr ""
 
 #: ../src/open_button.py:388

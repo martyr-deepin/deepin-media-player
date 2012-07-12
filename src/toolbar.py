@@ -24,6 +24,8 @@ from dtk.ui.frame import HorizontalFrame, VerticalFrame
 from dtk.ui.panel import Panel
 from dtk.ui.utils import propagate_expose
 
+from locales import _
+from tooltip import tooltip_text 
 from skin import app_theme
 from utils import allocation
 from constant import APP_WIDTH,PANEL_HEIGHT
@@ -69,6 +71,7 @@ class ToolBar(object):
             app_theme.get_pixbuf("top_toolbar/1_window_normal.png"),
             app_theme.get_pixbuf("top_toolbar/1_window_hover.png"),
             )
+        tooltip_text(self.toolbar_1X_button, _("100%"))
         self.toolbar_1X_hframe.add(self.toolbar_1X_button)        
         # 2X conect-> self.set_2x_video_play
         self.toolbar_2X_hframe   =  HorizontalFrame(5) 
@@ -78,10 +81,12 @@ class ToolBar(object):
             app_theme.get_pixbuf("top_toolbar/2_window_normal.png"),
             app_theme.get_pixbuf("top_toolbar/2_window_hover.png"),
             )
+        tooltip_text(self.toolbar_2X_button, _("200%"))
         self.toolbar_2X_hframe.add(self.toolbar_2X_button)
                        
         self.toolbar_above_hframe = HorizontalFrame(5) 
         self.toolbar_above_button = ToggleHoverButton(self.show_panel_toolbar, [self.panel, self.panel.event])
+        tooltip_text(self.toolbar_above_button, _("Keep above"))
         self.toolbar_above_hframe.add(self.toolbar_above_button)
         
         self.hbox.pack_start(self.toolbar_radio_button, False, False)        
