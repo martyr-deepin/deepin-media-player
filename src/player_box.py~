@@ -2245,7 +2245,7 @@ class PlayerBox(object):
         # In title root menu.
         self.play_menu = Menu([((self.menu_full_normal_pixbuf, self.menu_full_hover_pixbuf), _("Full Screen"), self.key_return),
                                ((self.menu_window_mode_normal_pixbuf, self.menu_window_mode_hover_pixbuf), _("Standard Mode"), self.set_menu_common),
-                               ((self.menu_concie_normal_pixbuf, self.menu_concie_hover_pixbuf), _("Concise Mode"), self.set_menu_concise),
+                               ((self.menu_concie_normal_pixbuf, self.menu_concie_hover_pixbuf), _("简洁模式"), self.set_menu_concise),
                                ((self.menu_pre_normal_pixbuf, self.menu_pre_hover_pixbuf), _("Prev"), self.key_pre),
                                ((self.menu_next_normal_pixbuf, self.menu_next_hover_pixbuf), _("Next"), self.key_next),
                                (None),
@@ -2271,7 +2271,7 @@ class PlayerBox(object):
                                      # (None, "字幕", self.subtitle_menu),
                                      (None, _("Take Screenshots"), self.sort_menu),
                                      (None, _("New Features"), init_user_guide),
-                                     ((self.menu_setting_normal_pixbuf, self.menu_setting_hover_pixbuf), _("Preferences"), self.config_gui),
+                                     ((self.menu_setting_normal_pixbuf, self.menu_setting_hover_pixbuf), _("Preferences), self.config_gui),
                                      # (None, "总在最前", None),
                                      # (None, "自定义换肤", None),
                                      # (None, "帮助与反馈", self.help_menu),
@@ -2653,7 +2653,7 @@ class PlayerBox(object):
 
     def open_sort_image_ini_gui(self):  #menu
         ini_gui = IniGui()
-        ini_gui.set("%s"%(_("Screenshot")))
+        ini_gui.set("%s"%(_("截图设置")))
         ini_gui.ini.connect("config-changed", self.restart_load_config_file)
 
         

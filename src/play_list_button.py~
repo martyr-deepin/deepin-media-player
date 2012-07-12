@@ -32,7 +32,7 @@ from locales import _
 class PlayListButton(object):
     def __init__(self):
         self.button = ImageButton()        
-        tooltip_text(self.button, _("Playlist"))
+        tooltip_text(self.button, _("播放列表"))
         
 class ImageButton(gtk.Button):
     def __init__(self, 

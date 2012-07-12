@@ -187,7 +187,7 @@ def init_mplayer_config():
             config.set("OtherKey", "load_subtitle_key",      "Alt + o")
             config.set("OtherKey", "subtitle_delay_key",     "]")
             config.set("OtherKey", "subtitle_advance_key",   "[")
-            config.set("OtherKey", "mouse_left_single_clicked", _("Pause/Play"))
+            config.set("OtherKey", "mouse_left_single_clicked", _("暂停/播放"))
             config.set("OtherKey", "mouse_left_double_clicked", _("Full Screen"))
             config.set("OtherKey", "mouse_wheel_event", _("Volumn"))
             #[SubtitleSet]

@@ -140,7 +140,7 @@ class ToolbarRadioButton(gtk.HBox):
         self.concise_btn_ali.set_padding(0, 0, 5, 5)
         self.concise_btn  = gtk.Button()
         self.concise_btn_ali.add(self.concise_btn)
-        tooltip_text(self.concise_btn, _("Concise Mode"))
+        tooltip_text(self.concise_btn, _("简洁模式"))
         self.concise_btn.add_events(gtk.gdk.ALL_EVENTS_MASK)
         self.concise_btn.connect("expose-event",  self.expose_draw_concise_btn)
         self.concise_btn.connect("motion-notify-event", self.show_toolbar)

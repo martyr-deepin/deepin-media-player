@@ -91,7 +91,7 @@ def init_config():
             config.set("OtherKey", "subtitle_advance_key",   "[")
             config.set("OtherKey", "mouse_left_single_clicked", _("Pause/Play"))
             config.set("OtherKey", "mouse_left_double_clicked", _("Full Screen"))
-            config.set("OtherKey", "mouse_wheel_event", _("Volumn"))
+            config.set("OtherKey", "mouse_wheel_event", _("音量"))
             #[SubtitleSet]
             config.set("SubtitleSet", "ai_load_subtitle", "True")
             config.set("SubtitleSet", "specific_location_search", "~/.config/deepin-media-player/subtitle")

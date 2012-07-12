@@ -72,7 +72,7 @@ class PlayControlPanel(object):
                                     app_theme.get_pixbuf("bottom_buttons/open_normal.png"),
                                     app_theme.get_pixbuf("bottom_buttons/open_hover.png"),
                                     app_theme.get_pixbuf("bottom_buttons/open_press.png"))
-        tooltip_text(self.open_btn, _("Open File"))
+        tooltip_text(self.open_btn, _("打开文件"))
 
         self.hbox.pack_start(self.stop_btn, False, False)
         self.hbox.pack_start(self.pre_btn, False, False)
