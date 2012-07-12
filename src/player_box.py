@@ -185,7 +185,10 @@ class PlayerBox(object):
         self.screen_frame.add(self.screen)
 
         '''Tooltip window.'''
+        font = self.config.get("SystemSet", "font")
+        font_size = self.config.get("SystemSet", "font_size")
         self.window_tool_tip = OSDTooltip(self.screen_frame, offset_x=20, offset_y=26)
+        self.window_tool_tip.change_style(font, int(font_size))
         '''mid open button.'''
         self.open_button = OpenButton(self.screen_frame, _("Open File"), 108, 40)
         self.open_button.connect("openbutton-clicked-event", lambda w, e: self.add_file_clear())
