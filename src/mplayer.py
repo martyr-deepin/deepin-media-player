@@ -326,6 +326,11 @@ class  Mplayer(gobject.GObject):
                        '-double',
                        '-slave',
                        '-quiet']
+                
+                # If path is url, must be add option `-nocache`,
+                # otherwise, mplayer cache process can't quit normally.
+                if format.get_html_bool(self.path):
+                    CMD += ['-nocache']
                        
                 CMD.append('-wid')
                 CMD.append('%s'%(str(self.xid)))
