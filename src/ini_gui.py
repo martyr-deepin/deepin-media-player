@@ -38,6 +38,9 @@ from dtk.ui.treeview import TreeView, TreeViewItem
 from ini import Config
 from mplayer import get_home_path
 import gtk
+import cairo
+import pango
+import pangocairo
 
 DEFAULT_FONT = "文泉驿微米黑"
 config_path = get_home_path() + "/.config/deepin-media-player/deepin_media_config.ini"
@@ -473,9 +476,19 @@ class SystemSet(gtk.VBox):
         # Font set.        
         self.font_set_btn_label = Label(_("Font"))
         #DEFAULT_FONT
-        font_set_items = [(DEFAULT_FONT, 1),
-                          (_("华彩"), 2)]
-        self.font_set_combo = ComboBox(font_set_items)        
+        font_set_items = []
+
+        fontmap = pangocairo.cairo_font_map_get_default()
+        i = 1
+        for font_map in fontmap.list_families():
+            font_set_items.append([font_map.get_name(), i])
+            i += 1
+        
+        # list_families
+        # pango.FontMap list_families()   get_name()
+        combo_width = 200
+        self.font_set_combo = ComboBox(font_set_items, combo_width)   
+        
         font_string = self.ini.get("SystemSet", "font")
         if font_string:
             self.font_set_combo.label.set_text(font_string)            
@@ -518,7 +531,7 @@ class SystemSet(gtk.VBox):
         self.fixed.put(self.screen_msg_btn,
                        system_set_x + screen_msg_x_padding, system_set_y)
         # Font set.
-        system_set_y += 25        
+        system_set_y += 25
         font_set_x_padding = 7
         self.fixed.put(self.font_set_btn_label, 
                        system_set_x + font_set_x_padding, system_set_y)
@@ -526,7 +539,7 @@ class SystemSet(gtk.VBox):
         self.fixed.put(self.font_set_combo, 
                        system_set_x + font_set_x_padding, system_set_y)
         # Font Size.
-        font_size_x_padding = system_set_x + font_set_x_padding + font_set_combo_width + self.font_set_btn_label.get_size_request()[0] + 10
+        font_size_x_padding = system_set_x + font_set_x_padding + font_set_combo_width + self.font_set_btn_label.get_size_request()[0] + 60
         system_set_y -= 20
         self.fixed.put(self.font_size_btn_label,
                        font_size_x_padding, system_set_y)

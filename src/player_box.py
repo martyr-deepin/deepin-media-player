@@ -497,12 +497,12 @@ class PlayerBox(object):
         widget.propagate_expose(widget.get_child(), event)
         return True
 
-    def modify_config_section_value(self, Config, str1, str2, str3):
-        # print Config
-        # print str1
-        # print str2
-        pass
-    
+    def modify_config_section_value(self, Config, section, argv, value):
+        if section == "SystemSet" and (argv in ["font", "font_size"]):
+            font = Config.get(section, "font")
+            font_size = Config.get(section, "font_size")
+            self.window_tool_tip.change_style(font, int(font_size))
+        
     def set_show_toolbar_function_true(self, widget, event):
         self.show_toolbar_focus_bool = True
 
