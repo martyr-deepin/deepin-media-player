@@ -66,6 +66,7 @@ from locales import _
 import threading
 import gtk
 import os
+from code_to_utf_8 import auto_decode
 # import random
 
 
@@ -1934,6 +1935,7 @@ class PlayerBox(object):
                     
             if save_down_file:        
                 if "True" == self.config.get("SubtitleSet", "ai_load_subtitle"):
+                    
                     # print "下载成功"
                     # print save_down_file
                     self.load_subtitle(save_down_file)        
@@ -1965,7 +1967,9 @@ class PlayerBox(object):
                 if "True" == self.config.get("SubtitleSet", "ai_load_subtitle"):
                     # print "本地夹在:"
                     # print save_down_file
-                    self.load_subtitle(save_down_file)        
+                    if save_down_file:
+                        if os.path.exists(save_down_file):                        
+                            self.load_subtitle(save_down_file)
 
 
         # Init last new play file menu.
@@ -2709,7 +2713,14 @@ class PlayerBox(object):
         self.mp.rightchannel()
 
     '''Subtitle.'''
-    def load_subtitle(self, sub_file):
+    def load_subtitle(self, sub_file):        
+        fp_str = open(sub_file, "r").read()
+        code_to_utf_8_str = auto_decode(fp_str)
+
+        fp_open = open(sub_file, "w")
+        fp_open.write(code_to_utf_8_str)
+        fp_open.close()
+        
         self.mp.subload(sub_file)
 
     def remove_subtitle(self):
