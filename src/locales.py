@@ -23,7 +23,7 @@
 # To test other language, use below method:
 #       env LANGUAGE=zh_CN foo.py
 
-from utils import get_parent_dir
+from dtk.ui.utils import get_parent_dir
 import gettext
 import os
 
