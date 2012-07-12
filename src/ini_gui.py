@@ -105,17 +105,17 @@ class IniGui(DialogBox):
         # TreeView add node.
         self.tree_view.add_item(None, TreeViewItem(_("Playback")))
         self.tree_view.add_item(None, TreeViewItem(_("Genera")))
-        key = self.tree_view.add_item(None, TreeViewItem(_("Keyboard Shotcuts")))
-        self.tree_view.add_item(key, TreeViewItem(_("Video Control"), has_arrow=False))
+        key = self.tree_view.add_item(None, TreeViewItem(_("Keyboard")))
+        self.tree_view.add_item(key, TreeViewItem(_("Video"), has_arrow=False))
         self.tree_view.add_item(key, TreeViewItem(_("Other"), has_arrow=False))        
         
         self.tree_view.add_item(None, TreeViewItem(_("Subtitles")))
         self.tree_view.add_item(None, TreeViewItem(_("Screenshot")))
-        self.tree_view.add_item(None, TreeViewItem(_("About")))
+        self.tree_view.add_item(None, TreeViewItem(_("About us")))
 
         category_box = gtk.VBox()
         background_box = BackgroundBox()
-        background_box.set_size_request(132, 11)
+        background_box.set_size_request(144, 11)
         background_box.draw_mask = self.draw_treeview_mask
         category_box.pack_start(background_box, False, False)
         
@@ -233,7 +233,7 @@ class Configure(gtk.VBox):
     def __init__(self):
         gtk.VBox.__init__(self)
         self.class_list = [_("Playback"), _("Genera"), _("Video Control"), _("Other"),
-                           _("Subtitles"), _("Screenshot"), _("Other"), _("About")]
+                           _("Subtitles"), _("Screenshot"), _("Other"), _("About us")]
         # Init all configure gui class.
         self.file_play = FilePlay()
         self.system_set = SystemSet()
@@ -270,7 +270,7 @@ class Configure(gtk.VBox):
                 self.pack_start(self.screen_shot)
             elif _("Other") == class_name:
                 self.pack_start(self.other_set)
-            elif _("About") == class_name:
+            elif _("About us") == class_name:
                 self.pack_start(self.about)
                 
             for widget in self.get_children(): 
@@ -1255,7 +1255,7 @@ class ScreenShot(gtk.VBox):
         self.save_file_radio_label = Label("")
         
         # Save path.
-        self.save_path_label = Label(_("Screenshot Directory:"))
+        self.save_path_label = Label(_("Screenshot directory:"))
         self.save_path_entry = InputEntry()
         # text_string = self.ini.get("ScreenshotSet", "save_path")
         # if text_string:
@@ -1438,7 +1438,7 @@ class About(gtk.VBox):
         title_box.pack_start(logo_box, False, False)
         title_box.pack_start(info_box, False, False)
         
-        describe = '''       ﻿ 深度影音播放器是Linux Deepin团队为广大linux用户量身开发的一款影音播放软件。支持多种视频格式，支持多模式切换，具有播放预览、在线字幕、视频截图、自定义换肤等几大特点。\n\n深度音乐播放器是自由软件，遵循自由软件基金会发布的GNU通用公共许可证第三版'''
+        describe = _("Deepin Media Player is a video player designed for Linux users.\nIt support a variety of video formats, and features mode switching,\nVideo preview, online subtitles, screenshot taking and skin selection.\n\nDeepin Media Player is free software licensed under GNU GPLv3.\n")
         
         describe_label = Label(describe, enable_select=False, wrap_width=457)
         main_box.pack_start(title_box, False, False)

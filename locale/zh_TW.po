@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-12 15:53+0800\n"
+"POT-Creation-Date: 2012-07-12 17:38+0800\n"
 "PO-Revision-Date: 2012-07-12 15:53+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -16,51 +16,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/ini.py:92 ../src/ini_gui.py:610 ../src/ini_gui.py:949
-#: ../src/mplayer.py:190
-msgid "Pause/Play"
-msgstr "暫停/播放"
-
-#: ../src/ini.py:93 ../src/player_box.py:2246 ../src/ini_gui.py:305
-#: ../src/ini_gui.py:670 ../src/ini_gui.py:961 ../src/mplayer.py:191
-#: ../src/togglehoverbutton.py:125
-msgid "Full Screen"
-msgstr "全屏"
-
-#: ../src/ini.py:94 ../src/player_box.py:619 ../src/player_box.py:634
-#: ../src/player_box.py:637 ../src/player_box.py:806 ../src/player_box.py:812
-#: ../src/player_box.py:823 ../src/player_box.py:2799 ../src/ini_gui.py:970
-#: ../src/mplayer.py:192
-msgid "Volumn"
-msgstr "音量"
-
-#: ../src/play_control_panel.py:48 ../src/player_box.py:968
-msgid "Stop"
-msgstr "停止"
-
-#: ../src/play_control_panel.py:56 ../src/player_box.py:1010
-#: ../src/player_box.py:2249 ../src/player_box.py:2326
-msgid "Prev"
-msgstr "上一首"
-
-#: ../src/play_control_panel.py:59 ../src/player_box.py:999
-#: ../src/player_box.py:2268 ../src/player_box.py:2408
-msgid "Play"
-msgstr "播放"
-
-#: ../src/play_control_panel.py:67 ../src/player_box.py:1016
-#: ../src/player_box.py:2250 ../src/player_box.py:2327
-msgid "Next"
-msgstr "下一首"
-
-#: ../src/play_control_panel.py:75 ../src/player_box.py:190
-#: ../src/player_box.py:2257 ../src/player_box.py:2400 ../src/ini_gui.py:570
+#: ../src/player_box.py:190 ../src/player_box.py:2257
+#: ../src/player_box.py:2400 ../src/ini_gui.py:570
+#: ../src/play_control_panel.py:75
 msgid "Open File"
 msgstr "打開文件"
-
-#: ../src/play_list_button.py:35
-msgid "Playlist"
-msgstr "播放列表"
 
 #: ../src/player_box.py:205 ../src/player_box.py:2258
 #: ../src/player_box.py:2401 ../src/ini_gui.py:590 ../src/ini_gui.py:1201
@@ -73,10 +33,17 @@ msgid "Open URL"
 msgstr "打開網址"
 
 #: ../src/player_box.py:573 ../src/player_box.py:1668
-#: ../src/player_box.py:1677 ../src/ini_gui.py:914 ../src/ini_gui.py:950
-#: ../src/ini_gui.py:962 ../src/ini_gui.py:971 ../src/mplayer.py:186
+#: ../src/player_box.py:1677 ../src/mplayer.py:186 ../src/ini_gui.py:914
+#: ../src/ini_gui.py:950 ../src/ini_gui.py:962 ../src/ini_gui.py:971
 msgid "Disabled"
 msgstr "禁用"
+
+#: ../src/player_box.py:619 ../src/player_box.py:634 ../src/player_box.py:637
+#: ../src/player_box.py:806 ../src/player_box.py:812 ../src/player_box.py:823
+#: ../src/player_box.py:2799 ../src/mplayer.py:192 ../src/ini_gui.py:970
+#: ../src/ini.py:94
+msgid "Volumn"
+msgstr "音量"
 
 #: ../src/player_box.py:628 ../src/player_box.py:831
 msgid "Mute: enabled"
@@ -90,13 +57,32 @@ msgstr "截圖已保存"
 msgid "Screenshot Copied to Clipboard"
 msgstr "截圖已保存到剪貼"
 
+#: ../src/player_box.py:968 ../src/play_control_panel.py:48
+msgid "Stop"
+msgstr "停止"
+
 #: ../src/player_box.py:984
 msgid "No Media Selected"
 msgstr "沒有可播放文件"
 
+#: ../src/player_box.py:999 ../src/player_box.py:2268
+#: ../src/player_box.py:2408 ../src/play_control_panel.py:59
+msgid "Play"
+msgstr "播放"
+
 #: ../src/player_box.py:1002
 msgid "Pause"
 msgstr "暫停"
+
+#: ../src/player_box.py:1010 ../src/player_box.py:2249
+#: ../src/player_box.py:2326 ../src/play_control_panel.py:56
+msgid "Prev"
+msgstr "上一首"
+
+#: ../src/player_box.py:1016 ../src/player_box.py:2250
+#: ../src/player_box.py:2327 ../src/play_control_panel.py:67
+msgid "Next"
+msgstr "下一首"
 
 #: ../src/player_box.py:1023
 msgid "Select Directory"
@@ -219,6 +205,12 @@ msgstr "單個循環"
 msgid "Repeat List"
 msgstr "列表循環"
 
+#: ../src/player_box.py:2246 ../src/mplayer.py:191 ../src/ini_gui.py:305
+#: ../src/ini_gui.py:670 ../src/ini_gui.py:961 ../src/togglehoverbutton.py:125
+#: ../src/ini.py:93
+msgid "Full Screen"
+msgstr "全屏"
+
 #: ../src/player_box.py:2247 ../src/player_box.py:2405
 #: ../src/togglehoverbutton.py:134
 msgid "Standard Mode"
@@ -252,14 +244,14 @@ msgstr "問題反饋"
 
 #: ../src/player_box.py:2264 ../src/ini_gui.py:111 ../src/ini_gui.py:233
 #: ../src/ini_gui.py:270
-msgid "About"
-msgstr "關於軟件"
+msgid "About us"
+msgstr "關於我們"
 
 #: ../src/player_box.py:2267
 msgid "File"
 msgstr "文件"
 
-#: ../src/player_box.py:2269 ../src/player_box.py:2409
+#: ../src/player_box.py:2269 ../src/player_box.py:2409 ../src/ini_gui.py:106
 msgid "Video"
 msgstr "視頻"
 
@@ -341,6 +333,15 @@ msgstr "打開所在文件夾"
 msgid "Screenshot"
 msgstr "截圖設置"
 
+#: ../src/mplayer.py:190 ../src/ini_gui.py:610 ../src/ini_gui.py:949
+#: ../src/ini.py:92
+msgid "Pause/Play"
+msgstr "暫停/播放"
+
+#: ../src/play_list_button.py:35
+msgid "Playlist"
+msgstr "播放列表"
+
 #: ../src/ini_gui.py:103 ../src/ini_gui.py:132 ../src/ini_gui.py:232
 #: ../src/ini_gui.py:254 ../src/ini_gui.py:287
 msgid "Playback"
@@ -352,13 +353,8 @@ msgid "Genera"
 msgstr "系統設置"
 
 #: ../src/ini_gui.py:105
-msgid "Keyboard Shotcuts"
+msgid "Keyboard"
 msgstr "快捷鍵"
-
-#: ../src/ini_gui.py:106 ../src/ini_gui.py:232 ../src/ini_gui.py:259
-#: ../src/ini_gui.py:554
-msgid "Video Control"
-msgstr "播放控制"
 
 #: ../src/ini_gui.py:107 ../src/ini_gui.py:232 ../src/ini_gui.py:233
 #: ../src/ini_gui.py:261 ../src/ini_gui.py:268 ../src/ini_gui.py:845
@@ -369,6 +365,10 @@ msgstr "其它快捷鍵"
 #: ../src/ini_gui.py:125
 msgid "Close"
 msgstr "關閉"
+
+#: ../src/ini_gui.py:232 ../src/ini_gui.py:259 ../src/ini_gui.py:554
+msgid "Video Control"
+msgstr "播放控制"
 
 #: ../src/ini_gui.py:294
 msgid "On Opening:"
@@ -495,7 +495,7 @@ msgid "Save File"
 msgstr "保存成文件"
 
 #: ../src/ini_gui.py:1245
-msgid "Screenshot Directory:"
+msgid "Screenshot directory:"
 msgstr "保存路徑： "
 
 #: ../src/ini_gui.py:1257
@@ -518,6 +518,20 @@ msgstr "版本："
 msgid "Release Date: "
 msgstr " 發佈時間："
 
+#: ../src/ini_gui.py:1428
+msgid ""
+"Deepin Media Player is a video player designed for Linux users.\n"
+"It support a variety of video formats, and features mode switching,\n"
+"Video preview, online subtitles, screenshot taking and skin selection.\n"
+"\n"
+"Deepin Media Player is free software licensed under GNU GPLv3.\n"
+msgstr ""
+"﻿深度影音播放器是Linux Deepin團隊為廣大linux用戶量身開發的一款影音播放軟件。\n"
+"支持多種視頻格式，支持多模式切換，具有播放預覽、\n"
+"在線字幕、視頻截圖、自定義換膚等幾大特點。\n"
+"\n"
+"深度音樂播放器是自由軟件，遵循自由軟件基金會發布的GNU通用公共許可證第三版。\n"
+
 #: ../src/open_button.py:388
 msgid "Enter URL"
 msgstr "輸入網址"
@@ -525,3 +539,6 @@ msgstr "輸入網址"
 #: ../src/open_button.py:388
 msgid "Please Enter a Valid URL"
 msgstr "請輸入有效的網址"
+
+#~ msgid "About"
+#~ msgstr "關於軟件"

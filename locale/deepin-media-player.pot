@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-12 15:53+0800\n"
+"POT-Creation-Date: 2012-07-12 17:38+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,50 +17,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/ini.py:92 ../src/ini_gui.py:610 ../src/ini_gui.py:949
-#: ../src/mplayer.py:190
-msgid "Pause/Play"
-msgstr ""
-
-#: ../src/ini.py:93 ../src/player_box.py:2246 ../src/ini_gui.py:305
-#: ../src/ini_gui.py:670 ../src/ini_gui.py:961 ../src/mplayer.py:191
-#: ../src/togglehoverbutton.py:125
-msgid "Full Screen"
-msgstr ""
-
-#: ../src/ini.py:94 ../src/player_box.py:619 ../src/player_box.py:634
-#: ../src/player_box.py:637 ../src/player_box.py:806 ../src/player_box.py:812
-#: ../src/player_box.py:823 ../src/player_box.py:2799 ../src/ini_gui.py:970
-#: ../src/mplayer.py:192
-msgid "Volumn"
-msgstr ""
-
-#: ../src/play_control_panel.py:48 ../src/player_box.py:968
-msgid "Stop"
-msgstr ""
-
-#: ../src/play_control_panel.py:56 ../src/player_box.py:1010
-#: ../src/player_box.py:2249 ../src/player_box.py:2326
-msgid "Prev"
-msgstr ""
-
-#: ../src/play_control_panel.py:59 ../src/player_box.py:999
-#: ../src/player_box.py:2268 ../src/player_box.py:2408
-msgid "Play"
-msgstr ""
-
-#: ../src/play_control_panel.py:67 ../src/player_box.py:1016
-#: ../src/player_box.py:2250 ../src/player_box.py:2327
-msgid "Next"
-msgstr ""
-
-#: ../src/play_control_panel.py:75 ../src/player_box.py:190
-#: ../src/player_box.py:2257 ../src/player_box.py:2400 ../src/ini_gui.py:570
+#: ../src/player_box.py:190 ../src/player_box.py:2257
+#: ../src/player_box.py:2400 ../src/ini_gui.py:570
+#: ../src/play_control_panel.py:75
 msgid "Open File"
-msgstr ""
-
-#: ../src/play_list_button.py:35
-msgid "Playlist"
 msgstr ""
 
 #: ../src/player_box.py:205 ../src/player_box.py:2258
@@ -74,9 +34,16 @@ msgid "Open URL"
 msgstr ""
 
 #: ../src/player_box.py:573 ../src/player_box.py:1668
-#: ../src/player_box.py:1677 ../src/ini_gui.py:914 ../src/ini_gui.py:950
-#: ../src/ini_gui.py:962 ../src/ini_gui.py:971 ../src/mplayer.py:186
+#: ../src/player_box.py:1677 ../src/mplayer.py:186 ../src/ini_gui.py:914
+#: ../src/ini_gui.py:950 ../src/ini_gui.py:962 ../src/ini_gui.py:971
 msgid "Disabled"
+msgstr ""
+
+#: ../src/player_box.py:619 ../src/player_box.py:634 ../src/player_box.py:637
+#: ../src/player_box.py:806 ../src/player_box.py:812 ../src/player_box.py:823
+#: ../src/player_box.py:2799 ../src/mplayer.py:192 ../src/ini_gui.py:970
+#: ../src/ini.py:94
+msgid "Volumn"
 msgstr ""
 
 #: ../src/player_box.py:628 ../src/player_box.py:831
@@ -91,12 +58,31 @@ msgstr ""
 msgid "Screenshot Copied to Clipboard"
 msgstr ""
 
+#: ../src/player_box.py:968 ../src/play_control_panel.py:48
+msgid "Stop"
+msgstr ""
+
 #: ../src/player_box.py:984
 msgid "No Media Selected"
 msgstr ""
 
+#: ../src/player_box.py:999 ../src/player_box.py:2268
+#: ../src/player_box.py:2408 ../src/play_control_panel.py:59
+msgid "Play"
+msgstr ""
+
 #: ../src/player_box.py:1002
 msgid "Pause"
+msgstr ""
+
+#: ../src/player_box.py:1010 ../src/player_box.py:2249
+#: ../src/player_box.py:2326 ../src/play_control_panel.py:56
+msgid "Prev"
+msgstr ""
+
+#: ../src/player_box.py:1016 ../src/player_box.py:2250
+#: ../src/player_box.py:2327 ../src/play_control_panel.py:67
+msgid "Next"
 msgstr ""
 
 #: ../src/player_box.py:1023
@@ -220,6 +206,12 @@ msgstr ""
 msgid "Repeat List"
 msgstr ""
 
+#: ../src/player_box.py:2246 ../src/mplayer.py:191 ../src/ini_gui.py:305
+#: ../src/ini_gui.py:670 ../src/ini_gui.py:961 ../src/togglehoverbutton.py:125
+#: ../src/ini.py:93
+msgid "Full Screen"
+msgstr ""
+
 #: ../src/player_box.py:2247 ../src/player_box.py:2405
 #: ../src/togglehoverbutton.py:134
 msgid "Standard Mode"
@@ -253,14 +245,14 @@ msgstr ""
 
 #: ../src/player_box.py:2264 ../src/ini_gui.py:111 ../src/ini_gui.py:233
 #: ../src/ini_gui.py:270
-msgid "About"
+msgid "About us"
 msgstr ""
 
 #: ../src/player_box.py:2267
 msgid "File"
 msgstr ""
 
-#: ../src/player_box.py:2269 ../src/player_box.py:2409
+#: ../src/player_box.py:2269 ../src/player_box.py:2409 ../src/ini_gui.py:106
 msgid "Video"
 msgstr ""
 
@@ -342,6 +334,15 @@ msgstr ""
 msgid "Screenshot"
 msgstr ""
 
+#: ../src/mplayer.py:190 ../src/ini_gui.py:610 ../src/ini_gui.py:949
+#: ../src/ini.py:92
+msgid "Pause/Play"
+msgstr ""
+
+#: ../src/play_list_button.py:35
+msgid "Playlist"
+msgstr ""
+
 #: ../src/ini_gui.py:103 ../src/ini_gui.py:132 ../src/ini_gui.py:232
 #: ../src/ini_gui.py:254 ../src/ini_gui.py:287
 msgid "Playback"
@@ -353,12 +354,7 @@ msgid "Genera"
 msgstr ""
 
 #: ../src/ini_gui.py:105
-msgid "Keyboard Shotcuts"
-msgstr ""
-
-#: ../src/ini_gui.py:106 ../src/ini_gui.py:232 ../src/ini_gui.py:259
-#: ../src/ini_gui.py:554
-msgid "Video Control"
+msgid "Keyboard"
 msgstr ""
 
 #: ../src/ini_gui.py:107 ../src/ini_gui.py:232 ../src/ini_gui.py:233
@@ -369,6 +365,10 @@ msgstr ""
 
 #: ../src/ini_gui.py:125
 msgid "Close"
+msgstr ""
+
+#: ../src/ini_gui.py:232 ../src/ini_gui.py:259 ../src/ini_gui.py:554
+msgid "Video Control"
 msgstr ""
 
 #: ../src/ini_gui.py:294
@@ -496,7 +496,7 @@ msgid "Save File"
 msgstr ""
 
 #: ../src/ini_gui.py:1245
-msgid "Screenshot Directory:"
+msgid "Screenshot directory:"
 msgstr ""
 
 #: ../src/ini_gui.py:1257
@@ -517,6 +517,15 @@ msgstr ""
 
 #: ../src/ini_gui.py:1416
 msgid "Release Date: "
+msgstr ""
+
+#: ../src/ini_gui.py:1428
+msgid ""
+"Deepin Media Player is a video player designed for Linux users.\n"
+"It support a variety of video formats, and features mode switching,\n"
+"Video preview, online subtitles, screenshot taking and skin selection.\n"
+"\n"
+"Deepin Media Player is free software licensed under GNU GPLv3.\n"
 msgstr ""
 
 #: ../src/open_button.py:388
