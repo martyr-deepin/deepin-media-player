@@ -112,7 +112,7 @@ class IniGui(DialogBox):
         self.tree_view.add_item(None, TreeViewItem(_("Playback")))
         self.tree_view.add_item(None, TreeViewItem(_("Genera")))
         key = self.tree_view.add_item(None, TreeViewItem(_("Keyboard")))
-        self.tree_view.add_item(key, TreeViewItem(_("Video"), has_arrow=False))
+        self.tree_view.add_item(key, TreeViewItem(_("Video Control"), has_arrow=False))
         self.tree_view.add_item(key, TreeViewItem(_("Other"), has_arrow=False))        
         
         self.tree_view.add_item(None, TreeViewItem(_("Subtitles")))
@@ -413,8 +413,9 @@ class SystemSet(gtk.VBox):
         self.fixed = gtk.Fixed()
         self.label = Label(_("Genera"))
         self.label.set_size_request(label_width, label_height)
-        self.heparator=HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
-        self.heparator.set_size_request(heparator_width, heparator_height)
+        self.heparator= create_separator_box()
+        # self.heparator=HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
+        # self.heparator.set_size_request(heparator_width, heparator_height)
         # System setting.
         # Minimize pause plaing.
         self.pause_play_btn = CheckButton(_("Pause When Minimized"))
@@ -522,8 +523,9 @@ class PlayControl(gtk.VBox):
         self.label = Label(_("Video Control"))
         self.label.set_size_request(label_width, label_height)        
         # heparator.
-        self.heparator=HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
-        self.heparator.set_size_request(heparator_width, heparator_height)
+        self.heparator= create_separator_box()
+        # self.heparator=HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
+        # self.heparator.set_size_request(heparator_width, heparator_height)
         # setting keys.
         entry_width  = 150
         entry_height = 24
@@ -812,8 +814,9 @@ class OtherKey(gtk.VBox):
         self.fixed = gtk.Fixed()
         self.label = Label(_("Other"))
         self.label.set_size_request(label_width, label_height)                
-        self.heparator=HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
-        self.heparator.set_size_request(heparator_width, heparator_height)
+        self.heparator= create_separator_box()
+        # self.heparator=HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
+        # self.heparator.set_size_request(heparator_width, heparator_height)
         
         entry_width  = 150
         entry_height = 24
@@ -1112,15 +1115,16 @@ class SubSet(gtk.VBox):
     def __init__(self):
         gtk.VBox.__init__(self)
         entry_width = 280
-        entry_height = 28
+        entry_height = 24
         self.ini = Config(config_path)
         # self.ini = config
         self.fixed = gtk.Fixed()
         self.label = Label(_("Subtitles"))
         self.label.set_size_request(label_width, label_height)
 
-        self.heparator=HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
-        self.heparator.set_size_request(heparator_width, heparator_height)
+        self.heparator= create_separator_box()
+        # self.heparator=HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
+        # self.heparator.set_size_request(heparator_width, heparator_height)
         # Ai load subtitle.
         self.ai_load_subtitle_checkbtn       = CheckButton(_("Auto-load Subtitles"))
         ini_bool = self.ini.get("SubtitleSet", "ai_load_subtitle")
@@ -1189,14 +1193,15 @@ class ScreenShot(gtk.VBox):
     def __init__(self):
         gtk.VBox.__init__(self)
         entry_width = 250
-        entry_height = 28
+        entry_height = 24
         self.ini = Config(config_path)
         # self.ini = config
         self.fixed = gtk.Fixed()
         self.label = Label(_("Screenshot"))
         self.label.set_size_request(label_width, label_height)
-        self.heparator=HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
-        self.heparator.set_size_request(heparator_width, heparator_height)                
+        self.heparator= create_separator_box()
+        # self.heparator=HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
+        # self.heparator.set_size_request(heparator_width, heparator_height)                
         # Save clipboard.
         self.save_clipboard_radio = RadioButton(_("Copy to Clipboard"))
         # save clipboard radio event.
@@ -1269,9 +1274,13 @@ class ScreenShot(gtk.VBox):
         title_box_align.set(0, 0, 1, 1)
         title_box_align.add(title_box)
         
+        save_path_button_align = gtk.Alignment()
+        save_path_button_align.set(3, 0, 0, 0)
+        save_path_button_align.add(self.save_path_button)
+        
         path_box = gtk.HBox(spacing=5)
         path_box.pack_start(self.save_path_entry, False, False)
-        path_box.pack_start(self.save_path_button, False, False)
+        path_box.pack_start(save_path_button_align, True, True)
         type_box = gtk.HBox(spacing=5)
         type_box.pack_start(self.save_type_label, False, False)
         type_box.pack_start(self.save_type_combo, False, False)
@@ -1336,8 +1345,9 @@ class OtherSet(gtk.VBox):
         self.fixed = gtk.Fixed()
         self.label = Label(_("Other"))
         self.label.set_size_request(label_width, label_height)
-        self.heparator=HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
-        self.heparator.set_size_request(heparator_width, heparator_height)                
+        self.heparator= create_separator_box()
+        # self.heparator=HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
+        # self.heparator.set_size_request(heparator_width, heparator_height)                
         
         otherset_x = 20
         #################################
