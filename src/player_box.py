@@ -1143,7 +1143,8 @@ class PlayerBox(object):
                 elif gio_format.get_html_bool(file_path):
                     # self.mp.addPlayFile('%s'%(file_path))
                     break
-                if len(self.argv_path_list) > 1: # Set play bool.
+                
+                if len(self.argv_path_list) > 0: # Set play bool.
                     self.clear_play_list_bool = True
 
         # self.play_list.list_view.set_highlight(self.play_list.list_view.items[0])
