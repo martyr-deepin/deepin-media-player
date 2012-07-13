@@ -1370,17 +1370,16 @@ class About(gtk.VBox):
         
         version_label = Label(_("Version:"))
         version_content = Label("V1.0", light_color)
-        publish_label = Label(_("Release Date: "))
-        publish_content = Label("2012.07.12    ", light_color)
         info_box = gtk.HBox(spacing=5)
+        info_align = gtk.Alignment()
+        info_align.set(0.5, 1, 1, 1)
+        info_align.add(info_box)
         info_box.pack_start(version_label, False, False)
         info_box.pack_start(version_content, False, False)
-        info_box.pack_start(publish_label, False, False)
-        info_box.pack_start(publish_content, False, False)
         
         title_box = gtk.HBox(spacing=140)
-        title_box.pack_start(logo_box, False, False)
-        title_box.pack_start(info_box, False, False)
+        title_box.pack_start(logo_box, True, True)
+        title_box.pack_start(info_align, True, True)
         
         describe = _("Deepin Media Player is a video player designed for Linux users.\nIt support a variety of video formats, and features mode switching,\nVideo preview, online subtitles, screenshot taking and skin selection.\n\nDeepin Media Player is free software licensed under GNU GPLv3.\n")
         
