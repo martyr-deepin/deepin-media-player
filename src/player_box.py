@@ -462,10 +462,8 @@ class PlayerBox(object):
         self.down_sub_title_hover_pixbuf = app_theme.get_pixbuf("screen/check_hover.png")
         
     def get_last_new_play_file_name(self, LastNewPlayFile, file_name):    
-        if file_name in self.mp.playList:
-            pass
-        else:    
-            self.mp.addPlayFile(file_name)        
+        if file_name not in self.mp.playList:
+            self.mp.addPlayFile(file_name) 
             self.clear_play_list_bool = True
         
     def open_button_popup_screen_menu(self, widget, event):
@@ -473,25 +471,20 @@ class PlayerBox(object):
         
         width = w/2 - self.screen_pop_menu.width/2 + 2
         height = h/2 + self.screen_pop_menu.height /2 + 50
-        # if self.full_bool:
-        #     width  -= 4
-            
+        
         if not self.screen_pop_menu.show_menu_bool:
             self.screen_pop_menu.show_menu(int(width), int(height))
         else:
             self.screen_pop_menu.hide_menu()
                             
     def messagebox(self, text):            
-        self.window_tool_tip.show(text)
-        
-        
+        self.window_tool_tip.show(text)                
 
     def toolbar2_panel_expose(self, widget, event):
         cr = widget.window.cairo_create()
         rect = widget.allocation
         x, y, w, h = rect.x, rect.y, rect.width, rect.height
         # Draw background.
-
         window_rect = self.app.window.get_allocation()
         toolbar_rect = widget.get_toplevel().get_allocation()
         with cairo_state(cr):
@@ -520,8 +513,6 @@ class PlayerBox(object):
 
     def hide_all_toolbars(self, widget, event):
         if not self.show_toolbar_bool:
-            # if not self.above_bool:
-            #     self.app.window.set_keep_above(False)
             self.toolbar.hide_toolbar()
             self.bottom_toolbar.hide_toolbar2()
 
@@ -533,8 +524,7 @@ class PlayerBox(object):
         if (w - bottom_padding <= event.x <= w) and (h - bottom_padding <= event.y <= h):
             if "MplayerView" != type(widget).__name__:
                 drag = gtk.gdk.BOTTOM_RIGHT_CORNER
-                widget.window.set_cursor(gtk.gdk.Cursor(drag))
-                
+                widget.window.set_cursor(gtk.gdk.Cursor(drag))                
                 self.cursor_type = drag
         elif self.cursor_type != None:
             widget.window.set_cursor(None)
@@ -574,44 +564,27 @@ class PlayerBox(object):
         config_type = self.config.get("OtherKey", "mouse_wheel_event")
         other_key_bool = self.config.get("OtherKey", "other_key_bool")
         
-        if _("Disabled") == config_type or other_key_bool.lower() == "false": # seek back.
-            pass
-        else: # Set volume.
+        if not (_("Disabled") == config_type or other_key_bool.lower() == "false"): # seek back.
             volume_value = 5
-            if event.direction == gtk.gdk.SCROLL_UP:                              
+            if event.direction == gtk.gdk.SCROLL_UP:
                 temp_value = 0
-                if self.mode_state_bool:                    
-                    temp_value = self.mp.volume + volume_value
-                    if (temp_value + volume_value) > 100:
-                        temp_value = 100                    
-                        
+                if self.mode_state_bool:
+                    temp_value = min(self.mp.volume + volume_value, 100)
                     self.bottom_toolbar.volume_button.value = temp_value
-                    self.volume_button.value = temp_value
-                    
+                    self.volume_button.value = temp_value                    
                 else:    
-                    temp_value = self.volume_button.value + volume_value
-                    if (temp_value + volume_value) > 100:
-                        temp_value = 100                    
-
+                    temp_value = min(self.volume_button.value + volume_value, 100)
                     self.volume_button.value = temp_value
                     self.bottom_toolbar.volume_button.value = temp_value
                                     
             elif event.direction == gtk.gdk.SCROLL_DOWN:
                 temp_value = 0
                 if self.mode_state_bool:                    
-                    temp_value = self.mp.volume - volume_value
-                    if (temp_value - volume_value) < 0:
-                        temp_value = 0                
-                    if temp_value < 0:    
-                        temp_value = 0
-                        
-                    self.bottom_toolbar.volume_button.value = temp_value    
-                    self.volume_button.value = temp_value                    
+                    temp_value = max(self.mp.volume - volume_value, 0)
+                    self.bottom_toolbar.volume_button.value = temp_value
+                    self.volume_button.value = temp_value
                 else:    
-                    temp_value = self.volume_button.value - volume_value
-                    if (temp_value - volume_value) < 0:
-                        temp_value = 0                                    
-                        
+                    temp_value = max(self.volume_button.value - volume_value, 0)
                     self.volume_button.value = temp_value
                     self.bottom_toolbar.volume_button.value = self.volume_button.value
                     temp_value = self.volume_button.value
@@ -698,8 +671,7 @@ class PlayerBox(object):
         if self.keymap.has_key(keyval_name):
             self.keymap[keyval_name]()
             
-        return True
-
+        return False
         
     def key_subtitle_advance(self):
         # print "subtitle advance..."
@@ -775,7 +747,7 @@ class PlayerBox(object):
         if self.mode_state_bool:
             self.show_window_widget(self.toolbar.toolbar_common_button)
         else:
-            self.hide_window_widget(self.toolbar.toolbar_concise_button)                        
+            self.hide_window_widget(self.toolbar.toolbar_concise_button)
 
     def key_add_volume(self):
         # print "add volume..."
@@ -788,38 +760,57 @@ class PlayerBox(object):
     def key_set_volume(self, type_bool):
         add_volume_state = 1
         sub_volume_state = 0
-        volume_value     = 5        
+        volume_value     = 5
+        temp_value = 0
         
         # Set volume.
         if type_bool == add_volume_state:
-            if (self.volume_button.value + volume_value) > 100:
-                self.volume_button.value = 100
-            self.volume_button.value = self.volume_button.value + volume_value
+            if self.mode_state_bool:
+                print self.mp.volume
+                self.mp.volume = min(self.mp.volume + 5, 100)
+                print self.mp.volume
+                self.bottom_toolbar.volume_button.value = self.mp.volume
+            else:
+                temp_value = min(self.volume_button.value + volume_value, 100)
+                self.volume_button.value                = temp_value
+                self.bottom_toolbar.volume_button.value = temp_value
         elif type_bool == sub_volume_state:
-            if (self.volume_button.value - volume_value) < 0:
-                self.volume_button.value = 0
-            self.volume_button.value = self.volume_button.value - volume_value
-            
-            
+            if self.mode_state_bool:                    
+                self.mp.volume = max(self.mp.volume - 5, 0)
+                self.bottom_toolbar.volume_button.value = self.mp.volume
+            else:    
+                temp_value = max(self.volume_button.value - volume_value, 0)
+                self.volume_button.value = temp_value
+                self.bottom_toolbar.volume_button.value = temp_value
+                
     def get_release_key_event(self, widget, event):
         keyval_name = get_keyevent_name(event)
         # add volume key init.
         add_volume_key = self.config.get("PlayControl", "add_volume_key")
-        if add_volume_key == keyval_name:
-            self.mp.setvolume(self.volume_button.value)
-            self.messagebox("%s:%s%s"%(_("Volumn"), int(self.volume_button.value), "%"))    
-                        
+        if add_volume_key == keyval_name:            
+            if self.mode_state_bool:
+                temp_value = self.mp.volume
+            else:    
+                temp_value = self.volume_button.value
+                
+            self.mp.setvolume(temp_value)
+            self.messagebox("%s:%s%s"%(_("Volumn"), int(temp_value), "%"))
+            
         # sub volume key init.
         sub_volume_key = self.config.get("PlayControl", "sub_volume_key")
         if sub_volume_key == keyval_name:
-            self.mp.setvolume(self.volume_button.value)
-            self.messagebox("%s:%s%s"%(_("Volumn"),int(self.volume_button.value), "%"))            
-        # print self.volume_button.value
+            if self.mode_state_bool:
+                temp_value = self.mp.volume
+            else:    
+                temp_value = self.volume_button.value
+                
+            self.mp.setvolume(temp_value) 
+            self.messagebox("%s:%s%s"%(_("Volumn"),int(temp_value), "%"))
         
     def key_set_mute(self):
         # print "key set mute..."        
         if self.mp.volumebool:
-            self.volume_button.set_volume_mute(False)            
+            self.volume_button.set_volume_mute(False)
             if self.mp.state:
                 self.mp.offmute()
             else:    

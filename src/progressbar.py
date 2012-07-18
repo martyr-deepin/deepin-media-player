@@ -33,8 +33,7 @@ from constant import DRAW_PROGRESSBAR_WIDTH_PADDING
 
 
 class ProgressBar(object):
-    '''Media player progressbar.'''
-	
+    '''Media player progressbar.'''	
     def __init__(self,
                  max = 100,
                  bg_pixbuf=app_theme.get_pixbuf("progressbar/progressbar_bg.png"),
