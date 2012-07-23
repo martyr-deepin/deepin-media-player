@@ -225,28 +225,16 @@ class PlayerBox(object):
         self.screen.set_can_focus(True)
         self.screen.set_can_default(True)
         self.screen.activate()
-        # drag resize window. .grab_focus()
+
         self.screen.connect("realize", self.init_media_player)
-        # self.screen.unset_flags(gtk.DOUBLE_BUFFERED) # disable double buffered to avoid video blinking
-
-        # Handle signal.
-        # self.connect("realize", self.realize_mplayer_view)
-
-        # self.screen.connect("key-press-event", self.get_key_event)
-        self.screen_frame_event.connect("button-press-event", self.drag_resize_window)
         self.screen.connect("motion-notify-event", self.modify_mouse_icon)
-
-        self.screen.connect_after("expose-event", self.draw_background)
-        # self.screen.connect("button-press-event", self.move_media_player_window)
-        self.screen_frame_event.connect("button-press-event", self.move_media_player_window)
-        # self.screen.connect("button-release-event", self.screen_media_player_clear)
-        self.screen_frame_event.connect("button-release-event", self.screen_media_player_clear)
-        # self.screen.connect("motion-notify-event", self.show_and_hide_toolbar)
+        self.screen.connect_after("expose-event", self.draw_background)        
+        
+        self.screen_frame_event.connect("button-press-event", self.drag_resize_window)
+        self.screen_frame_event.connect("button-press-event", self.move_media_player_window)        
+        self.screen_frame_event.connect("button-release-event", self.screen_media_player_clear)        
         self.screen_frame_event.connect("motion-notify-event", self.show_and_hide_toolbar)
-        self.screen.connect("configure-event", self.configure_hide_tool)
-        # self.screen.connect("leave-notify-event", self.hide_all_toolbars)
-        # self.screen.connect("get-xid", self.init_media_player)
-
+        self.screen.connect("configure-event", self.configure_hide_tool)                
 
         '''Progressbar Init.'''
         self.progressbar = ProgressBar()
@@ -261,7 +249,6 @@ class PlayerBox(object):
 
         '''Toolbar Init.'''
         self.toolbar = ToolBar()
-        # self.toolbar.panel.connect("leave-notify-event", self.set_show_toolbar_bool)
         self.toolbar.toolbar_full_button.connect("clicked",    self.full_play_window)
         self.toolbar.toolbar_common_button.connect("clicked",  self.show_window_widget)
         self.toolbar.toolbar_concise_button.connect("clicked", self.hide_window_widget)
@@ -311,11 +298,8 @@ class PlayerBox(object):
 
 
         '''playlist'''
-        # self.media_item = []
-        # self.playlist.list_view.add_items(self.media_item)
         self.play_list_dict = {} # play list dict type.
         self.play_list = PlayList()
-        # self.play_list.list_view.connect("key-press-event", self.get_key_event)
         self.play_list.list_view.connect("double-click-item", self.double_play_list_file)
         self.play_list.list_view.connect("delete-select-items", self.delete_play_list_file)
         self.play_list.list_view.connect("button-press-event", self.show_popup_menu)
@@ -343,10 +327,8 @@ class PlayerBox(object):
         self.show_time_label.time_font2 = "00:00:00"        
         self.show_time_label.set_time_font(self.show_time_label.time_font1 , self.show_time_label.time_font2)
         self.show_time_label_hframe.add(self.show_time_label.time_box)
-        # self.show_time_label_hframe.set(0, 0.5, 0, 0)
         self.show_time_label_hframe.set(0, 0, 1, 1)
         self.show_time_label_hframe.set_padding(0, 0, 10, 0)
-        # self.show_time_label_hframe.set_padding(0, 0, 30, 0)
 
         self.play_control_panel = PlayControlPanel()
 
@@ -360,7 +342,6 @@ class PlayerBox(object):
         self.play_control_panel.start_btn.connect("clicked", self.start_button_clicked, 1) # start play or pause play.
         self.play_control_panel.next_btn.connect("clicked", self.next_button_clicked) # next play.
         self.play_control_panel.open_btn.connect("clicked", self.open_button_clicked) # show open window.
-
 
         # Volume button.
         self.volume_button_hframe = HorizontalFrame()
@@ -865,14 +846,10 @@ class PlayerBox(object):
     '''play list button'''
     def play_list_button_clicked(self, widget): # play list button signal:clicked.
         if True == self.play_list_button.button.flags:
-            # self.app.window.resize(self.app.window.allocation.width + self.play_list.play_list_width,
-            #                        self.app.window.allocation.height)
             self.play_list.show_play_list()
             self.show_or_hide_play_list_bool = True
 
         if False == self.play_list_button.button.flags:
-            # self.app.window.resize(self.app.window.allocation.width - self.play_list.play_list_width,
-            #                        self.app.window.allocation.height)
             self.play_list.hide_play_list()
             self.show_or_hide_play_list_bool = False
 
@@ -882,10 +859,7 @@ class PlayerBox(object):
         # delete file of play list.
         play_list_dict_save = self.play_list_dict
         for list_item_i in list_item:
-            # print play_list_dict_save[list_item_i.title]
             self.mp.delPlayList(play_list_dict_save[list_item_i.title])
-            # del self.play_list_dict[list_item_i.title]
-
 
     def add_play_list(self, mplayer, path): # mplayer signal: "add-path"
         '''Play list add play file timeout.[100-1028 a play file].'''
@@ -914,7 +888,6 @@ class PlayerBox(object):
             else:
                 i.length, length = get_length(self.play_list_dict[i.title])
                 self.ini.set("PlayTime", '"%s"' % (self.play_list_dict[i.title]), length)
-                # self.ini.write()
                 self.ini.save()
             i.emit_redraw_request()
 
@@ -930,8 +903,6 @@ class PlayerBox(object):
             if 1 == self.mp.state:
                 self.mp.quit()
             self.start_button_clicked(self.play_control_panel.start_btn, 1)
-            # self.mp.play(self.mp.playList[0])
-            # self.mp.playListNum += 1
             self.play_list.list_view.set_highlight(self.play_list.list_view.items[0])
         return False
 
@@ -942,7 +913,6 @@ class PlayerBox(object):
                 self.mp.quit()
 
         # play file.
-        # self.start_button_clicked(self.play_control_panel.start_btn, 1)
         self.mp.play(self.play_list_dict[list_item.title])
         self.mp.playListNum = list_item.get_index()
 
@@ -952,7 +922,6 @@ class PlayerBox(object):
         self.bottom_toolbar.play_control_panel.start_btn.queue_draw()
 
         self.play_list.list_view.set_highlight(list_item)
-
 
     def hide_preview_function(self, widget, event):
         '''Hide preview window.'''
@@ -990,7 +959,6 @@ class PlayerBox(object):
 
     def start_button_time_pause(self): # start_button_clicked.
         if self.mp.pause_bool:
-            # self.mp.seek(int(self.progressbar.pos))
             self.messagebox(_("Play"))
             self.mp.start_play()            
         else:
@@ -1012,7 +980,6 @@ class PlayerBox(object):
 
     def open_button_clicked(self, widget):        
         self.show_open_dialog_window(open_button=False)
-        # self.clear_play_list_bool = True
         
     def show_open_dir_dialog_window(self, open_button=True):
         open_dialog = gtk.FileChooserDialog(_("Select Directory"),
@@ -1102,7 +1069,6 @@ class PlayerBox(object):
         # Init media player event.
         self.mp.connect("get-time-pos", self.get_time_pos)
         self.mp.connect("get-time-length", self.get_time_length)
-        # self.mp.connect("play-init", self.init_video_setting)
         self.mp.connect("play-start", self.media_player_start)
         self.mp.connect("play-end", self.media_player_end)
         self.mp.connect("play-next", self.media_player_next)
@@ -1121,7 +1087,7 @@ class PlayerBox(object):
         self.the_last_new_play_file_list = self.last_new_play_file_function.set_file_time(self.mp.path)
         
         gio_format = Format()
-        # try:
+        
         # argv path list.
         for file_path in self.argv_path_list:
             if file_path != "main.py":
@@ -1137,10 +1103,6 @@ class PlayerBox(object):
                 
                 if len(self.argv_path_list) > 0: # Set play bool.
                     self.clear_play_list_bool = True
-
-        # self.play_list.list_view.set_highlight(self.play_list.list_view.items[0])
-        # except:
-        #     print "Error:->>Test command: python main.py add file or dir"
    
     def init_play_list_state(self):            
         play_list_bool = self.config.get("Window", "playlist")
@@ -1156,7 +1118,7 @@ class PlayerBox(object):
         volume_value = self.config.get("Window",     "volume")
         volume_mute_bool = self.config.get("Window", "mute")
         MUTE_STATE = "-1"
-        # print volume_mute_bool
+
         if volume_value:            
             self.volume_button.value = int(volume_value)
             self.bottom_toolbar.volume_button.value = int(volume_value)
@@ -1205,7 +1167,7 @@ class PlayerBox(object):
                 else:
                     return False
         self.set_flags()        
-        # if no player vide file or no player.
+
         cr.set_source_rgb(*color_hex_to_cairo("#0D0D0D")) # 1f1f1f
         cr.rectangle(0, 0, w, h)
         cr.fill()
@@ -1223,7 +1185,6 @@ class PlayerBox(object):
             self.open_button_right.visible_bool = False
             self.screen_pop_menu.visible_bool = False            
 
-            # self.open_button.leave_bool = False
             self.screen_pop_menu.leave_bool = False
             self.open_button.draw_open_button(widget, event)
             self.open_button_right.draw_open_button(widget, event)
@@ -1258,16 +1219,12 @@ class PlayerBox(object):
         self.app.window.set_visible(True)
             
     def quit_window_save_config(self):
-        # save config section value.
-        # print self.show_or_hide_play_list_bool        
-        # print self.volume_button.volume_state
         self.config.set("Window", "playlist", self.show_or_hide_play_list_bool) # save open play list state.
         self.config.set("Window", "width",    self.app.window.allocation.width) # save app window height.
         self.config.set("Window", "height",   self.app.window.allocation.height) # save app window width.
         self.config.set("Window", "volume",   int(self.volume_button.value)) # save volume value.        
-        self.config.set("Window", "mute",     self.volume_button.volume_state) # save volume mute state.
-            
-        # self.config.set("")
+        self.config.set("Window", "mute",     self.volume_button.volume_state) # save volume mute state.            
+        
         self.config.save()
 
     def set_toolbar2_position(self, widget, event): #app window-state-event
@@ -1386,25 +1343,21 @@ class PlayerBox(object):
             return high
         
     def set_0_5x_video_play(self):
-        # print "0.5x video play."
         if self.video_play_flags():
             self.video_play_state = X_VIDEO_PLAY_0_5
             self.set_video_play(self.video_width*0.5, self.video_height*0.5)
                         
     def set_1x_video_play(self):
-        # print "1x video play."
         if self.video_play_flags():
             self.video_play_state = X_VIDEO_PLAY_1
             self.set_video_play(self.video_width, self.video_height)            
         
     def set_1_5x_video_play(self):
-        # print "1.5x video play" 
         if self.video_play_flags():
             self.video_play_state = X_VIDEO_PLAY_1_5
             self.set_video_play(self.video_width*1.5, self.video_height*1.5)            
         
     def set_2x_video_play(self):
-        # print "2x video play"
         if self.video_play_flags():
             self.set_video_play_state = X_VIDEO_PLAY_2
             self.set_video_play(self.video_width*2, self.video_height*2)
@@ -1464,24 +1417,17 @@ class PlayerBox(object):
             self.open_button_right.move(56, 30 + 26)
 
         if self.mp:
-            #self.app.hide_titlebar() # Test hide titlebar.
             # Toolbar position.
             if self.mp.pause_bool and self.mp.vide_bool:
                 self.mp.pause()
                 self.mp.pause()
 
-            #self.toolbar.panel.move(self.panel_x, self.panel_y)
             # Toolbar width and height.
             self.toolbar.panel.resize(self.screen_frame.get_allocation()[2],
                                       self.screen_frame.get_allocation()[3])
     
-            # self.toolbar.panel.resize(widget.allocation[2],
-            #                           widget.allocation[3])
             self.toolbar.panel.hide_all()
-            # if widget.window.get_state() == gtk.gdk.WINDOW_STATE_MAXIMIZED:
             self.bottom_toolbar.panel.resize(self.screen_frame.get_allocation()[2], 1)            
-            # self.toolbar.panel.resize(self.screen_frame.get_allocation()[2], 1)            
-            # self.toolbar2.panel.move(self.panel_x, self.panel_y + (widget.allocation[3] - self.toolbar2.panel.allocation[3]))
             self.bottom_toolbar.panel.move(self.panel_x, self.panel_y + (self.screen_frame.allocation[3] - self.bottom_toolbar.panel.allocation[3]))
             self.bottom_toolbar.panel.hide_all()
 
@@ -1506,7 +1452,6 @@ class PlayerBox(object):
         self.progressbar.hide_progressbar()
         self.hide_bottom()
 
-        #self.app.window.set_keep_above(True) # Window above.
         self.main_vbox_hframe.set_padding(0, 0, 0, 0) # Set window border.
         self.toolbar.panel.hide_all() # hide toolbar.
         self.bottom_toolbar.panel.hide_all()
@@ -1517,11 +1462,10 @@ class PlayerBox(object):
         # if True. play list hide.
         if self.show_or_hide_play_list_bool:
             self.play_list.hide_play_list()
-        # self.screen.queue_draw()
+
         self.concise_window_function()
         self.toolbar.panel.fullscreen()  # Toolbar hide.
-        #self.toolbar2.panel.fullscreen()
-        #self.app.window.set_keep_above(True)
+
         self.toolbar.panel.set_keep_above(True)
         self.bottom_toolbar.panel.set_keep_above(True)
         self.app.window.fullscreen()
@@ -1535,9 +1479,8 @@ class PlayerBox(object):
             if not self.mode_state_bool:
                 self.play_list.show_play_list()
 
-        # self.screen.queue_draw()
         self.toolbar.panel.unfullscreen()
-        #self.toolbar2.panel.unfullscreen()
+
         self.app.window.unfullscreen()
         self.common_window_function()
         self.full_bool = False
@@ -1647,11 +1590,7 @@ class PlayerBox(object):
             self.event_time = event.time
 
         config_string = self.config.get("OtherKey", "mouse_left_single_clicked")
-        
-        
-        # if "禁用" == config_string:
-        #     pass
-        # else:
+                
         if True:
             if is_single_click(event):
                 if not self.pause_bool:
@@ -1696,17 +1635,12 @@ class PlayerBox(object):
 
                 self.panel_x, self.panel_y = self.screen_frame.window.get_root_origin()
                 if self.mode_state_bool: # Concise mode.
-                    # if self.full_bool:
-                    #     self.toolbar.panel.move(self.panel_x - 2, self.panel_y)
-                    # else:    
                     self.toolbar.panel.move(self.panel_x, self.panel_y)
                 else:    # common mode.
                     self.toolbar.panel.move(self.panel_x + 2, self.panel_y + self.app.titlebar.allocation[3])
 
                 if self.full_bool:
-                    self.toolbar.panel.move(self.panel_x, self.panel_y)
-    
-            # self.toolbar.panel.set_keep_above(True)
+                    self.toolbar.panel.move(self.panel_x, self.panel_y)    
         else:
             if not self.above_bool:
                 self.app.window.set_keep_above(False)
@@ -1716,7 +1650,6 @@ class PlayerBox(object):
 
         # Show toolbar2.
         if self.mode_state_bool or self.full_bool: # concise mode.
-            # if widget.allocation[3]-20 <= event.y < widget.allocation[3]:
             if self.screen_frame.allocation[3]-20 <= event.y < self.screen_frame.allocation[3]:
                 if self.show_toolbar_focus_bool:
                     self.bottom_toolbar.show_toolbar2()
@@ -1787,10 +1720,7 @@ class PlayerBox(object):
                 self.progressbar.set_pos(0)
                 self.bottom_toolbar.progressbar.set_pos(0)
         else:                    
-            progressbar.drag_bool = True
-            
-            # self.point_bool = False
-            
+            progressbar.drag_bool = True            
             
     def progressbar_player_drag_pos_modify(self, widget, event, progressbar, pb_bit):
         '''Set player rate of progress.'''
@@ -1907,17 +1837,13 @@ class PlayerBox(object):
                 path_thread_id.start()        
             else:    
                 if "True" == self.config.get("SubtitleSet", "ai_load_subtitle"):
-                    # print "存在的文件:"
-                    # print save_down_file
-                    self.load_subtitle(save_down_file)
-                # print "存在相同文件名"
+                    self.load_subtitle(save_down_file)                    
         else:        
             print "Dir error!"
         return False
     
     def down_subtitle_threading_function(self, play_name, save_subtitle_path):
         if download_shooter_subtitle(play_name, save_subtitle_path):
-            # self.load_subtitle(save_down_file)
             temp_path_file = os.path.splitext(os.path.split(play_name)[1])[0]
             temp_path_file_list = os.listdir(save_subtitle_path)
             save_down_file = None
@@ -1925,17 +1851,11 @@ class PlayerBox(object):
                 if os.path.splitext(file_name)[0] == temp_path_file:
                     save_down_file = save_subtitle_path + "/" + file_name
                     
-            if save_down_file:        
-                if "True" == self.config.get("SubtitleSet", "ai_load_subtitle"):
-                    
-                    # print "下载成功"
-                    # print save_down_file
+            if save_down_file:
+                if "True" == self.config.get("SubtitleSet", "ai_load_subtitle"):                    
                     self.load_subtitle(save_down_file)        
-                    
-            # print "下载成功"
-        else:    
+        else:  # down lose. 
             pass
-            # print "下载失败"
             
     def media_player_start(self, mplayer, play_bool):
         '''media player start play.'''        
@@ -1957,8 +1877,6 @@ class PlayerBox(object):
                         save_down_file = save_subtitle_path + "/" + file_name
                         
                 if "True" == self.config.get("SubtitleSet", "ai_load_subtitle"):
-                    # print "本地夹在:"
-                    # print save_down_file
                     if save_down_file:
                         if os.path.exists(save_down_file):                        
                             self.load_subtitle(save_down_file)
@@ -1966,7 +1884,6 @@ class PlayerBox(object):
 
         # Init last new play file menu.
         self.the_last_new_play_file_list = self.last_new_play_file_function.set_file_time(mplayer.path)
-        # print self.last_new_play_file_function.ini.argvs_list
         # Get video width and height.
         self.video_width, self.video_height = get_vide_width_height(mplayer.path)
 
@@ -1990,9 +1907,6 @@ class PlayerBox(object):
                                            int(self.app.window.allocation.height) - video_padding_height)
                     self.app.window.set_position(gtk.WIN_POS_CENTER_ALWAYS)
             elif WINDOW_ADAPT_VIDEO_STATE == video_open_type:
-                # self.video_aspect_type = "默认"
-                # self.mp.playwinmax()
-                # self.mp.playwinmax_bool = False
                 pass
             elif UP_CLOSE_VIDEO_STATE == video_open_type:
                 width = self.config.get("Window", "width")
@@ -2002,14 +1916,12 @@ class PlayerBox(object):
                     self.app.window.set_position(gtk.WIN_POS_CENTER_ALWAYS)
             elif AI_FULL_VIDEO_STATE == video_open_type:
                 self.key_return()                
-        # self.set_ascept_function()
          
         # aspect set.                                    
         if self.video_aspect_type != "默认":        
             self.set_ascept_function()
         # full window.
         if self.playwinmax_bool and self.video_aspect_type == "默认":
-            # print "start media player."
             self.mp.playwinmax()
             self.playwinmax_bool = False
         
@@ -2020,16 +1932,11 @@ class PlayerBox(object):
         if pos is not None:
             gtk.timeout_add(140, self.get_pos_ste_seek, pos)
 
-        # # title show play file name.
+        # title show play file name.
         file_name = self.get_player_file_name(mplayer.path)
-        # if len(file_name) > 25:
-        #     file_name = file_name[0:3] + "..."
-
 
         self.app.titlebar.title_box.set_text(str(file_name))
-        # self.app.titlebar.change_title(str(file_name))
         # TabPage.
-
         for item in self.play_list.list_view.items:
             if self.play_list_dict[item.title] == self.mp.path:
                 self.play_list.list_view.set_highlight(item)
@@ -2040,17 +1947,13 @@ class PlayerBox(object):
 
 
     def media_player_end(self, mplayer, play_bool):
-        '''player end.'''        
-        
-        
-        # video width_height = None.
+        '''player end.'''                        
         self.video_width = self.video_height = None
         
         # return screen framt.
         self.screen_frame.set(0.0, 0.0, 1.0, 1.0)
         # Quit preview window player.
         self.preview.quit_preview_player()
-        #print self.input_string + "Linux Deepin Media player...end"
         # Play file modify start_btn.
         self.media_player_midfy_start_bool()
         config_bool = self.config.get("FilePlay", "memory_up_close_player_file_postion")
@@ -2059,14 +1962,12 @@ class PlayerBox(object):
                 self.ini.set("PlayMemory", '"%s"' % (mplayer.path), 0)
                 if mplayer.posNum < mplayer.lenNum - 100:
                     self.ini.set("PlayMemory", '"%s"' % (mplayer.path), mplayer.posNum)
-
-                # self.ini.write()
+                    
                 self.ini.save()
 
         self.playwinmax_bool = True
 
     def init_video_setting(self, mplayer, flags):    
-        # print "init_video_setting"
         pass
         
     def media_player_next(self, mplayer, play_bool):
@@ -2450,10 +2351,10 @@ class PlayerBox(object):
                 list_recycle_pixbuf = play_sequence_pixbuf
 
             '''play list popup menu'''
-            self.menu = Menu([(single_pixbuf, _("Play (single)"), self.sigle_play),         # 0
+            self.menu = Menu([(single_pixbuf, _("Play (single)"), self.sigle_play),          # 0
                               (order_pixbuf, _("Play (ordered)"), self.sequence_play),       # 1
-                              (random_pixbuf, _("Shuffle"), self.rand_play),          # 2
-                              (signle_cycle_pixbuf, _("Repeat"), self.sigle_loop_play), # 3
+                              (random_pixbuf, _("Shuffle"), self.rand_play),                 # 2
+                              (signle_cycle_pixbuf, _("Repeat"), self.sigle_loop_play),      # 3
                               (list_recycle_pixbuf, _("Repeat List"), self.loop_list_play)]  # 4
                              )
 
@@ -2615,7 +2516,6 @@ class PlayerBox(object):
         if url_bool:
             self.mp.clearPlayList()
             self.mp.addPlayFile(url_name) # play list add url name.
-            # self.mp.play(url_name)            
         else:    
             self.messagebox(str(url_name))
         
@@ -2624,9 +2524,7 @@ class PlayerBox(object):
         open_url.connect("openurl-url-name", self.get_url_name)
                 
     def del_index(self):
-        # self.delete_play_list_file(self.play_list.list_view, self.play_list.list_view.items)
         self.play_list.list_view.delete_select_items()
-
 
     def clear_list(self):
         self.play_list.list_view.clear()
@@ -2672,11 +2570,8 @@ class PlayerBox(object):
         
     '''config gui window'''
     def restart_load_config_file(self, IniGui, sec_root, sec_argv, sec_value):
-        # print sec_root, sec_argv, sec_value
         self.config.set(sec_root, sec_argv, sec_value)
         self.config.save()
-        # self.config = Config(get_home_path() + "/.config/deepin-media-player/deepin_media_config.ini")
-        # self.config.connect("config-changed", self.modify_config_section_value)
 
     def config_gui(self):        
         ini_gui = IniGui()
@@ -2759,24 +2654,9 @@ class PlayerBox(object):
         save_pixbuf.save(save_path_save_name + save_file_type, save_file_type[1:])
         
     def get_same_name_event(self, mplayer, path):
-        # if self.get_same_name_id:
-        #     gtk.timeout_remove(self.get_same_name_id)
-
-        # self.get_same_name_id = gtk.timeout_add(1000, self.play_same_name_file, path)
         pass
         
     def play_same_name_file(self, path):    
-        # self.mp.play(path)        
-        
-        # self.play_control_panel.start_btn.start_bool = False
-        # self.play_control_panel.start_btn.queue_draw()
-        # self.bottom_toolbar.play_control_panel.start_btn.start_bool = False
-        # self.bottom_toolbar.play_control_panel.start_btn.queue_draw()
-
-        # # self.virtual_set_start_btn_clicked()
-        # print path        
-        # self.get_same_name_id = None
-        # return False
         pass
         
     def menu_add_volume(self):
