@@ -108,15 +108,6 @@ def length_to_time(length):
                            str(time_add_zero(timeMin)), 
                            str(time_add_zero(timeSec))))
     
-        # return str("%s时%s分"%(str(time_add_zero(timeHour)), 
-        #                            str(time_add_zero(timeMin))))
-
-    # if timeMin > 0:
-    #     return str("%s分%s秒"%(str(time_add_zero(timeMin)), 
-    #                            str(time_add_zero(timeSec))))
-    # if timeSec > 0:
-    #     return str("%s秒"%(str(time_add_zero(timeSec))))
-    
 def time_add_zero(time_to):    
     if 0 <= time_to <= 9:
         time_to = "0" + str(time_to)
@@ -355,13 +346,14 @@ class  Mplayer(gobject.GObject):
                         os.O_NONBLOCK)
             
             self.emit("play-init", True)
-            # get lenght size.
+            # get length size.
+            self.getLenID = gobject.timeout_add(60, self.get_time_length)
+            # get pos size.
             self.getPosID = gobject.timeout_add(400, self.get_time_pos) 
                                 
             # IO_HUP[Monitor the pipeline is disconnected].
             self.eofID = gobject.io_add_watch(self.mplayerOut, gobject.IO_HUP, self.mplayerEOF)
             self.state = 1                
-            self.get_time_length()
             self.vide_bool = get_vide_flags(self.path)
             # Set volume.
             if self.volumebool:
@@ -408,9 +400,9 @@ class  Mplayer(gobject.GObject):
                                
     def get_time_pos(self):
         '''Get the current playback progress'''
-        if not self.lenState:
-            if self.getLenID:
-                self.stopGetLenID()
+        # if not self.lenState:
+        if self.getLenID:
+            self.stopGetLenID()
             
         self.cmd('get_time_pos\n')
         
@@ -425,9 +417,7 @@ class  Mplayer(gobject.GObject):
         
             if line.startswith("ANS_TIME_POSITION"):
                 posNum = int(float(line.replace("ANS_TIME_POSITION=", "")))
-                if self.lenState:
-                        self.getLenID = gobject.timeout_add(60, self.get_time_length)
-                        self.lenState = 0
+                
                 if posNum > 0:
                     self.posNum = posNum                   
                     # Init Hour, Min, Sec.
@@ -435,8 +425,6 @@ class  Mplayer(gobject.GObject):
                     self.timeMin  = 0
                     self.timeSec  = 0
                     self.time(self.posNum)  
-                    # Test time output.
-                    #print '%s:%s:%s' % (self.timeHour,self.timeMin,self.timeSec) 
                     self.emit("get-time-pos",int(self.posNum))
                     
         return True
