@@ -1948,8 +1948,18 @@ class PlayerBox(object):
 
     def media_player_end(self, mplayer, play_bool):
         '''player end.'''                        
-        self.video_width = self.video_height = None
-        
+        self.video_width = self.video_height = None        
+        # play end set show time label zero.
+        # show time label.
+        self.show_time_label.time_font1 = "00:00:00" + " / "
+        self.show_time_label.time_font2 = "00:00:00"        
+        self.show_time_label.set_time_font(self.show_time_label.time_font1 , self.show_time_label.time_font2)
+        # bottom_toolbar show time label.
+        self.bottom_toolbar.show_time.time_font1 = "00:00:00"
+        self.bottom_toolbar.show_time.time_font2 = "00:00:00 / "
+        self.bottom_toolbar.show_time.set_time_font(self.bottom_toolbar.show_time.time_font2, 
+                                                    self.bottom_toolbar.show_time.time_font1)
+
         # return screen framt.
         self.screen_frame.set(0.0, 0.0, 1.0, 1.0)
         # Quit preview window player.
