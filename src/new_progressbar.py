@@ -42,10 +42,10 @@ class ProgressBar(gtk.EventBox):
                  width = 100,
                  bg_color = app_theme.get_alpha_color("progressbar_bg"),
                  fg_color = app_theme.get_alpha_color("progressbar_fg"),
-                 bg_pixbuf = app_theme.get_pixbuf("progressbar_bg.png"),       
-                 fg_pixbuf = app_theme.get_pixbuf("progressbar_fg.png"),
-                 point_pixbuf = app_theme.get_pixbuf("slide_block.png"),
-                 hight_pixbuf = app_theme.get_pixbuf("progressbar_hight.png"),
+                 bg_pixbuf = app_theme.get_pixbuf("progressbar/progressbar_bg.png"),
+                 fg_pixbuf = app_theme.get_pixbuf("progressbar/progressbar_fg.png"),
+                 point_pixbuf = app_theme.get_pixbuf("progressbar/slide_block.png"),
+                 hight_pixbuf = app_theme.get_pixbuf("progressbar/progressbar_hight.png"),
                  cache_fg_pixbuf = app_theme.get_pixbuf("progressbar/cache_fg_pixbuf.png")
                  ):
         gtk.EventBox.__init__(self)
@@ -54,7 +54,7 @@ class ProgressBar(gtk.EventBox):
         self.set_size_request(width, point_pixbuf.get_pixbuf().get_height() + progressbar_padding_y)
         '''Init pixbuf.'''
         self.__bg_color     = bg_color
-        self.__fg_color     = fg_color                
+        self.__fg_color     = fg_color
         self.__bg_pixbuf    = bg_pixbuf.get_pixbuf()
         self.__bg_pixbuf    = self.__bg_pixbuf.scale_simple(self.__bg_pixbuf.get_width(), line_width,
                                                             gtk.gdk.INTERP_BILINEAR)
