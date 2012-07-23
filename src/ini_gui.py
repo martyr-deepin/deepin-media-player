@@ -413,9 +413,10 @@ class SystemSet(gtk.VBox):
         self.fixed = gtk.Fixed()
         self.label = Label(_("Genera"))
         self.label.set_size_request(label_width, label_height)
-        self.heparator= create_separator_box()
-        # self.heparator=HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
-        # self.heparator.set_size_request(heparator_width, heparator_height)
+        self.heparator_hbox = gtk.HBox()
+        self.heparator      = create_separator_box()
+        self.heparator_hbox.pack_start(self.heparator)
+        self.heparator_hbox.set_size_request(heparator_width, heparator_height)
         # System setting.
         # Minimize pause plaing.
         self.pause_play_btn = CheckButton(_("Pause When Minimized"))
@@ -474,7 +475,7 @@ class SystemSet(gtk.VBox):
         system_set_y = 40
         system_set_width = 0
         self.fixed.put(self.label, system_set_x, TITLE_HEIGHT_PADDING)
-        self.fixed.put(self.heparator, heparator_x, heparator_y)        
+        self.fixed.put(self.heparator_hbox, heparator_x, heparator_y)        
         self.fixed.put(self.pause_play_btn, 
                        system_set_x, system_set_y)
         # Minimize pause plaing.
@@ -523,9 +524,10 @@ class PlayControl(gtk.VBox):
         self.label = Label(_("Video Control"))
         self.label.set_size_request(label_width, label_height)        
         # heparator.
-        self.heparator= create_separator_box()
-        # self.heparator=HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
-        # self.heparator.set_size_request(heparator_width, heparator_height)
+        self.heparator      = create_separator_box()
+        self.heparator_hbox = gtk.HBox()
+        self.heparator_hbox.pack_start(self.heparator)
+        self.heparator_hbox.set_size_request(heparator_width, heparator_height)
         # setting keys.
         entry_width  = 150
         entry_height = 24
@@ -676,7 +678,7 @@ class PlayControl(gtk.VBox):
         # label.
         self.fixed.put(self.label, play_control_x, TITLE_HEIGHT_PADDING)
         # heparator.
-        self.fixed.put(self.heparator, 0, heparator_y)
+        self.fixed.put(self.heparator_hbox, 0, heparator_y)
         # open file key.
         # play_control_bool_checkbtn.
         
@@ -814,9 +816,10 @@ class OtherKey(gtk.VBox):
         self.fixed = gtk.Fixed()
         self.label = Label(_("Other"))
         self.label.set_size_request(label_width, label_height)                
-        self.heparator= create_separator_box()
-        # self.heparator=HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
-        # self.heparator.set_size_request(heparator_width, heparator_height)
+        self.heparator_hbox = gtk.HBox()
+        self.heparator      = create_separator_box()
+        self.heparator_hbox.pack_start(self.heparator)
+        self.heparator_hbox.set_size_request(heparator_width, heparator_height)
         
         entry_width  = 150
         entry_height = 24
@@ -964,7 +967,7 @@ class OtherKey(gtk.VBox):
         # label.
         self.fixed.put(self.label, other_Key_x, TITLE_HEIGHT_PADDING)
         # heparator.
-        self.fixed.put(self.heparator, heparator_x, heparator_y)
+        self.fixed.put(self.heparator_hbox, heparator_x, heparator_y)
         ########################################################
         self.fixed.put(self.other_key_bool_checkbtn,
                        other_Key_x, other_Key_y)
@@ -1121,10 +1124,10 @@ class SubSet(gtk.VBox):
         self.fixed = gtk.Fixed()
         self.label = Label(_("Subtitles"))
         self.label.set_size_request(label_width, label_height)
-
-        self.heparator= create_separator_box()
-        # self.heparator=HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
-        # self.heparator.set_size_request(heparator_width, heparator_height)
+        self.heparator_hbox = gtk.HBox()
+        self.heparator      = create_separator_box()
+        self.heparator_hbox.pack_start(self.heparator)
+        self.heparator_hbox.set_size_request(heparator_width, heparator_height)
         # Ai load subtitle.
         self.ai_load_subtitle_checkbtn       = CheckButton(_("Auto-load Subtitles"))
         ini_bool = self.ini.get("SubtitleSet", "ai_load_subtitle")
@@ -1149,7 +1152,7 @@ class SubSet(gtk.VBox):
         sub_set_x = 20
         sub_set_y = 40
         self.fixed.put(self.label, sub_set_x, TITLE_HEIGHT_PADDING)
-        self.fixed.put(self.heparator, heparator_x, heparator_y)
+        self.fixed.put(self.heparator_hbox, heparator_x, heparator_y)
         sub_set_x += 10
         # Ai load subtitle.
         self.fixed.put(self.ai_load_subtitle_checkbtn,
@@ -1199,9 +1202,10 @@ class ScreenShot(gtk.VBox):
         self.fixed = gtk.Fixed()
         self.label = Label(_("Screenshot"))
         self.label.set_size_request(label_width, label_height)
-        self.heparator= create_separator_box()
-        # self.heparator=HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
-        # self.heparator.set_size_request(heparator_width, heparator_height)                
+        self.heparator_hbox = gtk.HBox()
+        self.heparator      = create_separator_box()
+        self.heparator_hbox.pack_start(self.heparator)
+        self.heparator_hbox.set_size_request(heparator_width, heparator_height)                
         # Save clipboard.
         self.save_clipboard_radio = RadioButton(_("Copy to Clipboard"))
         # save clipboard radio event.
@@ -1345,14 +1349,14 @@ class OtherSet(gtk.VBox):
         self.fixed = gtk.Fixed()
         self.label = Label(_("Other"))
         self.label.set_size_request(label_width, label_height)
-        self.heparator= create_separator_box()
-        # self.heparator=HSeparator(app_theme.get_shadow_color("linearBackground").get_color_info())
-        # self.heparator.set_size_request(heparator_width, heparator_height)                
+        self.heparator_hbox = gtk.HBox()
+        self.heparator = create_separator_box()
+        self.heparator_hbox.pack_start(self.heparator)
         
         otherset_x = 20
         #################################
         self.fixed.put(self.label, otherset_x, TITLE_HEIGHT_PADDING)
-        self.fixed.put(self.heparator, heparator_x, heparator_y)
+        self.fixed.put(self.heparator_hbox, heparator_x, heparator_y)
         
         self.pack_start(self.fixed)
         
