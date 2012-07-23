@@ -21,6 +21,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import gobject    
+import os
 from locales import _
 
 def get_home_path():
@@ -61,9 +62,6 @@ def init_config():
             config.set("SystemSet", "minimize_pause_play", "False")            
             config.set("SystemSet", "font",                "文泉驿微米黑")
             config.set("SystemSet", "font_size",           "12")
-            # config.set()
-            # config.set()
-            # config.set()
             #[PlayControl]
             config.set("PlayControl", "play_control_bool", "True")
             config.set("PlayControl", "open_file_key",     "Ctrl + o")
@@ -150,11 +148,9 @@ class Config(gobject.GObject):
                         self.fp.seek(-1, 1)
                     else:    
                         self.argv_save_ch += ch
-                        # ch = self.fp.read(1)
                         
                 else:# Read argv.        
                     if "\n" == ch:
-                        # print self.argv_save_ch
                         self.split(self.argv_save_ch, "=")
                         self.argv_save_ch = ""
                     else:    
@@ -243,29 +239,4 @@ class Config(gobject.GObject):
             fp.write(section_string + "\n") # Save section.
             for argv_key in self.section_dict[section_key]:                
                 argv_string = "%s = %s" % (argv_key, self.section_dict[section_key][argv_key])
-                fp.write(argv_string + "\n") # Save argv. 
-                
-import os                                
-# config = Config(os.path.expanduser("~") + "/.config/deepin-media-player/deepin_media_config.ini")
-
-
-if __name__ == "__main__":
-    def test_get_section(confi, section, option, value):
-        print section
-        print option
-        print value
-    config = Config(os.path.expanduser("~") + "/.config/deepin-media-player/config.ini")    
-    config.connect("config-changed", test_get_section)
-    config.set("window", "w[fdsfsdf]idth", "32.232323")
-    # print "修改width:%s" % config.get("window", "width")
-    # config.set("window", "width", "473843.343")
-    # print "修改width:%s" % config.get("window", "h")
-    # config.set("window", 3434, 343)
-    # print "得到3434:=%s" % config.get("mplayer", "/home/long/long")
-    # config.set("window1", "width", "32.232323")
-    # config.set("window2", "width", "32.232323")
-    # config.set("window3", "width", "32.232323")
-    config.save()
-    
-
-    
+                fp.write(argv_string + "\n") # Save argv.                     
