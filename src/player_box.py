@@ -1757,6 +1757,8 @@ class PlayerBox(object):
                             save_pos = (float(int(event.x))/ widget.allocation.width* self.progressbar.max)
                             # preview window show.
                             self.move_window_time(save_pos, pb_bit)
+                else:            
+                    self.preview.quit_preview_player()
 
 
     def move_window_time(self, pos, pb_bit):
