@@ -20,40 +20,17 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from dtk.ui.label import Label
-# from constant import *
+from dtk.ui.label      import Label
 
 class ShowTime(object):
     def __init__(self,
-                 #font_color=app_theme.get_color("show_time")):
                  ):     
-        #self.font_color = font_color
         self.time_font1 = ""
         self.time_font2 = ""
         self.time_box = Label("", enable_gaussian=True)
-        # self.time_box = EventBox()       
-        # self.time_box.connect("expose-event", self.draw_play_time)
         
     def set_time_font(self, time_font2, time_font1):    
         self.time_font1 = str(time_font1)
         self.time_font2 = str(time_font2)
         
         self.time_box.set_text(self.time_font2 + self.time_font1)
-        # hbox = self.time_box.get_parent()
-        # hbox.queue_draw()
-        
-    # def draw_play_time(self, widget, event):
-    #     '''Draw media player time.'''
-    #     cr, x, y, w, h = allocation(widget)
-        
-    #     draw_text(cr, self.time_font1 + self.time_font2,
-    #               x, y, w + 4, h + 4,
-    #               9,
-    #               "#FFFFFF",
-    #               gaussian_radious=2, gaussian_color="#000000", border_radious=1, border_color="#000000")
-        
-    #     # Propagate expose.
-    #     propagate_expose(widget, event)
-        
-    #     return True
-    

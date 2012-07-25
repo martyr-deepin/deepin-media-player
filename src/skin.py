@@ -1,8 +1,12 @@
-from dtk.ui.theme import Theme, ui_theme
-from dtk.ui.skin_config import skin_config
-import os
-from dtk.ui.utils import get_parent_dir
+from dtk.ui.theme         import Theme, ui_theme
+from dtk.ui.skin_config   import skin_config
+from dtk.ui.utils         import get_parent_dir
+
 from constant import PROGRAM_NAME, PROGRAM_VERSION
+
+import os
+
+
 
 # Init skin config.
 skin_config.init_skin(

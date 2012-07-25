@@ -19,8 +19,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from mplayer import Mplayer
-from constant import PREVIEW_PV_WIDTH, PREVIEW_PV_HEIGHT
+from mplayer    import Mplayer
+from constant   import PREVIEW_PV_WIDTH, PREVIEW_PV_HEIGHT
+
 import gtk
 import cairo
 
@@ -31,7 +32,6 @@ class PreView(object):
         self.video_height = 0
         
         self.mp = Mplayer()
-        # self.mp.connect("play-start", self.get_video_width_and_height)
         self.xid = None
         self.pos = pos
         
@@ -39,7 +39,6 @@ class PreView(object):
         self.bg = gtk.Window(gtk.WINDOW_POPUP)
         self.bg.set_colormap(gtk.gdk.Screen().get_rgba_colormap())
         self.bg.set_decorated(False)
-        #self.bg.set_keep_above(True)
         self.bg.set_size_request(124, 60 + 25 + 4)
         self.bg.set_opacity(0.8)
         self.bg.set_type_hint(gtk.gdk.WINDOW_TYPE_HINT_MENU)
@@ -50,7 +49,6 @@ class PreView(object):
         # Hide preview window.
         self.bg.connect("motion-notify-event", self.motion_hide_preview)
         self.bg.connect("enter-notify-event", self.motion_hide_preview)
-        # self.bg.connect("focus-in-event", self.motion_hide_preview)
         
         # Preview window.
         self.pv = gtk.Window(gtk.WINDOW_POPUP)
@@ -66,7 +64,6 @@ class PreView(object):
         # Hide preview window.
         self.pv.connect("motion-notify-event", self.motion_hide_preview)
         self.pv.connect("enter-notify-event", self.motion_hide_preview)
-        # self.pv.connect("window-state-event", self.init_mplayer_window)
         
     def draw_preview_video_background(self, widget, event):    
         cr = widget.window.cairo_create()
@@ -134,8 +131,6 @@ class PreView(object):
         pos = self.pos
         
         time_hour, time_min, time_sec = self.mp.time(pos)
-        # time_min = self.mp.time(pos)[1]
-        # time_sec = self.mp.time(pos)[2]
         
         cr.show_text("%s:%s:%s" % (self.time_to_string(time_hour), 
                                    self.time_to_string(time_min),
@@ -197,13 +192,6 @@ class PreView(object):
         self.hide_preview()
         if 1 == self.mp.state:            
             self.mp.quit()
-            
-    # def get_video_width_and_height(self, mp, mp_pid, w1, h1, w2, h2):        
-    #     self.video_width = w1
-    #     self.video_height = h1
-    #     if w2 > w1:
-    #         self.video_width = w2
-    #         self.video_height = h2
         
     def set_preview_path(self, path):        
         if 0 == self.mp.state:

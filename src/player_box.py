@@ -20,6 +20,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from dtk.ui.skin_config     import skin_config
 from dtk.ui.osd_tooltip     import OSDTooltip
 from dtk.ui.utils           import cairo_state
 from dtk.ui.keymap          import get_keyevent_name
@@ -32,43 +33,35 @@ from dtk.ui.utils           import get_widget_root_coordinate
 from dtk.ui.menu            import Menu
 from dtk.ui.volume_button   import VolumeButton
 
-from constant import APP_WIDTH, APP_HEIGHT
-from ini import Config
-from gio_format import format
-# from opendialog import OpenDialog
-from dtk.ui.skin_config import skin_config
-from utils import allocation,path_threads
-from show_time import ShowTime
-from progressbar import ProgressBar
-from skin import app_theme
-from toolbar import ToolBar
-from bottom_toolbar import BottomToolBar
-from play_control_panel import PlayControlPanel
-from play_list_button import PlayListButton
-# from volume_button import VolumeButton
-from drag import drag_connect
-from preview import PreView
-from ini_gui import IniGui,VIDEO_ADAPT_WINDOW_STATE,WINDOW_ADAPT_VIDEO_STATE,UP_CLOSE_VIDEO_STATE,AI_FULL_VIDEO_STATE
-from gio_format import Format
-from mplayer import Mplayer
-# from mplayer import get_vide_width_height
-from mplayer import get_length
-from mplayer import get_home_path
-from mplayer import length_to_time, get_vide_width_height
-from playlist import PlayList
-from playlist import MediaItem
-from sort import Sort
-from open_button import OpenButton, ScreenMenu, OpenUrl
-from lastnewplayfile import LastNewPlayFile
-from service import download_shooter_subtitle
-from user_guide import init_user_guide
-from locales import _
+from locales              import _
+from constant             import APP_WIDTH, APP_HEIGHT
+from ini                  import Config
+from gio_format           import format
+from utils                import allocation,path_threads
+from show_time            import ShowTime
+from progressbar          import ProgressBar
+from skin                 import app_theme
+from toolbar              import ToolBar
+from bottom_toolbar       import BottomToolBar
+from play_control_panel   import PlayControlPanel
+from play_list_button     import PlayListButton
+from drag                 import drag_connect
+from preview              import PreView
+from ini_gui              import IniGui
+from ini_gui              import VIDEO_ADAPT_WINDOW_STATE, WINDOW_ADAPT_VIDEO_STATE, UP_CLOSE_VIDEO_STATE, AI_FULL_VIDEO_STATE
+from gio_format           import Format
+from mplayer              import Mplayer, get_length, get_home_path, length_to_time, get_vide_width_height
+from playlist             import PlayList, MediaItem
+from sort                 import Sort
+from open_button          import OpenButton, ScreenMenu, OpenUrl
+from lastnewplayfile      import LastNewPlayFile
+from service              import download_shooter_subtitle
+from user_guide           import init_user_guide
+from code_to_utf_8        import auto_decode
+
 import threading
 import gtk
 import os
-from code_to_utf_8 import auto_decode
-# import random
-
 
 X_VIDEO_PLAY_0_5 = 1 << 0
 X_VIDEO_PLAY_1   = 1 << 1
@@ -117,13 +110,9 @@ class PlayerBox(object):
         # Init deepin media player config gui.
         self.config = Config(get_home_path() + "/.config/deepin-media-player/deepin_media_config.ini")
         self.config.connect("config-changed", self.modify_config_section_value)
-        # self.ini.load()
         
         # same name id init.
-        self.get_same_name_id = None
-        # screen draw borde video width and height.
-        #get_vide_width_height (function return value)
-        
+        self.get_same_name_id = None        
         # play list menu.
         self.last_new_play_file_function = LastNewPlayFile()
         self.last_new_play_file_function.connect("get-file-name", self.get_last_new_play_file_name)
@@ -171,7 +160,6 @@ class PlayerBox(object):
         self.app.window.connect("focus-out-event", self.set_show_toolbar_function_false)
         self.app.window.connect("focus-in-event", self.set_show_toolbar_function_true)
         #keyboard Quick key.
-        # self.app.window.connect("realize", gtk.Widget.grab_focus)
         self.app.window.connect("key-press-event", self.get_key_event)
         self.app.window.connect("key-release-event", self.get_release_key_event)
         self.app.window.connect("scroll_event", self.app_scroll_event, 1)

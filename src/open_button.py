@@ -20,10 +20,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from dtk.ui.draw import draw_text, draw_pixbuf
-from dtk.ui.cache_pixbuf import CachePixbuf
-from locales import _
-from skin import app_theme
+from dtk.ui.draw           import draw_text, draw_pixbuf
+from dtk.ui.cache_pixbuf   import CachePixbuf
+
+from locales   import _
+from skin      import app_theme
+
 import gobject
 import gtk
 
@@ -146,7 +148,6 @@ class OpenButton(gobject.GObject):
     def queue_draw(self):            
         self.draw_window.queue_draw()
         self.__set_widget_save_attr()
-        # self.draw_window.queue_draw_area(self.__x, self.__x, self.width, self.height)
         
     def emit_open_button_press(self, widget, event):    
         temp_x = event.x
@@ -175,7 +176,6 @@ class OpenButton(gobject.GObject):
 
         self.press_bool = False
         self.queue_draw()
-        # self.draw_window.queue_draw()        
                                 
     def draw_open_button(self, widget, event):
         if not self.visible_bool:
@@ -279,7 +279,6 @@ class ScreenMenu(gobject.GObject):
     def queue_draw(self):        
         self.draw_window.queue_draw()
         self.__set_widget_save_attr()
-        # self.draw_window.queue_draw_area(self.x, self.y, self.x + self.width, self.y + self.height)
         
     def press_widget_emit_active(self, widget, event):    
          temp_x = int(event.x)
@@ -372,9 +371,6 @@ gobject.type_register(ScreenMenu)
 ####################################################
 #  open dialog url window.
 ####################################################
-
-from dtk.ui.entry import Entry
-from dtk.ui.window import Window
 from dtk.ui.dialog          import InputDialog
 
 class OpenUrl(gobject.GObject):
@@ -386,24 +382,11 @@ class OpenUrl(gobject.GObject):
         gobject.GObject.__init__(self)
         # url window dialog.
         self.url_win = InputDialog(_("Enter URL"), _("Please Enter a Valid URL"), confirm_callback = self.get_url_name)
-
-        # Set url window dialog.
-        # self.url_win.set_type_hint(gtk.gdk.WINDOW_TYPE_HINT_DIALOG)
-        # self.url_win.set_skip_taskbar_hint(True)
-        # self.url_win.set_resizable(False)
-        # self.url_win.set_modal(True)        
         self.url_win.set_position(gtk.WIN_POS_CENTER)
-        # # url entry init.
-        # self.url_text = Entry()
-        # self.url_text.set_size_request(300, 40)
-        # # Init url text events.
         self.url_win.entry.connect("key-press-event", self.get_url_text_name)
-        # # add url text.
-        # self.url_win.window_frame.add(self.url_text)
         self.url_win.show_all()
         
     def get_url_name(self, url_name):    
-        # self.get_url_text_name_function(url_name)
         self.emit("openurl-url-name", "%s"%(url_name), True)
         
     def get_url_text_name(self, url_text, event):        

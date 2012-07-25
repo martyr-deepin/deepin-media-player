@@ -22,8 +22,9 @@
 
 from dtk.ui.utils import propagate_expose
 
-from skin import app_theme
-from ImageButton import ImageButton
+from skin           import app_theme
+from ImageButton    import ImageButton
+
 import gtk
 
 class PlayListControlPanel(gtk.HBox):

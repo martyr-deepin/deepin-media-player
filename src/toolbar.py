@@ -24,13 +24,13 @@ from dtk.ui.frame import HorizontalFrame, VerticalFrame
 from dtk.ui.panel import Panel
 from dtk.ui.utils import propagate_expose
 
-from locales import _
-from tooltip import tooltip_text 
-from skin import app_theme
-from utils import allocation
-from constant import APP_WIDTH,PANEL_HEIGHT
+from locales           import _
+from tooltip           import tooltip_text 
+from skin              import app_theme
+from utils             import allocation
+from constant          import APP_WIDTH,PANEL_HEIGHT
 from togglehoverbutton import ToggleHoverButton, ToolbarRadioButton
-from mutualbutton import MutualButton
+
 import gtk
 import cairo
 
@@ -97,10 +97,6 @@ class ToolBar(object):
         self.hbox_hframe = VerticalFrame(padding=4)
         self.hbox_hframe.add(self.hbox)
         self.panel.add(self.hbox_hframe)        
-
-        # Mouse peneration.
-        # self.input_mask = gtk.gdk.Region()
-        # self.panel.window.input_shape_combine_region(self.input_mask, 0, 0)
         
         self.show_time_id = None
         
@@ -142,7 +138,6 @@ class ToolBar(object):
             self.panel.set_opacity(0)
             gtk.timeout_add(50, self.show_time)
             self.show = 1
-            # self.panel.set_keep_above(True)
             
     def hide_toolbar(self):    
         if 1 == self.show:

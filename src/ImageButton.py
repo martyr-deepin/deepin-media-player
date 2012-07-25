@@ -22,10 +22,12 @@
 
 # from dtk.ui.draw import *
 
-from dtk.ui.draw import draw_pixbuf
-from dtk.ui.utils import propagate_expose
+from dtk.ui.draw         import draw_pixbuf
+from dtk.ui.utils        import propagate_expose
 from dtk.ui.cache_pixbuf import CachePixbuf
+
 from skin import app_theme
+
 import gtk
 
 

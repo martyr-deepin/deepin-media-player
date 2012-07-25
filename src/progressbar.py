@@ -21,15 +21,15 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import gtk
-# import gobject
-from dtk.ui.utils import color_hex_to_cairo
-from dtk.ui.draw import draw_pixbuf
-from dtk.ui.draw import draw_line
-from dtk.ui.utils import container_remove_all
 
-from skin import app_theme
-from utils import allocation
-from constant import DRAW_PROGRESSBAR_WIDTH_PADDING
+from dtk.ui.utils   import color_hex_to_cairo
+from dtk.ui.draw    import draw_pixbuf
+from dtk.ui.draw    import draw_line
+from dtk.ui.utils   import container_remove_all
+
+from skin       import app_theme
+from utils      import allocation
+from constant   import DRAW_PROGRESSBAR_WIDTH_PADDING
 
 
 class ProgressBar(object):

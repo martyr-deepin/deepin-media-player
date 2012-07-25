@@ -21,9 +21,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-
-# Deein ui.
-from dtk.ui.utils import alpha_color_hex_to_cairo,color_hex_to_cairo
+from dtk.ui.utils import color_hex_to_cairo
 from dtk.ui.draw import draw_pixbuf
 
 import gtk
@@ -160,21 +158,11 @@ class ProgressBar(gtk.EventBox):
     def __draw_progressbar_cache(self, cr, x, y, w, h):
         
         cr.set_line_width(self.__line_width-1)
-        # cr.set_source_rgba(*alpha_color_hex_to_cairo(self.__fg_color.get_color_info()))                                        
         cr.set_source_rgb(*color_hex_to_cairo("#8c8c8c"))                                        
         
         for i in range(0, 100):            
             if self.cache_list[i]:
                 cache_padding_x = i / (float(self.__max_value) / w)
-                # cr.move_to(x, 
-                #            y + self.__progressbar_padding_y)
-                # cr.line_to(x  + self.__fg_padding_x , 
-                #            y + self.__progressbar_padding_y)
-                # cache_pixbuf = self.__cache_fg_pixbuf.get_pixbuf()
-                # cr.set_source_pixbuf(cache_pixbuf, 
-                #                      x + cache_padding_x ,
-                #                      y + self.__progressbar_padding_y)
-                # cr.paint_with_alpha(1)
                 
                 cr.move_to(x+ cache_padding_x, y + self.__progressbar_padding_y)
                 cr.line_to(x + cache_padding_x+5, 
@@ -183,13 +171,6 @@ class ProgressBar(gtk.EventBox):
 
     
     def __draw_progressbar_bg(self, cr, x, y, w, h):
-        # cr.set_line_width(self.__line_width)
-        # cr.set_source_rgba(*alpha_color_hex_to_cairo(self.__bg_color.get_color_info()))
-        # cr.move_to(x, 
-        #            y + self.__progressbar_padding_y)
-        # cr.line_to(x + w, 
-        #            y + self.__progressbar_padding_y )
-        # cr.stroke()
         self.__bg_pixbuf = self.__bg_pixbuf.scale_simple(x + w, self.__line_width,
                                                           gtk.gdk.INTERP_BILINEAR)
         cr.set_source_pixbuf(self.__bg_pixbuf,

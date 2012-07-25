@@ -20,11 +20,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from dtk.ui.slider import Wizard
+from dtk.ui.utils  import get_parent_dir
+
+import locale
+
 import gtk
 import os
-from dtk.ui.slider import Wizard
-from dtk.ui.utils import get_parent_dir
-import locale
 
 def init_user_guide(callback=None):
     (lang, _) = locale.getdefaultlocale()

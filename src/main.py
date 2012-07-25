@@ -21,16 +21,17 @@
 
 from skin import app_theme
 from dtk.ui.application import Application
-from constant import APP_WIDTH, APP_HEIGHT
-from player_box import PlayerBox
-from mplayer import init_mplayer_config
-# import os
+
+from constant     import APP_WIDTH, APP_HEIGHT
+from player_box   import PlayerBox
+from mplayer      import init_mplayer_config
+from user_guide   import init_user_guide
+from locales      import _
+
 import sys
 import gtk
-from user_guide import init_user_guide
-from ini import Config
 import os
-from locales import _
+
 
 # Thread init. 
 gtk.gdk.threads_init()
@@ -52,8 +53,6 @@ class MediaPlayer(object):
         init_mplayer_config()
         self.app = Application(False)
         # Set app size.
-        # self.app.window.set_size_request(APP_WIDTH, APP_HEIGHT) 
-        # self.app.set_default_size(480, APP_HEIGHT)               
         self.app.set_default_size(480, 400)               
         self.app.window.resize(APP_WIDTH, APP_HEIGHT)
         self.app.set_icon(app_theme.get_pixbuf("icon.ico"))

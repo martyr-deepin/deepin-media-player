@@ -20,29 +20,23 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from dtk.ui.frame import HorizontalFrame
-from dtk.ui.panel import Panel
+from dtk.ui.frame         import HorizontalFrame
+from dtk.ui.panel         import Panel
 from dtk.ui.volume_button import VolumeButton
 
-from constant import APP_WIDTH
-from progressbar import ProgressBar
-from show_time import ShowTime
+from constant           import APP_WIDTH
+from progressbar        import ProgressBar
+from show_time          import ShowTime
 from play_control_panel import PlayControlPanel
-# from volume_button import VolumeButton
 
 import gtk
-# import cairo
 
 class BottomToolBar(object):            
-    def __init__(self):#, background_pixbuf = app_theme.get_pixbuf("my_bg2.jpg")):
-        # self.background_pixbuf = background_pixbuf
+    def __init__(self):
         self.panel = Panel(APP_WIDTH, 60, window_type=gtk.WINDOW_POPUP)
         self.vbox = gtk.VBox()
         self.progressbar = ProgressBar()        
         
-        # panel signal.
-        # self.panel.set_type_hint(gtk.gdk.WINDOW_TYPE_HINT_TOOLBAR)
-        # self.panel.set_type_hint(gtk.gdk.WINDOW_TYPE_HINT_POPUP_MENU)
         self.hbox = gtk.HBox()
         # hbox add child widget.
         self.show_time_hframe = HorizontalFrame()

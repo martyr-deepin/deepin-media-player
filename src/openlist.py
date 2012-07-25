@@ -21,11 +21,9 @@
 
 
 from dtk.ui.draw import draw_pixbuf
-from dtk.ui.listview import ListView
 from dtk.ui.listview import get_content_size
 from dtk.ui.listview import render_text
-from dtk.ui.scrolled_window import ScrolledWindow
-import gtk
+
 import gobject
 
         
@@ -121,7 +119,6 @@ class OpenItem(gobject.GObject):
                  self.length_height + self.length_padding_y * 2),
                 (self.type_width + self.type_padding_x * 2, 
                  self.type_height + self.type_padding_y * 2),
-                # (self.modify_date_width + self.modify_date_padding_x * 2, 
                 (200,
                  self.modify_date_height + self.modify_date_padding_y * 2),
                 ]    

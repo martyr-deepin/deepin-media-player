@@ -43,7 +43,6 @@ def drag_data_received(wid, context, x, y, data, info, time, mp, play_list, widg
         
     for f in data.get_uris():
         path = urllib.unquote(f)[7:]
-        # print path
         # Add Dir.
         if os.path.isdir(path):            
             path_threads(path, mp)

@@ -21,13 +21,16 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from dtk.ui.draw import draw_pixbuf
-from dtk.ui.utils import propagate_expose
+from dtk.ui.draw         import draw_pixbuf
+from dtk.ui.utils        import propagate_expose
 from dtk.ui.cache_pixbuf import CachePixbuf
-from skin import app_theme
-from tooltip import tooltip_text
+
+from skin      import app_theme
+from tooltip   import tooltip_text
+from locales   import _
+
 import gtk
-from locales import _
+
 
 class PlayListButton(object):
     def __init__(self):
@@ -39,7 +42,6 @@ class ImageButton(gtk.Button):
                  bg_pixbuf=app_theme.get_pixbuf("bottom_buttons/list_button_background.png"),
                  button_pixbuf=app_theme.get_pixbuf("bottom_buttons/play_list_button.png")):
         gtk.Button.__init__(self)
-        #input_string = "play_list_button" # Input test string.
         self.flags = False
         self.bg_pixbuf = bg_pixbuf
         self.button_pixbuf = button_pixbuf

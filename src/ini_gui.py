@@ -19,27 +19,25 @@
 # 
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-from skin import app_theme
+from skin      import app_theme
+from locales   import _
+from ini       import Config
+from mplayer   import get_home_path
 
-from dtk.ui.utils import propagate_expose
-from dtk.ui.box import BackgroundBox, ImageBox
-from dtk.ui.dialog import DialogBox, DIALOG_MASK_MULTIPLE_PAGE
-from dtk.ui.button import Button
-from dtk.ui.entry import InputEntry, ShortcutKeyEntry
-from dtk.ui.combo import ComboBox
-from dtk.ui.draw import draw_vlinear
-from dtk.ui.label import Label
-from dtk.ui.button import CheckButton, RadioButton
-from dtk.ui.line import HSeparator
+from dtk.ui.utils   import propagate_expose
+from dtk.ui.box     import BackgroundBox, ImageBox
+from dtk.ui.dialog  import DialogBox, DIALOG_MASK_MULTIPLE_PAGE
+from dtk.ui.button  import Button
+from dtk.ui.entry   import InputEntry, ShortcutKeyEntry
+from dtk.ui.combo   import ComboBox
+from dtk.ui.draw    import draw_vlinear
+from dtk.ui.label   import Label
+from dtk.ui.button  import CheckButton, RadioButton
+from dtk.ui.line    import HSeparator
 from dtk.ui.scrolled_window import ScrolledWindow
-from locales import _
-from dtk.ui.treeview import TreeView, TreeViewItem
+from dtk.ui.treeview        import TreeView, TreeViewItem
 
-from ini import Config
-from mplayer import get_home_path
 import gtk
-import cairo
-import pango
 import pangocairo
 
 DEFAULT_FONT = "文泉驿微米黑"
@@ -183,47 +181,35 @@ class IniGui(DialogBox):
     
     def save_configure_file_ok_clicked(self):    
         # save ini configure file.
-        # print "_____________[FilePlay]________________________"
         file_play_dict = self.configure.file_play.get_file_play_state()
         for key in file_play_dict.keys():
             if self.ini.get("FilePlay", key) != str(file_play_dict[key]):
                 self.ini.set("FilePlay", key, file_play_dict[key])
-            # print "%s = %s" % (str(key), str(file_play_dict[key]))
-        # print "_____________[SystemSet]_______________________"
+
         system_set_dict = self.configure.system_set.get_system_set_state()
         for key in system_set_dict.keys():
             if self.ini.get("SystemSet", key) != str(system_set_dict[key]):
                 self.ini.set("SystemSet", key, system_set_dict[key])
-            # print "%s = %s" % (str(key), str(system_set_dict[key]))
-        # print "_____________[PlayControl]_____________________"    
+
         play_control_dict = self.configure.play_control.get_play_control_state()
         for key in play_control_dict.keys():
             if self.ini.get("PlayControl", key) != str(play_control_dict[key]):
                 self.ini.set("PlayControl", key, play_control_dict[key])
-            # print "%s = %s" % (str(key), str(play_control_dict[key]))
-        # print "_____________[OtherKey]________________________"    
+
         other_key_dict = self.configure.other_key.get_other_set_state()
         for key in other_key_dict.keys():
             if self.ini.get("OtherKey",  key) != str(other_key_dict[key]):
                 self.ini.set("OtherKey", key, other_key_dict[key])
-            # print "%s = %s" % (str(key), str(other_key_dict[key]))
-        # print "_____________[SubtitleSet]______________________"                
+
         sub_set_dict = self.configure.sub_set.get_subtitle_set_state()
         for key in sub_set_dict.keys():
             if self.ini.get("SubtitleSet", key) != str(sub_set_dict[key]):
                 self.ini.set("SubtitleSet", key, sub_set_dict[key])
-            # print "%s = %s" % (str(key), str(sub_set_dict[key]))
-        # print "_____________[ScreenshotSet]____________________"    
+                
         screenshot_dict = self.configure.screen_shot.get_screenshot_state()
         for key in screenshot_dict.keys():
             if self.ini.get("ScreenshotSet", key) != str(screenshot_dict[key]):
                 self.ini.set("ScreenshotSet", key, screenshot_dict[key])
-            # print "%s = %s" % (str(key), str(screenshot_dict[key]))
-            
-        # self.ini.save()    
-        # self.emit("config-changed", "save_over")
-        # quit configure window.
-        # self.destroy()
         return False
     
     def destroy_ini_gui_window_cancel_clicked(self, widget):    
@@ -293,7 +279,6 @@ class FilePlay(gtk.VBox):
         radio_table = gtk.Table(2, 2)
         # Init config file.
         self.ini = Config(config_path)
-        # self.ini = config
         self.label = Label(_("Playback"))        
         self.label.set_size_request(label_width, label_height)
         
@@ -324,7 +309,7 @@ class FilePlay(gtk.VBox):
         # open new file clear play list.
         self.clear_play_list_btn = CheckButton(_("Clear Playlist On Opening New Media"))        
         ini_bool = self.ini.get("FilePlay", "open_new_file_clear_play_list")
-        # print ini_bool
+
         self.clear_play_list_btn.set_active(False)
         if ini_bool:
             if "true" == ini_bool.lower():
@@ -409,7 +394,7 @@ class SystemSet(gtk.VBox):
         gtk.VBox.__init__(self)
         # Init config file.
         self.ini = Config(config_path)
-        # self.ini = config
+
         self.fixed = gtk.Fixed()
         self.label = Label(_("Genera"))
         self.label.set_size_request(label_width, label_height)
@@ -441,8 +426,6 @@ class SystemSet(gtk.VBox):
             font_set_items.append([font_map.get_name(), i])
             i += 1
         
-        # list_families
-        # pango.FontMap list_families()   get_name()
         combo_width = 200
         self.font_set_combo = ComboBox(font_set_items, combo_width)   
         
@@ -453,7 +436,6 @@ class SystemSet(gtk.VBox):
             self.font_set_combo.label.set_text(DEFAULT_FONT) 
             
         font_set_combo_width = 120
-        # self.font_set_combo.set_size_request(font_set_combo_width, font_set_combo_height)
         # Font size.
         self.font_size_btn_label = Label(_("Size"))
         font_set_items = []
@@ -469,7 +451,6 @@ class SystemSet(gtk.VBox):
         else:    
             self.font_size_btn_combo.label.set_text("8")
             
-        # self.font_size_btn_combo.set_size_request(font_size_combo_width, font_size_combo_height)
                 
         system_set_x = 20
         system_set_y = 40
@@ -519,7 +500,6 @@ class PlayControl(gtk.VBox):
     def __init__(self):
         gtk.VBox.__init__(self)
         self.ini = Config(config_path)
-        # self.ini = config
         self.fixed = gtk.Fixed()
         self.label = Label(_("Video Control"))
         self.label.set_size_request(label_width, label_height)        
@@ -531,11 +511,8 @@ class PlayControl(gtk.VBox):
         # setting keys.
         entry_width  = 150
         entry_height = 24
-        # entry_width = 150
-        # entry_height = 28
         # set PlayControl bool.
         self.play_control_bool_checkbtn = CheckButton(_("Hotkeys Enabled"))
-        # self.play_control_bool_checkbtn.set_active(True)
         self.play_control_bool_checkbtn.connect("button-press-event", self.set_play_control_all_sensitive)
                 
         # open file key.
@@ -665,7 +642,7 @@ class PlayControl(gtk.VBox):
         self.set_play_control_true()
         
         play_control_bool = self.ini.get("PlayControl", "play_control_bool")
-        # print play_control_bool
+
         if play_control_bool:
             if play_control_bool.lower() == "true":
                 pass
@@ -698,7 +675,6 @@ class PlayControl(gtk.VBox):
                        play_control_x_padding, play_control_y)       
         self.fixed.put(self.pre_a_entry_label, play_control_x_padding, play_control_y - self.open_file_entry_label.get_size_request()[1] - 2)
         # open file dir and next a.
-        # play_control_y += self.pre_a_entry.get_size_request()[1] + 10
         play_control_y += self.pre_a_entry.get_size_request()[1] + 10
         self.fixed.put(self.open_file_dir_entry_label,
                        play_control_x, play_control_y)
@@ -812,7 +788,7 @@ class OtherKey(gtk.VBox):
     def __init__(self):
         gtk.VBox.__init__(self)
         self.ini = Config(config_path)
-        # self.ini = config                
+
         self.fixed = gtk.Fixed()
         self.label = Label(_("Other"))
         self.label.set_size_request(label_width, label_height)                
@@ -929,7 +905,6 @@ class OtherKey(gtk.VBox):
         else:    
             self.mouse_left_single_clicked_combo.label.set_text(text_string)
             
-        # self.mouse_left_single_clicked_combo.set_size_request(entry_width, entry_height)
         # mouse left double clicked.
         self.mouse_left_double_clicked_combo_label = Label(_("Double Click"))
         self.mouse_left_double_clicked_combo       = ComboBox([(_("Full Screen"), 1),
@@ -938,7 +913,6 @@ class OtherKey(gtk.VBox):
         if text_string:
             self.mouse_left_double_clicked_combo.label.set_text(text_string)
             
-        # self.mouse_left_double_clicked_combo.set_size_request(entry_width, entry_height)
         # mouse wheel.
         self.mouse_wheel_combo_label = Label(_("Scroll"))
         self.mouse_wheel_combo       = ComboBox([(_("Volumn"), 1),
@@ -946,9 +920,7 @@ class OtherKey(gtk.VBox):
         text_string = self.ini.get("OtherKey", "mouse_wheel_event")
         if text_string:
             self.mouse_wheel_combo.label.set_text(text_string)        
-            
-        # self.mouse_wheel_combo.set_size_request(entry_width, entry_height)
-        
+                    
         # Set other key bool.
         other_key_bool = self.ini.get("OtherKey", "other_key_bool")    
         
@@ -1198,7 +1170,7 @@ class ScreenShot(gtk.VBox):
         entry_width = 250
         entry_height = 24
         self.ini = Config(config_path)
-        # self.ini = config
+
         self.fixed = gtk.Fixed()
         self.label = Label(_("Screenshot"))
         self.label.set_size_request(label_width, label_height)
@@ -1221,11 +1193,6 @@ class ScreenShot(gtk.VBox):
         # Save path.
         self.save_path_label = Label(_("Screenshot directory:"))
         self.save_path_entry = InputEntry()
-        # text_string = self.ini.get("ScreenshotSet", "save_path")
-        # if text_string:
-        #     self.save_path_entry.set_text(text_string)
-        # else:    
-        #     self.save_path_entry.set_text("~/.config/deepin-media-player/image")
             
         self.save_path_entry.set_size(entry_width, entry_height)                
         self.save_path_button = Button(_("View"))
@@ -1326,7 +1293,6 @@ class ScreenShot(gtk.VBox):
             self.save_type_combo.set_sensitive(True)
         
     def save_clipboard_radio_clicked(self, widget, event):    
-        # self.save_path_entry.entry.set_editable(False)            
         if 1 == event.button:
             self.save_path_entry.entry.set_editable(False)
             self.save_path_entry.entry.set_sensitive(False)            

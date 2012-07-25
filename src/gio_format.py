@@ -20,6 +20,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from formencode.validators import URL
+
 import gio
 
 class Format(object):

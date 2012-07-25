@@ -20,9 +20,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from locales import _
+
 import gobject    
 import os
-from locales import _
 
 def get_home_path():
     return os.path.expanduser("~")
