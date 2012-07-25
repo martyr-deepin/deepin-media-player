@@ -1918,9 +1918,11 @@ class PlayerBox(object):
         # Get mplayer pid.
         self.mplayer_pid = play_bool
         #play memory.
-        pos = self.ini.get("PlayMemory", '"%s"' % ((mplayer.path)))
-        if pos is not None:
-            gtk.timeout_add(140, self.get_pos_ste_seek, pos)
+        config_bool = self.config.get("FilePlay", "memory_up_close_player_file_postion")
+        if "true" == config_bool.lower():
+            pos = self.ini.get("PlayMemory", '"%s"' % ((mplayer.path)))
+            if pos is not None:
+                gtk.timeout_add(140, self.get_pos_ste_seek, pos)
 
         # title show play file name.
         file_name = self.get_player_file_name(mplayer.path)
@@ -1962,9 +1964,8 @@ class PlayerBox(object):
                 self.ini.set("PlayMemory", '"%s"' % (mplayer.path), 0)
                 if mplayer.posNum < mplayer.lenNum - 100:
                     self.ini.set("PlayMemory", '"%s"' % (mplayer.path), mplayer.posNum)
-                    
                 self.ini.save()
-
+                
         self.playwinmax_bool = True
 
     def init_video_setting(self, mplayer, flags):    
