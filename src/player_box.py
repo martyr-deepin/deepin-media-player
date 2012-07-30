@@ -74,6 +74,7 @@ class PlayerBox(object):
         # Init pixuf.
         self.init_system_pixbuf()
         
+        
         # signal and double.
         self.double_bool = False
         self.signal_timeout = []
@@ -105,7 +106,7 @@ class PlayerBox(object):
         self.pause_x = 0
         self.pause_y = 0                
         
-        self.init_config_file()
+        self.init_config_file()        
         self.init_last_new_play_file()
         # same name id init.
         self.get_same_name_id = None        
@@ -135,7 +136,7 @@ class PlayerBox(object):
         
         self.init_preview_window()
         self.init_app_window(app, argv_path_list)        
-        self.init_media_player_screen()
+        self.init_media_player_screen()        
         self.init_toptip_window()
         self.init_mid_open_button()
         self.init_progressbar()
@@ -319,7 +320,7 @@ class PlayerBox(object):
         self.window_tool_tip = OSDTooltip(self.screen_frame, offset_x=20, offset_y=26)
         if not font_size:
             font_size = 16
-        self.window_tool_tip.change_style(font, font_size)
+        self.window_tool_tip.change_style(font, int(font_size))
         
     def init_mid_open_button(self):
         self.open_button = OpenButton(self.screen_frame, _("Open File"), 108, 40)
@@ -487,8 +488,8 @@ class PlayerBox(object):
         else:
             self.screen_pop_menu.hide_menu()
                             
-    def messagebox(self, text):            
-        self.window_tool_tip.show(text)                
+    def messagebox(self, text):
+        self.window_tool_tip.show(text)
 
     def toolbar2_panel_expose(self, widget, event):
         cr = widget.window.cairo_create()
@@ -605,7 +606,7 @@ class PlayerBox(object):
                     
             self.messagebox("%s:%s%s"%(_("Volumn"), str(int(temp_value)), "%"))
             
-    def volume_button_get_value_event(self, volume_button, value, volume_state, volume_bit):        
+    def volume_button_get_value_event(self, volume_button, value, volume_state, volume_bit):
         if -1 == volume_state: # -1 -> stop play
             if self.mp:
                 if 1 == self.mp.state: # 1 -> start play
@@ -617,15 +618,15 @@ class PlayerBox(object):
             if self.mp:
                 if 1 == self.mp.state:                    
                     self.mp.offmute()                                     
-                    self.mp.setvolume(value)
-                    self.messagebox("%s:%s%s"%(_("Volumn"), str(value), "%"))
+                    self.mp.setvolume(value)                    
+                    self.messagebox(str("%s:%s%s"%(_("Volumn"), str(value), "%")))
                 else:    
                     self.mp.volumebool = False
-                    self.messagebox("%s:%s%s"%(_("Volumn"), str(value), "%"))
+                    self.messagebox(str("%s:%s%s"%(_("Volumn"), str(value), "%")))
                     
-        if 1 == volume_bit: # volume_bit: 1-> volume_button , 2-> volume_button of bottom_toolbar 
+        if 1 == volume_bit: # volume_bit: 1-> volume_button , 2-> volume_button of bottom_toolbar
             self.bottom_toolbar.volume_button.value = value
-        else:    
+        else:
             self.volume_button.value = value
             
     def init_config_key(self):
@@ -1753,7 +1754,6 @@ class PlayerBox(object):
             
     def progressbar_player_drag_pos_modify(self, widget, event, progressbar, pb_bit):
         '''Set player rate of progress.'''
-
         if progressbar.drag_bool: # Mouse left.
             # Hide preview window.
             self.hide_preview_function(widget, event)
@@ -1911,7 +1911,6 @@ class PlayerBox(object):
                     if save_down_file:
                         if os.path.exists(save_down_file):                        
                             self.load_subtitle(save_down_file)
-
 
         # Init last new play file menu.
         self.the_last_new_play_file_list = self.last_new_play_file_function.set_file_time(mplayer.path)
@@ -2515,7 +2514,6 @@ class PlayerBox(object):
                 temp_list.append(self.play_list_dict[item.title])
                 temp_dict[item.title] = item.length
 
-
             temp_list = sort.type_sort(temp_list)
             # clear play list.
             self.play_list.list_view.clear()
@@ -2529,7 +2527,6 @@ class PlayerBox(object):
                 list_item.append(MediaItem(list_str, temp_dict[list_str]))
                 self.mp.playList.append(self.play_list_dict[list_str])
                 self.mp.playListSum += 1
-
 
             self.play_list.list_view.add_items(list_item)
 
@@ -2553,6 +2550,10 @@ class PlayerBox(object):
         
     def add_file_dir_clear(self):            
         self.show_open_dir_dialog_window(False)
+                
+    def open_url_dialog_window(self):    
+        open_url = OpenUrl()
+        open_url.connect("openurl-url-name", self.get_url_name)
         
     def get_url_name(self, open_url, url_name, url_bool):
         if url_bool:
@@ -2561,9 +2562,6 @@ class PlayerBox(object):
         else:    
             self.messagebox(str(url_name))
         
-    def open_url_dialog_window(self):    
-        open_url = OpenUrl()
-        open_url.connect("openurl-url-name", self.get_url_name)
                 
     def del_index(self):
         self.play_list.list_view.delete_select_items()
@@ -2593,9 +2591,7 @@ class PlayerBox(object):
     def open_sort_image_ini_gui(self):  #menu
         ini_gui = IniGui()
         ini_gui.set("%s"%(_("Screenshot")))
-        ini_gui.ini.connect("config-changed", self.restart_load_config_file)
-
-        
+        ini_gui.ini.connect("config-changed", self.restart_load_config_file)        
         
     def open_current_file_dir(self):
         try:
@@ -2611,13 +2607,13 @@ class PlayerBox(object):
 
         
     '''config gui window'''
-    def restart_load_config_file(self, IniGui, sec_root, sec_argv, sec_value):
-        self.config.set(sec_root, sec_argv, sec_value)
-        self.config.save()
-
     def config_gui(self):        
         ini_gui = IniGui()
         ini_gui.ini.connect("config-changed", self.restart_load_config_file)
+        
+    def restart_load_config_file(self, IniGui, sec_root, sec_argv, sec_value):
+        self.config.set(sec_root, sec_argv, sec_value)
+        self.config.save()        
         
     # Menu concise.
     def set_menu_concise(self):
