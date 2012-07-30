@@ -140,63 +140,84 @@ def init_mplayer_config():
             config = Config(path + "/deepin_media_config.ini")
             # Init window.
             config.set("Window", "init_window", "True")
+            
             #[FilePlay]
-            config.set("FilePlay", "video_file_open",                     2)
-            config.set("FilePlay", "open_new_file_clear_play_list",       "True")
-            config.set("FilePlay", "memory_up_close_player_file_postion", "True")
-            config.set("FilePlay", "find_play_file_relation_file",        "False")
-            config.set("FilePlay", "mouse_progressbar_show_preview",      "False")
+            for argv, value in ([
+                    ("video_file_open",                          2),
+                    ("open_new_file_clear_play_list",       "True"),
+                    ("memory_up_close_player_file_postion", "True"),
+                    ("find_play_file_relation_file",        "False"),
+                    ("mouse_progressbar_show_preview",      "False")
+                    ]):
+                config.set("FilePlay", argv, value)
+                
             #[SystemSet]
-            config.set("SystemSet", "minimize_pause_play", "False")            
-            config.set("SystemSet", "font",                "文泉驿微米黑")
-            config.set("SystemSet", "font_size",           "16")
-            # config.set()
-            # config.set()
-            # config.set()
+            for argv, value in ([
+                    ("minimize_pause_play", "False"),
+                    ("font",                "文泉驿微米黑"),
+                    ("font_size",           "16")
+                    ]):
+                config.set("SystemSet", argv, value)
+                
             #[PlayControl]
-            config.set("PlayControl", "play_control_bool", "True")
-            config.set("PlayControl", "open_file_key",     "Ctrl + o")
-            config.set("PlayControl", "open_file_dir_key", "Ctrl + f")
-            config.set("PlayControl", "play_or_pause_key", "Space")
-            config.set("PlayControl", "seek_key",          "Right")
-            config.set("PlayControl", "back_key",          "Left")
-            config.set("PlayControl", "full_key",          "Return")
-            config.set("PlayControl", "pre_a_key",         "Page_Up")
-            config.set("PlayControl", "next_a_key",        "Page_Down")
-            config.set("PlayControl", "add_volume_key",    "Up")
-            config.set("PlayControl", "sub_volume_key",    "Down")
-            config.set("PlayControl", "mute_key",          "m")
-            config.set("PlayControl", "concise_key",       "Shift + Return")
+            for argv, value in ([
+                    ("play_control_bool", "True"),
+                    ("open_file_key",     "Ctrl + o"),
+                    ("open_file_dir_key", "Ctrl + f"),
+                    ("play_or_pause_key", "Space"),
+                    ("seek_key",          "Right"),
+                    ("back_key",          "Left"),
+                    ("full_key",          "Return"),
+                    ("pre_a_key",         "Page_Up"),
+                    ("next_a_key",        "Page_Down"),
+                    ("add_volume_key",    "Up"),
+                    ("sub_volume_key",    "Down"),
+                    ("mute_key",          "m"),
+                    ("concise_key",       "Shift + Return")
+                    ]):
+                config.set("PlayControl", argv, value)
+                
             #[OtherKey]
-            config.set("OtherKey", "other_key_bool",         "True")
-            config.set("OtherKey", "add_brightness_key",     "=")
-            config.set("OtherKey", "sub_brightness_key",     "-")
-            config.set("OtherKey", "inverse_rotation_key",   "w")
-            config.set("OtherKey", "clockwise_key",          "e")
-            config.set("OtherKey", "sort_image_key",         "Alt + a")
-            config.set("OtherKey", "switch_audio_track_key", _("Disabled"))
-            config.set("OtherKey", "load_subtitle_key",      "Alt + o")
-            config.set("OtherKey", "subtitle_delay_key",     "]")
-            config.set("OtherKey", "subtitle_advance_key",   "[")
-            config.set("OtherKey", "mouse_left_single_clicked", _("Pause/Play"))
-            config.set("OtherKey", "mouse_left_double_clicked", _("Full Screen"))
-            config.set("OtherKey", "mouse_wheel_event", _("Volumn"))
+            for argv, value in ([
+                    ("other_key_bool",         "True"),
+                    ("add_brightness_key",     "="),
+                    ("sub_brightness_key",     "-"),
+                    ("inverse_rotation_key",   "w"),
+                    ("clockwise_key",          "e"),
+                    ("sort_image_key",         "Alt + a"),
+                    ("switch_audio_track_key", _("Disabled")),
+                    ("load_subtitle_key",      "Alt + o"),
+                    ("subtitle_delay_key",     "]"),
+                    ("subtitle_advance_key",   "["),
+                    ("mouse_left_single_clicked", _("Pause/Play")),
+                    ("mouse_left_double_clicked", _("Full Screen")),
+                    ("mouse_wheel_event", _("Volumn")),
+                    ]):
+                config.set("OtherKey", argv, value)
+
             #[SubtitleSet]
-            config.set("SubtitleSet", "ai_load_subtitle", "True")
-            config.set("SubtitleSet", "specific_location_search", "~/.config/deepin-media-player/subtitle")
+            for argv, value in ([
+                    ("ai_load_subtitle", "True"),
+                    ("specific_location_search", "~/.config/deepin-media-player/subtitle")
+                    ]):
+                config.set("SubtitleSet", argv, value)
+            
             #[ScreenshotSet]
-            config.set("ScreenshotSet", "save_clipboard", "False")
-            config.set("ScreenshotSet", "save_file", "True")
-            config.set("ScreenshotSet", "save_path", "~/.config/deepin-media-player/image")
-            config.set("ScreenshotSet", "save_type", ".png")
-            config.set("ScreenshotSet", "current_show_sort", "False")
+            for argv, value in ([
+                    ("save_clipboard", "False"),
+                    ("save_file", "True"),
+                    ("save_path", "~/.config/deepin-media-player/image"),
+                    ("save_type", ".png"),
+                    ("current_show_sort", "False")
+                    ]):
+
+
+
+                config.set("ScreenshotSet", argv, value)
+                
             # save ini config.
             config.save()
-            
-        # Test config input.
-        # config = Config(path + "/deepin_media_config.ini")    
-        # print config.get("PlayControl", "open_file_key")
-            
+                       
         # create buffer file.
         if not os.path.exists(path + "/buffer"):
             os.mkdir(path + "/buffer")
