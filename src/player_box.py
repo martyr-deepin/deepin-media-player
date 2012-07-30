@@ -104,19 +104,11 @@ class PlayerBox(object):
         self.pause_bool = False
         self.pause_x = 0
         self.pause_y = 0                
-
-        # Init play memory.
-        self.ini = Config(get_home_path() + "/.config/deepin-media-player/config.ini")
-        # Init deepin media player config gui.
-        self.config = Config(get_home_path() + "/.config/deepin-media-player/deepin_media_config.ini")
-        self.config.connect("config-changed", self.modify_config_section_value)
         
+        self.init_config_file()
+        self.init_last_new_play_file()
         # same name id init.
         self.get_same_name_id = None        
-        # play list menu.
-        self.last_new_play_file_function = LastNewPlayFile()
-        self.last_new_play_file_function.connect("get-file-name", self.get_last_new_play_file_name)
-        self.the_last_new_play_file_list = []
                 
         # playlist.
         self.add_play_list_length_id = None
@@ -141,163 +133,22 @@ class PlayerBox(object):
         self.main_vbox_hframe.set_padding(0, 0, 2, 2)
         self.main_vbox_hframe.add(self.main_vbox)
         
-        '''Preview window'''
-        self.preview = PreView()
-
-        '''Save app(main.py)[init app].'''
-        self.app = app
-        self.app.set_menu_callback(lambda button: self.theme_menu_show(button))
-
-        self.app_width = 0  # Save media player window width.
-        self.app_height = 0 # Save media player window height.
-        self.argv_path_list = argv_path_list # command argv.
-        self.app.titlebar.min_button.connect("clicked", self.min_window_titlebar_min_btn_click)
-        self.app.window.connect("destroy", self.quit_player_window)
-        self.app.window.connect("configure-event", self.app_configure_hide_tool)
-        self.app.window.connect("window-state-event", self.set_toolbar2_position)
-        self.app.window.connect("leave-notify-event", self.hide_all_toolbars)
-        # test app window
-        self.app.window.connect("focus-out-event", self.set_show_toolbar_function_false)
-        self.app.window.connect("focus-in-event", self.set_show_toolbar_function_true)
-        #keyboard Quick key.
-        self.app.window.connect("key-press-event", self.get_key_event)
-        self.app.window.connect("key-release-event", self.get_release_key_event)
-        self.app.window.connect("scroll_event", self.app_scroll_event, 1)
-
-        '''Screen window init.'''
-        self.screen_frame_event = gtk.EventBox()
-        self.screen_frame = gtk.Alignment()
-        self.screen_frame_event.add(self.screen_frame)
-        self.screen_frame_event.add_events(gtk.gdk.ALL_EVENTS_MASK)
-        self.screen_frame.set(0.0, 0.0, 1.0, 1.0)
-        self.screen = gtk.DrawingArea()
-        self.screen_frame.add(self.screen)
-
-        '''Tooltip window.'''
-        font = self.config.get("SystemSet", "font")
-        font_size = self.config.get("SystemSet", "font_size")
-        self.window_tool_tip = OSDTooltip(self.screen_frame, offset_x=20, offset_y=26)
-        if not font_size:
-            font_size = 16
-        self.window_tool_tip.change_style(font, font_size)
-        '''mid open button.'''
-        self.open_button = OpenButton(self.screen_frame, _("Open File"), 108, 40)
-        self.open_button.connect("openbutton-clicked-event", lambda w, e: self.add_file_clear())
-        self.open_button.move(-14, 30)
-        open_button_right_width = 32
-        open_button_right_height = 40
-        open_button_right_x = 56
-        open_button_right_y = 30
-        self.open_button_right = OpenButton(self.screen_frame, "",
-                                            open_button_right_width, open_button_right_height,
-                                            app_theme.get_pixbuf("screen_mid/normal_button_right.png"),
-                                            app_theme.get_pixbuf("screen_mid/hover_button_right.png"),
-                                            app_theme.get_pixbuf("screen_mid/press_button_right.png"))
-        self.open_button_right.connect("openbutton-clicked-event", self.open_button_popup_screen_menu)        
-        self.open_button_right.move(open_button_right_x, open_button_right_y)
-        menu_item = [
-            (app_theme.get_pixbuf("screen_mid/screen_menu_open_dir.png"), _("Open Directory"), self.add_file_dir_clear),
-            # (app_theme.get_pixbuf("screen_mid/screen_menu_open_cdrom.png"),"打开光盘", None),
-            (app_theme.get_pixbuf("screen_mid/screen_menu_open_url.png"), _("Open URL"), self.open_url_dialog_window),
-            ]
-        self.screen_pop_menu = ScreenMenu(self.screen_frame, menu_item)
-        self.screen_pop_menu.size(self.screen_pop_menu.width, self.screen_pop_menu.height - 26)
+        self.init_preview_window()
+        self.init_app_window(app, argv_path_list)        
+        self.init_media_player_screen()
+        self.init_toptip_window()
+        self.init_mid_open_button()
+        self.init_progressbar()
+        self.init_toolbar()
+        self.init_bottom_toolbar()
+        self.init_playlist()
         
-        # Set background.
-        style = self.screen_frame.get_style()
-        self.screen_frame.connect("expose-event", self.draw_ascept_bg)
-        self.screen_frame.modify_bg(gtk.STATE_NORMAL, style.black)
-        self.screen.modify_bg(gtk.STATE_NORMAL, style.black)
-
-        # Screen signal init.
-        self.screen.add_events(gtk.gdk.ALL_EVENTS_MASK)
-        self.screen.set_has_window(True)
-        self.screen.set_can_focus(True)
-        self.screen.set_can_default(True)
-        self.screen.activate()
-
-        self.screen.connect("realize", self.init_media_player)
-        self.screen.connect("motion-notify-event", self.modify_mouse_icon)
-        self.screen.connect_after("expose-event", self.draw_background)        
-        
-        self.screen_frame_event.connect("button-press-event", self.drag_resize_window)
-        self.screen_frame_event.connect("button-press-event", self.move_media_player_window)        
-        self.screen_frame_event.connect("button-release-event", self.screen_media_player_clear)        
-        self.screen_frame_event.connect("motion-notify-event", self.show_and_hide_toolbar)
-        self.screen.connect("configure-event", self.configure_hide_tool)                
-
-        '''Progressbar Init.'''
-        self.progressbar = ProgressBar()
-        self.progressbar.window_mode_state = 0
-        # Progressbar signal init.
-        self.progressbar.pb.connect("motion-notify-event", self.progressbar_player_drag_pos_modify, self.progressbar, 1)
-        self.progressbar.pb.connect("button-press-event", self.progressbar_player_point_pos_modify, self.progressbar, 1)
-        self.progressbar.pb.connect("button-release-event", self.progressbar_set_point_bool, self.progressbar)
-
-        self.progressbar.pb.connect("enter-notify-event", self.show_preview_enter)
-        self.progressbar.pb.connect("leave-notify-event", self.hide_preview_leave)
-
-        '''Toolbar Init.'''
-        self.toolbar = ToolBar()
-        self.toolbar.toolbar_full_button.connect("clicked",    self.full_play_window)
-        self.toolbar.toolbar_common_button.connect("clicked",  self.show_window_widget)
-        self.toolbar.toolbar_concise_button.connect("clicked", self.hide_window_widget)
-        self.toolbar.toolbar_above_button.connect("clicked",   self.set_window_above)
-        self.toolbar.toolbar_1X_button.connect("clicked", lambda w: self.set_1x_video_play())
-        self.toolbar.toolbar_2X_button.connect("clicked", lambda w: self.set_2x_video_play())
-        '''Bottom Toolbar Init.'''
-        bottom_toolbar_height = 50
-        self.bottom_toolbar = BottomToolBar()
-        self.bottom_toolbar.panel.connect("expose-event", self.toolbar2_panel_expose)
-        self.bottom_toolbar.panel.set_size_request(1, bottom_toolbar_height) # Set bottom_toolbar height.
-        # draw resize window.
-        self.bottom_toolbar.panel.connect("scroll-event", self.app_scroll_event, 2) # 2->bottom_toolbar
-        self.bottom_toolbar.panel.connect("button-press-event", self.drag_resize_window)
-        self.bottom_toolbar.panel.connect("motion-notify-event", self.modify_mouse_icon)
-
-        self.bottom_toolbar.panel.connect("motion-notify-event", self.set_keep_window_toolbar2)
-        #self.toolbar2.show_toolbar2() Test function.
-        self.bottom_toolbar.progressbar.pb.connect("motion-notify-event",
-                                             self.progressbar_player_drag_pos_modify,
-                                             self.bottom_toolbar.progressbar, 2)
-        self.bottom_toolbar.progressbar.pb.connect("button-press-event",
-                                             self.progressbar_player_point_pos_modify,
-                                             self.bottom_toolbar.progressbar, 2)
-        self.bottom_toolbar.progressbar.pb.connect("button-release-event",
-                                             self.progressbar_set_point_bool,
-                                             self.bottom_toolbar.progressbar)
-        self.bottom_toolbar.progressbar.pb.connect("enter-notify-event", self.show_preview_enter)
-        self.bottom_toolbar.progressbar.pb.connect("leave-notify-event", self.hide_preview_leave)
-
-        # play_control_panel.
-        self.bottom_toolbar.play_control_panel.stop_btn.connect("clicked", self.stop_button_clicked)
-        self.bottom_toolbar.play_control_panel.pre_btn.connect("clicked", self.pre_button_clicked)
-        self.bottom_toolbar.play_control_panel.start_btn.connect("clicked", self.start_button_clicked, 2)
-        self.bottom_toolbar.play_control_panel.next_btn.connect("clicked", self.next_button_clicked)
-        self.bottom_toolbar.play_control_panel.open_btn.connect("clicked", self.open_button_clicked)
-
-        # Toolbar2 volume button.
-        self.bottom_toolbar.volume_button.value = 100
-        self.bottom_toolbar.volume_button.connect("volume-state-changed", self.volume_button_get_value_event, 2)
-
         # Child widget add to vbox.
         self.vbox.pack_start(self.screen_frame_event, True, True)
         self.vbox.pack_start(self.progressbar.hbox,False, False)
         # Hide playlist and show playlist widget hbox.
         self.hbox.pack_start(self.vbox, True, True)
-
-
-        '''playlist'''
-        self.play_list_dict = {} # play list dict type.
-        self.play_list = PlayList()
-        self.play_list.list_view.connect("double-click-item", self.double_play_list_file)
-        self.play_list.list_view.connect("delete-select-items", self.delete_play_list_file)
-        self.play_list.list_view.connect("button-press-event", self.show_popup_menu)
-        self.play_list.list_view.connect("single-click-item", self.open_current_file_dir_path)
-        self.play_list.list_view.connect("motion-notify-item", self.open_current_file_dir_path)
-
         self.hbox.pack_start(self.play_list.vbox, False, False)
-
 
         '''Bottom control.'''
         # Hide Bottom and show Bottom.
@@ -307,51 +158,11 @@ class PlayerBox(object):
         self.bottom_play_control_hbox_vframe = VerticalFrame(bottom_padding)
         self.bottom_play_control_hbox = gtk.HBox()
         self.bottom_play_control_hbox_vframe.add(self.bottom_play_control_hbox)
-
-        # Show time widget.
-        # padding=0, xalign=1, yalign=0.0, xscale=0.0, yscale=0.0
-        self.show_time_label_hframe = HorizontalFrame()
-        self.show_time_label = ShowTime()
-        self.show_time_label.time_box.set_size_request(110, -1)
-        self.show_time_label.time_font1 = "00:00:00" + " / "
-        self.show_time_label.time_font2 = "00:00:00"        
-        self.show_time_label.set_time_font(self.show_time_label.time_font1 , self.show_time_label.time_font2)
-        self.show_time_label_hframe.add(self.show_time_label.time_box)
-        self.show_time_label_hframe.set(0, 0, 1, 1)
-        self.show_time_label_hframe.set_padding(0, 0, 10, 0)
-
-        self.play_control_panel = PlayControlPanel()
-
-        self.play_control_panel_hframe = self.play_control_panel.hbox_hframe
-        self.play_control_panel_hframe.set(1, 0.5, 0, 0)
-        self.play_control_panel_hframe.set_padding(0, 1, 0, 0)
-
-        self.play_control_panel.stop_btn.connect("clicked", self.stop_button_clicked) # stop play.
-        self.play_control_panel.pre_btn.connect("clicked", self.pre_button_clicked) # pre play.
-        # 1 -> play_control_panel
-        self.play_control_panel.start_btn.connect("clicked", self.start_button_clicked, 1) # start play or pause play.
-        self.play_control_panel.next_btn.connect("clicked", self.next_button_clicked) # next play.
-        self.play_control_panel.open_btn.connect("clicked", self.open_button_clicked) # show open window.
-
-        # Volume button.
-        self.volume_button_hframe = HorizontalFrame()
-        self.volume_button = VolumeButton(volume_y = 14, press_emit_bool = True)
-        self.volume_button.value = 100
-        self.volume_button.connect("volume-state-changed", self.volume_button_get_value_event, 1) # 1 -> play_control_panel
-        self.volume_button.set_size_request(92, 40)
-        self.volume_button_hframe.add(self.volume_button)
-        self.volume_button_hframe.set(1, 0, 0, 0)
-        self.volume_button_hframe.set_padding(0, 0, 0, 0)
         
-        # play list button.
-        self.play_list_button_hframe = HorizontalFrame()
-        self.play_list_button = PlayListButton()
-        # play_list_button connect signal.
-        self.play_list_button.button.connect("clicked", self.play_list_button_clicked)
-        self.play_list_button_hframe.add(self.play_list_button.button)
-        self.play_list_button_hframe.set(0, 0, 1.0, 1.0)
-        self.play_list_button_hframe.set_padding(4, 0, 0, 20)
-        
+        self.init_show_time_label()
+        self.init_play_control_panel()
+        self.init_volume_button()
+        self.init_play_list_button()
         
         self.bottom_play_control_hbox.pack_start(self.show_time_label_hframe, False, False)
         self.bottom_play_control_hbox.pack_start(self.play_control_panel_hframe, True, True)
@@ -377,6 +188,9 @@ class PlayerBox(object):
         
         self.cursor_type = None
 
+    ##################################
+    '''Init value.'''    
+    ###
     def init_system_pixbuf(self):    
         # menu icon pixbuf. menupixbuf ..
         self.video_aspect_pixbuf = app_theme.get_pixbuf("screen/check_normal.png") # aspect state pixbuf.
@@ -431,6 +245,231 @@ class PlayerBox(object):
         self.down_sub_title_bool = False
         self.down_sub_title_norma_pixbuf = app_theme.get_pixbuf("screen/check_normal.png")
         self.down_sub_title_hover_pixbuf = app_theme.get_pixbuf("screen/check_hover.png")
+        
+    def init_preview_window(self):
+        self.preview = PreView()
+        
+    def init_config_file(self):    
+        # Init play memory.
+        self.ini = Config(get_home_path() + "/.config/deepin-media-player/config.ini")
+        # Init deepin media player config gui.
+        self.config = Config(get_home_path() + "/.config/deepin-media-player/deepin_media_config.ini")
+        self.config.connect("config-changed", self.modify_config_section_value)
+        
+    def init_last_new_play_file(self):    
+        self.last_new_play_file_function = LastNewPlayFile()
+        self.last_new_play_file_function.connect("get-file-name", self.get_last_new_play_file_name)
+        self.the_last_new_play_file_list = []
+        
+    def init_app_window(self, app, argv_path_list):    
+        self.app = app
+        self.app.set_menu_callback(lambda button: self.theme_menu_show(button))
+
+        self.app_width = 0  # Save media player window width.
+        self.app_height = 0 # Save media player window height.
+        self.argv_path_list = argv_path_list # command argv.
+        self.app.titlebar.min_button.connect("clicked", self.min_window_titlebar_min_btn_click)
+        self.app.window.connect("destroy", self.quit_player_window)
+        self.app.window.connect("configure-event", self.app_configure_hide_tool)
+        self.app.window.connect("window-state-event", self.set_toolbar2_position)
+        self.app.window.connect("leave-notify-event", self.hide_all_toolbars)
+        # test app window
+        self.app.window.connect("focus-out-event", self.set_show_toolbar_function_false)
+        self.app.window.connect("focus-in-event", self.set_show_toolbar_function_true)
+        #keyboard Quick key.
+        self.app.window.connect("key-press-event", self.get_key_event)
+        self.app.window.connect("key-release-event", self.get_release_key_event)
+        self.app.window.connect("scroll_event", self.app_scroll_event, 1)
+        
+    def init_media_player_screen(self):            
+        self.screen_frame_event = gtk.EventBox()
+        self.screen_frame = gtk.Alignment()
+        self.screen_frame_event.add(self.screen_frame)
+        self.screen_frame_event.add_events(gtk.gdk.ALL_EVENTS_MASK)
+        self.screen_frame.set(0.0, 0.0, 1.0, 1.0)
+        self.screen = gtk.DrawingArea()
+        self.screen_frame.add(self.screen)
+        
+        # Set background.
+        style = self.screen_frame.get_style()
+        self.screen_frame.connect("expose-event", self.draw_ascept_bg)
+        self.screen_frame.modify_bg(gtk.STATE_NORMAL, style.black)
+        self.screen.modify_bg(gtk.STATE_NORMAL, style.black)
+
+        # Screen signal init.
+        self.screen.add_events(gtk.gdk.ALL_EVENTS_MASK)
+        self.screen.set_has_window(True)
+        self.screen.set_can_focus(True)
+        self.screen.set_can_default(True)
+        self.screen.activate()
+
+        self.screen.connect("realize", self.init_media_player)
+        self.screen.connect("motion-notify-event", self.modify_mouse_icon)
+        self.screen.connect_after("expose-event", self.draw_background)        
+        
+        self.screen_frame_event.connect("button-press-event", self.drag_resize_window)
+        self.screen_frame_event.connect("button-press-event", self.move_media_player_window)        
+        self.screen_frame_event.connect("button-release-event", self.screen_media_player_clear)        
+        self.screen_frame_event.connect("motion-notify-event", self.show_and_hide_toolbar)
+        self.screen.connect("configure-event", self.configure_hide_tool)                
+        
+    def init_toptip_window(self):
+        font = self.config.get("SystemSet", "font")
+        font_size = self.config.get("SystemSet", "font_size")
+        self.window_tool_tip = OSDTooltip(self.screen_frame, offset_x=20, offset_y=26)
+        if not font_size:
+            font_size = 16
+        self.window_tool_tip.change_style(font, font_size)
+        
+    def init_mid_open_button(self):
+        self.open_button = OpenButton(self.screen_frame, _("Open File"), 108, 40)
+        self.open_button.connect("openbutton-clicked-event", lambda w, e: self.add_file_clear())
+        self.open_button.move(-14, 30)
+        open_button_right_width = 32
+        open_button_right_height = 40
+        open_button_right_x = 56
+        open_button_right_y = 30
+        self.open_button_right = OpenButton(self.screen_frame, "",
+                                            open_button_right_width, open_button_right_height,
+                                            app_theme.get_pixbuf("screen_mid/normal_button_right.png"),
+                                            app_theme.get_pixbuf("screen_mid/hover_button_right.png"),
+                                            app_theme.get_pixbuf("screen_mid/press_button_right.png"))
+        self.open_button_right.connect("openbutton-clicked-event", self.open_button_popup_screen_menu)        
+        self.open_button_right.move(open_button_right_x, open_button_right_y)
+        menu_item = [
+            (app_theme.get_pixbuf("screen_mid/screen_menu_open_dir.png"), _("Open Directory"), self.add_file_dir_clear),
+            # (app_theme.get_pixbuf("screen_mid/screen_menu_open_cdrom.png"),"打开光盘", None),
+            (app_theme.get_pixbuf("screen_mid/screen_menu_open_url.png"), _("Open URL"), self.open_url_dialog_window),
+            ]
+        self.screen_pop_menu = ScreenMenu(self.screen_frame, menu_item)
+        self.screen_pop_menu.size(self.screen_pop_menu.width, self.screen_pop_menu.height - 26)
+        
+    def init_progressbar(self):
+        self.progressbar = ProgressBar()
+        self.progressbar.window_mode_state = 0
+        # Progressbar signal init.
+        NORMAL_WINDOW_STATE = 1
+        self.progressbar.pb.connect("motion-notify-event", 
+                                    self.progressbar_player_drag_pos_modify, 
+                                    self.progressbar, NORMAL_WINDOW_STATE)
+        self.progressbar.pb.connect("button-press-event", 
+                                    self.progressbar_player_point_pos_modify, 
+                                    self.progressbar, NORMAL_WINDOW_STATE)
+        self.progressbar.pb.connect("button-release-event", self.progressbar_set_point_bool, self.progressbar)
+        self.progressbar.pb.connect("enter-notify-event", self.show_preview_enter)
+        self.progressbar.pb.connect("leave-notify-event", self.hide_preview_leave)
+        
+    def init_toolbar(self):    
+        self.toolbar = ToolBar()
+        self.toolbar.toolbar_full_button.connect("clicked",    self.full_play_window)
+        self.toolbar.toolbar_common_button.connect("clicked",  self.show_window_widget)
+        self.toolbar.toolbar_concise_button.connect("clicked", self.hide_window_widget)
+        self.toolbar.toolbar_above_button.connect("clicked",   self.set_window_above)
+        self.toolbar.toolbar_1X_button.connect("clicked", lambda w: self.set_1x_video_play())
+        self.toolbar.toolbar_2X_button.connect("clicked", lambda w: self.set_2x_video_play())
+        
+    def init_bottom_toolbar(self):
+        bottom_toolbar_height = 50
+        FULL_WINDOW_STATE = 2
+        self.bottom_toolbar = BottomToolBar()
+        self.bottom_toolbar.panel.connect("expose-event", 
+                                          self.toolbar2_panel_expose)
+        self.bottom_toolbar.panel.set_size_request(1, bottom_toolbar_height) # Set bottom_toolbar height.                
+        self.bottom_toolbar.panel.connect("scroll-event", 
+                                          self.app_scroll_event, FULL_WINDOW_STATE) # 2->bottom_toolbar
+        self.bottom_toolbar.panel.connect("button-press-event", 
+                                          self.drag_resize_window) # draw resize window.
+        self.bottom_toolbar.panel.connect("motion-notify-event", 
+                                          self.modify_mouse_icon)
+        self.bottom_toolbar.panel.connect("motion-notify-event", 
+                                          self.set_keep_window_toolbar2)
+        self.bottom_toolbar.progressbar.pb.connect("motion-notify-event",
+                                                   self.progressbar_player_drag_pos_modify,
+                                                   self.bottom_toolbar.progressbar, FULL_WINDOW_STATE)
+        self.bottom_toolbar.progressbar.pb.connect("button-press-event",
+                                                   self.progressbar_player_point_pos_modify,
+                                                   self.bottom_toolbar.progressbar, FULL_WINDOW_STATE)
+        self.bottom_toolbar.progressbar.pb.connect("button-release-event",
+                                                   self.progressbar_set_point_bool,
+                                                   self.bottom_toolbar.progressbar)
+        self.bottom_toolbar.progressbar.pb.connect("enter-notify-event", self.show_preview_enter)
+        self.bottom_toolbar.progressbar.pb.connect("leave-notify-event", self.hide_preview_leave)
+
+        # play_control_panel.
+        self.bottom_toolbar.play_control_panel.stop_btn.connect("clicked", self.stop_button_clicked)
+        self.bottom_toolbar.play_control_panel.pre_btn.connect("clicked", self.pre_button_clicked)
+        self.bottom_toolbar.play_control_panel.start_btn.connect("clicked", 
+                                                                 self.start_button_clicked, 
+                                                                 FULL_WINDOW_STATE)
+        self.bottom_toolbar.play_control_panel.next_btn.connect("clicked", self.next_button_clicked)
+        self.bottom_toolbar.play_control_panel.open_btn.connect("clicked", self.open_button_clicked)
+
+        # bottom toolbar volume button.
+        self.bottom_toolbar.volume_button.value = 100
+        self.bottom_toolbar.volume_button.connect("volume-state-changed", 
+                                                  self.volume_button_get_value_event, 
+                                                  FULL_WINDOW_STATE)
+    
+    def init_playlist(self):    
+        self.play_list_dict = {} # play list dict type.
+        self.play_list = PlayList()
+        self.play_list.list_view.connect("double-click-item", 
+                                         self.double_play_list_file)
+        self.play_list.list_view.connect("delete-select-items", 
+                                         self.delete_play_list_file)
+        self.play_list.list_view.connect("button-press-event", 
+                                         self.show_popup_menu)
+        self.play_list.list_view.connect("single-click-item", 
+                                         self.open_current_file_dir_path)
+        self.play_list.list_view.connect("motion-notify-item", 
+                                         self.open_current_file_dir_path)
+        
+    def init_show_time_label(self):    
+        # padding=0, xalign=1, yalign=0.0, xscale=0.0, yscale=0.0
+        self.show_time_label_hframe = HorizontalFrame()
+        self.show_time_label = ShowTime()
+        self.show_time_label.time_box.set_size_request(110, -1)
+        self.show_time_label.time_font1 = "00:00:00" + " / "
+        self.show_time_label.time_font2 = "00:00:00"        
+        self.show_time_label.set_time_font(self.show_time_label.time_font1 , self.show_time_label.time_font2)
+        self.show_time_label_hframe.add(self.show_time_label.time_box)
+        self.show_time_label_hframe.set(0, 0, 1, 1)
+        self.show_time_label_hframe.set_padding(0, 0, 10, 0)
+        
+    def init_play_control_panel(self):            
+        self.play_control_panel = PlayControlPanel()
+        self.play_control_panel_hframe = self.play_control_panel.hbox_hframe
+        self.play_control_panel_hframe.set(1, 0.5, 0, 0)
+        self.play_control_panel_hframe.set_padding(0, 1, 0, 0)
+        self.play_control_panel.stop_btn.connect("clicked", self.stop_button_clicked) # stop play.
+        self.play_control_panel.pre_btn.connect("clicked", self.pre_button_clicked) # pre play.
+        # 1 -> play_control_panel
+        self.play_control_panel.start_btn.connect("clicked", self.start_button_clicked, 1) # start play or pause play.
+        self.play_control_panel.next_btn.connect("clicked", self.next_button_clicked) # next play.
+        self.play_control_panel.open_btn.connect("clicked", self.open_button_clicked) # show open window.
+        
+    def init_volume_button(self):
+        self.volume_button_hframe = HorizontalFrame()
+        self.volume_button = VolumeButton(volume_y = 14, press_emit_bool = True)
+        self.volume_button.value = 100
+        self.volume_button.connect("volume-state-changed", self.volume_button_get_value_event, 1) # 1 -> play_control_panel
+        self.volume_button.set_size_request(92, 40)
+        self.volume_button_hframe.add(self.volume_button)
+        self.volume_button_hframe.set(1, 0, 0, 0)
+        self.volume_button_hframe.set_padding(0, 0, 0, 0)        
+        
+    def init_play_list_button(self):            
+        self.play_list_button_hframe = HorizontalFrame()
+        self.play_list_button = PlayListButton()
+        # play_list_button connect signal.
+        self.play_list_button.button.connect("clicked", self.play_list_button_clicked)
+        self.play_list_button_hframe.add(self.play_list_button.button)
+        self.play_list_button_hframe.set(0, 0, 1.0, 1.0)
+        self.play_list_button_hframe.set_padding(4, 0, 0, 20)
+        
+        
+    # 123456
+    ####################################################    
         
     def get_last_new_play_file_name(self, LastNewPlayFile, file_name):    
         if file_name not in self.mp.playList:

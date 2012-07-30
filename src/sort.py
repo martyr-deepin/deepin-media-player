@@ -82,9 +82,7 @@ class Sort(object):
                     
                 self.c_point = self.c_point.child_2[1]            
                 self.node_cmp()          
-                return True
-            
-            # elif index < self.c_point.has_list.keys()[0]: # Left.
+                return True            
             else:
                 if [] == self.c_point.child_2[0]:
                     self.c_point.child_2[0] = Tree()
@@ -160,7 +158,7 @@ class Tree(object):
 
 if __name__ == "__main__":    
     sort = Sort()
-    test_en_list = ["gbcdefg", "gvdeas", "gdfdsf", "gafdsf", "gdjfkd",                    
+    test_en_list = ["gbcdefg", "gvdeas", "gdfdsf", "gafdsf", "gdjfkd",
                     "fcjsdkfj", "wodkf", "fjdke", "adfjeickmfk", "fjdskeidk"]
     test_type_list = ["/home/long/1.avi",
                       "/home/long/11.avi",
