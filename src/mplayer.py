@@ -44,6 +44,19 @@ import subprocess
 from gio_format import format 
 from ini import Config
 
+
+# 0: single playing.      
+SINGLE_PLAYING_STATE = 0
+# 1: order playing.     
+ORDER_PLAYING_STATE  = 1
+# 2: random player.      
+RANDOM_PLAYER_STATE  = 2
+# 3: single cycle player. 
+SINGLE_CYCLE_PLAYER  = 3
+# 4: list recycle play. 
+LIST_RECYCLE_PLAY    = 4
+
+
 # Get play widow ID.
 def get_window_xid(widget):
     return widget.window.xid  
@@ -309,28 +322,18 @@ class  Mplayer(gobject.GObject):
         # 2: random player.      
         # 3: single cycle player. 
         # 4: list recycle play. 
-        self.playListState = 0 
-
+        self.playListState = SINGLE_PLAYING_STATE
         
     def play(self, path):
     
         self.path = path
         if not self.state:
             self.lenState = 1 
-            volume = self.volume
-            # print self.volumebool
-            # print self.volume
             # -input fil.. streme player.
             if self.xid:
                 CMD = ['mplayer',
-                       # '-input',
-                       # 'file=/tmp/cmd',
                        '-vo',
                        'gl,2,x11',
-                       # 'x11',
-                       # 'vdpau:deint=2,vdpau,gl,x11',
-                       # '-va',
-                       # '',
                        '-zoom',
                        '-nokeepaspect',
                        '-osdlevel',
@@ -677,13 +680,13 @@ class  Mplayer(gobject.GObject):
         self.mplayerIn, self.mplayerOut = None, None
         # Send play end signal.
         self.emit("play-end", True)
-        if self.playListState == 0: 
+        if self.playListState == SINGLE_PLAYING_STATE: 
             self.quit()
             return False
         
         self.playListNum += 1
         # Order play
-        if self.playListState == 1:
+        if self.playListState == ORDER_PLAYING_STATE:
             self.quit()
             if self.playListNum < self.playListSum:
                 self.play(self.playList[self.playListNum])    
@@ -691,7 +694,7 @@ class  Mplayer(gobject.GObject):
                 self.playListNum -= 1
                 return False
         # signal loop.    
-        elif self.playListState == 3:            
+        elif self.playListState == SINGLE_CYCLE_PLAYER:            
             self.playListNum -= 1
             self.play(self.playList[self.playListNum])                
             
@@ -727,9 +730,9 @@ class  Mplayer(gobject.GObject):
         self.play(self.playList[self.playListNum])
     
     def next_or_pre_state(self):    
-        if self.playListState == 2: #Random player
+        if self.playListState == RANDOM_PLAYER_STATE: #Random player
             self.random_player()     
-        elif self.playListState == 4 or self.playListState == 0 or self.playListState == 1 or self.playListState == 3:
+        elif self.playListState == LIST_RECYCLE_PLAY or self.playListState == SINGLE_PLAYING_STATE or self.playListState == ORDER_PLAYING_STATE or self.playListState == SINGLE_CYCLE_PLAYER:
             self.list_recycle_paly() 
             
     def next(self):
@@ -780,19 +783,17 @@ class  Mplayer(gobject.GObject):
         
         if self.state:
             # scrot image.
-            os.system("cd ~/.config/deepin-media-player/buffer/ && mplayer -ss %s -noframedrop -nosound -vo png -frames 1 '%s'" % (scrot_pos, self.path))
+            SCROT_CMD = "cd ~/.config/deepin-media-player/buffer/ && mplayer -ss %s -noframedrop -nosound -vo png -frames 1 '%s'" % (scrot_pos, self.path)
+            os.system(SCROT_CMD)
             # modify image name or get image file.
-            save_image_path = get_home_path() + "/.config/deepin-media-player/buffer/"        # save image buffer dir.    
+            save_image_path = get_home_path() + "/.config/deepin-media-player/buffer/"        # save image buffer dir.
             image_list = os.listdir(get_home_path() + "/.config/deepin-media-player/buffer/") # get dir all image.
             # print image_list
             for image_name in image_list:
                 if "png" == image_name[-3:]:
                     # preview window show image.
-                    os.system("cp '%s' '%s'" % (save_image_path + image_name, 
-                                                scrot_save_path))
-                    
-                    break
-                
+                    os.system("cp '%s' '%s'" % (save_image_path + image_name, scrot_save_path))                    
+                    break                
             return True
         else:
             return False
