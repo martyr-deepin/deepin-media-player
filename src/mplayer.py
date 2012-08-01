@@ -828,9 +828,7 @@ class  Mplayer(gobject.GObject):
                 
             return True
         else:
-            return False
-        
-        
+            return False                
         
     def findCurrentDir(self, path):
         '''Get all the files in the folder'''
@@ -880,22 +878,16 @@ class  Mplayer(gobject.GObject):
         f = open(listFileName)
         for i in f:            
             if self.findFile(i.strip("\n")):
-                # self.playListSum += 1
-                # self.playList.append(i.strip("\n"))
                 self.addPlayFile(i.strip("\n"))
         f.close()
        
     def savePlayList(self, listFileName):
         f = open(listFileName, 'w')
-        for i in self.playList:
-            f.write(i + "\n")
+        for file in self.playList:
+            f.write(file + "\n")
         f.close()
                 
     def clearPlayList(self):
-        # for i in self.playList:
-        #     self.playList.remove(i)
-        # for i in self.playList:
-        #     self.playList.remove(i)
         # clear play list.
         self.playList      = [] 
         # player list sum. 

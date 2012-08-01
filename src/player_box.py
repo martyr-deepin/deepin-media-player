@@ -1120,19 +1120,17 @@ class PlayerBox(object):
         
         # argv path list.
         for file_path in self.argv_path_list:
-            if file_path != "main.py":
-                if self.mp.findDmp(file_path): # .dmp add play file.
-                    self.mp.loadPlayList(file_path)                    
-                elif os.path.isfile(file_path): # add play file.
-                    self.mp.addPlayFile(file_path)
-                elif os.path.isdir(file_path): # add dir.
-                    path_threads(file_path, self.mp)
-                elif gio_format.get_html_bool(file_path):
-                    # self.mp.addPlayFile('%s'%(file_path))
-                    break
+            if self.mp.findDmp(file_path): # .dmp add play file.
+                self.mp.loadPlayList(file_path)
+            elif os.path.isfile(file_path): # add play file.
+                self.mp.addPlayFile(file_path)
+            elif os.path.isdir(file_path): # add dir.
+                path_threads(file_path, self.mp)
+            elif gio_format.get_html_bool(file_path):
+                break
                 
-                if len(self.argv_path_list) > 0: # Set play bool.
-                    self.clear_play_list_bool = True
+            if len(self.argv_path_list) > 0: # Set play bool.
+                self.clear_play_list_bool = True
    
     def init_play_list_state(self):            
         play_list_bool = self.config.get("Window", "playlist")
