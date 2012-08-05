@@ -36,11 +36,8 @@ import gtk
 import os
 import re
 import fcntl
-# import glib
 import gobject
-# import shutil
 import subprocess
-# from utils import *
 from gio_format import format 
 from ini import Config
 
@@ -68,7 +65,6 @@ def get_home_path():
 # Get play file length.
 def get_length(file_path):
     '''Get media player length.'''    
-    # cmd = "ffmpeg -i '%s' 2>&1 | grep 'Duration' | cut -d ' ' -f 4 | sed s/,//" % (file_path)
     cmd = "mplayer -vo null -ao null -frames 0 -identify '%s' 2>&1" % (file_path)
     fp = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)    
     cmd_str = fp.communicate()[0]
@@ -78,7 +74,6 @@ def get_length(file_path):
     except:    
         
         length = 520
-    # return (fp.stdout.read().split()[0])
     return length_to_time(length), str((length))
 
 def get_vide_width_height(file_path):
@@ -116,7 +111,6 @@ def length_to_time(length):
         timeMin  = int(timeSec / 60)
         timeSec -= int(timeMin * 60)         
         
-    # if timeHour > 0:    
     return str("%s:%s:%s"%(str(time_add_zero(timeHour)), 
                            str(time_add_zero(timeMin)), 
                            str(time_add_zero(timeSec))))
