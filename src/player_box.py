@@ -906,6 +906,7 @@ class PlayerBox(object):
     def add_play_list_length(self):
         '''staring length show.[add length]'''
         path_thread_id = threading.Thread(target=self.length_threads)
+        path_thread_id.setDaemon(True)
         path_thread_id.start()
         return False
 

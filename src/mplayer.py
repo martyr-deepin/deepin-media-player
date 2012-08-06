@@ -830,9 +830,10 @@ class  Mplayer(gobject.GObject):
         for pathfile in pathdir:
             pathfile2 = path + '/' + pathfile
             if os.path.isfile(pathfile2):
-                if self.findFile(pathfile2):
-                    self.playListSum += 1
-                    self.playList.append(pathfile2)
+                self.addPlayFile(pathfile2)
+                # if self.findFile(pathfile2):
+                #     self.playListSum += 1
+                #     self.playList.append(pathfile2)
                     
     def findDmp(self, pathfile2):                                
         file1, file2 = os.path.splitext(pathfile2)
@@ -853,8 +854,7 @@ class  Mplayer(gobject.GObject):
         '''Add a File'''
         self.playList.intert(index, path)        
         self.playListSum += 1
-        
-        
+                
     def addPlayFile(self, path):    
         if self.findFile(path): # play file.
             go = True           
@@ -871,8 +871,8 @@ class  Mplayer(gobject.GObject):
     def loadPlayList(self, listFileName):
         f = open(listFileName)
         for i in f:            
-            if self.findFile(i.strip("\n")):
-                self.addPlayFile(i.strip("\n"))
+            # if self.findFile(i.strip("\n")):
+            self.addPlayFile(i.strip("\n"))
         f.close()
        
     def savePlayList(self, listFileName):
