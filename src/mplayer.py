@@ -41,7 +41,7 @@ import subprocess
 from gio_format import format 
 from ini import Config
 
-
+# play list state.
 # 0: single playing.      
 SINGLE_PLAYING_STATE = 0
 # 1: order playing.     
@@ -52,7 +52,13 @@ RANDOM_PLAYER_STATE  = 2
 SINGLE_CYCLE_PLAYER  = 3
 # 4: list recycle play. 
 LIST_RECYCLE_PLAY    = 4
-
+# channel state.
+CHANNEL_NORMAL_STATE = 0
+CHANNEL_LEFT_STATE   = 1
+CHANNEL_RIGHT_STATE  = 2
+# playing state.
+STOPING_STATE  = 0
+STARTING_STATE = 1
 
 # Get play widow ID.
 def get_window_xid(widget):
@@ -283,7 +289,7 @@ class  Mplayer(gobject.GObject):
         
         self.xid         = xid 
         self.mplayer_pid = 0
-        self.state       = 0
+        self.state       = STOPING_STATE
         self.vide_bool   = False
         self.pause_bool  = False
         self.lenState    = 0
@@ -297,7 +303,7 @@ class  Mplayer(gobject.GObject):
         self.posNum      = 0
         
         # select channel state.
-        self.channel_state = 0
+        self.channel_state = CHANNEL_NORMAL_STATE
         
         # player list.
         self.playList      = [] 
@@ -321,7 +327,7 @@ class  Mplayer(gobject.GObject):
     def play(self, path):
     
         self.path = path
-        if not self.state:
+        if not (self.state): # STOPING_STATE
             self.lenState = 1 
             # -input fil.. streme player.
             if self.xid:
@@ -371,7 +377,7 @@ class  Mplayer(gobject.GObject):
                                 
             # IO_HUP[Monitor the pipeline is disconnected].
             self.eofID = gobject.io_add_watch(self.mplayerOut, gobject.IO_HUP, self.mplayerEOF)
-            self.state = 1                
+            self.state = STARTING_STATE
             self.vide_bool = get_vide_flags(self.path)
             # Set volume.
             if self.volumebool:
@@ -382,8 +388,8 @@ class  Mplayer(gobject.GObject):
             gobject.timeout_add(250, self.emit_play_start_event)
             
     def emit_play_start_event(self):
-        self.channel_state = 0
-        self.emit("play-start", self.mplayer_pid)        
+        self.channel_state = CHANNEL_NORMAL_STATE # 0
+        self.emit("play-start", self.mplayer_pid)
         return False
     
     ## Cmd control ##    
@@ -450,13 +456,13 @@ class  Mplayer(gobject.GObject):
     ## Subtitle Control ##
     def subload(self, subFile):
         '''Load subtitle'''
-        if self.state:
+        if STARTING_STATE == self.state: # STARTING_STATE
             self.cmd('sub_load %s\n' % (subFile))
             self.cmd('sub_select 1\n')
             
     def subremove(self):
         '''Remove subtitle'''
-        if self.state:
+        if STARTING_STATE == self.state:
             self.cmd('sub_remove\n')
             
     # subtitle alignment. # 0 top 1 center 2 bottom       
@@ -503,48 +509,50 @@ class  Mplayer(gobject.GObject):
     def addvolume(self, volumeNum):
         '''Add volume'''
         self.volume = volumeNum
-        if self.volume > 100:
-            self.volume = 100
-
-        if self.state:
+        self.volume = min(self.volume, 100)
+        # if self.volume > 100:
+        #     self.volume = 100
+        
+        if STARTING_STATE == self.state:
             self.cmd('volume +%s 1\n' % str(self.volume))
         
     def decvolume(self, volumeNum):
         '''Decrease volume'''
         self.volume = volumeNum
-        if self.volume < 0:
-            self.volume = 0            
-        if self.state:
+        self.volume = max(self.volume, 0)
+        # if self.volume < 0:
+        #     self.volume = 0            
+        if STARTING_STATE == self.state:
             self.cmd('volume -%s 1\n' % str(self.volume))
             
     def setvolume(self, volumeNum):
         '''Add volume'''
         self.volume = volumeNum
-        if self.volume > 100:
-            self.volume = 100
-        if self.volume < 0:    
-            self.volume = 0
-            
-        if self.state:
+        self.volume = max(min(self.volume, 100), 0)
+        # if self.volume > 100:
+        #     self.volume = 100
+        # if self.volume < 0:    
+        #     self.volume = 0            
+        if STARTING_STATE == self.state:
             self.cmd('volume %s 1\n' % str(self.volume))
             
     def leftchannel(self):
         '''The left channel'''
-        if self.state:
+        if STARTING_STATE == self.state:
             self.cmd('af channels=2:2:0:0:0:0\n')
-            self.channel_state = 1
+            self.channel_state = CHANNEL_LEFT_STATE #1
     
     def rightchannel(self):
         '''The right channel'''
-        if self.state:
+        if STARTING_STATE == self.state:
             self.cmd('af channels=2:2:0:1:1:1\n')             
-            self.channel_state = 2
+            self.channel_state = CHANNEL_RIGHT_STATE #2
             
     def normalchannel(self):
         '''Normal channel'''
-        if self.state:
+        if STARTING_STATE == self.state:
             self.cmd('af channels=2:2:0:0:1:1\n')
-            self.channel_state = 0
+            self.channel_state = CHANNEL_NORMAL_STATE #0
             
     def offmute(self): 
         self.volumebool = False
@@ -561,44 +569,44 @@ class  Mplayer(gobject.GObject):
     # brightness.
     def addbri(self, briNum):
         '''Add brightness'''
-        if self.state:
+        if STARTING_STATE == self.state:
             self.cmd('brightness +%s\n' % (briNum))
     
     def decbri(self, briNum):
         '''Decrease brightness'''
-        if self.state:
+        if STARTING_STATE == self.state:
             self.cmd('brightness -%s\n' % (briNum))
     
     # saturation.
     def addsat(self, satNum):
         '''Add saturation'''
-        if self.state:
+        if STARTING_STATE == self.state:
             self.cmd('saturation +%s\n' % (satNum))
             
     def decsat(self, satNum):
         '''Decrease saturation'''        
-        if self.state:
+        if STARTING_STATE == self.state:
             self.cmd('saturation -%s\n' % (satNum))
     
     # contrast. 
     def addcon(self, conNum):
         '''Add contrast'''
-        if self.state:
+        if STARTING_STATE == self.state:
             self.cmd('contrast +%s\n' % (conNum))    
             
     def deccon(self, conNum):
         '''Decrease contrast'''    
-        if self.state:
+        if STARTING_STATE == self.state:
             self.cmd('contrast -%s\n' % (conNum))
     
     # hue.
     def addhue(self, hueNum):
         '''Add hue'''
-        if self.state:
+        if STARTING_STATE == self.state:
             self.cmd('hue +%s\n' % (hueNum))        
     def dechue(self, hueNum):
         '''Decrease hue'''
-        if self.state:
+        if STARTING_STATE == self.state:
             self.cmd('hue -%s\n' % (hueNum))
     
             
@@ -610,41 +618,41 @@ class  Mplayer(gobject.GObject):
             
     def seek(self, seekNum):        
         '''Set rate of progress'''
-        if self.state:
+        if STARTING_STATE == self.state:
             self.cmd('seek %d 2\n' % (seekNum))               
             
     def fseek(self, seekNum):
         '''Fast forward'''
-        if self.state:
+        if STARTING_STATE == self.state:
             self.cmd('seek +%d\n' % (seekNum))   
             self.emit("play-fseek", seekNum)
             
     def bseek(self, seekNum):
         '''backward'''
-        if self.state:
+        if STARTING_STATE == self.state:
             self.cmd('seek -%d\n' % (seekNum))
             self.emit("play-bseek", seekNum)
             
     def pause(self):
-        if self.state  and not self.pause_bool:             
+        if (STARTING_STATE == self.state) and (not self.pause_bool):             
             self.pause_bool = True
             self.cmd('pause \n')
 
     def start_play(self):        
-        if self.state and self.pause_bool:
+        if (STARTING_STATE == self.state) and (self.pause_bool):
             self.pause_bool = False
             self.cmd('pause \n')        
                     
     def quit(self):
         '''quit deepin media player.'''
-        if self.state:
+        if STARTING_STATE == self.state:
             
             self.stopGetPosID()
             self.stopEofID()
             # Send play end signal.
             self.emit("play-end", True)
             self.cmd('quit \n')
-            self.state = 0
+            self.state = STOPING_STATE
             try:
                 self.mplayerIn.close()
                 self.mplayerOut.close()
@@ -670,7 +678,7 @@ class  Mplayer(gobject.GObject):
     def mplayerEOF(self, error, mplayer):
         '''Monitoring disconnect'''
         self.stopGetPosID()
-        self.state = 0 
+        self.state = STOPING_STATE
         self.mplayerIn, self.mplayerOut = None, None
         # Send play end signal.
         self.emit("play-end", True)
@@ -775,7 +783,7 @@ class  Mplayer(gobject.GObject):
         init_mplayer_config()
         #########################
         
-        if self.state:
+        if STARTING_STATE == self.state:
             # scrot image.
             SCROT_CMD = "cd ~/.config/deepin-media-player/buffer/ && mplayer -ss %s -noframedrop -nosound -vo png -frames 1 '%s'" % (scrot_pos, self.path)
             os.system(SCROT_CMD)
@@ -803,7 +811,7 @@ class  Mplayer(gobject.GObject):
         if not os.path.exists(os.path.split(scrot_save_path)[0]):
             os.mkdir(os.path.split(scrot_save_path)[0])
             
-        if self.state:
+        if STARTING_STATE == self.state:
             # scrot image.
             os.system("cd /tmp/buffer/ && mplayer -ss %s -noframedrop -nosound -vo png -frames 1 '%s'" % (scrot_pos, self.path))
             # modify image name or get image file.
@@ -892,9 +900,10 @@ class  Mplayer(gobject.GObject):
         self.random_num = 0        
         self.emit("clear-play-list", 1)
         
-
     def get_player_file_name(self, pathfile2):     
         file1, file2 = os.path.split(pathfile2)
         return os.path.splitext(file2)[0]
-    
+        
+    def starting_state_bool(self):
+        return STARTING_STATE == self.state
     

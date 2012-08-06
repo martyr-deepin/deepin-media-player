@@ -32,7 +32,6 @@ from utils    import allocation
 from tooltip  import tooltip_text
 from play_list_control_panel   import PlayListControlPanel
 
-
 import gtk
 import gobject
 
@@ -126,7 +125,7 @@ class MediaItem(gobject.GObject):
         (self.title_width, self.title_height) = get_content_size(self.title, DEFAULT_FONT_SIZE) #DEFAULT_FONT_SIZE
         self.title_width = 60
         
-        self.length_padding_x = 75
+        self.length_padding_x = 60
         self.length_padding_y = 5
         (self.length_width, self.length_height) = get_content_size(self.length, DEFAULT_FONT_SIZE) #DEFAULT_FONT_SIZE
         self.length_width = 10
