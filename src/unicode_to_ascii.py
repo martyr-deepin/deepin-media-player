@@ -23,33 +23,24 @@
 
 class UnicodeToAscii(object):    
     def unicode_bool(self, strings):
-        if 0 <= ord(strings[0:1].lower()) <= 127:
-            return False # False -> asicc. 
-        return True # True -> unicoe.
+        '''Unicode.'''
+        # False -> asicc. # True -> unicoe.
+        return not (0 <= ord(strings[0:1].lower()) <= 127)
     
     def number_bool(self, number):
-        if 0 <= ord(number[0:1].lower()) <= 127:
-            if 49 <= ord(number[0:1].lower()) <= 57:
-                return True            
-        return False
+        '''Number.'''
+        return (0 <= ord(number[0:1].lower()) <= 127) and (49 <= ord(number[0:1].lower()) <= 57)
         
     def en_bool(self, en):
-        '''English.'''
-        if 0 <= ord(en[0:1].lower()) <= 127:
-            if 65 <= ord(en[0:1].lower()) <= 90 or 97 <= ord(en[0:1].lower()) <= 122:
-                return True            
-        return False    
-    
+        '''English.'''        
+        return (0 <= ord(en[0:1].lower()) <= 127) and (65 <= ord(en[0:1].lower()) <= 90 or 97 <= ord(en[0:1].lower()) <= 122)    
     
     def unicoe_to_index(self, strings, index):
-        if len(strings.decode('utf-8')) > index:
-            return strings.decode('utf-8')[index]
-        return None
+        return None if len(strings.decode('utf-8')) <= index else strings.decode('utf-8')[index]
     
     def unicode_to_ascii(self, strings):            
         if 0 <= ord(strings[0:1].lower()) <= 127:
-            key = strings[0:1].lower()            
-            return key
+            return strings[0:1].lower() 
         
         key = strings.decode('utf-8') # str to utf-8(unicode)
         key = key[0].encode('gbk') # utf-8 to gbk.                                
