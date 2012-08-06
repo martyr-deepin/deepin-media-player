@@ -72,7 +72,13 @@ STARTING_PLAY = 1
 STOPING_PLAY  = 0
 VOLUME_BUTTON_STATE = 1
 MUTE_STATE = -1
-
+# ascept state. "16:10""16:9""4:3""1.85:1""2.35:1""默认"
+ASCEPT_NORMAL_STATE = "默认"
+ASCEPT_4X3_STATE    = "4:3"
+ASCEPT_16X9_STATE   = "16:9"
+ASCEPT_16X10_STATE  = "16:10"
+ASCEPT_1_85X1_STATE = "1.85:1"
+ASCEPT_2_35X1_STATE = "2.35:1"
 
 class PlayerBox(object):
     def __init__ (self, app, argv_path_list):
@@ -201,7 +207,7 @@ class PlayerBox(object):
         # menu icon pixbuf. menupixbuf ..
         self.video_aspect_pixbuf = app_theme.get_pixbuf("screen/check_normal.png") # aspect state pixbuf.
         self.video_aspect_select_pixbuf = app_theme.get_pixbuf("screen/check_hover.png")
-        self.video_aspect_type = "默认"
+        self.video_aspect_type = ASCEPT_NORMAL_STATE #"默认"
         self.playwinmax_bool = True
         self.menu_concie_normal_pixbuf = app_theme.get_pixbuf("screen/menu_concise_normal.png")
         self.menu_concie_hover_pixbuf = app_theme.get_pixbuf("screen/menu_concise_hover.png")
@@ -1299,54 +1305,54 @@ class PlayerBox(object):
 
     def set_restart_aspect(self):
         self.screen_frame.set(0.0, 0.0, 1.0, 1.0)
-        if self.playwinmax_bool and self.video_aspect_type != "默认":
+        if self.playwinmax_bool and self.video_aspect_type != ASCEPT_NORMAL_STATE:
             self.mp.playwinmax()
             self.playwinmax_bool = False
 
-        self.video_aspect_type = "默认"
+        self.video_aspect_type = ASCEPT_NORMAL_STATE
 
     def set_4X3_aspect(self):    # munu callback
         if 1 == self.mp.state:
-            self.video_aspect_type = "4:3"
+            self.video_aspect_type = ASCEPT_4X3_STATE # "4:3"
             self.set_ascept_function()
 
     def set_16X9_aspect(self):
         if 1 == self.mp.state:
-            self.video_aspect_type = "16:9"
+            self.video_aspect_type = ASCEPT_16X9_STATE # "16:9"
             self.set_ascept_function()
 
     def set_16X10_aspect(self):
         if 1 == self.mp.state:
-            self.video_aspect_type = "16:10"
+            self.video_aspect_type = ASCEPT_16X10_STATE # "16:10"
             self.set_ascept_function()
 
     def set_1_85X1_aspect(self):
         if 1 == self.mp.state:
-            self.video_aspect_type = "1.85:1"
+            self.video_aspect_type = ASCEPT_1_85X1_STATE # "1.85:1"
             self.set_ascept_function()
 
     def set_2_35X1_aspect(self):
         if 1 == self.mp.state:
-            self.video_aspect_type = "2.35:1"
+            self.video_aspect_type = ASCEPT_2_35X1_STATE # "2.35:1"
             self.set_ascept_function()
 
     def set_ascept_function(self):
-        if not self.playwinmax_bool and self.video_aspect_type != "默认":
+        if not self.playwinmax_bool and self.video_aspect_type != ASCEPT_NORMAL_STATE:
             self.mp.playwinmax()
             self.playwinmax_bool = True
 
         # Set screen frame ascept.
         x, y, w, h = self.screen_frame.allocation
         video_aspect = 0
-        if self.video_aspect_type == "4:3":
+        if self.video_aspect_type == ASCEPT_4X3_STATE: #"4:3"
             video_aspect = round(float(4) / 3, 2)
-        elif self.video_aspect_type == "16:9":
+        elif self.video_aspect_type == ASCEPT_16X9_STATE: #"16:9"
             video_aspect = round(float(16) / 9, 2)
-        elif self.video_aspect_type == "16:10":
+        elif self.video_aspect_type == ASCEPT_16X10_STATE: #"16:10"
             video_aspect = round(float(16) / 10, 2)
-        elif self.video_aspect_type == "1.85:1":
+        elif self.video_aspect_type == ASCEPT_1_85X1_STATE: #"1.85:1"
             video_aspect = round(float(1.85) / 1, 2)
-        elif self.video_aspect_type == "2.35:1":
+        elif self.video_aspect_type == ASCEPT_2_35X1_STATE: #"2.35:1"
             video_aspect = round(float(2.35) / 1, 2)
 
         screen_frame_aspect = round(float(w) / h, 2)
@@ -1951,10 +1957,10 @@ class PlayerBox(object):
                 self.key_return()                
          
         # aspect set.                                    
-        if self.video_aspect_type != "默认":        
+        if self.video_aspect_type != ASCEPT_NORMAL_STATE: # "默认"
             self.set_ascept_function()
         # full window.
-        if self.playwinmax_bool and self.video_aspect_type == "默认":
+        if self.playwinmax_bool and (self.video_aspect_type == ASCEPT_NORMAL_STATE): # "默认"
             self.mp.playwinmax()
             self.playwinmax_bool = False
         
@@ -2133,17 +2139,17 @@ class PlayerBox(object):
         pixbuf_1_85X1    = None
         pixbuf_2_35X1    = None
         
-        if "默认" == self.video_aspect_type:
+        if ASCEPT_NORMAL_STATE == self.video_aspect_type: #"默认"
             pixbuf_normal = (self.video_aspect_pixbuf, self.video_aspect_select_pixbuf)
-        elif "4:3" == self.video_aspect_type:
+        elif ASCEPT_4X3_STATE == self.video_aspect_type: #"4:3"
             pixbuf_4X3 = (self.video_aspect_pixbuf, self.video_aspect_select_pixbuf)
-        elif "16:9" == self.video_aspect_type:
+        elif ASCEPT_16X9_STATE == self.video_aspect_type: #"16:9"
             pixbuf_16X9 = (self.video_aspect_pixbuf, self.video_aspect_select_pixbuf)
-        elif "16:10" == self.video_aspect_type:    
+        elif ASCEPT_16X10_STATE == self.video_aspect_type: # "16:10"
             pixbuf_16X10 = (self.video_aspect_pixbuf, self.video_aspect_select_pixbuf)
-        elif "1.85:1" == self.video_aspect_type:    
+        elif ASCEPT_1_85X1_STATE == self.video_aspect_type: # "1.85:1"
             pixbuf_1_85X1 = (self.video_aspect_pixbuf, self.video_aspect_select_pixbuf)
-        elif "2.35:1" == self.video_aspect_type:
+        elif ASCEPT_2_35X1_STATE == self.video_aspect_type: #"2.35:1"
             pixbuf_2_35X1 = (self.video_aspect_pixbuf, self.video_aspect_select_pixbuf)
         
         self.screen_menu = Menu([(pixbuf_normal, _("Original"),  self.set_restart_aspect),
@@ -2293,17 +2299,17 @@ class PlayerBox(object):
         pixbuf_1_85X1    = None
         pixbuf_2_35X1    = None
         
-        if "默认" == self.video_aspect_type:
+        if ASCEPT_NORMAL_STATE == self.video_aspect_type: # 默认
             pixbuf_normal = (self.video_aspect_pixbuf, self.video_aspect_select_pixbuf)
-        elif "4:3" == self.video_aspect_type:
+        elif ASCEPT_4X3_STATE == self.video_aspect_type: #"4:3"
             pixbuf_4X3 = (self.video_aspect_pixbuf, self.video_aspect_select_pixbuf)
-        elif "16:9" == self.video_aspect_type:
+        elif ASCEPT_16X9_STATE == self.video_aspect_type: #"16:9"
             pixbuf_16X9 = (self.video_aspect_pixbuf, self.video_aspect_select_pixbuf)
-        elif "16:10" == self.video_aspect_type:    
+        elif ASCEPT_16X10_STATE == self.video_aspect_type: # "16:10"
             pixbuf_16X10 = (self.video_aspect_pixbuf, self.video_aspect_select_pixbuf)
-        elif "1.85:1" == self.video_aspect_type:    
+        elif ASCEPT_1_85X1_STATE == self.video_aspect_type: #"1.85:1"
             pixbuf_1_85X1 = (self.video_aspect_pixbuf, self.video_aspect_select_pixbuf)
-        elif "2.35:1" == self.video_aspect_type:
+        elif ASCEPT_2_35X1_STATE == self.video_aspect_type: # "2.35:1"
             pixbuf_2_35X1 = (self.video_aspect_pixbuf, self.video_aspect_select_pixbuf)
         
         screen_menu = Menu([(pixbuf_normal, _("Original"),  self.set_restart_aspect),
