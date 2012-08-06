@@ -589,7 +589,7 @@ class PlayerBox(object):
             volume_value = 5
             if event.direction == gtk.gdk.SCROLL_UP:
                 temp_value = 0
-                if self.mode_state_bool:
+                if self.mode_state_bool or self.full_bool:
                     temp_value = min(self.mp.volume + volume_value, 100)
                     self.bottom_toolbar.volume_button.value = temp_value
                     self.volume_button.value = temp_value                    
@@ -600,7 +600,7 @@ class PlayerBox(object):
                                     
             elif event.direction == gtk.gdk.SCROLL_DOWN:
                 temp_value = 0
-                if self.mode_state_bool:                    
+                if self.mode_state_bool or self.full_bool:                    
                     temp_value = max(self.mp.volume - volume_value, 0)
                     self.bottom_toolbar.volume_button.value = temp_value
                     self.volume_button.value = temp_value
@@ -1508,7 +1508,7 @@ class PlayerBox(object):
         self.bottom_toolbar.panel.set_keep_above(True)
         self.app.window.fullscreen()
         self.full_bool = True
-        self.mode_state_bool = True
+        # self.mode_state_bool = True
         # Set toolbar state.
         self.set_toolbar_state()
 
