@@ -2029,7 +2029,12 @@ class PlayerBox(object):
             pre_num = 0
         else:    
             pre_num = float(posNum) / self.mp.lenNum * 100
-        self.messagebox('%s%s%s %s(%s%s)'%(_("Forward"), fseek_num, _("s"),length_to_time(self.mp.posNum), "%", int(pre_num)))    
+        self.messagebox('%s%s%s %s(%s%s)'%(_("Forward"), 
+                                           fseek_num, 
+                                           _("s"), 
+                                           length_to_time(self.mp.posNum), 
+                                           int(pre_num), "%"
+                                           ))    
         
     def media_player_bseek(self, mplayer, bseek_num):         
         posNum = self.mp.posNum
@@ -2038,7 +2043,13 @@ class PlayerBox(object):
             pre_num = 0
         else:    
             pre_num = int(float(posNum) / self.mp.lenNum * 100)
-        self.messagebox('%s%s%s %s(%s%s)'%(_("Rewind"), bseek_num, _("s"),length_to_time(self.mp.posNum), "%", int(pre_num)))
+        self.messagebox('%s%s%s %s(%s%s)'%(_("Rewind"), 
+                                           bseek_num,
+                                           _("s"),
+                                           length_to_time(self.mp.posNum),                                            
+                                           int(pre_num),
+                                           "%"
+                                           ))
     
     def media_player_midfy_start_bool(self):  # media_player_end and media_player_next and media_player_pre.
         self.progressbar.set_pos(0)
