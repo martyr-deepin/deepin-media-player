@@ -71,9 +71,9 @@ def get_length(file_path):
     length_compile = re.compile(r"ID_LENGTH=([\d|\.]+)")
     try:
         length = length_compile.findall(cmd_str)[0]
-    except:    
-        
+    except:            
         length = 520
+        
     return length_to_time(length), str((length))
 
 def get_vide_width_height(file_path):
@@ -93,7 +93,7 @@ def get_vide_width_height(file_path):
 
             return float(video_width), float(video_height)
         else:
-            return None, None
+            return float(0), float(0)
     except:
         return float(0), float(0)
 
@@ -850,10 +850,10 @@ class  Mplayer(gobject.GObject):
         self.playList.remove(path)            
         self.playListSum -= 1        
         
-    def addPlayList(self, index, path):
-        '''Add a File'''
-        self.playList.intert(index, path)        
-        self.playListSum += 1
+    # def addPlayList(self, index, path):
+    #     '''Add a File'''
+    #     self.playList.intert(index, path)        
+    #     self.playListSum += 1
                 
     def addPlayFile(self, path):    
         if self.findFile(path): # play file.

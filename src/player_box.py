@@ -51,6 +51,7 @@ from ini_gui              import IniGui
 from ini_gui              import VIDEO_ADAPT_WINDOW_STATE, WINDOW_ADAPT_VIDEO_STATE, UP_CLOSE_VIDEO_STATE, AI_FULL_VIDEO_STATE
 from gio_format           import Format
 from mplayer              import Mplayer, get_length, get_home_path, length_to_time, get_vide_width_height
+from mplayer import SINGLE_PLAYING_STATE, ORDER_PLAYING_STATE, RANDOM_PLAYER_STATE, SINGLE_CYCLE_PLAYER, LIST_RECYCLE_PLAY
 from playlist             import PlayList, MediaItem
 from sort                 import Sort
 from open_button          import OpenButton, ScreenMenu, OpenUrl
@@ -67,6 +68,10 @@ X_VIDEO_PLAY_0_5 = 1 << 0
 X_VIDEO_PLAY_1   = 1 << 1
 X_VIDEO_PLAY_1_5 = 1 << 2
 X_VIDEO_PLAY_2   = 1 << 3
+STARTING_PLAY = 1
+STOPING_PLAY  = 0
+VOLUME_BUTTON_STATE = 1
+MUTE_STATE = -1
 
 
 class PlayerBox(object):
@@ -607,16 +612,16 @@ class PlayerBox(object):
             self.messagebox("%s:%s%s"%(_("Volumn"), str(int(temp_value)), "%"))
             
     def volume_button_get_value_event(self, volume_button, value, volume_state, volume_bit):
-        if -1 == volume_state: # -1 -> stop play
-            if self.mp:
-                if 1 == self.mp.state: # 1 -> start play
+        if MUTE_STATE == volume_state: # -1 -> stop play
+            if self.mp:                
+                if STARTING_PLAY == self.mp.state: # 1 -> start play
                     self.mp.nomute()                                       
                 else:    
                     self.mp.volumebool = True # mute: True  no mute: False.
                 self.messagebox(_("Mute: enabled"))    
         else:
             if self.mp:
-                if 1 == self.mp.state:                    
+                if STARTING_PLAY == self.mp.state:                    
                     self.mp.offmute()                                     
                     self.mp.setvolume(value)                    
                     self.messagebox(str("%s:%s%s"%(_("Volumn"), str(value), "%")))
@@ -624,7 +629,7 @@ class PlayerBox(object):
                     self.mp.volumebool = False
                     self.messagebox(str("%s:%s%s"%(_("Volumn"), str(value), "%")))
                     
-        if 1 == volume_bit: # volume_bit: 1-> volume_button , 2-> volume_button of bottom_toolbar
+        if VOLUME_BUTTON_STATE == volume_bit: # volume_bit: 1-> volume_button , 2-> volume_button of bottom_toolbar
             self.bottom_toolbar.volume_button.value = value
         else:
             self.volume_button.value = value
@@ -702,7 +707,7 @@ class PlayerBox(object):
 
     def key_sort_image(self):
         # print "sort image..."
-        if 1 == self.mp.state: 
+        if STARTING_PLAY == self.mp.state: 
             scrot_bool = self.config.get("ScreenshotSet", "current_show_sort")
             
             save_clipboard_bool =  self.config.get("ScreenshotSet", "save_clipboard")
@@ -931,7 +936,7 @@ class PlayerBox(object):
 
         if self.clear_play_list_bool:
             self.clear_play_list_bool = False
-            if 1 == self.mp.state:
+            if STARTING_PLAY == self.mp.state:
                 self.mp.quit()
             self.start_button_clicked(self.play_control_panel.start_btn, 1)
             self.play_list.list_view.set_highlight(self.play_list.list_view.items[0])
@@ -965,7 +970,7 @@ class PlayerBox(object):
 
     def start_button_clicked(self, widget, start_bit):
         '''start or pause'''
-        if 0 == self.mp.state:
+        if STOPING_PLAY == self.mp.state:
             self.mp.next() # Test pause.
             self.play_control_panel.start_btn.start_bool = False
             self.play_control_panel.start_btn.queue_draw()
@@ -982,7 +987,7 @@ class PlayerBox(object):
             if 1 == start_bit:
                 self.bottom_toolbar.play_control_panel.start_btn.start_bool = self.play_control_panel.start_btn.start_bool
                 self.bottom_toolbar.play_control_panel.start_btn.queue_draw()
-            if 2 == start_bit:
+            elif 2 == start_bit:
                 self.play_control_panel.start_btn.start_bool = self.bottom_toolbar.play_control_panel.start_btn.start_bool
                 self.play_control_panel.start_btn.queue_draw()
 
@@ -1110,7 +1115,7 @@ class PlayerBox(object):
         self.mp.connect("clear-play-list", self.clear_play_list)
         self.mp.connect("same-name-event", self.get_same_name_event)
         
-        self.mp.playListState = 1 # init play mode.
+        self.mp.playListState = ORDER_PLAYING_STATE # 1 # init play mode.
         
         self.init_volume_value()  # init volume.
         
@@ -2147,15 +2152,15 @@ class PlayerBox(object):
                                  ])        
         
         # 0: single playing.      
-        single_play_state       = 0
+        # single_play_state       = 0
         # 1: order playing.     
-        order_play_state        = 1
+        # order_play_state        = 1
         # 2: random player.      
-        random_play_state       = 2
+        # random_play_state       = 2
         # 3: single cycle player. 
-        signle_cycle_play_state = 3
+        # signle_cycle_play_state = 3
         # 4: list recycle play. 
-        list_recycle_play_state = 4
+        # list_recycle_play_state = 4
         
         play_sequence_pixbuf = (self.play_sequence_select_normal_pixbuf, self.play_sequence_select_hover_pixbuf)
         single_pixbuf = None
@@ -2164,15 +2169,15 @@ class PlayerBox(object):
         signle_cycle_pixbuf = None
         list_recycle_pixbuf = None
         
-        if self.mp.playListState   == single_play_state:
+        if self.mp.playListState   == SINGLE_PLAYING_STATE: # single_play_state:
             single_pixbuf = play_sequence_pixbuf
-        elif self.mp.playListState == order_play_state:    
+        elif self.mp.playListState == ORDER_PLAYING_STATE: # order_play_state:    
             order_pixbuf  = play_sequence_pixbuf
-        elif self.mp.playListState == random_play_state:
+        elif self.mp.playListState == RANDOM_PLAYER_STATE: # random_play_state:
             random_pixbuf = play_sequence_pixbuf
-        elif self.mp.playListState == signle_cycle_play_state:    
+        elif self.mp.playListState == SINGLE_CYCLE_PLAYER: # signle_cycle_play_state:    
             signle_cycle_pixbuf = play_sequence_pixbuf
-        elif self.mp.playListState == list_recycle_play_state:    
+        elif self.mp.playListState == LIST_RECYCLE_PLAY: # list_recycle_play_state:    
             list_recycle_pixbuf = play_sequence_pixbuf
 
         # In title root menu.
@@ -2226,15 +2231,15 @@ class PlayerBox(object):
     def screen_right_key_menu(self, event):
         
         # 0: single playing.      
-        single_play_state       = 0
+        # single_play_state       = 0
         # 1: order playing.     
-        order_play_state        = 1
+        # order_play_state        = 1
         # 2: random player.      
-        random_play_state       = 2
+        # random_play_state       = 2
         # 3: single cycle player. 
-        signle_cycle_play_state = 3
+        # signle_cycle_play_state = 3
         # 4: list recycle play. 
-        list_recycle_play_state = 4
+        # list_recycle_play_state = 4
         
         play_sequence_pixbuf = (self.play_sequence_select_normal_pixbuf, self.play_sequence_select_hover_pixbuf)
         single_pixbuf = None
@@ -2243,15 +2248,15 @@ class PlayerBox(object):
         signle_cycle_pixbuf = None
         list_recycle_pixbuf = None
         
-        if self.mp.playListState   == single_play_state:
+        if self.mp.playListState   == SINGLE_PLAYING_STATE: # single_play_state:
             single_pixbuf = play_sequence_pixbuf
-        elif self.mp.playListState == order_play_state:    
+        elif self.mp.playListState == ORDER_PLAYING_STATE: # order_play_state:    
             order_pixbuf  = play_sequence_pixbuf
-        elif self.mp.playListState == random_play_state:
+        elif self.mp.playListState == RANDOM_PLAYER_STATE: # random_play_state:
             random_pixbuf = play_sequence_pixbuf
-        elif self.mp.playListState == signle_cycle_play_state:    
+        elif self.mp.playListState == SINGLE_CYCLE_PLAYER: # signle_cycle_play_state:    
             signle_cycle_pixbuf = play_sequence_pixbuf
-        elif self.mp.playListState == list_recycle_play_state:    
+        elif self.mp.playListState == LIST_RECYCLE_PLAY:   #list_recycle_play_state:    
             list_recycle_pixbuf = play_sequence_pixbuf
 
         # screen right menu set mplayer play state.
@@ -2362,15 +2367,15 @@ class PlayerBox(object):
     def show_popup_menu(self, widget, event):
         if 3 == event.button:
             # 0: single playing.      
-            single_play_state       = 0
+            # single_play_state       = 0
             # 1: order playing.     
-            order_play_state        = 1
+            # order_play_state        = 1
             # 2: random player.      
-            random_play_state       = 2
+            # random_play_state       = 2
             # 3: single cycle player. 
-            signle_cycle_play_state = 3
+            # signle_cycle_play_state = 3
             # 4: list recycle play. 
-            list_recycle_play_state = 4
+            # list_recycle_play_state = 4
         
             play_sequence_pixbuf = (self.play_sequence_select_normal_pixbuf, self.play_sequence_select_hover_pixbuf)
             single_pixbuf = None
@@ -2378,16 +2383,16 @@ class PlayerBox(object):
             random_pixbuf = None
             signle_cycle_pixbuf = None
             list_recycle_pixbuf = None
-        
-            if self.mp.playListState   == single_play_state:
+
+            if self.mp.playListState   == SINGLE_PLAYING_STATE: # single_play_state:
                 single_pixbuf = play_sequence_pixbuf
-            elif self.mp.playListState == order_play_state:    
+            elif self.mp.playListState == ORDER_PLAYING_STATE: # order_play_state:    
                 order_pixbuf  = play_sequence_pixbuf
-            elif self.mp.playListState == random_play_state:
+            elif self.mp.playListState == RANDOM_PLAYER_STATE: # random_play_state:
                 random_pixbuf = play_sequence_pixbuf
-            elif self.mp.playListState == signle_cycle_play_state:    
+            elif self.mp.playListState == SINGLE_CYCLE_PLAYER: # signle_cycle_play_state:
                 signle_cycle_pixbuf = play_sequence_pixbuf
-            elif self.mp.playListState == list_recycle_play_state:    
+            elif self.mp.playListState == LIST_RECYCLE_PLAY: # list_recycle_play_state:  
                 list_recycle_pixbuf = play_sequence_pixbuf
 
             '''play list popup menu'''
@@ -2430,23 +2435,23 @@ class PlayerBox(object):
 
     def sigle_play(self):
         if self.mp:
-            self.mp.playListState = 0
+            self.mp.playListState = SINGLE_PLAYING_STATE # 0
 
     def sequence_play(self):
         if self.mp:
-            self.mp.playListState = 1
+            self.mp.playListState = ORDER_PLAYING_STATE # 1
 
     def rand_play(self):
         if self.mp:
-            self.mp.playListState = 2
+            self.mp.playListState = RANDOM_PLAYER_STATE # 2
 
     def sigle_loop_play(self):
         if self.mp:
-            self.mp.playListState = 3
+            self.mp.playListState = SINGLE_CYCLE_PLAYER # 3
 
     def loop_list_play(self):
         if self.mp:
-            self.mp.playListState = 4
+            self.mp.playListState = LIST_RECYCLE_PLAY # 4
 
     def name_sort(self):
         '''Play list name sort.'''
