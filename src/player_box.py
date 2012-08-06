@@ -579,7 +579,6 @@ class PlayerBox(object):
     def app_scroll_event(self, widget, event, type_bool):
         config_type = self.config.get("OtherKey", "mouse_wheel_event")
         other_key_bool = self.config.get("OtherKey", "other_key_bool")
-        
         if not (_("Disabled") == config_type or other_key_bool.lower() == "false"): # seek back.
             volume_value = 5
             if event.direction == gtk.gdk.SCROLL_UP:
@@ -604,8 +603,7 @@ class PlayerBox(object):
                     self.volume_button.value = temp_value
                     self.bottom_toolbar.volume_button.value = self.volume_button.value
                     temp_value = self.volume_button.value
-                    
-                
+                                    
             if temp_value != self.mp.volume:
                 self.mp.setvolume(temp_value)
                     
@@ -782,9 +780,9 @@ class PlayerBox(object):
         # Set volume.
         if type_bool == add_volume_state:
             if self.mode_state_bool:
-                print self.mp.volume
+                # print self.mp.volume
                 self.mp.volume = min(self.mp.volume + 5, 100)
-                print self.mp.volume
+                # print self.mp.volume
                 self.bottom_toolbar.volume_button.value = self.mp.volume
             else:
                 temp_value = min(self.volume_button.value + volume_value, 100)
@@ -1504,6 +1502,7 @@ class PlayerBox(object):
         self.bottom_toolbar.panel.set_keep_above(True)
         self.app.window.fullscreen()
         self.full_bool = True
+        self.mode_state_bool = True
         # Set toolbar state.
         self.set_toolbar_state()
 
