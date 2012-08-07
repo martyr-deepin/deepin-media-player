@@ -510,8 +510,6 @@ class  Mplayer(gobject.GObject):
         '''Add volume'''
         self.volume = volumeNum
         self.volume = min(self.volume, 100)
-        # if self.volume > 100:
-        #     self.volume = 100
         
         if STARTING_STATE == self.state:
             self.cmd('volume +%s 1\n' % str(self.volume))
@@ -520,8 +518,7 @@ class  Mplayer(gobject.GObject):
         '''Decrease volume'''
         self.volume = volumeNum
         self.volume = max(self.volume, 0)
-        # if self.volume < 0:
-        #     self.volume = 0            
+        
         if STARTING_STATE == self.state:
             self.cmd('volume -%s 1\n' % str(self.volume))
             
@@ -529,10 +526,7 @@ class  Mplayer(gobject.GObject):
         '''Add volume'''
         self.volume = volumeNum
         self.volume = max(min(self.volume, 100), 0)
-        # if self.volume > 100:
-        #     self.volume = 100
-        # if self.volume < 0:    
-        #     self.volume = 0            
+        
         if STARTING_STATE == self.state:
             self.cmd('volume %s 1\n' % str(self.volume))
             
@@ -830,7 +824,7 @@ class  Mplayer(gobject.GObject):
                 
             return True
         else:
-            return False                
+            return False               
         
     def findCurrentDir(self, path):
         '''Get all the files in the folder'''
@@ -839,9 +833,6 @@ class  Mplayer(gobject.GObject):
             pathfile2 = path + '/' + pathfile
             if os.path.isfile(pathfile2):
                 self.addPlayFile(pathfile2)
-                # if self.findFile(pathfile2):
-                #     self.playListSum += 1
-                #     self.playList.append(pathfile2)
                     
     def findDmp(self, pathfile2):                                
         file1, file2 = os.path.splitext(pathfile2)
@@ -857,11 +848,6 @@ class  Mplayer(gobject.GObject):
         '''Del a File'''
         self.playList.remove(path)            
         self.playListSum -= 1        
-        
-    # def addPlayList(self, index, path):
-    #     '''Add a File'''
-    #     self.playList.intert(index, path)        
-    #     self.playListSum += 1
                 
     def addPlayFile(self, path):    
         if self.findFile(path): # play file.
@@ -879,7 +865,6 @@ class  Mplayer(gobject.GObject):
     def loadPlayList(self, listFileName):
         f = open(listFileName)
         for i in f:            
-            # if self.findFile(i.strip("\n")):
             self.addPlayFile(i.strip("\n"))
         f.close()
        
