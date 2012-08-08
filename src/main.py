@@ -73,7 +73,7 @@ class MediaPlayer(object):
         # drag function.
         self.app.window.show_all()
         
-MediaPlayer()        
+MediaPlayer()
 
 gtk.gdk.threads_enter()
 gtk.main()

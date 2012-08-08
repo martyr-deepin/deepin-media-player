@@ -33,7 +33,8 @@ import gtk
 
 class BottomToolBar(object):            
     def __init__(self):
-        self.panel = Panel(APP_WIDTH, 60, window_type=gtk.WINDOW_POPUP)
+        app_padding_height = 60
+        self.panel = Panel(APP_WIDTH, app_padding_height, window_type=gtk.WINDOW_POPUP)
         self.vbox = gtk.VBox()
         self.progressbar = ProgressBar()        
         
@@ -45,7 +46,12 @@ class BottomToolBar(object):
         self.show_time.time_font2 = "00:00:00 / "
         self.show_time.set_time_font(self.show_time.time_font2, self.show_time.time_font1)
         self.show_time_hframe.add(self.show_time.time_box)
-        self.show_time.time_box.set_size_request(110, -1)
+        show_time_padding_widht = 110
+        show_time_padding_height = -1
+        self.show_time.time_box.set_size_request(
+            show_time_padding_widht, 
+            show_time_padding_height
+            )
         self.show_time_hframe.set(0, 0, 1, 1)
         self.show_time_hframe.set_padding(2, 0, 10, 40)
         
@@ -56,7 +62,12 @@ class BottomToolBar(object):
         
         self.volume_hframe = HorizontalFrame()
         self.volume_button = VolumeButton(press_emit_bool = True)
-        self.volume_button.set_size_request(120, 50)
+        volume_button_padding_width = 120
+        volume_button_padding_height = 50
+        self.volume_button.set_size_request(
+            volume_button_padding_width, 
+            volume_button_padding_height
+            )
         self.volume_hframe.add(self.volume_button)
         self.volume_hframe.set(1, 0, 0, 0)
         self.volume_hframe.set_padding(0, 0, 0, 0)
@@ -89,8 +100,10 @@ class BottomToolBar(object):
         self.panel.hide_all()
                 
 if __name__ == "__main__":    
-    def show_toolbar(widget, event):
-        if 0 <= event.y <= 30:
+    def show_toolbar(widget, event):        
+        min_y = 0
+        max_y = 30
+        if min_y <= event.y <= max_y:
             tb.show_toolbar2()
             tb.panel.move(500, 500)
         else:    

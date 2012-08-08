@@ -48,11 +48,11 @@ def drag_data_received(wid, context, x, y, data, info, time, mp, play_list, widg
             path_threads(path, mp)
 
         # Add .Dmp.    
-        if mp.findDmp(path):
+        elif mp.findDmp(path):
             mp.loadPlayList(path)
             
         # Add play file.    
-        if os.path.isfile(path):    
+        elif os.path.isfile(path):    
             mp.addPlayFile(path)
 
     context.finish(True, False, time)    
