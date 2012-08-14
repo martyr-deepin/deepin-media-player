@@ -721,7 +721,7 @@ class PlayerBox(object):
             save_type = self.config.get("ScreenshotSet", "save_type")
             
             if save_path[0] == "~":
-                    save_path = get_home_path() + save_path[1:]                    
+                save_path = get_home_path() + save_path[1:]                    
                     
             if save_file_bool == "True":
                 if scrot_bool.lower() == "true":
@@ -974,7 +974,7 @@ class PlayerBox(object):
 
     def start_button_clicked(self, widget, start_bit):
         '''start or pause'''
-        if STOPING_PLAY == self.mp.state:
+        if self.mp.state == STOPING_PLAY:
             self.mp.next() # Test pause.
             self.play_control_panel.start_button.start_bool = False
             self.play_control_panel.start_button.queue_draw()
@@ -1268,7 +1268,9 @@ class PlayerBox(object):
     def set_toolbar2_position(self, widget, event): #app window-state-event
         self.bottom_toolbar.show_toolbar2()
         self.toolbar.panel.move(self.panel_x + 1, self.panel_y + self.app.titlebar.allocation[3])
-        self.bottom_toolbar.panel.move(self.panel_x + 1, self.panel_y + self.screen_frame.allocation.height - self.bottom_toolbar.panel.allocation.height)
+        self.bottom_toolbar.panel.move(
+            self.panel_x + 1, 
+            self.panel_y + self.screen_frame.allocation.height - self.bottom_toolbar.panel.allocation.height)
         self.bottom_toolbar.hide_toolbar2()
 
     # ToolBar control function.
@@ -1280,10 +1282,16 @@ class PlayerBox(object):
         self.panel_x, self.panel_y = self.screen_frame.window.get_root_origin()
         if self.mode_state_bool: # Concise mode.
             self.toolbar.panel.move(self.panel_x, self.panel_y)
-            self.bottom_toolbar.panel.move(self.panel_x, self.panel_y + (widget.allocation[3] - self.bottom_toolbar.panel.allocation[3]))
+            self.bottom_toolbar.panel.move(
+                self.panel_x, 
+                self.panel_y + (widget.allocation[3] - self.bottom_toolbar.panel.allocation[3]))
         else:    # common mode.
-            self.toolbar.panel.move(self.panel_x + 1, self.panel_y + self.app.titlebar.allocation[3])
-            self.bottom_toolbar.panel.move(self.panel_x + 1, self.panel_y + self.screen_frame.allocation.height - self.bottom_toolbar.panel.allocation.height)
+            self.toolbar.panel.move(
+                self.panel_x + 1, 
+                self.panel_y + self.app.titlebar.allocation[3])
+            self.bottom_toolbar.panel.move(
+                self.panel_x + 1, 
+                self.panel_y + self.screen_frame.allocation.height - self.bottom_toolbar.panel.allocation.height)
 
         if self.full_bool:
             self.toolbar.panel.move(self.panel_x, self.panel_y)
@@ -1840,8 +1848,10 @@ class PlayerBox(object):
             if not self.point_bool:
                 self.progressbar.set_pos(pos)
                 self.bottom_toolbar.progressbar.set_pos(pos)
-                self.show_time_label.time_font2 = self.set_time_string(self.mp.timeHour) + ":" + self.set_time_string(self.mp.timeMin) + ":" + self.set_time_string(self.mp.timeSec) + " / "
-                self.bottom_toolbar.show_time.time_font2 = self.set_time_string(self.mp.timeHour) + ":" + self.set_time_string(self.mp.timeMin) + ":" + self.set_time_string(self.mp.timeSec) + " / "
+                self.show_time_label.time_font2 = self.set_time_string(
+                    self.mp.timeHour) + ":" + self.set_time_string(self.mp.timeMin) + ":" + self.set_time_string(self.mp.timeSec) + " / "
+                self.bottom_toolbar.show_time.time_font2 = self.set_time_string(
+                    self.mp.timeHour) + ":" + self.set_time_string(self.mp.timeMin) + ":" + self.set_time_string(self.mp.timeSec) + " / "
                 
                 self.show_time_label.set_time_font(self.show_time_label.time_font2,
                                                    self.show_time_label.time_font1)
