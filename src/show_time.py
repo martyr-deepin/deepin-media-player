@@ -23,8 +23,7 @@
 from dtk.ui.label      import Label
 
 class ShowTime(object):
-    def __init__(self,
-                 ):     
+    def __init__(self):     
         self.time_font1 = ""
         self.time_font2 = ""
         self.time_box = Label("", enable_gaussian=True)

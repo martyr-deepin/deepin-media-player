@@ -21,14 +21,14 @@ SVP_REV_NUMBER = 1543
 CLIENTKEY = "SP,aerSP,aer %d &e(\xd7\x02 %s %s"
 RETRY = 3
 
-def grapBlock(f, offset, size):
+def grap_block(f, offset, size):
     f.seek(offset)
     return f.read(size)
 
 def getBlockHash(f, offset):
-    return hashlib.md5(grapBlock(f, offset, 4096)).hexdigest()
+    return hashlib.md5(grap_block(f, offset, 4096)).hexdigest()
 
-def genFileHash(fpath):
+def generate_file_hash(fpath):
     ftotallen = os.stat(fpath).st_size
     if ftotallen < 8192:
         return ""
@@ -36,7 +36,7 @@ def genFileHash(fpath):
     f = open(fpath, "rb")
     return ";".join(getBlockHash(f, i) for i in offset)
 
-def getShortNameByFileName(fpath):
+def get_short_name_by_filename(fpath):
     fpath = os.path.basename(fpath).rsplit(".",1)[0]
     fpath = fpath.lower()
     
@@ -50,15 +50,15 @@ def getShortNameByFileName(fpath):
     
     return fpath.strip()
 
-def getShortName(fpath):
+def get_short_name(fpath):
     for i in range(3):
-        shortname = getShortNameByFileName(os.path.basename(fpath))
+        shortname = get_short_name_by_filename(os.path.basename(fpath))
         if not shortname:
             fpath = os.path.dirname(fpath)
         else:
             return shortname
 
-def genVHash(svprev, fpath, fhash):
+def gen_v_hash(svprev, fpath, fhash):
     """
     the clientkey is not avaliable now, but we can get it by reverse engineering splayer.exe
     to get the clientkey from splayer.exe:
@@ -103,16 +103,16 @@ def urlopen(url, svprev, formdata):
         raise Exception("HTTP response " + str(resp.status) + ": " + resp.reason)
     return resp
 
-def downloadSubs(fpath, lang):
+def download_subs(fpath, lang):
     global SVP_REV_NUMBER
     global RETRY
     pathinfo = fpath
     if os.path.sep != "\\":
         #*nix
         pathinfo = "E:\\" + pathinfo.replace(os.path.sep, "\\")
-    filehash = genFileHash(fpath)
-    shortname = getShortName(fpath)
-    vhash = genVHash(SVP_REV_NUMBER, fpath.encode("utf-8"), filehash)
+    filehash = generate_file_hash(fpath)
+    shortname = get_short_name(fpath)
+    vhash = gen_v_hash(SVP_REV_NUMBER, fpath.encode("utf-8"), filehash)
     formdata = []
     formdata.append(("pathinfo", pathinfo.encode("utf-8")))
     formdata.append(("filehash", filehash))
@@ -179,8 +179,8 @@ class SubFile(object):
             gzipper = gzip.GzipFile(fileobj=StringIO(self.FileData))
             self.FileData = gzipper.read()
 
-def getSub(fpath, languagesearch, languageshort, languagelong, subtitles_list):
-    subdata = downloadSubs(fpath, languagesearch)
+def get_sub(fpath, languagesearch, languageshort, languagelong, subtitles_list):
+    subdata = download_subs(fpath, languagesearch)
     if (subdata):
         package = Package(StringIO(subdata))
         basename = os.path.basename(fpath)
@@ -206,18 +206,18 @@ def search_subtitles( file_original_path, title, tvshow, year, season, episode, 
     elif string.lower(lang3) == "english": english = 3
 
     if ((chinese > 0) and (english == 0)):
-        getSub(file_original_path, "chn", "zh", "Chinese", subtitles_list)
+        get_sub(file_original_path, "chn", "zh", "Chinese", subtitles_list)
 
     if ((english > 0) and (chinese == 0)):
-        getSub(file_original_path, "eng", "en", "English", subtitles_list)
+        get_sub(file_original_path, "eng", "en", "English", subtitles_list)
 
     if ((chinese > 0) and (english > 0) and (chinese < english)):
-        getSub(file_original_path, "chn", "zh", "Chinese", subtitles_list)
-        getSub(file_original_path, "eng", "en", "English", subtitles_list)
+        get_sub(file_original_path, "chn", "zh", "Chinese", subtitles_list)
+        get_sub(file_original_path, "eng", "en", "English", subtitles_list)
 
     if ((chinese > 0) and (english > 0) and (chinese > english)):
-        getSub(file_original_path, "eng", "en", "English", subtitles_list)
-        getSub(file_original_path, "chn", "zh", "Chinese", subtitles_list)
+        get_sub(file_original_path, "eng", "en", "English", subtitles_list)
+        get_sub(file_original_path, "chn", "zh", "Chinese", subtitles_list)
 
     if ((chinese == 0) and (english == 0)):
         msg = "Won't work, Shooter.cn is only for Chinese and English subtitles!"
