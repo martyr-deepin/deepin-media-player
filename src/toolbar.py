@@ -24,11 +24,11 @@ from dtk.ui.frame import HorizontalFrame, VerticalFrame
 from dtk.ui.panel import Panel
 from dtk.ui.utils import propagate_expose
 
-from locales           import _
-from tooltip           import tooltip_text 
-from skin              import app_theme
-from utils             import allocation
-from constant          import APP_WIDTH,PANEL_HEIGHT
+from locales import _
+from tooltip import tooltip_text 
+from skin import app_theme
+from utils import allocation
+from constant import APP_WIDTH,PANEL_HEIGHT
 from togglehoverbutton import ToggleHoverButton, ToolbarRadioButton
 
 import gtk
@@ -55,17 +55,17 @@ class ToolBar(object):
         
         self.toolbar_radio_button = ToolbarRadioButton(self.show_panel_toolbar, [self.panel, self.panel.event])
         # full buton.
-        self.toolbar_full_hframe  = self.toolbar_radio_button.full_btn_ali
-        self.toolbar_full_button  = self.toolbar_radio_button.full_btn
+        self.toolbar_full_hframe = self.toolbar_radio_button.full_button_align
+        self.toolbar_full_button = self.toolbar_radio_button.full_button
         #
-        self.toolbar_common_hframe  = self.toolbar_radio_button.win_mode_btn_ali
-        self.toolbar_common_button  = self.toolbar_radio_button.win_mode_btn
+        self.toolbar_common_hframe = self.toolbar_radio_button.win_mode_button_align
+        self.toolbar_common_button = self.toolbar_radio_button.win_mode_button
         # 
-        self.toolbar_concise_hframe = self.toolbar_radio_button.concise_btn_ali
-        self.toolbar_concise_button = self.toolbar_radio_button.concise_btn
+        self.toolbar_concise_hframe = self.toolbar_radio_button.concise_button_align
+        self.toolbar_concise_button = self.toolbar_radio_button.concise_button
         # 1X conect-> self.set_2x_video_play        
-        self.toolbar_1X_hframe   =  HorizontalFrame(5) 
-        self.toolbar_1X_button   =  ToggleHoverButton(self.show_panel_toolbar, [self.panel, self.panel.event],
+        self.toolbar_1X_hframe = HorizontalFrame(5) 
+        self.toolbar_1X_button = ToggleHoverButton(self.show_panel_toolbar, [self.panel, self.panel.event],
             app_theme.get_pixbuf("top_toolbar/1_window_normal.png"),
             app_theme.get_pixbuf("top_toolbar/1_window_hover.png"),
             app_theme.get_pixbuf("top_toolbar/1_window_normal.png"),
@@ -74,8 +74,8 @@ class ToolBar(object):
         tooltip_text(self.toolbar_1X_button, _("100%"))
         self.toolbar_1X_hframe.add(self.toolbar_1X_button)        
         # 2X conect-> self.set_2x_video_play
-        self.toolbar_2X_hframe   =  HorizontalFrame(5) 
-        self.toolbar_2X_button   =  ToggleHoverButton(self.show_panel_toolbar, [self.panel, self.panel.event],
+        self.toolbar_2X_hframe = HorizontalFrame(5) 
+        self.toolbar_2X_button = ToggleHoverButton(self.show_panel_toolbar, [self.panel, self.panel.event],
             app_theme.get_pixbuf("top_toolbar/2_window_normal.png"),
             app_theme.get_pixbuf("top_toolbar/2_window_hover.png"),
             app_theme.get_pixbuf("top_toolbar/2_window_normal.png"),

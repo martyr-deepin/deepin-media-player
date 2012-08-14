@@ -20,11 +20,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from dtk.ui.draw           import draw_text, draw_pixbuf
-from dtk.ui.cache_pixbuf   import CachePixbuf
+from dtk.ui.draw import draw_text, draw_pixbuf
+from dtk.ui.cache_pixbuf import CachePixbuf
 
-from locales   import _
-from skin      import app_theme
+from locales import _
+from skin import app_theme
 
 import gobject
 import gtk
@@ -32,12 +32,12 @@ import gtk
 
 # x, y, width, height
 widget_save_attr = []
-widget_save_num  = 1
+widget_save_num = 1
 
 # open button state.
 OPEN_BUTTON_STATE_NORMAL = 0
-OPEN_BUTTON_STATE_PRESS  = 1
-OPEN_BUTTON_STATE_HOVER  = 2
+OPEN_BUTTON_STATE_PRESS = 1
+OPEN_BUTTON_STATE_HOVER = 2
 
 
 class OpenButton(gobject.GObject):    
@@ -66,7 +66,7 @@ class OpenButton(gobject.GObject):
         '''Init set openbutton attr.'''
         self.draw_window = draw_window
         '''Init pixbuf.'''
-        self.normal_pixbuf       = normal_pixbuf
+        self.normal_pixbuf = normal_pixbuf
         self.hover_button_pixbuf = hover_button_pixbuf
         self.press_button_pixbuf = press_button_pixbuf
         '''Init events.'''
@@ -80,11 +80,11 @@ class OpenButton(gobject.GObject):
         '''Init value.'''
         self.__padding_x = 0
         self.__padding_y = 0
-        self.__x      = 0
-        self.__y      = 0
-        self.width  = width
+        self.__x = 0
+        self.__y = 0
+        self.width = width
         self.height = height
-        self.text   = text
+        self.text = text
         self.visible_bool = False
         
         self.leave_bool = False
@@ -185,11 +185,11 @@ class OpenButton(gobject.GObject):
             self.__x = x + w/2 - self.width/2
             self.__y = y + h/2 - self.height/2
             if self.state == OPEN_BUTTON_STATE_NORMAL:            
-                pixbuf  = self.normal_pixbuf
+                pixbuf = self.normal_pixbuf
             elif self.state == OPEN_BUTTON_STATE_HOVER:
-                pixbuf  = self.hover_button_pixbuf
+                pixbuf = self.hover_button_pixbuf
             elif self.state == OPEN_BUTTON_STATE_PRESS:                            
-                pixbuf  = self.press_button_pixbuf
+                pixbuf = self.press_button_pixbuf
 
             self.cache_pixbuf.scale(pixbuf.get_pixbuf(), self.width, self.height)    
             draw_pixbuf(cr, self.cache_pixbuf.get_cache(), 
@@ -225,14 +225,14 @@ class ScreenMenu(gobject.GObject):
         self.menu_item = menu_item                
         self.menu_list = []
         
-        self.x      = x
-        self.y      = y
+        self.x = x
+        self.y = y
         self.save_x = 0
         self.save_y = 0
-        self.width  = self.menu_bg_pixbuf.get_pixbuf().get_width()
+        self.width = self.menu_bg_pixbuf.get_pixbuf().get_width()
         self.height = self.menu_bg_pixbuf.get_pixbuf().get_height()
-        self.__padding_x    = 0
-        self.__padding_y    = 0
+        self.__padding_x = 0
+        self.__padding_y = 0
         # show and hide menu value.
         self.show_menu_bool = False
         self.show_bool = False
@@ -368,7 +368,7 @@ gobject.type_register(ScreenMenu)
 ####################################################
 #  open dialog url window.
 ####################################################
-from dtk.ui.dialog          import InputDialog
+from dtk.ui.dialog import InputDialog
 
 class OpenUrl(gobject.GObject):
     __gsignals__ = {

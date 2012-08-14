@@ -45,19 +45,19 @@ from ini import Config
 # 0: single playing.      
 SINGLE_PLAYING_STATE = 0
 # 1: order playing.     
-ORDER_PLAYING_STATE  = 1
+ORDER_PLAYING_STATE = 1
 # 2: random player.      
-RANDOM_PLAYER_STATE  = 2
+RANDOM_PLAYER_STATE = 2
 # 3: single cycle player. 
-SINGLE_CYCLE_PLAYER  = 3
+SINGLE_CYCLE_PLAYER = 3
 # 4: list recycle play. 
-LIST_RECYCLE_PLAY    = 4
+LIST_RECYCLE_PLAY = 4
 # channel state.
 CHANNEL_NORMAL_STATE = 0
-CHANNEL_LEFT_STATE   = 1
-CHANNEL_RIGHT_STATE  = 2
+CHANNEL_LEFT_STATE = 1
+CHANNEL_RIGHT_STATE = 2
 # playing state.
-STOPING_STATE  = 0
+STOPING_STATE = 0
 STARTING_STATE = 1
 
 # Get play widow ID.
@@ -114,7 +114,7 @@ def length_to_time(length):
         timeSec -= int(timeHour * 3600)
         
     if timeSec >= 60:
-        timeMin  = int(timeSec / 60)
+        timeMin = int(timeSec / 60)
         timeSec -= int(timeMin * 60)         
         
     return str("%s:%s:%s"%(str(time_add_zero(timeHour)), 
@@ -287,35 +287,35 @@ class  Mplayer(gobject.GObject):
         
         gobject.GObject.__init__(self)
         
-        self.xid         = xid 
+        self.xid = xid 
         self.mplayer_pid = 0
-        self.state       = STOPING_STATE
-        self.vide_bool   = False
-        self.pause_bool  = False
-        self.lenState    = 0
+        self.state = STOPING_STATE
+        self.vide_bool = False
+        self.pause_bool = False
+        self.lenState = 0
         self.path = ""
         
-        self.timeHour    = 0
-        self.timeMin     = 0
-        self.timeSec     = 0
+        self.timeHour = 0
+        self.timeMin = 0
+        self.timeSec = 0
         
-        self.lenNum      = 0
-        self.posNum      = 0
+        self.lenNum = 0
+        self.posNum = 0
         
         # select channel state.
         self.channel_state = CHANNEL_NORMAL_STATE
         
         # player list.
-        self.playList      = [] 
+        self.playList = [] 
         # player list sum. 
-        self.playListSum   = 0 
+        self.playListSum = 0 
         # player list number. 
-        self.playListNum   = -1
+        self.playListNum = -1
         # random player num.
         self.random_num = 0;
         
         self.volumebool = False
-        self.volume     = 100
+        self.volume = 100
         # player state.
         # 0: single playing.      
         # 1: order playing.     
@@ -357,10 +357,10 @@ class  Mplayer(gobject.GObject):
                        '-quiet', path]
                 
             self.mpID = subprocess.Popen(CMD, 
-                                         stdin  = subprocess.PIPE,
+                                         stdin = subprocess.PIPE,
                                          stdout = subprocess.PIPE,
                                          stderr = subprocess.PIPE,
-                                         shell  = False)
+                                         shell = False)
             
             self.mplayer_pid = self.mpID.pid
             (self.mplayerIn, self.mplayerOut) = (self.mpID.stdin, self.mpID.stdout)
@@ -446,8 +446,8 @@ class  Mplayer(gobject.GObject):
                     self.posNum = posNum                   
                     # Init Hour, Min, Sec.
                     self.timeHour = 0
-                    self.timeMin  = 0
-                    self.timeSec  = 0
+                    self.timeMin = 0
+                    self.timeSec = 0
                     self.time(self.posNum)  
                     self.emit("get-time-pos",int(self.posNum))
                     
@@ -763,7 +763,7 @@ class  Mplayer(gobject.GObject):
             self.timeSec -= int(self.timeHour * 3600)
         
         if self.timeSec >= 60:
-            self.timeMin  = int(self.timeSec / 60)
+            self.timeMin = int(self.timeSec / 60)
             self.timeSec -= int(self.timeMin * 60)         
             
         return self.timeHour, self.timeMin, self.timeSec    
@@ -872,11 +872,11 @@ class  Mplayer(gobject.GObject):
                 
     def clear_playlist(self):
         # clear play list.
-        self.playList      = [] 
+        self.playList = [] 
         # player list sum. 
-        self.playListSum   = 0 
+        self.playListSum = 0 
         # player list number. 
-        self.playListNum   = -1
+        self.playListNum = -1
         # random player num.
         self.random_num = 0        
         self.emit("clear-play-list", 1)

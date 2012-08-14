@@ -20,13 +20,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from dtk.ui.frame         import HorizontalFrame
-from dtk.ui.panel         import Panel
+from dtk.ui.frame import HorizontalFrame
+from dtk.ui.panel import Panel
 from dtk.ui.volume_button import VolumeButton
 
-from constant           import APP_WIDTH
-from progressbar        import ProgressBar
-from show_time          import ShowTime
+from constant import APP_WIDTH
+from progressbar import ProgressBar
+from show_time import ShowTime
 from play_control_panel import PlayControlPanel
 
 import gtk

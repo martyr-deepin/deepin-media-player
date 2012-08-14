@@ -38,47 +38,47 @@ class PlayControlPanel(object):
         self.hbox_hframe.add(self.hbox)
         
         
-        self.stop_btn = StartButton(app_theme.get_pixbuf("bottom_buttons/stop_normal.png"),
+        self.stop_button = StartButton(app_theme.get_pixbuf("bottom_buttons/stop_normal.png"),
                                     app_theme.get_pixbuf("bottom_buttons/stop_hover.png"),
                                     app_theme.get_pixbuf("bottom_buttons/stop_press.png"),
                                     app_theme.get_pixbuf("bottom_buttons/stop_normal.png"),
                                     app_theme.get_pixbuf("bottom_buttons/stop_hover.png"),
                                     app_theme.get_pixbuf("bottom_buttons/stop_press.png")
                                     )
-        tooltip_text(self.stop_btn, _("Stop"))        
+        tooltip_text(self.stop_button, _("Stop"))        
         
-        self.pre_btn = StartButton(app_theme.get_pixbuf("bottom_buttons/pre_button_normal.png"),
+        self.pre_button = StartButton(app_theme.get_pixbuf("bottom_buttons/pre_button_normal.png"),
                                    app_theme.get_pixbuf("bottom_buttons/pre_button_hover.png"),
                                    app_theme.get_pixbuf("bottom_buttons/pre_button_press.png"),
                                    app_theme.get_pixbuf("bottom_buttons/pre_button_normal.png"),
                                    app_theme.get_pixbuf("bottom_buttons/pre_button_hover.png"),
                                    app_theme.get_pixbuf("bottom_buttons/pre_button_press.png"))        
-        tooltip_text(self.pre_btn, _("Prev"))
+        tooltip_text(self.pre_button, _("Prev"))
         
-        self.start_btn = StartButton()
-        tooltip_text(self.start_btn, _("Play"))
+        self.start_button = StartButton()
+        tooltip_text(self.start_button, _("Play"))
         
-        self.next_btn = StartButton(app_theme.get_pixbuf("bottom_buttons/next_button_normal.png"),
+        self.next_button = StartButton(app_theme.get_pixbuf("bottom_buttons/next_button_normal.png"),
                                     app_theme.get_pixbuf("bottom_buttons/next_button_hover.png"),
                                     app_theme.get_pixbuf("bottom_buttons/next_button_press.png"),
                                     app_theme.get_pixbuf("bottom_buttons/next_button_normal.png"),
                                     app_theme.get_pixbuf("bottom_buttons/next_button_hover.png"),
                                     app_theme.get_pixbuf("bottom_buttons/next_button_press.png"))
-        tooltip_text(self.next_btn, _("Next"))
+        tooltip_text(self.next_button, _("Next"))
         
-        self.open_btn = StartButton(app_theme.get_pixbuf("bottom_buttons/open_normal.png"),
+        self.open_button = StartButton(app_theme.get_pixbuf("bottom_buttons/open_normal.png"),
                                     app_theme.get_pixbuf("bottom_buttons/open_hover.png"),
                                     app_theme.get_pixbuf("bottom_buttons/open_press.png"),
                                     app_theme.get_pixbuf("bottom_buttons/open_normal.png"),
                                     app_theme.get_pixbuf("bottom_buttons/open_hover.png"),
                                     app_theme.get_pixbuf("bottom_buttons/open_press.png"))
-        tooltip_text(self.open_btn, _("Open File"))
+        tooltip_text(self.open_button, _("Open File"))
 
-        self.hbox.pack_start(self.stop_btn, False, False)
-        self.hbox.pack_start(self.pre_btn, False, False)
-        self.hbox.pack_start(self.start_btn, False, False)
-        self.hbox.pack_start(self.next_btn, False, False)
-        self.hbox.pack_start(self.open_btn, False, False)
+        self.hbox.pack_start(self.stop_button, False, False)
+        self.hbox.pack_start(self.pre_button, False, False)
+        self.hbox.pack_start(self.start_button, False, False)
+        self.hbox.pack_start(self.next_button, False, False)
+        self.hbox.pack_start(self.open_button, False, False)
             
         
 class StartButton(gtk.Button):
@@ -93,12 +93,12 @@ class StartButton(gtk.Button):
         gtk.Button.__init__(self)
         self.start_bool = True
         self.start_button_normal = start_button_normal
-        self.start_button_hover  = start_button_hover
-        self.start_button_press  = start_button_press
+        self.start_button_hover = start_button_hover
+        self.start_button_press = start_button_press
         
         self.pause_button_normal = pause_button_normal
-        self.pause_button_hover  = pause_button_hover
-        self.pause_button_press  = pause_button_press
+        self.pause_button_hover = pause_button_hover
+        self.pause_button_press = pause_button_press
         
         self.connect("expose-event", self.expose_button)
         self.connect("clicked", self.clicked_button)

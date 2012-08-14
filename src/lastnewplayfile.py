@@ -36,27 +36,27 @@ class LastNewPlayFile(gobject.GObject):
         
         # Init time.
         self.year = 0
-        self.mon  = 0
+        self.mon = 0
         self.mday = 0
         self.hour = 0
-        self.min  = 0
-        self.sec  = 0
+        self.min = 0
+        self.sec = 0
         self.time = "%s%s%s%s%s%s"%(self.year, self.mon, self.mday, self.hour, self.min, self.sec)
         # Init argvs list.
         self.argvs_list = self.ini.get_argvs("LastNewPlayFile")
-        self.argvs_num  = 0
+        self.argvs_num = 0
         if self.argvs_list:            
-            self.argvs_num  = len(self.argvs_list.keys())
+            self.argvs_num = len(self.argvs_list.keys())
         self.table_list = []
         
     def get_current_time(self):
         time_struct = time.localtime(time.time())
         self.year = time_struct.tm_year
-        self.mon  = time_struct.tm_mon
+        self.mon = time_struct.tm_mon
         self.mday = time_struct.tm_mday
         self.hour = time_struct.tm_hour
-        self.min  = time_struct.tm_min
-        self.sec  = time_struct.tm_sec
+        self.min = time_struct.tm_min
+        self.sec = time_struct.tm_sec
         return "%s%s%s%s%s%s"%(self.year, self.mon, self.mday, self.hour, self.min, self.sec)
         
     def set_file_time(self, play_file):
@@ -102,21 +102,21 @@ class LastNewPlayFile(gobject.GObject):
     def create_table(self):
         temp_table = Table()
         temp_table.section = "LastNewPlayFile"
-        temp_table.argv    = self.argvs_list.keys()[0]
-        temp_table.value   = self.argvs_list[self.argvs_list.keys()[0]]
+        temp_table.argv = self.argvs_list.keys()[0]
+        temp_table.value = self.argvs_list[self.argvs_list.keys()[0]]
         
         for key in self.argvs_list.keys():
             if self.argvs_list[key] <= temp_table.value:
-                temp_table.argv  = key
+                temp_table.argv = key
                 temp_table.value = self.argvs_list[key]
                 
         return temp_table        
     
 class Table(object):    
     def __init__(self):
-        self.section  = None
-        self.argv     = None
-        self.value    = None
+        self.section = None
+        self.argv = None
+        self.value = None
         
     
 

@@ -20,23 +20,23 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from skin      import app_theme
-from locales   import _
-from ini       import Config
-from mplayer   import get_home_path
+from skin import app_theme
+from locales import _
+from ini import Config
+from mplayer import get_home_path
 
-from dtk.ui.utils   import propagate_expose
-from dtk.ui.box     import BackgroundBox, ImageBox
-from dtk.ui.dialog  import DialogBox, DIALOG_MASK_MULTIPLE_PAGE
-from dtk.ui.button  import Button
-from dtk.ui.entry   import InputEntry, ShortcutKeyEntry
-from dtk.ui.combo   import ComboBox
-from dtk.ui.draw    import draw_vlinear
-from dtk.ui.label   import Label
-from dtk.ui.button  import CheckButton, RadioButton
-from dtk.ui.line    import HSeparator
+from dtk.ui.utils import propagate_expose
+from dtk.ui.box import BackgroundBox, ImageBox
+from dtk.ui.dialog import DialogBox, DIALOG_MASK_MULTIPLE_PAGE
+from dtk.ui.button import Button
+from dtk.ui.entry import InputEntry, ShortcutKeyEntry
+from dtk.ui.combo import ComboBox
+from dtk.ui.draw import draw_vlinear
+from dtk.ui.label import Label
+from dtk.ui.button import CheckButton, RadioButton
+from dtk.ui.line import HSeparator
 from dtk.ui.scrolled_window import ScrolledWindow
-from dtk.ui.treeview        import TreeView, TreeViewItem
+from dtk.ui.treeview import TreeView, TreeViewItem
 
 import gtk
 import pangocairo
@@ -67,8 +67,8 @@ heparator_height = 5
 # video open state.
 VIDEO_ADAPT_WINDOW_STATE = "1"
 WINDOW_ADAPT_VIDEO_STATE = "2"
-UP_CLOSE_VIDEO_STATE     = "3"
-AI_FULL_VIDEO_STATE      = "4"
+UP_CLOSE_VIDEO_STATE = "3"
+AI_FULL_VIDEO_STATE = "4"
 
 
 def create_separator_box(padding_x=0, padding_y=0):    
@@ -135,11 +135,11 @@ class IniGui(DialogBox):
         self.main_hbox.pack_start(self.configure)
         
         # bottom button.
-        self.cancel_btn = Button(_("Close"))
-        self.cancel_btn.connect("clicked", self.destroy_ini_gui_window_cancel_clicked)
+        self.cancel_button = Button(_("Close"))
+        self.cancel_button.connect("clicked", self.destroy_ini_gui_window_cancel_clicked)
         
         self.body_box.pack_start(self.main_hbox, True, True)
-        self.right_button_box.set_buttons([self.cancel_btn])
+        self.right_button_box.set_buttons([self.cancel_button])
         
         # Init configure index.
         self.set(_("Playback"))        
@@ -291,61 +291,61 @@ class FilePlay(gtk.VBox):
         # Video file open.
         self.video_file_open_label = Label(_("On Opening:"))
         
-        self.adapt_video_btn       = RadioButton(_("Fit to Window Size"))
+        self.adapt_video_button = RadioButton(_("Fit to Window Size"))
 
-        self.ai_set_radio_btn       = RadioButton(_("Resize Window"))
+        self.ai_set_radio_button = RadioButton(_("Resize Window"))
         
-        self.close_position_radio_btn       = RadioButton(_("Last Closed Size"))
+        self.close_position_radio_button = RadioButton(_("Last Closed Size"))
 
-        self.full_window_radio_btn       = RadioButton(_("Full Screen"))    
+        self.full_window_radio_button = RadioButton(_("Full Screen"))    
 
         set_num = self.ini.get("FilePlay", "video_file_open")        
         
         # Set state(1, 2, 3, 4).
         if '2' == set_num:
-            self.ai_set_radio_btn.set_active(False)
-            self.adapt_video_btn.set_active(True)
+            self.ai_set_radio_button.set_active(False)
+            self.adapt_video_button.set_active(True)
         elif '3' == set_num:    
-            self.close_position_radio_btn.set_active(True)
+            self.close_position_radio_button.set_active(True)
         elif '4' == set_num:    
-            self.full_window_radio_btn.set_active(True)
+            self.full_window_radio_button.set_active(True)
         else:    # config get None type.
-            self.ai_set_radio_btn.set_active(True) 
+            self.ai_set_radio_button.set_active(True) 
         ################################################################
         # open new file clear play list.
-        self.clear_play_list_btn = CheckButton(_("Clear Playlist On Opening New Media"))        
+        self.clear_play_list_button = CheckButton(_("Clear Playlist On Opening New Media"))        
         ini_bool = self.ini.get("FilePlay", "open_new_file_clear_play_list")
 
-        self.clear_play_list_btn.set_active(False)
+        self.clear_play_list_button.set_active(False)
         if ini_bool:
             if "true" == ini_bool.lower():
-                self.clear_play_list_btn.set_active(True)
+                self.clear_play_list_button.set_active(True)
                 
         
         # memory up close media player -> file play postion.
-        self.file_play_postion_btn = CheckButton(_("Resume Playing"))
+        self.file_play_postion_button = CheckButton(_("Resume Playing"))
         ini_bool = self.ini.get("FilePlay", "memory_up_close_player_file_postion")
-        self.file_play_postion_btn.set_active(False)
+        self.file_play_postion_button.set_active(False)
         if ini_bool:
             if "true" == ini_bool.lower():
-                self.file_play_postion_btn.set_active(True)
+                self.file_play_postion_button.set_active(True)
                     
         
         # play media when find file play in dir.
-        self.find_file_play_btn = CheckButton(_("Search for Similar Media and Continue Playing")) 
+        self.find_file_play_button = CheckButton(_("Search for Similar Media and Continue Playing")) 
         ini_bool = self.ini.get("FilePlay", "find_play_file_relation_file")
-        self.find_file_play_btn.set_active(False)
+        self.find_file_play_button.set_active(False)
         if ini_bool:
             if "true" == ini_bool.lower():
-                self.find_file_play_btn.set_active(True)
+                self.find_file_play_button.set_active(True)
                 
         # mouse progressbar show preview window.
-        self.show_preview_window_btn = CheckButton(_("Show Preview on Placing Cursor on Progress Bar"))
+        self.show_preview_window_button = CheckButton(_("Show Preview on Placing Cursor on Progress Bar"))
         ini_bool = self.ini.get("FilePlay", "mouse_progressbar_show_preview")
-        self.show_preview_window_btn.set_active(False)
+        self.show_preview_window_button.set_active(False)
         if ini_bool:
             if "true" == ini_bool.lower():
-                self.show_preview_window_btn.set_active(True)
+                self.show_preview_window_button.set_active(True)
             
         title_box = gtk.VBox(spacing=5)
         title_box.pack_start(self.label, False, False)
@@ -357,16 +357,16 @@ class FilePlay(gtk.VBox):
         title_box_align.add(title_box)
         
         radio_table.set_row_spacings(15)        
-        radio_table.attach(self.adapt_video_btn, 0, 1, 0, 1, yoptions=gtk.FILL)
-        radio_table.attach(self.ai_set_radio_btn, 1, 2, 0, 1, yoptions=gtk.FILL)
-        radio_table.attach(self.close_position_radio_btn, 0, 1, 1, 2, yoptions=gtk.FILL)
-        radio_table.attach(self.full_window_radio_btn, 1, 2, 1, 2, yoptions=gtk.FILL)
+        radio_table.attach(self.adapt_video_button, 0, 1, 0, 1, yoptions=gtk.FILL)
+        radio_table.attach(self.ai_set_radio_button, 1, 2, 0, 1, yoptions=gtk.FILL)
+        radio_table.attach(self.close_position_radio_button, 0, 1, 1, 2, yoptions=gtk.FILL)
+        radio_table.attach(self.full_window_radio_button, 1, 2, 1, 2, yoptions=gtk.FILL)
         
         check_box = gtk.VBox(spacing=15)
-        check_box.pack_start(self.clear_play_list_btn, False, False)
-        check_box.pack_start(self.file_play_postion_btn, False, False)
-        check_box.pack_start(self.find_file_play_btn, False, False)
-        check_box.pack_start(self.show_preview_window_btn, False, False)
+        check_box.pack_start(self.clear_play_list_button, False, False)
+        check_box.pack_start(self.file_play_postion_button, False, False)
+        check_box.pack_start(self.find_file_play_button, False, False)
+        check_box.pack_start(self.show_preview_window_button, False, False)
         
         self.set_spacing(15)
         self.pack_start(title_box_align, False, True)
@@ -377,21 +377,21 @@ class FilePlay(gtk.VBox):
         video_file_dict = {}
         # video file open.
         video_file_open_num = 1
-        if self.ai_set_radio_btn.get_active():
+        if self.ai_set_radio_button.get_active():
             video_file_open_num = 1
-        elif self.adapt_video_btn.get_active():    
+        elif self.adapt_video_button.get_active():    
             video_file_open_num = 2
-        elif self.close_position_radio_btn.get_active():    
+        elif self.close_position_radio_button.get_active():    
             video_file_open_num = 3
-        elif self.full_window_radio_btn.get_active():    
+        elif self.full_window_radio_button.get_active():    
             video_file_open_num = 4            
             
         video_file_dict["video_file_open"] = video_file_open_num
         #
-        video_file_dict["open_new_file_clear_play_list"] = self.clear_play_list_btn.get_active()
-        video_file_dict["memory_up_close_player_file_postion"] = self.file_play_postion_btn.get_active()
-        video_file_dict["find_play_file_relation_file"] = self.find_file_play_btn.get_active()
-        video_file_dict["mouse_progressbar_show_preview"] = self.show_preview_window_btn.get_active()
+        video_file_dict["open_new_file_clear_play_list"] = self.clear_play_list_button.get_active()
+        video_file_dict["memory_up_close_player_file_postion"] = self.file_play_postion_button.get_active()
+        video_file_dict["find_play_file_relation_file"] = self.find_file_play_button.get_active()
+        video_file_dict["mouse_progressbar_show_preview"] = self.show_preview_window_button.get_active()
         
         return video_file_dict
     
@@ -405,24 +405,24 @@ class SystemSet(gtk.VBox):
         self.label = Label(_("Genera"))
         self.label.set_size_request(label_width, label_height)
         self.heparator_hbox = gtk.HBox()
-        self.heparator      = create_separator_box()
+        self.heparator = create_separator_box()
         self.heparator_hbox.pack_start(self.heparator)
         self.heparator_hbox.set_size_request(heparator_width, heparator_height)
         # System setting.
         # Minimize pause plaing.
-        self.pause_play_btn = CheckButton(_("Pause When Minimized"))
+        self.pause_play_button = CheckButton(_("Pause When Minimized"))
         ini_bool = self.ini.get("SystemSet", "minimize_pause_play")
-        self.pause_play_btn.set_active(False)
+        self.pause_play_button.set_active(False)
         if ini_bool:
             if "true" == ini_bool.lower():
-                self.pause_play_btn.set_active(True)            
+                self.pause_play_button.set_active(True)            
             
-        self.pause_play_btn_label = Label("")
+        self.pause_play_button_label = Label("")
         
         # Screen messagebox.
-        self.screen_msg_btn = Label(_("Pop-up Messages"))
+        self.screen_msg_button = Label(_("Pop-up Messages"))
         # Font set.        
-        self.font_set_btn_label = Label(_("Font"))
+        self.font_set_button_label = Label(_("Font"))
         #DEFAULT_FONT
         font_set_items = []
 
@@ -443,19 +443,19 @@ class SystemSet(gtk.VBox):
             
         font_set_combo_width = 120
         # Font size.
-        self.font_size_btn_label = Label(_("Size"))
+        self.font_size_button_label = Label(_("Size"))
         font_set_items = []
         font_set_items_num = 1
         for i in range(8, 32):
             font_set_items.append((str(i), font_set_items_num))
             font_set_items_num += 1
             
-        self.font_size_btn_combo = ComboBox(font_set_items, 160)
+        self.font_size_button_combo = ComboBox(font_set_items, 160)
         font_size_string = self.ini.get("SystemSet", "font_size")
         if font_size_string:
-            self.font_size_btn_combo.label.set_text(font_size_string)            
+            self.font_size_button_combo.label.set_text(font_size_string)            
         else:    
-            self.font_size_btn_combo.label.set_text("8")
+            self.font_size_button_combo.label.set_text("8")
             
                 
         system_set_x = 20
@@ -463,32 +463,32 @@ class SystemSet(gtk.VBox):
         system_set_width = 0
         self.fixed.put(self.label, system_set_x, TITLE_HEIGHT_PADDING)
         self.fixed.put(self.heparator_hbox, heparator_x, heparator_y)        
-        self.fixed.put(self.pause_play_btn, 
+        self.fixed.put(self.pause_play_button, 
                        system_set_x, system_set_y)
         # Minimize pause plaing.
-        system_set_width = self.pause_play_btn.get_size_request()[0]
-        self.fixed.put(self.pause_play_btn_label, 
+        system_set_width = self.pause_play_button.get_size_request()[0]
+        self.fixed.put(self.pause_play_button_label, 
                        system_set_x + system_set_width, system_set_y)
         # Screen messagebox.
         system_set_y += 40
         screen_msg_x_padding = 8
-        self.fixed.put(self.screen_msg_btn,
+        self.fixed.put(self.screen_msg_button,
                        system_set_x + screen_msg_x_padding, system_set_y)
         # Font set.
         system_set_y += 25
         font_set_x_padding = 7
-        self.fixed.put(self.font_set_btn_label, 
+        self.fixed.put(self.font_set_button_label, 
                        system_set_x + font_set_x_padding, system_set_y)
         system_set_y += 20
         self.fixed.put(self.font_set_combo, 
                        system_set_x + font_set_x_padding, system_set_y)
         # Font Size.
-        font_size_x_padding = system_set_x + font_set_x_padding + font_set_combo_width + self.font_set_btn_label.get_size_request()[0] + 60
+        font_size_x_padding = system_set_x + font_set_x_padding + font_set_combo_width + self.font_set_button_label.get_size_request()[0] + 60
         system_set_y -= 20
-        self.fixed.put(self.font_size_btn_label,
+        self.fixed.put(self.font_size_button_label,
                        font_size_x_padding, system_set_y)
         system_set_y += 20
-        self.fixed.put(self.font_size_btn_combo,
+        self.fixed.put(self.font_size_button_combo,
                        font_size_x_padding, system_set_y)
         #        
         
@@ -497,9 +497,9 @@ class SystemSet(gtk.VBox):
     def get_system_set_state(self):           
         system_set_dict = {}
         #
-        system_set_dict["minimize_pause_play"] = self.pause_play_btn.get_active()
+        system_set_dict["minimize_pause_play"] = self.pause_play_button.get_active()
         system_set_dict["font"] = self.font_set_combo.label.get_text()
-        system_set_dict["font_size"] = self.font_size_btn_combo.label.get_text()
+        system_set_dict["font_size"] = self.font_size_button_combo.label.get_text()
         return system_set_dict
         
 class PlayControl(gtk.VBox):       
@@ -510,12 +510,12 @@ class PlayControl(gtk.VBox):
         self.label = Label(_("Video Control"))
         self.label.set_size_request(label_width, label_height)        
         # heparator.
-        self.heparator      = create_separator_box()
+        self.heparator = create_separator_box()
         self.heparator_hbox = gtk.HBox()
         self.heparator_hbox.pack_start(self.heparator)
         self.heparator_hbox.set_size_request(heparator_width, heparator_height)
         # setting keys.
-        entry_width  = 150
+        entry_width = 150
         entry_height = 24
         # set PlayControl bool.
         self.play_control_bool_checkbtn = CheckButton(_("Hotkeys Enabled"))
@@ -523,7 +523,7 @@ class PlayControl(gtk.VBox):
                 
         # open file key.
         self.open_file_entry_label = Label(_("Open File"))
-        self.open_file_entry       = ShortcutKeyEntry()
+        self.open_file_entry = ShortcutKeyEntry()
         text_string = self.ini.get("PlayControl", "open_file_key")
         if text_string:
             self.open_file_entry.set_shortcut_key(text_string)
@@ -533,7 +533,7 @@ class PlayControl(gtk.VBox):
         self.open_file_entry.set_size(entry_width, entry_height)
         # pre a.
         self.pre_a_entry_label = Label(_("Previous"))
-        self.pre_a_entry       = ShortcutKeyEntry()
+        self.pre_a_entry = ShortcutKeyEntry()
         text_string = self.ini.get("PlayControl", "pre_a_key")
         if text_string:
             self.pre_a_entry.set_shortcut_key(text_string)
@@ -543,7 +543,7 @@ class PlayControl(gtk.VBox):
         self.pre_a_entry.set_size(entry_width, entry_height)
         # open file dir.
         self.open_file_dir_entry_label = Label(_("Open Directory"))
-        self.open_file_dir_entry       = ShortcutKeyEntry()
+        self.open_file_dir_entry = ShortcutKeyEntry()
         text_string = self.ini.get("PlayControl", "open_file_dir_key")
         if text_string:
             self.open_file_dir_entry.set_shortcut_key(text_string)
@@ -553,7 +553,7 @@ class PlayControl(gtk.VBox):
         self.open_file_dir_entry.set_size(entry_width, entry_height)
         # next a.
         self.next_a_entry_label = Label(_("Previous"))
-        self.next_a_entry       = ShortcutKeyEntry()
+        self.next_a_entry = ShortcutKeyEntry()
         text_string = self.ini.get("PlayControl", "next_a_key")
         if text_string:
             self.next_a_entry.set_shortcut_key(text_string)
@@ -573,7 +573,7 @@ class PlayControl(gtk.VBox):
         self.play_or_pause_entry.set_size(entry_width, entry_height)
         # add volume.
         self.add_volume_entry_label = Label(_("Volumn Up"))
-        self.add_volume_entry       = ShortcutKeyEntry()
+        self.add_volume_entry = ShortcutKeyEntry()
         text_string = self.ini.get("PlayControl", "add_volume_key")
         if text_string:
             self.add_volume_entry.set_shortcut_key(text_string)        
@@ -583,7 +583,7 @@ class PlayControl(gtk.VBox):
         self.add_volume_entry.set_size(entry_width, entry_height)
         # seek.
         self.seek_entry_label = Label(_("Forward"))
-        self.seek_entry       = ShortcutKeyEntry()
+        self.seek_entry = ShortcutKeyEntry()
         text_string = self.ini.get("PlayControl", "seek_key")
         if text_string:
             self.seek_entry.set_shortcut_key(text_string)        
@@ -593,7 +593,7 @@ class PlayControl(gtk.VBox):
         self.seek_entry.set_size(entry_width, entry_height)
         # sub volume.
         self.sub_volume_entry_label = Label(_("Volumn Down"))
-        self.sub_volume_entry       = ShortcutKeyEntry()
+        self.sub_volume_entry = ShortcutKeyEntry()
         text_string = self.ini.get("PlayControl", "sub_volume_key")
         if text_string:
             self.sub_volume_entry.set_shortcut_key(text_string)        
@@ -603,7 +603,7 @@ class PlayControl(gtk.VBox):
         self.sub_volume_entry.set_size(entry_width, entry_height)
         # back.
         self.back_entry_label = Label(_("Rewind"))
-        self.back_entry       = ShortcutKeyEntry()
+        self.back_entry = ShortcutKeyEntry()
         text_string = self.ini.get("PlayControl", "back_key")
         if text_string:
             self.back_entry.set_shortcut_key(text_string)        
@@ -613,7 +613,7 @@ class PlayControl(gtk.VBox):
         self.back_entry.set_size(entry_width, entry_height)
         # Mute. 
         self.mute_entry_label = Label(_("Mute"))
-        self.mute_entry       = ShortcutKeyEntry()
+        self.mute_entry = ShortcutKeyEntry()
         text_string = self.ini.get("PlayControl", "mute_key")
         if text_string:
             self.mute_entry.set_shortcut_key(text_string)        
@@ -623,7 +623,7 @@ class PlayControl(gtk.VBox):
         self.mute_entry.set_size(entry_width, entry_height)
         # full.
         self.full_entry_label = Label(_("Full Screen"))
-        self.full_entry       = ShortcutKeyEntry()
+        self.full_entry = ShortcutKeyEntry()
         text_string = self.ini.get("PlayControl", "full_key")
         if text_string:
             self.full_entry.set_shortcut_key(text_string)        
@@ -633,7 +633,7 @@ class PlayControl(gtk.VBox):
         self.full_entry.set_size(entry_width, entry_height)
         # Concise mode.
         self.concise_entry_label = Label(_("Concise Mode"))
-        self.concise_entry       = ShortcutKeyEntry()
+        self.concise_entry = ShortcutKeyEntry()
         text_string = self.ini.get("PlayControl", "concise_key")
         if text_string:
             self.concise_entry.set_shortcut_key(text_string)        
@@ -774,19 +774,19 @@ class PlayControl(gtk.VBox):
         play_control_dict = {}
         play_control_dict["play_control_bool"] = self.play_control_bool_checkbtn.get_active()
         # Left.
-        play_control_dict["open_file_key"] =  self.open_file_entry.get_text()
+        play_control_dict["open_file_key"] = self.open_file_entry.get_text()
         play_control_dict["open_file_dir_key"] = self.open_file_dir_entry.get_text()
         play_control_dict["play_or_pause_key"] = self.play_or_pause_entry.get_text()
         play_control_dict["seek_key"] = self.seek_entry.get_text()
         play_control_dict["back_key"] = self.back_entry.get_text()
         play_control_dict["full_key"] = self.full_entry.get_text()
         # Right.
-        play_control_dict["pre_a_key"]      = self.pre_a_entry.get_text()
-        play_control_dict["next_a_key"]     = self.next_a_entry.get_text()
+        play_control_dict["pre_a_key"] = self.pre_a_entry.get_text()
+        play_control_dict["next_a_key"] = self.next_a_entry.get_text()
         play_control_dict["add_volume_key"] = self.add_volume_entry.get_text()
         play_control_dict["sub_volume_key"] = self.sub_volume_entry.get_text()
-        play_control_dict["mute_key"]       = self.mute_entry.get_text()
-        play_control_dict["concise_key"]    = self.concise_entry.get_text()
+        play_control_dict["mute_key"] = self.mute_entry.get_text()
+        play_control_dict["concise_key"] = self.concise_entry.get_text()
         
         return play_control_dict
     
@@ -799,11 +799,11 @@ class OtherKey(gtk.VBox):
         self.label = Label(_("Other"))
         self.label.set_size_request(label_width, label_height)                
         self.heparator_hbox = gtk.HBox()
-        self.heparator      = create_separator_box()
+        self.heparator = create_separator_box()
         self.heparator_hbox.pack_start(self.heparator)
         self.heparator_hbox.set_size_request(heparator_width, heparator_height)
         
-        entry_width  = 150
+        entry_width = 150
         entry_height = 24
         # set other_key bool.
         
@@ -812,7 +812,7 @@ class OtherKey(gtk.VBox):
         
         # Add Brightness.
         self.add_bri_entry_label = Label(_("Increse Brightness"))
-        self.add_bri_entry       = ShortcutKeyEntry()
+        self.add_bri_entry = ShortcutKeyEntry()
         text_string = self.ini.get("OtherKey", "add_brightness_key")
         if text_string:
             self.add_bri_entry.set_shortcut_key(text_string)
@@ -822,7 +822,7 @@ class OtherKey(gtk.VBox):
         self.add_bri_entry.set_size(entry_width, entry_height)
         # Sub Brightness.
         self.sub_bri_entry_label = Label(_("Decrease Brightness"))
-        self.sub_bri_entry       = ShortcutKeyEntry()
+        self.sub_bri_entry = ShortcutKeyEntry()
         text_string = self.ini.get("OtherKey", "sub_brightness_key")
         if text_string:
             self.sub_bri_entry.set_shortcut_key(text_string)
@@ -832,7 +832,7 @@ class OtherKey(gtk.VBox):
         self.sub_bri_entry.set_size(entry_width, entry_height)
         # Inverse Rotation.
         self.inverse_rotation_entry_label = Label(_("Rotate Conterclockwise"))
-        self.inverse_rotation_entry       = ShortcutKeyEntry()
+        self.inverse_rotation_entry = ShortcutKeyEntry()
         text_string = self.ini.get("OtherKey", "inverse_rotation_key")
         if text_string:
             self.inverse_rotation_entry.set_shortcut_key(text_string)
@@ -842,7 +842,7 @@ class OtherKey(gtk.VBox):
         self.inverse_rotation_entry.set_size(entry_width, entry_height)
         # Clockwise Rotation.
         self.clockwise_entry_label = Label(_("Rotate Clockwise"))
-        self.clockwise_entry       = ShortcutKeyEntry()
+        self.clockwise_entry = ShortcutKeyEntry()
         text_string = self.ini.get("OtherKey", "clockwise_key")
         if text_string:
             self.clockwise_entry.set_shortcut_key(text_string)
@@ -852,7 +852,7 @@ class OtherKey(gtk.VBox):
         self.clockwise_entry.set_size(entry_width, entry_height)
         # sort image.
         self.sort_image_entry_label = Label(_("Take Screenshots"))
-        self.sort_image_entry       = ShortcutKeyEntry()
+        self.sort_image_entry = ShortcutKeyEntry()
         text_string = self.ini.get("OtherKey", "sort_image_key")
         if text_string:
             self.sort_image_entry.set_shortcut_key(text_string)
@@ -862,7 +862,7 @@ class OtherKey(gtk.VBox):
         self.sort_image_entry.set_size(entry_width, entry_height)
         # Switch Audio track.
         self.switch_audio_track_entry_label = Label(_("Switch Audio Tracks"))
-        self.switch_audio_track_entry       = ShortcutKeyEntry()
+        self.switch_audio_track_entry = ShortcutKeyEntry()
         text_string = self.ini.get("OtherKey", "switch_audio_track_key")
         if text_string:
             self.switch_audio_track_entry.set_shortcut_key(text_string)
@@ -872,7 +872,7 @@ class OtherKey(gtk.VBox):
         self.switch_audio_track_entry.set_size(entry_width, entry_height)
         # Load subtitle.
         self.load_subtitle_entry_label = Label(_("Import Subtitles"))
-        self.load_subtitle_entry       = ShortcutKeyEntry()
+        self.load_subtitle_entry = ShortcutKeyEntry()
         text_string = self.ini.get("OtherKey", "load_subtitle_key")
         if text_string:
             self.load_subtitle_entry.set_shortcut_key(text_string)
@@ -882,7 +882,7 @@ class OtherKey(gtk.VBox):
         self.load_subtitle_entry.set_size(entry_width, entry_height)        
         # subtitle advance 0.5.
         self.subtitle_advance_entry_label = Label(_("Subtitle Advance 0.5s"))
-        self.subtitle_advance_entry       = ShortcutKeyEntry()
+        self.subtitle_advance_entry = ShortcutKeyEntry()
         text_string = self.ini.get("OtherKey", "subtitle_advance_key")
         if text_string:
             self.subtitle_advance_entry.set_shortcut_key(text_string)
@@ -892,7 +892,7 @@ class OtherKey(gtk.VBox):
         self.subtitle_advance_entry.set_size(entry_width, entry_height)
         # subtitle Delay 0.5.
         self.subtitle_delay_entry_label = Label(_("Subtitle Delay 0.5s"))
-        self.subtitle_delay_entry       = ShortcutKeyEntry()
+        self.subtitle_delay_entry = ShortcutKeyEntry()
         text_string = self.ini.get("OtherKey", "subtitle_delay_key")
         if text_string:
             self.subtitle_delay_entry.set_shortcut_key(text_string)
@@ -902,7 +902,7 @@ class OtherKey(gtk.VBox):
         self.subtitle_delay_entry.set_size(entry_width, entry_height)
         # mouse left single clicked.        
         self.mouse_left_single_clicked_combo_label = Label(_("Left Click"))
-        self.mouse_left_single_clicked_combo       = ComboBox([(_("Pause/Play"), 1),
+        self.mouse_left_single_clicked_combo = ComboBox([(_("Pause/Play"), 1),
                                                                (_("Disabled"), 2)])
 
         text_string = self.ini.get("OtherKey", "mouse_left_single_clicked")
@@ -913,7 +913,7 @@ class OtherKey(gtk.VBox):
             
         # mouse left double clicked.
         self.mouse_left_double_clicked_combo_label = Label(_("Double Click"))
-        self.mouse_left_double_clicked_combo       = ComboBox([(_("Full Screen"), 1),
+        self.mouse_left_double_clicked_combo = ComboBox([(_("Full Screen"), 1),
                                                                (_("Disabled"), 2)])
         text_string = self.ini.get("OtherKey", "mouse_left_double_clicked")
         if text_string:
@@ -921,7 +921,7 @@ class OtherKey(gtk.VBox):
             
         # mouse wheel.
         self.mouse_wheel_combo_label = Label(_("Scroll"))
-        self.mouse_wheel_combo       = ComboBox([(_("Volumn"), 1),
+        self.mouse_wheel_combo = ComboBox([(_("Volumn"), 1),
                                                  (_("Disabled"), 2)])
         text_string = self.ini.get("OtherKey", "mouse_wheel_event")
         if text_string:
@@ -1075,7 +1075,7 @@ class OtherKey(gtk.VBox):
     def get_other_set_state(self):
         other_set_dict = {}
         # Left.
-        other_set_dict["other_key_bool"]     = self.other_key_bool_checkbtn.get_active()
+        other_set_dict["other_key_bool"] = self.other_key_bool_checkbtn.get_active()
         other_set_dict["add_brightness_key"] = self.add_bri_entry.get_text()
         other_set_dict["sub_brightness_key"] = self.sub_bri_entry.get_text()
         other_set_dict["inverse_rotation_key"] = self.inverse_rotation_entry.get_text()
@@ -1103,11 +1103,11 @@ class SubSet(gtk.VBox):
         self.label = Label(_("Subtitles"))
         self.label.set_size_request(label_width, label_height)
         self.heparator_hbox = gtk.HBox()
-        self.heparator      = create_separator_box()
+        self.heparator = create_separator_box()
         self.heparator_hbox.pack_start(self.heparator)
         self.heparator_hbox.set_size_request(heparator_width, heparator_height)
         # Ai load subtitle.
-        self.ai_load_subtitle_checkbtn       = CheckButton(_("Auto-load Subtitles"))
+        self.ai_load_subtitle_checkbtn = CheckButton(_("Auto-load Subtitles"))
         ini_bool = self.ini.get("SubtitleSet", "ai_load_subtitle")
         self.ai_load_subtitle_checkbtn.set_active(False)
         if ini_bool:
@@ -1125,8 +1125,8 @@ class SubSet(gtk.VBox):
             self.specific_location_search_entry.set_text("~/.config/deepin-media-player/subtitle")
             
         self.specific_location_search_entry.set_size(entry_width, entry_height)
-        self.specific_location_search_btn   = Button(_("View"))
-        self.specific_location_search_btn.connect("clicked", self.load_path_to_sls_entry)
+        self.specific_location_search_button = Button(_("View"))
+        self.specific_location_search_button.connect("clicked", self.load_path_to_sls_entry)
         sub_set_x = 20
         sub_set_y = 40
         self.fixed.put(self.label, sub_set_x, TITLE_HEIGHT_PADDING)
@@ -1145,7 +1145,7 @@ class SubSet(gtk.VBox):
         sub_set_y += self.specific_location_search_label.get_size_request()[1] + 10
         self.fixed.put(self.specific_location_search_entry,
                        sub_set_x, sub_set_y + 1)
-        self.fixed.put(self.specific_location_search_btn,
+        self.fixed.put(self.specific_location_search_button,
                        sub_set_x + self.specific_location_search_entry.get_size_request()[0] + 10, sub_set_y)
         
         self.pack_start(self.fixed)
@@ -1181,7 +1181,7 @@ class ScreenShot(gtk.VBox):
         self.label = Label(_("Screenshot"))
         self.label.set_size_request(label_width, label_height)
         self.heparator_hbox = gtk.HBox()
-        self.heparator      = create_separator_box()
+        self.heparator = create_separator_box()
         self.heparator_hbox.pack_start(self.heparator)
         self.heparator_hbox.set_size_request(heparator_width, heparator_height)                
         # Save clipboard.
@@ -1204,8 +1204,8 @@ class ScreenShot(gtk.VBox):
         self.save_path_button = Button(_("View"))
         self.save_path_button.connect("clicked", self.save_path_to_save_path_entry_clicked)
         # Save type.
-        self.save_type_label  = Label(_("File Type:"))
-        self.save_type_combo  = ComboBox([(".png", 1),
+        self.save_type_label = Label(_("File Type:"))
+        self.save_type_combo = ComboBox([(".png", 1),
                                           (".jpeg", 2)])
         
         ini_bool = self.ini.get("ScreenshotSet", "save_clipboard")
@@ -1307,10 +1307,10 @@ class ScreenShot(gtk.VBox):
         
     def get_screenshot_state(self):     
         screenshot_dict = {}
-        screenshot_dict["save_clipboard"]   = self.save_clipboard_radio.get_active() 
-        screenshot_dict["save_file"]        = self.save_file_radio.get_active()
-        screenshot_dict["save_path"]        = self.save_path_entry.get_text()
-        screenshot_dict["save_type"]        = self.save_type_combo.label.get_text()            
+        screenshot_dict["save_clipboard"] = self.save_clipboard_radio.get_active() 
+        screenshot_dict["save_file"] = self.save_file_radio.get_active()
+        screenshot_dict["save_path"] = self.save_path_entry.get_text()
+        screenshot_dict["save_type"] = self.save_type_combo.label.get_text()            
         screenshot_dict["current_show_sort"] = self.current_show_sort_check.get_active()
         return screenshot_dict
         

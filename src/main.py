@@ -22,11 +22,11 @@
 from skin import app_theme
 from dtk.ui.application import Application
 
-from constant     import APP_WIDTH, APP_HEIGHT
-from player_box   import PlayerBox
-from mplayer      import init_mplayer_config
-from user_guide   import init_user_guide
-from locales      import _
+from constant import APP_WIDTH, APP_HEIGHT
+from player_box import PlayerBox
+from mplayer import init_mplayer_config
+from user_guide import init_user_guide
+from locales import _
 
 import sys
 import gtk

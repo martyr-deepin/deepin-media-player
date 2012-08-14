@@ -20,63 +20,63 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from dtk.ui.skin_config     import skin_config
-from dtk.ui.osd_tooltip     import OSDTooltip
-from dtk.ui.utils           import cairo_state
-from dtk.ui.keymap          import get_keyevent_name
-from dtk.ui.box             import EventBox
-from dtk.ui.draw            import draw_pixbuf
-from dtk.ui.frame           import HorizontalFrame,VerticalFrame
-from dtk.ui.utils           import is_double_click, is_single_click, is_right_button, color_hex_to_cairo
-from dtk.ui.constant        import WIDGET_POS_BOTTOM_LEFT
-from dtk.ui.utils           import get_widget_root_coordinate
-from dtk.ui.menu            import Menu
-from dtk.ui.volume_button   import VolumeButton
+from dtk.ui.skin_config import skin_config
+from dtk.ui.osd_tooltip import OSDTooltip
+from dtk.ui.utils import cairo_state
+from dtk.ui.keymap import get_keyevent_name
+from dtk.ui.box import EventBox
+from dtk.ui.draw import draw_pixbuf
+from dtk.ui.frame import HorizontalFrame,VerticalFrame
+from dtk.ui.utils import is_double_click, is_single_click, is_right_button, color_hex_to_cairo
+from dtk.ui.constant import WIDGET_POS_BOTTOM_LEFT
+from dtk.ui.utils import get_widget_root_coordinate
+from dtk.ui.menu import Menu
+from dtk.ui.volume_button import VolumeButton
 
-from locales              import _
-from constant             import APP_WIDTH, APP_HEIGHT
-from ini                  import Config
-from gio_format           import format
-from utils                import allocation,path_threads
-from show_time            import ShowTime
-from progressbar          import ProgressBar
-from skin                 import app_theme
-from toolbar              import ToolBar
-from bottom_toolbar       import BottomToolBar
-from play_control_panel   import PlayControlPanel
-from play_list_button     import PlayListButton
-from drag                 import drag_connect
-from preview              import PreView
-from ini_gui              import IniGui
-from ini_gui              import VIDEO_ADAPT_WINDOW_STATE, WINDOW_ADAPT_VIDEO_STATE, UP_CLOSE_VIDEO_STATE, AI_FULL_VIDEO_STATE
-from gio_format           import Format
-from mplayer              import Mplayer, get_length, get_home_path, length_to_time, get_vide_width_height
+from locales import _
+from constant import APP_WIDTH, APP_HEIGHT
+from ini import Config
+from gio_format import format
+from utils import allocation,path_threads
+from show_time import ShowTime
+from progressbar import ProgressBar
+from skin import app_theme
+from toolbar import ToolBar
+from bottom_toolbar import BottomToolBar
+from play_control_panel import PlayControlPanel
+from play_list_button import PlayListButton
+from drag import drag_connect
+from preview import PreView
+from ini_gui import IniGui
+from ini_gui import VIDEO_ADAPT_WINDOW_STATE, WINDOW_ADAPT_VIDEO_STATE, UP_CLOSE_VIDEO_STATE, AI_FULL_VIDEO_STATE
+from gio_format import Format
+from mplayer import Mplayer, get_length, get_home_path, length_to_time, get_vide_width_height
 from mplayer import SINGLE_PLAYING_STATE, ORDER_PLAYING_STATE, RANDOM_PLAYER_STATE, SINGLE_CYCLE_PLAYER, LIST_RECYCLE_PLAY
-from playlist             import PlayList, MediaItem
-from sort                 import Sort
-from open_button          import OpenButton, ScreenMenu, OpenUrl
-from lastnewplayfile      import LastNewPlayFile
-from service              import download_shooter_subtitle
-from user_guide           import init_user_guide
-from code_to_utf_8        import auto_decode
+from playlist import PlayList, MediaItem
+from sort import Sort
+from open_button import OpenButton, ScreenMenu, OpenUrl
+from lastnewplayfile import LastNewPlayFile
+from service import download_shooter_subtitle
+from user_guide import init_user_guide
+from code_to_utf_8 import auto_decode
 
 import threading
 import gtk
 import os
 
 X_VIDEO_PLAY_0_5 = 1 << 0
-X_VIDEO_PLAY_1   = 1 << 1
+X_VIDEO_PLAY_1 = 1 << 1
 X_VIDEO_PLAY_1_5 = 1 << 2
-X_VIDEO_PLAY_2   = 1 << 3
+X_VIDEO_PLAY_2 = 1 << 3
 STARTING_PLAY = 1
-STOPING_PLAY  = 0
+STOPING_PLAY = 0
 VOLUME_BUTTON_STATE = 1
 MUTE_STATE = -1
 # ascept state. "16:10""16:9""4:3""1.85:1""2.35:1""默认"
 ASCEPT_NORMAL_STATE = "默认"
-ASCEPT_4X3_STATE    = "4:3"
-ASCEPT_16X9_STATE   = "16:9"
-ASCEPT_16X10_STATE  = "16:10"
+ASCEPT_4X3_STATE = "4:3"
+ASCEPT_16X9_STATE = "16:9"
+ASCEPT_16X10_STATE = "16:10"
 ASCEPT_1_85X1_STATE = "1.85:1"
 ASCEPT_2_35X1_STATE = "2.35:1"
 
@@ -214,40 +214,40 @@ class PlayerBox(object):
         self.menu_window_mode_normal_pixbuf = app_theme.get_pixbuf("screen/menu_window_mode_normal.png")
         self.menu_window_mode_hover_pixbuf = app_theme.get_pixbuf("screen/menu_window_mode_hover.png")
         self.menu_play_sequence_normal_pixbuf = app_theme.get_pixbuf("screen/menu_play_sequence_normal.png")
-        self.menu_play_sequence_hover_pixbuf  = app_theme.get_pixbuf("screen/menu_play_sequence_hover.png")
+        self.menu_play_sequence_hover_pixbuf = app_theme.get_pixbuf("screen/menu_play_sequence_hover.png")
         self.menu_full_normal_pixbuf = app_theme.get_pixbuf("screen/menu_full_normal.png") 
-        self.menu_full_hover_pixbuf  = app_theme.get_pixbuf("screen/menu_full_hover.png")
+        self.menu_full_hover_pixbuf = app_theme.get_pixbuf("screen/menu_full_hover.png")
         self.menu_pre_normal_pixbuf = app_theme.get_pixbuf("screen/menu_pre_normal.png")
-        self.menu_pre_hover_pixbuf  = app_theme.get_pixbuf("screen/menu_pre_hover.png")
+        self.menu_pre_hover_pixbuf = app_theme.get_pixbuf("screen/menu_pre_hover.png")
         self.menu_next_normal_pixbuf = app_theme.get_pixbuf("screen/menu_next_normal.png")
-        self.menu_next_hover_pixbuf  = app_theme.get_pixbuf("screen/menu_next_hover.png")        
-        self.menu_f_seek_5_normal_pixbuf   = app_theme.get_pixbuf("screen/menu_f_seek_5_normal.png")
-        self.menu_f_seek_5_hover_pixbuf    = app_theme.get_pixbuf("screen/menu_f_seek_5_hover.png")
-        self.menu_b_seek_5_normal_pixbuf   = app_theme.get_pixbuf("screen/menu_b_seek_5_normal.png")
-        self.menu_b_seek_5_hover_pixbuf   = app_theme.get_pixbuf("screen/menu_b_seek_5_hover.png")
-        self.menu_volume_normal_pixbuf  = app_theme.get_pixbuf("screen/menu_volume_normal.png")
-        self.menu_volume_hover_pixbuf   = app_theme.get_pixbuf("screen/menu_volume_hover.png")
+        self.menu_next_hover_pixbuf = app_theme.get_pixbuf("screen/menu_next_hover.png")        
+        self.menu_f_seek_5_normal_pixbuf = app_theme.get_pixbuf("screen/menu_f_seek_5_normal.png")
+        self.menu_f_seek_5_hover_pixbuf = app_theme.get_pixbuf("screen/menu_f_seek_5_hover.png")
+        self.menu_b_seek_5_normal_pixbuf = app_theme.get_pixbuf("screen/menu_b_seek_5_normal.png")
+        self.menu_b_seek_5_hover_pixbuf = app_theme.get_pixbuf("screen/menu_b_seek_5_hover.png")
+        self.menu_volume_normal_pixbuf = app_theme.get_pixbuf("screen/menu_volume_normal.png")
+        self.menu_volume_hover_pixbuf = app_theme.get_pixbuf("screen/menu_volume_hover.png")
         self.menu_setting_normal_pixbuf = app_theme.get_pixbuf("screen/menu_setting_normal.png")
-        self.menu_setting_hover_pixbuf  = app_theme.get_pixbuf("screen/menu_setting_hover.png")
+        self.menu_setting_hover_pixbuf = app_theme.get_pixbuf("screen/menu_setting_hover.png")
         self.menu_quit_normal_pixbuf = app_theme.get_pixbuf("screen/menu_quit_normal.png")
-        self.menu_quit_hover_pixbuf  = app_theme.get_pixbuf("screen/menu_quit_hover.png")
+        self.menu_quit_hover_pixbuf = app_theme.get_pixbuf("screen/menu_quit_hover.png")
         self.menu_subtitle_normal_pixbuf = app_theme.get_pixbuf("screen/menu_subtitle_normal.png")
-        self.menu_subtitle_hover_pixbuf  = app_theme.get_pixbuf("screen/menu_subtitle_hover.png")
+        self.menu_subtitle_hover_pixbuf = app_theme.get_pixbuf("screen/menu_subtitle_hover.png")
         
         # play sequence pixbuf.
-        self.play_sequence_select_normal_pixbuf   =  app_theme.get_pixbuf("screen/check_normal.png")
-        self.play_sequence_select_hover_pixbuf    =  app_theme.get_pixbuf("screen/check_hover.png")
+        self.play_sequence_select_normal_pixbuf = app_theme.get_pixbuf("screen/check_normal.png")
+        self.play_sequence_select_hover_pixbuf = app_theme.get_pixbuf("screen/check_hover.png")
 
         # channel_select pixbuf.
-        self.select_channel_normal_pixbuf  =  app_theme.get_pixbuf("screen/check_normal.png")
-        self.select_channel_hover_pixbuf   =  app_theme.get_pixbuf("screen/check_hover.png")        
+        self.select_channel_normal_pixbuf = app_theme.get_pixbuf("screen/check_normal.png")
+        self.select_channel_hover_pixbuf = app_theme.get_pixbuf("screen/check_hover.png")        
         
         # mute/add/sub volume pixbuf.
         self.mute_normal_pixbuf = app_theme.get_pixbuf("screen/menu_volume_menu_normal.png")
         self.mute_hover_pixbuf = app_theme.get_pixbuf("screen/menu_volume_menu_hover.png")
         self.mute_volume_pixbuf = (self.mute_normal_pixbuf, self.mute_hover_pixbuf)
         self.add_volume_normal_pixbuf = app_theme.get_pixbuf("screen/menu_volume_add_normal.png")
-        self.add_volume_hover_pixbuf  = app_theme.get_pixbuf("screen/menu_volume_add_hover.png")
+        self.add_volume_hover_pixbuf = app_theme.get_pixbuf("screen/menu_volume_add_hover.png")
         self.add_volume_pixbuf = (self.add_volume_normal_pixbuf, self.add_volume_hover_pixbuf)
         self.sub_volume_normal_pixbuf = app_theme.get_pixbuf("screen/menu_volume_sub_normal.png")
         self.sub_volume_hover_pixbuf = app_theme.get_pixbuf("screen/menu_volume_sub_hover.png")
@@ -280,7 +280,7 @@ class PlayerBox(object):
         self.app_width = 0  # Save media player window width.
         self.app_height = 0 # Save media player window height.
         self.argv_path_list = argv_path_list # command argv.
-        self.app.titlebar.min_button.connect("clicked", self.min_window_titlebar_min_btn_click)
+        self.app.titlebar.min_button.connect("clicked", self.min_window_titlebar_min_button_click)
         self.app.window.connect("destroy", self.quit_player_window)
         self.app.window.connect("configure-event", self.app_configure_hide_tool)
         self.app.window.connect("window-state-event", self.set_toolbar2_position)
@@ -408,13 +408,13 @@ class PlayerBox(object):
         self.bottom_toolbar.progressbar.pb.connect("leave-notify-event", self.hide_preview_leave)
 
         # play_control_panel.
-        self.bottom_toolbar.play_control_panel.stop_btn.connect("clicked", self.stop_button_clicked)
-        self.bottom_toolbar.play_control_panel.pre_btn.connect("clicked", self.pre_button_clicked)
-        self.bottom_toolbar.play_control_panel.start_btn.connect("clicked", 
+        self.bottom_toolbar.play_control_panel.stop_button.connect("clicked", self.stop_button_clicked)
+        self.bottom_toolbar.play_control_panel.pre_button.connect("clicked", self.pre_button_clicked)
+        self.bottom_toolbar.play_control_panel.start_button.connect("clicked", 
                                                                  self.start_button_clicked, 
                                                                  FULL_WINDOW_STATE)
-        self.bottom_toolbar.play_control_panel.next_btn.connect("clicked", self.next_button_clicked)
-        self.bottom_toolbar.play_control_panel.open_btn.connect("clicked", self.open_button_clicked)
+        self.bottom_toolbar.play_control_panel.next_button.connect("clicked", self.next_button_clicked)
+        self.bottom_toolbar.play_control_panel.open_button.connect("clicked", self.open_button_clicked)
 
         # bottom toolbar volume button.
         self.bottom_toolbar.volume_button.value = 100
@@ -453,12 +453,12 @@ class PlayerBox(object):
         self.play_control_panel_hframe = self.play_control_panel.hbox_hframe
         self.play_control_panel_hframe.set(1, 0.5, 0, 0)
         self.play_control_panel_hframe.set_padding(0, 1, 0, 0)
-        self.play_control_panel.stop_btn.connect("clicked", self.stop_button_clicked) # stop play.
-        self.play_control_panel.pre_btn.connect("clicked", self.pre_button_clicked) # pre play.
+        self.play_control_panel.stop_button.connect("clicked", self.stop_button_clicked) # stop play.
+        self.play_control_panel.pre_button.connect("clicked", self.pre_button_clicked) # pre play.
         # 1 -> play_control_panel
-        self.play_control_panel.start_btn.connect("clicked", self.start_button_clicked, 1) # start play or pause play.
-        self.play_control_panel.next_btn.connect("clicked", self.next_button_clicked) # next play.
-        self.play_control_panel.open_btn.connect("clicked", self.open_button_clicked) # show open window.
+        self.play_control_panel.start_button.connect("clicked", self.start_button_clicked, 1) # start play or pause play.
+        self.play_control_panel.next_button.connect("clicked", self.next_button_clicked) # next play.
+        self.play_control_panel.open_button.connect("clicked", self.open_button_clicked) # show open window.
         
     def init_volume_button(self):
         self.volume_button_hframe = HorizontalFrame()
@@ -644,7 +644,7 @@ class PlayerBox(object):
         
         # open file key init.(left)        
         play_control_bool = self.config.get("PlayControl", "play_control_bool")
-        other_key_bool    = self.config.get("OtherKey",    "other_key_bool")
+        other_key_bool = self.config.get("OtherKey",    "other_key_bool")
         
         # [PlayControl] Init.
         if play_control_bool.lower() == "true":    
@@ -714,8 +714,8 @@ class PlayerBox(object):
         if STARTING_PLAY == self.mp.state: 
             scrot_bool = self.config.get("ScreenshotSet", "current_show_sort")
             
-            save_clipboard_bool =  self.config.get("ScreenshotSet", "save_clipboard")
-            save_file_bool =  self.config.get("ScreenshotSet", "save_file")
+            save_clipboard_bool = self.config.get("ScreenshotSet", "save_clipboard")
+            save_file_bool = self.config.get("ScreenshotSet", "save_file")
 
             save_path = self.config.get("ScreenshotSet", "save_path")
             save_type = self.config.get("ScreenshotSet", "save_type")
@@ -780,7 +780,7 @@ class PlayerBox(object):
     def key_set_volume(self, type_bool):
         add_volume_state = 1
         sub_volume_state = 0
-        volume_value     = 5
+        volume_value = 5
         temp_value = 0
         
         # Set volume.
@@ -792,7 +792,7 @@ class PlayerBox(object):
                 self.bottom_toolbar.volume_button.value = self.mp.volume
             else:
                 temp_value = min(self.volume_button.value + volume_value, 100)
-                self.volume_button.value                = temp_value
+                self.volume_button.value = temp_value
                 self.bottom_toolbar.volume_button.value = temp_value
         elif type_bool == sub_volume_state:
             if self.mode_state_bool:                    
@@ -847,11 +847,11 @@ class PlayerBox(object):
 
     def key_pre(self):
         # print "pre a key..."
-        self.pre_button_clicked(self.play_control_panel.pre_btn)
+        self.pre_button_clicked(self.play_control_panel.pre_button)
 
     def key_next(self):
         # print "next a key..."
-        self.next_button_clicked(self.play_control_panel.next_btn)
+        self.next_button_clicked(self.play_control_panel.next_button)
 
     def key_right(self):
         # print "right key..."
@@ -863,7 +863,7 @@ class PlayerBox(object):
         
     def key_space(self):
         # print "space key..."
-        self.virtual_set_start_btn_clicked()
+        self.virtual_set_start_button_clicked()
 
     def key_return(self):
         # print "return key.."
@@ -942,7 +942,7 @@ class PlayerBox(object):
             self.clear_play_list_bool = False
             if STARTING_PLAY == self.mp.state:
                 self.mp.quit()
-            self.start_button_clicked(self.play_control_panel.start_btn, 1)
+            self.start_button_clicked(self.play_control_panel.start_button, 1)
             self.play_list.list_view.set_highlight(self.play_list.list_view.items[0])
         return False
 
@@ -956,10 +956,10 @@ class PlayerBox(object):
         self.mp.play(self.play_list_dict[list_item.title])
         self.mp.playListNum = list_item.get_index()
 
-        self.play_control_panel.start_btn.start_bool = False
-        self.play_control_panel.start_btn.queue_draw()
-        self.bottom_toolbar.play_control_panel.start_btn.start_bool = False
-        self.bottom_toolbar.play_control_panel.start_btn.queue_draw()
+        self.play_control_panel.start_button.start_bool = False
+        self.play_control_panel.start_button.queue_draw()
+        self.bottom_toolbar.play_control_panel.start_button.start_bool = False
+        self.bottom_toolbar.play_control_panel.start_button.queue_draw()
 
         self.play_list.list_view.set_highlight(list_item)
 
@@ -976,24 +976,24 @@ class PlayerBox(object):
         '''start or pause'''
         if STOPING_PLAY == self.mp.state:
             self.mp.next() # Test pause.
-            self.play_control_panel.start_btn.start_bool = False
-            self.play_control_panel.start_btn.queue_draw()
-            self.bottom_toolbar.play_control_panel.start_btn.start_bool = False
-            self.bottom_toolbar.play_control_panel.start_btn.queue_draw()
+            self.play_control_panel.start_button.start_bool = False
+            self.play_control_panel.start_button.queue_draw()
+            self.bottom_toolbar.play_control_panel.start_button.start_bool = False
+            self.bottom_toolbar.play_control_panel.start_button.queue_draw()
             if 0 == self.mp.state: # NO player file.
-                self.play_control_panel.start_btn.start_bool = True # start_btn modify play state.
-                self.play_control_panel.start_btn.queue_draw()
-                self.bottom_toolbar.play_control_panel.start_btn.start_bool = True
-                self.bottom_toolbar.play_control_panel.start_btn.queue_draw()
+                self.play_control_panel.start_button.start_bool = True # start_button modify play state.
+                self.play_control_panel.start_button.queue_draw()
+                self.bottom_toolbar.play_control_panel.start_button.start_bool = True
+                self.bottom_toolbar.play_control_panel.start_button.queue_draw()
                 self.messagebox(_("No Media Selected"))
                 self.show_open_dialog_window()
         else:
             if 1 == start_bit:
-                self.bottom_toolbar.play_control_panel.start_btn.start_bool = self.play_control_panel.start_btn.start_bool
-                self.bottom_toolbar.play_control_panel.start_btn.queue_draw()
+                self.bottom_toolbar.play_control_panel.start_button.start_bool = self.play_control_panel.start_button.start_bool
+                self.bottom_toolbar.play_control_panel.start_button.queue_draw()
             elif 2 == start_bit:
-                self.play_control_panel.start_btn.start_bool = self.bottom_toolbar.play_control_panel.start_btn.start_bool
-                self.play_control_panel.start_btn.queue_draw()
+                self.play_control_panel.start_button.start_bool = self.bottom_toolbar.play_control_panel.start_button.start_bool
+                self.play_control_panel.start_button.queue_draw()
 
             gtk.timeout_add(50, self.start_button_time_pause)
 
@@ -1091,10 +1091,10 @@ class PlayerBox(object):
     def init_media_player(self, widget):
         '''Init deepin media player.'''
         # Init root window width_height.
-        self.app_width   = self.app.window.get_allocation()[2]
-        self.app_height  = self.app.window.get_allocation()[3]
-        self.root_window_width   =  self.app.window.get_screen().get_width() # save root widnwo screen width.
-        self.root_window_height  =  self.app.window.get_screen().get_height() # save roo widnow screen height.
+        self.app_width = self.app.window.get_allocation()[2]
+        self.app_height = self.app.window.get_allocation()[3]
+        self.root_window_width = self.app.window.get_screen().get_width() # save root widnwo screen width.
+        self.root_window_height = self.app.window.get_screen().get_height() # save roo widnow screen height.
                                 
         self.init_play_list_state()        
         
@@ -1149,7 +1149,7 @@ class PlayerBox(object):
         if play_list_bool:
             if "true" == play_list_bool.lower() :
                 self.play_list.show_play_list()
-                self.play_list_button.button.flags      = True
+                self.play_list_button.button.flags = True
                 self.play_list_button_clicked(self.play_list_button.button)
         
     def init_volume_value(self):            
@@ -1233,12 +1233,12 @@ class PlayerBox(object):
             self.screen_pop_menu.visible_bool = True
         return True
 
-    def min_window_titlebar_min_btn_click(self, widget):
+    def min_window_titlebar_min_button_click(self, widget):
         '''app titlebar min_button'''
         config_bool = self.config.get("SystemSet", "minimize_pause_play")
         if config_bool:
             if "true" == config_bool.lower():
-                self.virtual_set_start_btn_clicked()
+                self.virtual_set_start_button_clicked()
                 gtk.timeout_add(500, self.set_min_pause_bool_time)
 
     def set_min_pause_bool_time(self):
@@ -1297,7 +1297,7 @@ class PlayerBox(object):
             config_bool = self.config.get("SystemSet", "minimize_pause_play")            
             if config_bool:
                 if "true" == config_bool.lower():
-                    self.virtual_set_start_btn_clicked()
+                    self.virtual_set_start_button_clicked()
                     self.minimize_pause_play_bool = False
 
         if 1 == self.mp.state:            
@@ -1429,7 +1429,7 @@ class PlayerBox(object):
             self.app.window.resize(int(temp_video_width), int(temp_video_height))                                    
             self.app.window.set_position(gtk.WIN_POS_CENTER_ALWAYS)                        
         else:
-            if self.video_play_state   == X_VIDEO_PLAY_0_5:                    
+            if self.video_play_state == X_VIDEO_PLAY_0_5:                    
                 self.full_set_video_play(video_width, video_height)
             elif self.video_play_state == X_VIDEO_PLAY_1:
                 self.full_set_video_play(video_width, video_height)
@@ -1712,18 +1712,18 @@ class PlayerBox(object):
         if other_key_bool.lower() == "true":
             if self.pause_bool:
                 if 1 == self.mp.state:
-                    self.pause_time_id = gtk.timeout_add(250, self.virtual_set_start_btn_clicked)
+                    self.pause_time_id = gtk.timeout_add(250, self.virtual_set_start_button_clicked)
                     self.pause_bool = False
 
-    def virtual_set_start_btn_clicked(self):
+    def virtual_set_start_button_clicked(self):
         if self.mode_state_bool:
-            self.bottom_toolbar.play_control_panel.start_btn.start_bool = not self.bottom_toolbar.play_control_panel.start_btn.start_bool
-            self.bottom_toolbar.play_control_panel.start_btn.queue_draw()
-            self.start_button_clicked(self.bottom_toolbar.play_control_panel.start_btn, 2)
+            self.bottom_toolbar.play_control_panel.start_button.start_bool = not self.bottom_toolbar.play_control_panel.start_button.start_bool
+            self.bottom_toolbar.play_control_panel.start_button.queue_draw()
+            self.start_button_clicked(self.bottom_toolbar.play_control_panel.start_button, 2)
         else:
-            self.play_control_panel.start_btn.start_bool = not self.play_control_panel.start_btn.start_bool
-            self.play_control_panel.start_btn.queue_draw()
-            self.start_button_clicked(self.play_control_panel.start_btn, 1)
+            self.play_control_panel.start_button.start_bool = not self.play_control_panel.start_button.start_bool
+            self.play_control_panel.start_button.queue_draw()
+            self.start_button_clicked(self.play_control_panel.start_button, 1)
 
         return False
 
@@ -1783,7 +1783,7 @@ class PlayerBox(object):
         else:
             config_bool = self.config.get("FilePlay", "mouse_progressbar_show_preview")
             if config_bool:
-                if "true" ==  config_bool.lower():
+                if "true" == config_bool.lower():
                     if 1 == self.mp.state:
                         if self.play_video_file_bool(self.mp.path):
                             self.preview.set_preview_path(self.mp.path)
@@ -1999,7 +1999,7 @@ class PlayerBox(object):
         self.screen_frame.set(0.0, 0.0, 1.0, 1.0)
         # Quit preview window player.
         self.preview.quit_preview_player()
-        # Play file modify start_btn.
+        # Play file modify start_button.
         self.media_player_midfy_start_bool()
         config_bool = self.config.get("FilePlay", "memory_up_close_player_file_postion")
         if config_bool:
@@ -2055,10 +2055,10 @@ class PlayerBox(object):
         self.progressbar.set_pos(0)
         self.bottom_toolbar.progressbar.set_pos(0)
         self.screen.queue_draw()
-        self.play_control_panel.start_btn.start_bool = True
-        self.play_control_panel.start_btn.queue_draw()
-        self.bottom_toolbar.play_control_panel.start_btn.start_bool = True
-        self.bottom_toolbar.play_control_panel.start_btn.queue_draw()
+        self.play_control_panel.start_button.start_bool = True
+        self.play_control_panel.start_button.queue_draw()
+        self.bottom_toolbar.play_control_panel.start_button.start_bool = True
+        self.bottom_toolbar.play_control_panel.start_button.queue_draw()
 
     # Double buffer set.
     def unset_flags(self):
@@ -2095,12 +2095,12 @@ class PlayerBox(object):
                                    (None, _("Remove Subtitles"), None),
                                    ])
         
-        normal_channel_state  =  0
-        left_channel_state    =  1
-        right_channel_state   =  2
+        normal_channel_state = 0
+        left_channel_state = 1
+        right_channel_state = 2
         normal_channel_pixbuf = None
-        left_channel_pixbuf   = None
-        right_channel_pixbuf  = None
+        left_channel_pixbuf = None
+        right_channel_pixbuf = None
         
         channel_pixbuf = (self.select_channel_normal_pixbuf, self.select_channel_hover_pixbuf)
         
@@ -2126,12 +2126,12 @@ class PlayerBox(object):
                                  (self.mute_volume_pixbuf, _("Mute/Umute"), self.key_set_mute),
                                  ])
         # In title root menu.
-        pixbuf_normal    = None
-        pixbuf_4X3       = None
-        pixbuf_16X9      = None
-        pixbuf_16X10     = None
-        pixbuf_1_85X1    = None
-        pixbuf_2_35X1    = None
+        pixbuf_normal = None
+        pixbuf_4X3 = None
+        pixbuf_16X9 = None
+        pixbuf_16X10 = None
+        pixbuf_1_85X1 = None
+        pixbuf_2_35X1 = None
         
         if ASCEPT_NORMAL_STATE == self.video_aspect_type: #"默认"
             pixbuf_normal = (self.video_aspect_pixbuf, self.video_aspect_select_pixbuf)
@@ -2162,11 +2162,11 @@ class PlayerBox(object):
                                  ])        
         
         # 0: single playing.      
-        # single_play_state       = 0
+        # single_play_state = 0
         # 1: order playing.     
-        # order_play_state        = 1
+        # order_play_state = 1
         # 2: random player.      
-        # random_play_state       = 2
+        # random_play_state = 2
         # 3: single cycle player. 
         # signle_cycle_play_state = 3
         # 4: list recycle play. 
@@ -2174,15 +2174,15 @@ class PlayerBox(object):
         
         play_sequence_pixbuf = (self.play_sequence_select_normal_pixbuf, self.play_sequence_select_hover_pixbuf)
         single_pixbuf = None
-        order_pixbuf  = None
+        order_pixbuf = None
         random_pixbuf = None
         signle_cycle_pixbuf = None
         list_recycle_pixbuf = None
         
-        if self.mp.playListState   == SINGLE_PLAYING_STATE: # single_play_state:
+        if self.mp.playListState == SINGLE_PLAYING_STATE: # single_play_state:
             single_pixbuf = play_sequence_pixbuf
         elif self.mp.playListState == ORDER_PLAYING_STATE: # order_play_state:    
-            order_pixbuf  = play_sequence_pixbuf
+            order_pixbuf = play_sequence_pixbuf
         elif self.mp.playListState == RANDOM_PLAYER_STATE: # random_play_state:
             random_pixbuf = play_sequence_pixbuf
         elif self.mp.playListState == SINGLE_CYCLE_PLAYER: # signle_cycle_play_state:    
@@ -2241,11 +2241,11 @@ class PlayerBox(object):
     def screen_right_key_menu(self, event):
         
         # 0: single playing.      
-        # single_play_state       = 0
+        # single_play_state = 0
         # 1: order playing.     
-        # order_play_state        = 1
+        # order_play_state = 1
         # 2: random player.      
-        # random_play_state       = 2
+        # random_play_state = 2
         # 3: single cycle player. 
         # signle_cycle_play_state = 3
         # 4: list recycle play. 
@@ -2253,15 +2253,15 @@ class PlayerBox(object):
         
         play_sequence_pixbuf = (self.play_sequence_select_normal_pixbuf, self.play_sequence_select_hover_pixbuf)
         single_pixbuf = None
-        order_pixbuf  = None
+        order_pixbuf = None
         random_pixbuf = None
         signle_cycle_pixbuf = None
         list_recycle_pixbuf = None
         
-        if self.mp.playListState   == SINGLE_PLAYING_STATE: # single_play_state:
+        if self.mp.playListState == SINGLE_PLAYING_STATE: # single_play_state:
             single_pixbuf = play_sequence_pixbuf
         elif self.mp.playListState == ORDER_PLAYING_STATE: # order_play_state:    
-            order_pixbuf  = play_sequence_pixbuf
+            order_pixbuf = play_sequence_pixbuf
         elif self.mp.playListState == RANDOM_PLAYER_STATE: # random_play_state:
             random_pixbuf = play_sequence_pixbuf
         elif self.mp.playListState == SINGLE_CYCLE_PLAYER: # signle_cycle_play_state:    
@@ -2286,12 +2286,12 @@ class PlayerBox(object):
                           ])
 
         # aspect.
-        pixbuf_normal    = None
-        pixbuf_4X3       = None
-        pixbuf_16X9      = None
-        pixbuf_16X10     = None
-        pixbuf_1_85X1    = None
-        pixbuf_2_35X1    = None
+        pixbuf_normal = None
+        pixbuf_4X3 = None
+        pixbuf_16X9 = None
+        pixbuf_16X10 = None
+        pixbuf_1_85X1 = None
+        pixbuf_2_35X1 = None
         
         if ASCEPT_NORMAL_STATE == self.video_aspect_type: # 默认
             pixbuf_normal = (self.video_aspect_pixbuf, self.video_aspect_select_pixbuf)
@@ -2321,12 +2321,12 @@ class PlayerBox(object):
                             # (None, "全屏/退出", None),
                             ])
 
-        normal_channel_state  =  0
-        left_channel_state    =  1
-        right_channel_state   =  2
+        normal_channel_state = 0
+        left_channel_state = 1
+        right_channel_state = 2
         normal_channel_pixbuf = None
-        left_channel_pixbuf   = None
-        right_channel_pixbuf  = None
+        left_channel_pixbuf = None
+        right_channel_pixbuf = None
         
         channel_pixbuf = (self.select_channel_normal_pixbuf, self.select_channel_hover_pixbuf)
         
@@ -2377,11 +2377,11 @@ class PlayerBox(object):
     def show_popup_menu(self, widget, event):
         if 3 == event.button:
             # 0: single playing.      
-            # single_play_state       = 0
+            # single_play_state = 0
             # 1: order playing.     
-            # order_play_state        = 1
+            # order_play_state = 1
             # 2: random player.      
-            # random_play_state       = 2
+            # random_play_state = 2
             # 3: single cycle player. 
             # signle_cycle_play_state = 3
             # 4: list recycle play. 
@@ -2389,15 +2389,15 @@ class PlayerBox(object):
         
             play_sequence_pixbuf = (self.play_sequence_select_normal_pixbuf, self.play_sequence_select_hover_pixbuf)
             single_pixbuf = None
-            order_pixbuf  = None
+            order_pixbuf = None
             random_pixbuf = None
             signle_cycle_pixbuf = None
             list_recycle_pixbuf = None
 
-            if self.mp.playListState   == SINGLE_PLAYING_STATE: # single_play_state:
+            if self.mp.playListState == SINGLE_PLAYING_STATE: # single_play_state:
                 single_pixbuf = play_sequence_pixbuf
             elif self.mp.playListState == ORDER_PLAYING_STATE: # order_play_state:    
-                order_pixbuf  = play_sequence_pixbuf
+                order_pixbuf = play_sequence_pixbuf
             elif self.mp.playListState == RANDOM_PLAYER_STATE: # random_play_state:
                 random_pixbuf = play_sequence_pixbuf
             elif self.mp.playListState == SINGLE_CYCLE_PLAYER: # signle_cycle_play_state:
@@ -2493,8 +2493,8 @@ class PlayerBox(object):
             # clear play list.
             self.play_list.list_view.clear()
             self.mp.playList = []
-            self.mp.playListSum   = 0
-            self.mp.playListNum   = -1
+            self.mp.playListSum = 0
+            self.mp.playListNum = -1
             self.mp.random_num = 0
 
             # play list restart add file name.
@@ -2532,8 +2532,8 @@ class PlayerBox(object):
             # clear play list.
             self.play_list.list_view.clear()
             self.mp.playList = []
-            self.mp.playListSum   = 0
-            self.mp.playListNum   = -1
+            self.mp.playListSum = 0
+            self.mp.playListNum = -1
             self.mp.random_num = 0
 
             list_item = []
@@ -2720,7 +2720,7 @@ class PlayerBox(object):
     def menu_set_volume(self, type_bool):            
         add_volume_state = 1
         sub_volume_state = 0
-        volume_value     = 5        
+        volume_value = 5        
         
         # Set volume.
         if type_bool == add_volume_state:

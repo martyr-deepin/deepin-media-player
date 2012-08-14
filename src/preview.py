@@ -19,8 +19,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from mplayer    import Mplayer
-from constant   import PREVIEW_PV_WIDTH, PREVIEW_PV_HEIGHT
+from mplayer import Mplayer
+from constant import PREVIEW_PV_WIDTH, PREVIEW_PV_HEIGHT
 
 import gtk
 import cairo

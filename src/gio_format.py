@@ -29,7 +29,7 @@ class Format(object):
                              "application/vnd.rn-realmedia"]
         self.audio_format = ["audio"]        
         
-        self.html_format  = ["http", "https", "mms", "ftp"]
+        self.html_format = ["http", "https", "mms", "ftp"]
         
     def get_video_bool(self, file_path):
         file_format = self.format_function(file_path)

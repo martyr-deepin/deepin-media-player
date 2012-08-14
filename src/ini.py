@@ -187,8 +187,8 @@ class Config(gobject.GObject):
             
     def set(self, section, argv, value):
         section = str(section)
-        argv    = str(argv)
-        value   = str(value)
+        argv = str(argv)
+        value = str(value)
         
         if not self.section_dict.has_key(section):
             self.section_dict[section] = {argv:str(value)}
@@ -202,7 +202,7 @@ class Config(gobject.GObject):
                 
     def get(self, section, argv):
         section = str(section)
-        argv    = str(argv)
+        argv = str(argv)
         
         if self.section_dict.has_key(section):
             if self.section_dict[section].has_key(argv):                
@@ -219,7 +219,7 @@ class Config(gobject.GObject):
     
     def modify_argv(self, section, argv, new_argv, new_value):
         section = str(section)
-        argv    = str(argv)
+        argv = str(argv)
         
         if self.section_dict.has_key(section) and self.section_dict[section].has_key(argv):
             del self.section_dict[section][argv]

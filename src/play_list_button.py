@@ -21,13 +21,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from dtk.ui.draw         import draw_pixbuf
-from dtk.ui.utils        import propagate_expose
+from dtk.ui.draw import draw_pixbuf
+from dtk.ui.utils import propagate_expose
 from dtk.ui.cache_pixbuf import CachePixbuf
 
-from skin      import app_theme
-from tooltip   import tooltip_text
-from locales   import _
+from skin import app_theme
+from tooltip import tooltip_text
+from locales import _
 
 import gtk
 

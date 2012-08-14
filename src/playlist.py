@@ -19,16 +19,16 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from dtk.ui.draw               import draw_text
-from dtk.ui.utils              import container_remove_all, color_hex_to_cairo
-from dtk.ui.listview           import ListView
-from dtk.ui.listview           import get_content_size
-from dtk.ui.scrolled_window    import ScrolledWindow
-from dtk.ui.constant           import DEFAULT_FONT_SIZE,ALIGN_END, ALIGN_START
+from dtk.ui.draw import draw_text
+from dtk.ui.utils import container_remove_all, color_hex_to_cairo
+from dtk.ui.listview import ListView
+from dtk.ui.listview import get_content_size
+from dtk.ui.scrolled_window import ScrolledWindow
+from dtk.ui.constant import DEFAULT_FONT_SIZE,ALIGN_END, ALIGN_START
 
-from skin     import app_theme
-from tooltip  import tooltip_text
-from play_list_control_panel   import PlayListControlPanel
+from skin import app_theme
+from tooltip import tooltip_text
+from play_list_control_panel import PlayListControlPanel
 
 import gtk
 import gobject

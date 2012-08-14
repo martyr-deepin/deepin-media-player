@@ -51,13 +51,13 @@ class ProgressBar(gtk.EventBox):
         self.set_visible_window(False)
         self.set_size_request(width, point_pixbuf.get_pixbuf().get_height() + progressbar_padding_y)
         '''Init pixbuf.'''
-        self.__bg_color     = bg_color
-        self.__fg_color     = fg_color
-        self.__bg_pixbuf    = bg_pixbuf.get_pixbuf()
-        self.__bg_pixbuf    = self.__bg_pixbuf.scale_simple(self.__bg_pixbuf.get_width(), line_width,
+        self.__bg_color = bg_color
+        self.__fg_color = fg_color
+        self.__bg_pixbuf = bg_pixbuf.get_pixbuf()
+        self.__bg_pixbuf = self.__bg_pixbuf.scale_simple(self.__bg_pixbuf.get_width(), line_width,
                                                             gtk.gdk.INTERP_BILINEAR)
-        self.__fg_pixbuf    = fg_pixbuf.get_pixbuf()
-        self.__fg_pixbuf    = self.__fg_pixbuf.scale_simple(self.__fg_pixbuf.get_width(), line_width,
+        self.__fg_pixbuf = fg_pixbuf.get_pixbuf()
+        self.__fg_pixbuf = self.__fg_pixbuf.scale_simple(self.__fg_pixbuf.get_width(), line_width,
                                                             gtk.gdk.INTERP_BILINEAR)
         self.__point_pixbuf = point_pixbuf
         self.__hight_pixbuf = hight_pixbuf
@@ -71,16 +71,16 @@ class ProgressBar(gtk.EventBox):
             self.cache_list[i] = 1
             
         self.progressbar_state = False
-        self.__max_value  = max_value
-        self.__current_valeu  =  0
-        self.__temp_value     = 0
-        self.__drag_bool        = False
-        self.__line_width     = line_width
+        self.__max_value = max_value
+        self.__current_valeu = 0
+        self.__temp_value = 0
+        self.__drag_bool = False
+        self.__line_width = line_width
         self.__progressbar_padding_y = progressbar_padding_y
         self.__progressbar_width = width
         '''Init point value.'''
         self.__point_padding_x = 0
-        self.__point_show_bool   = False
+        self.__point_show_bool = False
         '''Init fg value.'''
         self.__fg_padding_x = 0
         '''Init progresbar event.'''
@@ -98,7 +98,7 @@ class ProgressBar(gtk.EventBox):
         self.__max_value = max_value
         
     def set_value(self, value):    
-        self.__current_value   = value
+        self.__current_value = value
         self.queue_draw()
         
     def get_value(self):    
@@ -106,7 +106,7 @@ class ProgressBar(gtk.EventBox):
     
     def __get_x(self, event):    
         self.__point_padding_x = event.x
-        self.__fg_padding_x    = event.x
+        self.__fg_padding_x = event.x
         self.__current_value = (float(self.__max_value) / self.allocation.width) * self.__fg_padding_x
         if self.__current_value < 0:
             self.__current_value = 0
@@ -261,5 +261,5 @@ if __name__ == "__main__":
     main_vbox.pack_start(pb, False, False)
     win.add(main_vbox)
     win.show_all()
-    mp  = Mplayer(screen.window.xid)
+    mp = Mplayer(screen.window.xid)
     gtk.main()
