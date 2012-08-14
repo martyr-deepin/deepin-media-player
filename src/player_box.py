@@ -639,49 +639,49 @@ class PlayerBox(object):
             self.volume_button.value = value
             
     def init_config_key(self):
-      self.keymap = {}
-      # Init Config keys.
-      
-      # open file key init.(left)        
-      play_control_bool = self.config.get("PlayControl", "play_control_bool")
-      other_key_bool    = self.config.get("OtherKey",    "other_key_bool")
-      
-      # [PlayControl] Init.
-      if play_control_bool.lower() == "true":    
-          for section, argv, connect_fun in [
-              ("PlayControl", "open_file_key", self.show_open_dialog_window),
-              ("PlayControl", "open_file_dir_key", self.show_open_dir_dialog_window),
-              ("PlayControl", "play_or_pause_key", self.key_space),
-              ("PlayControl", "seek_key",  self.key_right),
-              ("PlayControl", "back_key",  self.key_left),
-              ("PlayControl", "full_key",  self.key_return),
-              ("PlayControl", "pre_a_key",  self.key_pre),
-              ("PlayControl", "next_a_key", self.key_next),
-              ("PlayControl", "add_volume_key", self.key_add_volume),
-              ("PlayControl", "sub_volume_key", self.key_sub_volume),
-              ("PlayControl", "mute_key",       self.key_set_mute),
-              ("PlayControl", "concise_key",    self.key_concise)
-              ]:    
-            config_key = self.config.get(section, argv)
-            self.keymap[config_key] = connect_fun        
-            
-          self.keymap["Escape"] = self.key_quit_full        
-            
-      # [OtherKey].
-      if other_key_bool.lower() == "true":  
-          for section, argv, connect_fun in [
-              ("OtherKey", "add_brightness_key", self.key_add_brightness),
-              ("OtherKey", "sub_brightness_key", self.key_sub_brightness),
-              ("OtherKey", "inverse_rotation_key", self.key_inverse_rotation_key),
-              ("OtherKey", "clockwise_key",   self.key_clockwise),
-              ("OtherKey", "sort_image_key",  self.key_sort_image),
-              ("OtherKey", "switch_audio_track_key",  self.key_switch_audio_track),
-              ("OtherKey", "load_subtitle_key",  self.key_load_subtitle),
-              ("OtherKey", "subtitle_delay_key", self.key_subtitle_delay),
-              ("OtherKey", "subtitle_advance_key", self.key_subtitle_advance),
-              ]:
-              config_key = self.config.get(section, argv)
-              self.keymap[config_key] = connect_fun                                    
+        self.keymap = {}
+        # Init Config keys.
+        
+        # open file key init.(left)        
+        play_control_bool = self.config.get("PlayControl", "play_control_bool")
+        other_key_bool    = self.config.get("OtherKey",    "other_key_bool")
+        
+        # [PlayControl] Init.
+        if play_control_bool.lower() == "true":    
+            for section, argv, connect_fun in [
+                ("PlayControl", "open_file_key", self.show_open_dialog_window),
+                ("PlayControl", "open_file_dir_key", self.show_open_dir_dialog_window),
+                ("PlayControl", "play_or_pause_key", self.key_space),
+                ("PlayControl", "seek_key",  self.key_right),
+                ("PlayControl", "back_key",  self.key_left),
+                ("PlayControl", "full_key",  self.key_return),
+                ("PlayControl", "pre_a_key",  self.key_pre),
+                ("PlayControl", "next_a_key", self.key_next),
+                ("PlayControl", "add_volume_key", self.key_add_volume),
+                ("PlayControl", "sub_volume_key", self.key_sub_volume),
+                ("PlayControl", "mute_key",       self.key_set_mute),
+                ("PlayControl", "concise_key",    self.key_concise)
+                ]:    
+                config_key = self.config.get(section, argv)
+                self.keymap[config_key] = connect_fun        
+              
+            self.keymap["Escape"] = self.key_quit_full        
+              
+        # [OtherKey].
+        if other_key_bool.lower() == "true":  
+            for section, argv, connect_fun in [
+                ("OtherKey", "add_brightness_key", self.key_add_brightness),
+                ("OtherKey", "sub_brightness_key", self.key_sub_brightness),
+                ("OtherKey", "inverse_rotation_key", self.key_inverse_rotation_key),
+                ("OtherKey", "clockwise_key",   self.key_clockwise),
+                ("OtherKey", "sort_image_key",  self.key_sort_image),
+                ("OtherKey", "switch_audio_track_key",  self.key_switch_audio_track),
+                ("OtherKey", "load_subtitle_key",  self.key_load_subtitle),
+                ("OtherKey", "subtitle_delay_key", self.key_subtitle_delay),
+                ("OtherKey", "subtitle_advance_key", self.key_subtitle_advance),
+                ]:
+                config_key = self.config.get(section, argv)
+                self.keymap[config_key] = connect_fun                                    
           
     def get_key_event(self, widget, event): # app: key-release-event
         keyval_name = get_keyevent_name(event)
