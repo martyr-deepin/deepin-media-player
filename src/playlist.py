@@ -36,27 +36,31 @@ import gobject
 class PlayList(gtk.VBox):
     
     def __init__(self):
+        # Init.
         gtk.VBox.__init__(self)
+        self.item_array = []
+        
+        # Init play list container.
         self.play_list_vbox = gtk.VBox()
         self.play_list_width = 160
         self.play_list_vbox.set_size_request(self.play_list_width, -1)
         
+        # Init play list view.
         self.scrolled_window = ScrolledWindow()    
         self.scrolled_window.set_policy(gtk.POLICY_NEVER, gtk.POLICY_AUTOMATIC)
         
         self.list_view = ListView(drag_icon_pixbuf=app_theme.get_pixbuf("playlist/drag_video.png"))
         self.list_view.connect("motion-notify-item", self.motion_mouse_move_event)
         self.list_view.draw_mask = self.draw_mask
-        self.item_array = []
-
-        self.scrolled_window.add_child(self.list_view)
         
+        # Init play list control panel.
         self.play_list_control_panel = PlayListControlPanel()
         
+        # Connect widgets.
+        self.pack_start(self.play_list_vbox)
+        self.scrolled_window.add_child(self.list_view)
         self.play_list_vbox.pack_start(self.scrolled_window, True, True)
         self.play_list_vbox.pack_start(self.play_list_control_panel, False, False)
-        
-        self.pack_start(self.play_list_vbox)
         
     def motion_mouse_move_event(self, listview, list_item, colume, offset_x, offset_y):
         tooltip_text(listview, list_item.title)
