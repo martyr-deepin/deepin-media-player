@@ -21,37 +21,45 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from dtk.ui.utils import propagate_expose
-
-from skin           import app_theme
-from ImageButton    import ImageButton
-
+from dtk.ui.button import ImageButton
+from skin import app_theme
 import gtk
 
-class PlayListControlPanel(gtk.HBox):
+class PlayListControlPanel(gtk.Alignment):
+    
     def __init__(self):
-        gtk.HBox.__init__(self)
-        self.add_btn = ImageButton(app_theme.get_pixbuf("bottom_buttons/play_list_add_file.png"),
-                                   app_theme.get_pixbuf("bottom_buttons/play_list_add_file.png"))
+        # Init.
+        gtk.Alignment.__init__(self)
+        self.set(1, 0.5, 0, 0)
+        self.set_padding(10, 10, 0, 0)
         
-        self.del_btn_frame = gtk.Alignment()        
-        self.del_btn_frame.set_padding(0, 0, 10, 10)
-        self.del_btn = ImageButton(app_theme.get_pixbuf("bottom_buttons/play_list_del_file.png"),
-                                   app_theme.get_pixbuf("bottom_buttons/play_list_del_file.png"))        
+        # Init add button.
+        self.add_button = ImageButton(
+            app_theme.get_pixbuf("bottom_buttons/play_list_add_file.png"),
+            app_theme.get_pixbuf("bottom_buttons/play_list_add_file.png"),
+            app_theme.get_pixbuf("bottom_buttons/play_list_add_file.png"),
+            )
         
-        self.del_btn_frame.add(self.del_btn)        
+        # Init delete button.
+        self.delete_button = ImageButton(
+            app_theme.get_pixbuf("bottom_buttons/play_list_del_file.png"),
+            app_theme.get_pixbuf("bottom_buttons/play_list_del_file.png"),
+            app_theme.get_pixbuf("bottom_buttons/play_list_del_file.png"),
+            )        
+        self.delete_button_frame = gtk.Alignment()        
+        self.delete_button_frame.set_padding(0, 0, 10, 10)
+        self.delete_button_frame.add(self.delete_button)        
         
+        # Init button frame.
         self.hbox = gtk.HBox()
-        self.hbox.pack_start(self.add_btn, False, False)
-        self.hbox.pack_start(self.del_btn_frame, False, False)
         
-        self.hbox_frame = gtk.Alignment()
-        self.hbox_frame.set(1, 0.5, 0, 0)
+        # Connect widgets.
+        self.hbox.pack_start(self.add_button, False, False)
+        self.hbox.pack_start(self.delete_button_frame, False, False)
+        self.add(self.hbox)
         
-        self.hbox_frame.set_padding(10, 10, 0, 0)
-        self.hbox_frame.add(self.hbox)
-        
-        self.pack_start(self.hbox_frame, True, True)
-        self.hbox_frame.connect("expose-event", self.draw_background)
+        # Handle signals.
+        self.connect("expose-event", self.draw_background)
         
     def draw_background(self, widget, event):
         cr = widget.window.cairo_create()
@@ -61,14 +69,8 @@ class PlayListControlPanel(gtk.HBox):
         cr.fill()
         
         propagate_expose(widget, event)
+        
         return True
-        
-        
-        
-        
-        
-        
-        
         
 if __name__ == "__main__":
     win = gtk.Window(gtk.WINDOW_TOPLEVEL)
