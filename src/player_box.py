@@ -2039,7 +2039,7 @@ class PlayerBox(object):
             pre_num = 0
         else:    
             pre_num = float(posNum) / self.mp.lenNum * 100
-        self.messagebox('%s%s%s %s(%s%s)'%(_("Forward"), 
+        self.messagebox('%s%s%s %s(%s%s)' % (_("Forward"), 
                                            fseek_num, 
                                            _("s"), 
                                            length_to_time(self.mp.posNum), 
@@ -2053,7 +2053,7 @@ class PlayerBox(object):
             pre_num = 0
         else:    
             pre_num = int(float(posNum) / self.mp.lenNum * 100)
-        self.messagebox('%s%s%s %s(%s%s)'%(_("Rewind"), 
+        self.messagebox('%s%s%s %s(%s%s)' % (_("Rewind"), 
                                            bseek_num,
                                            _("s"),
                                            length_to_time(self.mp.posNum),                                            

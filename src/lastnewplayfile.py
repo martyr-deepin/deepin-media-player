@@ -61,16 +61,16 @@ class LastNewPlayFile(gobject.GObject):
         
     def set_file_time(self, play_file):
         if len(play_file) > 0:
-            if self.ini.get_argv_bool("LastNewPlayFile", '"%s"'%(play_file)):            
-                self.ini.set("LastNewPlayFile", '"%s"'%(play_file), self.get_current_time())            
+            if self.ini.get_argv_bool("LastNewPlayFile", '"%s"' % (play_file)):            
+                self.ini.set("LastNewPlayFile", '"%s"' % (play_file), self.get_current_time())            
             else:
                 if self.argvs_num < 10:
                     # print self.argvs_num
-                    self.ini.set("LastNewPlayFile", '"%s"'%(play_file), self.get_current_time())
+                    self.ini.set("LastNewPlayFile", '"%s"' % (play_file), self.get_current_time())
                 else:                    
                     modify_argv = self.get_modify_argv().argv
                     # print "modify_argv...."
-                    self.ini.modify_argv("LastNewPlayFile", '%s'%(modify_argv), '"%s"'%(play_file), self.get_current_time())
+                    self.ini.modify_argv("LastNewPlayFile", '%s' % (modify_argv), '"%s"' % (play_file), self.get_current_time())
                 
         # Save and get argv kyes.    
         self.argvs_list = self.ini.get_argvs("LastNewPlayFile")

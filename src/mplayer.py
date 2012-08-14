@@ -348,7 +348,7 @@ class  Mplayer(gobject.GObject):
                     command += ['-nocache']
                        
                 command.append('-wid')
-                command.append('%s'%(str(self.xid)))
+                command.append('%s' % (str(self.xid)))
                 command.append(path)
             else:
                 command = ['mplayer',
