@@ -859,10 +859,9 @@ class  Mplayer(gobject.GObject):
                 self.play_list_sum += 1
         
     def load_playlist(self, list_file_name):
-        f = open(list_file_name)
-        for i in f:            
-            self.add_play_file(i.strip("\n"))
-        f.close()
+        with open(list_file_name) as f:
+            for i in f:
+                self.add_play_file(i.strip("\n"))
        
     def save_playlist(self, list_file_name):
         f = open(list_file_name, 'w')
