@@ -20,9 +20,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from dtk.ui.label      import Label
+from dtk.ui.label import Label
 
 class ShowTime(object):
+    
     def __init__(self):     
         self.time_font1 = ""
         self.time_font2 = ""
