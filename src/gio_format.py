@@ -34,24 +34,13 @@ class Format(object):
     def get_video_bool(self, file_path):
         file_format = self.format_function(file_path)
         return (file_format in self.video_foramt) or (file_format.split("/")[0] in self.video_foramt)
-        # if (file_format in self.video_foramt) or (file_format.split("/")[0] in self.video_foramt):
-        #     return True
-        # else:
-        #     return False
         
     def get_audio_bool(self, file_path):
         file_format = self.format_function(file_path)
         return (file_format.split("/")[0] in self.audio_format)
-        # if (file_format.split("/")[0] in self.audio_format):
-        #     return True
-        # else:
-        #     return False
         
     def get_html_bool(self, file_path):    
         return file_path[0:4] in self.html_format or file_path[0:3] in self.html_format
-        # if file_path[0:4] in self.html_format or file_path[0:3] in self.html_format:
-        #     return True
-        # return False
     
     def is_valid_url(self, url):
         '''Is valid url.'''
@@ -66,17 +55,11 @@ class Format(object):
     def get_play_bool(self, file_path):    
         if self.get_html_bool(file_path):
             return self.is_valid_url(file_path)
-            # if self.is_valid_url(file_path):
-            #     return True
         else:    
             file_format = self.format_function(file_path)
             if file_format:
                 return (file_format.split("/")[0] in self.audio_format) or (file_format in self.video_foramt) or (file_format.split("/")[0] in self.video_foramt)
-                # if (file_format.split("/")[0] in self.audio_format) or (file_format in self.video_foramt) or (file_format.split("/")[0] in self.video_foramt):
-                #     return True
-                # else:
-                #     return False
-        
+            
     def format_function(self, file_path):
         try:
             gio_file = gio.File(file_path)

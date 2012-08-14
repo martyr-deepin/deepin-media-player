@@ -1401,10 +1401,7 @@ class PlayerBox(object):
             self.set_video_play(self.video_width*2, self.video_height*2)
                     
     def video_play_flags(self):    
-        if self.mp.state:
-            if self.video_width and self.video_height:
-                return True
-        return False    
+        return self.mp.state and self.video_width and self.video_height
         
     def set_video_play(self, video_width, video_height):
         self.screen_frame.set_padding(0, 0, 0, 0)        

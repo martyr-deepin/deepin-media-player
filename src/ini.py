@@ -215,23 +215,18 @@ class Config(gobject.GObject):
             return self.section_dict[section]
         
     def get_argv_bool(self, section, argv):    
-        section = str(section)
-        argv    = str(argv)
-        if self.section_dict.has_key(section):
-            if self.section_dict[section].has_key(argv):
-                return True
-        return None    
+        return self.section_dict.has_key(str(section)) and self.section_dict[section].has_key(str(argv))
     
     def modify_argv(self, section, argv, new_argv, new_value):
         section = str(section)
         argv    = str(argv)
         
-        if self.section_dict.has_key(section):
-            if self.section_dict[section].has_key(argv):
-                del self.section_dict[section][argv]
-                self.section_dict[section][new_argv] = new_value
-                return True
-        return None    
+        if self.section_dict.has_key(section) and self.section_dict[section].has_key(argv):
+            del self.section_dict[section][argv]
+            self.section_dict[section][new_argv] = new_value
+            return True
+        
+        return False
     
     def save(self):
         fp = open(self.ini_path, "w")
