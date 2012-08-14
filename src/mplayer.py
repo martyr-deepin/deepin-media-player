@@ -456,13 +456,13 @@ class  Mplayer(gobject.GObject):
     ## Subtitle Control ##
     def subload(self, subFile):
         '''Load subtitle'''
-        if STARTING_STATE == self.state: # STARTING_STATE
+        if self.state == STARTING_STATE: # STARTING_STATE
             self.cmd('sub_load %s\n' % (subFile))
             self.cmd('sub_select 1\n')
             
     def subremove(self):
         '''Remove subtitle'''
-        if STARTING_STATE == self.state:
+        if self.state == STARTING_STATE:
             self.cmd('sub_remove\n')
             
     # subtitle alignment. # 0 top 1 center 2 bottom       
@@ -511,7 +511,7 @@ class  Mplayer(gobject.GObject):
         self.volume = volumeNum
         self.volume = min(self.volume, 100)
         
-        if STARTING_STATE == self.state:
+        if self.state == STARTING_STATE:
             self.cmd('volume +%s 1\n' % str(self.volume))
         
     def decvolume(self, volumeNum):
@@ -519,7 +519,7 @@ class  Mplayer(gobject.GObject):
         self.volume = volumeNum
         self.volume = max(self.volume, 0)
         
-        if STARTING_STATE == self.state:
+        if self.state == STARTING_STATE:
             self.cmd('volume -%s 1\n' % str(self.volume))
             
     def setvolume(self, volumeNum):
@@ -527,24 +527,24 @@ class  Mplayer(gobject.GObject):
         self.volume = volumeNum
         self.volume = max(min(self.volume, 100), 0)
         
-        if STARTING_STATE == self.state:
+        if self.state == STARTING_STATE:
             self.cmd('volume %s 1\n' % str(self.volume))
             
     def leftchannel(self):
         '''The left channel'''
-        if STARTING_STATE == self.state:
+        if self.state == STARTING_STATE:
             self.cmd('af channels=2:2:0:0:0:0\n')
             self.channel_state = CHANNEL_LEFT_STATE #1
     
     def rightchannel(self):
         '''The right channel'''
-        if STARTING_STATE == self.state:
+        if self.state == STARTING_STATE:
             self.cmd('af channels=2:2:0:1:1:1\n')             
             self.channel_state = CHANNEL_RIGHT_STATE #2
             
     def normalchannel(self):
         '''Normal channel'''
-        if STARTING_STATE == self.state:
+        if self.state == STARTING_STATE:
             self.cmd('af channels=2:2:0:0:1:1\n')
             self.channel_state = CHANNEL_NORMAL_STATE #0
             
@@ -563,44 +563,44 @@ class  Mplayer(gobject.GObject):
     # brightness.
     def addbri(self, briNum):
         '''Add brightness'''
-        if STARTING_STATE == self.state:
+        if self.state == STARTING_STATE:
             self.cmd('brightness +%s\n' % (briNum))
     
     def decbri(self, briNum):
         '''Decrease brightness'''
-        if STARTING_STATE == self.state:
+        if self.state == STARTING_STATE:
             self.cmd('brightness -%s\n' % (briNum))
     
     # saturation.
     def addsat(self, satNum):
         '''Add saturation'''
-        if STARTING_STATE == self.state:
+        if self.state == STARTING_STATE:
             self.cmd('saturation +%s\n' % (satNum))
             
     def decsat(self, satNum):
         '''Decrease saturation'''        
-        if STARTING_STATE == self.state:
+        if self.state == STARTING_STATE:
             self.cmd('saturation -%s\n' % (satNum))
     
     # contrast. 
     def addcon(self, conNum):
         '''Add contrast'''
-        if STARTING_STATE == self.state:
+        if self.state == STARTING_STATE:
             self.cmd('contrast +%s\n' % (conNum))    
             
     def deccon(self, conNum):
         '''Decrease contrast'''    
-        if STARTING_STATE == self.state:
+        if self.state == STARTING_STATE:
             self.cmd('contrast -%s\n' % (conNum))
     
     # hue.
     def addhue(self, hueNum):
         '''Add hue'''
-        if STARTING_STATE == self.state:
+        if self.state == STARTING_STATE:
             self.cmd('hue +%s\n' % (hueNum))        
     def dechue(self, hueNum):
         '''Decrease hue'''
-        if STARTING_STATE == self.state:
+        if self.state == STARTING_STATE:
             self.cmd('hue -%s\n' % (hueNum))
     
             
@@ -612,34 +612,34 @@ class  Mplayer(gobject.GObject):
             
     def seek(self, seekNum):        
         '''Set rate of progress'''
-        if STARTING_STATE == self.state:
+        if self.state == STARTING_STATE:
             self.cmd('seek %d 2\n' % (seekNum))               
             
     def fseek(self, seekNum):
         '''Fast forward'''
-        if STARTING_STATE == self.state:
+        if self.state == STARTING_STATE:
             self.cmd('seek +%d\n' % (seekNum))   
             self.emit("play-fseek", seekNum)
             
     def bseek(self, seekNum):
         '''backward'''
-        if STARTING_STATE == self.state:
+        if self.state == STARTING_STATE:
             self.cmd('seek -%d\n' % (seekNum))
             self.emit("play-bseek", seekNum)
             
     def pause(self):
-        if (STARTING_STATE == self.state) and (not self.pause_bool):             
+        if (self.state == STARTING_STATE) and (not self.pause_bool):             
             self.pause_bool = True
             self.cmd('pause \n')
 
     def start_play(self):        
-        if (STARTING_STATE == self.state) and (self.pause_bool):
+        if (self.state == STARTING_STATE) and (self.pause_bool):
             self.pause_bool = False
             self.cmd('pause \n')        
                     
     def quit(self):
         '''quit deepin media player.'''
-        if STARTING_STATE == self.state:
+        if self.state == STARTING_STATE:
             
             self.stop_get_pos_id()
             self.stop_eof_id()
@@ -805,7 +805,7 @@ class  Mplayer(gobject.GObject):
         if not os.path.exists(os.path.split(scrot_save_path)[0]):
             os.mkdir(os.path.split(scrot_save_path)[0])
             
-        if STARTING_STATE == self.state:
+        if self.state == STARTING_STATE:
             # scrot image.
             os.system("cd /tmp/buffer/ && mplayer -ss %s -noframedrop -nosound -vo png -frames 1 '%s'" % (scrot_pos, self.path))
             # modify image name or get image file.
@@ -886,5 +886,5 @@ class  Mplayer(gobject.GObject):
         return os.path.splitext(file2)[0]
         
     def starting_state_bool(self):
-        return STARTING_STATE == self.state
+        return self.state == STARTING_STATE
     
