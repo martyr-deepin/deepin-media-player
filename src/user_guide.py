@@ -22,13 +22,12 @@
 
 from dtk.ui.slider import Wizard
 from dtk.ui.utils  import get_parent_dir
-
-import locale
-
 import gtk
+import locale
 import os
 
 def init_user_guide(callback=None):
+    # Get language in current environment.
     (lang, _) = locale.getdefaultlocale()
     if lang == "zh_CN":
         slide_lang = lang
@@ -36,18 +35,22 @@ def init_user_guide(callback=None):
         slide_lang = "zh_HK"
     else:
         slide_lang = "en"
-    _file = os.path.join(get_parent_dir(__file__, 1), "user_guide")
+        
+    # Get image directory.
+    image_dir = os.path.join(get_parent_dir(__file__, 1), "user_guide")
 
+    # Init user guide.
     user_guide = Wizard(
-        [os.path.join(_file, "preview_slide.png"),
-         os.path.join(_file, "online_slide.png"),
-         os.path.join(_file, "multi-mode_slide.png")],
-        [(os.path.join(_file, slide_lang, "preview_hover.png"), os.path.join(_file, slide_lang, "preview_normal.png")), 
-         (os.path.join(_file, slide_lang, "online_hover.png"), os.path.join(_file, slide_lang, "online_normal.png")), 
-         (os.path.join(_file, slide_lang, "multi-mode_hover.png"), os.path.join(_file, slide_lang, "multi-mode_normal.png"))],
+        [os.path.join(image_dir, "preview_slide.png"),
+         os.path.join(image_dir, "online_slide.png"),
+         os.path.join(image_dir, "multi-mode_slide.png")],
+        [(os.path.join(image_dir, slide_lang, "preview_hover.png"), os.path.join(image_dir, slide_lang, "preview_normal.png")), 
+         (os.path.join(image_dir, slide_lang, "online_hover.png"), os.path.join(image_dir, slide_lang, "online_normal.png")), 
+         (os.path.join(image_dir, slide_lang, "multi-mode_hover.png"), os.path.join(image_dir, slide_lang, "multi-mode_normal.png"))],
         callback
         )
     
+    # Show user guide.
     user_guide.show_all()
 
 if __name__ == "__main__":
