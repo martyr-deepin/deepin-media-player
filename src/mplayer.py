@@ -127,126 +127,126 @@ def time_add_zero(time_to):
     return str(time_to)
         
 def init_mplayer_config():
-        # create .config.
-        path = get_home_path() + "/.config"
-        if not os.path.exists(path):
-            os.mkdir(path)
+    # create .config.
+    path = get_home_path() + "/.config"
+    if not os.path.exists(path):
+        os.mkdir(path)
+    
+    # create deepin-me...    
+    path += "/deepin-media-player"    
+    if not os.path.exists(path):
+        os.mkdir(path)
+    
+    # create buffer file.
+    if not os.path.exists(path + "/subtitle"):
+        os.mkdir(path + "/subtitle")
+    
+    # create config.ini.    
+    if not os.path.exists(path + "/config.ini"):
+        fp = open(path + "/config.ini", "a")
+        fp.close()
         
-        # create deepin-me...    
-        path += "/deepin-media-player"    
-        if not os.path.exists(path):
-            os.mkdir(path)
+    if not os.path.exists(path + "/deepin_media_config.ini"):
+        fp = open(path + "/deepin_media_config.ini", "a")
+        fp.close()            
+        # Init config.ini            
+        config = Config(path + "/deepin_media_config.ini")
+        # Init window.
+        config.set("Window", "init_window", "True")
         
-        # create buffer file.
-        if not os.path.exists(path + "/subtitle"):
-            os.mkdir(path + "/subtitle")
+        #[FilePlay]
+        for argv, value in ([
+                ("video_file_open",                          2),
+                ("open_new_file_clear_play_list",       "True"),
+                ("memory_up_close_player_file_postion", "True"),
+                ("find_play_file_relation_file",        "False"),
+                ("mouse_progressbar_show_preview",      "False")
+                ]):
+            config.set("FilePlay", argv, value)
+            
+        #[SystemSet]
+        for argv, value in ([
+                ("minimize_pause_play", "False"),
+                ("font",                "文泉驿微米黑"),
+                ("font_size",           "16")
+                ]):
+            config.set("SystemSet", argv, value)
+            
+        #[PlayControl]
+        for argv, value in ([
+                ("play_control_bool", "True"),
+                ("open_file_key",     "Ctrl + o"),
+                ("open_file_dir_key", "Ctrl + f"),
+                ("play_or_pause_key", "Space"),
+                ("seek_key",          "Right"),
+                ("back_key",          "Left"),
+                ("full_key",          "Return"),
+                ("pre_a_key",         "Page_Up"),
+                ("next_a_key",        "Page_Down"),
+                ("add_volume_key",    "Up"),
+                ("sub_volume_key",    "Down"),
+                ("mute_key",          "m"),
+                ("concise_key",       "Shift + Return")
+                ]):
+            config.set("PlayControl", argv, value)
+            
+        #[OtherKey]
+        for argv, value in ([
+                ("other_key_bool",         "True"),
+                ("add_brightness_key",     "="),
+                ("sub_brightness_key",     "-"),
+                ("inverse_rotation_key",   "w"),
+                ("clockwise_key",          "e"),
+                ("sort_image_key",         "Alt + a"),
+                ("switch_audio_track_key", _("Disabled")),
+                ("load_subtitle_key",      "Alt + o"),
+                ("subtitle_delay_key",     "]"),
+                ("subtitle_advance_key",   "["),
+                ("mouse_left_single_clicked", _("Pause/Play")),
+                ("mouse_left_double_clicked", _("Full Screen")),
+                ("mouse_wheel_event", _("Volumn")),
+                ]):
+            config.set("OtherKey", argv, value)
+
+        #[SubtitleSet]
+        for argv, value in ([
+                ("ai_load_subtitle", "True"),
+                ("specific_location_search", "~/.config/deepin-media-player/subtitle")
+                ]):
+            config.set("SubtitleSet", argv, value)
         
-        # create config.ini.    
-        if not os.path.exists(path + "/config.ini"):
-            fp = open(path + "/config.ini", "a")
-            fp.close()
-            
-        if not os.path.exists(path + "/deepin_media_config.ini"):
-            fp = open(path + "/deepin_media_config.ini", "a")
-            fp.close()            
-            # Init config.ini            
-            config = Config(path + "/deepin_media_config.ini")
-            # Init window.
-            config.set("Window", "init_window", "True")
-            
-            #[FilePlay]
-            for argv, value in ([
-                    ("video_file_open",                          2),
-                    ("open_new_file_clear_play_list",       "True"),
-                    ("memory_up_close_player_file_postion", "True"),
-                    ("find_play_file_relation_file",        "False"),
-                    ("mouse_progressbar_show_preview",      "False")
-                    ]):
-                config.set("FilePlay", argv, value)
-                
-            #[SystemSet]
-            for argv, value in ([
-                    ("minimize_pause_play", "False"),
-                    ("font",                "文泉驿微米黑"),
-                    ("font_size",           "16")
-                    ]):
-                config.set("SystemSet", argv, value)
-                
-            #[PlayControl]
-            for argv, value in ([
-                    ("play_control_bool", "True"),
-                    ("open_file_key",     "Ctrl + o"),
-                    ("open_file_dir_key", "Ctrl + f"),
-                    ("play_or_pause_key", "Space"),
-                    ("seek_key",          "Right"),
-                    ("back_key",          "Left"),
-                    ("full_key",          "Return"),
-                    ("pre_a_key",         "Page_Up"),
-                    ("next_a_key",        "Page_Down"),
-                    ("add_volume_key",    "Up"),
-                    ("sub_volume_key",    "Down"),
-                    ("mute_key",          "m"),
-                    ("concise_key",       "Shift + Return")
-                    ]):
-                config.set("PlayControl", argv, value)
-                
-            #[OtherKey]
-            for argv, value in ([
-                    ("other_key_bool",         "True"),
-                    ("add_brightness_key",     "="),
-                    ("sub_brightness_key",     "-"),
-                    ("inverse_rotation_key",   "w"),
-                    ("clockwise_key",          "e"),
-                    ("sort_image_key",         "Alt + a"),
-                    ("switch_audio_track_key", _("Disabled")),
-                    ("load_subtitle_key",      "Alt + o"),
-                    ("subtitle_delay_key",     "]"),
-                    ("subtitle_advance_key",   "["),
-                    ("mouse_left_single_clicked", _("Pause/Play")),
-                    ("mouse_left_double_clicked", _("Full Screen")),
-                    ("mouse_wheel_event", _("Volumn")),
-                    ]):
-                config.set("OtherKey", argv, value)
-
-            #[SubtitleSet]
-            for argv, value in ([
-                    ("ai_load_subtitle", "True"),
-                    ("specific_location_search", "~/.config/deepin-media-player/subtitle")
-                    ]):
-                config.set("SubtitleSet", argv, value)
-            
-            #[ScreenshotSet]
-            for argv, value in ([
-                    ("save_clipboard", "False"),
-                    ("save_file", "True"),
-                    ("save_path", "~/.config/deepin-media-player/image"),
-                    ("save_type", ".png"),
-                    ("current_show_sort", "False")
-                    ]):
+        #[ScreenshotSet]
+        for argv, value in ([
+                ("save_clipboard", "False"),
+                ("save_file", "True"),
+                ("save_path", "~/.config/deepin-media-player/image"),
+                ("save_type", ".png"),
+                ("current_show_sort", "False")
+                ]):
 
 
 
-                config.set("ScreenshotSet", argv, value)
-                
-            # save ini config.
-            config.save()
-                       
-        # create buffer file.
-        if not os.path.exists(path + "/buffer"):
-            os.mkdir(path + "/buffer")
+            config.set("ScreenshotSet", argv, value)
             
-        # create save image.    
-        if not os.path.exists(path + "/image"):
-            os.mkdir(path + "/image")
-            
-        '''preview scrot image'''    
-        # create preview image buffer.    
-        if not os.path.exists("/tmp/buffer"):
-            os.mkdir("/tmp/buffer")    
-            
-        # create save preview window image.    
-        if not os.path.exists("/tmp/preview"):
-            os.mkdir("/tmp/preview") 
+        # save ini config.
+        config.save()
+                   
+    # create buffer file.
+    if not os.path.exists(path + "/buffer"):
+        os.mkdir(path + "/buffer")
+        
+    # create save image.    
+    if not os.path.exists(path + "/image"):
+        os.mkdir(path + "/image")
+        
+    '''preview scrot image'''    
+    # create preview image buffer.    
+    if not os.path.exists("/tmp/buffer"):
+        os.mkdir("/tmp/buffer")    
+        
+    # create save preview window image.    
+    if not os.path.exists("/tmp/preview"):
+        os.mkdir("/tmp/preview") 
 
         
 def get_vide_flags(path):
@@ -331,41 +331,41 @@ class  Mplayer(gobject.GObject):
             self.lenState = 1 
             # -input fil.. streme player.
             if self.xid:
-                CMD = ['mplayer',
-                       '-vo',
-                       'gl,2,x11',
-                       '-zoom',
-                       '-nokeepaspect',
-                       '-osdlevel',
-                       '0',
-                       '-double',
-                       '-slave',
-                       '-quiet']
+                command = ['mplayer',
+                           '-vo',
+                           'gl,2,x11',
+                           '-zoom',
+                           '-nokeepaspect',
+                           '-osdlevel',
+                           '0',
+                           '-double',
+                           '-slave',
+                           '-quiet']
                 
                 # If path is url, must be add option `-nocache`,
                 # otherwise, mplayer cache process can't quit normally.
                 if format.get_html_bool(self.path):
-                    CMD += ['-nocache']
+                    command += ['-nocache']
                        
-                CMD.append('-wid')
-                CMD.append('%s'%(str(self.xid)))
-                CMD.append(path)
+                command.append('-wid')
+                command.append('%s'%(str(self.xid)))
+                command.append(path)
             else:
-                CMD = ['mplayer',
+                command = ['mplayer',
                        '-double',
                        '-slave',
                        '-quiet', path]
                 
-            self.mpID = subprocess.Popen(CMD, 
+            self.mp_id = subprocess.Popen(command, 
                                          stdin = subprocess.PIPE,
                                          stdout = subprocess.PIPE,
                                          stderr = subprocess.PIPE,
                                          shell = False)
             
-            self.mplayer_pid = self.mpID.pid
-            (self.mplayerIn, self.mplayerOut) = (self.mpID.stdin, self.mpID.stdout)
+            self.mplayer_pid = self.mp_id.pid
+            (self.mplayerIn, self.mplayer_out) = (self.mp_id.stdin, self.mp_id.stdout)
                                                 
-            fcntl.fcntl(self.mplayerOut, 
+            fcntl.fcntl(self.mplayer_out, 
                         fcntl.F_SETFL, 
                         os.O_NONBLOCK)
             
@@ -376,7 +376,7 @@ class  Mplayer(gobject.GObject):
             self.getPosID = gobject.timeout_add(400, self.get_time_pos) 
                                 
             # IO_HUP[Monitor the pipeline is disconnected].
-            self.eofID = gobject.io_add_watch(self.mplayerOut, gobject.IO_HUP, self.mplayer_eof)
+            self.eofID = gobject.io_add_watch(self.mplayer_out, gobject.IO_HUP, self.mplayer_eof)
             self.state = STARTING_STATE
             self.vide_bool = get_vide_flags(self.path)
             # Set volume.
@@ -406,7 +406,7 @@ class  Mplayer(gobject.GObject):
         self.cmd('get_time_length\n')
         while True:
             try:
-                line = self.mplayerOut.readline()
+                line = self.mplayer_out.readline()
             except StandardError:
                 break
                             
@@ -432,7 +432,7 @@ class  Mplayer(gobject.GObject):
         
         while True:
             try:
-                line = self.mplayerOut.readline()
+                line = self.mplayer_out.readline()
             except StandardError:
                 break
                             
@@ -649,8 +649,8 @@ class  Mplayer(gobject.GObject):
             self.state = STOPING_STATE
             try:
                 self.mplayerIn.close()
-                self.mplayerOut.close()
-                self.mpID.kill()
+                self.mplayer_out.close()
+                self.mp_id.kill()
             except StandardError:
                 pass
                 
@@ -673,7 +673,7 @@ class  Mplayer(gobject.GObject):
         '''Monitoring disconnect'''
         self.stop_get_pos_id()
         self.state = STOPING_STATE
-        self.mplayerIn, self.mplayerOut = None, None
+        self.mplayerIn, self.mplayer_out = None, None
         # Send play end signal.
         self.emit("play-end", True)
         if self.playListState == SINGLE_PLAYING_STATE: 
@@ -777,10 +777,10 @@ class  Mplayer(gobject.GObject):
         init_mplayer_config()
         #########################
         
-        if STARTING_STATE == self.state:
+        if self.state == STARTING_STATE:
             # scrot image.
-            SCROT_CMD = "cd ~/.config/deepin-media-player/buffer/ && mplayer -ss %s -noframedrop -nosound -vo png -frames 1 '%s'" % (scrot_pos, self.path)
-            os.system(SCROT_CMD)
+            scrot_command = "cd ~/.config/deepin-media-player/buffer/ && mplayer -ss %s -noframedrop -nosound -vo png -frames 1 '%s'" % (scrot_pos, self.path)
+            os.system(scrot_command)
             # modify image name or get image file.
             save_image_path = get_home_path() + "/.config/deepin-media-player/buffer/"        # save image buffer dir.
             image_list = os.listdir(get_home_path() + "/.config/deepin-media-player/buffer/") # get dir all image.
