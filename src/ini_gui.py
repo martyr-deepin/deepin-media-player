@@ -40,7 +40,12 @@ from dtk.ui.treeview        import TreeView, TreeViewItem
 import gtk
 import pangocairo
 
-DEFAULT_FONT = "文泉驿微米黑"
+font_test_window = gtk.Window(gtk.WINDOW_POPUP)
+font_test_window.set_default_size(0, 0)
+font_test_window.move(-1000000, -1000000)
+DEFAULT_FONT = ' '.join(str(font_test_window.get_pango_context().get_font_description()).split(" ")[0:-1])
+font_test_window.destroy()
+
 config_path = get_home_path() + "/.config/deepin-media-player/deepin_media_config.ini"
 # Ini(configure) window.
 INI_WIDTH = 640
