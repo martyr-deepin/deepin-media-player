@@ -830,7 +830,7 @@ class  Mplayer(gobject.GObject):
         '''Get all the files in the folder'''
         pathdir = os.listdir(path)       
         for pathfile in pathdir:
-            pathfile2 = path + '/' + pathfile
+            pathfile2 = os.path.join(path, pathfile)
             if os.path.isfile(pathfile2):
                 self.add_play_file(pathfile2)
                     
