@@ -75,6 +75,4 @@ class MediaPlayer(object):
         
 MediaPlayer()
 
-gtk.gdk.threads_enter()
 gtk.main()
-gtk.gdk.threads_leave()

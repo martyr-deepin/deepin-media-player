@@ -321,7 +321,7 @@ class ScreenMenu(gobject.GObject):
                  self.move_bool = False
                  self.leave_bool = False
                  
-    def draw_move_rectagnle(self, cr, x, y):     
+    def draw_move_rectangle(self, cr, x, y):     
         cr.set_source_rgba(1, 1, 1, 0.1)
         cr.rectangle(self.x + self.icon_padding_x, 
                      self.y + self.icon_padding_y + self.icon_padding_height * self.index, self.width-4,
@@ -334,7 +334,7 @@ class ScreenMenu(gobject.GObject):
         if self.show_menu_bool:
             self.draw_background(cr, x, y)
             # Draw menu rectangle.
-            self.draw_move_rectagnle(cr, x, y)
+            self.draw_move_rectangle(cr, x, y)
             self.draw_menu_left_icon(cr, x, y)    
 
             

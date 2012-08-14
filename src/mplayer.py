@@ -376,7 +376,7 @@ class  Mplayer(gobject.GObject):
             self.getPosID = gobject.timeout_add(400, self.get_time_pos) 
                                 
             # IO_HUP[Monitor the pipeline is disconnected].
-            self.eofID = gobject.io_add_watch(self.mplayerOut, gobject.IO_HUP, self.mplayerEOF)
+            self.eofID = gobject.io_add_watch(self.mplayerOut, gobject.IO_HUP, self.mplayer_eof)
             self.state = STARTING_STATE
             self.vide_bool = get_vide_flags(self.path)
             # Set volume.
@@ -426,7 +426,7 @@ class  Mplayer(gobject.GObject):
         '''Get the current playback progress'''
         # if not self.lenState:
         if self.getLenID:
-            self.stopGetLenID()
+            self.stop_get_len_id()
             
         self.cmd('get_time_pos\n')
         
@@ -641,8 +641,8 @@ class  Mplayer(gobject.GObject):
         '''quit deepin media player.'''
         if STARTING_STATE == self.state:
             
-            self.stopGetPosID()
-            self.stopEofID()
+            self.stop_get_pos_id()
+            self.stop_eof_id()
             # Send play end signal.
             self.emit("play-end", True)
             self.cmd('quit \n')
@@ -654,24 +654,24 @@ class  Mplayer(gobject.GObject):
             except StandardError:
                 pass
                 
-    def stopEofID(self):
+    def stop_eof_id(self):
         if self.eofID:
             gobject.source_remove(self.eofID)
         self.eofID = 0
         
-    def stopGetPosID(self):
+    def stop_get_pos_id(self):
         if self.getPosID:
             gobject.source_remove(self.getPosID)
         self.getPosID = 0
     
-    def stopGetLenID(self):
+    def stop_get_len_id(self):
         if self.getLenID:
             gobject.source_remove(self.getLenID)
         self.getLenID = 0
             
-    def mplayerEOF(self, error, mplayer):
+    def mplayer_eof(self, error, mplayer):
         '''Monitoring disconnect'''
-        self.stopGetPosID()
+        self.stop_get_pos_id()
         self.state = STOPING_STATE
         self.mplayerIn, self.mplayerOut = None, None
         # Send play end signal.
@@ -826,27 +826,27 @@ class  Mplayer(gobject.GObject):
         else:
             return False               
         
-    def findCurrentDir(self, path):
+    def find_current_dir(self, path):
         '''Get all the files in the folder'''
         pathdir = os.listdir(path)       
         for pathfile in pathdir:
             pathfile2 = path + '/' + pathfile
             if os.path.isfile(pathfile2):
-                self.addPlayFile(pathfile2)
+                self.add_play_file(pathfile2)
                     
-    def findDmp(self, pathfile2):                                
+    def find_dmp(self, pathfile2):                                
         return pathfile2.lower().endswith(".dmp")
         
-    def findFile(self, pathfile2):
+    def find_file(self, pathfile2):
         return format.get_play_bool(pathfile2)
     
-    def delPlayList(self, path): 
+    def del_playlist(self, path): 
         '''Del a File'''
         self.playList.remove(path)            
         self.playListSum -= 1        
                 
-    def addPlayFile(self, path):    
-        if self.findFile(path): # play file.
+    def add_play_file(self, path):    
+        if self.find_file(path): # play file.
             go = True           
             for i in self.playList:
                 if self.get_player_file_name(i) == self.get_player_file_name(path):
@@ -858,19 +858,19 @@ class  Mplayer(gobject.GObject):
                 self.emit("add-path", path)
                 self.playListSum += 1
         
-    def loadPlayList(self, listFileName):
+    def load_playlist(self, listFileName):
         f = open(listFileName)
         for i in f:            
-            self.addPlayFile(i.strip("\n"))
+            self.add_play_file(i.strip("\n"))
         f.close()
        
-    def savePlayList(self, listFileName):
+    def save_playlist(self, listFileName):
         f = open(listFileName, 'w')
         for file in self.playList:
             f.write(file + "\n")
         f.close()
                 
-    def clearPlayList(self):
+    def clear_playlist(self):
         # clear play list.
         self.playList      = [] 
         # player list sum. 

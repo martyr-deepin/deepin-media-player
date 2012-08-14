@@ -48,14 +48,14 @@ def path_threads(path, mp):
             if os.path.isfile(new_path):    
                 new_file = new_path                
                 # .dmp add play file..
-                if(mp.findDmp(new_file)):
-                    mp.loadPlayList(new_file)
+                if(mp.find_dmp(new_file)):
+                    mp.load_playlist(new_file)
                     
                 # play file[.rmvb, .avi...].    
-                if(mp.findFile(new_file)):
+                if(mp.find_file(new_file)):
                     old_file = new_file
                     file1, file2 = os.path.splitext(new_file)
                     new_file = file1 + file2.lower()                    
                     os.rename(old_file,new_file)
-                    mp.addPlayFile(new_file)                
+                    mp.add_play_file(new_file)                
                     

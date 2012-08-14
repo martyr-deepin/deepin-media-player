@@ -39,7 +39,7 @@ def drag_drop(wid, context, x, y, time):
 def drag_data_received(wid, context, x, y, data, info, time, mp, play_list, widget_bool):    
     if data.get_uris():
         if widget_bool:            
-            mp.clearPlayList() # clear mplayer play list.    
+            mp.clear_playlist() # clear mplayer play list.    
         
     for f in data.get_uris():
         path = urllib.unquote(f)[7:]
@@ -48,12 +48,12 @@ def drag_data_received(wid, context, x, y, data, info, time, mp, play_list, widg
             path_threads(path, mp)
 
         # Add .Dmp.    
-        elif mp.findDmp(path):
-            mp.loadPlayList(path)
+        elif mp.find_dmp(path):
+            mp.load_playlist(path)
             
         # Add play file.    
         elif os.path.isfile(path):    
-            mp.addPlayFile(path)
+            mp.add_play_file(path)
 
     context.finish(True, False, time)    
     return True

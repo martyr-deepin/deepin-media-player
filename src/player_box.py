@@ -485,7 +485,7 @@ class PlayerBox(object):
         
     def get_last_new_play_file_name(self, LastNewPlayFile, file_name):    
         if file_name not in self.mp.playList:
-            self.mp.addPlayFile(file_name) 
+            self.mp.add_play_file(file_name) 
             self.clear_play_list_bool = True
         
     def open_button_popup_screen_menu(self, widget, event):
@@ -898,7 +898,7 @@ class PlayerBox(object):
         # delete file of play list.
         play_list_dict_save = self.play_list_dict
         for list_item_i in list_item:
-            self.mp.delPlayList(play_list_dict_save[list_item_i.title])
+            self.mp.del_playlist(play_list_dict_save[list_item_i.title])
 
     def add_play_list(self, mplayer, path): # mplayer signal: "add-path"
         '''Play list add play file timeout.[100-1028 a play file].'''
@@ -1034,7 +1034,7 @@ class PlayerBox(object):
             path_string = open_dialog.get_filename()
             if path_string:
                 if not open_button:
-                    self.mp.clearPlayList()
+                    self.mp.clear_playlist()
                     self.clear_play_list_bool = True 
                 self.get_path_name(path_string)
         open_dialog.destroy()
@@ -1052,7 +1052,7 @@ class PlayerBox(object):
             path_string = open_dialog.get_filename()
             if path_string:
                 if not open_button:
-                    self.mp.clearPlayList()
+                    self.mp.clear_playlist()
                     self.clear_play_list_bool = True 
                 self.get_path_name(path_string)
             
@@ -1067,13 +1067,13 @@ class PlayerBox(object):
             path_threads(path_string, self.mp)
 
         # # Add .Dmp.
-        if self.mp.findDmp(path_string):
-            self.mp.loadPlayList(path_string)
+        if self.mp.find_dmp(path_string):
+            self.mp.load_playlist(path_string)
 
         # Add play file.
         if os.path.isfile(path_string):
-            if self.mp.findFile(path_string):                
-                self.mp.addPlayFile(path_string)
+            if self.mp.find_file(path_string):                
+                self.mp.add_play_file(path_string)
             else:    
                 self.messagebox(_("Failed to Open Selected Fil"))
 
@@ -1130,10 +1130,10 @@ class PlayerBox(object):
         
         # argv path list.
         for file_path in self.argv_path_list:
-            if self.mp.findDmp(file_path): # .dmp add play file.
-                self.mp.loadPlayList(file_path)
+            if self.mp.find_dmp(file_path): # .dmp add play file.
+                self.mp.load_playlist(file_path)
             elif os.path.isfile(file_path): # add play file.
-                self.mp.addPlayFile(file_path)
+                self.mp.add_play_file(file_path)
             elif os.path.isdir(file_path): # add dir.
                 path_threads(file_path, self.mp)
             elif gio_format.get_html_bool(file_path):
@@ -2571,8 +2571,8 @@ class PlayerBox(object):
         
     def get_url_name(self, open_url, url_name, url_bool):
         if url_bool:
-            self.mp.clearPlayList()
-            self.mp.addPlayFile(url_name) # play list add url name.
+            self.mp.clear_playlist()
+            self.mp.add_play_file(url_name) # play list add url name.
         else:    
             self.messagebox(str(url_name))
         
@@ -2582,7 +2582,7 @@ class PlayerBox(object):
 
     def clear_list(self):
         self.play_list.list_view.clear()
-        self.mp.clearPlayList()
+        self.mp.clear_playlist()
 
     def del_error_file(self):
         '''Delete error play file.'''
@@ -2592,7 +2592,7 @@ class PlayerBox(object):
                 path = self.play_list_dict[item.title]
                 if not os.path.exists(path):
                     self.play_list.list_view.items.remove(item)
-                    self.mp.delPlayList(path)
+                    self.mp.del_playlist(path)
 
     def open_sort_image_dir(self):
         file_name = self.config.get("ScreenshotSet", "save_path")
