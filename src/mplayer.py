@@ -363,7 +363,7 @@ class  Mplayer(gobject.GObject):
                                          shell = False)
             
             self.mplayer_pid = self.mp_id.pid
-            (self.mplayerIn, self.mplayer_out) = (self.mp_id.stdin, self.mp_id.stdout)
+            (self.mplayer_in, self.mplayer_out) = (self.mp_id.stdin, self.mp_id.stdout)
                                                 
             fcntl.fcntl(self.mplayer_out, 
                         fcntl.F_SETFL, 
@@ -396,8 +396,8 @@ class  Mplayer(gobject.GObject):
     def cmd(self, cmdStr):
         '''Mplayer command'''
         try:
-            self.mplayerIn.write(cmdStr)
-            self.mplayerIn.flush()
+            self.mplayer_in.write(cmdStr)
+            self.mplayer_in.flush()
         except StandardError, e:
             print 'command error %s' % (e)
           
@@ -648,7 +648,7 @@ class  Mplayer(gobject.GObject):
             self.cmd('quit \n')
             self.state = STOPING_STATE
             try:
-                self.mplayerIn.close()
+                self.mplayer_in.close()
                 self.mplayer_out.close()
                 self.mp_id.kill()
             except StandardError:
@@ -673,7 +673,7 @@ class  Mplayer(gobject.GObject):
         '''Monitoring disconnect'''
         self.stop_get_pos_id()
         self.state = STOPING_STATE
-        self.mplayerIn, self.mplayer_out = None, None
+        self.mplayer_in, self.mplayer_out = None, None
         # Send play end signal.
         self.emit("play-end", True)
         if self.playListState == SINGLE_PLAYING_STATE: 
