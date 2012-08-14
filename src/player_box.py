@@ -1865,8 +1865,7 @@ class PlayerBox(object):
         for file_name in temp_path_file_list:
             if os.path.splitext(file_name)[0] == temp_path_file:
                 down_bool = False
-                save_down_file = save_subtitle_path + "/" + file_name
-            
+                save_down_file = os.path.join(save_subtitle_path, file_name)            
         if os.path.exists(save_subtitle_path):    
             if down_bool:
                 path_thread_id = threading.Thread(target=self.down_subtitle_threading_function,args=(play_name,save_subtitle_path,))
@@ -1886,8 +1885,7 @@ class PlayerBox(object):
             save_down_file = None
             for file_name in temp_path_file_list:
                 if os.path.splitext(file_name)[0] == temp_path_file:
-                    save_down_file = save_subtitle_path + "/" + file_name
-                    
+                    save_down_file = os.path.join(save_subtitle_path, file_name)                    
             if save_down_file:
                 if "True" == self.config.get("SubtitleSet", "ai_load_subtitle"):                    
                     self.load_subtitle(save_down_file)        
@@ -1911,8 +1909,7 @@ class PlayerBox(object):
                 save_down_file = None
                 for file_name in temp_path_file_list:
                     if os.path.splitext(file_name)[0] == temp_path_file:
-                        save_down_file = save_subtitle_path + "/" + file_name
-                        
+                        save_down_file = os.path.join(save_subtitle_path, file_name)                        
                 if "True" == self.config.get("SubtitleSet", "ai_load_subtitle"):
                     if save_down_file:
                         if os.path.exists(save_down_file):                        

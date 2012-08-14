@@ -37,16 +37,13 @@ def path_threads(path, mp):
             if "." == i[0:1]:
                 continue
             
-            if "/" != path:
-                new_path = path + "/" + i
-            else:    
-                new_path = path + i
+            new_path = os.path.join(path, i)
                             
             if os.path.isdir(new_path):
                 path_thread_id = threading.Thread(target=path_threads, args=(new_path, mp))
                 path_thread_id.setDaemon(True)
                 path_thread_id.start()
-                #path_threads(new_path, mp)
+                 #path_threads(new_path, mp)
                 
             if os.path.isfile(new_path):    
                 new_file = new_path                

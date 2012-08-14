@@ -835,8 +835,7 @@ class  Mplayer(gobject.GObject):
                 self.addPlayFile(pathfile2)
                     
     def findDmp(self, pathfile2):                                
-        file1, file2 = os.path.splitext(pathfile2)
-        return file2.lower() in ['.dmp']
+        return pathfile2.lower().endswith(".dmp")
         
     def findFile(self, pathfile2):
         return format.get_play_bool(pathfile2)
