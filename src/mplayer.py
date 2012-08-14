@@ -306,11 +306,11 @@ class  Mplayer(gobject.GObject):
         self.channel_state = CHANNEL_NORMAL_STATE
         
         # player list.
-        self.playList = [] 
+        self.play_list = [] 
         # player list sum. 
-        self.playListSum = 0 
+        self.play_list_sum = 0 
         # player list number. 
-        self.playListNum = -1
+        self.play_list_num = -1
         # random player num.
         self.random_num = 0;
         
@@ -322,7 +322,7 @@ class  Mplayer(gobject.GObject):
         # 2: random player.      
         # 3: single cycle player. 
         # 4: list recycle play. 
-        self.playListState = SINGLE_PLAYING_STATE
+        self.play_list_state = SINGLE_PLAYING_STATE
         
     def play(self, path):
     
@@ -676,26 +676,26 @@ class  Mplayer(gobject.GObject):
         self.mplayer_in, self.mplayer_out = None, None
         # Send play end signal.
         self.emit("play-end", True)
-        if self.playListState == SINGLE_PLAYING_STATE: 
+        if self.play_list_state == SINGLE_PLAYING_STATE: 
             self.quit()
             return False
         
-        self.playListNum += 1
+        self.play_list_num += 1
         # Order play
-        if self.playListState == ORDER_PLAYING_STATE:
+        if self.play_list_state == ORDER_PLAYING_STATE:
             self.quit()
-            if self.playListNum < self.playListSum:
-                self.play(self.playList[self.playListNum])    
+            if self.play_list_num < self.play_list_sum:
+                self.play(self.play_list[self.play_list_num])    
             else:
-                self.playListNum -= 1
+                self.play_list_num -= 1
                 return False
         # signal loop.    
-        elif self.playListState == SINGLE_CYCLE_PLAYER:            
-            self.playListNum -= 1
-            self.play(self.playList[self.playListNum])                
+        elif self.play_list_state == SINGLE_CYCLE_PLAYER:            
+            self.play_list_num -= 1
+            self.play(self.play_list[self.play_list_num])                
             
             
-        self.playListNum = self.playListNum % self.playListSum
+        self.play_list_num = self.play_list_num % self.play_list_sum
         
         self.next_or_pre_state()    
         
@@ -710,42 +710,42 @@ class  Mplayer(gobject.GObject):
     
     def random_player(self): 
         '''Random player'''
-        self.playListNum = random.randint(0, self.playListSum - 1)
-        for i in range(0,self.playListSum + self.playListSum):
-            if self.playListNum == self.random_num:
-                self.playListNum = random.randint(0, self.playListSum - 1)
+        self.play_list_num = random.randint(0, self.play_list_sum - 1)
+        for i in range(0,self.play_list_sum + self.play_list_sum):
+            if self.play_list_num == self.random_num:
+                self.play_list_num = random.randint(0, self.play_list_sum - 1)
             else:
                 break           
-        self.random_num = self.playListNum    
+        self.random_num = self.play_list_num    
         self.quit()
-        self.play(self.playList[self.playListNum])
+        self.play(self.play_list[self.play_list_num])
             
     def list_recycle_paly(self):
         '''state : 4'''
         self.quit()
-        self.play(self.playList[self.playListNum])
+        self.play(self.play_list[self.play_list_num])
     
     def next_or_pre_state(self):    
-        if self.playListState == RANDOM_PLAYER_STATE: #Random player
+        if self.play_list_state == RANDOM_PLAYER_STATE: #Random player
             self.random_player()     
-        elif self.playListState == LIST_RECYCLE_PLAY or self.playListState == SINGLE_PLAYING_STATE or self.playListState == ORDER_PLAYING_STATE or self.playListState == SINGLE_CYCLE_PLAYER:
+        elif self.play_list_state == LIST_RECYCLE_PLAY or self.play_list_state == SINGLE_PLAYING_STATE or self.play_list_state == ORDER_PLAYING_STATE or self.play_list_state == SINGLE_CYCLE_PLAYER:
             self.list_recycle_paly() 
             
     def next(self):
-        if self.playListSum > 0:
-            self.playListNum += 1
+        if self.play_list_sum > 0:
+            self.play_list_num += 1
             # Start.
-            self.playListNum = self.playListNum % self.playListSum
+            self.play_list_num = self.play_list_num % self.play_list_sum
             self.next_or_pre_state()
             self.emit("play-next", 1)
         else:    
             self.emit("play-next", 0)
             
     def pre(self):
-        if self.playListSum > 0:
-            self.playListNum -= 1
-            if self.playListNum < 0:
-                self.playListNum = self.playListSum - 1
+        if self.play_list_sum > 0:
+            self.play_list_num -= 1
+            if self.play_list_num < 0:
+                self.play_list_num = self.play_list_sum - 1
             self.next_or_pre_state()
             self.emit("play-pre", 1)
                 
@@ -842,41 +842,41 @@ class  Mplayer(gobject.GObject):
     
     def del_playlist(self, path): 
         '''Del a File'''
-        self.playList.remove(path)            
-        self.playListSum -= 1        
+        self.play_list.remove(path)            
+        self.play_list_sum -= 1        
                 
     def add_play_file(self, path):    
         if self.find_file(path): # play file.
             go = True           
-            for i in self.playList:
+            for i in self.play_list:
                 if self.get_player_file_name(i) == self.get_player_file_name(path):
                     self.emit("same-name-event", i)
                     go = False
                     break
             if go:        
-                self.playList.append(path)
+                self.play_list.append(path)
                 self.emit("add-path", path)
-                self.playListSum += 1
+                self.play_list_sum += 1
         
-    def load_playlist(self, listFileName):
-        f = open(listFileName)
+    def load_playlist(self, list_file_name):
+        f = open(list_file_name)
         for i in f:            
             self.add_play_file(i.strip("\n"))
         f.close()
        
-    def save_playlist(self, listFileName):
-        f = open(listFileName, 'w')
-        for file in self.playList:
+    def save_playlist(self, list_file_name):
+        f = open(list_file_name, 'w')
+        for file in self.play_list:
             f.write(file + "\n")
         f.close()
                 
     def clear_playlist(self):
         # clear play list.
-        self.playList = [] 
+        self.play_list = [] 
         # player list sum. 
-        self.playListSum = 0 
+        self.play_list_sum = 0 
         # player list number. 
-        self.playListNum = -1
+        self.play_list_num = -1
         # random player num.
         self.random_num = 0        
         self.emit("clear-play-list", 1)
