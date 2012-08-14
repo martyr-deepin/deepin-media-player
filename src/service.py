@@ -1,21 +1,35 @@
+#! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# Shooter.cn subtitles
-import os
-import hashlib
-from httplib import HTTPConnection, OK
+# Copyright (C) 2011 ~ 2012 Deepin, Inc.
+#               2011 ~ 2012 Hailong Qiu
+# 
+# Author:     Hailong Qiu <qiuhailong@linuxdeepin.com>
+# Maintainer: Hailong Qiu <qiuhailong@linuxdeepin.com>
+# 
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import struct
 from cStringIO import StringIO
-import gzip
-import traceback
-import random
+from httplib import HTTPConnection, OK
 from urlparse import urlparse
-
+import gzip
+import hashlib
+import os
+import random
 import string
-#import xbmc, xbmcgui
-#from utilities import log
-#_ = sys.modules[ "__main__" ].__language__
+import struct
+import traceback
 
 SVP_REV_NUMBER = 1543
 CLIENTKEY = "SP,aerSP,aer %d &e(\xd7\x02 %s %s"
