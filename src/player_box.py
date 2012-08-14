@@ -160,7 +160,7 @@ class PlayerBox(object):
         self.vbox.pack_start(self.progressbar.hbox,False, False)
         # Hide playlist and show playlist widget hbox.
         self.hbox.pack_start(self.vbox, True, True)
-        self.hbox.pack_start(self.play_list.vbox, False, False)
+        self.hbox.pack_start(self.play_list, False, False)
 
         '''Bottom control.'''
         # Hide Bottom and show Bottom.

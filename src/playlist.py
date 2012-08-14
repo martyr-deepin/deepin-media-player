@@ -19,34 +19,28 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from dtk.ui.draw               import draw_line, draw_text
+from dtk.ui.draw               import draw_text
 from dtk.ui.utils              import container_remove_all, color_hex_to_cairo
 from dtk.ui.listview           import ListView
 from dtk.ui.listview           import get_content_size
 from dtk.ui.scrolled_window    import ScrolledWindow
-from dtk.ui.box                import EventBox
 from dtk.ui.constant           import DEFAULT_FONT_SIZE,ALIGN_END, ALIGN_START
 
 from skin     import app_theme
-from utils    import allocation
 from tooltip  import tooltip_text
 from play_list_control_panel   import PlayListControlPanel
 
 import gtk
 import gobject
 
-class PlayList(object):
+class PlayList(gtk.VBox):
     
     def __init__(self):
-        self.vbox = gtk.VBox()
-        self.playlist_vbox = gtk.VBox()
+        gtk.VBox.__init__(self)
+        self.play_list_vbox = gtk.VBox()
         self.play_list_width = 160
-        self.play_list_height = 50
-        self.playlist_vbox.set_size_request(self.play_list_width, self.play_list_height)
-        self.vbox_vframe = gtk.Alignment()
-        self.vbox_vframe.set(0.0, 0.0, 1.0, 1.0)        
-        self.vbox_vframe.set_padding(0, 2, 0, 0)
-                
+        self.play_list_vbox.set_size_request(self.play_list_width, -1)
+        
         self.scrolled_window = ScrolledWindow()    
         self.scrolled_window.set_policy(gtk.POLICY_NEVER, gtk.POLICY_AUTOMATIC)
         
@@ -56,39 +50,28 @@ class PlayList(object):
         self.item_array = []
 
         self.scrolled_window.add_child(self.list_view)
-                
-        self.playlist_vbox.pack_start(self.scrolled_window)
-        self.vbox_vframe.add(self.playlist_vbox)
-        self.vbox.pack_start(self.vbox_vframe, True, True)
         
-        self.draw_line_event_box = EventBox()
-        self.draw_line_event_box.connect("expose-event", self.draw_lien_expose_event)
         self.play_list_control_panel = PlayListControlPanel()
-        self.vbox.pack_start(self.draw_line_event_box, False, False)
         
+        self.play_list_vbox.pack_start(self.scrolled_window, True, True)
+        self.play_list_vbox.pack_start(self.play_list_control_panel, False, False)
+        
+        self.pack_start(self.play_list_vbox)
         
     def motion_mouse_move_event(self, listview, list_item, colume, offset_x, offset_y):
         tooltip_text(listview, list_item.title)
-        
     
     def draw_mask(self, cr, x, y, w, h):    
         cr.set_source_rgb(*color_hex_to_cairo("#1F1F1F"))# 101112
         cr.rectangle(x, y, w, h)
         cr.fill()
         
-    def draw_lien_expose_event(self, widget, event):    
-        cr, x, y, w, h = allocation(widget)
-        cr.set_source_rgba(1, 1, 1, 0.1) # 10% #FFFFFF
-        draw_line(cr, x, y+h-2, x+w, y+h-2)
-        return True
-                
     def show_play_list(self):
-        if self.vbox.get_children() == [] and self.vbox_vframe != None:
-           self.vbox.add(self.vbox_vframe)
-           self.vbox.pack_start(self.draw_line_event_box, False, False) 
+        if self.get_children() == []:
+            self.pack_start(self.play_list_vbox)
            
     def hide_play_list(self):
-        container_remove_all(self.vbox)    
+        container_remove_all(self)    
         
 class MediaItem(gobject.GObject):
     '''List item.'''    

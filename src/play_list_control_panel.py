@@ -72,7 +72,7 @@ class PlayListControlPanel(gtk.HBox):
         
 if __name__ == "__main__":
     win = gtk.Window(gtk.WINDOW_TOPLEVEL)
-    win.connect("destroy", gtk.main_quit)
+    win.connect("destroy", lambda w: gtk.main_quit())
     
     win.add(PlayListControlPanel())
     
