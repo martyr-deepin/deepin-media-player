@@ -342,21 +342,18 @@ class ScreenMenu(gobject.GObject):
     def draw_background(self, cr, x, y):    
         # Draw background.
         menu_bg_pixbuf = self.menu_bg_pixbuf.get_pixbuf().scale_simple(self.width, self.height, gtk.gdk.INTERP_BILINEAR)
-        cr.set_source_pixbuf(menu_bg_pixbuf,
-                             self.x,
-                             self.y)
-        cr.paint_with_alpha(1)    
+        draw_pixbuf(cr, menu_bg_pixbuf, self.x, self.y)
         
     def draw_menu_left_icon(self, cr, x, y):    
         # Draw menu left icon.
         temp_icon_height = 0
         for item in self.menu_list:            
             # Draw menu left icon.
-            cr.set_source_pixbuf(item[0].get_pixbuf(),
-                                 self.x + self.icon_padding_x*2 + 7,
-                                 self.y + temp_icon_height + item[0].get_pixbuf().get_height()/2
-                                 )
-            cr.paint_with_alpha(1)
+            draw_pixbuf(cr, 
+                        item[0].get_pixbuf(), 
+                        self.x + self.icon_padding_x*2 + 7,
+                        self.y + temp_icon_height + item[0].get_pixbuf().get_height()/2
+                        )
             
             # Draw menu right font. 123456
             draw_text(cr, item[1], 

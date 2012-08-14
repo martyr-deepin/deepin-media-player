@@ -161,47 +161,44 @@ class ToolbarRadioButton(gtk.HBox):
         x, y, w, h = widget.allocation
         # widget.state        
         
-        draw_pixbuf = self.full_normal_pixbuf
+        pixbuf = self.full_normal_pixbuf
         
         if widget.state    ==   gtk.STATE_NORMAL:
-            draw_pixbuf = self.full_normal_pixbuf
+            pixbuf = self.full_normal_pixbuf
         elif widget.state == gtk.STATE_PRELIGHT:
-            draw_pixbuf = self.full_hover_pixbuf
+            pixbuf = self.full_hover_pixbuf
         
-        image_w = draw_pixbuf.get_pixbuf().get_width()
-        image_h = draw_pixbuf.get_pixbuf().get_height()
+        image_w = pixbuf.get_pixbuf().get_width()
+        image_h = pixbuf.get_pixbuf().get_height()
         widget.set_size_request(image_w, image_h)
         
         if self.full_state:
-            draw_pixbuf = self.full_hover_pixbuf
+            pixbuf = self.full_hover_pixbuf
             
-        cr.set_source_pixbuf(draw_pixbuf.get_pixbuf(), x, y)
-        cr.paint_with_alpha(1)
-    
+        draw_pixbuf(cr, pixbuf.get_pixbuf(), x, y)    
+        
         return True
     
     def expose_draw_win_mode_btn(self, widget, event):
         cr = widget.window.cairo_create()
         x, y, w, h = widget.allocation
         
-        draw_pixbuf = self.window_mode_normal_pixbuf
+        pixbuf = self.window_mode_normal_pixbuf
         
         if widget.state    ==   gtk.STATE_NORMAL:
-            draw_pixbuf = self.window_mode_normal_pixbuf
+            pixbuf = self.window_mode_normal_pixbuf
         elif widget.state == gtk.STATE_PRELIGHT:
-            draw_pixbuf = self.window_mode_hover_pixbuf
+            pixbuf = self.window_mode_hover_pixbuf
         
-        image_w = draw_pixbuf.get_pixbuf().get_width()
-        image_h = draw_pixbuf.get_pixbuf().get_height()
+        image_w = pixbuf.get_pixbuf().get_width()
+        image_h = pixbuf.get_pixbuf().get_height()
         widget.set_size_request(image_w, image_h)
         
         if not self.full_state:
             if not self.window_state:
-                draw_pixbuf = self.window_mode_hover_pixbuf
+                pixbuf = self.window_mode_hover_pixbuf
                 
-        cr.set_source_pixbuf(draw_pixbuf.get_pixbuf(), x, y)    
-        cr.paint_with_alpha(1)
-        
+        draw_pixbuf(cr, pixbuf.get_pixbuf(), x, y)        
         
         return True
     
@@ -209,24 +206,22 @@ class ToolbarRadioButton(gtk.HBox):
         cr = widget.window.cairo_create()
         x, y, w, h = widget.allocation
         
-        draw_pixbuf = self.concise_normal_pixbuf
+        pixbuf = self.concise_normal_pixbuf
         
         if widget.state    ==   gtk.STATE_NORMAL:
-            draw_pixbuf = self.concise_normal_pixbuf
+            pixbuf = self.concise_normal_pixbuf
         elif widget.state == gtk.STATE_PRELIGHT:
-            draw_pixbuf = self.concise_hover_pixbuf
+            pixbuf = self.concise_hover_pixbuf
         
-        image_w = draw_pixbuf.get_pixbuf().get_width()
-        image_h = draw_pixbuf.get_pixbuf().get_height()
+        image_w = pixbuf.get_pixbuf().get_width()
+        image_h = pixbuf.get_pixbuf().get_height()
         widget.set_size_request(image_w, image_h)
         
         if not self.full_state:
             if self.window_state:
-                draw_pixbuf = self.concise_hover_pixbuf
+                pixbuf = self.concise_hover_pixbuf
                 
-        cr.set_source_pixbuf(draw_pixbuf.get_pixbuf(), x, y)    
-        cr.paint_with_alpha(1)        
-        
+        draw_pixbuf(cr, pixbuf.get_pixbuf(), x, y)        
         
         return True
 

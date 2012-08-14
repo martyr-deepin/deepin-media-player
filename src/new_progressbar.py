@@ -173,17 +173,17 @@ class ProgressBar(gtk.EventBox):
     def __draw_progressbar_bg(self, cr, x, y, w, h):
         self.__bg_pixbuf = self.__bg_pixbuf.scale_simple(x + w, self.__line_width,
                                                           gtk.gdk.INTERP_BILINEAR)
-        cr.set_source_pixbuf(self.__bg_pixbuf,
-                             x,
-                             y + self.__progressbar_padding_y - self.__bg_pixbuf.get_height()/2)
-        cr.paint_with_alpha(1)        
+        draw_pixbuf(cr, 
+                    self.__bg_pixbuf,
+                    x,
+                    y + self.__progressbar_padding_y - self.__bg_pixbuf.get_height()/2)
         
     def __draw_progressbar_hight(self, cr, x, y, w, h):    
         hight_pixbuf = self.__hight_pixbuf.get_pixbuf()
-        cr.set_source_pixbuf(hight_pixbuf,
-                             x + self.__fg_padding_x - hight_pixbuf.get_width(), 
-                             y + self.__progressbar_padding_y - hight_pixbuf.get_height()/2)
-        cr.paint_with_alpha(1)                                
+        draw_pixbuf(cr,
+                    hight_pixbuf,
+                    x + self.__fg_padding_x - hight_pixbuf.get_width(), 
+                    y + self.__progressbar_padding_y - hight_pixbuf.get_height()/2)
     
     def __draw_progressbar_fg(self, cr, x, y, w, h):
         self.__fg_padding_x = self.__current_value / (float(self.__max_value) / w)
@@ -192,10 +192,10 @@ class ProgressBar(gtk.EventBox):
         if self.__fg_padding_x >= 0:
             fg_scale_pixbuf = self.__fg_pixbuf
             for i in range(0, int(x + self.__fg_padding_x)):
-                cr.set_source_pixbuf(fg_scale_pixbuf,
-                                     i,
-                                     y + self.__progressbar_padding_y - fg_scale_pixbuf.get_height()/2)
-                cr.paint_with_alpha(1)        
+                draw_pixbuf(cr,
+                            fg_scale_pixbuf,
+                            i,
+                            y + self.__progressbar_padding_y - fg_scale_pixbuf.get_height()/2)
         
     def __draw_progressbar_point(self, cr, x, y, w, h):
         if self.__point_show_bool:
