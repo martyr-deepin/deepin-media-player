@@ -1452,7 +1452,6 @@ class PlayerBox(object):
         '''quit fll window and common window'''
         self.app.show_titlebar() # show titlebar.
         self.progressbar.show_progressbar()
-
         self.main_vbox_hframe.set_padding(0, 0, 2, 2)
         self.toolbar.panel.hide_all()
         self.show_toolbar_bool = False
@@ -1460,18 +1459,14 @@ class PlayerBox(object):
         self.show_bottom()
         self.app.window.show_all()
 
-
     def concise_window_function(self):
         '''full window and concise mode'''
         self.app.hide_titlebar() # hide titlbar.
         self.progressbar.hide_progressbar()
         self.hide_bottom()
-
         self.main_vbox_hframe.set_padding(0, 0, 0, 0) # Set window border.
         self.toolbar.panel.hide_all() # hide toolbar.
         self.bottom_toolbar.panel.hide_all()
-
-
 
     def set_window_full(self):
         # if True. play list hide.
@@ -1491,9 +1486,8 @@ class PlayerBox(object):
 
     def set_window_quit_full(self):
         # # if True. play list show.
-        if self.show_or_hide_play_list_bool:
-            if not self.mode_state_bool:
-                self.play_list.show_play_list()
+        if self.show_or_hide_play_list_bool and (not self.mode_state_bool):
+            self.play_list.show_play_list()
 
         self.toolbar.panel.unfullscreen()
 
