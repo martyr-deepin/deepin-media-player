@@ -764,37 +764,32 @@ class PlayerBox(object):
 
     def key_add_volume(self):
         # print "add volume..."
-        self.key_set_volume(1) # 1-> add volume.
+        self.key_set_volume(True)
 
     def key_sub_volume(self):
         # print "sub volume..."
-        self.key_set_volume(0) # 0 -> sub volume.
+        self.key_set_volume(False)
         
-    def key_set_volume(self, type_bool):
-        add_volume_state = 1
-        sub_volume_state = 0
-        volume_value = 5
-        temp_value = 0
+    def key_set_volume(self, increase_volume=True):
+        volume_step = 5
         
         # Set volume.
-        if type_bool == add_volume_state:
+        if increase_volume:
             if self.mode_state_bool:
-                # print self.mp.volume
-                self.mp.volume = min(self.mp.volume + 5, 100)
-                # print self.mp.volume
+                self.mp.volume = min(self.mp.volume + volume_step, 100)
                 self.bottom_toolbar.volume_button.value = self.mp.volume
             else:
-                temp_value = min(self.volume_button.value + volume_value, 100)
-                self.volume_button.value = temp_value
-                self.bottom_toolbar.volume_button.value = temp_value
-        elif type_bool == sub_volume_state:
+                volume_value = min(self.volume_button.value + volume_step, 100)
+                self.volume_button.value = volume_value
+                self.bottom_toolbar.volume_button.value = volume_value
+        else:
             if self.mode_state_bool:                    
-                self.mp.volume = max(self.mp.volume - 5, 0)
+                self.mp.volume = max(self.mp.volume - volume_step, 0)
                 self.bottom_toolbar.volume_button.value = self.mp.volume
             else:    
-                temp_value = max(self.volume_button.value - volume_value, 0)
-                self.volume_button.value = temp_value
-                self.bottom_toolbar.volume_button.value = temp_value
+                volume_value = max(self.volume_button.value - volume_step, 0)
+                self.volume_button.value = volume_value
+                self.bottom_toolbar.volume_button.value = volume_value
                 
     def get_release_key_event(self, widget, event):
         keyval_name = get_keyevent_name(event)
