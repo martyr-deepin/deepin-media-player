@@ -841,17 +841,13 @@ class  Mplayer(gobject.GObject):
                 
     def add_play_file(self, path):    
         if self.find_file(path): # play file.
-            go = True           
-            for i in self.play_list:
-                if self.get_player_file_name(i) == self.get_player_file_name(path):
-                    self.emit("same-name-event", i)
-                    go = False
-                    break
-            if go:        
+            if self.get_player_file_name(path) in map(self.get_player_file_name, self.play_list):
+                self.emit("same-name-event", path)
+            else:
                 self.play_list.append(path)
                 self.emit("add-path", path)
                 self.play_list_sum += 1
-        
+                
     def load_playlist(self, list_file_name):
         with open(list_file_name) as f:
             for i in f:
