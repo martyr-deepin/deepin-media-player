@@ -584,34 +584,29 @@ class PlayerBox(object):
         config_type = self.config.get("OtherKey", "mouse_wheel_event")
         other_key_bool = self.config.get("OtherKey", "other_key_bool")
         if not (_("Disabled") == config_type or other_key_bool.lower() == "false"): # seek back.
-            volume_value = 5
+            volume_value = 0
+            volume_step = 5
             if event.direction == gtk.gdk.SCROLL_UP:
-                temp_value = 0
                 if self.mode_state_bool or self.full_bool:
-                    temp_value = min(self.mp.volume + volume_value, 100)
-                    self.bottom_toolbar.volume_button.value = temp_value
-                    self.volume_button.value = temp_value                    
+                    volume_value = min(self.mp.volume + volume_step, 100)
                 else:    
-                    temp_value = min(self.volume_button.value + volume_value, 100)
-                    self.volume_button.value = temp_value
-                    self.bottom_toolbar.volume_button.value = temp_value
-                                    
-            elif event.direction == gtk.gdk.SCROLL_DOWN:
-                temp_value = 0
-                if self.mode_state_bool or self.full_bool:                    
-                    temp_value = max(self.mp.volume - volume_value, 0)
-                    self.bottom_toolbar.volume_button.value = temp_value
-                    self.volume_button.value = temp_value
-                else:    
-                    temp_value = max(self.volume_button.value - volume_value, 0)
-                    self.volume_button.value = temp_value
-                    self.bottom_toolbar.volume_button.value = self.volume_button.value
-                    temp_value = self.volume_button.value
-                                    
-            if temp_value != self.mp.volume:
-                self.mp.setvolume(temp_value)
+                    volume_value = min(self.volume_button.value + volume_step, 100)
                     
-            self.messagebox("%s:%s%s"%(_("Volumn"), str(int(temp_value)), "%"))
+                self.volume_button.value = volume_value
+                self.bottom_toolbar.volume_button.value = volume_value
+            elif event.direction == gtk.gdk.SCROLL_DOWN:
+                if self.mode_state_bool or self.full_bool:                    
+                    volume_value = max(self.mp.volume - volume_step, 0)
+                else:    
+                    volume_value = max(self.volume_button.value - volume_step, 0)
+                    
+                self.volume_button.value = volume_value
+                self.bottom_toolbar.volume_button.value = volume_value
+                                    
+            if volume_value != self.mp.volume:
+                self.mp.setvolume(volume_value)
+                    
+            self.messagebox("%s:%s%s"%(_("Volumn"), str(int(volume_value)), "%"))
             
     def volume_button_get_value_event(self, volume_button, value, volume_state, volume_bit):
         if MUTE_STATE == volume_state: # -1 -> stop play
