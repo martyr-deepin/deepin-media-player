@@ -1427,16 +1427,13 @@ class PlayerBox(object):
         
     def configure_hide_tool(self, widget, event): # screen: configure-event.
         self.screen_pop_menu.hide_menu()
-        if self.full_bool:            
-            self.open_button.move(-14, 30+26)
-            self.open_button_right.move(56, 30+26)
-        else:    
-            self.open_button.move(-14, 30 + 26)
-            self.open_button_right.move(56, 30 + 26)
+        self.open_button.move(-14, 30 + 26)
+        self.open_button_right.move(56, 30 + 26)
 
         if self.mp:
             # Toolbar position.
             if self.mp.pause_bool and self.mp.vide_bool:
+                # TODO: Why pause twice?
                 self.mp.pause()
                 self.mp.pause()
 
@@ -1445,10 +1442,10 @@ class PlayerBox(object):
                                       self.screen_frame.get_allocation()[3])
     
             self.toolbar.panel.hide_all()
+            
             self.bottom_toolbar.panel.resize(self.screen_frame.get_allocation()[2], 1)            
             self.bottom_toolbar.panel.move(self.panel_x, self.panel_y + (self.screen_frame.allocation[3] - self.bottom_toolbar.panel.allocation[3]))
             self.bottom_toolbar.panel.hide_all()
-
 
     '''Toolbar button.'''
     def common_window_function(self):
