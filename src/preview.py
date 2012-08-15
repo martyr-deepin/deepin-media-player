@@ -22,7 +22,7 @@
 from dtk.ui.draw import draw_text
 from dtk.ui.constant import DEFAULT_FONT_SIZE
 from mplayer import Mplayer
-from constant import PREVIEW_PV_WIDTH, PREVIEW_PV_HEIGHT
+from constant import PREVIEW_PV_WIDTH, PREVIEW_PV_HEIGHT, STOPING_PLAY, STARTING_PLAY
 
 import gtk
 import cairo
@@ -183,11 +183,11 @@ class PreView(object):
         
     def quit_preview_player(self):    
         self.hide_preview()
-        if 1 == self.mp.state:            
+        if STARTING_PLAY == self.mp.state:            
             self.mp.quit()
         
     def set_preview_path(self, path):        
-        if 0 == self.mp.state:
+        if STOPING_PLAY == self.mp.state:
             self.pv.show_all()            
             self.pv.set_opacity(0)
             self.mp.xid = self.pv.window.xid
@@ -209,7 +209,7 @@ class PreView(object):
         
     def init_mplayer_window(self, pos):       
         self.mp.xid = self.xid
-        if 1 == self.mp.state:
+        if STARTING_PLAY == self.mp.state:
             self.mp.seek(pos)
             
         

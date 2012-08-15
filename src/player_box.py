@@ -34,7 +34,7 @@ from dtk.ui.menu import Menu
 from dtk.ui.volume_button import VolumeButton
 
 from locales import _
-from constant import APP_WIDTH, APP_HEIGHT
+from constant import APP_WIDTH, APP_HEIGHT, STARTING_PLAY, STOPING_PLAY
 from ini import Config
 from gio_format import format
 from utils import allocation,path_threads
@@ -68,8 +68,6 @@ X_VIDEO_PLAY_0_5 = 1 << 0
 X_VIDEO_PLAY_1 = 1 << 1
 X_VIDEO_PLAY_1_5 = 1 << 2
 X_VIDEO_PLAY_2 = 1 << 3
-STARTING_PLAY = 1
-STOPING_PLAY = 0
 VOLUME_BUTTON_STATE = 1
 MUTE_STATE = -1
 # ascept state. "16:10""16:9""4:3""1.85:1""2.35:1""默认"
@@ -947,7 +945,7 @@ class PlayerBox(object):
     def double_play_list_file(self, list_view, list_item, colume, offset_x, offset_y):
         '''double play file.'''
         if self.mp:
-            if 1 == self.mp.state:
+            if STARTING_PLAY == self.mp.state:
                 self.mp.quit()
 
         # play file.
@@ -978,7 +976,7 @@ class PlayerBox(object):
             self.play_control_panel.start_button.queue_draw()
             self.bottom_toolbar.play_control_panel.start_button.start_bool = False
             self.bottom_toolbar.play_control_panel.start_button.queue_draw()
-            if 0 == self.mp.state: # NO player file.
+            if STOPING_PLAY == self.mp.state: # NO player file.
                 self.play_control_panel.start_button.start_bool = True # start_button modify play state.
                 self.play_control_panel.start_button.queue_draw()
                 self.bottom_toolbar.play_control_panel.start_button.start_bool = True
@@ -1186,7 +1184,7 @@ class PlayerBox(object):
         cr, x, y, w, h = allocation(widget)
 
       
-        if self.mp and (1 == self.mp.state):
+        if self.mp and (STARTING_PLAY == self.mp.state):
             if (self.mp.state) and (self.mp.vide_bool): # vide file.                
                 self.unset_flags()
                 self.open_button.visible_bool = True
@@ -1306,7 +1304,7 @@ class PlayerBox(object):
                     self.virtual_set_start_button_clicked()
                     self.minimize_pause_play_bool = False
 
-        if 1 == self.mp.state:            
+        if STARTING_PLAY == self.mp.state:            
             self.set_ascept_function()
 
     def set_restart_aspect(self):
@@ -1318,27 +1316,27 @@ class PlayerBox(object):
         self.video_aspect_type = ASCEPT_NORMAL_STATE
 
     def set_4X3_aspect(self):    # munu callback
-        if 1 == self.mp.state:
+        if STARTING_PLAY == self.mp.state:
             self.video_aspect_type = ASCEPT_4X3_STATE # "4:3"
             self.set_ascept_function()
 
     def set_16X9_aspect(self):
-        if 1 == self.mp.state:
+        if STARTING_PLAY == self.mp.state:
             self.video_aspect_type = ASCEPT_16X9_STATE # "16:9"
             self.set_ascept_function()
 
     def set_16X10_aspect(self):
-        if 1 == self.mp.state:
+        if STARTING_PLAY == self.mp.state:
             self.video_aspect_type = ASCEPT_16X10_STATE # "16:10"
             self.set_ascept_function()
 
     def set_1_85X1_aspect(self):
-        if 1 == self.mp.state:
+        if STARTING_PLAY == self.mp.state:
             self.video_aspect_type = ASCEPT_1_85X1_STATE # "1.85:1"
             self.set_ascept_function()
 
     def set_2_35X1_aspect(self):
-        if 1 == self.mp.state:
+        if STARTING_PLAY == self.mp.state:
             self.video_aspect_type = ASCEPT_2_35X1_STATE # "2.35:1"
             self.set_ascept_function()
 
@@ -1715,7 +1713,7 @@ class PlayerBox(object):
         # pause / play 123456 release.
         other_key_bool = self.config.get("OtherKey", "other_key_bool")
         
-        if other_key_bool.lower() == "true" and  self.pause_bool and 1 == self.mp.state:
+        if other_key_bool.lower() == "true" and  self.pause_bool and STARTING_PLAY == self.mp.state:
             self.pause_time_id = gtk.timeout_add(250, self.virtual_set_start_button_clicked)
             self.pause_bool = False
 
@@ -1748,7 +1746,7 @@ class PlayerBox(object):
     def progressbar_player_point_pos_modify(self, widget, event, progressbar, pb_bit):
         '''Mouse left click rate of progress'''
         if self.mp:
-            if 1 == self.mp.state:
+            if STARTING_PLAY == self.mp.state:
                 # Hide preview window.
                 self.hide_preview_function(widget, event)
 
@@ -1767,13 +1765,13 @@ class PlayerBox(object):
         if progressbar.drag_bool: # Mouse left.
             # Hide preview window.
             self.hide_preview_function(widget, event)
-            if 1 == self.mp.state:
+            if STARTING_PLAY == self.mp.state:
                 if 1 == pb_bit:
                     self.bottom_toolbar.progressbar.set_pos(progressbar.pos)
                 elif 2 == pb_bit:
                     self.progressbar.set_pos(progressbar.pos)
 
-                if self.mp and 1 == self.mp.state:
+                if self.mp and STARTING_PLAY == self.mp.state:
                     self.mp.seek(int(progressbar.pos))
                     self.show_time_label.time_font2 = self.set_time_string(
                         self.mp.time_hour) + ":" + self.set_time_string(self.mp.time_min) + ":" + self.set_time_string(self.mp.time_sec)
@@ -1789,7 +1787,7 @@ class PlayerBox(object):
             config_bool = self.config.get("FilePlay", "mouse_progressbar_show_preview")
             if config_bool:
                 if "true" == config_bool.lower():
-                    if 1 == self.mp.state and self.play_video_file_bool(self.mp.path):
+                    if STARTING_PLAY == self.mp.state and self.play_video_file_bool(self.mp.path):
                         self.preview.set_preview_path(self.mp.path)
                         self.x_root = event.x_root
                         self.y_root = event.y_root
@@ -1813,7 +1811,7 @@ class PlayerBox(object):
                                   preview_y_padding)
 
     def show_preview_enter(self, widget, event):
-        if 0 == self.mp.state:
+        if STOPING_PLAY == self.mp.state:
             self.progressbar.drag_pixbuf_bool = False
             self.bottom_toolbar.progressbar.drag_pixbuf_bool = False
 
