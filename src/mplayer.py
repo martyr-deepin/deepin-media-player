@@ -30,6 +30,7 @@
 #   .bseek()
 #   .addvolume()
 ########################################################
+from dtk.ui.utils import remove_timeout_id
 from locales import _
 import random
 import gtk
@@ -649,19 +650,13 @@ class  Mplayer(gobject.GObject):
                 pass
                 
     def stop_eof_id(self):
-        if self.eof_id:
-            gobject.source_remove(self.eof_id)
-        self.eof_id = 0
+        remove_timeout_id(self.eof_id)
         
     def stop_get_position_id(self):
-        if self.get_position_id:
-            gobject.source_remove(self.get_position_id)
-        self.get_position_id = 0
+        remove_timeout_id(self.get_position_id)
     
     def stop_get_len_id(self):
-        if self.get_length_id:
-            gobject.source_remove(self.get_length_id)
-        self.get_length_id = 0
+        remove_timeout_id(self.get_length_id)
             
     def mplayer_eof(self, error, mplayer):
         '''Monitoring disconnect'''
