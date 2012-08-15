@@ -725,20 +725,20 @@ class PlayerBox(object):
                     
             if save_file_bool == "True":
                 if scrot_bool.lower() == "true":
-                    self.scrot_current_screen_pixbuf(save_path + "/%s-%s"%(self.get_player_file_name(self.mp.path), self.mp.posNum), save_type)
+                    self.scrot_current_screen_pixbuf(save_path + "/%s-%s"%(self.get_player_file_name(self.mp.path), self.mp.pos_num), save_type)
                     self.messagebox(_("Screenshot Saved"))
                 else:    
-                    self.mp.preview_scrot(self.mp.posNum, save_path + "/%s-%s"%(self.get_player_file_name(self.mp.path), self.mp.posNum) + save_type)
+                    self.mp.preview_scrot(self.mp.pos_num, save_path + "/%s-%s"%(self.get_player_file_name(self.mp.path), self.mp.pos_num) + save_type)
                     self.messagebox(_("Screenshot Saved"))
                     
             if save_clipboard_bool == "True": # save clipboard
-                clipboard_path = "/tmp" + "/%s-%s"%(self.get_player_file_name(self.mp.path), self.mp.posNum) + save_type
+                clipboard_path = "/tmp" + "/%s-%s"%(self.get_player_file_name(self.mp.path), self.mp.pos_num) + save_type
                 if scrot_bool.lower() == "true":
-                    clipboard_path = "/tmp" + "/%s-%s"%(self.get_player_file_name(self.mp.path), self.mp.posNum)
+                    clipboard_path = "/tmp" + "/%s-%s"%(self.get_player_file_name(self.mp.path), self.mp.pos_num)
                     self.scrot_current_screen_pixbuf(clipboard_path, save_type)
                     clipboard_path += save_type
                 else:
-                    self.mp.preview_scrot(self.mp.posNum, clipboard_path)
+                    self.mp.preview_scrot(self.mp.pos_num, clipboard_path)
                     
                 pixbuf_clipboard = gtk.gdk.pixbuf_new_from_file(clipboard_path)
                 clipboard = gtk.Clipboard()
@@ -1780,8 +1780,8 @@ class PlayerBox(object):
                 if self.mp:
                     if 1 == self.mp.state:
                         self.mp.seek(int(progressbar.pos))
-                        self.show_time_label.time_font2 = self.set_time_string(self.mp.timeHour) + ":" + self.set_time_string(self.mp.timeMin) + ":" + self.set_time_string(self.mp.timeSec)
-                        self.bottom_toolbar.show_time.time_font2 = self.set_time_string(self.mp.timeHour) + ":" + self.set_time_string(self.mp.timeMin) + ":" + self.set_time_string(self.mp.timeSec)
+                        self.show_time_label.time_font2 = self.set_time_string(self.mp.time_hour) + ":" + self.set_time_string(self.mp.time_min) + ":" + self.set_time_string(self.mp.time_sec)
+                        self.bottom_toolbar.show_time.time_font2 = self.set_time_string(self.mp.time_hour) + ":" + self.set_time_string(self.mp.time_min) + ":" + self.set_time_string(self.mp.time_sec)
                         self.bottom_toolbar.panel.queue_draw()
                         self.app.window.queue_draw()
             else:
@@ -1849,9 +1849,9 @@ class PlayerBox(object):
                 self.progressbar.set_pos(pos)
                 self.bottom_toolbar.progressbar.set_pos(pos)
                 self.show_time_label.time_font2 = self.set_time_string(
-                    self.mp.timeHour) + ":" + self.set_time_string(self.mp.timeMin) + ":" + self.set_time_string(self.mp.timeSec) + " / "
+                    self.mp.time_hour) + ":" + self.set_time_string(self.mp.time_min) + ":" + self.set_time_string(self.mp.time_sec) + " / "
                 self.bottom_toolbar.show_time.time_font2 = self.set_time_string(
-                    self.mp.timeHour) + ":" + self.set_time_string(self.mp.timeMin) + ":" + self.set_time_string(self.mp.timeSec) + " / "
+                    self.mp.time_hour) + ":" + self.set_time_string(self.mp.time_min) + ":" + self.set_time_string(self.mp.time_sec) + " / "
                 
                 self.show_time_label.set_time_font(self.show_time_label.time_font2,
                                                    self.show_time_label.time_font1)
@@ -2015,8 +2015,8 @@ class PlayerBox(object):
         if config_bool:
             if "true" == config_bool.lower():
                 self.ini.set("PlayMemory", '"%s"' % (mplayer.path), 0)
-                if mplayer.posNum < mplayer.lenNum - 100:
-                    self.ini.set("PlayMemory", '"%s"' % (mplayer.path), mplayer.posNum)
+                if mplayer.pos_num < mplayer.len_num - 100:
+                    self.ini.set("PlayMemory", '"%s"' % (mplayer.path), mplayer.pos_num)
                 self.ini.save()
                 
         self.playwinmax_bool = True
@@ -2033,30 +2033,30 @@ class PlayerBox(object):
         self.media_player_midfy_start_bool()
 
     def media_player_fseek(self, mplayer, fseek_num):    
-        posNum = self.mp.posNum
+        pos_num = self.mp.pos_num
         pre_num = 0
-        if posNum == 0:
+        if pos_num == 0:
             pre_num = 0
         else:    
-            pre_num = float(posNum) / self.mp.lenNum * 100
+            pre_num = float(pos_num) / self.mp.len_num * 100
         self.messagebox('%s%s%s %s(%s%s)' % (_("Forward"), 
                                            fseek_num, 
                                            _("s"), 
-                                           length_to_time(self.mp.posNum), 
+                                           length_to_time(self.mp.pos_num), 
                                            int(pre_num), "%"
                                            ))    
         
     def media_player_bseek(self, mplayer, bseek_num):         
-        posNum = self.mp.posNum
+        pos_num = self.mp.pos_num
         pre_num = 0
-        if posNum == 0:
+        if pos_num == 0:
             pre_num = 0
         else:    
-            pre_num = int(float(posNum) / self.mp.lenNum * 100)
+            pre_num = int(float(pos_num) / self.mp.len_num * 100)
         self.messagebox('%s%s%s %s(%s%s)' % (_("Rewind"), 
                                            bseek_num,
                                            _("s"),
-                                           length_to_time(self.mp.posNum),                                            
+                                           length_to_time(self.mp.pos_num),                                            
                                            int(pre_num),
                                            "%"
                                            ))

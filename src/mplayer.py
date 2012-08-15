@@ -105,21 +105,21 @@ def get_vide_width_height(file_path):
 
 
 def length_to_time(length):  
-    timeSec = int(float(length))
-    timeHour = 0
-    timeMin = 0
+    time_sec = int(float(length))
+    time_hour = 0
+    time_min = 0
     
-    if timeSec >= 3600:
-        timeHour = int(timeSec / 3600)
-        timeSec -= int(timeHour * 3600)
+    if time_sec >= 3600:
+        time_hour = int(time_sec / 3600)
+        time_sec -= int(time_hour * 3600)
         
-    if timeSec >= 60:
-        timeMin = int(timeSec / 60)
-        timeSec -= int(timeMin * 60)         
+    if time_sec >= 60:
+        time_min = int(time_sec / 60)
+        time_sec -= int(time_min * 60)         
         
-    return str("%s:%s:%s"%(str(time_add_zero(timeHour)), 
-                           str(time_add_zero(timeMin)), 
-                           str(time_add_zero(timeSec))))
+    return str("%s:%s:%s"%(str(time_add_zero(time_hour)), 
+                           str(time_add_zero(time_min)), 
+                           str(time_add_zero(time_sec))))
     
 def time_add_zero(time_to):    
     if 0 <= time_to <= 9:
@@ -295,12 +295,12 @@ class  Mplayer(gobject.GObject):
         self.lenState = 0
         self.path = ""
         
-        self.timeHour = 0
-        self.timeMin = 0
-        self.timeSec = 0
+        self.time_hour = 0
+        self.time_min = 0
+        self.time_sec = 0
         
-        self.lenNum = 0
-        self.posNum = 0
+        self.len_num = 0
+        self.pos_num = 0
         
         # select channel state.
         self.channel_state = CHANNEL_NORMAL_STATE
@@ -365,12 +365,12 @@ class  Mplayer(gobject.GObject):
             
             self.emit("play-init", True)
             # get length size.
-            self.getLenID = gobject.timeout_add(60, self.get_time_length)
+            self.get_length_id = gobject.timeout_add(60, self.get_time_length)
             # get pos size.
-            self.getPosID = gobject.timeout_add(400, self.get_time_pos) 
+            self.get_position_id = gobject.timeout_add(400, self.get_time_pos) 
                                 
             # IO_HUP[Monitor the pipeline is disconnected].
-            self.eofID = gobject.io_add_watch(self.mplayer_out, gobject.IO_HUP, self.mplayer_eof)
+            self.eof_id = gobject.io_add_watch(self.mplayer_out, gobject.IO_HUP, self.mplayer_eof)
             self.state = STARTING_STATE
             self.vide_bool = get_vide_flags(self.path)
             # Set volume.
@@ -387,10 +387,10 @@ class  Mplayer(gobject.GObject):
         return False
     
     ## Cmd control ##    
-    def cmd(self, cmdStr):
+    def cmd(self, cmd_str):
         '''Mplayer command'''
         try:
-            self.mplayer_in.write(cmdStr)
+            self.mplayer_in.write(cmd_str)
             self.mplayer_in.flush()
         except StandardError, e:
             print 'command error %s' % (e)
@@ -408,18 +408,18 @@ class  Mplayer(gobject.GObject):
                 break   
 
             if line.startswith("ANS_LENGTH"):
-                lenNum = int(float(line.replace("ANS_LENGTH=", "")))
-                if lenNum > 0:
-                    self.lenNum = lenNum               
-                    self.emit("get-time-length",self.lenNum)
-                    # print "mplayer:" + str(self.lenNum)
+                len_num = int(float(line.replace("ANS_LENGTH=", "")))
+                if len_num > 0:
+                    self.len_num = len_num               
+                    self.emit("get-time-length",self.len_num)
+                    # print "mplayer:" + str(self.len_num)
                     
         return True
                                
     def get_time_pos(self):
         '''Get the current playback progress'''
         # if not self.lenState:
-        if self.getLenID:
+        if self.get_length_id:
             self.stop_get_len_id()
             
         self.cmd('get_time_pos\n')
@@ -434,24 +434,24 @@ class  Mplayer(gobject.GObject):
                 break
         
             if line.startswith("ANS_TIME_POSITION"):
-                posNum = int(float(line.replace("ANS_TIME_POSITION=", "")))
+                pos_num = int(float(line.replace("ANS_TIME_POSITION=", "")))
                 
-                if posNum > 0:
-                    self.posNum = posNum                   
+                if pos_num > 0:
+                    self.pos_num = pos_num                   
                     # Init Hour, Min, Sec.
-                    self.timeHour = 0
-                    self.timeMin = 0
-                    self.timeSec = 0
-                    self.time(self.posNum)  
-                    self.emit("get-time-pos",int(self.posNum))
+                    self.time_hour = 0
+                    self.time_min = 0
+                    self.time_sec = 0
+                    self.time(self.pos_num)  
+                    self.emit("get-time-pos",int(self.pos_num))
                     
         return True
 
     ## Subtitle Control ##
-    def subload(self, subFile):
+    def subload(self, sub_file):
         '''Load subtitle'''
         if self.state == STARTING_STATE: # STARTING_STATE
-            self.cmd('sub_load %s\n' % (subFile))
+            self.cmd('sub_load %s\n' % (sub_file))
             self.cmd('sub_select 1\n')
             
     def subremove(self):
@@ -500,25 +500,25 @@ class  Mplayer(gobject.GObject):
         
             
     ## Volume Control ##
-    def addvolume(self, volumeNum):
+    def addvolume(self, volume_num):
         '''Add volume'''
-        self.volume = volumeNum
+        self.volume = volume_num
         self.volume = min(self.volume, 100)
         
         if self.state == STARTING_STATE:
             self.cmd('volume +%s 1\n' % str(self.volume))
         
-    def decvolume(self, volumeNum):
+    def decvolume(self, volume_num):
         '''Decrease volume'''
-        self.volume = volumeNum
+        self.volume = volume_num
         self.volume = max(self.volume, 0)
         
         if self.state == STARTING_STATE:
             self.cmd('volume -%s 1\n' % str(self.volume))
             
-    def setvolume(self, volumeNum):
+    def setvolume(self, volume_num):
         '''Add volume'''
-        self.volume = volumeNum
+        self.volume = volume_num
         self.volume = max(min(self.volume, 100), 0)
         
         if self.state == STARTING_STATE:
@@ -555,47 +555,47 @@ class  Mplayer(gobject.GObject):
         
     ## video Control ##
     # brightness.
-    def addbri(self, briNum):
+    def addbri(self, bri_num):
         '''Add brightness'''
         if self.state == STARTING_STATE:
-            self.cmd('brightness +%s\n' % (briNum))
+            self.cmd('brightness +%s\n' % (bri_num))
     
-    def decbri(self, briNum):
+    def decbri(self, bri_num):
         '''Decrease brightness'''
         if self.state == STARTING_STATE:
-            self.cmd('brightness -%s\n' % (briNum))
+            self.cmd('brightness -%s\n' % (bri_num))
     
     # saturation.
-    def addsat(self, satNum):
+    def addsat(self, sat_num):
         '''Add saturation'''
         if self.state == STARTING_STATE:
-            self.cmd('saturation +%s\n' % (satNum))
+            self.cmd('saturation +%s\n' % (sat_num))
             
-    def decsat(self, satNum):
+    def decsat(self, sat_num):
         '''Decrease saturation'''        
         if self.state == STARTING_STATE:
-            self.cmd('saturation -%s\n' % (satNum))
+            self.cmd('saturation -%s\n' % (sat_num))
     
     # contrast. 
-    def addcon(self, conNum):
+    def addcon(self, con_num):
         '''Add contrast'''
         if self.state == STARTING_STATE:
-            self.cmd('contrast +%s\n' % (conNum))    
+            self.cmd('contrast +%s\n' % (con_num))    
             
-    def deccon(self, conNum):
+    def deccon(self, con_num):
         '''Decrease contrast'''    
         if self.state == STARTING_STATE:
-            self.cmd('contrast -%s\n' % (conNum))
+            self.cmd('contrast -%s\n' % (con_num))
     
     # hue.
-    def addhue(self, hueNum):
+    def addhue(self, hue_num):
         '''Add hue'''
         if self.state == STARTING_STATE:
-            self.cmd('hue +%s\n' % (hueNum))        
-    def dechue(self, hueNum):
+            self.cmd('hue +%s\n' % (hue_num))        
+    def dechue(self, hue_num):
         '''Decrease hue'''
         if self.state == STARTING_STATE:
-            self.cmd('hue -%s\n' % (hueNum))
+            self.cmd('hue -%s\n' % (hue_num))
     
             
     ## Play control ##   
@@ -604,22 +604,22 @@ class  Mplayer(gobject.GObject):
         # if self.state:
         self.cmd('vo_fullscreen\n')
             
-    def seek(self, seekNum):        
+    def seek(self, seek_num):        
         '''Set rate of progress'''
         if self.state == STARTING_STATE:
-            self.cmd('seek %d 2\n' % (seekNum))               
+            self.cmd('seek %d 2\n' % (seek_num))               
             
-    def fseek(self, seekNum):
+    def fseek(self, seek_num):
         '''Fast forward'''
         if self.state == STARTING_STATE:
-            self.cmd('seek +%d\n' % (seekNum))   
-            self.emit("play-fseek", seekNum)
+            self.cmd('seek +%d\n' % (seek_num))   
+            self.emit("play-fseek", seek_num)
             
-    def bseek(self, seekNum):
+    def bseek(self, seek_num):
         '''backward'''
         if self.state == STARTING_STATE:
-            self.cmd('seek -%d\n' % (seekNum))
-            self.emit("play-bseek", seekNum)
+            self.cmd('seek -%d\n' % (seek_num))
+            self.emit("play-bseek", seek_num)
             
     def pause(self):
         if (self.state == STARTING_STATE) and (not self.pause_bool):             
@@ -635,7 +635,7 @@ class  Mplayer(gobject.GObject):
         '''quit deepin media player.'''
         if self.state == STARTING_STATE:
             
-            self.stop_get_pos_id()
+            self.stop_get_position_id()
             self.stop_eof_id()
             # Send play end signal.
             self.emit("play-end", True)
@@ -649,23 +649,23 @@ class  Mplayer(gobject.GObject):
                 pass
                 
     def stop_eof_id(self):
-        if self.eofID:
-            gobject.source_remove(self.eofID)
-        self.eofID = 0
+        if self.eof_id:
+            gobject.source_remove(self.eof_id)
+        self.eof_id = 0
         
-    def stop_get_pos_id(self):
-        if self.getPosID:
-            gobject.source_remove(self.getPosID)
-        self.getPosID = 0
+    def stop_get_position_id(self):
+        if self.get_position_id:
+            gobject.source_remove(self.get_position_id)
+        self.get_position_id = 0
     
     def stop_get_len_id(self):
-        if self.getLenID:
-            gobject.source_remove(self.getLenID)
-        self.getLenID = 0
+        if self.get_length_id:
+            gobject.source_remove(self.get_length_id)
+        self.get_length_id = 0
             
     def mplayer_eof(self, error, mplayer):
         '''Monitoring disconnect'''
-        self.stop_get_pos_id()
+        self.stop_get_position_id()
         self.state = STOPING_STATE
         self.mplayer_in, self.mplayer_out = None, None
         # Send play end signal.
@@ -746,21 +746,21 @@ class  Mplayer(gobject.GObject):
     ## time Control ##
     def time(self, sec):
         # Clear.
-        self.timeSec = 0
-        self.timeHour = 0
-        self.timeMin = 0
+        self.time_sec = 0
+        self.time_hour = 0
+        self.time_min = 0
         
-        self.timeSec = int(sec)
+        self.time_sec = int(sec)
         
-        if self.timeSec >= 3600:
-            self.timeHour = int(self.timeSec / 3600)
-            self.timeSec -= int(self.timeHour * 3600)
+        if self.time_sec >= 3600:
+            self.time_hour = int(self.time_sec / 3600)
+            self.time_sec -= int(self.time_hour * 3600)
         
-        if self.timeSec >= 60:
-            self.timeMin = int(self.timeSec / 60)
-            self.timeSec -= int(self.timeMin * 60)         
+        if self.time_sec >= 60:
+            self.time_min = int(self.time_sec / 60)
+            self.time_sec -= int(self.time_min * 60)         
             
-        return self.timeHour, self.timeMin, self.timeSec    
+        return self.time_hour, self.time_min, self.time_sec    
     
     # Puase show image.
     def scrot(self, 
