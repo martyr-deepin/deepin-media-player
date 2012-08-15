@@ -1867,9 +1867,8 @@ class PlayerBox(object):
                 for file_name in temp_path_file_list:
                     if os.path.splitext(file_name)[0] == temp_path_file:
                         save_down_file = os.path.join(save_subtitle_path, file_name)                        
-                if "True" == self.config.get("SubtitleSet", "ai_load_subtitle"):
-                    if save_down_file and os.path.exists(save_down_file):                        
-                        self.load_subtitle(save_down_file)
+                if "True" == self.config.get("SubtitleSet", "ai_load_subtitle") and save_down_file and os.path.exists(save_down_file):
+                    self.load_subtitle(save_down_file)
 
         # Init last new play file menu.
         self.the_last_new_play_file_list = self.last_new_play_file_function.set_file_time(mplayer.path)
@@ -1936,7 +1935,6 @@ class PlayerBox(object):
         self.progressbar.set_pos(0)
         self.bottom_toolbar.progressbar.set_pos(0)
 
-
     def media_player_end(self, mplayer, play_bool):
         '''player end.'''                        
         self.video_width = self.video_height = None        
@@ -1958,12 +1956,11 @@ class PlayerBox(object):
         # Play file modify start_button.
         self.media_player_midfy_start_bool()
         config_bool = self.config.get("FilePlay", "memory_up_close_player_file_postion")
-        if config_bool:
-            if "true" == config_bool.lower():
-                self.ini.set("PlayMemory", '"%s"' % (mplayer.path), 0)
-                if mplayer.pos_num < mplayer.len_num - 100:
-                    self.ini.set("PlayMemory", '"%s"' % (mplayer.path), mplayer.pos_num)
-                self.ini.save()
+        if config_bool and "true" == config_bool.lower():
+            self.ini.set("PlayMemory", '"%s"' % (mplayer.path), 0)
+            if mplayer.pos_num < mplayer.len_num - 100:
+                self.ini.set("PlayMemory", '"%s"' % (mplayer.path), mplayer.pos_num)
+            self.ini.save()
                 
         self.playwinmax_bool = True
 
@@ -1973,7 +1970,6 @@ class PlayerBox(object):
     def media_player_next(self, mplayer, play_bool):
         if 1 == play_bool:
             self.media_player_midfy_start_bool()
-
 
     def media_player_pre(self, mplayer, play_bool):
         self.media_player_midfy_start_bool()
@@ -2323,8 +2319,7 @@ class PlayerBox(object):
                 ((self.menu_setting_normal_pixbuf, self.menu_setting_hover_pixbuf), _("Preferences"), self.config_gui) 
                 ], True)
         
-        self.screen_right_root_menu.show((int(event.x_root), int(event.y_root)),
-                                (0, 0))
+        self.screen_right_root_menu.show((int(event.x_root), int(event.y_root)), (0, 0))
         
     def set_down_sub_title_bool(self):    
         self.down_sub_title_bool = not self.down_sub_title_bool
@@ -2396,8 +2391,7 @@ class PlayerBox(object):
                                             True)
 
 
-            self.play_list_root_menu.show((int(event.x_root), int(event.y_root)),
-                                (0, 0))
+            self.play_list_root_menu.show((int(event.x_root), int(event.y_root)), (0, 0))
 
     def sigle_play(self):
         if self.mp:
@@ -2531,7 +2525,6 @@ class PlayerBox(object):
             self.mp.add_play_file(url_name) # play list add url name.
         else:    
             self.messagebox(str(url_name))
-        
                 
     def del_index(self):
         self.play_list.list_view.delete_select_items()
@@ -2574,7 +2567,6 @@ class PlayerBox(object):
 
     def open_current_file_dir_path(self, list_view, list_item, column, offset_x, offset_y):
         self.open_file_name = self.play_list_dict[list_item.title]
-
         
     '''config gui window'''
     def config_gui(self):        
@@ -2655,9 +2647,10 @@ class PlayerBox(object):
     def scrot_current_screen_pixbuf(self, save_path_save_name, save_file_type=".png"):
         x, y, w, h = self.screen_frame.get_allocation()
         screen_pixbuf = gtk.gdk.Pixbuf(gtk.gdk.COLORSPACE_RGB, False, 8, w, h)
-        save_pixbuf = screen_pixbuf.get_from_drawable(self.screen_frame.window, 
-                                                      self.screen_frame.get_colormap(),
-                                                      0, 0, 0, 0, w, h)
+        save_pixbuf = screen_pixbuf.get_from_drawable(
+            self.screen_frame.window, 
+            self.screen_frame.get_colormap(),
+            0, 0, 0, 0, w, h)
         save_pixbuf.save(save_path_save_name + save_file_type, save_file_type[1:])
         
     def get_same_name_event(self, mplayer, path):
@@ -2687,7 +2680,5 @@ class PlayerBox(object):
                 self.volume_button.value = 0
             self.volume_button.value = self.volume_button.value - volume_value
             
-            
         self.mp.setvolume(self.volume_button.value)
         self.messagebox("%s:%s%s"%(_("Volumn"), int(self.volume_button.value), "%"))                            
-        
