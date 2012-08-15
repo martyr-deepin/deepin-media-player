@@ -897,7 +897,6 @@ class PlayerBox(object):
 
         gtk.timeout_add(10, self.add_play_list_time, path)
 
-
     def add_play_list_length(self):
         '''staring length show.[add length]'''
         path_thread_id = threading.Thread(target=self.length_threads)
@@ -916,7 +915,6 @@ class PlayerBox(object):
                 self.ini.set("PlayTime", '"%s"' % (self.play_list_dict[i.title]), length)
                 self.ini.save()
             i.emit_redraw_request()
-
 
     def add_play_list_time(self, path): # all.
         '''play list add play file.'''
@@ -1045,7 +1043,6 @@ class PlayerBox(object):
                 
         open_dialog.destroy()
 
-
     def try_play(self, path_string):
         # print path_string
         if os.path.isdir(path_string):
@@ -1069,7 +1066,6 @@ class PlayerBox(object):
     def hide_bottom(self):
         if [] != self.bottom_main_vbox.get_children():
             self.bottom_main_vbox.foreach(self.bottom_main_vbox.remove(self.bottom_play_control_hbox_vframe_event_box))
-
                 
     '''Init media player.'''
     def init_media_player(self, widget):
@@ -1172,10 +1168,9 @@ class PlayerBox(object):
     def draw_background(self, widget, event):
         '''Draw screen mplayer view background.'''
         cr, x, y, w, h = allocation(widget)
-
       
-        if self.mp and (STARTING_PLAY == self.mp.state):
-            if (self.mp.state) and (self.mp.vide_bool): # vide file.                
+        if self.mp and STARTING_PLAY == self.mp.state:
+            if self.mp.state and self.mp.vide_bool: # vide file.                
                 self.unset_flags()
                 self.open_button.visible_bool = True
                 self.open_button.visible_bool = True
@@ -1185,11 +1180,8 @@ class PlayerBox(object):
                 self.open_button_right.leave_bool = False
                 self.screen_pop_menu.leave_bool = False
                 
-                if self.mp.pause_bool: # vide pause.
-                    # Draw pause background.
-                    return False
-                else:
-                    return False
+                return False
+            
         self.set_flags()        
 
         cr.set_source_rgb(*color_hex_to_cairo("#0D0D0D")) # 1f1f1f
@@ -1217,18 +1209,19 @@ class PlayerBox(object):
             self.open_button.visible_bool = True
             self.open_button_right.visible_bool = True
             self.screen_pop_menu.visible_bool = True
+            
         return True
 
     def min_window_titlebar_min_button_click(self, widget):
         '''app titlebar min_button'''
         config_bool = self.config.get("SystemSet", "minimize_pause_play")
-        if config_bool:
-            if "true" == config_bool.lower():
-                self.virtual_set_start_button_clicked()
-                gtk.timeout_add(500, self.set_min_pause_bool_time)
+        if config_bool and "true" == config_bool.lower():
+            self.virtual_set_start_button_clicked()
+            gtk.timeout_add(500, self.set_min_pause_bool_time)
 
     def set_min_pause_bool_time(self):
         self.minimize_pause_play_bool = True
+        
         return False
 
     def quit_player_window(self, widget):
@@ -1261,7 +1254,6 @@ class PlayerBox(object):
 
     # ToolBar control function.
     def app_configure_hide_tool(self, widget, event): #app: configure-event.
-                
         self.toolbar.panel.hide_all()
         self.show_toolbar_bool = False
 
@@ -1289,10 +1281,9 @@ class PlayerBox(object):
         # Set minimize pause play.
         if self.minimize_pause_play_bool:
             config_bool = self.config.get("SystemSet", "minimize_pause_play")            
-            if config_bool:
-                if "true" == config_bool.lower():
-                    self.virtual_set_start_button_clicked()
-                    self.minimize_pause_play_bool = False
+            if config_bool and "true" == config_bool.lower():
+                self.virtual_set_start_button_clicked()
+                self.minimize_pause_play_bool = False
 
         if STARTING_PLAY == self.mp.state:            
             self.set_ascept_function()
@@ -1355,19 +1346,19 @@ class PlayerBox(object):
             self.screen_frame.set(0.0, 0.0, 1.0, 1.0)
         elif screen_frame_aspect > video_aspect:
             x = (float(h)* video_aspect) / w
-            if (x > 0.0):
-                self.screen_frame.set(0.5, 0.0, self.max(x, 0.1, 1.0), 1.0);
+            if x > 0.0:
+                self.screen_frame.set(0.5, 0.0, self.max(x, 0.1, 1.0), 1.0)
             else:
-                self.screen_frame.set(0.5, 0.0, 1.0, 1.0);
+                self.screen_frame.set(0.5, 0.0, 1.0, 1.0)
         elif screen_frame_aspect < video_aspect:
             y = (float(w) / video_aspect) / h;
             if y > 0.0:
-                self.screen_frame.set(0.0, 0.5, 1.0, self.max(y, 0.1, 1.0));
+                self.screen_frame.set(0.0, 0.5, 1.0, self.max(y, 0.1, 1.0))
             else:
-                self.screen_frame.set(0.0, 0.5, 1.0, 1.0);
+                self.screen_frame.set(0.0, 0.5, 1.0, 1.0)
 
     def max(self, x, low, high):
-        if low <= x  <= high:
+        if low <= x <= high:
             return x
         if low > x:
             return low
@@ -1400,27 +1391,25 @@ class PlayerBox(object):
     def set_video_play(self, video_width, video_height):
         self.screen_frame.set_padding(0, 0, 0, 0)        
         if not self.full_bool: # full bool. True -> full False -> quit full.
-            temp_video_width = 0
-            temp_video_height = 0
+            new_video_width = 0
+            new_video_height = 0
             
             if video_height > self.root_window_height:
-                temp_video_height = self.root_window_height - 30
+                new_video_height = self.root_window_height - 30
+            elif video_height < APP_HEIGHT:
+                new_video_height = APP_HEIGHT
             else:    
-                if video_height < APP_HEIGHT:
-                    temp_video_height = APP_HEIGHT
-                else:    
-                    temp_video_height = video_height
+                new_video_height = video_height
                 
             if video_width > self.root_window_width:
-                temp_video_width = self.root_window_width - 200
+                new_video_width = self.root_window_width - 200
+            elif video_width < APP_WIDTH:
+                new_video_width = APP_WIDTH
             else:    
-                if video_width < APP_WIDTH:
-                    temp_video_width = APP_WIDTH
-                else:    
-                    temp_video_width = video_width
+                new_video_width = video_width
                 
             # Set media player size and position.
-            self.app.window.resize(int(temp_video_width), int(temp_video_height))                                    
+            self.app.window.resize(int(new_video_width), int(new_video_height))                                    
             self.app.window.set_position(gtk.WIN_POS_CENTER_ALWAYS)                        
         else:
             if self.video_play_state == X_VIDEO_PLAY_0_5:                    
