@@ -128,30 +128,37 @@ def time_add_zero(time_to):
     return str(time_to)
         
 def init_mplayer_config():
-    # create .config.
-    path = get_home_path() + "/.config"
+    # Create config directory if it not exists.
+    path = os.path.join(get_home_path(), ".config/deepin-media-player")
     if not os.path.exists(path):
-        os.mkdir(path)
-    
-    # create deepin-me...    
-    path += "/deepin-media-player"    
-    if not os.path.exists(path):
-        os.mkdir(path)
-    
-    # create buffer file.
-    if not os.path.exists(path + "/subtitle"):
-        os.mkdir(path + "/subtitle")
-    
-    # create config.ini.    
-    if not os.path.exists(path + "/config.ini"):
-        fp = open(path + "/config.ini", "a")
+        os.makedirs(path)
+        
+    # Create subdirectories if it not exists.
+    for subdir in ["subtitle", "buffer", "image"]:
+        subpath = os.path.join(path, subdir)
+        if not os.path.exists(subpath):
+            os.makedirs(subpath)
+            
+    # Create preview directories if it not exists.
+    for subdir in ["/tmp/buffer", "/tmp/preview"]:
+        if not os.path.exists(subdir):
+            os.makedirs(subdir)
+        
+    # Create config if it not exists.    
+    config_path = os.path.join(path, "config.ini")
+    if not os.path.exists(config_path):
+        fp = open(config_path, "a")
         fp.close()
         
-    if not os.path.exists(path + "/deepin_media_config.ini"):
-        fp = open(path + "/deepin_media_config.ini", "a")
+    # Create media config file if it not exists.
+    media_config_path = os.path.join(path, "deepin_media_config.ini")
+    if not os.path.exists(media_config_path):
+        fp = open(media_config_path, "a")
         fp.close()            
+        
         # Init config.ini            
-        config = Config(path + "/deepin_media_config.ini")
+        config = Config(media_config_path)
+        
         # Init window.
         config.set("Window", "init_window", "True")
         
@@ -224,31 +231,10 @@ def init_mplayer_config():
                 ("save_type", ".png"),
                 ("current_show_sort", "False")
                 ]):
-
-
-
             config.set("ScreenshotSet", argv, value)
             
         # save ini config.
         config.save()
-                   
-    # create buffer file.
-    if not os.path.exists(path + "/buffer"):
-        os.mkdir(path + "/buffer")
-        
-    # create save image.    
-    if not os.path.exists(path + "/image"):
-        os.mkdir(path + "/image")
-        
-    '''preview scrot image'''    
-    # create preview image buffer.    
-    if not os.path.exists("/tmp/buffer"):
-        os.mkdir("/tmp/buffer")    
-        
-    # create save preview window image.    
-    if not os.path.exists("/tmp/preview"):
-        os.mkdir("/tmp/preview") 
-
         
 def get_vide_flags(path):
     return format.get_video_bool(path)
