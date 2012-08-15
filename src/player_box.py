@@ -473,12 +473,10 @@ class PlayerBox(object):
     def init_play_list_button(self):            
         self.play_list_button_hframe = HorizontalFrame()
         self.play_list_button = PlayListButton()
-        # play_list_button connect signal.
-        self.play_list_button.button.connect("clicked", self.play_list_button_clicked)
+        self.play_list_button.button.connect("toggled", self.play_list_button_clicked)
         self.play_list_button_hframe.add(self.play_list_button.button)
         self.play_list_button_hframe.set(0, 0, 1.0, 1.0)
-        self.play_list_button_hframe.set_padding(4, 0, 0, 20)
-        
+        self.play_list_button_hframe.set_padding(9, 9, 0, 20)
         
     # 123456
     ####################################################    
@@ -884,14 +882,12 @@ class PlayerBox(object):
             
     '''play list button'''
     def play_list_button_clicked(self, widget): # play list button signal:clicked.
-        if True == self.play_list_button.button.flags:
+        if widget.get_active():
             self.play_list.show_play_list()
             self.show_or_hide_play_list_bool = True
-
-        if False == self.play_list_button.button.flags:
+        else:
             self.play_list.hide_play_list()
             self.show_or_hide_play_list_bool = False
-
 
     '''Play list control'''
     def delete_play_list_file(self, list_view, list_item):
@@ -1147,10 +1143,12 @@ class PlayerBox(object):
         
         self.play_list.hide_play_list() # Hide play list.
         if play_list_bool:
-            if "true" == play_list_bool.lower() :
+            if play_list_bool.lower() == "true":
                 self.play_list.show_play_list()
-                self.play_list_button.button.flags = True
-                self.play_list_button_clicked(self.play_list_button.button)
+                self.play_list_button.button.set_active(True)
+            else:
+                self.play_list.hide_play_list()
+                self.play_list_button.button.set_active(False)
         
     def init_volume_value(self):            
         volume_value = self.config.get("Window",     "volume")
