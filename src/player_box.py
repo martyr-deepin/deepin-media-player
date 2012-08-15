@@ -22,7 +22,7 @@
 
 from dtk.ui.skin_config import skin_config
 from dtk.ui.osd_tooltip import OSDTooltip
-from dtk.ui.utils import cairo_state
+from dtk.ui.utils import cairo_state, is_left_button
 from dtk.ui.keymap import get_keyevent_name
 from dtk.ui.box import EventBox
 from dtk.ui.draw import draw_pixbuf
@@ -1623,7 +1623,7 @@ class PlayerBox(object):
     # Control mplayer window.
     def move_media_player_window(self, widget, event): # screen: button-press-event
         '''Move window.'''
-        if 1 == event.button:
+        if is_left_button(event):
             self.event_button = event.button
             self.event_x_root = event.x_root
             self.event_y_root = event.y_root

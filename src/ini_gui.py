@@ -25,7 +25,7 @@ from locales import _
 from ini import Config
 from mplayer import get_home_path
 
-from dtk.ui.utils import propagate_expose
+from dtk.ui.utils import propagate_expose, is_left_button
 from dtk.ui.box import BackgroundBox, ImageBox
 from dtk.ui.dialog import DialogBox, DIALOG_MASK_MULTIPLE_PAGE
 from dtk.ui.button import Button
@@ -736,7 +736,7 @@ class PlayControl(gtk.VBox):
         self.pack_start(self.fixed)
         
     def set_play_control_all_sensitive(self, widget, event):    
-        if 1 == event.button:
+        if is_left_button(event):
             checkbtn_bool = self.play_control_bool_checkbtn.get_active()
             if checkbtn_bool:
                 self.set_play_control_false()
@@ -1040,7 +1040,7 @@ class OtherKey(gtk.VBox):
         self.pack_start(self.fixed)
     
     def set_other_key_bool_checkbtn_press(self, widget, event):
-        if 1 == event.button:
+        if is_left_button(event):
             if self.other_key_bool_checkbtn.get_active():
                 self.set_other_key_false()
             else:
@@ -1283,7 +1283,7 @@ class ScreenShot(gtk.VBox):
 
         
     def save_file_radio_clicked(self, widget, event):    
-        if 1 == event.button:
+        if is_left_button(event):
             self.save_path_entry.entry.set_editable(True)
             self.save_path_entry.entry.set_sensitive(True)            
             self.save_path_button.set_sensitive(True)            
@@ -1291,7 +1291,7 @@ class ScreenShot(gtk.VBox):
             self.save_type_combo.set_sensitive(True)
         
     def save_clipboard_radio_clicked(self, widget, event):    
-        if 1 == event.button:
+        if is_left_button(event):
             self.save_path_entry.entry.set_editable(False)
             self.save_path_entry.entry.set_sensitive(False)            
             self.save_path_button.set_sensitive(False) 
