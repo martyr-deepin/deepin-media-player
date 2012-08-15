@@ -1034,7 +1034,7 @@ class PlayerBox(object):
                 if not open_button:
                     self.mp.clear_playlist()
                     self.clear_play_list_bool = True 
-                self.get_path_name(path_string)
+                self.try_play(path_string)
         open_dialog.destroy()
 
     def show_open_dialog_window(self, open_button=True):
@@ -1052,19 +1052,18 @@ class PlayerBox(object):
                 if not open_button:
                     self.mp.clear_playlist()
                     self.clear_play_list_bool = True 
-                self.get_path_name(path_string)
+                self.try_play(path_string)
             
                 
         open_dialog.destroy()
 
 
-    # def get_path_name(self, open_dialog, path_string):
-    def get_path_name(self, path_string):
-        # # print path_string
+    def try_play(self, path_string):
+        # print path_string
         if os.path.isdir(path_string):
             path_threads(path_string, self.mp)
 
-        # # Add .Dmp.
+        # Add .dmp.
         if self.mp.find_dmp(path_string):
             self.mp.load_playlist(path_string)
 
@@ -1073,8 +1072,7 @@ class PlayerBox(object):
             if self.mp.find_file(path_string):                
                 self.mp.add_play_file(path_string)
             else:    
-                self.messagebox(_("Failed to Open Selected Fil"))
-
+                self.messagebox(_("Failed to Open Selected File"))
 
     def show_bottom(self):
         if [] == self.bottom_main_vbox.get_children():
