@@ -19,11 +19,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from dtk.ui.draw import draw_text
+from dtk.ui.constant import DEFAULT_FONT_SIZE
 from mplayer import Mplayer
 from constant import PREVIEW_PV_WIDTH, PREVIEW_PV_HEIGHT
 
 import gtk
 import cairo
+import pango
 
 class PreView(object): 
     def __init__(self, path = "", pos = 0): 
@@ -108,34 +111,25 @@ class PreView(object):
     
     # Background window.    
     def draw_background(self, widget, event):    
+        # Init.
         cr = widget.window.cairo_create()
         rect = widget.allocation
         x, y, w, h = rect.x, rect.y, rect.width, rect.height
 
+        # Draw preview background.
         cr.set_source_rgb(0, 0, 0)
         cr.rectangle(x, y, w, h)
         cr.fill()  
         
-        cr.select_font_face("Courier",
-                            cairo.FONT_SLANT_NORMAL,
-                            cairo.FONT_WEIGHT_BOLD)
-        font_size = 12
-        cr.set_font_size(font_size)
-        cr.set_source_rgb(1, 1, 1)
-        font_width_padding = 25
-        font_height_padding = 16
-        cr.move_to(w/2 - font_width_padding, h - font_height_padding)
-        
-        # Show Time.
-        pos = self.pos
-        
-        time_hour, time_min, time_sec = self.mp.time(pos)
-        
-        cr.show_text("%s:%s:%s" % (self.time_to_string(time_hour), 
-                                   self.time_to_string(time_min),
-                                   self.time_to_string(time_sec)))
-        
-        
+        # Draw preview time.
+        font_height_padding = 24
+        time_hour, time_min, time_sec = self.mp.time(self.pos)
+        draw_text(cr, 
+                  "%s:%s:%s" % (self.time_to_string(time_hour), self.time_to_string(time_min), self.time_to_string(time_sec)),
+                  x, h - font_height_padding, w, DEFAULT_FONT_SIZE,
+                  text_color = "#ffffff",
+                  alignment=pango.ALIGN_CENTER
+                  )
                 
         return True
     
