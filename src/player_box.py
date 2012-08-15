@@ -797,23 +797,23 @@ class PlayerBox(object):
         add_volume_key = self.config.get("PlayControl", "add_volume_key")
         if add_volume_key == keyval_name:            
             if self.mode_state_bool:
-                temp_value = self.mp.volume
+                volume_value = self.mp.volume
             else:    
-                temp_value = self.volume_button.value
+                volume_value = self.volume_button.value
                 
-            self.mp.setvolume(temp_value)
-            self.messagebox("%s:%s%s"%(_("Volumn"), int(temp_value), "%"))
+            self.mp.setvolume(volume_value)
+            self.messagebox("%s:%s%s"%(_("Volumn"), int(volume_value), "%"))
             
         # sub volume key init.
         sub_volume_key = self.config.get("PlayControl", "sub_volume_key")
         if sub_volume_key == keyval_name:
             if self.mode_state_bool:
-                temp_value = self.mp.volume
+                volume_value = self.mp.volume
             else:    
-                temp_value = self.volume_button.value
+                volume_value = self.volume_button.value
                 
-            self.mp.setvolume(temp_value) 
-            self.messagebox("%s:%s%s"%(_("Volumn"),int(temp_value), "%"))
+            self.mp.setvolume(volume_value) 
+            self.messagebox("%s:%s%s"%(_("Volumn"),int(volume_value), "%"))
         
     def key_set_mute(self):
         # print "key set mute..."        
