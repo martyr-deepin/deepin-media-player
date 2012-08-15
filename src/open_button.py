@@ -22,6 +22,7 @@
 
 from dtk.ui.draw import draw_text, draw_pixbuf
 from dtk.ui.cache_pixbuf import CachePixbuf
+from dtk.ui.utils import is_left_button
 
 from locales import _
 from skin import app_theme
@@ -156,7 +157,7 @@ class OpenButton(gobject.GObject):
         if (self.__x + self.__padding_x <= temp_x <= self.__x + self.width + self.__padding_x) and (self.__y + self.__padding_y <= temp_y <= self.__y + self.__padding_y + self.height):
             self.emit("openbutton-press-event", event)
             if not self.visible_bool:
-                if event.button == 1:
+                if is_left_button(event):
                     self.press_bool = True                                
                     self.state = OPEN_BUTTON_STATE_PRESS
             self.queue_draw()    
@@ -286,7 +287,7 @@ class ScreenMenu(gobject.GObject):
          # 
          if self.show_menu_bool:             
              if (self.x  <= temp_x <= self.x + self.width) and (self.y  <= temp_y <= self.y + self.height):
-                 if event.button == 1: # Left clicked.
+                 if is_left_button(event):
                      self.hide_menu()
                      if self.menu_list[self.index][2]:
                          self.menu_list[self.index][2]()
