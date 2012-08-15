@@ -649,8 +649,8 @@ class PlayerBox(object):
         # [PlayControl] Init.
         if play_control_bool.lower() == "true":    
             for section, argv, connect_fun in [
-                ("PlayControl", "open_file_key", self.show_open_dialog_window),
-                ("PlayControl", "open_file_dir_key", self.show_open_dir_dialog_window),
+                ("PlayControl", "open_file_key", lambda : self.show_open_dialog_window(False)),
+                ("PlayControl", "open_file_dir_key", lambda : self.show_open_dir_dialog_window(False)),
                 ("PlayControl", "play_or_pause_key", self.key_space),
                 ("PlayControl", "seek_key",  self.key_right),
                 ("PlayControl", "back_key",  self.key_left),
@@ -986,7 +986,7 @@ class PlayerBox(object):
                 self.bottom_toolbar.play_control_panel.start_button.start_bool = True
                 self.bottom_toolbar.play_control_panel.start_button.queue_draw()
                 self.messagebox(_("No Media Selected"))
-                self.show_open_dialog_window()
+                self.show_open_dialog_window(False)
         else:
             if 1 == start_bit:
                 self.bottom_toolbar.play_control_panel.start_button.start_bool = self.play_control_panel.start_button.start_bool
@@ -1019,7 +1019,7 @@ class PlayerBox(object):
             self.messagebox(_("Next"))
 
     def open_button_clicked(self, widget):        
-        self.show_open_dialog_window(open_button=False)
+        self.show_open_dialog_window(False)
         
     def show_open_dir_dialog_window(self, open_button=True):
         open_dialog = gtk.FileChooserDialog(_("Select Directory"),
