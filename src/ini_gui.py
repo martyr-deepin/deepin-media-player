@@ -317,35 +317,31 @@ class FilePlay(gtk.VBox):
         ini_bool = self.ini.get("FilePlay", "open_new_file_clear_play_list")
 
         self.clear_play_list_button.set_active(False)
-        if ini_bool:
-            if "true" == ini_bool.lower():
-                self.clear_play_list_button.set_active(True)
+        if ini_bool and "true" == ini_bool.lower():
+            self.clear_play_list_button.set_active(True)
                 
         
         # memory up close media player -> file play postion.
         self.file_play_postion_button = CheckButton(_("Resume Playing"))
         ini_bool = self.ini.get("FilePlay", "memory_up_close_player_file_postion")
         self.file_play_postion_button.set_active(False)
-        if ini_bool:
-            if "true" == ini_bool.lower():
-                self.file_play_postion_button.set_active(True)
+        if ini_bool and "true" == ini_bool.lower():
+            self.file_play_postion_button.set_active(True)
                     
         
         # play media when find file play in dir.
         self.find_file_play_button = CheckButton(_("Search for Similar Media and Continue Playing")) 
         ini_bool = self.ini.get("FilePlay", "find_play_file_relation_file")
         self.find_file_play_button.set_active(False)
-        if ini_bool:
-            if "true" == ini_bool.lower():
-                self.find_file_play_button.set_active(True)
+        if ini_bool and "true" == ini_bool.lower():
+            self.find_file_play_button.set_active(True)
                 
         # mouse progressbar show preview window.
         self.show_preview_window_button = CheckButton(_("Show Preview on Placing Cursor on Progress Bar"))
         ini_bool = self.ini.get("FilePlay", "mouse_progressbar_show_preview")
         self.show_preview_window_button.set_active(False)
-        if ini_bool:
-            if "true" == ini_bool.lower():
-                self.show_preview_window_button.set_active(True)
+        if ini_bool and "true" == ini_bool.lower():
+            self.show_preview_window_button.set_active(True)
             
         title_box = gtk.VBox(spacing=5)
         title_box.pack_start(self.label, False, False)
@@ -413,9 +409,8 @@ class SystemSet(gtk.VBox):
         self.pause_play_button = CheckButton(_("Pause When Minimized"))
         ini_bool = self.ini.get("SystemSet", "minimize_pause_play")
         self.pause_play_button.set_active(False)
-        if ini_bool:
-            if "true" == ini_bool.lower():
-                self.pause_play_button.set_active(True)            
+        if ini_bool and "true" == ini_bool.lower():
+            self.pause_play_button.set_active(True)            
             
         self.pause_play_button_label = Label("")
         
@@ -1110,9 +1105,8 @@ class SubSet(gtk.VBox):
         self.ai_load_subtitle_checkbtn = CheckButton(_("Auto-load Subtitles"))
         ini_bool = self.ini.get("SubtitleSet", "ai_load_subtitle")
         self.ai_load_subtitle_checkbtn.set_active(False)
-        if ini_bool:
-            if "true" == ini_bool.lower():            
-                self.ai_load_subtitle_checkbtn.set_active(True)                
+        if ini_bool and "true" == ini_bool.lower():            
+            self.ai_load_subtitle_checkbtn.set_active(True)                
                 
         self.ai_load_subtitle_checkbtn_label = Label("")
         # Specified Location Search.
@@ -1226,22 +1220,20 @@ class ScreenShot(gtk.VBox):
         else:    
             self.save_type_combo.label.set_text(".png")
             
-        if ini_bool:
-             if "true" == ini_bool.lower():
-                 self.save_file_radio.set_active(False)
-                 self.save_clipboard_radio.set_active(True)        
-                 self.save_path_entry.set_editable(False)
-                 self.save_path_entry.set_sensitive(False)
-                 self.save_path_button.set_sensitive(False)
-                 self.save_type_combo.set_sensitive(False)                 
+        if ini_bool and "true" == ini_bool.lower():
+            self.save_file_radio.set_active(False)
+            self.save_clipboard_radio.set_active(True)        
+            self.save_path_entry.set_editable(False)
+            self.save_path_entry.set_sensitive(False)
+            self.save_path_button.set_sensitive(False)
+            self.save_type_combo.set_sensitive(False)                 
                  
         self.current_show_sort_label = Label("")
         self.current_show_sort_check = CheckButton(_("Keep Current Aspect Ratio"))
         self.current_show_sort_check.set_active(False)
         ini_bool = self.ini.get("ScreenshotSet", "current_show_sort")
-        if ini_bool:
-            if "true" == ini_bool.lower():
-                self.current_show_sort_check.set_active(True)
+        if ini_bool and "true" == ini_bool.lower():
+            self.current_show_sort_check.set_active(True)
                 
         title_box = gtk.VBox(spacing=5)
         title_box.pack_start(self.label, False, False)

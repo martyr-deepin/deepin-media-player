@@ -1715,11 +1715,9 @@ class PlayerBox(object):
         # pause / play 123456 release.
         other_key_bool = self.config.get("OtherKey", "other_key_bool")
         
-        if other_key_bool.lower() == "true":
-            if self.pause_bool:
-                if 1 == self.mp.state:
-                    self.pause_time_id = gtk.timeout_add(250, self.virtual_set_start_button_clicked)
-                    self.pause_bool = False
+        if other_key_bool.lower() == "true" and  self.pause_bool and 1 == self.mp.state:
+            self.pause_time_id = gtk.timeout_add(250, self.virtual_set_start_button_clicked)
+            self.pause_bool = False
 
     def virtual_set_start_button_clicked(self):
         if self.mode_state_bool:
@@ -1775,13 +1773,14 @@ class PlayerBox(object):
                 elif 2 == pb_bit:
                     self.progressbar.set_pos(progressbar.pos)
 
-                if self.mp:
-                    if 1 == self.mp.state:
-                        self.mp.seek(int(progressbar.pos))
-                        self.show_time_label.time_font2 = self.set_time_string(self.mp.time_hour) + ":" + self.set_time_string(self.mp.time_min) + ":" + self.set_time_string(self.mp.time_sec)
-                        self.bottom_toolbar.show_time.time_font2 = self.set_time_string(self.mp.time_hour) + ":" + self.set_time_string(self.mp.time_min) + ":" + self.set_time_string(self.mp.time_sec)
-                        self.bottom_toolbar.panel.queue_draw()
-                        self.app.window.queue_draw()
+                if self.mp and 1 == self.mp.state:
+                    self.mp.seek(int(progressbar.pos))
+                    self.show_time_label.time_font2 = self.set_time_string(
+                        self.mp.time_hour) + ":" + self.set_time_string(self.mp.time_min) + ":" + self.set_time_string(self.mp.time_sec)
+                    self.bottom_toolbar.show_time.time_font2 = self.set_time_string(
+                        self.mp.time_hour) + ":" + self.set_time_string(self.mp.time_min) + ":" + self.set_time_string(self.mp.time_sec)
+                    self.bottom_toolbar.panel.queue_draw()
+                    self.app.window.queue_draw()
             else:
                 self.progressbar.set_pos(0)
                 self.bottom_toolbar.progressbar.set_pos(0)
@@ -1790,14 +1789,13 @@ class PlayerBox(object):
             config_bool = self.config.get("FilePlay", "mouse_progressbar_show_preview")
             if config_bool:
                 if "true" == config_bool.lower():
-                    if 1 == self.mp.state:
-                        if self.play_video_file_bool(self.mp.path):
-                            self.preview.set_preview_path(self.mp.path)
-                            self.x_root = event.x_root
-                            self.y_root = event.y_root
-                            save_pos = (float(int(event.x))/ widget.allocation.width* self.progressbar.max)
-                            # preview window show.
-                            self.move_window_time(save_pos, pb_bit)
+                    if 1 == self.mp.state and self.play_video_file_bool(self.mp.path):
+                        self.preview.set_preview_path(self.mp.path)
+                        self.x_root = event.x_root
+                        self.y_root = event.y_root
+                        save_pos = (float(int(event.x))/ widget.allocation.width* self.progressbar.max)
+                        # preview window show.
+                        self.move_window_time(save_pos, pb_bit)
                 else:            
                     self.preview.quit_preview_player()
 
@@ -1842,22 +1840,21 @@ class PlayerBox(object):
     def get_time_pos(self, mplayer, pos):
         '''Get mplayer pos to pos of progressbar.'''
         # Test media player pos.
-        if not self.progressbar.drag_bool:
-            if not self.point_bool:
-                self.progressbar.set_pos(pos)
-                self.bottom_toolbar.progressbar.set_pos(pos)
-                self.show_time_label.time_font2 = self.set_time_string(
-                    self.mp.time_hour) + ":" + self.set_time_string(self.mp.time_min) + ":" + self.set_time_string(self.mp.time_sec) + " / "
-                self.bottom_toolbar.show_time.time_font2 = self.set_time_string(
-                    self.mp.time_hour) + ":" + self.set_time_string(self.mp.time_min) + ":" + self.set_time_string(self.mp.time_sec) + " / "
-                
-                self.show_time_label.set_time_font(self.show_time_label.time_font2,
-                                                   self.show_time_label.time_font1)
-                self.bottom_toolbar.show_time.set_time_font(self.show_time_label.time_font2,
-                                                   self.show_time_label.time_font1)
-                
-                self.bottom_toolbar.panel.queue_draw()
-                self.app.window.queue_draw()
+        if (not self.progressbar.drag_bool) and (not self.point_bool):
+            self.progressbar.set_pos(pos)
+            self.bottom_toolbar.progressbar.set_pos(pos)
+            self.show_time_label.time_font2 = self.set_time_string(
+                self.mp.time_hour) + ":" + self.set_time_string(self.mp.time_min) + ":" + self.set_time_string(self.mp.time_sec) + " / "
+            self.bottom_toolbar.show_time.time_font2 = self.set_time_string(
+                self.mp.time_hour) + ":" + self.set_time_string(self.mp.time_min) + ":" + self.set_time_string(self.mp.time_sec) + " / "
+            
+            self.show_time_label.set_time_font(self.show_time_label.time_font2,
+                                               self.show_time_label.time_font1)
+            self.bottom_toolbar.show_time.set_time_font(self.show_time_label.time_font2,
+                                               self.show_time_label.time_font1)
+            
+            self.bottom_toolbar.panel.queue_draw()
+            self.app.window.queue_draw()
 
     def get_pos_ste_seek(self, pos):
         self.mp.seek(int(pos))
@@ -1879,9 +1876,8 @@ class PlayerBox(object):
                 path_thread_id = threading.Thread(target=self.down_subtitle_threading_function,args=(play_name,save_subtitle_path,))
                 path_thread_id.setDaemon(True)
                 path_thread_id.start()        
-            else:    
-                if "True" == self.config.get("SubtitleSet", "ai_load_subtitle"):
-                    self.load_subtitle(save_down_file)                    
+            elif "True" == self.config.get("SubtitleSet", "ai_load_subtitle"):
+                self.load_subtitle(save_down_file)                    
         else:        
             print "Dir error!"
         return False
@@ -1894,9 +1890,8 @@ class PlayerBox(object):
             for file_name in temp_path_file_list:
                 if os.path.splitext(file_name)[0] == temp_path_file:
                     save_down_file = os.path.join(save_subtitle_path, file_name)                    
-            if save_down_file:
-                if "True" == self.config.get("SubtitleSet", "ai_load_subtitle"):                    
-                    self.load_subtitle(save_down_file)        
+            if save_down_file and "True" == self.config.get("SubtitleSet", "ai_load_subtitle"):                    
+                self.load_subtitle(save_down_file)        
         else:  # down lose. 
             pass
             
@@ -1919,9 +1914,8 @@ class PlayerBox(object):
                     if os.path.splitext(file_name)[0] == temp_path_file:
                         save_down_file = os.path.join(save_subtitle_path, file_name)                        
                 if "True" == self.config.get("SubtitleSet", "ai_load_subtitle"):
-                    if save_down_file:
-                        if os.path.exists(save_down_file):                        
-                            self.load_subtitle(save_down_file)
+                    if save_down_file and os.path.exists(save_down_file):                        
+                        self.load_subtitle(save_down_file)
 
         # Init last new play file menu.
         self.the_last_new_play_file_list = self.last_new_play_file_function.set_file_time(mplayer.path)
