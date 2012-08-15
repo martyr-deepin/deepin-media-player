@@ -69,7 +69,7 @@ class PreView(object):
         cr = widget.window.cairo_create()
         x, y, w, h = widget.get_allocation()
         
-        if 0 != self.video_width or 0 != self.video_height:
+        if self.video_width or self.video_height:
             video_ratio = float(self.video_width) / self.video_height
             bit = video_ratio - (float(w) / h)
             cr.set_source_rgb(0, 0, 0)
@@ -116,7 +116,6 @@ class PreView(object):
         cr.rectangle(x, y, w, h)
         cr.fill()  
         
-
         cr.select_font_face("Courier",
                             cairo.FONT_SLANT_NORMAL,
                             cairo.FONT_WEIGHT_BOLD)
