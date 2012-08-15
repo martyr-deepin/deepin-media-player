@@ -1664,10 +1664,9 @@ class PlayerBox(object):
         self.hide_preview_leave(widget, event)
 
         # pause /play. 123456 motion.
-        if self.pause_bool:            
-            if abs(self.pause_x - event.x) > 5 or abs(self.pause_y - event.y) > 5:
-                self.pause_bool = False
-                self.app.window.begin_move_drag(self.event_button,
+        if self.pause_bool and (abs(self.pause_x - event.x) > 5 or abs(self.pause_y - event.y) > 5):
+            self.pause_bool = False
+            self.app.window.begin_move_drag(self.event_button,
                                             int(self.event_x_root),
                                             int(self.event_y_root),
                                             self.event_time)
@@ -1696,7 +1695,6 @@ class PlayerBox(object):
     def set_keep_window_toolbar2(self, widget, event):
         pass
 
-
     # Mplayer event of player control.
     def set_point_bool_time(self):
         self.point_bool = False
@@ -1704,7 +1702,6 @@ class PlayerBox(object):
 
     def progressbar_set_point_bool(self, widget, event, progressbar):
         gtk.timeout_add(20, self.set_point_bool_time)
-
 
     def progressbar_player_point_pos_modify(self, widget, event, progressbar, pb_bit):
         '''Mouse left click rate of progress'''
@@ -1760,9 +1757,7 @@ class PlayerBox(object):
                 else:            
                     self.preview.quit_preview_player()
 
-
     def move_window_time(self, pos, pb_bit):
-
         if 1 == pb_bit:
             preview_y_padding = self.app.window.get_position()[1] + self.screen_frame.allocation.height + self.app.titlebar.allocation.height - self.preview.bg.get_allocation()[3]
         elif 2 == pb_bit:
@@ -1770,8 +1765,9 @@ class PlayerBox(object):
 
         self.preview.show_preview(pos)
         # previwe window show position.
-        self.preview.move_preview(self.x_root - self.preview.bg.get_allocation()[2]/2,
-                                  preview_y_padding)
+        self.preview.move_preview(
+            self.x_root - self.preview.bg.get_allocation()[2]/2,
+            preview_y_padding)
 
     def show_preview_enter(self, widget, event):
         if STOPING_PLAY == self.mp.state:
@@ -1789,7 +1785,6 @@ class PlayerBox(object):
 
     def get_time_length(self, mplayer, length):
         '''Get mplayer length to max of progressbar.'''
-        
         self.progressbar.max = length
         self.bottom_toolbar.progressbar.max = length # toolbar2 max value.
         Hour, Min, Sec = self.mp.time(length)
@@ -1853,8 +1848,6 @@ class PlayerBox(object):
                     save_down_file = os.path.join(save_subtitle_path, file_name)                    
             if save_down_file and "True" == self.config.get("SubtitleSet", "ai_load_subtitle"):                    
                 self.load_subtitle(save_down_file)        
-        else:  # down lose. 
-            pass
             
     def media_player_start(self, mplayer, play_bool):
         '''media player start play.'''        
