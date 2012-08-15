@@ -330,31 +330,25 @@ class  Mplayer(gobject.GObject):
         if not (self.state): # STOPING_STATE
             self.lenState = 1 
             # -input fil.. streme player.
-            if self.xid:
-                command = ['mplayer',
-                           '-vo',
-                           'gl,2,x11',
-                           '-zoom',
-                           '-nokeepaspect',
-                           '-osdlevel',
-                           '0',
-                           '-double',
-                           '-slave',
-                           '-quiet']
-                
-                # If path is url, must be add option `-nocache`,
-                # otherwise, mplayer cache process can't quit normally.
-                if format.get_html_bool(self.path):
-                    command += ['-nocache']
-                       
-                command.append('-wid')
-                command.append('%s' % (str(self.xid)))
-                command.append(path)
-            else:
-                command = ['mplayer',
+            command = ['mplayer',
+                       '-vo',
+                       'gl,2,x11',
+                       '-zoom',
+                       '-nokeepaspect',
+                       '-osdlevel',
+                       '0',
                        '-double',
                        '-slave',
-                       '-quiet', path]
+                       '-quiet']
+            
+            # If path is url, must be add option `-nocache`,
+            # otherwise, mplayer cache process can't quit normally.
+            if format.get_html_bool(self.path):
+                command += ['-nocache']
+                   
+            command.append('-wid')
+            command.append('%s' % (str(self.xid)))
+            command.append(path)
                 
             self.mp_id = subprocess.Popen(command, 
                                          stdin = subprocess.PIPE,
