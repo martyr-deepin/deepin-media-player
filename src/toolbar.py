@@ -38,7 +38,7 @@ import cairo
 class ToolBar(object):
     def __init__(self):
         self.opacity = 0.0
-        self.show = 0
+        self.show = False
         self.hbox = gtk.HBox()
         
         self.panel = Panel(APP_WIDTH - 350, PANEL_HEIGHT + 5, window_type=gtk.WINDOW_POPUP)        
@@ -120,12 +120,12 @@ class ToolBar(object):
         self.panel.set_opacity(self.default_opacity)
         
     def show_panel_toolbar(self, widget, event):    
-        self.show = 0
+        self.show = False
         if self.show_time_id:
             gtk.timeout_remove(self.show_time_id)
         
     def hide_panel_toolbar(self, widget, event):            
-        self.show = 1
+        self.show = True
         self.show_time_id = gtk.timeout_add(1000, self.hide_toolbar_time)
         
     def hide_toolbar_time(self):    
@@ -133,20 +133,17 @@ class ToolBar(object):
         return False
         
     def show_toolbar(self):   
-        if 0 == self.show:
+        if not self.show:
             self.panel.show_all()
             self.panel.set_opacity(0)
             gtk.timeout_add(50, self.show_time)
-            self.show = 1
+            self.show = True
             
     def hide_toolbar(self):    
-        if 1 == self.show:
+        if self.show:
             self.panel.set_opacity(0)
             self.panel.hide_all()
-            self.show = 0
-                       
-        
-
+            self.show = False
 
 if __name__ == "__main__":
     
