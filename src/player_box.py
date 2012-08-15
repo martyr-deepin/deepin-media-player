@@ -1553,7 +1553,6 @@ class PlayerBox(object):
 
         # Set toolbar state.
         self.set_toolbar_state()
-    
 
     def hide_window_widget(self, widget): #concise_button
         '''Hide widnow titlebar and play control panel.
@@ -1562,7 +1561,6 @@ class PlayerBox(object):
         Hide border of window.
         [concise mode:]
         '''
-        
         if self.show_or_hide_play_list_bool:
             self.play_list.hide_play_list()
 
@@ -1578,8 +1576,9 @@ class PlayerBox(object):
             self.mode_state_bool = True
             self.bottom_toolbar.panel.show_all()
             # Set toolbar2 panel position.
-            self.bottom_toolbar.panel.move(self.panel_x,
-                                     self.panel_y + (widget.allocation[3] - self.bottom_toolbar.panel.allocation[3]) - self.app.titlebar.allocation[3])
+            self.bottom_toolbar.panel.move(
+                self.panel_x,
+                self.panel_y + (widget.allocation[3] - self.bottom_toolbar.panel.allocation[3]) - self.app.titlebar.allocation[3])
 
             self.bottom_toolbar.panel.hide_all()
 
@@ -1601,34 +1600,28 @@ class PlayerBox(object):
 
         config_string = self.config.get("OtherKey", "mouse_left_single_clicked")
                 
-        if True:
-            if is_single_click(event):
-                if not self.pause_bool:
-                    if not self.open_button.leave_bool and not self.open_button_right.leave_bool and not self.screen_pop_menu.leave_bool:
-                        # pause / play. 123456 press.                        
-                        self.pause_bool = True # Save pause bool.
-                        self.pause_x = event.x # Save x postion.
-                        self.pause_y = event.y # Save y postion.
-                else:
-                    if not (_("Disabled") == config_string):
-                        if self.pause_time_id:
-                            gtk.timeout_remove(self.pause_time_id)
-                            self.pause_bool = False
+        if is_single_click(event):
+            if not self.pause_bool:
+                if not self.open_button.leave_bool and not self.open_button_right.leave_bool and not self.screen_pop_menu.leave_bool:
+                    # pause / play. 123456 press.                        
+                    self.pause_bool = True # Save pause bool.
+                    self.pause_x = event.x # Save x postion.
+                    self.pause_y = event.y # Save y postion.
+            else:
+                if (not (_("Disabled") == config_string)) and self.pause_time_id:
+                    gtk.timeout_remove(self.pause_time_id)
+                    self.pause_bool = False
 
         # Double clicked full.
         config_string = self.config.get("OtherKey", "mouse_left_double_clicked")
         other_key_bool = self.config.get("OtherKey", "other_key_bool")
                 
-        if _("Disabled") == config_string or other_key_bool.lower() == "false":
-            pass
-        else:
-            if is_double_click(event):
-                if not self.open_button.leave_bool and not self.open_button_right.leave_bool and not self.screen_pop_menu.leave_bool:
-                    self.full_play_window(widget)
-                    self.toolbar.toolbar_full_button.flags = not self.toolbar.toolbar_full_button.flags
-                    if self.pause_time_id:
-                        gtk.timeout_remove(self.pause_time_id)
-                        self.pause_bool = False
+        if (not _("Disabled") == config_string) and (not other_key_bool.lower() == "false") and is_double_click(event) and (not self.open_button.leave_bool) and (not self.open_button_right.leave_bool) and (not self.screen_pop_menu.leave_bool):
+            self.full_play_window(widget)
+            self.toolbar.toolbar_full_button.flags = not self.toolbar.toolbar_full_button.flags
+            if self.pause_time_id:
+                gtk.timeout_remove(self.pause_time_id)
+                self.pause_bool = False
                     
     # Toolbar hide and show.
     def show_and_hide_toolbar(self, widget, event): # screen:motion_notify_event
