@@ -858,10 +858,9 @@ class  Mplayer(gobject.GObject):
                 self.add_play_file(i.strip("\n"))
        
     def save_playlist(self, list_file_name):
-        f = open(list_file_name, 'w')
-        for file in self.play_list:
-            f.write(file + "\n")
-        f.close()
+        with open(list_file_name, 'w') as f:
+            for file in self.play_list:
+                f.write(file + '\n')
                 
     def clear_playlist(self):
         # clear play list.

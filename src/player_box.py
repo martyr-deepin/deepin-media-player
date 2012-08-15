@@ -2666,9 +2666,8 @@ class PlayerBox(object):
         fp_str = open(sub_file, "r").read()
         code_to_utf_8_str = auto_decode(fp_str)
 
-        fp_open = open(sub_file, "w")
-        fp_open.write(code_to_utf_8_str)
-        fp_open.close()
+        with open(sub_file, 'w') as fp_open:
+            fp_open.write(code_to_utf_8_str)
         
         self.mp.subload(sub_file)
 
