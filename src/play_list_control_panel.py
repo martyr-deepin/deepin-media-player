@@ -23,6 +23,8 @@
 from dtk.ui.utils import propagate_expose
 from dtk.ui.button import ImageButton
 from skin import app_theme
+from tooltip import tooltip_text
+from locales import _
 import gtk
 
 class PlayListControlPanel(gtk.Alignment):
@@ -60,6 +62,10 @@ class PlayListControlPanel(gtk.Alignment):
         
         # Handle signals.
         self.connect("expose-event", self.draw_background)
+        
+        # Handle tooltip.
+        tooltip_text(self.add_button, _("Add File"))
+        tooltip_text(self.delete_button, _("Remove Selected"))
         
     def draw_background(self, widget, event):
         cr = widget.window.cairo_create()

@@ -435,6 +435,8 @@ class PlayerBox(object):
                                          self.open_current_file_dir_path)
         self.play_list.list_view.connect("motion-notify-item", 
                                          self.open_current_file_dir_path)
+        self.play_list.play_list_control_panel.add_button.connect("clicked", lambda w: self.add_file())
+        self.play_list.play_list_control_panel.delete_button.connect("clicked", lambda w: self.del_index())
         
     def init_show_time_label(self):    
         # padding=0, xalign=1, yalign=0.0, xscale=0.0, yscale=0.0
