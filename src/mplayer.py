@@ -39,7 +39,7 @@ import re
 import fcntl
 import gobject
 import subprocess
-from gio_format import format 
+from type_check import is_valid_video_file, is_valid_url_file, is_file_can_play 
 from ini import Config
 
 # play list state.
@@ -85,7 +85,7 @@ def get_length(file_path):
 
 def get_vide_width_height(file_path):
     try:
-        if get_vide_flags(file_path):
+        if is_valid_video_file(file_path):
             cmd = "mplayer -vo null -ao null -frames 0 -identify '%s' 2>&1" % (file_path)
             fp = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)    
             cmd_str = fp.communicate()[0]
@@ -236,10 +236,6 @@ def init_mplayer_config():
         # save ini config.
         config.save()
         
-def get_vide_flags(path):
-    return format.is_valid_video_file(path)
-            
-        
 class  Mplayer(gobject.GObject):
     '''deepin media player control layer'''
     __gsignals__ = {
@@ -330,7 +326,7 @@ class  Mplayer(gobject.GObject):
             
             # If path is url, must be add option `-nocache`,
             # otherwise, mplayer cache process can't quit normally.
-            if format.is_valid_url_file(self.path):
+            if is_valid_url_file(self.path):
                 command += ['-nocache']
                    
             command.append('-wid')
@@ -359,7 +355,7 @@ class  Mplayer(gobject.GObject):
             # IO_HUP[Monitor the pipeline is disconnected].
             self.eof_id = gobject.io_add_watch(self.mplayer_out, gobject.IO_HUP, self.mplayer_eof)
             self.state = STARTING_STATE
-            self.vide_bool = get_vide_flags(self.path)
+            self.vide_bool = is_valid_video_file(self.path)
             # Set volume.
             if self.volumebool:
                 self.nomute()
@@ -813,7 +809,7 @@ class  Mplayer(gobject.GObject):
         return pathfile2.lower().endswith(".dmp")
         
     def find_file(self, pathfile2):
-        return format.is_file_can_play(pathfile2)
+        return is_file_can_play(pathfile2)
     
     def del_playlist(self, path): 
         '''Del a File'''

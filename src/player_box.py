@@ -36,7 +36,7 @@ from dtk.ui.volume_button import VolumeButton
 from locales import _
 from constant import APP_WIDTH, APP_HEIGHT, STARTING_PLAY, STOPING_PLAY
 from ini import Config
-from gio_format import format
+from type_check import is_valid_url_file, is_valid_video_file
 from utils import allocation,path_threads
 from show_time import ShowTime
 from progressbar import ProgressBar
@@ -49,7 +49,6 @@ from drag import drag_connect
 from preview import PreView
 from ini_gui import IniGui
 from ini_gui import VIDEO_ADAPT_WINDOW_STATE, WINDOW_ADAPT_VIDEO_STATE, UP_CLOSE_VIDEO_STATE, AI_FULL_VIDEO_STATE
-from gio_format import Format
 from mplayer import Mplayer, get_length, get_home_path, length_to_time, get_vide_width_height
 from mplayer import SINGLE_PLAYING_STATE, ORDER_PLAYING_STATE, RANDOM_PLAYER_STATE, SINGLE_CYCLE_PLAYER, LIST_RECYCLE_PLAY
 from playlist import PlayList, MediaItem
@@ -1106,8 +1105,6 @@ class PlayerBox(object):
         # Init last new play file.
         self.the_last_new_play_file_list = self.last_new_play_file_function.set_file_time(self.mp.path)
         
-        gio_format = Format()
-        
         # argv path list.
         for file_path in self.argv_path_list:
             if self.mp.find_dmp(file_path): # .dmp add play file.
@@ -1116,7 +1113,7 @@ class PlayerBox(object):
                 self.mp.add_play_file(file_path)
             elif os.path.isdir(file_path): # add dir.
                 path_threads(file_path, self.mp)
-            elif gio_format.is_valid_url_file(file_path):
+            elif is_valid_url_file(file_path):
                 break
                 
             if len(self.argv_path_list) > 0: # Set play bool.
@@ -1747,7 +1744,7 @@ class PlayerBox(object):
             config_bool = self.config.get("FilePlay", "mouse_progressbar_show_preview")
             if config_bool:
                 if "true" == config_bool.lower():
-                    if STARTING_PLAY == self.mp.state and self.play_video_file_bool(self.mp.path):
+                    if STARTING_PLAY == self.mp.state and is_valid_video_file(self.mp.path):
                         self.preview.set_preview_path(self.mp.path)
                         self.x_root = event.x_root
                         self.y_root = event.y_root
@@ -1858,7 +1855,7 @@ class PlayerBox(object):
                 save_subtitle_path = get_home_path() + save_subtitle_path[1:]
         if save_subtitle_path:
             if self.down_sub_title_bool:            
-                if format.is_valid_video_file(mplayer.path):                
+                if is_valid_video_file(mplayer.path):                
                     gtk.timeout_add(500, self.down_subtitle_threading, mplayer.path, save_subtitle_path)
             else:                        
                 temp_path_file = os.path.splitext(os.path.split(mplayer.path)[1])[0]
@@ -1880,7 +1877,7 @@ class PlayerBox(object):
         
         if video_open_type:
             if VIDEO_ADAPT_WINDOW_STATE == video_open_type: 
-                if format.is_valid_video_file(mplayer.path):
+                if is_valid_video_file(mplayer.path):
                     screen_frame_height = self.screen_frame.allocation.height
                     modify_window_width = float(self.video_width)/self.video_height * screen_frame_height
                     video_padding_height = 0
@@ -2024,9 +2021,6 @@ class PlayerBox(object):
     '''Set toolbar on window show positon.'''
     def set_toolbar_show_opsition(self):
         x, y = self.app.window.get_position()
-
-    def play_video_file_bool(self, vide_path):
-        return format.is_valid_video_file(vide_path)
 
     def get_player_file_name(self, pathfile2):
         if pathfile2[0:4].lower() == "http":
