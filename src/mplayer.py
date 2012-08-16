@@ -165,51 +165,51 @@ def init_mplayer_config():
         #[FilePlay]
         for argv, value in ([
                 ("video_file_open",                          2),
-                ("open_new_file_clear_play_list",       "True"),
+                ("open_new_file_clear_play_list", "True"),
                 ("memory_up_close_player_file_postion", "True"),
-                ("find_play_file_relation_file",        "False"),
-                ("mouse_progressbar_show_preview",      "False")
+                ("find_play_file_relation_file", "False"),
+                ("mouse_progressbar_show_preview", "False")
                 ]):
             config.set("FilePlay", argv, value)
             
         #[SystemSet]
         for argv, value in ([
                 ("minimize_pause_play", "False"),
-                ("font",                "文泉驿微米黑"),
-                ("font_size",           "16")
+                ("font", "文泉驿微米黑"),
+                ("font_size", "16")
                 ]):
             config.set("SystemSet", argv, value)
             
         #[PlayControl]
         for argv, value in ([
                 ("play_control_bool", "True"),
-                ("open_file_key",     "Ctrl + o"),
+                ("open_file_key", "Ctrl + o"),
                 ("open_file_dir_key", "Ctrl + f"),
                 ("play_or_pause_key", "Space"),
-                ("seek_key",          "Right"),
-                ("back_key",          "Left"),
-                ("full_key",          "Return"),
-                ("pre_a_key",         "Page_Up"),
-                ("next_a_key",        "Page_Down"),
-                ("add_volume_key",    "Up"),
-                ("sub_volume_key",    "Down"),
-                ("mute_key",          "m"),
-                ("concise_key",       "Shift + Return")
+                ("seek_key", "Right"),
+                ("back_key", "Left"),
+                ("full_key", "Return"),
+                ("pre_a_key", "Page_Up"),
+                ("next_a_key", "Page_Down"),
+                ("add_volume_key", "Up"),
+                ("sub_volume_key", "Down"),
+                ("mute_key", "m"),
+                ("concise_key", "Shift + Return")
                 ]):
             config.set("PlayControl", argv, value)
             
         #[OtherKey]
         for argv, value in ([
-                ("other_key_bool",         "True"),
-                ("add_brightness_key",     "="),
-                ("sub_brightness_key",     "-"),
-                ("inverse_rotation_key",   "w"),
-                ("clockwise_key",          "e"),
-                ("sort_image_key",         "Alt + a"),
+                ("other_key_bool", "True"),
+                ("add_brightness_key", "="),
+                ("sub_brightness_key", "-"),
+                ("inverse_rotation_key", "w"),
+                ("clockwise_key", "e"),
+                ("sort_image_key", "Alt + a"),
                 ("switch_audio_track_key", _("Disabled")),
-                ("load_subtitle_key",      "Alt + o"),
-                ("subtitle_delay_key",     "]"),
-                ("subtitle_advance_key",   "["),
+                ("load_subtitle_key", "Alt + o"),
+                ("subtitle_delay_key", "]"),
+                ("subtitle_advance_key", "["),
                 ("mouse_left_single_clicked", _("Pause/Play")),
                 ("mouse_left_double_clicked", _("Full Screen")),
                 ("mouse_wheel_event", _("Volumn")),

@@ -636,7 +636,7 @@ class PlayerBox(object):
         
         # open file key init.(left)        
         play_control_bool = self.config.get("PlayControl", "play_control_bool")
-        other_key_bool = self.config.get("OtherKey",    "other_key_bool")
+        other_key_bool = self.config.get("OtherKey", "other_key_bool")
         
         # [PlayControl] Init.
         if play_control_bool == "True":    
@@ -1132,7 +1132,7 @@ class PlayerBox(object):
                 self.play_list_button.button.set_active(False)
         
     def init_volume_value(self):            
-        volume_value = self.config.get("Window",     "volume")
+        volume_value = self.config.get("Window", "volume")
         volume_mute_bool = self.config.get("Window", "mute")
         MUTE_STATE = "-1"
 
