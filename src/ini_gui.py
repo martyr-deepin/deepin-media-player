@@ -644,12 +644,9 @@ class PlayControl(gtk.VBox):
         
         play_control_bool = self.ini.get("PlayControl", "play_control_bool")
 
-        if play_control_bool:
-            if play_control_bool.lower() == "true":
-                pass
-            else:    
-                self.play_control_bool_checkbtn.set_active(False)
-                self.set_play_control_false()                
+        if play_control_bool and not (play_control_bool == "True"):
+            self.play_control_bool_checkbtn.set_active(False)
+            self.set_play_control_false()                
 
         play_control_x = 20
         play_control_y = 40

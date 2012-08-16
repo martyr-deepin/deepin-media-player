@@ -583,7 +583,7 @@ class PlayerBox(object):
     def app_scroll_event(self, widget, event, type_bool):
         config_type = self.config.get("OtherKey", "mouse_wheel_event")
         other_key_bool = self.config.get("OtherKey", "other_key_bool")
-        if not (_("Disabled") == config_type or other_key_bool.lower() == "false"): # seek back.
+        if not (_("Disabled") == config_type or other_key_bool == "False"): # seek back.
             volume_value = 0
             volume_step = 5
             if event.direction == gtk.gdk.SCROLL_UP:
@@ -640,7 +640,7 @@ class PlayerBox(object):
         other_key_bool = self.config.get("OtherKey",    "other_key_bool")
         
         # [PlayControl] Init.
-        if play_control_bool.lower() == "true":    
+        if play_control_bool == "True":    
             for section, argv, connect_fun in [
                 ("PlayControl", "open_file_key", lambda : self.show_open_dialog_window(False)),
                 ("PlayControl", "open_file_dir_key", lambda : self.show_open_dir_dialog_window(False)),
@@ -661,7 +661,7 @@ class PlayerBox(object):
             self.keymap["Escape"] = self.key_quit_full        
               
         # [OtherKey].
-        if other_key_bool.lower() == "true":  
+        if other_key_bool == "True":  
             for section, argv, connect_fun in [
                 ("OtherKey", "add_brightness_key", self.key_add_brightness),
                 ("OtherKey", "sub_brightness_key", self.key_sub_brightness),
@@ -717,7 +717,7 @@ class PlayerBox(object):
                 save_path = get_home_path() + save_path[1:]                    
                     
             if save_file_bool == "True":
-                if scrot_bool.lower() == "true":
+                if scrot_bool == "True":
                     self.scrot_current_screen_pixbuf(save_path + "/%s-%s"%(self.get_player_file_name(self.mp.path), self.mp.pos_num), save_type)
                     self.messagebox(_("Screenshot Saved"))
                 else:    
@@ -726,7 +726,7 @@ class PlayerBox(object):
                     
             if save_clipboard_bool == "True": # save clipboard
                 clipboard_path = "/tmp" + "/%s-%s"%(self.get_player_file_name(self.mp.path), self.mp.pos_num) + save_type
-                if scrot_bool.lower() == "true":
+                if scrot_bool == "True":
                     clipboard_path = "/tmp" + "/%s-%s"%(self.get_player_file_name(self.mp.path), self.mp.pos_num)
                     self.scrot_current_screen_pixbuf(clipboard_path, save_type)
                     clipboard_path += save_type
@@ -1127,7 +1127,7 @@ class PlayerBox(object):
         
         self.play_list.hide_play_list() # Hide play list.
         if play_list_bool:
-            if play_list_bool.lower() == "true":
+            if play_list_bool == "True":
                 self.play_list.show_play_list()
                 self.play_list_button.button.set_active(True)
             else:
@@ -1616,7 +1616,7 @@ class PlayerBox(object):
         config_string = self.config.get("OtherKey", "mouse_left_double_clicked")
         other_key_bool = self.config.get("OtherKey", "other_key_bool")
                 
-        if (not _("Disabled") == config_string) and (not other_key_bool.lower() == "false") and is_double_click(event) and (not self.open_button.leave_bool) and (not self.open_button_right.leave_bool) and (not self.screen_pop_menu.leave_bool):
+        if (not _("Disabled") == config_string) and (not other_key_bool == "False") and is_double_click(event) and (not self.open_button.leave_bool) and (not self.open_button_right.leave_bool) and (not self.screen_pop_menu.leave_bool):
             self.full_play_window(widget)
             self.toolbar.toolbar_full_button.flags = not self.toolbar.toolbar_full_button.flags
             if self.pause_time_id:
@@ -1675,7 +1675,7 @@ class PlayerBox(object):
         # pause / play 123456 release.
         other_key_bool = self.config.get("OtherKey", "other_key_bool")
         
-        if other_key_bool.lower() == "true" and  self.pause_bool and STARTING_PLAY == self.mp.state:
+        if other_key_bool == "True" and  self.pause_bool and STARTING_PLAY == self.mp.state:
             self.pause_time_id = gtk.timeout_add(250, self.virtual_set_start_button_clicked)
             self.pause_bool = False
 
