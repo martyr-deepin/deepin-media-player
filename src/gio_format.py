@@ -20,36 +20,35 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from formencode.validators import URL
-
 import gio
 
+VIDEO_FORMAT = ["video", "application/vnd.rn-realmedia"]
+AUDIO_FORMAT = ["audio"]        
+HTML_FORMAT = ["http", "https", "mms", "ftp"]
+
 class Format(object):
-    def __init__(self):
-        self.video_foramt = ["video", 
-                             "application/vnd.rn-realmedia"]
-        self.audio_format = ["audio"]        
-        
-        self.html_format = ["http", "https", "mms", "ftp"]
-        
+    
     def get_video_bool(self, file_path):
         file_format = self.format_function(file_path)
-        return (file_format in self.video_foramt) or (file_format.split("/")[0] in self.video_foramt)
+        return (file_format in VIDEO_FORMAT) or (file_format.split("/")[0] in VIDEO_FORMAT)
         
     def get_audio_bool(self, file_path):
         file_format = self.format_function(file_path)
-        return (file_format.split("/")[0] in self.audio_format)
+        return (file_format.split("/")[0] in AUDIO_FORMAT)
         
     def get_html_bool(self, file_path):    
-        return file_path[0:4] in self.html_format or file_path[0:3] in self.html_format
+        return file_path[0:4] in HTML_FORMAT or file_path[0:3] in HTML_FORMAT
     
     def is_valid_url(self, url):
         '''Is valid url.'''
         try:
             url_checker = URL()
             url_checker.to_python(url)
+            
             return True
         except Exception, e:
-            print "gio_format@@@", e
+            print "gio_format error: %s" % (e)
+            
             return False
         
     def get_play_bool(self, file_path):    
@@ -58,7 +57,7 @@ class Format(object):
         else:    
             file_format = self.format_function(file_path)
             if file_format:
-                return (file_format.split("/")[0] in self.audio_format) or (file_format in self.video_foramt) or (file_format.split("/")[0] in self.video_foramt)
+                return (file_format.split("/")[0] in AUDIO_FORMAT) or (file_format in VIDEO_FORMAT) or (file_format.split("/")[0] in VIDEO_FORMAT)
             
     def format_function(self, file_path):
         try:
