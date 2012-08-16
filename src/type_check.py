@@ -44,6 +44,8 @@ def is_file_can_play(file_path):
         file_type = get_file_type(file_path)
         if file_type:
             return (file_type.split("/")[0] in AUDIO_TYPES) or (file_type in VIDEO_TYPES) or (file_type.split("/")[0] in VIDEO_TYPES)
+        else:
+            return False
         
 def get_file_type(file_path):
     try:
