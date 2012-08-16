@@ -2478,6 +2478,7 @@ class PlayerBox(object):
                 temp_dict[item.title] = item.length
 
             temp_list = sort.type_sort(temp_list)
+            
             # clear play list.
             self.play_list.list_view.clear()
             self.mp.playList = []

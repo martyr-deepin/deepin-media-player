@@ -171,7 +171,7 @@ if __name__ == "__main__":
                       "/home/long/13.rmvb",
                       ]
     print "=========Test: Name sort.========="
-    sort.name_sort(test_en_list)
+    print sort.name_sort(test_en_list)
     print sort.mid_tree(sort.en_tree)    
     print "=========Test: Type sort.========="    
     print sort.type_sort(test_type_list)
