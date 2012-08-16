@@ -28,15 +28,15 @@ HTML_TYPES = ["http", "https", "mms", "ftp"]
 
 class Format(object):
     
-    def get_video_bool(self, file_path):
+    def is_valid_video_file(self, file_path):
         file_type = self.get_file_type(file_path)
         return (file_type in VIDEO_TYPES) or (file_type.split("/")[0] in VIDEO_TYPES)
         
-    def get_audio_bool(self, file_path):
+    def is_valid_audio_file(self, file_path):
         file_type = self.get_file_type(file_path)
         return (file_type.split("/")[0] in AUDIO_TYPES)
         
-    def get_html_bool(self, file_path):    
+    def is_valid_url_file(self, file_path):    
         return file_path[0:4] in HTML_TYPES or file_path[0:3] in HTML_TYPES
     
     def is_valid_url(self, url):
@@ -51,8 +51,8 @@ class Format(object):
             
             return False
         
-    def get_play_bool(self, file_path):    
-        if self.get_html_bool(file_path):
+    def is_file_can_play(self, file_path):    
+        if self.is_valid_url_file(file_path):
             return self.is_valid_url(file_path)
         else:    
             file_type = self.get_file_type(file_path)

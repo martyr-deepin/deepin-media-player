@@ -1116,7 +1116,7 @@ class PlayerBox(object):
                 self.mp.add_play_file(file_path)
             elif os.path.isdir(file_path): # add dir.
                 path_threads(file_path, self.mp)
-            elif gio_format.get_html_bool(file_path):
+            elif gio_format.is_valid_url_file(file_path):
                 break
                 
             if len(self.argv_path_list) > 0: # Set play bool.
@@ -1858,7 +1858,7 @@ class PlayerBox(object):
                 save_subtitle_path = get_home_path() + save_subtitle_path[1:]
         if save_subtitle_path:
             if self.down_sub_title_bool:            
-                if format.get_video_bool(mplayer.path):                
+                if format.is_valid_video_file(mplayer.path):                
                     gtk.timeout_add(500, self.down_subtitle_threading, mplayer.path, save_subtitle_path)
             else:                        
                 temp_path_file = os.path.splitext(os.path.split(mplayer.path)[1])[0]
@@ -1880,7 +1880,7 @@ class PlayerBox(object):
         
         if video_open_type:
             if VIDEO_ADAPT_WINDOW_STATE == video_open_type: 
-                if format.get_video_bool(mplayer.path):
+                if format.is_valid_video_file(mplayer.path):
                     screen_frame_height = self.screen_frame.allocation.height
                     modify_window_width = float(self.video_width)/self.video_height * screen_frame_height
                     video_padding_height = 0
@@ -2026,7 +2026,7 @@ class PlayerBox(object):
         x, y = self.app.window.get_position()
 
     def play_video_file_bool(self, vide_path):
-        return format.get_video_bool(vide_path)
+        return format.is_valid_video_file(vide_path)
 
     def get_player_file_name(self, pathfile2):
         if pathfile2[0:4].lower() == "http":

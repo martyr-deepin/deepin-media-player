@@ -237,7 +237,7 @@ def init_mplayer_config():
         config.save()
         
 def get_vide_flags(path):
-    return format.get_video_bool(path)
+    return format.is_valid_video_file(path)
             
         
 class  Mplayer(gobject.GObject):
@@ -330,7 +330,7 @@ class  Mplayer(gobject.GObject):
             
             # If path is url, must be add option `-nocache`,
             # otherwise, mplayer cache process can't quit normally.
-            if format.get_html_bool(self.path):
+            if format.is_valid_url_file(self.path):
                 command += ['-nocache']
                    
             command.append('-wid')
@@ -813,7 +813,7 @@ class  Mplayer(gobject.GObject):
         return pathfile2.lower().endswith(".dmp")
         
     def find_file(self, pathfile2):
-        return format.get_play_bool(pathfile2)
+        return format.is_file_can_play(pathfile2)
     
     def del_playlist(self, path): 
         '''Del a File'''
