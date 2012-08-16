@@ -19,12 +19,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from formencode.validators import URL
+import urlparse
 import gio
 
 VIDEO_TYPES = ["video", "application/vnd.rn-realmedia"]
 AUDIO_TYPES = ["audio"]        
-HTML_TYPES = ["http", "https", "mms", "ftp"]
+HTML_TYPES = ["http", "https", "mms", "ftp", "sftp", "shttp"]
 
 class Format(object):
     
@@ -36,24 +36,12 @@ class Format(object):
         file_type = self.get_file_type(file_path)
         return (file_type.split("/")[0] in AUDIO_TYPES)
         
-    def is_valid_url_file(self, file_path):    
-        return file_path[0:4] in HTML_TYPES or file_path[0:3] in HTML_TYPES
+    def is_valid_url_file(self, url):    
+        return urlparse.urlparse(url).scheme in HTML_TYPES
     
-    def is_valid_url(self, url):
-        '''Is valid url.'''
-        try:
-            url_checker = URL()
-            url_checker.to_python(url)
-            
-            return True
-        except Exception, e:
-            print "gio_format error: %s" % (e)
-            
-            return False
-        
     def is_file_can_play(self, file_path):    
         if self.is_valid_url_file(file_path):
-            return self.is_valid_url(file_path)
+            return True
         else:    
             file_type = self.get_file_type(file_path)
             if file_type:
