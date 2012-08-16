@@ -1114,7 +1114,7 @@ class PlayerBox(object):
             elif os.path.isdir(file_path): # add dir.
                 path_threads(file_path, self.mp)
             elif is_valid_url_file(file_path):
-                break
+                self.mp.add_play_file(file_path)
                 
         if len(self.argv_path_list) > 0: # Set play bool.
             self.clear_play_list_bool = True
