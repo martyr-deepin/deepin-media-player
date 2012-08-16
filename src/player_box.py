@@ -36,7 +36,7 @@ from dtk.ui.volume_button import VolumeButton
 from locales import _
 from constant import APP_WIDTH, APP_HEIGHT, STARTING_PLAY, STOPING_PLAY
 from ini import Config
-from type_check import is_valid_url_file, is_valid_video_file
+from type_check import is_valid_url_file, is_valid_video_file, is_file_can_play, is_valid_dmp_file
 from utils import allocation,path_threads
 from show_time import ShowTime
 from progressbar import ProgressBar
@@ -1048,12 +1048,12 @@ class PlayerBox(object):
             path_threads(path_string, self.mp)
 
         # Add .dmp.
-        if self.mp.find_dmp(path_string):
+        if is_valid_dmp_file(path_string):
             self.mp.load_playlist(path_string)
 
         # Add play file.
         if os.path.isfile(path_string):
-            if self.mp.find_file(path_string):                
+            if is_file_can_play(path_string):                
                 self.mp.add_play_file(path_string)
             else:    
                 self.messagebox(_("Failed to Open Selected File"))
@@ -1105,16 +1105,21 @@ class PlayerBox(object):
         # Init last new play file.
         self.the_last_new_play_file_list = self.last_new_play_file_function.set_file_time(self.mp.path)
         
-        # argv path list.
+        # Parse input arguments.
         for file_path in self.argv_path_list:
-            if self.mp.find_dmp(file_path): # .dmp add play file.
-                self.mp.load_playlist(file_path)
-            elif os.path.isfile(file_path): # add play file.
+            # Is url?
+            if is_valid_url_file(file_path):
                 self.mp.add_play_file(file_path)
-            elif os.path.isdir(file_path): # add dir.
+            # Is directory?
+            elif os.path.isdir(file_path):
                 path_threads(file_path, self.mp)
-            elif is_valid_url_file(file_path):
-                self.mp.add_play_file(file_path)
+            elif os.path.isfile(file_path):
+                # Is .dmp file?
+                if is_valid_dmp_file(file_path):
+                    self.mp.load_playlist(file_path)
+                # Is normal file?
+                else:
+                    self.mp.add_play_file(file_path)
                 
         if len(self.argv_path_list) > 0: # Set play bool.
             self.clear_play_list_bool = True

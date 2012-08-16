@@ -24,6 +24,7 @@ import gtk
 import os
 import urllib
 from utils import path_threads
+from type_check import is_valid_dmp_file
 
 pygtk.require('2.0')
 
@@ -48,7 +49,7 @@ def drag_data_received(wid, context, x, y, data, info, time, mp, play_list, widg
             path_threads(path, mp)
 
         # Add .Dmp.    
-        elif mp.find_dmp(path):
+        elif is_valid_dmp_file(path):
             mp.load_playlist(path)
             
         # Add play file.    

@@ -805,19 +805,13 @@ class  Mplayer(gobject.GObject):
             if os.path.isfile(pathfile2):
                 self.add_play_file(pathfile2)
                     
-    def find_dmp(self, pathfile2):                                
-        return pathfile2.lower().endswith(".dmp")
-        
-    def find_file(self, pathfile2):
-        return is_file_can_play(pathfile2)
-    
     def del_playlist(self, path): 
         '''Del a File'''
         self.play_list.remove(path)            
         self.play_list_sum -= 1        
                 
     def add_play_file(self, path):    
-        if self.find_file(path): # play file.
+        if is_file_can_play(path): # play file.
             if self.get_player_file_name(path) in map(self.get_player_file_name, self.play_list):
                 self.emit("same-name-event", path)
             else:

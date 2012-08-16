@@ -37,6 +37,9 @@ def is_valid_audio_file(file_path):
 def is_valid_url_file(url):    
     return urlparse.urlparse(url).scheme in HTML_TYPES
 
+def is_valid_dmp_file(file_path):                                
+    return file_path.lower().endswith(".dmp")
+        
 def is_file_can_play(file_path):    
     if is_valid_url_file(file_path):
         return True

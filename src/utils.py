@@ -22,6 +22,7 @@
 
 import threading
 import os
+from type_check import is_file_can_play, is_valid_dmp_file
 
 def allocation(widget):
     cr = widget.window.cairo_create()
@@ -47,11 +48,11 @@ def path_threads(path, mp):
             if os.path.isfile(new_path):    
                 new_file = new_path                
                 # .dmp add play file..
-                if(mp.find_dmp(new_file)):
+                if is_valid_dmp_file(new_file):
                     mp.load_playlist(new_file)
                     
                 # play file[.rmvb, .avi...].    
-                if(mp.find_file(new_file)):
+                if(is_file_can_play(new_file)):
                     old_file = new_file
                     file1, file2 = os.path.splitext(new_file)
                     new_file = file1 + file2.lower()                    
