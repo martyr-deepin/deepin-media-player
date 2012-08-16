@@ -43,7 +43,6 @@ def path_threads(path, mp):
                 path_thread_id = threading.Thread(target=path_threads, args=(new_path, mp))
                 path_thread_id.setDaemon(True)
                 path_thread_id.start()
-                 #path_threads(new_path, mp)
                 
             if os.path.isfile(new_path):    
                 new_file = new_path                

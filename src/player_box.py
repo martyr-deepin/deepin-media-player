@@ -1116,8 +1116,8 @@ class PlayerBox(object):
             elif is_valid_url_file(file_path):
                 break
                 
-            if len(self.argv_path_list) > 0: # Set play bool.
-                self.clear_play_list_bool = True
+        if len(self.argv_path_list) > 0: # Set play bool.
+            self.clear_play_list_bool = True
    
     def init_play_list_state(self):            
         play_list_bool = self.config.get("Window", "playlist")
