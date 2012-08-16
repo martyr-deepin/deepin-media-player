@@ -22,22 +22,22 @@
 from formencode.validators import URL
 import gio
 
-VIDEO_FORMAT = ["video", "application/vnd.rn-realmedia"]
-AUDIO_FORMAT = ["audio"]        
-HTML_FORMAT = ["http", "https", "mms", "ftp"]
+VIDEO_TYPES = ["video", "application/vnd.rn-realmedia"]
+AUDIO_TYPES = ["audio"]        
+HTML_TYPES = ["http", "https", "mms", "ftp"]
 
 class Format(object):
     
     def get_video_bool(self, file_path):
-        file_format = self.format_function(file_path)
-        return (file_format in VIDEO_FORMAT) or (file_format.split("/")[0] in VIDEO_FORMAT)
+        file_type = self.get_file_type(file_path)
+        return (file_type in VIDEO_TYPES) or (file_type.split("/")[0] in VIDEO_TYPES)
         
     def get_audio_bool(self, file_path):
-        file_format = self.format_function(file_path)
-        return (file_format.split("/")[0] in AUDIO_FORMAT)
+        file_type = self.get_file_type(file_path)
+        return (file_type.split("/")[0] in AUDIO_TYPES)
         
     def get_html_bool(self, file_path):    
-        return file_path[0:4] in HTML_FORMAT or file_path[0:3] in HTML_FORMAT
+        return file_path[0:4] in HTML_TYPES or file_path[0:3] in HTML_TYPES
     
     def is_valid_url(self, url):
         '''Is valid url.'''
@@ -55,11 +55,11 @@ class Format(object):
         if self.get_html_bool(file_path):
             return self.is_valid_url(file_path)
         else:    
-            file_format = self.format_function(file_path)
-            if file_format:
-                return (file_format.split("/")[0] in AUDIO_FORMAT) or (file_format in VIDEO_FORMAT) or (file_format.split("/")[0] in VIDEO_FORMAT)
+            file_type = self.get_file_type(file_path)
+            if file_type:
+                return (file_type.split("/")[0] in AUDIO_TYPES) or (file_type in VIDEO_TYPES) or (file_type.split("/")[0] in VIDEO_TYPES)
             
-    def format_function(self, file_path):
+    def get_file_type(self, file_path):
         try:
             gio_file = gio.File(file_path)
             file_atrr = ",".join([gio.FILE_ATTRIBUTE_STANDARD_CONTENT_TYPE,
@@ -71,12 +71,11 @@ class Format(object):
                                   gio.FILE_ATTRIBUTE_STANDARD_ICON,
                                   ])
             gio_file_info = gio_file.query_info(file_atrr)
-            file_format = gio_file_info.get_attribute_as_string(gio.FILE_ATTRIBUTE_STANDARD_CONTENT_TYPE)
-            return file_format
+            file_type = gio_file_info.get_attribute_as_string(gio.FILE_ATTRIBUTE_STANDARD_CONTENT_TYPE)
+            return file_type
         except Exception, e:
             print e
             return None
-
     
 format = Format()
 
