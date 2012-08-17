@@ -481,7 +481,7 @@ class PlayerBox(object):
     ####################################################    
         
     def get_last_new_play_file_name(self, LastNewPlayFile, file_name):    
-        if file_name not in self.mp.playList:
+        if file_name not in self.mp.play_list:
             self.mp.add_play_file(file_name) 
             self.clear_play_list_bool = True
         
@@ -590,17 +590,14 @@ class PlayerBox(object):
                     volume_value = min(self.mp.volume + volume_step, 100)
                 else:    
                     volume_value = min(self.volume_button.value + volume_step, 100)
-                    
-                self.volume_button.value = volume_value
-                self.bottom_toolbar.volume_button.value = volume_value
             elif event.direction == gtk.gdk.SCROLL_DOWN:
                 if self.mode_state_bool or self.full_bool:                    
                     volume_value = max(self.mp.volume - volume_step, 0)
                 else:    
                     volume_value = max(self.volume_button.value - volume_step, 0)
                     
-                self.volume_button.value = volume_value
-                self.bottom_toolbar.volume_button.value = volume_value
+            self.volume_button.value = volume_value
+            self.bottom_toolbar.volume_button.value = volume_value
                                     
             if volume_value != self.mp.volume:
                 self.mp.setvolume(volume_value)
@@ -770,49 +767,31 @@ class PlayerBox(object):
         self.key_set_volume(False)
         
     def key_set_volume(self, increase_volume=True):
-        volume_step = 5
-        
-        # Set volume.
-        if increase_volume:
-            if self.mode_state_bool:
-                self.mp.volume = min(self.mp.volume + volume_step, 100)
-                self.bottom_toolbar.volume_button.value = self.mp.volume
+        volume_step = 5                
+        if increase_volume: # add volume.
+            if self.mode_state_bool or self.full_bool:
+                volume_value = min(self.mp.volume + volume_step, 100)
             else:
                 volume_value = min(self.volume_button.value + volume_step, 100)
-                self.volume_button.value = volume_value
-                self.bottom_toolbar.volume_button.value = volume_value
-        else:
-            if self.mode_state_bool:                    
-                self.mp.volume = max(self.mp.volume - volume_step, 0)
-                self.bottom_toolbar.volume_button.value = self.mp.volume
+        else: # sub volume.
+            if self.mode_state_bool or self.full_bool:                    
+                volume_value = max(self.mp.volume - volume_step, 0)
             else:    
                 volume_value = max(self.volume_button.value - volume_step, 0)
-                self.volume_button.value = volume_value
-                self.bottom_toolbar.volume_button.value = volume_value
-                
+
+        self.mp.volume = volume_value
+    
     def get_release_key_event(self, widget, event):
         keyval_name = get_keyevent_name(event)
         # add volume key init.
         add_volume_key = self.config.get("PlayControl", "add_volume_key")
-        if add_volume_key == keyval_name:            
-            if self.mode_state_bool:
-                volume_value = self.mp.volume
-            else:    
-                volume_value = self.volume_button.value
-                
+        sub_volume_key = self.config.get("PlayControl", "sub_volume_key")
+        if keyval_name in [sub_volume_key, add_volume_key]:
+            volume_value = self.mp.volume
+            self.volume_button.value = volume_value
+            self.bottom_toolbar.volume_button.value = volume_value            
             self.mp.setvolume(volume_value)
             self.messagebox("%s:%s%s"%(_("Volumn"), int(volume_value), "%"))
-            
-        # sub volume key init.
-        sub_volume_key = self.config.get("PlayControl", "sub_volume_key")
-        if sub_volume_key == keyval_name:
-            if self.mode_state_bool:
-                volume_value = self.mp.volume
-            else:    
-                volume_value = self.volume_button.value
-                
-            self.mp.setvolume(volume_value) 
-            self.messagebox("%s:%s%s"%(_("Volumn"),int(volume_value), "%"))
         
     def key_set_mute(self):
         # print "key set mute..."        
@@ -991,13 +970,13 @@ class PlayerBox(object):
 
     def pre_button_clicked(self, widget):
         '''prev.'''
-        if (len(self.mp.playList) > 1):
+        if (len(self.mp.play_list) > 1):
             self.mp.pre()
             self.messagebox(_("Prev"))
             
     def next_button_clicked(self, widget):
         '''next'''
-        if (len(self.mp.playList) > 1):
+        if (len(self.mp.play_list) > 1):
             self.mp.next()
             self.messagebox(_("Next"))
 
@@ -2441,7 +2420,7 @@ class PlayerBox(object):
 
             # clear play list.
             self.play_list.list_view.clear()
-            self.mp.playList = []
+            self.mp.play_list = []
             self.mp.play_list_sum = 0
             self.mp.play_list_num = -1
             self.mp.random_num = 0
@@ -2453,7 +2432,7 @@ class PlayerBox(object):
                     for k in j:
                         list_item.append(MediaItem(k, temp_dict[k]))
 
-                        self.mp.playList.append(self.play_list_dict[k])
+                        self.mp.play_list.append(self.play_list_dict[k])
                         self.mp.play_list_sum += 1
 
             self.play_list.list_view.add_items(list_item)
@@ -2481,7 +2460,7 @@ class PlayerBox(object):
             
             # clear play list.
             self.play_list.list_view.clear()
-            self.mp.playList = []
+            self.mp.play_list = []
             self.mp.play_list_sum = 0
             self.mp.play_list_num = -1
             self.mp.random_num = 0
@@ -2489,7 +2468,7 @@ class PlayerBox(object):
             list_item = []
             for list_str in temp_list:
                 list_item.append(MediaItem(list_str, temp_dict[list_str]))
-                self.mp.playList.append(self.play_list_dict[list_str])
+                self.mp.play_list.append(self.play_list_dict[list_str])
                 self.mp.play_list_sum += 1
 
             self.play_list.list_view.add_items(list_item)
@@ -2607,10 +2586,10 @@ class PlayerBox(object):
         with open(sub_file, 'w') as fp_open:
             fp_open.write(code_to_utf_8_str)
         
-        self.mp.subload(sub_file)
+        self.mp.sub_load(sub_file)
 
     def remove_subtitle(self):
-        self.mp.subremove()
+        self.mp.sub_remove()
 
     def play_win_max(self):
         self.mp.playwinmax()

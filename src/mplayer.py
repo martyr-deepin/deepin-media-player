@@ -431,13 +431,13 @@ class  Mplayer(gobject.GObject):
         return True
 
     ## Subtitle Control ##
-    def subload(self, sub_file):
+    def sub_load(self, sub_file):
         '''Load subtitle'''
         if self.state == STARTING_STATE: # STARTING_STATE
             self.cmd('sub_load %s\n' % (sub_file))
             self.cmd('sub_select 1\n')
             
-    def subremove(self):
+    def sub_remove(self):
         '''Remove subtitle'''
         if self.state == STARTING_STATE:
             self.cmd('sub_remove\n')
