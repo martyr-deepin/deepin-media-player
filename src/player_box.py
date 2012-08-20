@@ -1859,6 +1859,38 @@ class PlayerBox(object):
             
     def media_player_start(self, mplayer, play_bool):
         '''media player start play.'''        
+        # load subtitle.
+        self.media_player_start_load_subtitle(mplayer)
+        
+        # Init last new play file menu.
+        self.the_last_new_play_file_list = self.last_new_play_file_function.set_file_time(mplayer.path)
+        # Get video width and height.
+        self.video_width, self.video_height = get_vide_width_height(mplayer.path)
+        # set aspect.
+        self.media_player_start_set_aspect(mplayer)        
+        # Get mplayer pid.
+        self.mplayer_pid = play_bool
+        #play memory.
+        config_bool = self.config.get("FilePlay", "memory_up_close_player_file_postion")
+        if "true" == config_bool.lower():
+            pos = self.ini.get("PlayMemory", '"%s"' % ((mplayer.path)))
+            if pos is not None:
+                gtk.timeout_add(140, self.get_pos_ste_seek, pos)
+
+        # title show play file name.
+        file_name = self.get_player_file_name(mplayer.path)
+
+        self.app.titlebar.title_box.set_text(str(file_name))
+        # TabPage.
+        for item in self.play_list.list_view.items:
+            if self.play_list_dict[item.title] == self.mp.path:
+                self.play_list.list_view.set_highlight(item)
+                break
+
+        self.progressbar.set_pos(0)
+        self.bottom_toolbar.progressbar.set_pos(0)
+            
+    def media_player_start_load_subtitle(self, mplayer):    
         # down subtitle.
         save_subtitle_path = self.config.get("SubtitleSet","specific_location_search")        
         if save_subtitle_path:
@@ -1877,12 +1909,8 @@ class PlayerBox(object):
                         save_down_file = os.path.join(save_subtitle_path, file_name)                        
                 if "True" == self.config.get("SubtitleSet", "ai_load_subtitle") and save_down_file and os.path.exists(save_down_file):
                     self.load_subtitle(save_down_file)
-
-        # Init last new play file menu.
-        self.the_last_new_play_file_list = self.last_new_play_file_function.set_file_time(mplayer.path)
-        # Get video width and height.
-        self.video_width, self.video_height = get_vide_width_height(mplayer.path)
-
+        
+    def media_player_start_set_aspect(self, mplayer):
         # config gui -> [Fileplay] video_file_open = ?
         video_open_type = self.config.get("FilePlay", "video_file_open")                            
         
@@ -1921,28 +1949,6 @@ class PlayerBox(object):
             self.mp.playwinmax()
             self.playwinmax_bool = False
         
-        # Get mplayer pid.
-        self.mplayer_pid = play_bool
-        #play memory.
-        config_bool = self.config.get("FilePlay", "memory_up_close_player_file_postion")
-        if "true" == config_bool.lower():
-            pos = self.ini.get("PlayMemory", '"%s"' % ((mplayer.path)))
-            if pos is not None:
-                gtk.timeout_add(140, self.get_pos_ste_seek, pos)
-
-        # title show play file name.
-        file_name = self.get_player_file_name(mplayer.path)
-
-        self.app.titlebar.title_box.set_text(str(file_name))
-        # TabPage.
-        for item in self.play_list.list_view.items:
-            if self.play_list_dict[item.title] == self.mp.path:
-                self.play_list.list_view.set_highlight(item)
-                break
-
-        self.progressbar.set_pos(0)
-        self.bottom_toolbar.progressbar.set_pos(0)
-
     def media_player_end(self, mplayer, play_bool):
         '''player end.'''                        
         self.video_width = self.video_height = None        
@@ -2678,13 +2684,9 @@ class PlayerBox(object):
         
         # Set volume.
         if type_bool == add_volume_state:
-            if (self.volume_button.value + volume_value) > 100:
-                self.volume_button.value = 100
-            self.volume_button.value = self.volume_button.value + volume_value
+            self.volume_button.value = min(self.volume_button.value + volume_value, 100)
         elif type_bool == sub_volume_state:
-            if (self.volume_button.value - volume_value) < 0:
-                self.volume_button.value = 0
-            self.volume_button.value = self.volume_button.value - volume_value
+            self.volume_button.value = max(self.volume_button.value - volume_value, 0)
             
         self.mp.setvolume(self.volume_button.value)
-        self.messagebox("%s:%s%s"%(_("Volumn"), int(self.volume_button.value), "%"))                            
+        self.messagebox("%s:%s%s"%(_("Volumn"), int(self.volume_button.value), "%"))
