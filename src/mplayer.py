@@ -72,15 +72,14 @@ def get_home_path():
 # Get play file length.
 def get_length(file_path):
     '''Get media player length.'''
-    cmd = "mplayer -vo null -ao null -frames 0 -identify '%s' >/dev/null 2>&1" % (file_path)
+    cmd = "mplayer -vo null -ao null -frames 0 -identify '%s'" % (file_path)
     fp = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
     cmd_str = fp.communicate()[0]
     length_compile = re.compile(r"ID_LENGTH=([\d|\.]+)")
     try:
         length = length_compile.findall(cmd_str)[0]
     except:            
-        length = 520
-        
+        length = 520                
     return length_to_time(length), str((length))
 
 def get_vide_width_height(file_path):
@@ -307,7 +306,7 @@ class  Mplayer(gobject.GObject):
         # 4: list recycle play. 
         self.play_list_state = SINGLE_PLAYING_STATE
         
-    def play(self, path):    
+    def play(self, path):            
         self.path = path
         if not (self.state): # STOPING_STATE
             self.lenState = 1 
@@ -345,8 +344,9 @@ class  Mplayer(gobject.GObject):
                         os.O_NONBLOCK)
             
             self.emit("play-init", True)
+            
             # get length size.
-            self.get_length_id = gobject.timeout_add(60, self.get_time_length)
+            self.get_time_length(path)
             # get pos size.
             self.get_position_id = gobject.timeout_add(400, self.get_time_pos) 
                                 
@@ -376,33 +376,13 @@ class  Mplayer(gobject.GObject):
         except StandardError, e:
             print 'command error %s' % (e)
           
-    def get_time_length(self):
+    def get_time_length(self, path):
         '''Get the total length'''
-        self.cmd('get_time_length\n')
-        while True:
-            try:
-                line = self.mplayer_out.readline()
-            except StandardError:
-                break
-                            
-            if not line:
-                break   
-
-            if line.startswith("ANS_LENGTH"):
-                len_num = int(float(line.replace("ANS_LENGTH=", "")))
-                if len_num > 0:
-                    self.len_num = len_num               
-                    self.emit("get-time-length",self.len_num)
-                    # print "mplayer:" + str(self.len_num)
-                    
-        return True
+        self.len_num = int(float(get_length(path)[1]))
+        self.emit("get-time-length", self.len_num)
                                
     def get_time_pos(self):
         '''Get the current playback progress'''
-        # if not self.lenState:
-        if self.get_length_id:
-            self.stop_get_len_id()
-            
         self.cmd('get_time_pos\n')
         
         while True:
