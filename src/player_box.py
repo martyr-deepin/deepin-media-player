@@ -81,8 +81,7 @@ class PlayerBox(object):
     def __init__ (self, app, argv_path_list):
         # Init pixuf.
         self.init_system_pixbuf()
-        
-        
+                
         # signal and double.
         self.double_bool = False
         self.signal_timeout = []
@@ -358,82 +357,103 @@ class PlayerBox(object):
         self.progressbar.window_mode_state = 0
         # Progressbar signal init.
         NORMAL_WINDOW_STATE = 1
-        self.progressbar.pb.connect("motion-notify-event", 
-                                    self.progressbar_player_drag_pos_modify, 
-                                    self.progressbar, NORMAL_WINDOW_STATE)
-        self.progressbar.pb.connect("button-press-event", 
-                                    self.progressbar_player_point_pos_modify, 
-                                    self.progressbar, NORMAL_WINDOW_STATE)
-        self.progressbar.pb.connect("button-release-event", self.progressbar_set_point_bool, self.progressbar)
-        self.progressbar.pb.connect("enter-notify-event", self.show_preview_enter)
-        self.progressbar.pb.connect("leave-notify-event", self.hide_preview_leave)
+        self.progressbar.pb.connect(
+            "motion-notify-event", 
+            self.progressbar_player_drag_pos_modify, 
+            self.progressbar, NORMAL_WINDOW_STATE)
+        self.progressbar.pb.connect(
+            "button-press-event", 
+            self.progressbar_player_point_pos_modify, 
+            self.progressbar, NORMAL_WINDOW_STATE)
+        self.progressbar.pb.connect(
+            "button-release-event", self.progressbar_set_point_bool, self.progressbar)
+        self.progressbar.pb.connect(
+            "enter-notify-event", self.show_preview_enter)
+        self.progressbar.pb.connect(
+            "leave-notify-event", self.hide_preview_leave)
         
     def init_toolbar(self):    
         self.toolbar = ToolBar()
-        self.toolbar.toolbar_full_button.connect("clicked",    self.full_play_window)
-        self.toolbar.toolbar_common_button.connect("clicked",  self.show_window_widget)
-        self.toolbar.toolbar_concise_button.connect("clicked", self.hide_window_widget)
-        self.toolbar.toolbar_above_button.connect("clicked",   self.set_window_above)
-        self.toolbar.toolbar_1X_button.connect("clicked", lambda w: self.set_1x_video_play())
-        self.toolbar.toolbar_2X_button.connect("clicked", lambda w: self.set_2x_video_play())
+        self.toolbar.toolbar_full_button.connect(
+            "clicked",    self.full_play_window)
+        self.toolbar.toolbar_common_button.connect(
+            "clicked",  self.show_window_widget)
+        self.toolbar.toolbar_concise_button.connect(
+            "clicked", self.hide_window_widget)
+        self.toolbar.toolbar_above_button.connect(
+            "clicked",   self.set_window_above)
+        self.toolbar.toolbar_1X_button.connect(
+            "clicked", lambda w: self.set_1x_video_play())
+        self.toolbar.toolbar_2X_button.connect(
+            "clicked", lambda w: self.set_2x_video_play())
         
     def init_bottom_toolbar(self):
         bottom_toolbar_height = 50
         FULL_WINDOW_STATE = 2
         self.bottom_toolbar = BottomToolBar()
-        self.bottom_toolbar.panel.connect("expose-event", 
-                                          self.toolbar2_panel_expose)
+        self.bottom_toolbar.panel.connect(
+            "expose-event", self.toolbar2_panel_expose)
         self.bottom_toolbar.panel.set_size_request(1, bottom_toolbar_height) # Set bottom_toolbar height.                
-        self.bottom_toolbar.panel.connect("scroll-event", 
-                                          self.app_scroll_event, FULL_WINDOW_STATE) # 2->bottom_toolbar
-        self.bottom_toolbar.panel.connect("button-press-event", 
-                                          self.drag_resize_window) # draw resize window.
-        self.bottom_toolbar.panel.connect("motion-notify-event", 
-                                          self.modify_mouse_icon)
-        self.bottom_toolbar.panel.connect("motion-notify-event", 
-                                          self.set_keep_window_toolbar2)
-        self.bottom_toolbar.progressbar.pb.connect("motion-notify-event",
-                                                   self.progressbar_player_drag_pos_modify,
-                                                   self.bottom_toolbar.progressbar, FULL_WINDOW_STATE)
-        self.bottom_toolbar.progressbar.pb.connect("button-press-event",
-                                                   self.progressbar_player_point_pos_modify,
-                                                   self.bottom_toolbar.progressbar, FULL_WINDOW_STATE)
-        self.bottom_toolbar.progressbar.pb.connect("button-release-event",
-                                                   self.progressbar_set_point_bool,
-                                                   self.bottom_toolbar.progressbar)
-        self.bottom_toolbar.progressbar.pb.connect("enter-notify-event", self.show_preview_enter)
-        self.bottom_toolbar.progressbar.pb.connect("leave-notify-event", self.hide_preview_leave)
+        self.bottom_toolbar.panel.connect(
+            "scroll-event", self.app_scroll_event, FULL_WINDOW_STATE) # 2->bottom_toolbar
+        self.bottom_toolbar.panel.connect(
+            "button-press-event", self.drag_resize_window) # draw resize window.
+        self.bottom_toolbar.panel.connect(
+            "motion-notify-event", self.modify_mouse_icon)
+        self.bottom_toolbar.panel.connect(
+            "motion-notify-event", self.set_keep_window_toolbar2)
+        self.bottom_toolbar.progressbar.pb.connect(
+            "motion-notify-event",
+            self.progressbar_player_drag_pos_modify,
+            self.bottom_toolbar.progressbar, FULL_WINDOW_STATE)
+        self.bottom_toolbar.progressbar.pb.connect(
+            "button-press-event",
+            self.progressbar_player_point_pos_modify,
+            self.bottom_toolbar.progressbar, FULL_WINDOW_STATE)
+        self.bottom_toolbar.progressbar.pb.connect(
+            "button-release-event",
+            self.progressbar_set_point_bool,
+            self.bottom_toolbar.progressbar)
+        self.bottom_toolbar.progressbar.pb.connect(
+            "enter-notify-event", self.show_preview_enter)
+        self.bottom_toolbar.progressbar.pb.connect(
+            "leave-notify-event", self.hide_preview_leave)
 
         # play_control_panel.
-        self.bottom_toolbar.play_control_panel.stop_button.connect("clicked", self.stop_button_clicked)
-        self.bottom_toolbar.play_control_panel.pre_button.connect("clicked", self.pre_button_clicked)
-        self.bottom_toolbar.play_control_panel.start_button.connect("clicked", 
-                                                                 self.start_button_clicked, 
-                                                                 FULL_WINDOW_STATE)
-        self.bottom_toolbar.play_control_panel.next_button.connect("clicked", self.next_button_clicked)
-        self.bottom_toolbar.play_control_panel.open_button.connect("clicked", self.open_button_clicked)
+        self.bottom_toolbar.play_control_panel.stop_button.connect(
+            "clicked", self.stop_button_clicked)
+        self.bottom_toolbar.play_control_panel.pre_button.connect(
+            "clicked", self.pre_button_clicked)
+        self.bottom_toolbar.play_control_panel.start_button.connect(
+            "clicked", self.start_button_clicked, FULL_WINDOW_STATE)
+        self.bottom_toolbar.play_control_panel.next_button.connect(
+            "clicked", self.next_button_clicked)
+        self.bottom_toolbar.play_control_panel.open_button.connect(
+            "clicked", self.open_button_clicked)
 
         # bottom toolbar volume button.
         self.bottom_toolbar.volume_button.value = 100
-        self.bottom_toolbar.volume_button.connect("volume-state-changed", 
-                                                  self.volume_button_get_value_event, 
-                                                  FULL_WINDOW_STATE)
+        self.bottom_toolbar.volume_button.connect(
+            "volume-state-changed", 
+            self.volume_button_get_value_event)
     
     def init_playlist(self):    
         self.play_list_dict = {} # play list dict type.
         self.play_list = PlayList()
-        self.play_list.list_view.connect("double-click-item", 
-                                         self.double_play_list_file)
-        self.play_list.list_view.connect("delete-select-items", 
-                                         self.delete_play_list_file)
-        self.play_list.list_view.connect("button-press-event", 
-                                         self.show_popup_menu)
-        self.play_list.list_view.connect("single-click-item", 
-                                         self.open_current_file_dir_path)
-        self.play_list.list_view.connect("motion-notify-item", 
-                                         self.open_current_file_dir_path)
-        self.play_list.play_list_control_panel.add_button.connect("clicked", lambda w: self.add_file())
-        self.play_list.play_list_control_panel.delete_button.connect("clicked", lambda w: self.del_index())
+        self.play_list.list_view.connect(
+            "double-click-item", self.double_play_list_file)
+        self.play_list.list_view.connect(
+            "delete-select-items", self.delete_play_list_file)
+        self.play_list.list_view.connect(
+            "button-press-event", self.show_popup_menu)
+        self.play_list.list_view.connect(
+            "single-click-item", self.open_current_file_dir_path)
+        self.play_list.list_view.connect(
+            "motion-notify-item", self.open_current_file_dir_path)
+        self.play_list.play_list_control_panel.add_button.connect(
+            "clicked", lambda w: self.add_file())
+        self.play_list.play_list_control_panel.delete_button.connect(
+            "clicked", lambda w: self.del_index())
         
     def init_show_time_label(self):    
         # padding=0, xalign=1, yalign=0.0, xscale=0.0, yscale=0.0
@@ -442,7 +462,9 @@ class PlayerBox(object):
         self.show_time_label.time_box.set_size_request(110, -1)
         self.show_time_label.time_font1 = "00:00:00" + " / "
         self.show_time_label.time_font2 = "00:00:00"        
-        self.show_time_label.set_time_font(self.show_time_label.time_font1 , self.show_time_label.time_font2)
+        self.show_time_label.set_time_font(
+            self.show_time_label.time_font1, 
+            self.show_time_label.time_font2)
         self.show_time_label_hframe.add(self.show_time_label.time_box)
         self.show_time_label_hframe.set(0, 0, 1, 1)
         self.show_time_label_hframe.set_padding(0, 0, 10, 0)
@@ -452,19 +474,27 @@ class PlayerBox(object):
         self.play_control_panel_hframe = self.play_control_panel.hbox_hframe
         self.play_control_panel_hframe.set(1, 0.5, 0, 0)
         self.play_control_panel_hframe.set_padding(0, 1, 0, 0)
-        self.play_control_panel.stop_button.connect("clicked", self.stop_button_clicked) # stop play.
-        self.play_control_panel.pre_button.connect("clicked", self.pre_button_clicked) # pre play.
+        self.play_control_panel.stop_button.connect(
+            "clicked", self.stop_button_clicked) # stop play.
+        self.play_control_panel.pre_button.connect(
+            "clicked", self.pre_button_clicked) # pre play.
         # 1 -> play_control_panel
-        self.play_control_panel.start_button.connect("clicked", self.start_button_clicked, 1) # start play or pause play.
-        self.play_control_panel.next_button.connect("clicked", self.next_button_clicked) # next play.
-        self.play_control_panel.open_button.connect("clicked", self.open_button_clicked) # show open window.
+        self.play_control_panel.start_button.connect(
+            "clicked", self.start_button_clicked, 1) # start play or pause play.
+        self.play_control_panel.next_button.connect(
+            "clicked", self.next_button_clicked) # next play.
+        self.play_control_panel.open_button.connect(
+            "clicked", self.open_button_clicked) # show open window.
         
     def init_volume_button(self):
         self.volume_button_hframe = HorizontalFrame()
         self.volume_button = VolumeButton(volume_y = 14, press_emit_bool = True)
         self.volume_button.value = 100
-        self.volume_button.connect("volume-state-changed", self.volume_button_get_value_event, 1) # 1 -> play_control_panel
-        self.volume_button.set_size_request(92, 40)
+        self.volume_button.connect(
+            "volume-state-changed", self.volume_button_get_value_event)
+        volume_button_width = 92
+        volume_button_height = 40
+        self.volume_button.set_size_request(volume_button_width, volume_button_height)
         self.volume_button_hframe.add(self.volume_button)
         self.volume_button_hframe.set(1, 0, 0, 0)
         self.volume_button_hframe.set_padding(0, 0, 0, 0)        
@@ -477,7 +507,6 @@ class PlayerBox(object):
         self.play_list_button_hframe.set(0, 0, 1.0, 1.0)
         self.play_list_button_hframe.set_padding(9, 9, 0, 20)
         
-    # 123456
     ####################################################    
         
     def get_last_new_play_file_name(self, LastNewPlayFile, file_name):    
@@ -485,13 +514,11 @@ class PlayerBox(object):
             self.mp.add_play_file(file_name) 
             self.clear_play_list_bool = True
         
-    def open_button_popup_screen_menu(self, widget, event):
-        x, y, w, h = self.screen_frame.allocation
-        
-        width = w/2 - self.screen_pop_menu.width/2 + 2
-        height = h/2 + self.screen_pop_menu.height /2 + 50
-        
+    def open_button_popup_screen_menu(self, widget, event):        
         if not self.screen_pop_menu.show_menu_bool:
+            x, y, w, h = self.screen_frame.allocation        
+            width = w/2 - self.screen_pop_menu.width/2 + 2
+            height = h/2 + self.screen_pop_menu.height /2 + 50
             self.screen_pop_menu.show_menu(int(width), int(height))
         else:
             self.screen_pop_menu.hide_menu()
@@ -540,15 +567,14 @@ class PlayerBox(object):
         h = widget.allocation.height
         bottom_padding = 10
 
-        if (w - bottom_padding <= event.x <= w) and (h - bottom_padding <= event.y <= h):
+        if ((w - bottom_padding) <= event.x <= w) and ((h - bottom_padding) <= event.y <= h):
             if "MplayerView" != type(widget).__name__:
                 drag = gtk.gdk.BOTTOM_RIGHT_CORNER
-                widget.window.set_cursor(gtk.gdk.Cursor(drag))                
+                widget.window.set_cursor(gtk.gdk.Cursor(drag))
                 self.cursor_type = drag
         elif self.cursor_type != None:
             widget.window.set_cursor(None)
-            self.app.window.window.set_cursor(None)
-            
+            self.app.window.window.set_cursor(None)            
             self.cursor_type = None
 
     def drag_resize_window(self, widget, event): # screen: button-press-event -> drag resize window.
@@ -604,7 +630,7 @@ class PlayerBox(object):
                     
             self.messagebox("%s:%s%s"%(_("Volumn"), str(int(volume_value)), "%"))
             
-    def volume_button_get_value_event(self, volume_button, value, volume_state, volume_bit):
+    def volume_button_get_value_event(self, volume_button, value, volume_state):
         if MUTE_STATE == volume_state: # -1 -> stop play
             if self.mp:                
                 if STARTING_PLAY == self.mp.state: # 1 -> start play
@@ -614,7 +640,7 @@ class PlayerBox(object):
                 self.messagebox(_("Mute: enabled"))    
         else:
             if self.mp:
-                if STARTING_PLAY == self.mp.state:                    
+                if STARTING_PLAY == self.mp.state:
                     self.mp.offmute()                                     
                     self.mp.setvolume(value)                    
                     self.messagebox(str("%s:%s%s"%(_("Volumn"), str(value), "%")))
@@ -622,10 +648,8 @@ class PlayerBox(object):
                     self.mp.volumebool = False
                     self.messagebox(str("%s:%s%s"%(_("Volumn"), str(value), "%")))
                     
-        if VOLUME_BUTTON_STATE == volume_bit: # volume_bit: 1-> volume_button , 2-> volume_button of bottom_toolbar
-            self.bottom_toolbar.volume_button.value = value
-        else:
-            self.volume_button.value = value
+        self.bottom_toolbar.volume_button.value = value
+        self.volume_button.value = value
             
     def init_config_key(self):
         self.keymap = {}
@@ -714,10 +738,13 @@ class PlayerBox(object):
                     
             if save_file_bool == "True":
                 if scrot_bool == "True":
-                    self.scrot_current_screen_pixbuf(save_path + "/%s-%s"%(self.get_player_file_name(self.mp.path), self.mp.pos_num), save_type)
+                    self.scrot_current_screen_pixbuf(
+                        save_path + "/%s-%s"%(self.get_player_file_name(self.mp.path), self.mp.pos_num), save_type)
                     self.messagebox(_("Screenshot Saved"))
                 else:    
-                    self.mp.preview_scrot(self.mp.pos_num, save_path + "/%s-%s"%(self.get_player_file_name(self.mp.path), self.mp.pos_num) + save_type)
+                    self.mp.preview_scrot(
+                        self.mp.pos_num, 
+                        save_path + "/%s-%s"%(self.get_player_file_name(self.mp.path), self.mp.pos_num) + save_type)
                     self.messagebox(_("Screenshot Saved"))
                     
             if save_clipboard_bool == "True": # save clipboard
@@ -786,10 +813,11 @@ class PlayerBox(object):
         # add volume key init.
         add_volume_key = self.config.get("PlayControl", "add_volume_key")
         sub_volume_key = self.config.get("PlayControl", "sub_volume_key")
+        
         if keyval_name in [sub_volume_key, add_volume_key]:
             volume_value = self.mp.volume
             self.volume_button.value = volume_value
-            self.bottom_toolbar.volume_button.value = volume_value            
+            self.bottom_toolbar.volume_button.value = volume_value
             self.mp.setvolume(volume_value)
             self.messagebox("%s:%s%s"%(_("Volumn"), int(volume_value), "%"))
         
@@ -846,8 +874,7 @@ class PlayerBox(object):
         
         if not self.toolbar.toolbar_full_button.flags:
             self.toolbar.toolbar_full_button.flags = not self.toolbar.toolbar_full_button.flags
-            
-            
+                        
     '''play list button'''
     def play_list_button_clicked(self, widget): # play list button signal:clicked.
         if widget.get_active():

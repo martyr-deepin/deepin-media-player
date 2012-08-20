@@ -258,3 +258,8 @@ def download_shooter_subtitle(movieFqnPath, subtitlePath):
     result = download_subtitles(subtitle_list[0], 0, '', subtitlePath, '', '');    
     if (not result[0]):
         return True, result[2]
+
+if __name__ == "__main__":    
+    play_name = "/home/long/1.rmvb"
+    save_subtitle_path = "/home/long/"
+    download_shooter_subtitle(play_name, save_subtitle_path)
