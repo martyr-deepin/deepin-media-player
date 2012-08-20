@@ -1944,6 +1944,7 @@ class PlayerBox(object):
         # aspect set.                                    
         if self.video_aspect_type != ASCEPT_NORMAL_STATE: # "默认"
             self.set_ascept_function()
+            
         # full window.
         if self.playwinmax_bool and (self.video_aspect_type == ASCEPT_NORMAL_STATE): # "默认"
             self.mp.playwinmax()

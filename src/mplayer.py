@@ -71,9 +71,9 @@ def get_home_path():
 
 # Get play file length.
 def get_length(file_path):
-    '''Get media player length.'''    
-    cmd = "mplayer -vo null -ao null -frames 0 -identify '%s' 2>&1" % (file_path)
-    fp = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)    
+    '''Get media player length.'''
+    cmd = "mplayer -vo null -ao null -frames 0 -identify '%s' >/dev/null 2>&1" % (file_path)
+    fp = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
     cmd_str = fp.communicate()[0]
     length_compile = re.compile(r"ID_LENGTH=([\d|\.]+)")
     try:
@@ -307,23 +307,21 @@ class  Mplayer(gobject.GObject):
         # 4: list recycle play. 
         self.play_list_state = SINGLE_PLAYING_STATE
         
-    def play(self, path):
-    
+    def play(self, path):    
         self.path = path
         if not (self.state): # STOPING_STATE
             self.lenState = 1 
-            # -input fil.. streme player.
+            # -input file.. streme player.
             command = ['mplayer',
                        '-vo',
-                       'gl,2,x11',
+                       'gl,2,x11,xv',
                        '-zoom',
                        '-nokeepaspect',
                        '-osdlevel',
                        '0',
                        '-double',
                        '-slave',
-                       '-quiet']
-            
+                       '-quiet']            
             # If path is url, must be add option `-nocache`,
             # otherwise, mplayer cache process can't quit normally.
             if is_valid_url_file(self.path):
@@ -750,7 +748,7 @@ class  Mplayer(gobject.GObject):
         
         if self.state == STARTING_STATE:
             # scrot image.
-            scrot_command = "cd ~/.config/deepin-media-player/buffer/ && mplayer -ss %s -noframedrop -nosound -vo png -frames 1 '%s'" % (scrot_pos, self.path)
+            scrot_command = "cd ~/.config/deepin-media-player/buffer/ && mplayer -ss %s -noframedrop -nosound -vo png -frames 1 '%s' >/dev/null 2>&1" % (scrot_pos, self.path)
             os.system(scrot_command)
             # modify image name or get image file.
             save_image_path = get_home_path() + "/.config/deepin-media-player/buffer/"        # save image buffer dir.
@@ -778,7 +776,7 @@ class  Mplayer(gobject.GObject):
             
         if self.state == STARTING_STATE:
             # scrot image.
-            os.system("cd /tmp/buffer/ && mplayer -ss %s -noframedrop -nosound -vo png -frames 1 '%s'" % (scrot_pos, self.path))
+            os.system("cd /tmp/buffer/ && mplayer -ss %s -noframedrop -nosound -vo png -frames 1 '%s' >/dev/null 2>&1" % (scrot_pos, self.path))
             # modify image name or get image file.
             save_image_path = "/tmp/buffer/"        # save preview image buffer dir.    
             image_list = os.listdir(save_image_path) # get dir all image.
