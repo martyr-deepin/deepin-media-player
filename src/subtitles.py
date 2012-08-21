@@ -21,6 +21,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import gobject
+from code_to_utf_8 import auto_decode
 
 class Subtitles(gobject.GObject):
     __gsignals__ = {
@@ -40,7 +41,7 @@ class Subtitles(gobject.GObject):
     def __init__(self):
         gobject.GObject.__init__(self)
         self.__subtitle_list = []
-            
+        
     def clear(self):
         self.__sub_list = []
         
@@ -48,6 +49,12 @@ class Subtitles(gobject.GObject):
         pass
         
     def add(self, path):
+        fp_str = open(path, "r").read()
+        code_to_utf_8_str = auto_decode(fp_str)
+
+        with open(path, 'w') as fp_open:
+            fp_open.write(code_to_utf_8_str)
+            
         self.__subtitle_list.append(path) # save subtitle path.
         self.emit("add-subtitle-event", str(path))
         
@@ -62,7 +69,7 @@ class Subtitles(gobject.GObject):
             del self.__subtitle_list[subtitle_index]
             self.emit("delete-subtitle-event", str(subtitle_path), int(subtitle_index))
         
-    def stop(self):        
+    def stop(self):
         self.emit("stop-subtitle-event")
         
 if __name__ == "__main__":    
@@ -70,12 +77,14 @@ if __name__ == "__main__":
         print STRING
         
     def select_sub_event(subtitle, STRING, INT):  
+        print "字幕文件:%s 加载完毕!!" % (STRING)
         print "select_sub_event:", STRING, INT
         
-    def del_sub_event(subtitle, STRING, INT):    
+    def del_sub_event(subtitle, STRING, INT):            
         print "del_sub_event:", STRING, INT
         
     def stop_sub_event(subtitle):
+        print "停止字幕:"
         print "stop_sub_event:", subtitle
         
     sub_titles = Subtitles()
@@ -84,7 +93,7 @@ if __name__ == "__main__":
     sub_titles.connect("delete-subtitle-event", del_sub_event)
     sub_titles.connect("stop-subtitle-event", stop_sub_event)
     
-    sub_titles.add("/home/long/1.ass")
+    sub_titles.add("/home/long/1.srt")
     sub_titles.select(0)
     # sub_titles.delete(0)
     sub_titles.stop()
