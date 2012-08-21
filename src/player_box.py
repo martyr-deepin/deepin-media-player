@@ -2618,9 +2618,9 @@ class PlayerBox(object):
         code_to_utf_8_str = auto_decode(fp_str)
 
         with open(sub_file, 'w') as fp_open:
-            fp_open.write(code_to_utf_8_str)
-        
-        self.mp.sub_load(sub_file)
+            fp_open.write(code_to_utf_8_str)        
+            
+        self.mp.sub_add(sub_file)
 
     def remove_subtitle(self):
         self.mp.sub_remove()
