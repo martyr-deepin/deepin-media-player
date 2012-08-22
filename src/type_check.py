@@ -25,7 +25,11 @@ import gio
 VIDEO_TYPES = ["video", "application/vnd.rn-realmedia"]
 AUDIO_TYPES = ["audio"]        
 HTML_TYPES = ["http", "https", "mms", "ftp", "sftp", "shttp"]
-    
+SUBTITLE_TYPES = ["application/x-subrip", "text/x-ssa"]    
+
+def is_subtitle_file(subtitle_path):
+    return get_file_type(subtitle_path) in SUBTITLE_TYPES
+
 def is_valid_video_file(file_path):
     file_type = get_file_type(file_path)
     return (file_type in VIDEO_TYPES) or (file_type.split("/")[0] in VIDEO_TYPES)

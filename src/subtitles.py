@@ -20,8 +20,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import os
 import gobject
 from code_to_utf_8 import auto_decode
+from type_check import is_subtitle_file
+from utils import get_paly_file_name
 
 class Subtitles(gobject.GObject):
     __gsignals__ = {
@@ -37,6 +40,12 @@ class Subtitles(gobject.GObject):
         "stop-subtitle-event":(
             gobject.SIGNAL_RUN_LAST,
             gobject.TYPE_NONE, ()),
+        "add-delay-subtitle-event":(
+            gobject.SIGNAL_RUN_LAST,
+            gobject.TYPE_NONE, ()),
+        "sub-delay-subtitle-event":(
+            gobject.SIGNAL_RUN_LAST,
+            gobject.TYPE_NONE, ()),
         }
     def __init__(self):
         gobject.GObject.__init__(self)
@@ -45,16 +54,24 @@ class Subtitles(gobject.GObject):
     def clear(self):
         self.__sub_list = []
         
-    def scan_subtitle(self, path):
-        pass
-        
-    def add(self, path):
-        fp_str = open(path, "r").read()
-        code_to_utf_8_str = auto_decode(fp_str)
-
-        with open(path, 'w') as fp_open:
-            fp_open.write(code_to_utf_8_str)
+    def scan_subtitle(self, video_file, subtitle_path):
+        if os.path.exists(subtitle_path):
+            path_file_list = os.listdir(subtitle_path)            
             
+            print filter(
+                lambda path: is_subtitle_file(path) and (not cmp(get_paly_file_name(video_file), get_paly_file_name(path))), 
+                map(lambda path_file: os.path.join(subtitle_path, path_file), path_file_list))
+                
+    def add(self, path):
+        # read subtitle file.
+        with open(path, "r") as read_fp:
+            fp_str = read_fp.read()            
+        # to subtitle code.  
+        code_to_utf_8_str = auto_decode(fp_str)
+        # write subtitle file.
+        with open(path, 'w') as write_fp:
+            write_fp.write(code_to_utf_8_str)
+        
         self.__subtitle_list.append(path) # save subtitle path.
         self.emit("add-subtitle-event", str(path))
         
@@ -72,6 +89,13 @@ class Subtitles(gobject.GObject):
     def stop(self):
         self.emit("stop-subtitle-event")
         
+    def add_delay(self):
+        self.emit("add-delay-subtitle-event")
+        
+    def sub_delay(self):    
+        self.emit("sub-delay-subtitle-event")
+        
+                
 if __name__ == "__main__":    
     def add_sub_event(subtitle, STRING):
         print STRING
@@ -87,14 +111,32 @@ if __name__ == "__main__":
         print "停止字幕:"
         print "stop_sub_event:", subtitle
         
+    ''' 
+    1s = 1000ms
+    delay(float)
+    '''        
+    def add_delay_subtitle_event(subtitle):
+        print "添加字幕延时",
+        print "add_delay_subtitle_event"
+        
+    def sub_delay_subtitle_event(subtitle):
+        print "减少字幕延时",
+        print "add_delay_subtitle_event"
+        
     sub_titles = Subtitles()
     sub_titles.connect("add-subtitle-event", add_sub_event)
     sub_titles.connect("select-subtitle-event", select_sub_event)
     sub_titles.connect("delete-subtitle-event", del_sub_event)
     sub_titles.connect("stop-subtitle-event", stop_sub_event)
+    sub_titles.connect("add-delay-subtitle-event", add_delay_subtitle_event)
+    sub_titles.connect("sub-delay-subtitle-event", sub_delay_subtitle_event)
     
     sub_titles.add("/home/long/1.srt")
     sub_titles.select(0)
     # sub_titles.delete(0)
     sub_titles.stop()
     sub_titles.select(0)
+    sub_titles.add_delay() 
+    sub_titles.sub_delay()
+    sub_titles.scan_subtitle("/home/long/1.avi", "/home/long")
+    

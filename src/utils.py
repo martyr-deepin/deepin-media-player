@@ -63,6 +63,9 @@ def path_threads(path, mp):
                     os.rename(old_file,new_file)
                     mp.add_play_file(new_file)                
                     
+def get_paly_file_name(path):
+    return os.path.splitext(os.path.split(path)[1])[0]
+
 ############################################################                    
 ### get video information.
 class SubTitles(object):                    
