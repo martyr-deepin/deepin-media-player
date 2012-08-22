@@ -31,6 +31,9 @@ class Subtitles(gobject.GObject):
         "add-subtitle-event":(
             gobject.SIGNAL_RUN_LAST,
             gobject.TYPE_NONE, (gobject.TYPE_STRING,)),
+        "scan-subtitle-event":(
+            gobject.SIGNAL_RUN_LAST,
+            gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
         "select-subtitle-event":(
             gobject.SIGNAL_RUN_LAST,
             gobject.TYPE_NONE, (gobject.TYPE_STRING, gobject.TYPE_INT,)),
@@ -45,7 +48,7 @@ class Subtitles(gobject.GObject):
             gobject.TYPE_NONE, ()),
         "sub-delay-subtitle-event":(
             gobject.SIGNAL_RUN_LAST,
-            gobject.TYPE_NONE, ()),
+            gobject.TYPE_NONE, ()),        
         }
     def __init__(self):
         gobject.GObject.__init__(self)
@@ -58,10 +61,13 @@ class Subtitles(gobject.GObject):
         if os.path.exists(subtitle_path):
             path_file_list = os.listdir(subtitle_path)            
             
-            print filter(
+            subtitle_list = filter(
                 lambda path: is_subtitle_file(path) and (not cmp(get_paly_file_name(video_file), get_paly_file_name(path))), 
                 map(lambda path_file: os.path.join(subtitle_path, path_file), path_file_list))
-                
+            
+            if subtitle_list:    
+                self.emit("scan-subtitle-event", subtitle_list)
+            
     def add(self, path):
         # read subtitle file.
         with open(path, "r") as read_fp:
@@ -98,6 +104,7 @@ class Subtitles(gobject.GObject):
                 
 if __name__ == "__main__":    
     def add_sub_event(subtitle, STRING):
+        print "add_sub_event:", 
         print STRING
         
     def select_sub_event(subtitle, STRING, INT):  
@@ -123,6 +130,10 @@ if __name__ == "__main__":
         print "减少字幕延时",
         print "add_delay_subtitle_event"
         
+    def scan_subtitle_event(subtitle, subtitle_list):    
+        print "scan_subtitle_event:", subtitle_list
+        map(lambda subtitle_file:subtitle.add(subtitle_file), subtitle_list)
+        
     sub_titles = Subtitles()
     sub_titles.connect("add-subtitle-event", add_sub_event)
     sub_titles.connect("select-subtitle-event", select_sub_event)
@@ -130,6 +141,7 @@ if __name__ == "__main__":
     sub_titles.connect("stop-subtitle-event", stop_sub_event)
     sub_titles.connect("add-delay-subtitle-event", add_delay_subtitle_event)
     sub_titles.connect("sub-delay-subtitle-event", sub_delay_subtitle_event)
+    sub_titles.connect("scan-subtitle-event", scan_subtitle_event)
     
     sub_titles.add("/home/long/1.srt")
     sub_titles.select(0)
