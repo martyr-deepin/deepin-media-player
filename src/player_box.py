@@ -267,7 +267,7 @@ class PlayerBox(object):
         self.sub_titles.connect("delete-subtitle-event",
                              self.delete_subtitle_event)
         self.sub_titles.connect("stop-subtitle-event",
-                             self.top_subtitle_event)
+                             self.stop_subtitle_event)
         self.sub_titles.connect("add-delay-subtitle-event",
                              self.add_delay_subtitle_event)
         self.sub_titles.connect("sub-delay-subtitle-event",
@@ -2716,3 +2716,36 @@ class PlayerBox(object):
             
         self.mp.setvolume(self.volume_button.value)
         self.messagebox("%s:%s%s"%(_("Volumn"), int(self.volume_button.value), "%"))
+
+    # init_subtitles connect events.    
+    def add_subtitle_event(self, subtitle, subtitle_path):
+        pass
+    
+    def scan_subtitle_event(self, subtitle, subtitle_list):
+        map(lambda subtitle_file:subtitle.add(subtitle_file), subtitle_list)
+        
+    def select_subtitle_event(self, subtitle, subtitle_path, subtitle_index):
+        pass
+    def delete_subtitle_event(self, subtitle, subtitle_path, subtitle_index):
+        pass
+    
+    def stop_subtitle_event(self, subtitle):
+        pass
+    
+    def add_delay_subtitle_event(self, subtitle):
+        pass
+    
+    def sub_delay_subtitle_event(self, subtitle):
+        pass
+    
+    def add_scale_subtitle_event(self, subtitle):
+        pass
+    
+    def sub_scale_subtitle_event(self, subtitle):
+        pass
+    
+    def clear_subtitle_event(self, subtitle, subtitle_len):
+        pass
+    
+    
+    
