@@ -58,6 +58,7 @@ from lastnewplayfile import LastNewPlayFile
 from service import download_shooter_subtitle
 from user_guide import init_user_guide
 from code_to_utf_8 import auto_decode
+from subtitles import SubTitles
 
 import threading
 import gtk
@@ -141,6 +142,7 @@ class PlayerBox(object):
         self.main_vbox_hframe.set_padding(0, 0, 2, 2)
         self.main_vbox_hframe.add(self.main_vbox)
         
+        self.init_subtitles()
         self.init_preview_window()
         self.init_app_window(app, argv_path_list)        
         self.init_media_player_screen()        
@@ -254,13 +256,36 @@ class PlayerBox(object):
         self.down_sub_title_norma_pixbuf = app_theme.get_pixbuf("screen/check_normal.png")
         self.down_sub_title_hover_pixbuf = app_theme.get_pixbuf("screen/check_hover.png")
         
+    def init_subtitles(self):    
+        self.sub_titles = SubTitles()
+        self.sub_titles.connect("add-subtitle-event",
+                             self.add_subtitle_event)
+        self.sub_titles.connect("scan-subtitle-event",
+                             self.scan_subtitle_event)
+        self.sub_titles.connect("select-subtitle-event",
+                             self.select_subtitle_event)
+        self.sub_titles.connect("delete-subtitle-event",
+                             self.delete_subtitle_event)
+        self.sub_titles.connect("stop-subtitle-event",
+                             self.top_subtitle_event)
+        self.sub_titles.connect("add-delay-subtitle-event",
+                             self.add_delay_subtitle_event)
+        self.sub_titles.connect("sub-delay-subtitle-event",
+                             self.sub_delay_subtitle_event)
+        self.sub_titles.connect("add-scale-subtitle-event",
+                             self.add_scale_subtitle_event)
+        self.sub_titles.connect("sub-scale-subtitle-event",
+                             self.sub_scale_subtitle_event)
+        self.sub_titles.connect("clear-subtitle-event",
+                             self.clear_subtitle_event)
+                
     def init_preview_window(self):
         self.preview = PreView()
         
     def init_config_file(self):    
         # Init play memory.
         self.ini = Config(get_home_path() + "/.config/deepin-media-player/config.ini")
-        # Init deepin media player config gui.
+        # Init deepin media playbr config gui.
         self.config = Config(get_home_path() + "/.config/deepin-media-player/deepin_media_config.ini")
         self.config.connect("config-changed", self.modify_config_section_value)
         

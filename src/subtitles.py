@@ -26,13 +26,7 @@ from code_to_utf_8 import auto_decode
 from type_check import is_subtitle_file
 from utils import get_paly_file_name
 
-'''
-现有的功能:
-  清空所有字幕,添加,加载,删除,停止,延时...指定字幕.
-  搜索目录下的字幕文件.
-'''
-
-class Subtitles(gobject.GObject):
+class SubTitles(gobject.GObject):
     __gsignals__ = {
         "add-subtitle-event":(
             gobject.SIGNAL_RUN_LAST,
@@ -164,7 +158,7 @@ if __name__ == "__main__":
         print "scan_subtitle_event:", subtitle_list
         map(lambda subtitle_file:subtitle.add(subtitle_file), subtitle_list)
         
-    def clear_subtitle_event(subtitle, subtitle_len):    
+    def clear_subtitle_event(subtitle, subtitle_len):
         print "clear_subtitle_event:", subtitle_len
         
     def add_scale_subtitle_event(subtitle):    
@@ -175,7 +169,7 @@ if __name__ == "__main__":
         print "减小字体大小"
         print "sub_scale_subtitle_event"
         
-    sub_titles = Subtitles()
+    sub_titles = SubTitles()
     sub_titles.connect("add-subtitle-event", add_sub_event)
     sub_titles.connect("select-subtitle-event", select_sub_event)
     sub_titles.connect("delete-subtitle-event", del_sub_event)
