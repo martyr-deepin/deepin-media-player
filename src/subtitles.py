@@ -26,6 +26,12 @@ from code_to_utf_8 import auto_decode
 from type_check import is_subtitle_file
 from utils import get_paly_file_name
 
+'''
+现有的功能:
+  清空所有字幕,添加,加载,删除,停止,延时...指定字幕.
+  搜索目录下的字幕文件.
+'''
+
 class Subtitles(gobject.GObject):
     __gsignals__ = {
         "add-subtitle-event":(
@@ -48,39 +54,53 @@ class Subtitles(gobject.GObject):
             gobject.TYPE_NONE, ()),
         "sub-delay-subtitle-event":(
             gobject.SIGNAL_RUN_LAST,
-            gobject.TYPE_NONE, ()),        
+            gobject.TYPE_NONE, ()),
+        "add-scale-subtitle-event":(
+            gobject.SIGNAL_RUN_LAST,
+            gobject.TYPE_NONE,()),
+        "sub-scale-subtitle-event":(
+            gobject.SIGNAL_RUN_LAST,
+            gobject.TYPE_NONE,()),
+        "clear-subtitle-event":(
+            gobject.SIGNAL_RUN_LAST,
+            gobject.TYPE_NONE, (gobject.TYPE_INT,)),        
         }
     def __init__(self):
         gobject.GObject.__init__(self)
         self.__subtitle_list = []
         
     def clear(self):
-        self.__sub_list = []
+        if self.__subtitle_list != []:
+            self.emit("clear-subtitle-event", len(self.__subtitle_list) - 1)
+            self.__subtitle_list = []
         
     def scan_subtitle(self, video_file, subtitle_path):
         if os.path.exists(subtitle_path):
             path_file_list = os.listdir(subtitle_path)            
             
-            subtitle_list = filter(
+            scan_subtitle_list = filter(
                 lambda path: is_subtitle_file(path) and (not cmp(get_paly_file_name(video_file), get_paly_file_name(path))), 
                 map(lambda path_file: os.path.join(subtitle_path, path_file), path_file_list))
             
-            if subtitle_list:    
-                self.emit("scan-subtitle-event", subtitle_list)
+            if scan_subtitle_list:    
+                self.emit("scan-subtitle-event", scan_subtitle_list)
             
     def add(self, path):
-        # read subtitle file.
-        with open(path, "r") as read_fp:
-            fp_str = read_fp.read()            
-        # to subtitle code.  
-        code_to_utf_8_str = auto_decode(fp_str)
-        # write subtitle file.
-        with open(path, 'w') as write_fp:
-            write_fp.write(code_to_utf_8_str)
+        if os.path.exists(path):
+            # read subtitle file.
+            with open(path, "r") as read_fp:
+                fp_str = read_fp.read()            
+            # to subtitle code.  
+            code_to_utf_8_str = auto_decode(fp_str)
+            # write subtitle file.
+            with open(path, 'w') as write_fp:
+                write_fp.write(code_to_utf_8_str)
         
-        self.__subtitle_list.append(path) # save subtitle path.
-        self.emit("add-subtitle-event", str(path))
-        
+            self.__subtitle_list.append(path) # save subtitle path.
+            self.emit("add-subtitle-event", str(path))
+        else:    
+            print "add lose..."
+            
     def select(self, subtitle_index):
         if subtitle_index < len(self.__subtitle_list):
             subtitle_path = self.__subtitle_list[subtitle_index]
@@ -93,15 +113,25 @@ class Subtitles(gobject.GObject):
             self.emit("delete-subtitle-event", str(subtitle_path), int(subtitle_index))
         
     def stop(self):
-        self.emit("stop-subtitle-event")
+        if self.__subtitle_list != []:
+            self.emit("stop-subtitle-event")
         
     def add_delay(self):
-        self.emit("add-delay-subtitle-event")
+        if self.__subtitle_list != []:
+            self.emit("add-delay-subtitle-event")
         
-    def sub_delay(self):    
-        self.emit("sub-delay-subtitle-event")
+    def sub_delay(self):
+        if self.__subtitle_list != []:
+            self.emit("sub-delay-subtitle-event")
         
-                
+    def add_scale(self):
+        if self.__subtitle_list != []:
+            self.emit("add-scale-subtitle-event")
+    
+    def sub_scale(self):
+        if self.__subtitle_list != []:
+            self.emit("sub-scale-subtitle-event")
+        
 if __name__ == "__main__":    
     def add_sub_event(subtitle, STRING):
         print "add_sub_event:", 
@@ -134,6 +164,17 @@ if __name__ == "__main__":
         print "scan_subtitle_event:", subtitle_list
         map(lambda subtitle_file:subtitle.add(subtitle_file), subtitle_list)
         
+    def clear_subtitle_event(subtitle, subtitle_len):    
+        print "clear_subtitle_event:", subtitle_len
+        
+    def add_scale_subtitle_event(subtitle):    
+        print "增加子体大小"
+        print "add_delay_subtitle_event"
+        
+    def sub_scale_subtitle_event(subtitle):
+        print "减小字体大小"
+        print "sub_scale_subtitle_event"
+        
     sub_titles = Subtitles()
     sub_titles.connect("add-subtitle-event", add_sub_event)
     sub_titles.connect("select-subtitle-event", select_sub_event)
@@ -142,13 +183,19 @@ if __name__ == "__main__":
     sub_titles.connect("add-delay-subtitle-event", add_delay_subtitle_event)
     sub_titles.connect("sub-delay-subtitle-event", sub_delay_subtitle_event)
     sub_titles.connect("scan-subtitle-event", scan_subtitle_event)
+    sub_titles.connect("clear-subtitle-event", clear_subtitle_event)
+    sub_titles.connect("add-scale-subtitle-event", add_scale_subtitle_event)
+    sub_titles.connect("sub-scale-subtitle-event", sub_scale_subtitle_event)
     
-    sub_titles.add("/home/long/1.srt")
+    sub_titles.add("/home/long/视频/1.srt")
     sub_titles.select(0)
     # sub_titles.delete(0)
     sub_titles.stop()
     sub_titles.select(0)
     sub_titles.add_delay() 
     sub_titles.sub_delay()
-    sub_titles.scan_subtitle("/home/long/1.avi", "/home/long")
-    
+    sub_titles.scan_subtitle("/home/long/视频/1.avi", "/home/long/视频")
+    sub_titles.delete(1)
+    sub_titles.clear()
+    sub_titles.add_scale()
+    sub_titles.sub_scale()

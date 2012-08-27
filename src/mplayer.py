@@ -305,6 +305,7 @@ class  Mplayer(gobject.GObject):
         # 3: single cycle player. 
         # 4: list recycle play. 
         self.play_list_state = SINGLE_PLAYING_STATE
+        self.subtitle_scale_value = 1.0        
         
     def play(self, path):            
         self.path = path
@@ -421,39 +422,34 @@ class  Mplayer(gobject.GObject):
     def sub_del(self, index):        
         if self.state == STARTING_STATE: # STARTING_STATE
             self.cmd('sub_remove %s\n', index)
-            
-    def sub_clear(self):
-        '''Remove subtitle'''
-        if self.state == STARTING_STATE:
-            self.cmd('sub_remove\n')
-            
+                        
     def sub_stop(self):        
         if self.state == STARTING_STATE:
             self.cmd("sub_select -1\n")
             
-    # subtitle alignment. # 0 top 1 center 2 bottom       
-    # def sub_alignment_top(self):
-    # def sub_alignment_center(self):
-    # def sub_alignment_bottom(self):        
-            
+    # subtitle alignment. # 0 top 1 center 2 bottom  
+    def sub_alignment_top(self):
+        self.sub_alignment(0)
+        
+    def sub_alignment_center(self):
+        self.sub_alignment(1)
+        
+    def sub_alignment_bottom(self):
+        self.sub_alignment(2)
+        
+    def sub_alignment(self, alignment_state):
+        if self.state == STARTING_STATE:
+            self.cmd("sub_alignment %s\n"%(alignment_state))
+
     # subtitle delay(+/-[abs]).
     # def sub_add_delay(self):       
     # def sub_sub_delay(self):    
-            
-    # subtitles load.
-    # def sub_load(self, sub_file)
-            
+                        
     # subtitle log.
     # def sub_log(self)
             
     # subtitle pos.    
     # def sub_pos(self)
-            
-    # subtitle remove(value).
-    # def sub_remove(self, value)
-            
-    # subtitle select(value).  -1 close subtitle. 1 ... 2..3.select subtitle
-    # def sub_select(self, value):
             
     # subtitle source(source).    
     # def sub_source(self):         
@@ -468,9 +464,17 @@ class  Mplayer(gobject.GObject):
     # def sub_demux(self, value):        
             
     # subtitle scale(+/-[abs])
-    # def sub_scale(self):                                
-        
-            
+    # sub_scale %f 1\n. 默认 1.0
+    def sub_add_scale(self):
+        self.sub_scale(self.subtitle_scale_value+0.1)
+    
+    def sub_down_scale(self):
+        self.sub_scale(self.subtitle_scale_value-0.1)
+    
+    def sub_scale(self, value): # value -> %f
+        if self.state == STARTING_STATE:
+            self.cmd("sub_scale %s 1\n" % (value));
+                    
     ## Volume Control ##
     def addvolume(self, volume_num):
         '''Add volume'''
