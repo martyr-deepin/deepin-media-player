@@ -1884,6 +1884,8 @@ class PlayerBox(object):
             
     def media_player_start(self, mplayer, play_bool):
         '''media player start play.'''        
+        # scan subtitle.
+        self.media_player_start_scan_subtitle(mplayer)
         # load subtitle.
         self.media_player_start_load_subtitle(mplayer)
         
@@ -1915,14 +1917,18 @@ class PlayerBox(object):
         self.progressbar.set_pos(0)
         self.bottom_toolbar.progressbar.set_pos(0)
             
+    def media_player_start_scan_subtitle(self, mplayer):
+        print self.sub_titles.scan_subtitle(mplayer.path, os.path.split(mplayer.path)[0])
+        
     def media_player_start_load_subtitle(self, mplayer):    
         # down subtitle.
         save_subtitle_path = self.config.get("SubtitleSet","specific_location_search")        
         if save_subtitle_path:
             if save_subtitle_path[0:1] == "~":
                 save_subtitle_path = get_home_path() + save_subtitle_path[1:]
+                
         if save_subtitle_path:
-            if self.down_sub_title_bool:            
+            if self.down_sub_title_bool:
                 if is_valid_video_file(mplayer.path):                
                     gtk.timeout_add(500, self.down_subtitle_threading, mplayer.path, save_subtitle_path)
             else:                        
@@ -2336,16 +2342,16 @@ class PlayerBox(object):
         if self.down_sub_title_bool:
             down_sub_title_pixbuf = (self.down_sub_title_norma_pixbuf, self.down_sub_title_hover_pixbuf)
                         
-        self.subtitles_select_menu = Menu([(None, "...", None)])
+        self.subtitles_select_menu = Menu([])
         
         subtitles_scale_menu = Menu([
-                (None, "增大尺寸", None),                
-                (None, "减小尺寸", None)
+                (None, "增大尺寸", self.subtitle_add_scale_key),                
+                (None, "减小尺寸", self.subtitle_sub_scale_key)
                 ])
         
         subtitles_delay_menu = Menu([
-                (None, "提前0.5秒", None),
-                (None, "延时0.5秒", None)
+                (None, "提前0.5秒", self.subtitle_add_delay_key),
+                (None, "延时0.5秒", self.subtitle_sub_delay_key)
                 ])
 
         self.subtitles_control_menu = Menu([
@@ -2748,40 +2754,55 @@ class PlayerBox(object):
 
     # init_subtitles connect events.    
     def add_subtitle_event(self, subtitle, subtitle_path):
-        pass
+        print "add_subtitle_event"
     
     def scan_subtitle_event(self, subtitle, subtitle_list):
         map(lambda subtitle_file:subtitle.add(subtitle_file), subtitle_list)
         
     def select_subtitle_event(self, subtitle, subtitle_path, subtitle_index):
-        pass
+        print "select_subtitle_event"
+        
     def delete_subtitle_event(self, subtitle, subtitle_path, subtitle_index):
-        pass
+        print "delete_subtitle_event"
     
     def stop_subtitle_event(self, subtitle):
-        pass
+        print "stop_subtitle_event"
+        print "字幕停止"
     
     def add_delay_subtitle_event(self, subtitle):
-        pass
+        print "add_delay_subtitle_event"
+        self.messagebox("字幕提前0.5秒")
     
     def sub_delay_subtitle_event(self, subtitle):
-        pass
-    
+        print "sub_delay_subtitle_event"
+        self.messagebox("字幕延时0.5秒")
+        
     def add_scale_subtitle_event(self, subtitle):
-        pass
-    
+        print "add_scale_subtitle_event"
+        self.messagebox("增大字幕尺寸")
+        
     def sub_scale_subtitle_event(self, subtitle):
-        pass
+        print "sub_scale_subtitle_event"        
+        self.messagebox("减少字幕尺寸")
     
     def clear_subtitle_event(self, subtitle, subtitle_len):
-        pass
+        print "clear_subtitle_event"
     
+    # subtitles menu control.        
     # subtitle key[stop,add/sub scale].
     def subtitle_stop_key(self):
-        pass
+        self.sub_titles.stop()
     
     def subtitle_add_scale_key(self):
-        pass
+        self.sub_titles.add_scale()
           
-    def subtitle_sub_scale_key(self):
-        pass
+    def subtitle_sub_scale_key(self):                
+        self.sub_titles.sub_scale()
+
+    def subtitle_add_delay_key(self):
+        self.sub_titles.add_delay()
+    
+    def subtitle_sub_delay_key(self):
+        self.sub_titles.sub_delay()
+    
+    

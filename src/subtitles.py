@@ -70,6 +70,7 @@ class SubTitles(gobject.GObject):
         
     def scan_subtitle(self, video_file, subtitle_path):
         if os.path.exists(subtitle_path):
+            print subtitle_path
             path_file_list = os.listdir(subtitle_path)            
             
             scan_subtitle_list = filter(
