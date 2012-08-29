@@ -257,6 +257,7 @@ class PlayerBox(object):
         self.down_sub_title_hover_pixbuf = app_theme.get_pixbuf("screen/check_hover.png")
         
     def init_subtitles(self):    
+        self.subtitles_select_menu_item = []
         self.sub_titles = SubTitles()
         self.sub_titles.connect("add-subtitle-event",
                              self.add_subtitle_event)
@@ -2342,7 +2343,7 @@ class PlayerBox(object):
         if self.down_sub_title_bool:
             down_sub_title_pixbuf = (self.down_sub_title_norma_pixbuf, self.down_sub_title_hover_pixbuf)
                         
-        self.subtitles_select_menu = Menu([])
+        self.subtitles_select_menu = Menu(self.subtitles_select_menu_item)
         
         subtitles_scale_menu = Menu([
                 (None, "增大尺寸", self.subtitle_add_scale_key),                
@@ -2755,7 +2756,9 @@ class PlayerBox(object):
     # init_subtitles connect events.    
     def add_subtitle_event(self, subtitle, subtitle_path):
         print "add_subtitle_event"
-    
+        # add to selece menu.
+        self.subtitles_select_menu_item.append((None, subtitle_path, None))
+        
     def scan_subtitle_event(self, subtitle, subtitle_list):
         map(lambda subtitle_file:subtitle.add(subtitle_file), subtitle_list)
         
