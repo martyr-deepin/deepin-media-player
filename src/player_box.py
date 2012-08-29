@@ -2747,6 +2747,7 @@ class PlayerBox(object):
     def clear_subtitle_event(self, subtitle, subtitle_len):
         pass
     
+    # subtitle key[stop,add/sub scale].
     def subtitle_stop_key(self):
         pass
     
@@ -2754,4 +2755,4 @@ class PlayerBox(object):
         pass
           
     def subtitle_sub_scale_key(self):
-        pass            
+        pass
