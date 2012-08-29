@@ -2335,11 +2335,27 @@ class PlayerBox(object):
         down_sub_title_pixbuf = None
         if self.down_sub_title_bool:
             down_sub_title_pixbuf = (self.down_sub_title_norma_pixbuf, self.down_sub_title_hover_pixbuf)
-            
-        down_sub_title_menu = Menu([
-                (down_sub_title_pixbuf, _("Auto-download Subtitles"), self.set_down_sub_title_bool)
+                        
+        self.subtitles_select_menu = Menu([(None, "...", None)])
+        
+        subtitles_scale_menu = Menu([
+                (None, "增大尺寸", None),                
+                (None, "减小尺寸", None)
                 ])
         
+        subtitles_delay_menu = Menu([
+                (None, "提前0.5秒", None),
+                (None, "延时0.5秒", None)
+                ])
+
+        self.subtitles_control_menu = Menu([
+                (down_sub_title_pixbuf, _("Auto-download Subtitles"), self.set_down_sub_title_bool),
+                (None, "手动载入字幕", None),
+                (None, "字幕选择", self.subtitles_select_menu),
+                (None, "字幕大小", subtitles_scale_menu),
+                (None, "字幕同步", subtitles_delay_menu)
+                ])
+
         self.screen_right_root_menu = Menu([
                 (None, _("Open File"),   self.add_file_clear),
                 (None, _("Open Directory"), self.add_file_dir_clear),
@@ -2352,12 +2368,25 @@ class PlayerBox(object):
                 (None, _("Play"), play_menu),
                 (None, _("Video"), screen_menu),
                 ((self.menu_volume_normal_pixbuf, self.menu_volume_hover_pixbuf), _("Audio"), channel_select),
-                ((self.menu_subtitle_normal_pixbuf, self.menu_subtitle_hover_pixbuf), _("Subtitles"), down_sub_title_menu),
-                ((self.menu_setting_normal_pixbuf, self.menu_setting_hover_pixbuf), _("Preferences"), self.config_gui) 
+                ((self.menu_subtitle_normal_pixbuf, self.menu_subtitle_hover_pixbuf), _("Subtitles"), self.subtitles_control_menu),
+                ((self.menu_setting_normal_pixbuf, self.menu_setting_hover_pixbuf), _("Preferences"), self.config_gui)
                 ], True)
         
         self.screen_right_root_menu.show((int(event.x_root), int(event.y_root)), (0, 0))
         
+
+#         右键菜单 添加
+# 1.手动载入字幕
+# 2.字幕选择（出三级菜单）
+#   （字幕A）
+#   （字幕B）
+# 3.字幕大小
+#   （增大尺寸   快捷键）
+#    （减小尺寸  快捷键）
+# 4.字幕同步（暂时叫这个名字）
+#   （提前0.5秒  快捷键）
+#    （延时0.5秒 快捷键）
+    
     def set_down_sub_title_bool(self):    
         self.down_sub_title_bool = not self.down_sub_title_bool
         
