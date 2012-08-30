@@ -442,9 +442,15 @@ class  Mplayer(gobject.GObject):
             self.cmd("sub_alignment %s\n"%(alignment_state))
 
     # subtitle delay(+/-[abs]).
-    # def sub_add_delay(self):       
-    # def sub_sub_delay(self):    
-                        
+    def up_add_delay(self):       
+        self.sub_delay()
+        
+    def down_sub_delay(self):
+        self.sub_delay()
+    
+    def sub_delay(self, value):                    
+        pass
+    
     # subtitle log.
     # def sub_log(self)
             
@@ -465,11 +471,11 @@ class  Mplayer(gobject.GObject):
             
     # subtitle scale(+/-[abs])
     # sub_scale %f 1\n. 默认 1.0
-    def sub_add_scale(self):
-        self.sub_scale(self.subtitle_scale_value+0.1)
+    def sub_up_scale(self):
+        self.sub_scale(self.subtitle_scale_value + 0.1)
     
     def sub_down_scale(self):
-        self.sub_scale(self.subtitle_scale_value-0.1)
+        self.sub_scale(self.subtitle_scale_value - 0.1)
     
     def sub_scale(self, value): # value -> %f
         if self.state == STARTING_STATE:

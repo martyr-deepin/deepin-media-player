@@ -205,56 +205,85 @@ class PlayerBox(object):
         # menu icon pixbuf. menupixbuf ..
         self.video_aspect_pixbuf = app_theme.get_pixbuf("screen/check_normal.png") # aspect state pixbuf.
         self.video_aspect_select_pixbuf = app_theme.get_pixbuf("screen/check_hover.png")
+        self.video_aspect_none_pixbuf = app_theme.get_pixbuf("screen/check_none.png")
         self.video_aspect_type = ASCEPT_NORMAL_STATE #"默认"
         self.playwinmax_bool = True
+        # concie pixbuf.
         self.menu_concie_normal_pixbuf = app_theme.get_pixbuf("screen/menu_concise_normal.png")
         self.menu_concie_hover_pixbuf = app_theme.get_pixbuf("screen/menu_concise_hover.png")
+        self.menu_concie_none_pixbuf = app_theme.get_pixbuf("screen/menu_concise_none.png")
+        # window mode.
         self.menu_window_mode_normal_pixbuf = app_theme.get_pixbuf("screen/menu_window_mode_normal.png")
         self.menu_window_mode_hover_pixbuf = app_theme.get_pixbuf("screen/menu_window_mode_hover.png")
+        self.menu_window_mode_none_pixbuf = app_theme.get_pixbuf("screen/menu_window_mode_none.png")
+        # play sequence.
         self.menu_play_sequence_normal_pixbuf = app_theme.get_pixbuf("screen/menu_play_sequence_normal.png")
         self.menu_play_sequence_hover_pixbuf = app_theme.get_pixbuf("screen/menu_play_sequence_hover.png")
+        self.menu_play_sequence_none_pixbuf = app_theme.get_pixbuf("screen/menu_play_sequence_none.png")
+        # full .
         self.menu_full_normal_pixbuf = app_theme.get_pixbuf("screen/menu_full_normal.png") 
         self.menu_full_hover_pixbuf = app_theme.get_pixbuf("screen/menu_full_hover.png")
+        self.menu_full_none_pixbuf = app_theme.get_pixbuf("screen/menu_full_none.png")
+        # pre.
         self.menu_pre_normal_pixbuf = app_theme.get_pixbuf("screen/menu_pre_normal.png")
         self.menu_pre_hover_pixbuf = app_theme.get_pixbuf("screen/menu_pre_hover.png")
+        self.menu_pre_none_pixbuf = app_theme.get_pixbuf("screen/menu_pre_none.png")
+        # next.
         self.menu_next_normal_pixbuf = app_theme.get_pixbuf("screen/menu_next_normal.png")
         self.menu_next_hover_pixbuf = app_theme.get_pixbuf("screen/menu_next_hover.png")        
+        self.menu_next_none_pixbuf = app_theme.get_pixbuf("screen/menu_next_none.png")        
+        # f seek 5.
         self.menu_f_seek_5_normal_pixbuf = app_theme.get_pixbuf("screen/menu_f_seek_5_normal.png")
         self.menu_f_seek_5_hover_pixbuf = app_theme.get_pixbuf("screen/menu_f_seek_5_hover.png")
+        self.menu_f_seek_5_none_pixbuf = app_theme.get_pixbuf("screen/menu_f_seek_5_none.png")
+        # b seek 5.
         self.menu_b_seek_5_normal_pixbuf = app_theme.get_pixbuf("screen/menu_b_seek_5_normal.png")
         self.menu_b_seek_5_hover_pixbuf = app_theme.get_pixbuf("screen/menu_b_seek_5_hover.png")
+        self.menu_b_seek_5_none_pixbuf = app_theme.get_pixbuf("screen/menu_b_seek_5_none.png")
+        # volume.
         self.menu_volume_normal_pixbuf = app_theme.get_pixbuf("screen/menu_volume_normal.png")
         self.menu_volume_hover_pixbuf = app_theme.get_pixbuf("screen/menu_volume_hover.png")
+        self.menu_volume_none_pixbuf = app_theme.get_pixbuf("screen/menu_volume_none.png")
+        # settin.
         self.menu_setting_normal_pixbuf = app_theme.get_pixbuf("screen/menu_setting_normal.png")
         self.menu_setting_hover_pixbuf = app_theme.get_pixbuf("screen/menu_setting_hover.png")
+        self.menu_setting_none_pixbuf = app_theme.get_pixbuf("screen/menu_setting_none.png")
+        # quit.
         self.menu_quit_normal_pixbuf = app_theme.get_pixbuf("screen/menu_quit_normal.png")
         self.menu_quit_hover_pixbuf = app_theme.get_pixbuf("screen/menu_quit_hover.png")
+        self.menu_quit_none_pixbuf = app_theme.get_pixbuf("screen/menu_quit_none.png")
+        # subtitle.
         self.menu_subtitle_normal_pixbuf = app_theme.get_pixbuf("screen/menu_subtitle_normal.png")
         self.menu_subtitle_hover_pixbuf = app_theme.get_pixbuf("screen/menu_subtitle_hover.png")
-        
+        self.menu_subtitle_none_pixbuf = app_theme.get_pixbuf("screen/menu_subtitle_none.png")        
         # play sequence pixbuf.
         self.play_sequence_select_normal_pixbuf = app_theme.get_pixbuf("screen/check_normal.png")
         self.play_sequence_select_hover_pixbuf = app_theme.get_pixbuf("screen/check_hover.png")
-
+        self.play_sequence_select_none_pixbuf = app_theme.get_pixbuf("screen/check_none.png")
         # channel_select pixbuf.
         self.select_channel_normal_pixbuf = app_theme.get_pixbuf("screen/check_normal.png")
         self.select_channel_hover_pixbuf = app_theme.get_pixbuf("screen/check_hover.png")        
-        
+        self.select_channel_none_pixbuf = app_theme.get_pixbuf("screen/check_none.png")                
         # mute/add/sub volume pixbuf.
         self.mute_normal_pixbuf = app_theme.get_pixbuf("screen/menu_volume_menu_normal.png")
         self.mute_hover_pixbuf = app_theme.get_pixbuf("screen/menu_volume_menu_hover.png")
-        self.mute_volume_pixbuf = (self.mute_normal_pixbuf, self.mute_hover_pixbuf)
+        self.mute_none_pixbuf = app_theme.get_pixbuf("screen/menu_volume_menu_none.png")                
+        self.mute_volume_pixbuf = (self.mute_normal_pixbuf, self.mute_hover_pixbuf, self.mute_none_pixbuf)
+        # add volume.
         self.add_volume_normal_pixbuf = app_theme.get_pixbuf("screen/menu_volume_add_normal.png")
         self.add_volume_hover_pixbuf = app_theme.get_pixbuf("screen/menu_volume_add_hover.png")
-        self.add_volume_pixbuf = (self.add_volume_normal_pixbuf, self.add_volume_hover_pixbuf)
+        self.add_volume_none_pixbuf = app_theme.get_pixbuf("screen/menu_volume_add_none.png")
+        self.add_volume_pixbuf = (self.add_volume_normal_pixbuf, self.add_volume_hover_pixbuf, self.add_volume_none_pixbuf)
+        # sub volume.
         self.sub_volume_normal_pixbuf = app_theme.get_pixbuf("screen/menu_volume_sub_normal.png")
         self.sub_volume_hover_pixbuf = app_theme.get_pixbuf("screen/menu_volume_sub_hover.png")
-        self.sub_volume_pixbuf = (self.sub_volume_normal_pixbuf, self.sub_volume_hover_pixbuf)
-        
+        self.sub_volume_none_pixbuf = app_theme.get_pixbuf("screen/menu_volume_sub_none.png")
+        self.sub_volume_pixbuf = (self.sub_volume_normal_pixbuf, self.sub_volume_hover_pixbuf, self.sub_volume_none_pixbuf)        
         # down subtitle pixbuf.
         self.down_sub_title_bool = False
         self.down_sub_title_norma_pixbuf = app_theme.get_pixbuf("screen/check_normal.png")
         self.down_sub_title_hover_pixbuf = app_theme.get_pixbuf("screen/check_hover.png")
+        self.down_sub_title_none_pixbuf = app_theme.get_pixbuf("screen/check_none.png")
         
     def init_subtitles(self):    
         self.subtitles_select_menu_item = []
@@ -1881,7 +1910,7 @@ class PlayerBox(object):
                 if os.path.splitext(file_name)[0] == temp_path_file:
                     save_down_file = os.path.join(save_subtitle_path, file_name)                    
             if save_down_file and "True" == self.config.get("SubtitleSet", "ai_load_subtitle"):                    
-                self.load_subtitle(save_down_file)        
+                self.load_subtitle(save_down_file)
             
     def media_player_start(self, mplayer, play_bool):
         '''media player start play.'''        
@@ -1923,7 +1952,7 @@ class PlayerBox(object):
         
     def media_player_start_load_subtitle(self, mplayer):    
         # down subtitle.
-        save_subtitle_path = self.config.get("SubtitleSet","specific_location_search")        
+        save_subtitle_path = self.config.get("SubtitleSet","specific_location_search")
         if save_subtitle_path:
             if save_subtitle_path[0:1] == "~":
                 save_subtitle_path = get_home_path() + save_subtitle_path[1:]
@@ -2098,7 +2127,7 @@ class PlayerBox(object):
         left_channel_pixbuf = None
         right_channel_pixbuf = None
         
-        channel_pixbuf = (self.select_channel_normal_pixbuf, self.select_channel_hover_pixbuf)
+        channel_pixbuf = (self.select_channel_normal_pixbuf, self.select_channel_hover_pixbuf, self.select_channel_none_pixbuf)
         
         if self.mp.channel_state == normal_channel_state:
             normal_channel_pixbuf = channel_pixbuf
@@ -2130,17 +2159,17 @@ class PlayerBox(object):
         pixbuf_2_35X1 = None
         
         if ASCEPT_NORMAL_STATE == self.video_aspect_type: #"默认"
-            pixbuf_normal = (self.video_aspect_pixbuf, self.video_aspect_select_pixbuf)
+            pixbuf_normal = (self.video_aspect_pixbuf, self.video_aspect_select_pixbuf, self.video_aspect_none_pixbuf)
         elif ASCEPT_4X3_STATE == self.video_aspect_type: #"4:3"
-            pixbuf_4X3 = (self.video_aspect_pixbuf, self.video_aspect_select_pixbuf)
+            pixbuf_4X3 = (self.video_aspect_pixbuf, self.video_aspect_select_pixbuf, self.video_aspect_none_pixbuf)
         elif ASCEPT_16X9_STATE == self.video_aspect_type: #"16:9"
-            pixbuf_16X9 = (self.video_aspect_pixbuf, self.video_aspect_select_pixbuf)
+            pixbuf_16X9 = (self.video_aspect_pixbuf, self.video_aspect_select_pixbuf, self.video_aspect_none_pixbuf)
         elif ASCEPT_16X10_STATE == self.video_aspect_type: # "16:10"
-            pixbuf_16X10 = (self.video_aspect_pixbuf, self.video_aspect_select_pixbuf)
+            pixbuf_16X10 = (self.video_aspect_pixbuf, self.video_aspect_select_pixbuf, self.video_aspect_none_pixbuf)
         elif ASCEPT_1_85X1_STATE == self.video_aspect_type: # "1.85:1"
-            pixbuf_1_85X1 = (self.video_aspect_pixbuf, self.video_aspect_select_pixbuf)
+            pixbuf_1_85X1 = (self.video_aspect_pixbuf, self.video_aspect_select_pixbuf, self.video_aspect_none_pixbuf)
         elif ASCEPT_2_35X1_STATE == self.video_aspect_type: #"2.35:1"
-            pixbuf_2_35X1 = (self.video_aspect_pixbuf, self.video_aspect_select_pixbuf)
+            pixbuf_2_35X1 = (self.video_aspect_pixbuf, self.video_aspect_select_pixbuf, self.video_aspect_none_pixbuf)
         
         self.screen_menu = Menu([(pixbuf_normal, _("Original"),  self.set_restart_aspect),
                                  (pixbuf_4X3,    "4:3",    self.set_4X3_aspect),
@@ -2168,7 +2197,7 @@ class PlayerBox(object):
         # 4: list recycle play. 
         # list_recycle_play_state = 4
         
-        play_sequence_pixbuf = (self.play_sequence_select_normal_pixbuf, self.play_sequence_select_hover_pixbuf)
+        play_sequence_pixbuf = (self.play_sequence_select_normal_pixbuf, self.play_sequence_select_hover_pixbuf, self.play_sequence_select_none_pixbuf)
         single_pixbuf = None
         order_pixbuf = None
         random_pixbuf = None
@@ -2194,15 +2223,24 @@ class PlayerBox(object):
                                      (list_recycle_pixbuf, _("Repeat List"), self.loop_list_play)]
                                     )
         # In title root menu.
-        self.play_menu = Menu([((self.menu_full_normal_pixbuf, self.menu_full_hover_pixbuf), _("Full Screen"), self.key_return),
-                               ((self.menu_window_mode_normal_pixbuf, self.menu_window_mode_hover_pixbuf), _("Standard Mode"), self.set_menu_common),
-                               ((self.menu_concie_normal_pixbuf, self.menu_concie_hover_pixbuf), _("Concise Mode"), self.set_menu_concise),
-                               ((self.menu_pre_normal_pixbuf, self.menu_pre_hover_pixbuf), _("Prev"), self.key_pre),
-                               ((self.menu_next_normal_pixbuf, self.menu_next_hover_pixbuf), _("Next"), self.key_next),
+        full_menu_pixbufs = (self.menu_full_normal_pixbuf, self.menu_full_hover_pixbuf, self.menu_full_normal_pixbuf)
+        window_mode_pixbufs = (self.menu_window_mode_normal_pixbuf, self.menu_window_mode_hover_pixbuf, self.menu_window_mode_none_pixbuf)
+        menu_pre_pixbufs = (self.menu_pre_normal_pixbuf, self.menu_pre_hover_pixbuf, self.menu_pre_none_pixbuf)
+        menu_next_pixbufs = (self.menu_next_normal_pixbuf, self.menu_next_hover_pixbuf, self.menu_next_none_pixbuf)
+        menu_f_seek_5_pixbufs = (self.menu_f_seek_5_normal_pixbuf, self.menu_f_seek_5_hover_pixbuf, self.menu_f_seek_5_none_pixbuf)
+        menu_b_seek_5_pixbufs = (self.menu_b_seek_5_normal_pixbuf, self.menu_b_seek_5_hover_pixbuf, self.menu_b_seek_5_none_pixbuf)
+        menu_concise_pixbufs = (self.menu_concie_normal_pixbuf, self.menu_concie_hover_pixbuf, self.menu_concie_none_pixbuf)
+        menu_play_sequence_pixbufs = (self.menu_play_sequence_normal_pixbuf, self.menu_play_sequence_hover_pixbuf, self.menu_play_sequence_none_pixbuf)
+        
+        self.play_menu = Menu([(full_menu_pixbufs, _("Full Screen"), self.key_return),
+                               (window_mode_pixbufs, _("Standard Mode"), self.set_menu_common),
+                               (menu_concise_pixbufs, _("Concise Mode"), self.set_menu_concise),
+                               (menu_pre_pixbufs, _("Prev"), self.key_pre),
+                               (menu_next_pixbufs, _("Next"), self.key_next),
                                (None),
-                               ((self.menu_f_seek_5_normal_pixbuf, self.menu_f_seek_5_hover_pixbuf), _("Forward 5s"), self.key_right),
-                               ((self.menu_b_seek_5_normal_pixbuf, self.menu_b_seek_5_hover_pixbuf), _("Rewind 5s"), self.key_left),
-                               ((self.menu_play_sequence_normal_pixbuf, self.menu_play_sequence_hover_pixbuf), _("Play Order"), self.play_state_menu),
+                               (menu_f_seek_5_pixbufs, _("Forward 5s"), self.key_right),
+                               (menu_b_seek_5_pixbufs, _("Rewind 5s"), self.key_left),
+                               (menu_play_sequence_pixbufs, _("Play Order"), self.play_state_menu),
                                ])
         # In title root menu.
         self.file_menu = Menu([(None, _("Open File"), self.add_file_clear),
@@ -2215,19 +2253,22 @@ class PlayerBox(object):
                                (None, _("About us"), None)])
         
         #
+        menu_volume_pixbufs = (self.menu_volume_normal_pixbuf, self.menu_volume_hover_pixbuf, self.menu_volume_none_pixbuf)
+        menu_setting_pixbufs = (self.menu_setting_normal_pixbuf, self.menu_setting_hover_pixbuf, self.menu_setting_none_pixbuf)
+        menu_quit_pixbufs = (self.menu_quit_normal_pixbuf, self.menu_quit_hover_pixbuf, self.menu_quit_none_pixbuf)
         self.title_root_menu = Menu([(None, _("File"), self.file_menu),
                                      (None, _("Play"), self.play_menu),
                                      (None, _("Video"), self.screen_menu),
-                                     ((self.menu_volume_normal_pixbuf, self.menu_volume_hover_pixbuf), _("Audio"), self.volume_menu),
+                                     (menu_volume_pixbufs, _("Audio"), self.volume_menu),
                                      # (None, "字幕", self.subtitle_menu),
                                      (None, _("Take Screenshots"), self.sort_menu),
                                      (None, _("New Features"), init_user_guide),
-                                     ((self.menu_setting_normal_pixbuf, self.menu_setting_hover_pixbuf), _("Preferences"), self.config_gui),
+                                     (menu_setting_pixbufs, _("Preferences"), self.config_gui),
                                      # (None, "总在最前", None),
                                      # (None, "自定义换肤", None),
                                      # (None, "帮助与反馈", self.help_menu),
                                      (None),
-                                     ((self.menu_quit_normal_pixbuf, self.menu_quit_hover_pixbuf), _("Quit"), self.set_menu_quit)],
+                                     (menu_quit_pixbufs, _("Quit"), self.set_menu_quit)],
                                     True)
         self.title_root_menu.show(
             get_widget_root_coordinate(button, WIDGET_POS_BOTTOM_LEFT),
@@ -2247,7 +2288,7 @@ class PlayerBox(object):
         # 4: list recycle play. 
         # list_recycle_play_state = 4
         
-        play_sequence_pixbuf = (self.play_sequence_select_normal_pixbuf, self.play_sequence_select_hover_pixbuf)
+        play_sequence_pixbuf = (self.play_sequence_select_normal_pixbuf, self.play_sequence_select_hover_pixbuf, self.play_sequence_select_none_pixbuf)
         single_pixbuf = None
         order_pixbuf = None
         random_pixbuf = None
@@ -2272,13 +2313,17 @@ class PlayerBox(object):
                                 (signle_cycle_pixbuf, _("Repeat"), self.sigle_loop_play),
                                 (list_recycle_pixbuf, _("Repeat List"), self.loop_list_play)]
                                )
-        
+        # 这里需要重构.代码可复用.
+        menu_pre_pixbufs = (self.menu_pre_normal_pixbuf, self.menu_pre_hover_pixbuf, self.menu_pre_none_pixbuf)
+        menu_next_pixbufs = (self.menu_next_normal_pixbuf, self.menu_next_hover_pixbuf, self.menu_next_none_pixbuf)
+        menu_f_seek_5_pixbufs = (self.menu_f_seek_5_normal_pixbuf, self.menu_f_seek_5_hover_pixbuf, self.menu_f_seek_5_none_pixbuf)
+        menu_b_seek_5_pixbufs = (self.menu_b_seek_5_normal_pixbuf, self.menu_b_seek_5_hover_pixbuf, self.menu_b_seek_5_none_pixbuf)
         play_menu = Menu([                                                    
-                          ((self.menu_pre_normal_pixbuf, self.menu_pre_hover_pixbuf), _("Prev"), self.key_pre),
-                          ((self.menu_next_normal_pixbuf, self.menu_next_hover_pixbuf), _("Next"), self.key_next),
+                          (menu_pre_pixbufs, _("Prev"), self.key_pre),
+                          (menu_next_pixbufs, _("Next"), self.key_next),
                           (None),
-                          ((self.menu_f_seek_5_normal_pixbuf, self.menu_f_seek_5_hover_pixbuf), _("Forward 5s"), self.key_right),
-                          ((self.menu_b_seek_5_normal_pixbuf, self.menu_b_seek_5_hover_pixbuf), _("Rewind 5s"), self.key_left),
+                          (menu_f_seek_5_pixbufs, _("Forward 5s"), self.key_right),
+                          (menu_b_seek_5_pixbufs, _("Rewind 5s"), self.key_left),
                           ])
 
         # aspect.
@@ -2288,19 +2333,19 @@ class PlayerBox(object):
         pixbuf_16X10 = None
         pixbuf_1_85X1 = None
         pixbuf_2_35X1 = None
-        
+        video_aspect_pixbufs = (self.video_aspect_pixbuf, self.video_aspect_select_pixbuf, self.video_aspect_none_pixbuf)
         if ASCEPT_NORMAL_STATE == self.video_aspect_type: # 默认
-            pixbuf_normal = (self.video_aspect_pixbuf, self.video_aspect_select_pixbuf)
+            pixbuf_normal = video_aspect_pixbufs
         elif ASCEPT_4X3_STATE == self.video_aspect_type: #"4:3"
-            pixbuf_4X3 = (self.video_aspect_pixbuf, self.video_aspect_select_pixbuf)
+            pixbuf_4X3 = video_aspect_pixbufs
         elif ASCEPT_16X9_STATE == self.video_aspect_type: #"16:9"
-            pixbuf_16X9 = (self.video_aspect_pixbuf, self.video_aspect_select_pixbuf)
+            pixbuf_16X9 = video_aspect_pixbufs
         elif ASCEPT_16X10_STATE == self.video_aspect_type: # "16:10"
-            pixbuf_16X10 = (self.video_aspect_pixbuf, self.video_aspect_select_pixbuf)
+            pixbuf_16X10 = video_aspect_pixbufs
         elif ASCEPT_1_85X1_STATE == self.video_aspect_type: #"1.85:1"
-            pixbuf_1_85X1 = (self.video_aspect_pixbuf, self.video_aspect_select_pixbuf)
+            pixbuf_1_85X1 = video_aspect_pixbufs
         elif ASCEPT_2_35X1_STATE == self.video_aspect_type: # "2.35:1"
-            pixbuf_2_35X1 = (self.video_aspect_pixbuf, self.video_aspect_select_pixbuf)
+            pixbuf_2_35X1 = video_aspect_pixbufs
         
         screen_menu = Menu([(pixbuf_normal, _("Original"),  self.set_restart_aspect),
                             (pixbuf_4X3,    "4:3",    self.set_4X3_aspect),
@@ -2324,7 +2369,7 @@ class PlayerBox(object):
         left_channel_pixbuf = None
         right_channel_pixbuf = None
         
-        channel_pixbuf = (self.select_channel_normal_pixbuf, self.select_channel_hover_pixbuf)
+        channel_pixbuf = (self.select_channel_normal_pixbuf, self.select_channel_hover_pixbuf, self.select_channel_none_pixbuf)
         
         if self.mp.channel_state == normal_channel_state:
             normal_channel_pixbuf = channel_pixbuf
@@ -2341,10 +2386,13 @@ class PlayerBox(object):
         
         down_sub_title_pixbuf = None
         if self.down_sub_title_bool:
-            down_sub_title_pixbuf = (self.down_sub_title_norma_pixbuf, self.down_sub_title_hover_pixbuf)
+            down_sub_title_pixbuf = (self.down_sub_title_norma_pixbuf, self.down_sub_title_hover_pixbuf, self.down_sub_title_none_pixbuf)
                         
-        self.subtitles_select_menu = Menu(self.subtitles_select_menu_item)
-        
+        if bool(len(self.subtitles_select_menu_item)):
+            self.subtitles_select_menu = Menu(self.subtitles_select_menu_item)
+        else:
+            self.subtitles_select_menu = None
+            
         subtitles_scale_menu = Menu([
                 (None, "增大尺寸", self.subtitle_add_scale_key),                
                 (None, "减小尺寸", self.subtitle_sub_scale_key)
@@ -2363,20 +2411,30 @@ class PlayerBox(object):
                 (None, "字幕同步", subtitles_delay_menu)
                 ])
 
+        self.subtitles_control_menu.set_menu_item_sensitive_by_index(2, bool(len(self.subtitles_select_menu_item)))
+                        
+        # 代码需要重构.
+        menu_full_pixbufs = (self.menu_full_normal_pixbuf, self.menu_full_hover_pixbuf, self.menu_full_none_pixbuf)
+        menu_window_mode_pixbufs =  (self.menu_window_mode_normal_pixbuf, self.menu_window_mode_hover_pixbuf, self.menu_window_mode_none_pixbuf)
+        menu_concise_pixbufs = (self.menu_concie_normal_pixbuf, self.menu_concie_hover_pixbuf, self.menu_concie_none_pixbuf)
+        menu_play_sequence_pixbufs = (self.menu_play_sequence_normal_pixbuf, self.menu_play_sequence_hover_pixbuf, self.menu_play_sequence_none_pixbuf)
+        menu_volume_pixbufs = (self.menu_volume_normal_pixbuf, self.menu_volume_hover_pixbuf, self.menu_volume_none_pixbuf)
+        menu_subtitle_pixbufs = (self.menu_subtitle_normal_pixbuf, self.menu_subtitle_hover_pixbuf, self.menu_subtitle_none_pixbuf)
+        menu_setting_pixbufs = (self.menu_setting_normal_pixbuf, self.menu_setting_hover_pixbuf, self.menu_setting_none_pixbuf)
         self.screen_right_root_menu = Menu([
                 (None, _("Open File"),   self.add_file_clear),
                 (None, _("Open Directory"), self.add_file_dir_clear),
                 (None, _("Open URL"),   self.open_url_dialog_window),
                 (None),
-                ((self.menu_full_normal_pixbuf, self.menu_full_hover_pixbuf), _("Full Screen On/Off"),    self.key_return),
-                ((self.menu_window_mode_normal_pixbuf, self.menu_window_mode_hover_pixbuf), _("Standard Mode"), self.set_menu_common),
-                ((self.menu_concie_normal_pixbuf, self.menu_concie_hover_pixbuf), _("Concise Mode"), self.set_menu_concise),
-                ((self.menu_play_sequence_normal_pixbuf, self.menu_play_sequence_hover_pixbuf), _("Play Order"), play_state_menu),
+                (menu_full_pixbufs, _("Full Screen On/Off"),    self.key_return),
+                (menu_window_mode_pixbufs, _("Standard Mode"), self.set_menu_common),
+                (menu_concise_pixbufs, _("Concise Mode"), self.set_menu_concise),
+                (menu_play_sequence_pixbufs, _("Play Order"), play_state_menu),
                 (None, _("Play"), play_menu),
                 (None, _("Video"), screen_menu),
-                ((self.menu_volume_normal_pixbuf, self.menu_volume_hover_pixbuf), _("Audio"), channel_select),
-                ((self.menu_subtitle_normal_pixbuf, self.menu_subtitle_hover_pixbuf), _("Subtitles"), self.subtitles_control_menu),
-                ((self.menu_setting_normal_pixbuf, self.menu_setting_hover_pixbuf), _("Preferences"), self.config_gui)
+                (menu_volume_pixbufs, _("Audio"), channel_select),
+                (menu_subtitle_pixbufs, _("Subtitles"), self.subtitles_control_menu),
+                (menu_setting_pixbufs, _("Preferences"), self.config_gui)
                 ], True)
         
         self.screen_right_root_menu.show((int(event.x_root), int(event.y_root)), (0, 0))
@@ -2675,14 +2733,13 @@ class PlayerBox(object):
 
     '''Subtitle.'''
     def load_subtitle(self, sub_file):        
-        fp_str = open(sub_file, "r").read()
-        code_to_utf_8_str = auto_decode(fp_str)
-
-        with open(sub_file, 'w') as fp_open:
-            fp_open.write(code_to_utf_8_str)        
-            
-        self.mp.sub_add(sub_file)
-
+        # fp_str = open(sub_file, "r").read()
+        # code_to_utf_8_str = auto_decode(fp_str)
+        # with open(sub_file, 'w') as fp_open:
+        #     fp_open.write(code_to_utf_8_str)            
+        # self.mp.sub_add(sub_file)
+        self.sub_titles.add(sub_file)
+        
     def remove_subtitle(self):
         self.mp.sub_remove()
 
@@ -2770,7 +2827,7 @@ class PlayerBox(object):
     
     def stop_subtitle_event(self, subtitle):
         print "stop_subtitle_event"
-        print "字幕停止"
+        self.messagebox("停止字幕")
     
     def add_delay_subtitle_event(self, subtitle):
         print "add_delay_subtitle_event"
