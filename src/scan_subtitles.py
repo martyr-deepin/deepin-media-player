@@ -28,6 +28,9 @@ SCAN_PAGE_URL = "http://www.yyets.com/php/search/index"
 
 class ScanUrlSub:
     def __init__(self):        
+        self.init_value()
+        
+    def init_value(self):    
         self.scan_url = SCAN_URL
         self.mc_url_and_name_list = []
         self.mc_url_and_name_dict = {}
@@ -51,6 +54,7 @@ class ScanUrlSub:
         self.get_page_all_url_list(temp_url)    
         
     def scan_url_function(self, keyword_str):
+        self.init_value()
         self.keyword_str = keyword_str
         self.scan_open_url_get_informtiom(self.scan_url + str(keyword_str))
         
@@ -125,20 +129,144 @@ class ScanUrlSub:
                     key = key + str(self.key_dict_i)
                     self.key_dict_i += 1
                 self.mc_url_and_name_dict[key] = url_mc[0]
+                                        
+                
+                
+#################################################################################################                
+from skin import app_theme
+from dtk.ui.button import Button
+from dtk.ui.listview import ListItem, ListView
+from dtk.ui.application import Application               
+from dtk.ui.scrolled_window import ScrolledWindow
+from dtk.ui.entry import InputEntry
+from dtk.ui.label import Label
+import gtk
+
+class ScanGui(object):
+    def __init__(self):
+        self.app = Application()
+        # init value.
+        self.scan_url_sub = ScanUrlSub()
+        # Set app size.
+        self.app.set_default_size(480, 400)               
+        self.app.set_icon(app_theme.get_pixbuf("icon.ico"))
+        self.app.set_skin_preview(app_theme.get_pixbuf("frame.png"))
+        # Add app titlebar.
+        self.app.add_titlebar(
+            ["close"],
+            app_theme.get_pixbuf("logo.png"),
+            "字幕下载", " ", True)
         
-if __name__ == "__main__":
-    scan_url_sub = ScanUrlSub()
-    scan_url_sub.scan_url_function("dsfsdf")    
+        # main_vbox init.
+        self.main_vbox = gtk.VBox()
+        self.main_vbox_align = gtk.Alignment()
+        self.main_vbox_align.set(1, 1, 1, 1)
+        self.main_vbox_align.set_padding(6, 4, 2, 2)
+        self.main_vbox_align.add(self.main_vbox)
+        
+        self.items = []
+        self.list_view = ListView(
+        [(lambda item: item.title, cmp),
+         (lambda item: item.artist, cmp),
+         (lambda item: item.length, cmp)])
+        self.list_view.set_expand_column(0)
+        self.list_view.add_titles(["字幕", "语言", "时长"])        
+        self.list_view.connect("double-click-item", self.list_view_double_click_item)
+        self.scrolled_window = ScrolledWindow()
+        self.scrolled_window.add_child(self.list_view)
+
+        # top hbox init.
+        self.top_hbox_init()
+        # bottom hbox init.
+        self.bottom_hbox_init()
+        
+        
+        self.main_vbox.pack_start(self.top_hbox_align, False, False)
+        self.main_vbox.pack_start(self.scrolled_window)
+        # self.main_vbox.pack_start(self.bottom_hbox_align, False, False)
+        
+        self.app.main_box.add(self.main_vbox_align)
+        
+        self.app.window.show_all()
+        
+    def list_view_double_click_item(self, ListView, item, i, x, y):
+        print self.scan_url_sub.mc_url_and_name_dict[item.title]
     
-    print "搜索字幕总数:", scan_url_sub.sum_subtitles    
-    print '下一页需要的链接:', scan_url_sub.page_string 
-    temp_url = scan_url_sub.page_string + "3" + scan_url_sub.down_page_url
-    temp_url = SCAN_PAGE_URL + temp_url
-    print "搜索:", temp_url
-    scan_url_sub.scan_page_index(3)
-    # scan_url_sub.get_page_all_url_list(temp_url)
-    scan_url_sub.get_sum_page()
-    print "第3页:搜索到的东西:", len(scan_url_sub.mc_url_and_name_dict.keys())
-    print "=========================="
-    for i in scan_url_sub.mc_url_and_name_dict.keys():
-        print i
+    def top_hbox_init(self):
+        self.scan_sub_sum_label = Label("搜索的字幕总数:")
+        self.scan_sub_sum_label_align = gtk.Alignment()
+        self.scan_sub_sum_label_align.set_padding(4, 0, 0, 80)
+        self.scan_sub_sum_label_align.add(self.scan_sub_sum_label)
+        
+        self.name_label = Label("影片名：")
+        self.name_label_align = gtk.Alignment()        
+        self.name_label_align.add(self.name_label)
+        self.name_label_align.set(1, 0, 0, 0)
+        self.name_label_align.set_padding(4, 0, 0, 0)
+        
+        self.name_entry = InputEntry("")
+        self.name_entry.set_size(125, 24)
+        self.name_entry_align = gtk.Alignment()
+        self.name_entry_align.set_padding(0, 2, 2, 2)
+        self.name_entry_align.add(self.name_entry)
+        
+        self.scan_button = Button("搜索")
+        self.scan_button_align = gtk.Alignment()
+        self.scan_button_align.add(self.scan_button)
+        self.scan_button_align.set_padding(0, 6, 5, 20)
+        
+        self.top_hbox = gtk.HBox()
+        self.top_hbox_align = gtk.Alignment()
+        self.top_hbox_align.add(self.top_hbox)
+        self.top_hbox_align.set(1, 0, 0, 0)
+        
+        self.top_hbox.pack_start(self.scan_sub_sum_label_align)
+        self.top_hbox.pack_start(self.name_label_align)
+        self.top_hbox.pack_start(self.name_entry_align, False, False)
+        self.top_hbox.pack_start(self.scan_button_align, False, False)
+
+        self.scan_button.connect("clicked", self.scan_button_clicked)
+        
+    def scan_button_clicked(self, widget):    
+        scan_name = self.name_entry.get_text()
+        if bool(len(scan_name)):
+            # clear value.
+            self.list_view.clear()
+            self.items = []
+            self.scan_url_sub.scan_url_function(str(scan_name))        
+            self.scan_sub_sum_label.set_text("字幕总数:%s" % str(self.scan_url_sub.sum_subtitles))
+            self.scan_url_sub.scan_page_index(1)
+            self.scan_url_sub.get_sum_page()
+            
+            for key in self.scan_url_sub.mc_url_and_name_dict.keys():
+                self.items.append(ListItem(str(key), "", ""))
+
+            self.list_view.add_items(self.items)
+        
+    def bottom_hbox_init(self):        
+        self.down_button = Button("下载")
+        self.down_button_align = gtk.Alignment()
+        self.down_button_align.set_padding(2, 2, 2, 2)
+        self.down_button_align.add(self.down_button)
+        
+        self.bottom_hbox = gtk.HBox()
+        self.bottom_hbox_align = gtk.Alignment()
+        self.bottom_hbox_align.set(1, 0, 0, 0)
+        self.bottom_hbox_align.add(self.bottom_hbox)
+        
+        self.bottom_hbox.pack_start(self.down_button_align)
+        
+ScanGui()
+gtk.main()
+
+# if __name__ == "__main__":
+#     scan_url_sub = ScanUrlSub()
+#     scan_url_sub.scan_url_function("功夫熊猫")
+#     print "搜索字幕总数:", scan_url_sub.sum_subtitles
+#     print '下一页需要的链接:', scan_url_sub.page_string
+#     scan_url_sub.scan_page_index(3)
+#     scan_url_sub.get_sum_page()
+#     print "第3页:搜索到的东西:", len(scan_url_sub.mc_url_and_name_dict.keys())
+#     print "=========================="
+#     for i in scan_url_sub.mc_url_and_name_dict.keys():
+#         print i
