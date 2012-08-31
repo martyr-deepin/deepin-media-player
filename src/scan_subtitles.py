@@ -20,7 +20,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import urllib
 import urllib2
+import os
 import re
 
 SCAN_URL =  "http://www.yyets.com/php/search/index?keyword="
@@ -101,8 +103,8 @@ class ScanUrlSub:
     def get_sum_page(self):
         '''總的頁數.'''
         print "当前頁的字幕数:", self.current_page
-        print "总的字幕数目:", self.sum_subtitles        
-        print "玉樹:", self.sum_subtitles - (self.sum_subtitles / max(self.current_page, 1)) * self.current_page
+        print "总的字幕数目:",  self.sum_subtitles        
+        print "玉樹:",  self.sum_subtitles - (self.sum_subtitles / max(self.current_page, 1)) * self.current_page
         
     def mc_list_scan_function(self, mc_list):        
         url_patter = r'<a href=([\S]+)'
@@ -130,7 +132,43 @@ class ScanUrlSub:
                     self.key_dict_i += 1
                 self.mc_url_and_name_dict[key] = url_mc[0]
                                         
-                
+    def down_subtitle(self, url_addr, down_path="/tmp"):  
+        url_addr = url_addr[1:][:-1]
+        ret_html = urllib2.urlopen(url_addr)
+        ret_html_string = ret_html.read()
+        # get url_addr down addr..
+        down_url_addr = ""
+        down_patter = r'字幕下载：</font><a href=(.+)class="f3">'
+        down_url_addr = re.findall(down_patter, ret_html_string)
+        
+        if down_url_addr:
+            down_url_addr = down_url_addr[0].strip()
+            down_url_addr = down_url_addr[1:][:-1]
+            
+            print "down_url_addr", down_url_addr
+            try:
+                down_data = urllib.urlopen(down_url_addr)
+                # get_code = down_data.getcode()
+                get_url = down_data.geturl()
+                # get_info = down_data.info()
+                # print "get_code:", get_code
+                # print "get_url:", get_url
+                # print "get_info:", get_info
+                save_file_name = os.path.split(get_url)[1]
+                # print "save_file_name:", save_file_name                
+                save_path = os.path.join(down_path, save_file_name)
+                # down subtitle file.
+                fp = open(save_path, "w")
+                fp.write(down_data.read())
+                fp.close()
+            except Exception, e:    
+                print "Error:", e
+                return False
+            return True
+        else:
+            return False
+        
+        
                 
 #################################################################################################                
 from skin import app_theme
@@ -142,11 +180,17 @@ from dtk.ui.entry import InputEntry
 from dtk.ui.label import Label
 import gtk
 
+
+gtk.gdk.threads_init()
+
 class ScanGui(object):
     def __init__(self):
         self.app = Application()
         # init value.
         self.scan_url_sub = ScanUrlSub()
+        self.row_height = 1
+        self.current_page = 1
+        self.sum_subtitle_num = 0
         # Set app size.
         self.app.set_default_size(480, 400)               
         self.app.set_icon(app_theme.get_pixbuf("icon.ico"))
@@ -172,25 +216,52 @@ class ScanGui(object):
         self.list_view.set_expand_column(0)
         self.list_view.add_titles(["字幕", "语言", "时长"])        
         self.list_view.connect("double-click-item", self.list_view_double_click_item)
-        self.scrolled_window = ScrolledWindow()
+        self.scrolled_window = ScrolledWindow()        
         self.scrolled_window.add_child(self.list_view)
 
         # top hbox init.
         self.top_hbox_init()
         # bottom hbox init.
         self.bottom_hbox_init()
-        
-        
+                
         self.main_vbox.pack_start(self.top_hbox_align, False, False)
         self.main_vbox.pack_start(self.scrolled_window)
         # self.main_vbox.pack_start(self.bottom_hbox_align, False, False)
         
         self.app.main_box.add(self.main_vbox_align)
         
+        # scrolled window connect events.
+        self.scrolled_window.get_vadjustment().connect("value-changed", self.scrolled_window_load_last_sub_page)
+        
         self.app.window.show_all()
         
+    def scrolled_window_load_last_sub_page(self, vadjustment):
+        try:
+            self.row_height = self.list_view.items[0].get_column_sizes()[0][1]
+            start_position_row = int(self.scrolled_window.get_vadjustment().get_value() / self.row_height)
+            end_position_row_padding   = int(self.scrolled_window.allocation.height / self.row_height)            
+            end_position_row   = end_position_row_padding + start_position_row            
+            if (self.sum_subtitle_num - self.scan_url_sub.current_page) > 0 and (end_position_row >= int(self.scan_url_sub.sum_subtitles - self.sum_subtitle_num - 5)): # 动态加载页. 滚动的位置 >= 搜索总数 - 当前总数 - 5 ->> 才去加载.
+                self.sum_subtitle_num -= self.scan_url_sub.current_page
+                gtk.timeout_add(500, self.add_subtitle_page)
+        except Exception, e:    
+            print "Error", e
+            
+    def add_subtitle_page(self):    
+        self.current_page += 1
+        print "开始添加文件"
+        self.scan_url_sub.scan_page_index(self.current_page)
+        for key in self.scan_url_sub.mc_url_and_name_dict.keys():
+            self.items.append(ListItem(str(key), "", ""))                    
+            
+        self.list_view.add_items(self.items)
+        
     def list_view_double_click_item(self, ListView, item, i, x, y):
-        print self.scan_url_sub.mc_url_and_name_dict[item.title]
+        # print item.get_column_sizes()
+        if self.scan_url_sub.down_subtitle(self.scan_url_sub.mc_url_and_name_dict[item.title]):
+            print "下载成功..."
+        else:    
+            print "下载失败..."
     
     def top_hbox_init(self):
         self.scan_sub_sum_label = Label("搜索的字幕总数:")
@@ -199,7 +270,7 @@ class ScanGui(object):
         self.scan_sub_sum_label_align.add(self.scan_sub_sum_label)
         
         self.name_label = Label("影片名：")
-        self.name_label_align = gtk.Alignment()        
+        self.name_label_align = gtk.Alignment()
         self.name_label_align.add(self.name_label)
         self.name_label_align.set(1, 0, 0, 0)
         self.name_label_align.set_padding(4, 0, 0, 0)
@@ -231,17 +302,25 @@ class ScanGui(object):
         scan_name = self.name_entry.get_text()
         if bool(len(scan_name)):
             # clear value.
-            self.list_view.clear()
-            self.items = []
-            self.scan_url_sub.scan_url_function(str(scan_name))        
-            self.scan_sub_sum_label.set_text("字幕总数:%s" % str(self.scan_url_sub.sum_subtitles))
-            self.scan_url_sub.scan_page_index(1)
-            self.scan_url_sub.get_sum_page()
+            gtk.timeout_add(500, self.scan_subtitles_function, scan_name)
             
-            for key in self.scan_url_sub.mc_url_and_name_dict.keys():
-                self.items.append(ListItem(str(key), "", ""))
+            
+    def scan_subtitles_timeout(self, scan_name):
+        self.scan_subtitles_function(scan_name)
+        
+    def scan_subtitles_function(self, scan_name):
+        self.list_view.clear()
+        self.items = []
+        self.current_page = 1
+        self.scan_url_sub.scan_url_function(str(scan_name))
+        self.sum_subtitle_num = self.scan_url_sub.sum_subtitles # save sum subtitles.
+        self.scan_sub_sum_label.set_text("字幕总数:%s" % str(self.scan_url_sub.sum_subtitles))
+        self.scan_url_sub.scan_page_index(1)
+        self.scan_url_sub.get_sum_page()
+        for key in self.scan_url_sub.mc_url_and_name_dict.keys():
+            self.items.append(ListItem(str(key), "", ""))
 
-            self.list_view.add_items(self.items)
+        self.list_view.add_items(self.items)
         
     def bottom_hbox_init(self):        
         self.down_button = Button("下载")
@@ -257,7 +336,9 @@ class ScanGui(object):
         self.bottom_hbox.pack_start(self.down_button_align)
         
 ScanGui()
+gtk.gdk.threads_enter()
 gtk.main()
+gtk.gdk.threads_leave()
 
 # if __name__ == "__main__":
 #     scan_url_sub = ScanUrlSub()
