@@ -117,6 +117,7 @@ class IniGui(DialogBox):
         self.tree_view.add_item(None, TreeViewItem(_("Genera")))
         key = self.tree_view.add_item(None, TreeViewItem(_("Keyboard")))
         self.tree_view.add_item(key, TreeViewItem(_("Video Control"), has_arrow=False))
+        self.tree_view.add_item(key, TreeViewItem("字幕控制", has_arrow=False)) # new
         self.tree_view.add_item(key, TreeViewItem(_("Other"), has_arrow=False))        
         
         self.tree_view.add_item(None, TreeViewItem(_("Subtitles")))
@@ -146,14 +147,17 @@ class IniGui(DialogBox):
         self.show_all()
                 
     def set(self, type_str):    
-        index = self.configure.set(type_str)[1]
-        if index is not None:
-            self.tree_view.set_highlight_index(index)
+        self.configure.set(type_str)
+        # if index is not None:
+        
+        highlight_dict = {_("Playback"):0,
+                          _("Screenshot"):4}
+        index = highlight_dict[type_str]
+        self.tree_view.set_highlight_index(index)
         
     def press_save_ini_file(self, widget, event):    
         gtk.timeout_add(500, self.save_configure_file_ok_clicked)
-        
-        
+                
     def draw_scrolled_window_backgournd(self, widget, event):
         cr = widget.window.cairo_create()
         rect = widget.allocation
@@ -230,51 +234,44 @@ class IniGui(DialogBox):
 class Configure(gtk.VBox):
     def __init__(self):
         gtk.VBox.__init__(self)
-        self.class_list = [_("Playback"), _("Genera"), _("Video Control"), _("Other"),
-                           _("Subtitles"), _("Screenshot"), _("Other"), _("About us")]
+        self.class_dict = {
+            _("Playback"):FilePlay(),
+            _("Genera"):SystemSet(),
+            _("Video Control"):PlayControl(),
+            "字幕控制":SubKey(),
+            _("Other"):OtherKey(),
+            _("Subtitles"):SubSet(),
+            _("Screenshot"):ScreenShot(),
+            _("About us"):About()
+            }
+        # self.class_list = [_("Playback"), _("Genera"), _("Video Control"), "字幕控制", _("Other"),
+        #                    _("Subtitles"), _("Screenshot"), _("Other"), _("About us")]
         # Init all configure gui class.
-        self.file_play = FilePlay()
-        self.system_set = SystemSet()
-        self.play_control = PlayControl()
-        self.other_key = OtherKey()
-        self.sub_set = SubSet()
-        self.screen_shot = ScreenShot()
-        self.other_set = OtherSet()
-        self.about = About()
-        
+        self.file_play = self.class_dict[_("Playback")]
+        self.system_set = self.class_dict[_("Genera")]
+        self.play_control = self.class_dict[_("Video Control")]
+        self.sub_key = self.class_dict["字幕控制"] 
+        self.other_key = self.class_dict[_("Other")]
+        self.sub_set = self.class_dict[_("Subtitles")]
+        self.screen_shot = self.class_dict[_("Screenshot")]
+        self.about = self.class_dict[_("About us")]
         self.show_all()
         
     def set(self, class_name):
         class_name = class_name.strip()
         index = None
-        if class_name in self.class_list:
-            
+        # if class_name in self.class_list:
+        if self.class_dict.has_key(class_name):
+            # remove other class modual.
             for widget in self.get_children():
                 self.remove(widget)
-            
-            if _("Playback") == class_name:
-                index = 0
-                self.pack_start(self.file_play)
-            elif _("Genera") == class_name:
-                self.pack_start(self.system_set)
-            elif _("Video Control") == class_name:
-                self.pack_start(self.play_control)
-            elif _("Other") == class_name:
-                self.pack_start(self.other_key)
-            elif _("Subtitles") == class_name:
-                self.pack_start(self.sub_set)
-            elif _("Screenshot") == class_name:
-                index = 4
-                self.pack_start(self.screen_shot)
-            elif _("Other") == class_name:
-                self.pack_start(self.other_set)
-            elif _("About us") == class_name:
-                self.pack_start(self.about)
+                
+            self.pack_start(self.class_dict[class_name])
                 
             for widget in self.get_children(): 
                 if widget:
                     self.show_all()
-                    return True,index                
+                    return True,index      
         return None       
     
 
@@ -285,7 +282,7 @@ class FilePlay(gtk.VBox):
         radio_table = gtk.Table(2, 2)
         # Init config file.
         self.ini = Config(config_path)
-        self.label = Label(_("Playback"))        
+        self.label = Label(_("Playback"))
         self.label.set_size_request(label_width, label_height)
         
         # Video file open.
@@ -319,8 +316,7 @@ class FilePlay(gtk.VBox):
         self.clear_play_list_button.set_active(False)
         if ini_bool and "true" == ini_bool.lower():
             self.clear_play_list_button.set_active(True)
-                
-        
+                        
         # memory up close media player -> file play postion.
         self.file_play_postion_button = CheckButton(_("Resume Playing"))
         ini_bool = self.ini.get("FilePlay", "memory_up_close_player_file_postion")
@@ -782,6 +778,10 @@ class PlayControl(gtk.VBox):
         
         return play_control_dict
     
+class SubKey(gtk.VBox):    
+    def __init__(self):
+        gtk.VBox.__init__(self)
+        
 class OtherKey(gtk.VBox):
     def __init__(self):
         gtk.VBox.__init__(self)

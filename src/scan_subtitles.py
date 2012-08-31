@@ -102,10 +102,11 @@ class ScanUrlSub:
     
     def get_sum_page(self):
         '''總的頁數.'''
-        print "当前頁的字幕数:", self.current_page
-        print "总的字幕数目:",  self.sum_subtitles        
-        print "玉樹:",  self.sum_subtitles - (self.sum_subtitles / max(self.current_page, 1)) * self.current_page
-        
+        # print "当前頁的字幕数:", self.current_page
+        # print "总的字幕数目:",  self.sum_subtitles        
+        # print "玉樹:",  self.sum_subtitles - (self.sum_subtitles / max(self.current_page, 1)) * self.current_page
+        pass
+    
     def mc_list_scan_function(self, mc_list):        
         url_patter = r'<a href=([\S]+)'
         # name_patter = r'target="_blank"><strong class="f14 list_title">(.+)\)</strong>'
