@@ -244,8 +244,7 @@ class Configure(gtk.VBox):
             _("Screenshot"):ScreenShot(),
             _("About us"):About()
             }
-        # self.class_list = [_("Playback"), _("Genera"), _("Video Control"), "字幕控制", _("Other"),
-        #                    _("Subtitles"), _("Screenshot"), _("Other"), _("About us")]
+        
         # Init all configure gui class.
         self.file_play = self.class_dict[_("Playback")]
         self.system_set = self.class_dict[_("Genera")]
@@ -296,18 +295,18 @@ class FilePlay(gtk.VBox):
 
         self.full_window_radio_button = RadioButton(_("Full Screen"))    
 
-        set_num = self.ini.get("FilePlay", "video_file_open")        
+        set_num = self.ini.get("FilePlay", "video_file_open")
         
         # Set state(1, 2, 3, 4).
         if '2' == set_num:
             self.ai_set_radio_button.set_active(False)
-            self.adapt_video_button.set_active(True)
+            self.adapt_video_button.set_active(True) # 视频适应窗口.
         elif '3' == set_num:    
-            self.close_position_radio_button.set_active(True)
+            self.close_position_radio_button.set_active(True) # 上次关闭尺寸.
         elif '4' == set_num:    
-            self.full_window_radio_button.set_active(True)
+            self.full_window_radio_button.set_active(True) # 全屏.
         else:    # config get None type.
-            self.ai_set_radio_button.set_active(True) 
+            self.ai_set_radio_button.set_active(True) # 窗口适应视频.
         ################################################################
         # open new file clear play list.
         self.clear_play_list_button = CheckButton(_("Clear Playlist On Opening New Media"))        
