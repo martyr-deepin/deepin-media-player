@@ -2852,13 +2852,13 @@ class PlayerBox(object):
     def clear_subtitle_event(self, subtitle, subtitle_len):
         print "clear_subtitle_event"
     
-    # menu control.    
-    def open_scan_gui_window(self):        
+    # menu control.
+    def open_scan_gui_window(self):
         scan_gui = ScanGui()
         scan_gui.connect("add-subtitle-file", self.add_subtitle_file_event)
-        scan_gui.show_window()    
+        scan_gui.show_window()
         
-    def add_subtitle_file_event(self, ScanGui, sub_file):    
+    def add_subtitle_file_event(self, ScanGui, sub_file):
         print "add_subtitle_file_event:", sub_file
         
     # subtitles menu control.        

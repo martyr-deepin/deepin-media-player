@@ -194,9 +194,13 @@ class ScanGui(gobject.GObject):
     def __init__(self):
         gobject.GObject.__init__(self)
         # self.app = Application() 
-        self.app = DialogBox("字幕搜索", 480, 400,
-                           mask_type=False,
-                           window_pos=gtk.WIN_POS_CENTER)
+        self.app = DialogBox("字幕搜索", 480, 350,
+                             mask_type=False,
+                             modal=False,
+                             window_hint=gtk.gdk.WINDOW_TYPE_HINT_NORMAL,
+                             window_pos=gtk.WIN_POS_CENTER,
+                             resizable=True)
+        self.app.set_size_request(480, 350)
         # init value.
         self.scan_url_sub = ScanUrlSub()
         self.row_height = 1
@@ -206,15 +210,6 @@ class ScanGui(gobject.GObject):
                                ".zip":"7z x -o%s"%(TEMP_FILE_DIR)}
         self.down_to_copy_path = "/tmp/tmp_sub"
         self.highlight_item = None
-        # Set app size.
-        # self.app.set_default_size(480, 400)               
-        # self.app.set_icon(app_theme.get_pixbuf("icon.ico"))
-        # self.app.set_skin_preview(app_theme.get_pixbuf("frame.png"))
-        # Add app titlebar.
-        # self.app.add_titlebar(
-        #     ["close"],
-        #     app_theme.get_pixbuf("logo.png"),
-        #     "字幕下载", " ", True)
         
         # main_vbox init.
         self.main_vbox = gtk.VBox()
