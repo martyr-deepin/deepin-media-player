@@ -59,6 +59,7 @@ from service import download_shooter_subtitle
 from user_guide import init_user_guide
 from code_to_utf_8 import auto_decode
 from subtitles import SubTitles
+from scan_subtitles import ScanGui
 
 import threading
 import gtk
@@ -2406,8 +2407,9 @@ class PlayerBox(object):
                 ])
 
         self.subtitles_control_menu = Menu([
-                (down_sub_title_pixbuf, _("Auto-download Subtitles"), self.set_down_sub_title_bool),
-                (None, "手动载入字幕", None),
+                # (down_sub_title_pixbuf, _("Auto-download Subtitles"), self.set_down_sub_title_bool),
+                (None, "手动搜索字幕", self.open_scan_gui_window),
+                (None, "手动载入字幕", None),                
                 (None, "字幕选择", self.subtitles_select_menu),
                 (None, "字幕大小", subtitles_scale_menu),
                 (None, "字幕同步", subtitles_delay_menu)
@@ -2850,6 +2852,15 @@ class PlayerBox(object):
     def clear_subtitle_event(self, subtitle, subtitle_len):
         print "clear_subtitle_event"
     
+    # menu control.    
+    def open_scan_gui_window(self):        
+        scan_gui = ScanGui()
+        scan_gui.connect("add-subtitle-file", self.add_subtitle_file_event)
+        scan_gui.show_window()    
+        
+    def add_subtitle_file_event(self, ScanGui, sub_file):    
+        print "add_subtitle_file_event:", sub_file
+        
     # subtitles menu control.        
     # subtitle key[stop,add/sub scale].
     def subtitle_stop_key(self):

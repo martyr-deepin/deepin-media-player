@@ -175,20 +175,28 @@ class ScanUrlSub:
 from skin import app_theme
 from dtk.ui.button import Button
 from dtk.ui.listview import ListItem, ListView
-from dtk.ui.application import Application               
+from dtk.ui.dialog import DialogBox, DIALOG_MASK_MULTIPLE_PAGE
 from dtk.ui.scrolled_window import ScrolledWindow
 from dtk.ui.entry import InputEntry
 from dtk.ui.label import Label
 from ini import Config,get_home_path
 import gtk
-
+import gobject
 TEMP_FILE_DIR = "/tmp/tmp_sub"
 
-gtk.gdk.threads_init()
+# gtk.gdk.threads_init()
 
-class ScanGui(object):
+class ScanGui(gobject.GObject):
+    __gsignals__ = {
+        "add-subtitle-file" : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE,
+                            (gobject.TYPE_STRING,))
+        }    
     def __init__(self):
-        self.app = Application()
+        gobject.GObject.__init__(self)
+        # self.app = Application() 
+        self.app = DialogBox("字幕搜索", 480, 400,
+                           mask_type=False,
+                           window_pos=gtk.WIN_POS_CENTER)
         # init value.
         self.scan_url_sub = ScanUrlSub()
         self.row_height = 1
@@ -199,14 +207,14 @@ class ScanGui(object):
         self.down_to_copy_path = "/tmp/tmp_sub"
         self.highlight_item = None
         # Set app size.
-        self.app.set_default_size(480, 400)               
-        self.app.set_icon(app_theme.get_pixbuf("icon.ico"))
-        self.app.set_skin_preview(app_theme.get_pixbuf("frame.png"))
+        # self.app.set_default_size(480, 400)               
+        # self.app.set_icon(app_theme.get_pixbuf("icon.ico"))
+        # self.app.set_skin_preview(app_theme.get_pixbuf("frame.png"))
         # Add app titlebar.
-        self.app.add_titlebar(
-            ["close"],
-            app_theme.get_pixbuf("logo.png"),
-            "字幕下载", " ", True)
+        # self.app.add_titlebar(
+        #     ["close"],
+        #     app_theme.get_pixbuf("logo.png"),
+        #     "字幕下载", " ", True)
         
         # main_vbox init.
         self.main_vbox = gtk.VBox()
@@ -236,15 +244,18 @@ class ScanGui(object):
         self.main_vbox.pack_start(self.scrolled_window)
         self.main_vbox.pack_start(self.bottom_hbox_align, False, False)
         
-        self.app.main_box.add(self.main_vbox_align)
-        
+        # self.app.main_box.add(self.main_vbox_align)
+        self.app.body_box.pack_start(self.main_vbox_align)        
+        # self.app.window.connect("destroy", lambda w:self.app.window.destroy())
         # scrolled window connect events.
         self.scrolled_window.get_vadjustment().connect("value-changed", self.scrolled_window_load_last_sub_page)
         # list view connect events.
         self.list_view.connect("double-click-item", self.list_view_double_click_item)
         self.list_view.connect("single-click-item", self.list_view_single_click_item)
-        
-        self.app.window.show_all()
+                                        
+    def show_window(self):    
+        # self.app.window.show_all()
+        self.app.show_all()
         
     def init_tmp_dir(self):    
         if not os.path.exists(TEMP_FILE_DIR):
@@ -334,7 +345,6 @@ class ScanGui(object):
     def bottom_hbox_init(self):        
         self.scan_sub_sum_label = Label("搜索的字幕总数:")
         self.scan_sub_sum_label_align = gtk.Alignment()
-        self.scan_sub_sum_label_align.set(1, 1, 1, 1)
         self.scan_sub_sum_label_align.set_padding(4, 0, 4, 0)
         self.scan_sub_sum_label_align.add(self.scan_sub_sum_label)
 
@@ -351,9 +361,10 @@ class ScanGui(object):
         self.bottom_hbox = gtk.HBox()
         self.bottom_hbox_align = gtk.Alignment()
         self.bottom_hbox_align.set(1, 1, 1, 1)
+        self.bottom_hbox_align.set_padding(12, 0, 0, 0)
         self.bottom_hbox_align.add(self.bottom_hbox)
                 
-        self.bottom_hbox.pack_start(self.scan_sub_sum_label_align)
+        self.bottom_hbox.pack_start(self.scan_sub_sum_label_align, True)
         self.bottom_hbox.pack_start(self.down_button_align, False, False)
         self.bottom_hbox.pack_start(self.close_button_align, False, False)        
                 
@@ -367,7 +378,7 @@ class ScanGui(object):
         
     def close_button_clicked(self, widget): 
         '''quit scan sub window.'''
-        gtk.main_quit()
+        self.app.destroy()
         
     def __down_subtitle_function(self, title):    
         if self.scan_url_sub.down_subtitle(self.scan_url_sub.mc_url_and_name_dict[title]):
@@ -386,13 +397,14 @@ class ScanGui(object):
             # os.path.makedirs("/tmp/tmp_sub/")
             self.scan_sub_sum_label.set_text("字幕保存%s" % ("/tmp 目录"))
             # print "下载成功..."
+            self.emit("add-subtitle-file", "获取文件名.....要写哦!!")
         else:
             self.scan_sub_sum_label.set_text("下载失败!!")
         
-ScanGui()
-gtk.gdk.threads_enter()
-gtk.main()
-gtk.gdk.threads_leave()
+# ScanGui()
+# gtk.gdk.threads_enter()
+# gtk.main()
+# gtk.gdk.threads_leave()
 
 # if __name__ == "__main__":
 #     scan_url_sub = ScanUrlSub()
