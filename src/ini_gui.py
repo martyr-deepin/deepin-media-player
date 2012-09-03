@@ -805,7 +805,7 @@ class SubKey(gtk.VBox):
         # init fixed.
         # self.fixed_hbox = gtk.HBox()
         self.fixed = gtk.Fixed()
-        self.fixed.set_size_request(500, 500)
+        # self.fixed.set_size_request(500, 500)
         # self.fixed_hbox.pack_start(self.fixed)
         # heparator.
         self.heparator_hbox = gtk.HBox()
@@ -943,248 +943,73 @@ class OtherKey(gtk.VBox):
         self.heparator_hbox = gtk.HBox()
         self.heparator = create_separator_box()
         self.heparator_hbox.pack_start(self.heparator)
-        self.heparator_hbox.set_size_request(heparator_width, heparator_height)
-        
-        entry_width = 150
-        entry_height = 24
-        # set other_key bool.
-        
+        self.heparator_hbox.set_size_request(heparator_width, heparator_height)        
+        # set other_key bool.        
         self.other_key_bool_checkbtn = CheckButton(_("Hotkeys Enabled"))
         self.other_key_bool_checkbtn.connect("button-press-event", self.set_other_key_bool_checkbtn_press)
-        
-        # Add Brightness.
-        self.add_bri_entry_label = Label(_("Increse Brightness"))
-        self.add_bri_entry = ShortcutKeyEntry()
-        text_string = self.ini.get("OtherKey", "add_brightness_key")
-        if text_string:
-            self.add_bri_entry.set_shortcut_key(text_string)
-        else: # =   
-            self.add_bri_entry.set_shortcut_key("=")
-            
-        self.add_bri_entry.set_size(entry_width, entry_height)
-        # Sub Brightness.
-        self.sub_bri_entry_label = Label(_("Decrease Brightness"))
-        self.sub_bri_entry = ShortcutKeyEntry()
-        text_string = self.ini.get("OtherKey", "sub_brightness_key")
-        if text_string:
-            self.sub_bri_entry.set_shortcut_key(text_string)
-        else:    # -
-            self.sub_bri_entry.set_shortcut_key("-")
-            
-        self.sub_bri_entry.set_size(entry_width, entry_height)
-        # Inverse Rotation.
-        self.inverse_rotation_entry_label = Label(_("Rotate Conterclockwise"))
-        self.inverse_rotation_entry = ShortcutKeyEntry()
-        text_string = self.ini.get("OtherKey", "inverse_rotation_key")
-        if text_string:
-            self.inverse_rotation_entry.set_shortcut_key(text_string)
-        else:    # w
-            self.inverse_rotation_entry.set_shortcut_key("w")
-            
-        self.inverse_rotation_entry.set_size(entry_width, entry_height)
-        # Clockwise Rotation.
-        self.clockwise_entry_label = Label(_("Rotate Clockwise"))
-        self.clockwise_entry = ShortcutKeyEntry()
-        text_string = self.ini.get("OtherKey", "clockwise_key")
-        if text_string:
-            self.clockwise_entry.set_shortcut_key(text_string)
-        else:    # e
-            self.clockwise_entry.set_shortcut_key("e")
-            
-        self.clockwise_entry.set_size(entry_width, entry_height)
-        # sort image.
-        self.sort_image_entry_label = Label(_("Take Screenshots"))
-        self.sort_image_entry = ShortcutKeyEntry()
-        text_string = self.ini.get("OtherKey", "sort_image_key")
-        if text_string:
-            self.sort_image_entry.set_shortcut_key(text_string)
-        else:    # Alt_L/R A
-            self.sort_image_entry.set_shortcut_key("Alt+a")
-            
-        self.sort_image_entry.set_size(entry_width, entry_height)
-        # Switch Audio track.
-        self.switch_audio_track_entry_label = Label(_("Switch Audio Tracks"))
-        self.switch_audio_track_entry = ShortcutKeyEntry()
-        text_string = self.ini.get("OtherKey", "switch_audio_track_key")
-        if text_string:
-            self.switch_audio_track_entry.set_shortcut_key(text_string)
-        else:    # 
-            self.switch_audio_track_entry.set_shortcut_key(_("Disabled"))
-            
-        self.switch_audio_track_entry.set_size(entry_width, entry_height)
-        # Load subtitle.
-        self.load_subtitle_entry_label = Label(_("Import Subtitles"))
-        self.load_subtitle_entry = ShortcutKeyEntry()
-        text_string = self.ini.get("OtherKey", "load_subtitle_key")
-        if text_string:
-            self.load_subtitle_entry.set_shortcut_key(text_string)
-        else:    #Alt_L/R + O
-            self.load_subtitle_entry.set_shortcut_key("Alt+O")
-            
-        self.load_subtitle_entry.set_size(entry_width, entry_height)        
-        # subtitle advance 0.5.
-        self.subtitle_advance_entry_label = Label(_("Subtitle Advance 0.5s"))
-        self.subtitle_advance_entry = ShortcutKeyEntry()
-        text_string = self.ini.get("OtherKey", "subtitle_advance_key")
-        if text_string:
-            self.subtitle_advance_entry.set_shortcut_key(text_string)
-        else:    # [
-            self.subtitle_advance_entry.set_shortcut_key("[")
-            
-        self.subtitle_advance_entry.set_size(entry_width, entry_height)
-        # subtitle Delay 0.5.
-        self.subtitle_delay_entry_label = Label(_("Subtitle Delay 0.5s"))
-        self.subtitle_delay_entry = ShortcutKeyEntry()
-        text_string = self.ini.get("OtherKey", "subtitle_delay_key")
-        if text_string:
-            self.subtitle_delay_entry.set_shortcut_key(text_string)
-        else:    # ]
-            self.subtitle_delay_entry.set_shortcut_key("]")
-            
-        self.subtitle_delay_entry.set_size(entry_width, entry_height)
-        # mouse left single clicked.        
-        self.mouse_left_single_clicked_combo_label = Label(_("Left Click"))
-        self.mouse_left_single_clicked_combo = ComboBox([(_("Pause/Play"), 1),
-                                                               (_("Disabled"), 2)])
-
-        text_string = self.ini.get("OtherKey", "mouse_left_single_clicked")
-        if text_string:
-            self.mouse_left_single_clicked_combo.label.set_text(text_string)
-        else:    
-            self.mouse_left_single_clicked_combo.label.set_text(text_string)
-            
-        # mouse left double clicked.
-        self.mouse_left_double_clicked_combo_label = Label(_("Double Click"))
-        self.mouse_left_double_clicked_combo = ComboBox([(_("Full Screen"), 1),
-                                                               (_("Disabled"), 2)])
-        text_string = self.ini.get("OtherKey", "mouse_left_double_clicked")
-        if text_string:
-            self.mouse_left_double_clicked_combo.label.set_text(text_string)
-            
-        # mouse wheel.
-        self.mouse_wheel_combo_label = Label(_("Scroll"))
-        self.mouse_wheel_combo = ComboBox([(_("Volumn"), 1),
-                                                 (_("Disabled"), 2)])
-        text_string = self.ini.get("OtherKey", "mouse_wheel_event")
-        if text_string:
-            self.mouse_wheel_combo.label.set_text(text_string)        
-                    
-        # Set other key bool.
-        other_key_bool = self.ini.get("OtherKey", "other_key_bool")    
-        
-        self.other_key_bool_checkbtn.set_active(True)
-        self.set_other_key_true()
-        
-        if other_key_bool:    
-            if "true" == other_key_bool.lower():
-                pass
-            else:
-                self.other_key_bool_checkbtn.set_active(False)
-                self.set_other_key_false()
-            
-        other_Key_x = 20
-        other_Key_y = 40
-        # label.
-        self.fixed.put(self.label, other_Key_x, TITLE_HEIGHT_PADDING)
-        # heparator.
-        self.fixed.put(self.heparator_hbox, heparator_x, heparator_y)
-        ########################################################
-        self.fixed.put(self.other_key_bool_checkbtn,
-                       other_Key_x, other_Key_y)
-        
-        other_Key_y += self.other_key_bool_checkbtn.get_size_request()[1] + 10
-        other_Key_x += 10        
-        # Add Brightness.
-        self.fixed.put(self.add_bri_entry_label, 
-                       other_Key_x, other_Key_y)
-        other_Key_y += self.add_bri_entry_label.get_size_request()[1] + 2
-        self.fixed.put(self.add_bri_entry,
-                       other_Key_x, other_Key_y)
-        other_Key_y += self.add_bri_entry.get_size_request()[1] + 10
-        # Sub Brightness.
-        self.fixed.put(self.sub_bri_entry_label, 
-                       other_Key_x, other_Key_y)
-        other_Key_y += self.sub_bri_entry_label.get_size_request()[1] + 2
-        self.fixed.put(self.sub_bri_entry,
-                       other_Key_x, other_Key_y)
-        other_Key_y += self.sub_bri_entry.get_size_request()[1] + 10
-        # Inverse Rotation.
-        self.fixed.put(self.inverse_rotation_entry_label,
-                       other_Key_x, other_Key_y)
-        other_Key_y += self.inverse_rotation_entry_label.get_size_request()[1] + 2
-        self.fixed.put(self.inverse_rotation_entry,
-                       other_Key_x, other_Key_y)
-        other_Key_y += self.inverse_rotation_entry.get_size_request()[1] + 10
-        # Clockwise Rotation.
-        self.fixed.put(self.clockwise_entry_label,
-                       other_Key_x, other_Key_y)
-        other_Key_y += self.clockwise_entry_label.get_size_request()[1] + 2
-        self.fixed.put(self.clockwise_entry,
-                       other_Key_x, other_Key_y)
-        other_Key_y += self.clockwise_entry.get_size_request()[1] + 10
-        # sort image.
-        self.fixed.put(self.sort_image_entry_label,
-                       other_Key_x, other_Key_y)
-        other_Key_y += self.sort_image_entry_label.get_size_request()[1] + 2
-        self.fixed.put(self.sort_image_entry,
-                       other_Key_x, other_Key_y)
-        other_Key_y += self.sort_image_entry.get_size_request()[1] + 10
-        # Switch Audio track.
-        self.fixed.put(self.switch_audio_track_entry_label,
-                       other_Key_x, other_Key_y)
-        other_Key_y += self.switch_audio_track_entry_label.get_size_request()[1] + 2
-        self.fixed.put(self.switch_audio_track_entry,
-                       other_Key_x, other_Key_y)
-        other_Key_y += self.switch_audio_track_entry_label.get_size_request()[1] + 10
-        ##############################################
-        # Load subtitle.
-        other_Key_x_padding = other_Key_x + self.switch_audio_track_entry.get_size_request()[0] + self.switch_audio_track_entry_label.get_size_request()[0]
-        other_Key_y = 40 + self.other_key_bool_checkbtn.get_size_request()[1] + 10
-        self.fixed.put(self.load_subtitle_entry_label,
-                       other_Key_x_padding,  other_Key_y)
-        other_Key_y += self.load_subtitle_entry_label.get_size_request()[1] + 2
-        self.fixed.put(self.load_subtitle_entry,
-                       other_Key_x_padding, other_Key_y)
-        other_Key_y += self.load_subtitle_entry.get_size_request()[1] + 10
-        ##############################################
-        # subtitle 0.5.
-        # subtitle advance 0.5.
-        self.fixed.put(self.subtitle_advance_entry_label,
-                       other_Key_x_padding, other_Key_y)
-        other_Key_y += self.subtitle_advance_entry_label.get_size_request()[1] + 2
-        self.fixed.put(self.subtitle_advance_entry,
-                       other_Key_x_padding, other_Key_y)
-        other_Key_y += self.subtitle_advance_entry.get_size_request()[1] + 10
-        # subtitle Delay 0.5.
-        self.fixed.put(self.subtitle_delay_entry_label,
-                       other_Key_x_padding, other_Key_y)
-        other_Key_y += self.subtitle_delay_entry_label.get_size_request()[1] + 2
-        self.fixed.put(self.subtitle_delay_entry,
-                       other_Key_x_padding, other_Key_y)
-        other_Key_y += self.subtitle_delay_entry.get_size_request()[1] + 11
-        # mouse left single clicked.        
-        self.fixed.put(self.mouse_left_single_clicked_combo_label, 
-                       other_Key_x_padding, other_Key_y)
-        other_Key_y += self.mouse_left_single_clicked_combo_label.get_size_request()[1] + 1
-        self.fixed.put(self.mouse_left_single_clicked_combo, 
-                       other_Key_x_padding, other_Key_y)
-        other_Key_y += self.mouse_left_single_clicked_combo_label.get_size_request()[1] + 21
-        # mouse left double clicked.
-        self.fixed.put(self.mouse_left_double_clicked_combo_label, 
-                       other_Key_x_padding, other_Key_y)
-        other_Key_y += self.mouse_left_double_clicked_combo_label.get_size_request()[1] + 1
-        self.fixed.put(self.mouse_left_double_clicked_combo, 
-                       other_Key_x_padding, other_Key_y)
-        other_Key_y += self.mouse_left_double_clicked_combo_label.get_size_request()[1] + 20
-        # mouse wheel.
-        self.fixed.put(self.mouse_wheel_combo_label,
-                       other_Key_x_padding, other_Key_y)
-        other_Key_y += self.mouse_wheel_combo_label.get_size_request()[1] + 1
-        self.fixed.put(self.mouse_wheel_combo,
-                       other_Key_x_padding, other_Key_y)
-        other_Key_y += self.mouse_wheel_combo_label.get_size_request()[1] + 10
                 
+        entry_width = 120
+        entry_height = 24
+        # init widgets label left and right.        
+        widgets_label_left = [Label(_("Increse Brightness")),
+                              Label(_("Decrease Brightness")),
+                              Label(_("Rotate Conterclockwise")),
+                              Label(_("Rotate Clockwise")),
+                              Label(_("Take Screenshots")),
+                              Label(_("Switch Audio Tracks")),
+                              ]
+        widgets_label_right = [Label(_("Left Click")),
+                               Label(_("Double Click")),
+                               Label(_("Scroll"))
+                               ]
+        # init widgets Left and right.
+        self.widgets_left = [ShortcutKeyEntry(),
+                             ShortcutKeyEntry(),
+                             ShortcutKeyEntry(),
+                             ShortcutKeyEntry(),
+                             ShortcutKeyEntry(),
+                             ShortcutKeyEntry(),
+                             ]
+        self.widgets_right = [ComboBox([(_("Pause/Play"), 1), (_("Disabled"), 2)]),
+                              ComboBox([(_("Full Screen"), 1), (_("Disabled"), 2)]),
+                              ComboBox([(_("Volumn"), 1),(_("Disabled"), 2)])
+                              ]                
+        # set widgets left size.
+        for widget_left in self.widgets_left:
+            if widget_left:
+                widget_left.set_size(entry_width, entry_height)
+        # set widgets position and add widgets.
+        title_offset_x, title_offset_y = 20, 10
+        heparator_offset_x, heparator_offset_y = 0, title_offset_y + 25
+        other_Key_offset_x = 20
+        other_Key_offset_y = 40
+        start_x, start_y = 30, heparator_offset_y + 30
+        offset_x, offset_y = entry_width + 50, 50        
+        self.fixed.put(self.label, title_offset_x, title_offset_y - 8)
+        self.fixed.put(self.heparator_hbox, heparator_offset_x, heparator_offset_y)
+        self.fixed.put(self.other_key_bool_checkbtn, other_Key_offset_x, other_Key_offset_y)
+        widgets_add_widget(
+            self.fixed, 
+            widgets_label_left, widgets_label_right, 
+            start_x, start_y, offset_x, offset_y)        
+        widgets_add_widget(
+            self.fixed, 
+            self.widgets_left, self.widgets_right,
+            start_x, start_y + 20, offset_x, offset_y)
         self.pack_start(self.fixed)
+    
+    def init_read_other_key_value(self):            
+        self.key_titles_left = ["add_brightness_key",
+                                "sub_brightness_key",
+                                "inverse_rotation_key",
+                                "clockwise_key",
+                                "sort_image_key",
+                                "switch_audio_track_key"
+                                ]
+        self.key_titles_right = ["mouse_left_single_clicked",
+                                 "mouse_left_double_clicked",
+                                 "mouse_wheel_event"
+                                 ]        
     
     def set_other_key_bool_checkbtn_press(self, widget, event):
         if is_left_button(event):
@@ -1199,38 +1024,20 @@ class OtherKey(gtk.VBox):
     def set_other_key_true(self):
         self.set_other_key_bool_function(True)
     
-    def set_other_key_bool_function(self, type_bool):    
-        self.add_bri_entry.set_sensitive(type_bool)
-        self.sub_bri_entry.set_sensitive(type_bool)
-        self.inverse_rotation_entry.set_sensitive(type_bool)
-        self.clockwise_entry.set_sensitive(type_bool)
-        self.sort_image_entry.set_sensitive(type_bool)
-        self.switch_audio_track_entry.set_sensitive(type_bool)
-        self.load_subtitle_entry.set_sensitive(type_bool)
-        self.subtitle_advance_entry.set_sensitive(type_bool)
-        self.subtitle_delay_entry.set_sensitive(type_bool)
-        self.mouse_left_single_clicked_combo.set_sensitive(type_bool)
-        self.mouse_left_double_clicked_combo.set_sensitive(type_bool)        
-        self.mouse_wheel_combo.set_sensitive(type_bool)
+    def set_other_key_bool_function(self, type_bool):
+        for widget_left in self.widgets_left:
+            widget_left.set_sensitive(type_bool)
+        for widget_right in self.widgets_right:
+            widget_right.set_sensitive(type_bool)
         
     def get_other_set_state(self):
         other_set_dict = {}
-        # Left.
         other_set_dict["other_key_bool"] = self.other_key_bool_checkbtn.get_active()
-        other_set_dict["add_brightness_key"] = self.add_bri_entry.get_text()
-        other_set_dict["sub_brightness_key"] = self.sub_bri_entry.get_text()
-        other_set_dict["inverse_rotation_key"] = self.inverse_rotation_entry.get_text()
-        other_set_dict["clockwise_key"] = self.clockwise_entry.get_text()
-        other_set_dict["sort_image_key"] = self.sort_image_entry.get_text()
-        other_set_dict["switch_audio_track_key"] = self.switch_audio_track_entry.get_text()
-        # Right.
-        other_set_dict["load_subtitle_key"] = self.load_subtitle_entry.get_text()
-        other_set_dict["subtitle_advance_key"] = self.subtitle_advance_entry.get_text()
-        other_set_dict["subtitle_delay_key"] = self.subtitle_delay_entry.get_text()
-        other_set_dict["mouse_left_single_clicked"] = self.mouse_left_single_clicked_combo.label.get_text()
-        other_set_dict["mouse_left_double_clicked"] = self.mouse_left_double_clicked_combo.label.get_text()
-        other_set_dict["mouse_wheel_event"] = self.mouse_wheel_combo.label.get_text()
-        
+        #
+        for key_title, widget in map(lambda key_title, widget:(key_title, widget), self.key_titles_left, self.widgets_left):
+            other_set_dict[str(key_title)] = widget.get_text()
+        for key_title, widget in map(lambda key_title, widget:(key_title, widget), self.key_titles_right, self.widgets_right):    
+            other_set_dict[str(key_title)] = widget.label.get_text()
         return other_set_dict
     
 class SubSet(gtk.VBox):    
