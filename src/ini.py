@@ -28,81 +28,6 @@ import os
 def get_home_path():
     return os.path.expanduser("~")
 
-def init_config():
-        # create .config.
-        path = get_home_path() + "/.config"
-        if not os.path.exists(path):
-            os.mkdir(path)
-        
-        # create deepin-me...    
-        path += "/deepin-media-player"    
-        if not os.path.exists(path):
-            os.mkdir(path)
-        
-        # create buffer file.
-        if not os.path.exists(path + "/subtitle"):
-            os.mkdir(path + "/subtitle")
-        
-        # create config.ini.    
-        if not os.path.exists(path + "/config.ini"):
-            fp = open(path + "/config.ini", "a")
-            fp.close()
-            
-        if not os.path.exists(path + "/deepin_media_config.ini"):
-            fp = open(path + "/deepin_media_config.ini", "a")
-            fp.close()            
-            # Init config.ini            
-            config = Config(path + "/deepin_media_config.ini")
-            #[FilePlay]
-            config.set("FilePlay", "video_file_open",                     2)
-            config.set("FilePlay", "open_new_file_clear_play_list", "True")
-            config.set("FilePlay", "memory_up_close_player_file_postion", "True")
-            config.set("FilePlay", "find_play_file_relation_file", "False")
-            config.set("FilePlay", "mouse_progressbar_show_preview", "False")
-            #[SystemSet]
-            config.set("SystemSet", "minimize_pause_play", "False")            
-            config.set("SystemSet", "font", "文泉驿微米黑")
-            config.set("SystemSet", "font_size", "12")
-            #[PlayControl]
-            config.set("PlayControl", "play_control_bool", "True")
-            config.set("PlayControl", "open_file_key", "Ctrl + o")
-            config.set("PlayControl", "open_file_dir_key", "Ctrl + f")
-            config.set("PlayControl", "play_or_pause_key", "Space")
-            config.set("PlayControl", "seek_key", "Right")
-            config.set("PlayControl", "back_key", "Left")
-            config.set("PlayControl", "full_key", "Return")
-            config.set("PlayControl", "pre_a_key", "Page_Up")
-            config.set("PlayControl", "next_a_key", "Page_Down")
-            config.set("PlayControl", "add_volume_key", "Up")
-            config.set("PlayControl", "sub_volume_key", "Down")
-            config.set("PlayControl", "mute_key", "m")
-            config.set("PlayControl", "concise_key", "Shift+Return")
-            #[OtherKey]
-            config.set("OtherKey", "other_key_bool", "True")
-            config.set("OtherKey", "add_brightness_key", "=")
-            config.set("OtherKey", "sub_brightness_key", "-")
-            config.set("OtherKey", "inverse_rotation_key", "w")
-            config.set("OtherKey", "clockwise_key", "e")
-            config.set("OtherKey", "sort_image_key", "Alt + a")
-            config.set("OtherKey", "switch_audio_track_key", "NULL")
-            config.set("OtherKey", "load_subtitle_key", "Alt + o")
-            config.set("OtherKey", "subtitle_delay_key", "]")
-            config.set("OtherKey", "subtitle_advance_key", "[")
-            config.set("OtherKey", "mouse_left_single_clicked", _("Pause/Play"))
-            config.set("OtherKey", "mouse_left_double_clicked", _("Full Screen"))
-            config.set("OtherKey", "mouse_wheel_event", _("Volumn"))
-            #[SubtitleSet]
-            config.set("SubtitleSet", "ai_load_subtitle", "True")
-            config.set("SubtitleSet", "specific_location_search", "~/.config/deepin-media-player/subtitle")
-            #[ScreenshotSet]
-            config.set("ScreenshotSet", "save_clipboard", "False")
-            config.set("ScreenshotSet", "save_file", "True")
-            config.set("ScreenshotSet", "save_path", "~/.config/deepin-media-player/image")
-            config.set("ScreenshotSet", "save_type", ".png")
-            config.set("ScreenshotSet", "current_show_sort", "False")
-            # save ini config.
-            config.save()
-
 class Config(gobject.GObject):
     __gsignals__ = {
         "config-changed" : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE,
@@ -120,16 +45,15 @@ class Config(gobject.GObject):
         
         # init function.
         try:
-            if not os.path.exists(ini_path):                
-                init_config()
+            if not os.path.exists(ini_path):
+                # init_config()
+                print "Config:Eroor:ini_path no read... ..."
                 
             self.fp = open(ini_path, "r")
             self.init_config()                                            
         except Exception, e:    
             print "%s" % (e)
-        
-        
-            
+                            
     def init_config(self):        
         
         while True:

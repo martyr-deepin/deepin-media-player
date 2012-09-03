@@ -843,6 +843,10 @@ class SubKey(gtk.VBox):
             ShortcutKeyEntry(),
             ShortcutKeyEntry(),
             ]
+        # set active is flase.
+        self.set_subkey_flase()
+        # init read ini value.
+        self.init_read_subkey_value()
         # set widgets left, right size.
         entry_width = 150
         entry_height = 24
@@ -872,6 +876,33 @@ class SubKey(gtk.VBox):
         # init widget connect events.
         self.check_btn.connect("button-press-event", self.check_btn_key_bool_press)        
         
+    def init_read_subkey_value(self):    
+        self.key_titles_left = ["subkey_add_delay_key", 
+                                "subkey_sub_delay_key",
+                                "subkey_load_key"
+                                ]
+        self.key_titles_right = ["subkey_add_scale_key",
+                                 "subkey_sub_scale_key",
+                                 ]
+        #
+        subkey_bool = self.ini.get("SubKey", "subkey_bool")
+        if subkey_bool and subkey_bool == "True":
+            self.check_btn.set_active(True)
+            self.set_subkey_true()
+        # 
+        for_widgets_left = map(lambda title, widget:(title, widget), self.key_titles_left, self.widgets_left)
+        for title, widget in for_widgets_left:
+            key_value = self.ini.get("SubKey", title)
+            widget.set_text(key_value)
+            if bool(len(key_value)):
+                widget.set_shortcut_key(key_value)
+        #        
+        for_widgets_right = map(lambda title, widget:(title, widget), self.key_titles_right, self.widgets_right)
+        for title, widget in for_widgets_right:
+            key_value = self.ini.get("SubKey", title)
+            if bool(len(key_value)):
+                widget.set_shortcut_key(key_value)
+                
     def check_btn_key_bool_press(self, widget, event):    
         if is_left_button(event):
             if widget.get_active():
@@ -894,17 +925,10 @@ class SubKey(gtk.VBox):
     def get_subkey_set_state(self):
         subkey_set_dict = {}
         subkey_set_dict["subkey_bool"] = self.check_btn.get_active()
-        key_titles_left = ["subkey_add_delay_key", 
-                           "subkey_sub_delay_key",
-                           "subkey_load_key"
-                           ]
-        key_titles_right = ["subkey_add_scale_key",
-                            "subkey_sub_scale_key",
-                            ]
         #
-        for key_title, widget in map(lambda key_title, widget:(key_title, widget), key_titles_left, self.widgets_left):
+        for key_title, widget in map(lambda key_title, widget:(key_title, widget), self.key_titles_left, self.widgets_left):
             subkey_set_dict[str(key_title)] = widget.get_text()
-        for key_title, widget in map(lambda key_title, widget:(key_title, widget), key_titles_right, self.widgets_right):    
+        for key_title, widget in map(lambda key_title, widget:(key_title, widget), self.key_titles_right, self.widgets_right):    
             subkey_set_dict[str(key_title)] = widget.get_text()            
         return subkey_set_dict
         

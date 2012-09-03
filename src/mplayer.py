@@ -197,6 +197,17 @@ def init_mplayer_config():
                 ]):
             config.set("PlayControl", argv, value)
             
+        #[SubKey]    
+        for argv, value in ([
+                ("subkey_bool", "True"),
+                ("subkey_add_delay_key", "Ctrl + Alt + 1"),
+                ("subkey_sub_delay_key", "Ctrl + Alt + 2"),
+                ("subkey_load_key", "Ctrl + Alt + 3"),
+                ("subkey_add_scale_key", "Ctrl + Alt + 4"),
+                ("subkey_sub_scale_key", "Ctrl + Alt + 5"),
+                ]):
+            config.set("SubKey", argv, value)
+            
         #[OtherKey]
         for argv, value in ([
                 ("other_key_bool", "True"),
