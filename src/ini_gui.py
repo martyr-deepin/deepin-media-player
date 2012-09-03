@@ -884,9 +884,9 @@ class SubKey(gtk.VBox):
         self.key_titles_right = ["subkey_add_scale_key",
                                  "subkey_sub_scale_key",
                                  ]
-        #
+        # 
         subkey_bool = self.ini.get("SubKey", "subkey_bool")
-        if subkey_bool and subkey_bool == "True":
+        if subkey_bool and "True" == subkey_bool:
             self.check_btn.set_active(True)
             self.set_subkey_true()
         # 
@@ -926,9 +926,12 @@ class SubKey(gtk.VBox):
         subkey_set_dict = {}
         subkey_set_dict["subkey_bool"] = self.check_btn.get_active()
         #
-        for key_title, widget in map(lambda key_title, widget:(key_title, widget), self.key_titles_left, self.widgets_left):
+        for key_title, widget in map(lambda key_title, widget:(key_title, widget), 
+                                     self.key_titles_left, self.widgets_left):
             subkey_set_dict[str(key_title)] = widget.get_text()
-        for key_title, widget in map(lambda key_title, widget:(key_title, widget), self.key_titles_right, self.widgets_right):    
+        #     
+        for key_title, widget in map(lambda key_title, widget:(key_title, widget), 
+                                     self.key_titles_right, self.widgets_right):    
             subkey_set_dict[str(key_title)] = widget.get_text()            
         return subkey_set_dict
         
@@ -939,7 +942,7 @@ class OtherKey(gtk.VBox):
 
         self.fixed = gtk.Fixed()
         self.label = Label(_("Other"))
-        self.label.set_size_request(label_width, label_height)                
+        self.label.set_size_request(label_width, label_height)
         self.heparator_hbox = gtk.HBox()
         self.heparator = create_separator_box()
         self.heparator_hbox.pack_start(self.heparator)
@@ -974,6 +977,10 @@ class OtherKey(gtk.VBox):
                               ComboBox([(_("Full Screen"), 1), (_("Disabled"), 2)]),
                               ComboBox([(_("Volumn"), 1),(_("Disabled"), 2)])
                               ]                
+        # init other start set false.
+        self.set_other_key_false()
+        # init start read config.
+        self.init_read_other_key_value()        
         # set widgets left size.
         for widget_left in self.widgets_left:
             if widget_left:
@@ -1009,8 +1016,26 @@ class OtherKey(gtk.VBox):
         self.key_titles_right = ["mouse_left_single_clicked",
                                  "mouse_left_double_clicked",
                                  "mouse_wheel_event"
-                                 ]        
-    
+                                 ]
+        #
+        other_other_bool = self.ini.get("OtherKey", "other_key_bool")
+        if other_other_bool and "True" == other_other_bool:
+            self.other_key_bool_checkbtn.set_active(True)
+            self.set_other_key_true()                
+        # 
+        for_widgets_left = map(lambda title, widget:(title, widget), self.key_titles_left, self.widgets_left)
+        for title, widget in for_widgets_left:
+            key_value = self.ini.get("OtherKey", title)
+            widget.set_text(key_value)
+            if bool(len(key_value)):
+                widget.set_shortcut_key(key_value)
+        #        
+        for_widgets_right = map(lambda title, widget:(title, widget), self.key_titles_right, self.widgets_right)
+        for title, widget in for_widgets_right:
+            key_value = self.ini.get("OtherKey", title)
+            if bool(len(key_value)):
+                widget.label.set_text(key_value)
+            
     def set_other_key_bool_checkbtn_press(self, widget, event):
         if is_left_button(event):
             if self.other_key_bool_checkbtn.get_active():
@@ -1034,9 +1059,11 @@ class OtherKey(gtk.VBox):
         other_set_dict = {}
         other_set_dict["other_key_bool"] = self.other_key_bool_checkbtn.get_active()
         #
-        for key_title, widget in map(lambda key_title, widget:(key_title, widget), self.key_titles_left, self.widgets_left):
+        for key_title, widget in map(lambda key_title, widget:(key_title, widget),
+                                     self.key_titles_left, self.widgets_left):
             other_set_dict[str(key_title)] = widget.get_text()
-        for key_title, widget in map(lambda key_title, widget:(key_title, widget), self.key_titles_right, self.widgets_right):    
+        for key_title, widget in map(lambda key_title, widget:(key_title, widget),
+                                     self.key_titles_right, self.widgets_right):
             other_set_dict[str(key_title)] = widget.label.get_text()
         return other_set_dict
     
