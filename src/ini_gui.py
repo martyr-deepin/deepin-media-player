@@ -70,6 +70,22 @@ WINDOW_ADAPT_VIDEO_STATE = "2"
 UP_CLOSE_VIDEO_STATE = "3"
 AI_FULL_VIDEO_STATE = "4"
 
+def all_widget_to_widgets(widget_left, widget_right):
+    return map(lambda left, right:(left, right), widget_left, widget_right)
+
+def widgets_add_widget(fixed, widgets_left, widgets_right, start_x, start_y, offset_x, offset_y):
+    widgets_all = all_widget_to_widgets(widgets_left, widgets_right)
+    widgets_offset_x = start_x
+    widgets_offset_y = start_y
+    for widget_left, widget_right in widgets_all:
+        widgets_offset_x = start_x        
+        if widget_left:
+            fixed.put(widget_left, widgets_offset_x, widgets_offset_y) # add left widget.            
+        widgets_offset_x += offset_x
+        if widget_right:
+            fixed.put(widget_right, widgets_offset_x, widgets_offset_y) # add right widget.
+        # y positon move widget_left and widget_right.    
+        widgets_offset_y += offset_y
 
 def create_separator_box(padding_x=0, padding_y=0):    
     separator_box = HSeparator(
@@ -498,7 +514,7 @@ class PlayControl(gtk.VBox):
         self.ini = Config(config_path)
         self.fixed = gtk.Fixed()
         self.label = Label(_("Video Control"))
-        self.label.set_size_request(label_width, label_height)        
+        self.label.set_size_request(label_width, label_height)
         # heparator.
         self.heparator = create_separator_box()
         self.heparator_hbox = gtk.HBox()
@@ -509,8 +525,7 @@ class PlayControl(gtk.VBox):
         entry_height = 24
         # set PlayControl bool.
         self.play_control_bool_checkbtn = CheckButton(_("Hotkeys Enabled"))
-        self.play_control_bool_checkbtn.connect("button-press-event", self.set_play_control_all_sensitive)
-                
+        self.play_control_bool_checkbtn.connect("button-press-event", self.set_play_control_all_sensitive)                
         # open file key.
         self.open_file_entry_label = Label(_("Open File"))
         self.open_file_entry = ShortcutKeyEntry()
@@ -780,6 +795,70 @@ class PlayControl(gtk.VBox):
 class SubKey(gtk.VBox):    
     def __init__(self):
         gtk.VBox.__init__(self)
+        self.ini = Config(config_path)
+        self.fixed_hbox = gtk.HBox()
+        self.fixed = gtk.Fixed()
+        self.fixed.set_size_request(500, 500)
+        self.fixed_hbox.pack_start(self.fixed)
+        # heparator.
+        self.heparator_hbox = gtk.HBox()
+        self.heparator = create_separator_box()
+        self.heparator_hbox.set_size_request(heparator_width, heparator_height)
+        
+        # add title.        
+        title_offset_x = 20
+        title_offset_y = 10
+        self.title_label = Label("字幕控制")
+        # add check_btn.
+        check_btn_offset_x = 20
+        check_btn_offset_y = 45
+        self.check_btn = CheckButton("开启热键")
+        # add widgets.
+        heparator_offset_x = 0
+        heparator_offset_y = title_offset_y + 25        
+        # create widgets left, right label.
+        widgets_label_left = [
+            Label("字幕提前0.5秒"),
+            Label("字幕延时0.5秒"),
+            Label("载入字幕"),
+            ]
+        widgets_label_right = [
+            Label("增大字幕尺寸"),
+            Label("减小字幕尺寸"),
+            ]        
+        # create widgets left, right.
+        widgets_left = [
+            ShortcutKeyEntry(),
+            ShortcutKeyEntry(),
+            ShortcutKeyEntry(),
+            ]
+        widgets_right = [
+            ShortcutKeyEntry(),
+            ShortcutKeyEntry(),
+            ]                                
+        # set widgets left, right size.
+        entry_width = 150
+        entry_height = 24
+        for widget_left, widget_right in all_widget_to_widgets(widgets_left, widgets_right):
+            if widget_left:
+                widget_left.set_size(entry_width, entry_height)
+            if widget_right:    
+                widget_right.set_size(entry_width, entry_height)
+        #
+        start_x, start_y = 30, heparator_offset_y  + 40 
+        offset_x, offset_y = entry_width + 50, 50        
+        self.fixed.put(self.title_label, title_offset_x, title_offset_y)
+        self.heparator_hbox.pack_start(self.heparator)
+        self.fixed.put(self.heparator_hbox, heparator_offset_x, heparator_offset_y)
+        self.fixed.put(self.check_btn, check_btn_offset_x, check_btn_offset_y)
+        widgets_add_widget(self.fixed, widgets_label_left, widgets_label_right, start_x, start_y, offset_x, offset_y)
+        widgets_add_widget(self.fixed, widgets_left, widgets_right, start_x, start_y + 20, offset_x, offset_y)        
+        self.pack_start(self.fixed_hbox)        
+        
+    def get_subkey_set_state(self):
+        subkey_set_dict = {}
+        
+        return subkey_set_dict
         
 class OtherKey(gtk.VBox):
     def __init__(self):

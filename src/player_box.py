@@ -2039,7 +2039,9 @@ class PlayerBox(object):
             self.ini.save()
                 
         self.playwinmax_bool = True
-
+        # subtitles of clear up play file.
+        self.subtitles_select_menu_item = []
+        
     def init_video_setting(self, mplayer, flags):    
         pass
         
@@ -2410,7 +2412,7 @@ class PlayerBox(object):
                 (None, "字幕大小", subtitles_scale_menu),
                 (None, "字幕同步", subtitles_delay_menu)
                 ])
-
+        
         self.subtitles_control_menu.set_menu_item_sensitive_by_index(2, bool(len(self.subtitles_select_menu_item)))
                         
         # 代码需要重构.
@@ -2864,5 +2866,7 @@ class PlayerBox(object):
     
     def subtitle_sub_delay_key(self):
         self.sub_titles.sub_delay()
+        
+        
     
     
