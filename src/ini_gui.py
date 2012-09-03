@@ -796,10 +796,11 @@ class SubKey(gtk.VBox):
     def __init__(self):
         gtk.VBox.__init__(self)
         self.ini = Config(config_path)
-        self.fixed_hbox = gtk.HBox()
+        # init fixed.
+        # self.fixed_hbox = gtk.HBox()
         self.fixed = gtk.Fixed()
         self.fixed.set_size_request(500, 500)
-        self.fixed_hbox.pack_start(self.fixed)
+        # self.fixed_hbox.pack_start(self.fixed)
         # heparator.
         self.heparator_hbox = gtk.HBox()
         self.heparator = create_separator_box()
@@ -811,8 +812,8 @@ class SubKey(gtk.VBox):
         self.title_label = Label("字幕控制")
         # add check_btn.
         check_btn_offset_x = 20
-        check_btn_offset_y = 45
-        self.check_btn = CheckButton("开启热键")
+        check_btn_offset_y = 40
+        self.check_btn = CheckButton("开启热键")        
         # add widgets.
         heparator_offset_x = 0
         heparator_offset_y = title_offset_y + 25        
@@ -827,37 +828,78 @@ class SubKey(gtk.VBox):
             Label("减小字幕尺寸"),
             ]        
         # create widgets left, right.
-        widgets_left = [
+        self.widgets_left = [
             ShortcutKeyEntry(),
             ShortcutKeyEntry(),
             ShortcutKeyEntry(),
             ]
-        widgets_right = [
+        self.widgets_right = [
             ShortcutKeyEntry(),
             ShortcutKeyEntry(),
-            ]                                
+            ]
         # set widgets left, right size.
         entry_width = 150
         entry_height = 24
-        for widget_left, widget_right in all_widget_to_widgets(widgets_left, widgets_right):
+        for widget_left, widget_right in all_widget_to_widgets(self.widgets_left, self.widgets_right):
             if widget_left:
                 widget_left.set_size(entry_width, entry_height)
-            if widget_right:    
+            if widget_right:
                 widget_right.set_size(entry_width, entry_height)
-        #
-        start_x, start_y = 30, heparator_offset_y  + 40 
-        offset_x, offset_y = entry_width + 50, 50        
+        # add widgets.
+        start_x, start_y = 30, heparator_offset_y + 30
+        offset_x, offset_y = entry_width + 50, 50
         self.fixed.put(self.title_label, title_offset_x, title_offset_y)
         self.heparator_hbox.pack_start(self.heparator)
         self.fixed.put(self.heparator_hbox, heparator_offset_x, heparator_offset_y)
         self.fixed.put(self.check_btn, check_btn_offset_x, check_btn_offset_y)
-        widgets_add_widget(self.fixed, widgets_label_left, widgets_label_right, start_x, start_y, offset_x, offset_y)
-        widgets_add_widget(self.fixed, widgets_left, widgets_right, start_x, start_y + 20, offset_x, offset_y)        
-        self.pack_start(self.fixed_hbox)        
+        widgets_add_widget(
+            self.fixed, 
+            widgets_label_left, widgets_label_right,
+            start_x, start_y, 
+            offset_x, offset_y)
+        widgets_add_widget(
+            self.fixed, 
+            self.widgets_left, self.widgets_right, 
+            start_x, start_y + 20, 
+            offset_x, offset_y)
+        self.pack_start(self.fixed)
+        # init widget connect events.
+        self.check_btn.connect("button-press-event", self.check_btn_key_bool_press)        
         
+    def check_btn_key_bool_press(self, widget, event):    
+        if is_left_button(event):
+            if widget.get_active():
+                self.set_subkey_flase()
+            else:    
+                self.set_subkey_true()
+        
+    def set_subkey_flase(self):            
+        self.set_subkey_bool_function(False)
+        
+    def set_subkey_true(self):    
+        self.set_subkey_bool_function(True)
+        
+    def set_subkey_bool_function(self, key_bool):
+        for widget_left in self.widgets_left:
+            widget_left.set_sensitive(key_bool)
+        for widget_right in self.widgets_right:
+            widget_right.set_sensitive(key_bool)
+            
     def get_subkey_set_state(self):
         subkey_set_dict = {}
-        
+        subkey_set_dict["subkey_bool"] = self.check_btn.get_active()
+        key_titles_left = ["subkey_add_delay_key", 
+                           "subkey_sub_delay_key",
+                           "subkey_load_key"
+                           ]
+        key_titles_right = ["subkey_add_scale_key",
+                            "subkey_sub_scale_key",
+                            ]
+        #
+        for key_title, widget in map(lambda key_title, widget:(key_title, widget), key_titles_left, self.widgets_left):
+            subkey_set_dict[str(key_title)] = widget.get_text()
+        for key_title, widget in map(lambda key_title, widget:(key_title, widget), key_titles_right, self.widgets_right):    
+            subkey_set_dict[str(key_title)] = widget.get_text()            
         return subkey_set_dict
         
 class OtherKey(gtk.VBox):
