@@ -222,6 +222,11 @@ class IniGui(DialogBox):
             if self.ini.get("PlayControl", key) != str(play_control_dict[key]):
                 self.ini.set("PlayControl", key, play_control_dict[key])
 
+        subkey_set_dict = self.configure.sub_key.get_subkey_set_state()
+        for key in subkey_set_dict.keys():
+            if self.ini.get("SubKey", key) != str(subkey_set_dict[key]):
+                self.ini.set("SubKey", key, (subkey_set_dict[key]))
+        
         other_key_dict = self.configure.other_key.get_other_set_state()
         for key in other_key_dict.keys():
             if self.ini.get("OtherKey",  key) != str(other_key_dict[key]):
@@ -236,8 +241,9 @@ class IniGui(DialogBox):
         for key in screenshot_dict.keys():
             if self.ini.get("ScreenshotSet", key) != str(screenshot_dict[key]):
                 self.ini.set("ScreenshotSet", key, screenshot_dict[key])
+                
         return False
-    
+                    
     def destroy_ini_gui_window_cancel_clicked(self, widget):    
         # quit configure window.
         self.destroy()
@@ -1162,8 +1168,7 @@ class OtherKey(gtk.VBox):
                 self.set_other_key_false()
             else:
                 self.set_other_key_true()
-                
-            
+                            
     def set_other_key_false(self):    
         self.set_other_key_bool_function(False)
     
