@@ -200,11 +200,11 @@ def init_mplayer_config():
         #[SubKey]    
         for argv, value in ([
                 ("subkey_bool", "True"),
-                ("subkey_add_delay_key", "Ctrl + Alt + 1"),
-                ("subkey_sub_delay_key", "Ctrl + Alt + 2"),
-                ("subkey_load_key", "Ctrl + Alt + 3"),
-                ("subkey_add_scale_key", "Ctrl + Alt + 4"),
-                ("subkey_sub_scale_key", "Ctrl + Alt + 5"),
+                ("subkey_add_delay_key", "["),
+                ("subkey_sub_delay_key", "]"),
+                ("subkey_load_key", "Alt + o"),
+                ("subkey_add_scale_key", "Alt + Left"),
+                ("subkey_sub_scale_key", "Alt + Right"),
                 ]):
             config.set("SubKey", argv, value)
             
@@ -430,6 +430,11 @@ class  Mplayer(gobject.GObject):
         if self.state == STARTING_STATE: # STARTING_STATE
             self.cmd('sub_select %s\n' % str(index))
             
+    def sub_clear(self, end_index): # clear all subtitl file.
+        if self.state == STARTING_STATE:
+            for index in range(0, end_index):
+                self.sub_del(index)
+                
     def sub_del(self, index):        
         if self.state == STARTING_STATE: # STARTING_STATE
             self.cmd('sub_remove %s\n' % index)
@@ -453,15 +458,16 @@ class  Mplayer(gobject.GObject):
             self.cmd("sub_alignment %s\n"%(alignment_state))
 
     # subtitle delay(+/-[abs]).
-    def up_add_delay(self):       
-        self.sub_delay()
+    def sub_up_delay(self): # sub_delay 0.1\n sub_delay -0.1\n
+        self.sub_delay(0.1)
         
-    def down_sub_delay(self):
-        self.sub_delay()
+    def sub_down_delay(self):
+        self.sub_delay(-0.1)
     
     def sub_delay(self, value):                    
-        pass
-    
+        if self.state == STARTING_STATE:
+            self.cmd("sub_delay %s\n" % (value))
+        
     # subtitle log.
     # def sub_log(self)
             
@@ -483,10 +489,12 @@ class  Mplayer(gobject.GObject):
     # subtitle scale(+/-[abs])
     # sub_scale %f 1\n. 默认 1.0
     def sub_up_scale(self):
-        self.sub_scale(self.subtitle_scale_value + 0.1)
-    
+        self.subtitle_scale_value += 0.1
+        self.sub_scale(self.subtitle_scale_value)
+        
     def sub_down_scale(self):
-        self.sub_scale(self.subtitle_scale_value - 0.1)
+        self.subtitle_scale_value -= 0.1
+        self.sub_scale(self.subtitle_scale_value)
     
     def sub_scale(self, value): # value -> %f
         if self.state == STARTING_STATE:

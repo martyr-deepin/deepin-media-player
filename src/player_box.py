@@ -713,6 +713,7 @@ class PlayerBox(object):
         
         # open file key init.(left)        
         play_control_bool = self.config.get("PlayControl", "play_control_bool")
+        sub_key_bool = self.config.get("SubKey", "subkey_bool")
         other_key_bool = self.config.get("OtherKey", "other_key_bool")
         
         # [PlayControl] Init.
@@ -736,6 +737,17 @@ class PlayerBox(object):
               
             self.keymap["Escape"] = self.key_quit_full        
               
+        if sub_key_bool == "True":    
+            for section , argv, connect_fun in [
+                ("SubKey", "subkey_load_key", self.subtitle_load_subtitle_key), 
+                ("SubKey", "subkey_add_delay_key", self.subtitle_add_delay_key),                
+                ("SubKey", "subkey_sub_delay_key", self.subtitle_sub_delay_key),                
+                ("SubKey", "subkey_add_scale_key", self.subtitle_add_scale_key),
+                ("SubKey", "subkey_sub_scale_key", self.subtitle_sub_scale_key),                
+                ]:
+                config_key = self.config.get(section, argv)
+                self.keymap[config_key] = connect_fun
+                
         # [OtherKey].
         if other_key_bool == "True":  
             for section, argv, connect_fun in [
@@ -745,9 +757,9 @@ class PlayerBox(object):
                 ("OtherKey", "clockwise_key",   self.key_clockwise),
                 ("OtherKey", "sort_image_key",  self.key_sort_image),
                 ("OtherKey", "switch_audio_track_key",  self.key_switch_audio_track),
-                ("OtherKey", "load_subtitle_key",  self.key_load_subtitle),
-                ("OtherKey", "subtitle_delay_key", self.key_subtitle_delay),
-                ("OtherKey", "subtitle_advance_key", self.key_subtitle_advance),
+                # ("OtherKey", "load_subtitle_key",  self.key_load_subtitle),
+                # ("OtherKey", "subtitle_delay_key", self.key_subtitle_delay),
+                # ("OtherKey", "subtitle_advance_key", self.key_subtitle_advance),
                 ]:
                 config_key = self.config.get(section, argv)
                 self.keymap[config_key] = connect_fun                                    
@@ -771,8 +783,8 @@ class PlayerBox(object):
         pass
 
     def key_load_subtitle(self):
-        # print "load subtitle..."
-        pass
+        print "load subtitle..."
+        
 
     def key_switch_audio_track(self):
         # print "key switch audio track..."
@@ -1100,8 +1112,7 @@ class PlayerBox(object):
                     self.mp.clear_playlist()
                     self.clear_play_list_bool = True 
                 self.try_play(path_string)
-            
-                
+                            
         open_dialog.destroy()
 
     def try_play(self, path_string):
@@ -1914,12 +1925,14 @@ class PlayerBox(object):
                 self.load_subtitle(save_down_file)
             
     def media_player_start(self, mplayer, play_bool):
-        '''media player start play.'''        
+        '''media player start play.'''                
+        # clear subtitle file.
+        mplayer.sub_del(0)
         # scan subtitle.
         self.media_player_start_scan_subtitle(mplayer)
         # load subtitle.
         self.media_player_start_load_subtitle(mplayer)
-        
+        ###########################################################
         # Init last new play file menu.
         self.the_last_new_play_file_list = self.last_new_play_file_function.set_file_time(mplayer.path)
         # Get video width and height.
@@ -1969,6 +1982,7 @@ class PlayerBox(object):
                 for file_name in temp_path_file_list:
                     if os.path.splitext(file_name)[0] == temp_path_file:
                         save_down_file = os.path.join(save_subtitle_path, file_name)                        
+                        
                 if "True" == self.config.get("SubtitleSet", "ai_load_subtitle") and save_down_file and os.path.exists(save_down_file):
                     self.load_subtitle(save_down_file)
         
@@ -2041,9 +2055,14 @@ class PlayerBox(object):
                 
         self.playwinmax_bool = True
         # subtitles of clear up play file.
-        self.subtitles_select_menu_item = []
+        self.clear_subtitle_file()
         
-    def init_video_setting(self, mplayer, flags):    
+    def clear_subtitle_file(self):
+        self.subtitles_select_menu_item = []
+        self.mp.sub_clear(self.sub_titles.get_index())
+        self.sub_titles.clear()
+        
+    def init_video_setting(self, mplayer, flags):
         pass
         
     def media_player_next(self, mplayer, play_bool):
@@ -2409,13 +2428,15 @@ class PlayerBox(object):
         self.subtitles_control_menu = Menu([
                 # (down_sub_title_pixbuf, _("Auto-download Subtitles"), self.set_down_sub_title_bool),
                 (None, "手动搜索字幕", self.open_scan_gui_window),
-                (None, "手动载入字幕", None),                
+                (None, "手动载入字幕", self.open_window_load_subtitle), 
+                (None, "停止字幕", self.subtitle_stop_key),
+                (None),
                 (None, "字幕选择", self.subtitles_select_menu),
                 (None, "字幕大小", subtitles_scale_menu),
                 (None, "字幕同步", subtitles_delay_menu)
                 ])
         
-        self.subtitles_control_menu.set_menu_item_sensitive_by_index(2, bool(len(self.subtitles_select_menu_item)))
+        self.subtitles_control_menu.set_menu_item_sensitive_by_index(4, bool(len(self.subtitles_select_menu_item)))
                         
         # 代码需要重构.
         menu_full_pixbufs = (self.menu_full_normal_pixbuf, self.menu_full_hover_pixbuf, self.menu_full_none_pixbuf)
@@ -2737,11 +2758,6 @@ class PlayerBox(object):
 
     '''Subtitle.'''
     def load_subtitle(self, sub_file):        
-        # fp_str = open(sub_file, "r").read()
-        # code_to_utf_8_str = auto_decode(fp_str)
-        # with open(sub_file, 'w') as fp_open:
-        #     fp_open.write(code_to_utf_8_str)            
-        # self.mp.sub_add(sub_file)
         self.sub_titles.add(sub_file)
         
     def remove_subtitle(self):
@@ -2816,45 +2832,50 @@ class PlayerBox(object):
 
     # init_subtitles connect events.    
     def add_subtitle_event(self, subtitle, subtitle_path, index):
-        print "add_subtitle_event"
         # add to selece menu.
         self.subtitles_select_menu_item.append((None, subtitle_path, lambda : self.sub_titles.select(index)))
+        # add to mplayer.
         self.mp.sub_add(subtitle_path)
         
     def scan_subtitle_event(self, subtitle, subtitle_list):
         map(lambda subtitle_file:subtitle.add(subtitle_file), subtitle_list)
         
     def select_subtitle_event(self, subtitle, subtitle_path, subtitle_index):
-        print "select_subtitle_event"
+        # print "select_subtitle_event"
         self.mp.sub_select(subtitle_index)
-        print subtitle_index
+        self.messagebox("加载字幕")
+        # print subtitle_index
         
     def delete_subtitle_event(self, subtitle, subtitle_path, subtitle_index):
         print "delete_subtitle_event"
     
     def stop_subtitle_event(self, subtitle):
-        print "stop_subtitle_event"
+        # print "stop_subtitle_event"
         self.messagebox("停止字幕")
-    
+        
     def add_delay_subtitle_event(self, subtitle):
-        print "add_delay_subtitle_event"
+        # print "add_delay_subtitle_event"
+        self.mp.sub_up_delay()
         self.messagebox("字幕提前0.5秒")
     
     def sub_delay_subtitle_event(self, subtitle):
-        print "sub_delay_subtitle_event"
+        # print "sub_delay_subtitle_event"
         self.messagebox("字幕延时0.5秒")
+        self.mp.sub_down_delay()
         
     def add_scale_subtitle_event(self, subtitle):
-        print "add_scale_subtitle_event"
+        # print "add_scale_subtitle_event"
+        self.mp.sub_up_scale()
         self.messagebox("增大字幕尺寸")
         
     def sub_scale_subtitle_event(self, subtitle):
-        print "sub_scale_subtitle_event"        
+        # print "sub_scale_subtitle_event"
+        self.mp.sub_down_scale()
         self.messagebox("减少字幕尺寸")
     
     def clear_subtitle_event(self, subtitle, subtitle_len):
         print "clear_subtitle_event"
-    
+        
     # menu control.
     def open_scan_gui_window(self):
         scan_gui = ScanGui()
@@ -2891,6 +2912,23 @@ class PlayerBox(object):
         os.makedirs("/tmp/tmp_sub/")
         
     # subtitles menu control.        
+    def open_window_load_subtitle(self):    
+        open_dialog = gtk.FileChooserDialog(_("Select Files"),
+                                            None,
+                                            gtk.FILE_CHOOSER_ACTION_OPEN,
+                                            (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
+                                             gtk.STOCK_OPEN, gtk.RESPONSE_OK))
+        open_dialog.set_current_folder(get_home_path())
+        res = open_dialog.run()
+
+        if res == gtk.RESPONSE_OK:
+            path_string = open_dialog.get_filename()
+            if path_string:
+                print "open_window_load_subtitle;", path_string
+                self.sub_titles.add(path_string)
+                
+        open_dialog.destroy()
+        
     # subtitle key[stop,add/sub scale].
     def subtitle_stop_key(self):
         self.sub_titles.stop()
@@ -2907,6 +2945,7 @@ class PlayerBox(object):
     def subtitle_sub_delay_key(self):
         self.sub_titles.sub_delay()
         
+    def subtitle_load_subtitle_key(self):
+        self.sub_titles.select(0)        
+
         
-    
-    

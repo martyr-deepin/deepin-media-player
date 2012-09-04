@@ -63,6 +63,9 @@ class SubTitles(gobject.GObject):
         gobject.GObject.__init__(self)
         self.__subtitle_list = []
         
+    def get_index(self):    
+        return len(self.__subtitle_list)
+    
     def clear(self):
         if self.__subtitle_list != []:
             self.emit("clear-subtitle-event", len(self.__subtitle_list) - 1)
