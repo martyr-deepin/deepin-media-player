@@ -789,8 +789,8 @@ class PlayerBox(object):
             save_path = self.config.get("ScreenshotSet", "save_path")
             save_type = self.config.get("ScreenshotSet", "save_type")
             
-            if save_path[0] == "~":
-                save_path = get_home_path() + save_path[1:]                    
+            # if save_path[0] == "~":
+            #     save_path = get_home_path() + save_path[1:]
                     
             if save_file_bool == "True":
                 if scrot_bool == "True":
@@ -1881,8 +1881,8 @@ class PlayerBox(object):
 
     def down_subtitle_threading(self, play_name, save_subtitle_path):    
         down_bool = True
-        if save_subtitle_path[0:1] == "~":
-            save_subtitle_path = get_home_path() + save_subtitle_path[1:]
+        # if save_subtitle_path[0:1] == "~":
+        #     save_subtitle_path = get_home_path() + save_subtitle_path[1:]
             
         temp_path_file = os.path.splitext(os.path.split(play_name)[1])[0]
         temp_path_file_list = os.listdir(save_subtitle_path)
@@ -2858,8 +2858,34 @@ class PlayerBox(object):
         scan_gui.connect("add-subtitle-file", self.add_subtitle_file_event)
         scan_gui.show_window()
         
-    def add_subtitle_file_event(self, ScanGui, sub_file):
-        print "add_subtitle_file_event:", sub_file
+    def add_subtitle_file_event(self, ScanGui, sub_file_list):
+        # add subtitle file.
+        if self.mp.state == STARTING_PLAY:
+            mv_dir = os.path.split(self.mp.path)[0]
+            for subtitle in sub_file_list:
+                video_subtitle = self.mv_subtitle_to_movie(subtitle, mv_dir)
+                if video_subtitle:
+                    self.sub_titles.add(video_subtitle)
+        else: 
+            mv_dir = self.config.get("SubtitleSet", "specific_location_search")
+            # mv subtitle file to dir.
+            if bool(len(mv_dir)) and mv_dir is not None:
+                for subtitle in sub_file_list:
+                    self.mv_subtitle_to_movie(subtitle, mv_dir)
+        ##############################
+        # delete dir.    
+        self.delete_subtitle_temp()
+        
+    def mv_subtitle_to_movie(self, sub_file, mv_dir):
+        try:
+            os.system("cp '%s' '%s'"%(sub_file, mv_dir))
+            return os.path.join(mv_dir, os.path.split(sub_file)[1])
+        except Exception, e:
+            print "[error]mv_subtitle_to_movie function:", e
+            
+    def delete_subtitle_temp(self):        
+        os.system("rm -rf /tmp/tmp_sub/")
+        os.makedirs("/tmp/tmp_sub/")
         
     # subtitles menu control.        
     # subtitle key[stop,add/sub scale].

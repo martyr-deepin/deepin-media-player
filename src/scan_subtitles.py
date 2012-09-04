@@ -189,8 +189,8 @@ TEMP_FILE_DIR = "/tmp/tmp_sub"
 class ScanGui(gobject.GObject):
     __gsignals__ = {
         "add-subtitle-file" : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE,
-                            (gobject.TYPE_STRING,))
-        }    
+                            (gobject.TYPE_PYOBJECT,))
+        }
     def __init__(self):
         gobject.GObject.__init__(self)
         # self.app = Application() 
@@ -206,8 +206,8 @@ class ScanGui(gobject.GObject):
         self.row_height = 1
         self.current_page = 1
         self.sum_subtitle_num = 0
-        self.format_command = {".rar":"7z x -o%s"%(TEMP_FILE_DIR),
-                               ".zip":"7z x -o%s"%(TEMP_FILE_DIR)}
+        # self.format_command = {".rar":"unrar x %s %s",
+        #                        ".zip":"7za x -o%s"}
         self.down_to_copy_path = "/tmp/tmp_sub"
         self.highlight_item = None
         
@@ -377,22 +377,38 @@ class ScanGui(gobject.GObject):
         
     def __down_subtitle_function(self, title):    
         if self.scan_url_sub.down_subtitle(self.scan_url_sub.mc_url_and_name_dict[title]):
-            print self.scan_url_sub.save_file_name
-            # 7z...        
-            # file_name, file_type = os.path.splitext(self.scan_url_sub.save_file_name)
-            # temp_file_path = os.path.join("/tmp", self.scan_url_sub.save_file_name)
-            # cmd_line = self.format_command[file_type] + " " + temp_file_path
-            # os.system(cmd_line)
-            # list_dir = os.listdir(TEMP_FILE_DIR)
-            # if os.path.isfile(list_dir[0]):
-            #     pass
-            # elif os.path.isdir(list_dir[0]):
-            #     pass
-            # os.system("rm -rf /tmp/tmp_sub/") 
-            # os.path.makedirs("/tmp/tmp_sub/")
+            # print self.scan_url_sub.save_file_name
+            file_name, file_type = os.path.splitext(self.scan_url_sub.save_file_name)
+            temp_file_path = os.path.join("/tmp", self.scan_url_sub.save_file_name)
+            
+            if ".rar" == file_type:
+                cmd_line = "unrar x %s %s" % (temp_file_path, "/tmp/tmp_sub/")
+            elif ".zip" == file_type:
+                cmd_line = "7z x -o%s %s" % ("/tmp/tmp_sub", temp_file_path)                
+                
+            # run 解压缩.
+            os.system(cmd_line)
+            # scan dir.
+            list_dir = os.listdir(TEMP_FILE_DIR)
+            subtitles_list = []
+            
+            for file_ in list_dir:
+                file_path = os.path.join("/tmp/tmp_sub/", file_)
+                if os.path.isfile(file_path):
+                    subtitles_list.append(file_path)
+                elif os.path.isdir(file_path):
+                    list_dir____ = os.listdir(file_path)
+                    for file____ in list_dir____:                        
+                        sub_dir_file = file_path + "/"+ file____ #os.path.join(file_path, file____)
+                        if os.path.isfile(sub_dir_file):
+                            subtitles_list.append(sub_dir_file)
+            # messagebox infromtiom.    
             self.scan_sub_sum_label.set_text("字幕保存%s" % ("/tmp 目录"))
-            # print "下载成功..."
-            self.emit("add-subtitle-file", "获取文件名.....要写哦!!")
+            # print "down_subtitle_function:", subtitles_list            
+            # send event.
+            self.emit("add-subtitle-file", subtitles_list)
+            # delete down temp .
+            os.system("rm -rf %s"% (temp_file_path))
         else:
             self.scan_sub_sum_label.set_text("下载失败!!")
         
