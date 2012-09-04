@@ -2815,16 +2815,19 @@ class PlayerBox(object):
         self.messagebox("%s:%s%s"%(_("Volumn"), int(self.volume_button.value), "%"))
 
     # init_subtitles connect events.    
-    def add_subtitle_event(self, subtitle, subtitle_path):
+    def add_subtitle_event(self, subtitle, subtitle_path, index):
         print "add_subtitle_event"
         # add to selece menu.
-        self.subtitles_select_menu_item.append((None, subtitle_path, None))
+        self.subtitles_select_menu_item.append((None, subtitle_path, lambda : self.sub_titles.select(index)))
+        self.mp.sub_add(subtitle_path)
         
     def scan_subtitle_event(self, subtitle, subtitle_list):
         map(lambda subtitle_file:subtitle.add(subtitle_file), subtitle_list)
         
     def select_subtitle_event(self, subtitle, subtitle_path, subtitle_index):
         print "select_subtitle_event"
+        self.mp.sub_select(subtitle_index)
+        print subtitle_index
         
     def delete_subtitle_event(self, subtitle, subtitle_path, subtitle_index):
         print "delete_subtitle_event"

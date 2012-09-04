@@ -30,7 +30,7 @@ class SubTitles(gobject.GObject):
     __gsignals__ = {
         "add-subtitle-event":(
             gobject.SIGNAL_RUN_LAST,
-            gobject.TYPE_NONE, (gobject.TYPE_STRING,)),
+            gobject.TYPE_NONE, (gobject.TYPE_STRING, gobject.TYPE_INT)),
         "scan-subtitle-event":(
             gobject.SIGNAL_RUN_LAST,
             gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
@@ -67,7 +67,7 @@ class SubTitles(gobject.GObject):
         if self.__subtitle_list != []:
             self.emit("clear-subtitle-event", len(self.__subtitle_list) - 1)
             self.__subtitle_list = []
-        
+            
     def scan_subtitle(self, video_file, subtitle_path):
         if os.path.exists(subtitle_path):
             print subtitle_path
@@ -92,7 +92,7 @@ class SubTitles(gobject.GObject):
                 write_fp.write(code_to_utf_8_str)
         
             self.__subtitle_list.append(path) # save subtitle path.
-            self.emit("add-subtitle-event", str(path))
+            self.emit("add-subtitle-event", str(path), len(self.__subtitle_list) -1)
         else:    
             print "add lose..."
             

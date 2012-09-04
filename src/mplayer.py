@@ -416,7 +416,7 @@ class  Mplayer(gobject.GObject):
                     self.time_min = 0
                     self.time_sec = 0
                     self.time(self.pos_num)  
-                    self.emit("get-time-pos",int(self.pos_num))
+                    self.emit("get-time-pos", int(self.pos_num))
                     
         return True
 
@@ -428,11 +428,11 @@ class  Mplayer(gobject.GObject):
             
     def sub_select(self, index):        
         if self.state == STARTING_STATE: # STARTING_STATE
-            self.cmd('sub_select %s\n', str(index))
+            self.cmd('sub_select %s\n' % str(index))
             
     def sub_del(self, index):        
         if self.state == STARTING_STATE: # STARTING_STATE
-            self.cmd('sub_remove %s\n', index)
+            self.cmd('sub_remove %s\n' % index)
                         
     def sub_stop(self):        
         if self.state == STARTING_STATE:
