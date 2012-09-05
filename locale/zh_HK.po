@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-05 17:01+0800\n"
+"POT-Creation-Date: 2012-09-05 16:33+0800\n"
 "PO-Revision-Date: 2012-07-12 15:53+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -43,7 +43,7 @@ msgstr "播放控製"
 #: ../src/ini_gui.py:136 ../src/ini_gui.py:263 ../src/ini_gui.py:274
 #: ../src/ini_gui.py:818
 msgid "Subtitle"
-msgstr "字幕"
+msgstr "字幕控製"
 
 #: ../src/ini_gui.py:137 ../src/ini_gui.py:264 ../src/ini_gui.py:275
 #: ../src/ini_gui.py:944 ../src/ini_gui.py:1294
@@ -605,9 +605,8 @@ msgid "Duration"
 msgstr "時長"
 
 #: ../src/scan_subtitles.py:288
-#, fuzzy
 msgid "Movie Name: "
-msgstr "影片名："
+msgstr "影片名:"
 
 #: ../src/scan_subtitles.py:301
 msgid "Search"
