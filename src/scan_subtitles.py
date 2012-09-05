@@ -180,6 +180,7 @@ from dtk.ui.scrolled_window import ScrolledWindow
 from dtk.ui.entry import InputEntry
 from dtk.ui.label import Label
 from ini import Config,get_home_path
+from locales import _
 import gtk
 import gobject
 TEMP_FILE_DIR = "/tmp/tmp_sub"
@@ -194,7 +195,7 @@ class ScanGui(gobject.GObject):
     def __init__(self):
         gobject.GObject.__init__(self)
         # self.app = Application() 
-        self.app = DialogBox("字幕搜索", 480, 350,
+        self.app = DialogBox(_("Search Subtitles"), 480, 350,
                              mask_type=False,
                              modal=False,
                              window_hint=gtk.gdk.WINDOW_TYPE_HINT_NORMAL,
@@ -224,7 +225,7 @@ class ScanGui(gobject.GObject):
          (lambda item: item.artist, cmp),
          (lambda item: item.length, cmp)])
         self.list_view.set_expand_column(0)
-        self.list_view.add_titles(["字幕", "语言", "时长"])        
+        self.list_view.add_titles([_("Subtiles"), _("Language"), _("Duration")])        
         self.scrolled_window = ScrolledWindow()        
         self.scrolled_window.add_child(self.list_view)
 
@@ -284,7 +285,7 @@ class ScanGui(gobject.GObject):
         self.highlight_item = item
             
     def top_hbox_init(self):        
-        self.name_label = Label("影片名：")
+        self.name_label = Label(_("Movie Name: "))
         self.name_label_align = gtk.Alignment()
         self.name_label_align.add(self.name_label)
         self.name_label_align.set(0, 0, 0, 0)
@@ -297,7 +298,7 @@ class ScanGui(gobject.GObject):
         self.name_entry_align.set_padding(0, 0, 2, 2)
         self.name_entry_align.add(self.name_entry)
         
-        self.scan_button = Button("搜索")
+        self.scan_button = Button(_("Search"))
         self.scan_button_align = gtk.Alignment()
         self.scan_button_align.add(self.scan_button)
         self.scan_button_align.set(1, 0, 0, 0)
@@ -329,7 +330,7 @@ class ScanGui(gobject.GObject):
         self.current_page = 1
         self.scan_url_sub.scan_url_function(str(scan_name))
         self.sum_subtitle_num = self.scan_url_sub.sum_subtitles # save sum subtitles.
-        self.scan_sub_sum_label.set_text("字幕总数:%s" % str(self.scan_url_sub.sum_subtitles))
+        self.scan_sub_sum_label.set_text("%s: %s" % (_("Total search results"), str(self.scan_url_sub.sum_subtitles)))
         self.scan_url_sub.scan_page_index(1)
         self.scan_url_sub.get_sum_page()
         for key in self.scan_url_sub.mc_url_and_name_dict.keys():
@@ -338,18 +339,18 @@ class ScanGui(gobject.GObject):
         self.list_view.add_items(self.items)
         
     def bottom_hbox_init(self):        
-        self.scan_sub_sum_label = Label("搜索的字幕总数:")
+        self.scan_sub_sum_label = Label(_("Total search results: 0"))
         self.scan_sub_sum_label_align = gtk.Alignment()
         self.scan_sub_sum_label_align.set_padding(4, 0, 4, 0)
         self.scan_sub_sum_label_align.add(self.scan_sub_sum_label)
 
-        self.down_button = Button("下载")
+        self.down_button = Button(_("Download"))
         self.down_button.set_size_request(95, 25)
         self.down_button_align = gtk.Alignment()
         self.down_button_align.set_padding(2, 0, 2, 2)
         self.down_button_align.add(self.down_button)
         
-        self.close_button = Button("关闭")
+        self.close_button = Button(_("Close"))
         self.close_button.set_size_request(95, 25)
         self.close_button_align = gtk.Alignment()
         self.close_button_align.set_padding(2, 0, 2, 2)
@@ -405,19 +406,19 @@ class ScanGui(gobject.GObject):
                         if os.path.isfile(sub_dir_file):
                             subtitles_list.append(sub_dir_file)
             # messagebox infromtiom.   
-            self.scan_sub_sum_label.set_text("字幕保存%s" % ("/tmp 目录"))
+            self.scan_sub_sum_label.set_text("%s%s%s" % (_("Subtile has been saved to the"), "/tmp ", _("director")))
             # print "down_subtitle_function:", subtitles_list            
             # send event.
             self.emit("add-subtitle-file", subtitles_list)
             # delete down temp .
             os.system("rm -rf %s"% (temp_file_path))
         else:
-            self.scan_sub_sum_label.set_text("下载失败!!")
+            self.scan_sub_sum_label.set_text(_("Failed to download the subtitle!"))
         
-scan_gui = ScanGui()
-scan_gui.app.show_all()
+# scan_gui = ScanGui()
+# scan_gui.app.show_all()
 # gtk.gdk.threads_enter()
-gtk.main()
+# gtk.main()
 # gtk.gdk.threads_leave()
 
 # if __name__ == "__main__":

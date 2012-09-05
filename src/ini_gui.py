@@ -133,7 +133,7 @@ class IniGui(DialogBox):
         self.tree_view.add_item(None, TreeViewItem(_("Genera")))
         key = self.tree_view.add_item(None, TreeViewItem(_("Keyboard")))
         self.tree_view.add_item(key, TreeViewItem(_("Video Control"), has_arrow=False))
-        self.tree_view.add_item(key, TreeViewItem("字幕控制", has_arrow=False)) # new
+        self.tree_view.add_item(key, TreeViewItem(_("Subtitle"), has_arrow=False)) # new
         self.tree_view.add_item(key, TreeViewItem(_("Other"), has_arrow=False))        
         
         self.tree_view.add_item(None, TreeViewItem(_("Subtitles")))
@@ -260,7 +260,7 @@ class Configure(gtk.VBox):
             _("Playback"):FilePlay(),
             _("Genera"):SystemSet(),
             _("Video Control"):PlayControl(),
-            "字幕控制":SubKey(),
+            _("Subtitle"):SubKey(),
             _("Other"):OtherKey(),
             _("Subtitles"):SubSet(),
             _("Screenshot"):ScreenShot(),
@@ -271,7 +271,7 @@ class Configure(gtk.VBox):
         self.file_play = self.class_dict[_("Playback")]
         self.system_set = self.class_dict[_("Genera")]
         self.play_control = self.class_dict[_("Video Control")]
-        self.sub_key = self.class_dict["字幕控制"] 
+        self.sub_key = self.class_dict[_("Subtitle")] 
         self.other_key = self.class_dict[_("Other")]
         self.sub_set = self.class_dict[_("Subtitles")]
         self.screen_shot = self.class_dict[_("Screenshot")]
@@ -815,23 +815,23 @@ class SubKey(gtk.VBox):
         # add title.        
         title_offset_x = 20
         title_offset_y = 10
-        self.title_label = Label("字幕控制")
+        self.title_label = Label(_("Subtitle"))
         # add check_btn.
         check_btn_offset_x = 20
         check_btn_offset_y = 40
-        self.check_btn = CheckButton("开启热键")        
+        self.check_btn = CheckButton(_("Enable Keyboard Shortcuts"))        
         # add widgets.
         heparator_offset_x = 0
         heparator_offset_y = title_offset_y + 25        
         # create widgets left, right label.
         widgets_label_left = [
-            Label("字幕提前0.5秒"),
-            Label("字幕延时0.5秒"),
-            Label("载入字幕"),
+            Label(_("Forword by 0.5s")),
+            Label(_("Delay by 0.5s")),
+            Label(_("Loading Subtiles")),
             ]
         widgets_label_right = [
-            Label("增大字幕尺寸"),
-            Label("减小字幕尺寸"),
+            Label(_("Increase the Size of Characters")),
+            Label(_("Decrease the Size of Characters")),
             ]        
         # create widgets left, right.
         self.widgets_left = [

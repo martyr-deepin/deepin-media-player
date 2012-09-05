@@ -2419,24 +2419,24 @@ class PlayerBox(object):
             self.subtitles_select_menu = None
             
         subtitles_scale_menu = Menu([
-                (None, "增大尺寸", self.subtitle_add_scale_key),                
-                (None, "减小尺寸", self.subtitle_sub_scale_key)
+                (None, _("Enlarge"), self.subtitle_add_scale_key),                
+                (None, _("Decrease"), self.subtitle_sub_scale_key)
                 ])
         
         subtitles_delay_menu = Menu([
-                (None, "提前0.5秒", self.subtitle_add_delay_key),
-                (None, "延时0.5秒", self.subtitle_sub_delay_key)
+                (None, _("0.5 seconds forword"), self.subtitle_add_delay_key),
+                (None, _("0.5 sceconds delay"), self.subtitle_sub_delay_key)
                 ])
 
         self.subtitles_control_menu = Menu([
                 # (down_sub_title_pixbuf, _("Auto-download Subtitles"), self.set_down_sub_title_bool),
-                (None, "手动搜索字幕", self.open_scan_gui_window),
-                (None, "手动载入字幕", self.open_window_load_subtitle), 
-                (None, "停止字幕", self.subtitle_stop_key),
+                (None, _("Search subtitles"), self.open_scan_gui_window),
+                (None, _("Load subtitles"), self.open_window_load_subtitle), 
+                (None, _("Disable Subtitles"), self.subtitle_stop_key),
                 (None),
-                (None, "字幕选择", self.subtitles_select_menu),
-                (None, "字幕大小", subtitles_scale_menu),
-                (None, "字幕同步", subtitles_delay_menu)
+                (None, _("Select Subtitles"), self.subtitles_select_menu),
+                (None, _("Size of Subtitles"), subtitles_scale_menu),
+                (None, _("Subtitle Synchronization"), subtitles_delay_menu)
                 ])
         
         self.subtitles_control_menu.set_menu_item_sensitive_by_index(4, bool(len(self.subtitles_select_menu_item)))
