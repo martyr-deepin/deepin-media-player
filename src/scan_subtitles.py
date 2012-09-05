@@ -215,7 +215,7 @@ class ScanGui(gobject.GObject):
         self.main_vbox = gtk.VBox()
         self.main_vbox_align = gtk.Alignment()
         self.main_vbox_align.set(1, 1, 1, 1)
-        self.main_vbox_align.set_padding(6, 4, 2, 2)
+        self.main_vbox_align.set_padding(6, 0, 2, 2)
         self.main_vbox_align.add(self.main_vbox)
         
         self.items = []
@@ -236,7 +236,7 @@ class ScanGui(gobject.GObject):
         self.bottom_hbox_init()
                 
         self.main_vbox.pack_start(self.top_hbox_align, False, False)
-        self.main_vbox.pack_start(self.scrolled_window)
+        self.main_vbox.pack_start(self.scrolled_window, True, True)
         self.main_vbox.pack_start(self.bottom_hbox_align, False, False)
         
         # self.app.main_box.add(self.main_vbox_align)
@@ -294,7 +294,7 @@ class ScanGui(gobject.GObject):
         self.name_entry.set_size(125, 24)
         self.name_entry_align = gtk.Alignment()
         self.name_entry_align.set(1, 1, 1, 1)
-        self.name_entry_align.set_padding(0, 2, 2, 2)
+        self.name_entry_align.set_padding(0, 0, 2, 2)
         self.name_entry_align.add(self.name_entry)
         
         self.scan_button = Button("搜索")
@@ -344,13 +344,15 @@ class ScanGui(gobject.GObject):
         self.scan_sub_sum_label_align.add(self.scan_sub_sum_label)
 
         self.down_button = Button("下载")
+        self.down_button.set_size_request(95, 25)
         self.down_button_align = gtk.Alignment()
-        self.down_button_align.set_padding(2, 2, 2, 2)
+        self.down_button_align.set_padding(2, 0, 2, 2)
         self.down_button_align.add(self.down_button)
         
         self.close_button = Button("关闭")
+        self.close_button.set_size_request(95, 25)
         self.close_button_align = gtk.Alignment()
-        self.close_button_align.set_padding(2, 2, 2, 2)
+        self.close_button_align.set_padding(2, 0, 2, 2)
         self.close_button_align.add(self.close_button)
         
         self.bottom_hbox = gtk.HBox()
@@ -361,7 +363,7 @@ class ScanGui(gobject.GObject):
                 
         self.bottom_hbox.pack_start(self.scan_sub_sum_label_align, True)
         self.bottom_hbox.pack_start(self.down_button_align, False, False)
-        self.bottom_hbox.pack_start(self.close_button_align, False, False)        
+        self.bottom_hbox.pack_start(self.close_button_align, False, False)
                 
         self.down_button.connect("clicked", self.down_button_clicked)
         self.close_button.connect("clicked", self.close_button_clicked)
@@ -402,7 +404,7 @@ class ScanGui(gobject.GObject):
                         sub_dir_file = file_path + "/"+ file____ #os.path.join(file_path, file____)
                         if os.path.isfile(sub_dir_file):
                             subtitles_list.append(sub_dir_file)
-            # messagebox infromtiom.    
+            # messagebox infromtiom.   
             self.scan_sub_sum_label.set_text("字幕保存%s" % ("/tmp 目录"))
             # print "down_subtitle_function:", subtitles_list            
             # send event.
@@ -412,9 +414,10 @@ class ScanGui(gobject.GObject):
         else:
             self.scan_sub_sum_label.set_text("下载失败!!")
         
-# ScanGui()
+scan_gui = ScanGui()
+scan_gui.app.show_all()
 # gtk.gdk.threads_enter()
-# gtk.main()
+gtk.main()
 # gtk.gdk.threads_leave()
 
 # if __name__ == "__main__":

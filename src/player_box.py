@@ -1932,6 +1932,9 @@ class PlayerBox(object):
         self.media_player_start_scan_subtitle(mplayer)
         # load subtitle.
         self.media_player_start_load_subtitle(mplayer)
+        ai_load_bool = self.config.get("SubtitleSet", "ai_load_subtitle")
+        if "True" == ai_load_bool:
+            self.sub_titles.select(0)
         ###########################################################
         # Init last new play file menu.
         self.the_last_new_play_file_list = self.last_new_play_file_function.set_file_time(mplayer.path)
@@ -1967,9 +1970,9 @@ class PlayerBox(object):
     def media_player_start_load_subtitle(self, mplayer):    
         # down subtitle.
         save_subtitle_path = self.config.get("SubtitleSet","specific_location_search")
-        if save_subtitle_path:
-            if save_subtitle_path[0:1] == "~":
-                save_subtitle_path = get_home_path() + save_subtitle_path[1:]
+        # if save_subtitle_path:
+        #     if save_subtitle_path[0:1] == "~":
+        #         save_subtitle_path = get_home_path() + save_subtitle_path[1:]
                 
         if save_subtitle_path:
             if self.down_sub_title_bool:
