@@ -52,7 +52,9 @@ class LrcRead(object):
         for lrc_line in self.string_list:
             if lrc_line not in [ "\n", ""]:
                 if lrc_line[0] == "[":
-                    temp_string_list.append(lrc_line)
+                    if lrc_line[1] in ['0', '1', '2', '3', '5',
+                                       '6', '7', '8', '9']:
+                        temp_string_list.append(lrc_line)
                     
         self.string_list = temp_string_list                
         

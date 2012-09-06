@@ -75,10 +75,14 @@ class Lrc(gobject.GObject):
         self.emit("lrc-changed")
         
     def expose_lrc_text_function(self, cr):
-        if self.show_lrc_bool:                   
-            self.draw_lrc_text(self.lrc_text, cr)
+        if self.show_lrc_bool:
             
+            cr.set_source_rgba(0, 1, 0, 0.5)
+            cr.rectangle(0,0 , 500, 50)
+            cr.fill()
+            self.draw_lrc_text(self.lrc_text, cr)
     def draw_lrc_text(self, ch, cr, init_fg_color="#FFFFFF"):
+        
         context = pangocairo.CairoContext(cr)
         layout = context.create_layout()
         layout.set_font_description(pango.FontDescription("%s %s" % (self.font_type, self.font_size)))
