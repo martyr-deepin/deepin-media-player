@@ -23,7 +23,8 @@
 import chardet
 import mmap
 import re
-# 只需要小学知识就OK了,算吧.. 格式:(start_time, end_time, text)
+
+# fromat:(start_time, end_time, text)
 
 class LrcRead(object):
     def __init__(self):
