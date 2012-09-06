@@ -44,9 +44,15 @@ class Lrc(gobject.GObject):
         self.alpha = 0.5        
         self.time_delay = 250
         self.show_lrc_bool = True
+        self.timeout_add_bool = True
         self.timeout_add_id = None
         self.init_font()
-        self.init_timeout()
+        
+    def start_lrc(self):    
+        self.timeout_add_bool = True
+        
+    def stop_lrc(self):    
+        self.timeout_add_bool = False
         
     def init_timeout(self, time_delay=0):     
         if self.timeout_add_id:
@@ -58,7 +64,7 @@ class Lrc(gobject.GObject):
         self.pango_list.insert(pango.AttrForeground(65535, 0, 0, 0, self.end_index))
         self.end_index += 1
         self.emit("lrc-changed")
-        return True
+        return self.timeout_add_bool
     
     def init_font(self, font_type=INIT_FONT_TYPE, font_size=INIT_FONT_SIZE):
         self.font_type = font_type
@@ -72,13 +78,13 @@ class Lrc(gobject.GObject):
         if self.show_lrc_bool:                   
             self.draw_lrc_text(self.lrc_text, cr)
             
-    def draw_lrc_text(self, ch, cr, init_fg_color="#FFFFFF"):    
+    def draw_lrc_text(self, ch, cr, init_fg_color="#FFFFFF"):
         context = pangocairo.CairoContext(cr)
         layout = context.create_layout()
         layout.set_font_description(pango.FontDescription("%s %s" % (self.font_type, self.font_size)))
         
         # Set font position.
-        layout.set_text(ch)        
+        layout.set_text(ch)
         layout.set_attributes(self.pango_list)
         # ch_width, ch_height = layout.get_pixel_size()
         cr.move_to(0, 0)
@@ -87,7 +93,7 @@ class Lrc(gobject.GObject):
         # Show font.
         context.update_layout(layout)
         context.show_layout(layout)
-    
+
 if __name__ == "__main__":
     def test_osd_lrc_function(widget, event):
         cr = widget.window.cairo_create()
