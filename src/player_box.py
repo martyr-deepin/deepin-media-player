@@ -60,7 +60,7 @@ from user_guide import init_user_guide
 from code_to_utf_8 import auto_decode
 from subtitles import SubTitles
 from scan_subtitles import ScanGui
-
+from lrc.osd_lrc import Lrc
 import threading
 import gtk
 import os
@@ -83,7 +83,11 @@ class PlayerBox(object):
     def __init__ (self, app, argv_path_list):
         # Init pixuf.
         self.init_system_pixbuf()
-                
+        # Init lrc show system.
+        # self.lrc = Lrc()        
+        # self.lrc.init_timeout(200)
+        # self.lrc.show_text("Linux Deepin 深度影音 窗体歌词测试...\n开发人员 强烈测试和推荐")
+        # self.lrc.connect("lrc-changed", self.active_expose_window_screen)
         # signal and double.
         self.double_bool = False
         self.signal_timeout = []
@@ -1242,8 +1246,8 @@ class PlayerBox(object):
 
     def draw_background(self, widget, event):
         '''Draw screen mplayer view background.'''
-        cr, x, y, w, h = allocation(widget)
-      
+        cr, x, y, w, h = allocation(widget)                
+        
         if self.mp and STARTING_PLAY == self.mp.state:
             if self.mp.state and self.mp.vide_bool: # vide file.                
                 self.unset_flags()
@@ -1285,8 +1289,12 @@ class PlayerBox(object):
             self.open_button_right.visible_bool = True
             self.screen_pop_menu.visible_bool = True
             
+        # self.lrc.expose_lrc_text_function(cr)    
         return True
 
+    def active_expose_window_screen(self, LRC):
+        self.screen.queue_draw()
+        
     def min_window_titlebar_min_button_click(self, widget):
         '''app titlebar min_button'''
         config_bool = self.config.get("SystemSet", "minimize_pause_play")

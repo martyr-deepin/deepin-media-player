@@ -526,15 +526,15 @@ msgstr "延时0.5秒"
 
 #: ../src/player_box.py:2433
 msgid "Search subtitles"
-msgstr "字幕选择"
+msgstr "手动搜索字幕"
 
 #: ../src/player_box.py:2434
 msgid "Load subtitles"
-msgstr "自动载入字幕"
+msgstr "手动载入字幕"
 
 #: ../src/player_box.py:2435
 msgid "Disable Subtitles"
-msgstr "字幕选择"
+msgstr "字幕停止"
 
 #: ../src/player_box.py:2438
 msgid "Size of Subtitles"
