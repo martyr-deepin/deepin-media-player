@@ -2505,7 +2505,7 @@ class PlayerBox(object):
             # 4: list recycle play. 
             # list_recycle_play_state = 4
         
-            play_sequence_pixbuf = (self.play_sequence_select_normal_pixbuf, self.play_sequence_select_hover_pixbuf)
+            play_sequence_pixbuf = (self.play_sequence_select_normal_pixbuf, self.play_sequence_select_hover_pixbuf, self.play_sequence_select_none_pixbuf)
             single_pixbuf = None
             order_pixbuf = None
             random_pixbuf = None
@@ -2891,6 +2891,10 @@ class PlayerBox(object):
     def open_scan_gui_window(self):
         scan_gui = ScanGui()
         scan_gui.connect("add-subtitle-file", self.add_subtitle_file_event)
+        if self.mp.state == STARTING_PLAY:
+            scan_file_name = self.get_player_file_name(self.mp.path)
+            if scan_file_name:
+                scan_gui.name_entry.set_text(str(scan_file_name))
         scan_gui.show_window()
         
     def add_subtitle_file_event(self, ScanGui, sub_file_list):

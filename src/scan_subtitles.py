@@ -183,9 +183,11 @@ from ini import Config,get_home_path
 from locales import _
 import gtk
 import gobject
+import threading
+
 TEMP_FILE_DIR = "/tmp/tmp_sub"
 
-# gtk.gdk.threads_init()
+gtk.gdk.threads_init()
 
 class ScanGui(gobject.GObject):
     __gsignals__ = {
@@ -198,7 +200,7 @@ class ScanGui(gobject.GObject):
         self.app = DialogBox(_("Search Subtitles"), 480, 350,
                              mask_type=False,
                              modal=False,
-                             window_hint=gtk.gdk.WINDOW_TYPE_HINT_NORMAL,
+                             window_hint=gtk.gdk.WINDOW_TYPE_HINT_DIALOG,
                              window_pos=gtk.WIN_POS_CENTER,
                              resizable=True)
         self.app.set_size_request(480, 350)
@@ -225,7 +227,8 @@ class ScanGui(gobject.GObject):
          (lambda item: item.artist, cmp),
          (lambda item: item.length, cmp)])
         self.list_view.set_expand_column(0)
-        self.list_view.add_titles([_("Subtiles"), _("Language"), _("Duration")])        
+        # self.list_view.add_titles([_("Subtiles"), _("Language"), _("Duration")])        
+        self.list_view.add_titles([_("Subtiles"), "", ""])        
         self.scrolled_window = ScrolledWindow(0, 0)        
         self.scrolled_window.add_child(self.list_view)
 
@@ -265,19 +268,32 @@ class ScanGui(gobject.GObject):
             end_position_row   = end_position_row_padding + start_position_row            
             if (self.sum_subtitle_num - self.scan_url_sub.current_page) > 0 and (end_position_row >= int(self.scan_url_sub.sum_subtitles - self.sum_subtitle_num - 5)): # 动态加载页. 滚动的位置 >= 搜索总数 - 当前总数 - 5 ->> 才去加载.
                 self.sum_subtitle_num -= self.scan_url_sub.current_page
-                gtk.timeout_add(500, self.add_subtitle_page)
+                
+                path_thread_id = threading.Thread(target=self.add_subtitle_page_threading)
+                path_thread_id.setDaemon(True)
+                path_thread_id.start()        
+                
         except Exception, e:    
             print "Error", e
             
+    def add_subtitle_page_threading(self):        
+        gtk.timeout_add(100, self.add_subtitle_page)
+        
     def add_subtitle_page(self):    
         self.current_page += 1
         # print "开始添加文件"
         self.scan_url_sub.scan_page_index(self.current_page)
+        
+        # gtk.timeout_add(100, self.add_subtitle_page_to_play_list)
+        self.add_subtitle_page_to_play_list()
+        
+    def add_subtitle_page_to_play_list(self):        
         for key in self.scan_url_sub.mc_url_and_name_dict.keys():
-            self.items.append(ListItem(str(key), "", ""))                    
+            self.items.append(ListItem(str(key), "", ""))                                
             
         self.list_view.add_items(self.items)
-        
+        return False
+    
     def list_view_double_click_item(self, ListView, item, column, offset_x, offset_y):
         self.__down_subtitle_function(item.title)
         
@@ -319,20 +335,30 @@ class ScanGui(gobject.GObject):
         scan_name = self.name_entry.get_text()
         if bool(len(scan_name)):
             # clear value.
-            gtk.timeout_add(500, self.scan_subtitles_function, scan_name)
+            path_thread_id = threading.Thread(target=self.scan_subtitles_threading, args=(scan_name, ))
+            path_thread_id.setDaemon(True)
+            path_thread_id.start()        
                         
+    def scan_subtitles_threading(self, scan_name):        
+            gtk.timeout_add(100, self.scan_subtitles_timeout, scan_name)                    
+            
     def scan_subtitles_timeout(self, scan_name):
         self.scan_subtitles_function(scan_name)
-        
+        return False
+    
     def scan_subtitles_function(self, scan_name):
         self.list_view.clear()
         self.items = []
         self.current_page = 1
         self.scan_url_sub.scan_url_function(str(scan_name))
         self.sum_subtitle_num = self.scan_url_sub.sum_subtitles # save sum subtitles.
+        gtk.timeout_add(100, self.play_list_add_scan_file)        
+        
+    def play_list_add_scan_file(self):    
         self.scan_sub_sum_label.set_text("%s: %s" % (_("Total search results"), str(self.scan_url_sub.sum_subtitles)))
         self.scan_url_sub.scan_page_index(1)
-        self.scan_url_sub.get_sum_page()
+        self.scan_url_sub.get_sum_page()        
+        
         for key in self.scan_url_sub.mc_url_and_name_dict.keys():
             self.items.append(ListItem(str(key), "", ""))
 
@@ -387,7 +413,7 @@ class ScanGui(gobject.GObject):
             if ".rar" == file_type:
                 cmd_line = "unrar x %s %s" % (temp_file_path, "/tmp/tmp_sub/")
             elif ".zip" == file_type:
-                cmd_line = "7z x -o%s %s" % ("/tmp/tmp_sub", temp_file_path)                
+                cmd_line = "7za x -o%s %s" % ("/tmp/tmp_sub", temp_file_path)                
                 
             # run 解压缩.
             os.system(cmd_line)
