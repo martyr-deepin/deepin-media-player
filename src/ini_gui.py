@@ -803,15 +803,11 @@ class SubKey(gtk.VBox):
         gtk.VBox.__init__(self)
         self.ini = Config(config_path)
         # init fixed.
-        # self.fixed_hbox = gtk.HBox()
         self.fixed = gtk.Fixed()
-        # self.fixed.set_size_request(500, 500)
-        # self.fixed_hbox.pack_start(self.fixed)
         # heparator.
         self.heparator_hbox = gtk.HBox()
         self.heparator = create_separator_box()
-        self.heparator_hbox.set_size_request(heparator_width, heparator_height)
-        
+        self.heparator_hbox.set_size_request(heparator_width, heparator_height)        
         # add title.        
         title_offset_x = 20
         title_offset_y = 10
@@ -833,18 +829,19 @@ class SubKey(gtk.VBox):
             Label(_("Increase the Size of Characters")),
             Label(_("Decrease the Size of Characters")),
             ]        
-        # create widgets left, right.
+        # create widgets left.
         self.widgets_left = [
             ShortcutKeyEntry(),
             ShortcutKeyEntry(),
             ShortcutKeyEntry(),
             ]
+        # create widgets right.
         self.widgets_right = [
             ShortcutKeyEntry(),
             ShortcutKeyEntry(),
-            ]        
+            ]                
         # set active is flase.
-        self.set_subkey_flase()
+        # self.set_subkey_flase()
         # init read ini value and init config value. 
         self.init_read_subkey_value()
         # set widgets left, right size.

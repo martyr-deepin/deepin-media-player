@@ -2941,13 +2941,11 @@ class PlayerBox(object):
                                              gtk.STOCK_OPEN, gtk.RESPONSE_OK))
         open_dialog.set_current_folder(get_home_path())
         res = open_dialog.run()
-
         if res == gtk.RESPONSE_OK:
             path_string = open_dialog.get_filename()
             if path_string:
-                print "open_window_load_subtitle;", path_string
                 self.sub_titles.add(path_string)
-                
+                self.mp.sub_select(int(self.sub_titles.get_index())-1)
         open_dialog.destroy()
         
     # subtitle key[stop,add/sub scale].
