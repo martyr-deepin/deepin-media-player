@@ -538,7 +538,7 @@ msgstr "字幕停止"
 
 #: ../src/player_box.py:2438
 msgid "Size of Subtitles"
-msgstr "字幕选择"
+msgstr "字母尺寸"
 
 #: ../src/player_box.py:2439
 msgid "Subtitle Synchronization"
@@ -614,7 +614,7 @@ msgstr "搜索"
 
 #: ../src/scan_subtitles.py:333
 msgid "Total search results"
-msgstr "搜索的字幕总数: "
+msgstr "搜索的字幕总数"
 
 #: ../src/scan_subtitles.py:342
 msgid "Total search results: 0"
