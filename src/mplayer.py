@@ -426,7 +426,7 @@ class  Mplayer(gobject.GObject):
     def sub_add(self, sub_file):
         '''Load subtitle'''
         if self.state == STARTING_STATE: # STARTING_STATE
-            self.cmd('sub_load %s\n' % (sub_file))
+            self.cmd("sub_load '%s'\n" % (sub_file))
             
     def sub_select(self, index):        
         if self.state == STARTING_STATE: # STARTING_STATE
