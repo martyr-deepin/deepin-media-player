@@ -805,8 +805,8 @@ class PlayerBox(object):
             save_path = self.config.get("ScreenshotSet", "save_path")
             save_type = self.config.get("ScreenshotSet", "save_type")
             
-            # if save_path[0] == "~":
-            #     save_path = get_home_path() + save_path[1:]
+            if save_path[0] == "~":
+                save_path = get_home_path() + save_path[1:]
                     
             if save_file_bool == "True":
                 if scrot_bool == "True":
@@ -1900,8 +1900,8 @@ class PlayerBox(object):
 
     def down_subtitle_threading(self, play_name, save_subtitle_path):    
         down_bool = True
-        # if save_subtitle_path[0:1] == "~":
-        #     save_subtitle_path = get_home_path() + save_subtitle_path[1:]
+        if save_subtitle_path[0:1] == "~":
+            save_subtitle_path = get_home_path() + save_subtitle_path[1:]
             
         temp_path_file = os.path.splitext(os.path.split(play_name)[1])[0]
         temp_path_file_list = os.listdir(save_subtitle_path)
@@ -1978,9 +1978,9 @@ class PlayerBox(object):
     def media_player_start_load_subtitle(self, mplayer):    
         # down subtitle.
         save_subtitle_path = self.config.get("SubtitleSet","specific_location_search")
-        # if save_subtitle_path:
-        #     if save_subtitle_path[0:1] == "~":
-        #         save_subtitle_path = get_home_path() + save_subtitle_path[1:]
+        if save_subtitle_path:
+            if save_subtitle_path[0:1] == "~":
+                save_subtitle_path = get_home_path() + save_subtitle_path[1:]
                 
         if save_subtitle_path:
             if self.down_sub_title_bool:
@@ -2903,6 +2903,10 @@ class PlayerBox(object):
                     self.sub_titles.add(video_subtitle)
         else: 
             mv_dir = self.config.get("SubtitleSet", "specific_location_search")
+            save_subtitle_path = mv_dir
+            if save_subtitle_path[0:1] == "~":
+                save_subtitle_path = get_home_path() + save_subtitle_path[1:]
+            mv_dir = save_subtitle_path    
             # mv subtitle file to dir.
             if bool(len(mv_dir)) and mv_dir is not None:
                 for subtitle in sub_file_list:

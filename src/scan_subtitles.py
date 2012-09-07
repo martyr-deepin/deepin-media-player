@@ -226,7 +226,7 @@ class ScanGui(gobject.GObject):
          (lambda item: item.length, cmp)])
         self.list_view.set_expand_column(0)
         self.list_view.add_titles([_("Subtiles"), _("Language"), _("Duration")])        
-        self.scrolled_window = ScrolledWindow()        
+        self.scrolled_window = ScrolledWindow(0, 0)        
         self.scrolled_window.add_child(self.list_view)
 
         # init temp dir file.

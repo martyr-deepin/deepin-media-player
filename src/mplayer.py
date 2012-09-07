@@ -229,7 +229,8 @@ def init_mplayer_config():
         #[SubtitleSet]
         for argv, value in ([
                 ("ai_load_subtitle", "True"),
-                ("specific_location_search", os.path.join(get_home_path(), ".config/deepin-media-player/subtitle"))
+                # ("specific_location_search", os.path.join(get_home_path(), ".config/deepin-media-player/subtitle"))
+                ("specific_location_search",  "~/.config/deepin-media-player/subtitle")
                 ]):
             config.set("SubtitleSet", argv, value)
         
@@ -237,7 +238,8 @@ def init_mplayer_config():
         for argv, value in ([
                 ("save_clipboard", "False"),
                 ("save_file", "True"),
-                ("save_path", os.path.join(get_home_path(), ".config/deepin-media-player/image")),
+                # ("save_path", os.path.join(get_home_path(), ".config/deepin-media-player/image")),
+                ("save_path", "~/.config/deepin-media-player/image"),
                 ("save_type", ".png"),
                 ("current_show_sort", "False")
                 ]):

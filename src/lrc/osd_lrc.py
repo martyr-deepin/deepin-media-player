@@ -37,17 +37,18 @@ class Lrc(gobject.GObject):
         }
     def __init__(self):
         gobject.GObject.__init__(self)
-        self.pango_list = pango.AttrList()
-        
+        self.pango_list = pango.AttrList()        
         self.lrc_text = ""
-        self.end_index = 0
         self.offset_x = 0
-        self.alpha = 0.5        
-        self.time_delay = 250
-        self.show_width = 0
+        self.offset_y = 0
+        self.offset_width = 1
+        self.padding_width = 0
+        self.padding_height = 0
+        self.time_delay = 0
         self.show_lrc_bool = True
         self.timeout_add_bool = True
         self.timeout_add_id = None
+        # Init function.
         self.init_font()
         
     def start_lrc(self):    
@@ -63,65 +64,43 @@ class Lrc(gobject.GObject):
         self.timeout_add_id = gtk.timeout_add(self.time_delay, self.draw_lrc_timeout_add)
         
     def draw_lrc_timeout_add(self):    
-        self.pango_list.insert(pango.AttrForeground(65535, 0, 0, 0, self.end_index))
-        # self.offset_x += 100
-        self.show_width += 1
+        self.padding_width += self.offset_width
         self.emit("lrc-changed")
         return self.timeout_add_bool
     
     def init_font(self, font_type=INIT_FONT_TYPE, font_size=INIT_FONT_SIZE):
         self.font_type = font_type
         self.font_size = font_size
+        self.emit("lrc-changed")
         
     def show_text(self, lrc_text): 
         self.lrc_text = lrc_text
         self.emit("lrc-changed")
         
     def expose_lrc_text_function(self, cr):
-        if self.show_lrc_bool:            
-            # cr.set_source_rgb(0, 0, 0)
+        if self.show_lrc_bool:
             self.draw_lrc_text(self.lrc_text, cr)
             
     def draw_lrc_text(self, ch, cr, init_fg_color="#FF0000"):
         
         context = pangocairo.CairoContext(cr)
         layout = context.create_layout()
-        layout.set_font_description(pango.FontDescription("%s %s" % (self.font_type, self.font_size)))
-        
-        # Set font position.
-        cr.set_source_rgb(1, 0, 0)
+        layout.set_font_description(pango.FontDescription("%s %s" % (self.font_type, self.font_size)))        
+        # Set font text string.        
         layout.set_text(ch)
-        layout.set_attributes(self.pango_list)
-        ch_width, ch_height = layout.get_pixel_size()
-        
-        cr.move_to(30, 0)
-        #
-        cr.save()        
-        cr.layout_path(layout) 
-        cr.set_source_rgba(0, 0, 1)
-        # if #draw 填充的字体.
-        # cr.set_line_width(1) # 设置宽        
-        # cr.stroke_preserve() # 保存绘制的路径
-        # cr.set_source_rgba(0, 1, 0)
-        # cr.fill()
-        # else 里面空的字体.
-        cr.stroke()                
-        #
-        cr.restore()
-        #        
-        pattern = cairo.LinearGradient(self.offset_x, 0.0, 
-                                       self.offset_x, ch_height )        
-        pattern.add_color_stop_rgba(0.0, 0.5, 1.0, 0.5, 1.0)
-        pattern.add_color_stop_rgba(0.5, 0.5, 0.5, 0.5, 1.0)
-        pattern.add_color_stop_rgba(1.0, 0.1, 0.5, 0.1, 1.5)
-        cr.set_source(pattern)
-        cr.set_operator(cairo.OPERATOR_OVER)                
-        #
+        # Get font width and height.
+        ch_width, ch_height = layout.get_pixel_size()                        
+        # Background font.
+        cr.move_to(self.offset_x, self.offset_y)
+        cr.set_source_rgb(1, 0, 0)
+        context.show_layout(layout)
+        # Mov rectangle(offset_x, offset_y, padding_width, padding_height).
         cr.save()
-        cr.rectangle(0, 0, self.show_width, 200)
+        cr.rectangle(self.offset_x, self.offset_y, self.padding_width, ch_height)
         cr.clip()        
-        #
-        cr.move_to(30, 0)        
+        # Foreground font.
+        cr.move_to(self.offset_x, self.offset_y)
+        cr.set_source_rgb(0, 0, 1)
         context.show_layout(layout)
         cr.restore()
         
@@ -136,6 +115,7 @@ if __name__ == "__main__":
         return True
     
     def active_expose_window(LRC):
+        print "active_expose_window////"
         win.queue_draw()
         
     def modify_lrc_time(widget):    
@@ -159,7 +139,7 @@ if __name__ == "__main__":
     
     lrc = Lrc()    
     lrc.show_text("深度LINUX DEEPIN 深度影音")    
-    lrc.init_timeout(50)
+    lrc.init_timeout(500)
     lrc.connect("lrc-changed", active_expose_window)
     
     ################################################
@@ -167,3 +147,8 @@ if __name__ == "__main__":
     win.connect("realize", realize_win)
     win.show_all()
     gtk.main()
+
+'''/*
+背景颜色的字体.
+前景颜色的字体.(只能在长方形中显示,随着长方形的变化,字体就慢慢的显示出来.)
+*/'''
