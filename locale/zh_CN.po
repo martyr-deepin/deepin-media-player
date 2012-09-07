@@ -178,7 +178,7 @@ msgstr "启用热键"
 
 #: ../src/ini_gui.py:828
 msgid "Forword by 0.5s"
-msgstr "快进5秒"
+msgstr "快字幕提前5秒"
 
 #: ../src/ini_gui.py:829
 msgid "Delay by 0.5s"
