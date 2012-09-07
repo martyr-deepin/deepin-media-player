@@ -877,32 +877,35 @@ class SubKey(gtk.VBox):
         self.check_btn.connect("button-press-event", self.check_btn_key_bool_press)        
         
     def init_read_subkey_value(self):    
-        self.key_titles_left = ["subkey_add_delay_key", 
-                                "subkey_sub_delay_key",
-                                "subkey_load_key"
-                                ]
-        self.key_titles_right = ["subkey_add_scale_key",
-                                 "subkey_sub_scale_key",
-                                 ]
+        try:
+            self.key_titles_left = ["subkey_add_delay_key", 
+                                    "subkey_sub_delay_key",
+                                    "subkey_load_key"
+                                    ]
+            self.key_titles_right = ["subkey_add_scale_key",
+                                     "subkey_sub_scale_key",
+                                     ]
         # 
-        subkey_bool = self.ini.get("SubKey", "subkey_bool")
-        if subkey_bool and "True" == subkey_bool:
-            self.check_btn.set_active(True)
-            self.set_subkey_true()
+            subkey_bool = self.ini.get("SubKey", "subkey_bool")
+            if subkey_bool and "True" == subkey_bool:
+                self.check_btn.set_active(True)
+                self.set_subkey_true()
         # 
-        for_widgets_left = map(lambda title, widget:(title, widget), self.key_titles_left, self.widgets_left)
-        for title, widget in for_widgets_left:
-            key_value = self.ini.get("SubKey", title)
-            widget.set_text(key_value)
-            if bool(len(key_value)):
-                widget.set_shortcut_key(key_value)
+            for_widgets_left = map(lambda title, widget:(title, widget), self.key_titles_left, self.widgets_left)
+            for title, widget in for_widgets_left:
+                key_value = self.ini.get("SubKey", title)
+                widget.set_text(key_value)
+                if bool(len(key_value)):
+                    widget.set_shortcut_key(key_value)
         #        
-        for_widgets_right = map(lambda title, widget:(title, widget), self.key_titles_right, self.widgets_right)
-        for title, widget in for_widgets_right:
-            key_value = self.ini.get("SubKey", title)
-            if bool(len(key_value)):
-                widget.set_shortcut_key(key_value)
-                
+            for_widgets_right = map(lambda title, widget:(title, widget), self.key_titles_right, self.widgets_right)
+            for title, widget in for_widgets_right:
+                key_value = self.ini.get("SubKey", title)
+                if bool(len(key_value)):
+                    widget.set_shortcut_key(key_value)
+        except Exception, e:        
+            print "init_read_subkey_value:", e
+            
     def check_btn_key_bool_press(self, widget, event):    
         if is_left_button(event):
             if widget.get_active():
@@ -1006,35 +1009,38 @@ class OtherKey(gtk.VBox):
         self.pack_start(self.fixed)
     
     def init_read_other_key_value(self):            
-        self.key_titles_left = ["add_brightness_key",
+        try:
+            self.key_titles_left = ["add_brightness_key",
                                 "sub_brightness_key",
                                 "inverse_rotation_key",
                                 "clockwise_key",
                                 "sort_image_key",
                                 "switch_audio_track_key"
                                 ]
-        self.key_titles_right = ["mouse_left_single_clicked",
+            self.key_titles_right = ["mouse_left_single_clicked",
                                  "mouse_left_double_clicked",
                                  "mouse_wheel_event"
                                  ]
-        #
-        other_other_bool = self.ini.get("OtherKey", "other_key_bool")
-        if other_other_bool and "True" == other_other_bool:
-            self.other_key_bool_checkbtn.set_active(True)
-            self.set_other_key_true()                
-        # 
-        for_widgets_left = map(lambda title, widget:(title, widget), self.key_titles_left, self.widgets_left)
-        for title, widget in for_widgets_left:
-            key_value = self.ini.get("OtherKey", title)
-            widget.set_text(key_value)
-            if bool(len(key_value)):
-                widget.set_shortcut_key(key_value)
-        #        
-        for_widgets_right = map(lambda title, widget:(title, widget), self.key_titles_right, self.widgets_right)
-        for title, widget in for_widgets_right:
-            key_value = self.ini.get("OtherKey", title)
-            if bool(len(key_value)):
-                widget.label.set_text(key_value)
+            #
+            other_other_bool = self.ini.get("OtherKey", "other_key_bool")
+            if other_other_bool and "True" == other_other_bool:
+                self.other_key_bool_checkbtn.set_active(True)
+                self.set_other_key_true()                
+            # 
+            for_widgets_left = map(lambda title, widget:(title, widget), self.key_titles_left, self.widgets_left)
+            for title, widget in for_widgets_left:
+                key_value = self.ini.get("OtherKey", title)
+                widget.set_text(key_value)
+                if bool(len(key_value)):
+                    widget.set_shortcut_key(key_value)
+            #        
+            for_widgets_right = map(lambda title, widget:(title, widget), self.key_titles_right, self.widgets_right)
+            for title, widget in for_widgets_right:
+                key_value = self.ini.get("OtherKey", title)
+                if bool(len(key_value)):
+                    widget.label.set_text(key_value)
+        except Exception,e:
+            print "other class:init_read_other_key_value:", e
             
     def set_other_key_bool_checkbtn_press(self, widget, event):
         if is_left_button(event):
