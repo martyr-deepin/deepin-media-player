@@ -25,6 +25,7 @@ import urllib2
 import os
 import re
 
+
 SCAN_URL =  "http://www.yyets.com/php/search/index?keyword="
 SCAN_PAGE_URL = "http://www.yyets.com/php/search/index"
 
@@ -174,11 +175,14 @@ class ScanUrlSub:
 #################################################################################################                
 from skin import app_theme
 from dtk.ui.button import Button
-from dtk.ui.listview import ListItem, ListView
+from dtk.ui.listview import ListView, render_text
 from dtk.ui.dialog import DialogBox, DIALOG_MASK_MULTIPLE_PAGE
 from dtk.ui.scrolled_window import ScrolledWindow
 from dtk.ui.entry import InputEntry
 from dtk.ui.label import Label
+from dtk.ui.utils import get_content_size
+from dtk.ui.constant import DEFAULT_FONT_SIZE, ALIGN_END
+
 from ini import Config,get_home_path
 from locales import _
 import gtk
@@ -223,12 +227,13 @@ class ScanGui(gobject.GObject):
         
         self.items = []
         self.list_view = ListView(
-        [(lambda item: item.title, cmp),
-         (lambda item: item.artist, cmp),
-         (lambda item: item.length, cmp)])
+        [(lambda item: item.title, cmp)
+         # (lambda item: item.artist, cmp),
+         # (lambda item: item.length, cmp)
+         ])
         self.list_view.set_expand_column(0)
         # self.list_view.add_titles([_("Subtiles"), _("Language"), _("Duration")])        
-        self.list_view.add_titles([_("Subtiles"), "", ""])        
+        self.list_view.add_titles([_("Subtiles")])        
         self.scrolled_window = ScrolledWindow(0, 0)        
         self.scrolled_window.add_child(self.list_view)
 
@@ -289,7 +294,8 @@ class ScanGui(gobject.GObject):
         
     def add_subtitle_page_to_play_list(self):        
         for key in self.scan_url_sub.mc_url_and_name_dict.keys():
-            self.items.append(ListItem(str(key), "", ""))                                
+            # self.items.append(ListItem(str(key), "", ""))                                
+            self.items.append(ListItem(str(key), ))          
             
         self.list_view.add_items(self.items)
         return False
@@ -360,7 +366,8 @@ class ScanGui(gobject.GObject):
         self.scan_url_sub.get_sum_page()        
         
         for key in self.scan_url_sub.mc_url_and_name_dict.keys():
-            self.items.append(ListItem(str(key), "", ""))
+            # self.items.append(ListItem(str(key), "", ""))
+            self.items.append(ListItem(str(key)))
 
         self.list_view.add_items(self.items)
         
@@ -441,6 +448,9 @@ class ScanGui(gobject.GObject):
         else:
             self.scan_sub_sum_label.set_text(_("Failed to download the subtitle!"))
         
+    # def messagebox_down_informtion(self):            
+        # self.scan_sub_sum_label.set_text("字幕下载中")
+        
 # scan_gui = ScanGui()
 # scan_gui.app.show_all()
 # gtk.gdk.threads_enter()
@@ -458,3 +468,133 @@ class ScanGui(gobject.GObject):
 #     print "=========================="
 #     for i in scan_url_sub.mc_url_and_name_dict.keys():
 #         print i
+
+            
+            
+class ListItem(gobject.GObject):
+    '''
+    ListItem template to build your own item for L{ I{ListView} <ListView>}.
+    
+    @note: This class just template to build list item, you should build new item with same interface.
+    '''
+    
+    __gsignals__ = {
+        "redraw-request" : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, ()),
+    }
+    
+    def __init__(self, title):
+        '''
+        Initialize ListItem class.
+
+        @param title: Title.
+        @param artist: Artist.
+        @param length: Length.
+        '''
+        gobject.GObject.__init__(self)
+        self.update(title)
+        self.index = None
+        
+    def set_index(self, index):
+        '''
+        Update index.
+        
+        This is ListView interface, you should implement it.
+        
+        @param index: Index.
+        '''
+        self.index = index
+                
+    def get_index(self):
+        '''
+        Get index.
+        
+        This is ListView interface, you should implement it.
+        '''
+        return self.index
+        
+    def emit_redraw_request(self):
+        '''
+        Emit redraw-request signal.
+        
+        This is ListView interface, you should implement it.
+        '''
+        self.emit("redraw-request")
+        
+    def update(self, title):
+        '''
+        Update.
+        
+        This is ListView interface, you should implement it.
+        
+        @param title: Title.
+        @param artist: Artist.
+        @param length: Length.
+        '''
+        # Update.
+        self.title = title
+        
+        # Calculate item size.
+        self.title_padding_x = 10
+        self.title_padding_y = 5
+        (self.title_width, self.title_height) = get_content_size(self.title, DEFAULT_FONT_SIZE)
+                
+    def render_title(self, cr, rect, in_select, in_highlight):
+        '''
+        Render title.
+        
+        @param cr: Cairo context.
+        @param rect: Redraw rectangle. 
+        @param in_select: Whether current item is selected, this value pass from ListView.
+        @param in_highlight: Whether current item is highlighted, this value pass from ListView.
+        '''
+        rect.x += self.title_padding_x
+        rect.width -= self.title_padding_x * 2
+        render_text(cr, rect, self.title, in_select, in_highlight)
+    
+    def render_artist(self, cr, rect, in_select, in_highlight):
+        '''
+        Render artist.
+        
+        @param cr: Cairo context.
+        @param rect: Redraw rectangle. 
+        @param in_select: Whether current item is selected, this value pass from ListView.
+        @param in_highlight: Whether current item is highlighted, this value pass from ListView.
+        '''
+        rect.x += self.artist_padding_x
+        rect.width -= self.title_padding_x * 2
+        render_text(cr, rect, self.artist, in_select, in_highlight)
+    
+    def render_length(self, cr, rect, in_select, in_highlight):
+        '''
+        Render length.
+        
+        @param cr: Cairo context.
+        @param rect: Redraw rectangle. 
+        @param in_select: Whether current item is selected, this value pass from ListView.
+        @param in_highlight: Whether current item is highlighted, this value pass from ListView.
+        '''
+        rect.width -= self.length_padding_x * 2
+        render_text(cr, rect, self.length, in_select, in_highlight, align=ALIGN_END)
+        
+    def get_column_sizes(self):
+        '''
+        Get column sizes.
+        
+        This is ListView interface, you should implement it.
+        
+        @return: Return column size tuple.
+        '''
+        return [(self.title_width + self.title_padding_x * 2,
+                 self.title_height + self.title_padding_y * 2)
+                ]    
+    
+    def get_renders(self):
+        '''
+        Get render callbacks.
+        
+        This is ListView interface, you should implement it.
+        
+        @return: Return render functions.
+        '''
+        return [self.render_title]
+            
