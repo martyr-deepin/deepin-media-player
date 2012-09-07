@@ -310,6 +310,7 @@ class ScanGui(gobject.GObject):
         self.name_entry_align.set(1, 1, 1, 1)
         self.name_entry_align.set_padding(0, 0, 2, 2)
         self.name_entry_align.add(self.name_entry)
+        self.name_entry.entry.connect("press-return", self.scan_button_clicked)
         
         self.scan_button = Button(_("Search"))
         self.scan_button_align = gtk.Alignment()
