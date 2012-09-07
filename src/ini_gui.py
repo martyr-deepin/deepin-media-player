@@ -842,10 +842,10 @@ class SubKey(gtk.VBox):
         self.widgets_right = [
             ShortcutKeyEntry(),
             ShortcutKeyEntry(),
-            ]
+            ]        
         # set active is flase.
         self.set_subkey_flase()
-        # init read ini value.
+        # init read ini value and init config value. 
         self.init_read_subkey_value()
         # set widgets left, right size.
         entry_width = 150
@@ -875,7 +875,7 @@ class SubKey(gtk.VBox):
         self.pack_start(self.fixed)
         # init widget connect events.
         self.check_btn.connect("button-press-event", self.check_btn_key_bool_press)        
-        
+                
     def init_read_subkey_value(self):    
         try:
             self.key_titles_left = ["subkey_add_delay_key", 
@@ -885,24 +885,35 @@ class SubKey(gtk.VBox):
             self.key_titles_right = ["subkey_add_scale_key",
                                      "subkey_sub_scale_key",
                                      ]
-        # 
+            # 
             subkey_bool = self.ini.get("SubKey", "subkey_bool")
-            if subkey_bool and "True" == subkey_bool:
+            if subkey_bool and "False" == subkey_bool:
+                self.check_btn.set_active(False)
+                self.set_subkey_flase()
+            else:    
                 self.check_btn.set_active(True)
                 self.set_subkey_true()
-        # 
-            for_widgets_left = map(lambda title, widget:(title, widget), self.key_titles_left, self.widgets_left)
-            for title, widget in for_widgets_left:
+            # get config left value.
+            self.keys_left = ["[", "]", "Alt + o"]
+            for_widgets_left = map(lambda title, widget, key:(title, widget, key), self.key_titles_left, self.widgets_left, self.keys_left)
+            for title, widget, init_key in for_widgets_left:
                 key_value = self.ini.get("SubKey", title)
                 widget.set_text(key_value)
-                if bool(len(key_value)):
+                if key_value:
                     widget.set_shortcut_key(key_value)
-        #        
-            for_widgets_right = map(lambda title, widget:(title, widget), self.key_titles_right, self.widgets_right)
-            for title, widget in for_widgets_right:
+                else:    
+                    widget.set_shortcut_key(init_key)
+            # get config right value. 
+            self.keys_right = ["Alt + Left", "Alt + Right"]        
+            for_widgets_right = map(lambda title, widget, key:(title, widget, key), self.key_titles_right, self.widgets_right, self.keys_right)
+            
+            for title, widget, init_key in for_widgets_right:
                 key_value = self.ini.get("SubKey", title)
-                if bool(len(key_value)):
+                if key_value:
                     widget.set_shortcut_key(key_value)
+                else:    
+                    widget.set_shortcut_key(init_key)
+                    
         except Exception, e:        
             print "init_read_subkey_value:", e
             
@@ -1023,22 +1034,35 @@ class OtherKey(gtk.VBox):
                                  ]
             #
             other_other_bool = self.ini.get("OtherKey", "other_key_bool")
-            if other_other_bool and "True" == other_other_bool:
+            if other_other_bool and "False" == other_other_bool:
+                self.other_key_bool_checkbtn.set_active(False)
+                self.set_other_key_false()                
+            else:    
                 self.other_key_bool_checkbtn.set_active(True)
                 self.set_other_key_true()                
-            # 
-            for_widgets_left = map(lambda title, widget:(title, widget), self.key_titles_left, self.widgets_left)
-            for title, widget in for_widgets_left:
+
+            # get config left value.
+            self.keys_left = ["=", "-", "w", "e", "Alt + a", _("Disabled")]    
+            for_widgets_left = map(lambda title, widget, key:(title, widget, key), self.key_titles_left, self.widgets_left, self.keys_left)
+            
+            for title, widget, init_key in for_widgets_left:
                 key_value = self.ini.get("OtherKey", title)
                 widget.set_text(key_value)
-                if bool(len(key_value)):
+                if key_value:
                     widget.set_shortcut_key(key_value)
-            #        
-            for_widgets_right = map(lambda title, widget:(title, widget), self.key_titles_right, self.widgets_right)
-            for title, widget in for_widgets_right:
+                else:    
+                    widget.set_shortcut_key(init_key)
+            # get config right value.
+            self.keys_right = [_("Pause/Play"), _("Full Screen"), _("Volumn")]
+            for_widgets_right = map(lambda title, widget, key:(title, widget, key), self.key_titles_right, self.widgets_right, self.keys_right)
+            
+            for title, widget, init_key in for_widgets_right:
                 key_value = self.ini.get("OtherKey", title)
-                if bool(len(key_value)):
+                if key_value:
                     widget.label.set_text(key_value)
+                else:    
+                    widget.label.set_text(init_key)
+                    
         except Exception,e:
             print "other class:init_read_other_key_value:", e
             

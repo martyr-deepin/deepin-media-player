@@ -2862,7 +2862,9 @@ class PlayerBox(object):
     
     def stop_subtitle_event(self, subtitle):
         # print "stop_subtitle_event"
+        self.mp.sub_stop()
         self.messagebox("停止字幕")
+        
         
     def add_delay_subtitle_event(self, subtitle):
         # print "add_delay_subtitle_event"
