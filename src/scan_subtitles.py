@@ -243,16 +243,12 @@ class ScanGui(gobject.GObject):
         # top hbox init.
         self.top_hbox_init()
         # bottom hbox init.
-        self.bottom_hbox_init()
-                
-        self.main_vbox.pack_start(self.top_hbox_align, False, False)
-        self.main_vbox.pack_start(self.scrolled_window, True, True)
-        self.main_vbox.pack_start(self.bottom_hbox_align, False, False)
         
-        # self.app.main_box.add(self.main_vbox_align)
-        self.app.body_box.pack_start(self.main_vbox_align)        
-        # self.app.window.connect("destroy", lambda w:self.app.window.destroy())
-        # scrolled window connect events.
+        self.app.body_box.pack_start(self.top_hbox_align, False, False)
+        self.app.body_box.pack_start(self.scrolled_window, True, True)
+        
+        self.bottom_hbox_init()
+
         self.scrolled_window.get_vadjustment().connect("value-changed", self.scrolled_window_load_last_sub_page)
         # list view connect events.
         self.list_view.connect("double-click-item", self.list_view_double_click_item)
@@ -348,13 +344,14 @@ class ScanGui(gobject.GObject):
         self.sum_subtitle_num = self.scan_url_sub.sum_subtitles # save sum subtitles.
         
         self.scan_sub_sum_label.set_text("%s: %s" % (_("Total search results"), str(self.scan_url_sub.sum_subtitles)))
-        self.scan_url_sub.scan_page_index(1)
-        self.scan_url_sub.get_sum_page()        
-        
-        for key in self.scan_url_sub.mc_url_and_name_dict.keys():
-            self.items.append(ListItem(str(key)))
+        if self.scan_url_sub.sum_subtitles > 0:
+            self.scan_url_sub.scan_page_index(1)
+            self.scan_url_sub.get_sum_page()        
             
-        self.play_list_add_scan_file()
+            for key in self.scan_url_sub.mc_url_and_name_dict.keys():
+                self.items.append(ListItem(str(key)))
+                
+            self.play_list_add_scan_file()
         
     @post_gui
     def play_list_add_scan_file(self):    
@@ -362,31 +359,13 @@ class ScanGui(gobject.GObject):
         
     def bottom_hbox_init(self):        
         self.scan_sub_sum_label = Label(_("Total search results: 0"))
-        self.scan_sub_sum_label_align = gtk.Alignment()
-        self.scan_sub_sum_label_align.set_padding(4, 0, 4, 0)
-        self.scan_sub_sum_label_align.add(self.scan_sub_sum_label)
 
         self.down_button = Button(_("Download"))
-        self.down_button.set_size_request(95, 25)
-        self.down_button_align = gtk.Alignment()
-        self.down_button_align.set_padding(2, 0, 2, 2)
-        self.down_button_align.add(self.down_button)
         
         self.close_button = Button(_("Close"))
-        self.close_button.set_size_request(95, 25)
-        self.close_button_align = gtk.Alignment()
-        self.close_button_align.set_padding(2, 0, 2, 2)
-        self.close_button_align.add(self.close_button)
         
-        self.bottom_hbox = gtk.HBox()
-        self.bottom_hbox_align = gtk.Alignment()
-        self.bottom_hbox_align.set(1, 1, 1, 1)
-        self.bottom_hbox_align.set_padding(12, 0, 0, 0)
-        self.bottom_hbox_align.add(self.bottom_hbox)
-                
-        self.bottom_hbox.pack_start(self.scan_sub_sum_label_align, True)
-        self.bottom_hbox.pack_start(self.down_button_align, False, False)
-        self.bottom_hbox.pack_start(self.close_button_align, False, False)
+        self.app.left_button_box.set_buttons([self.scan_sub_sum_label])
+        self.app.right_button_box.set_buttons([self.down_button, self.close_button])
                 
         self.down_button.connect("clicked", self.down_button_clicked)
         self.close_button.connect("clicked", self.close_button_clicked)
