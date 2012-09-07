@@ -630,7 +630,7 @@ msgstr "字幕保存"
 
 #: ../src/scan_subtitles.py:409
 msgid "director"
-msgstr "添加文件夹"
+msgstr "文件夹"
 
 #: ../src/scan_subtitles.py:416
 msgid "Failed to download the subtitle!"
