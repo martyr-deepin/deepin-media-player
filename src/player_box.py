@@ -2906,7 +2906,9 @@ class PlayerBox(object):
             for subtitle in sub_file_list:
                 video_subtitle = self.mv_subtitle_to_movie(subtitle, mv_dir)
                 if video_subtitle:
-                    self.sub_titles.add(video_subtitle)
+                    self.sub_titles.add(video_subtitle)                    
+                    self.mp.sub_select(int(self.sub_titles.get_index())-1)
+                    self.messagebox("加载字幕")
         else: 
             mv_dir = self.config.get("SubtitleSet", "specific_location_search")
             save_subtitle_path = mv_dir
