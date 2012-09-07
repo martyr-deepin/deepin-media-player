@@ -538,7 +538,7 @@ msgstr "字幕停止"
 
 #: ../src/player_box.py:2438
 msgid "Size of Subtitles"
-msgstr "字母尺寸"
+msgstr "字幕尺寸"
 
 #: ../src/player_box.py:2439
 msgid "Subtitle Synchronization"
