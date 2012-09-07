@@ -24,6 +24,7 @@ import urllib
 import urllib2
 import os
 import re
+from dtk.ui.threads import post_gui
 
 
 SCAN_URL =  "http://www.yyets.com/php/search/index?keyword="
@@ -191,7 +192,7 @@ import threading
 
 TEMP_FILE_DIR = "/tmp/tmp_sub"
 
-gtk.gdk.threads_init()
+# gtk.gdk.threads_init()
 
 class ScanGui(gobject.GObject):
     __gsignals__ = {
@@ -274,31 +275,25 @@ class ScanGui(gobject.GObject):
             if (self.sum_subtitle_num - self.scan_url_sub.current_page) > 0 and (end_position_row >= int(self.scan_url_sub.sum_subtitles - self.sum_subtitle_num - 5)): # 动态加载页. 滚动的位置 >= 搜索总数 - 当前总数 - 5 ->> 才去加载.
                 self.sum_subtitle_num -= self.scan_url_sub.current_page
                 
-                path_thread_id = threading.Thread(target=self.add_subtitle_page_threading)
+                path_thread_id = threading.Thread(target=self.add_subtitle_page)
                 path_thread_id.setDaemon(True)
                 path_thread_id.start()        
                 
         except Exception, e:    
             print "Error", e
             
-    def add_subtitle_page_threading(self):        
-        gtk.timeout_add(100, self.add_subtitle_page)
-        
     def add_subtitle_page(self):    
         self.current_page += 1
-        # print "开始添加文件"
         self.scan_url_sub.scan_page_index(self.current_page)
         
-        # gtk.timeout_add(100, self.add_subtitle_page_to_play_list)
-        self.add_subtitle_page_to_play_list()
-        
-    def add_subtitle_page_to_play_list(self):        
         for key in self.scan_url_sub.mc_url_and_name_dict.keys():
-            # self.items.append(ListItem(str(key), "", ""))                                
             self.items.append(ListItem(str(key), ))          
             
+        self.add_subtitle_page_to_play_list()
+        
+    @post_gui    
+    def add_subtitle_page_to_play_list(self):        
         self.list_view.add_items(self.items)
-        return False
     
     def list_view_double_click_item(self, ListView, item, column, offset_x, offset_y):
         self.__down_subtitle_function(item.title)
@@ -339,18 +334,11 @@ class ScanGui(gobject.GObject):
         
     def scan_button_clicked(self, widget):    
         scan_name = self.name_entry.get_text()
-        if bool(len(scan_name)):
+        if len(scan_name) != 0:
             # clear value.
-            path_thread_id = threading.Thread(target=self.scan_subtitles_threading, args=(scan_name, ))
+            path_thread_id = threading.Thread(target=self.scan_subtitles_function, args=(scan_name, ))
             path_thread_id.setDaemon(True)
             path_thread_id.start()        
-                        
-    def scan_subtitles_threading(self, scan_name):        
-            gtk.timeout_add(100, self.scan_subtitles_timeout, scan_name)                    
-            
-    def scan_subtitles_timeout(self, scan_name):
-        self.scan_subtitles_function(scan_name)
-        return False
     
     def scan_subtitles_function(self, scan_name):
         self.list_view.clear()
@@ -358,17 +346,18 @@ class ScanGui(gobject.GObject):
         self.current_page = 1
         self.scan_url_sub.scan_url_function(str(scan_name))
         self.sum_subtitle_num = self.scan_url_sub.sum_subtitles # save sum subtitles.
-        gtk.timeout_add(100, self.play_list_add_scan_file)        
         
-    def play_list_add_scan_file(self):    
         self.scan_sub_sum_label.set_text("%s: %s" % (_("Total search results"), str(self.scan_url_sub.sum_subtitles)))
         self.scan_url_sub.scan_page_index(1)
         self.scan_url_sub.get_sum_page()        
         
         for key in self.scan_url_sub.mc_url_and_name_dict.keys():
-            # self.items.append(ListItem(str(key), "", ""))
             self.items.append(ListItem(str(key)))
-
+            
+        self.play_list_add_scan_file()
+        
+    @post_gui
+    def play_list_add_scan_file(self):    
         self.list_view.add_items(self.items)
         
     def bottom_hbox_init(self):        
