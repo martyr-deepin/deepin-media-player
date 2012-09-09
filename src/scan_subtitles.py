@@ -388,11 +388,14 @@ class ScanGui(gobject.GObject):
             
             if ".rar" == file_type:
                 cmd_line = "unrar x %s %s" % (temp_file_path, "/tmp/tmp_sub/")
+                os.system(cmd_line)
             elif ".zip" == file_type:
-                cmd_line = "7za x -o%s %s" % ("/tmp/tmp_sub", temp_file_path)                
+                cmd_line = "7za x -o%s %s" % ("/tmp/tmp_sub", temp_file_path)
+                os.system(cmd_line)
+                if len(os.listdir("/tmp/tmp_sub")) <= 0:
+                    cmd_line = "unzip %s -d %s"%(temp_file_path, "/tmp/tmp_sub")
+                    os.system(cmd_line)
                 
-            # run 解压缩.
-            os.system(cmd_line)
             # scan dir.
             list_dir = os.listdir(TEMP_FILE_DIR)
             subtitles_list = []

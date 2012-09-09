@@ -2844,10 +2844,20 @@ class PlayerBox(object):
     # init_subtitles connect events.    
     def add_subtitle_event(self, subtitle, subtitle_path, index):
         # add to selece menu.
-        self.subtitles_select_menu_item.append((None, subtitle_path, lambda : self.sub_titles.select(index)))
-        # add to mplayer.
-        self.mp.sub_add(subtitle_path)
+        add_bool = True
         
+        if len(self.subtitles_select_menu_item) <= 0:
+            self.subtitles_select_menu_item.append((None, subtitle_path, lambda : self.sub_titles.select(index)))
+            self.mp.sub_add(subtitle_path)
+        else:    
+            for item in self.subtitles_select_menu_item:
+                if item[1] == subtitle_path:
+                    add_bool = False
+                    
+            if add_bool:        
+                self.subtitles_select_menu_item.append((None, subtitle_path, lambda : self.sub_titles.select(index)))
+                self.mp.sub_add(subtitle_path)
+                            
     def scan_subtitle_event(self, subtitle, subtitle_list):
         map(lambda subtitle_file:subtitle.add(subtitle_file), subtitle_list)
         
