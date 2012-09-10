@@ -54,7 +54,8 @@ class ScanUrlSub:
             temp_url = SCAN_PAGE_URL + temp_url
         else:    
             temp_url = self.page_string + self.down_page_url
-            temp_url = SCAN_PAGE_URL + temp_url            
+            temp_url = SCAN_PAGE_URL + temp_url
+        # print "scan_page_index:[temp_url--->>>", temp_url
         self.get_page_all_url_list(temp_url)    
         
     def scan_url_function(self, keyword_str):
@@ -181,10 +182,10 @@ from dtk.ui.dialog import DialogBox, DIALOG_MASK_MULTIPLE_PAGE
 from dtk.ui.scrolled_window import ScrolledWindow
 from dtk.ui.entry import InputEntry
 from dtk.ui.label import Label
-from dtk.ui.utils import get_content_size
+from dtk.ui.utils import get_content_size, color_hex_to_cairo, is_network_connected
 from dtk.ui.constant import DEFAULT_FONT_SIZE, ALIGN_END
-
 from ini import Config,get_home_path
+from toolbar import tooltip_text
 from locales import _
 import gtk
 import gobject
@@ -232,6 +233,7 @@ class ScanGui(gobject.GObject):
          # (lambda item: item.artist, cmp),
          # (lambda item: item.length, cmp)
          ])
+        # self.list_view.draw_mask = self.draw_mask
         self.list_view.set_expand_column(0)
         # self.list_view.add_titles([_("Subtiles"), _("Language"), _("Duration")])        
         self.list_view.add_titles([_("Subtiles")])        
@@ -253,7 +255,13 @@ class ScanGui(gobject.GObject):
         # list view connect events.
         self.list_view.connect("double-click-item", self.list_view_double_click_item)
         self.list_view.connect("single-click-item", self.list_view_single_click_item)
+        self.list_view.connect("motion-notify-item", self.list_view_motion_notify_item)
                                         
+    # def draw_mask(self, cr, x, y, w, h):    
+    #     cr.set_source_rgba(1, 1, 1, 0.9)
+    #     cr.rectangle(x, y, w, h)
+    #     cr.fill()
+        
     def show_window(self):    
         # self.app.window.show_all()
         self.app.show_all()
@@ -273,7 +281,7 @@ class ScanGui(gobject.GObject):
                 
                 path_thread_id = threading.Thread(target=self.add_subtitle_page)
                 path_thread_id.setDaemon(True)
-                path_thread_id.start()        
+                path_thread_id.start()
                 
         except Exception, e:    
             print "Error", e
@@ -299,6 +307,9 @@ class ScanGui(gobject.GObject):
         self.highlight_item = item
         # print self.highlight_item
             
+    def list_view_motion_notify_item(self, list_view, item, column, offset_x, offset_y):
+        tooltip_text(list_view, item.title)
+    
     def top_hbox_init(self):        
         self.name_label = Label(_("Movie Name: "))
         self.name_label_align = gtk.Alignment()
@@ -334,14 +345,19 @@ class ScanGui(gobject.GObject):
         
     def scan_button_clicked(self, widget):    
         scan_name = self.name_entry.get_text()
-        if len(scan_name) != 0:
-            self.scan_sub_sum_label.set_text("正在搜索... ...")
-            # clear value.
-            path_thread_id = threading.Thread(target=self.scan_subtitles_function, args=(scan_name, ))
-            path_thread_id.setDaemon(True)
-            path_thread_id.start()        
+        # print scan_name
+        if is_network_connected():
+            if len(scan_name) != 0:
+                self.scan_sub_sum_label.set_text(_("正在搜索字幕......"))
+                # clear value.
+                path_thread_id = threading.Thread(target=self.scan_subtitles_function, args=(scan_name, ))
+                path_thread_id.setDaemon(True)
+                path_thread_id.start()
+        else:        
+            self.scan_sub_sum_label.set_text(_("您的网络暂无链接"))
     
-    def scan_subtitles_function(self, scan_name):
+    def scan_subtitles_function(self, scan_name):        
+        # print "scan_subtitles_function:"
         self.list_view.clear()
         self.items = []
         self.current_page = 1
@@ -349,6 +365,7 @@ class ScanGui(gobject.GObject):
         self.sum_subtitle_num = self.scan_url_sub.sum_subtitles # save sum subtitles.
         
         self.scan_sub_sum_label.set_text("%s: %s" % (_("Total search results"), str(self.scan_url_sub.sum_subtitles)))
+        # print "scan_url_sum:", self.scan_url_sub.sum_subtitles
         if self.scan_url_sub.sum_subtitles > 0:
             self.scan_url_sub.scan_page_index(1)
             self.scan_url_sub.get_sum_page()
@@ -357,13 +374,15 @@ class ScanGui(gobject.GObject):
                 self.items.append(ListItem(str(key)))
                 
             self.play_list_add_scan_file()
-        
+        else:
+            self.scan_sub_sum_label.set_text("抱歉,没有搜索到相关字幕")
+            
     @post_gui
     def play_list_add_scan_file(self):    
         self.list_view.add_items(self.items)
         
-    def bottom_hbox_init(self):        
-        self.scan_sub_sum_label = Label(_("Total search results: 0"))
+    def bottom_hbox_init(self):
+        self.scan_sub_sum_label = Label("")
 
         self.down_button = Button(_("Download"))
         
@@ -530,34 +549,10 @@ class ListItem(gobject.GObject):
         @param in_highlight: Whether current item is highlighted, this value pass from ListView.
         '''
         rect.x += self.title_padding_x
-        rect.width -= self.title_padding_x * 2
+        # rect.width -= self.title_padding_x * 2
+        rect.width = 400
         render_text(cr, rect, self.title, in_select, in_highlight)
-    
-    def render_artist(self, cr, rect, in_select, in_highlight):
-        '''
-        Render artist.
-        
-        @param cr: Cairo context.
-        @param rect: Redraw rectangle. 
-        @param in_select: Whether current item is selected, this value pass from ListView.
-        @param in_highlight: Whether current item is highlighted, this value pass from ListView.
-        '''
-        rect.x += self.artist_padding_x
-        rect.width -= self.title_padding_x * 2
-        render_text(cr, rect, self.artist, in_select, in_highlight)
-    
-    def render_length(self, cr, rect, in_select, in_highlight):
-        '''
-        Render length.
-        
-        @param cr: Cairo context.
-        @param rect: Redraw rectangle. 
-        @param in_select: Whether current item is selected, this value pass from ListView.
-        @param in_highlight: Whether current item is highlighted, this value pass from ListView.
-        '''
-        rect.width -= self.length_padding_x * 2
-        render_text(cr, rect, self.length, in_select, in_highlight, align=ALIGN_END)
-        
+
     def get_column_sizes(self):
         '''
         Get column sizes.
@@ -566,7 +561,11 @@ class ListItem(gobject.GObject):
         
         @return: Return column size tuple.
         '''
-        return [(self.title_width + self.title_padding_x * 2,
+        # return [(self.title_width + self.title_padding_x * 2,
+        #          self.title_height + self.title_padding_y * 2)
+        #         ]    
+    
+        return [(400,
                  self.title_height + self.title_padding_y * 2)
                 ]    
     

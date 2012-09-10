@@ -614,7 +614,7 @@ msgstr "搜索"
 
 #: ../src/scan_subtitles.py:333
 msgid "Total search results"
-msgstr "搜索的字幕總數"
+msgstr "搜索到字幕"
 
 #: ../src/scan_subtitles.py:342
 msgid "Total search results: 0"
