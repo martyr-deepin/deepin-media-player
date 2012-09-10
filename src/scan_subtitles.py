@@ -437,7 +437,9 @@ class ScanGui(gobject.GObject):
                     for file____ in list_dir____:                        
                         sub_dir_file = file_path + "/"+ file____ #os.path.join(file_path, file____)
                         if os.path.isfile(sub_dir_file):
-                            subtitles_list.append(sub_dir_file)
+                            new_sub_dir_file = self.file_name_code_to_utf_8(sub_dir_file)
+                            os.rename(sub_dir_file, new_sub_dir_file)
+                            subtitles_list.append(new_sub_dir_file)
             # messagebox infromtiom.   
             self.scan_sub_sum_label.set_text("%s%s" % (_("Subtile has been saved to the"), _("director")))
             # print "down_subtitle_function:", subtitles_list            
@@ -449,7 +451,16 @@ class ScanGui(gobject.GObject):
             self.scan_sub_sum_label.set_text(_("Failed to download the subtitle!"))
                     
             
+    def file_name_code_to_utf_8(self, file_name):
+        import chardet
+        encoding = chardet.detect(str(file_name))["encoding"]
+        if encoding != "utf-8":
+            to_string = str(file_name).decode(encoding).encode("utf-8")
+        else:    
+            to_string = str(file_name).decode("utf-8")
             
+        return to_string
+    
 class ListItem(gobject.GObject):
     '''
     ListItem template to build your own item for L{ I{ListView} <ListView>}.
