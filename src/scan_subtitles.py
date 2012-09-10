@@ -233,7 +233,7 @@ class ScanGui(gobject.GObject):
          # (lambda item: item.artist, cmp),
          # (lambda item: item.length, cmp)
          ])
-        # self.list_view.draw_mask = self.draw_mask
+        self.list_view.draw_mask = self.draw_mask
         self.list_view.set_expand_column(0)
         # self.list_view.add_titles([_("Subtiles"), _("Language"), _("Duration")])        
         self.list_view.add_titles([_("Subtiles")])
@@ -257,10 +257,10 @@ class ScanGui(gobject.GObject):
         self.list_view.connect("single-click-item", self.list_view_single_click_item)
         self.list_view.connect("motion-notify-item", self.list_view_motion_notify_item)
                                         
-    # def draw_mask(self, cr, x, y, w, h):    
-    #     cr.set_source_rgba(1, 1, 1, 0.9)
-    #     cr.rectangle(x, y, w, h)
-    #     cr.fill()
+    def draw_mask(self, cr, x, y, w, h):    
+        cr.set_source_rgba(1, 1, 1, 0.9)
+        cr.rectangle(x, y, w, h)
+        cr.fill()
         
     def show_window(self):    
         # self.app.window.show_all()
