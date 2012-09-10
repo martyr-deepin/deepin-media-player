@@ -2911,15 +2911,16 @@ class PlayerBox(object):
         
     def add_subtitle_file_event(self, ScanGui, sub_file_list):
         # add subtitle file.
-        if self.mp.state == STARTING_PLAY:
-            mv_dir = os.path.split(self.mp.path)[0]
-            for subtitle in sub_file_list:
-                video_subtitle = self.mv_subtitle_to_movie(subtitle, mv_dir)
-                if video_subtitle:
-                    self.sub_titles.add(video_subtitle)                    
-                    self.mp.sub_select(int(self.sub_titles.get_index())-1)
-                    self.messagebox(_("Subtitle loaded")) # 加载字幕
-        else: 
+        # if self.mp.state == STARTING_PLAY:
+            # mv_dir = os.path.split(self.mp.path)[0]
+            # for subtitle in sub_file_list:
+                # video_subtitle = self.mv_subtitle_to_movie(subtitle, mv_dir)
+                # if video_subtitle:
+                    # self.sub_titles.add(video_subtitle)                    
+                    # self.mp.sub_select(int(self.sub_titles.get_index())-1)
+                    # self.messagebox(_("Subtitle loaded")) # 加载字幕
+        # else: 
+        if True:
             mv_dir = self.config.get("SubtitleSet", "specific_location_search")
             save_subtitle_path = mv_dir
             if save_subtitle_path[0:1] == "~":
@@ -2928,7 +2929,11 @@ class PlayerBox(object):
             # mv subtitle file to dir.
             if bool(len(mv_dir)) and mv_dir is not None:
                 for subtitle in sub_file_list:
-                    self.mv_subtitle_to_movie(subtitle, mv_dir)
+                    self.mv_subtitle_to_movie(subtitle, mv_dir)                    
+                    if self.mp.state == STARTING_PLAY:        
+                        self.sub_titles.add(subtitle)
+                if self.mp.state == STARTING_PLAY:        
+                    self.mp.sub_select(int(0))
         ##############################
         # delete dir.    
         self.delete_subtitle_temp()
