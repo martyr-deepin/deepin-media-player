@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-10 14:34+0800\n"
+"POT-Creation-Date: 2012-09-10 14:55+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -69,7 +69,7 @@ msgstr ""
 
 #: ../src/ini_gui.py:133 ../src/ini_gui.py:261 ../src/ini_gui.py:272
 #: ../src/ini_gui.py:418
-msgid "Genera"
+msgid "General"
 msgstr ""
 
 #: ../src/ini_gui.py:134
@@ -349,7 +349,7 @@ msgstr ""
 msgid "No network connection established"
 msgstr ""
 
-#: ../src/scan_subtitles.py:367
+#: ../src/scan_subtitles.py:369
 msgid "Total search results"
 msgstr ""
 
@@ -577,7 +577,7 @@ msgid "Search subtitles"
 msgstr ""
 
 #: ../src/player_box.py:2442
-msgid "Load subtitles"
+msgid "Load a subtitle"
 msgstr ""
 
 #: ../src/player_box.py:2443 ../src/player_box.py:2876
@@ -633,5 +633,5 @@ msgid "Open Containing Directory"
 msgstr ""
 
 #: ../src/player_box.py:2867 ../src/player_box.py:2921
-msgid "Load a subtitle"
+msgid "Subtitle loaded"
 msgstr ""

@@ -130,7 +130,7 @@ class IniGui(DialogBox):
         
         # TreeView add node.
         self.tree_view.add_item(None, TreeViewItem(_("Playback")))
-        self.tree_view.add_item(None, TreeViewItem(_("Genera")))
+        self.tree_view.add_item(None, TreeViewItem(_("General")))
         key = self.tree_view.add_item(None, TreeViewItem(_("Keyboard")))
         self.tree_view.add_item(key, TreeViewItem(_("Video Control"), has_arrow=False))
         self.tree_view.add_item(key, TreeViewItem(_("Subtitle"), has_arrow=False)) # new
@@ -258,7 +258,7 @@ class Configure(gtk.VBox):
         gtk.VBox.__init__(self)
         self.class_dict = {
             _("Playback"):FilePlay(),
-            _("Genera"):SystemSet(),
+            _("General"):SystemSet(),
             _("Video Control"):PlayControl(),
             _("Subtitle"):SubKey(),
             _("Other"):OtherKey(),
@@ -269,7 +269,7 @@ class Configure(gtk.VBox):
         
         # Init all configure gui class.
         self.file_play = self.class_dict[_("Playback")]
-        self.system_set = self.class_dict[_("Genera")]
+        self.system_set = self.class_dict[_("General")]
         self.play_control = self.class_dict[_("Video Control")]
         self.sub_key = self.class_dict[_("Subtitle")] 
         self.other_key = self.class_dict[_("Other")]
@@ -415,7 +415,7 @@ class SystemSet(gtk.VBox):
         self.ini = Config(config_path)
 
         self.fixed = gtk.Fixed()
-        self.label = Label(_("Genera"))
+        self.label = Label(_("General"))
         self.label.set_size_request(label_width, label_height)
         self.heparator_hbox = gtk.HBox()
         self.heparator = create_separator_box()

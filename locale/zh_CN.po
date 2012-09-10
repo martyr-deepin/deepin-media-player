@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-10 14:34+0800\n"
+"POT-Creation-Date: 2012-09-10 14:55+0800\n"
 "PO-Revision-Date: 2012-07-12 15:53+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -69,7 +69,7 @@ msgstr "播放设置"
 
 #: ../src/ini_gui.py:133 ../src/ini_gui.py:261 ../src/ini_gui.py:272
 #: ../src/ini_gui.py:418
-msgid "Genera"
+msgid "General"
 msgstr "系统设置"
 
 #: ../src/ini_gui.py:134
@@ -354,7 +354,7 @@ msgstr "正在搜索字幕......"
 msgid "No network connection established"
 msgstr "您的网络暂无链接"
 
-#: ../src/scan_subtitles.py:367
+#: ../src/scan_subtitles.py:369
 msgid "Total search results"
 msgstr "搜索到字幕"
 
@@ -582,7 +582,7 @@ msgid "Search subtitles"
 msgstr "手动搜索字幕"
 
 #: ../src/player_box.py:2442
-msgid "Load subtitles"
+msgid "Load a subtitle"
 msgstr "手动载入字幕"
 
 #: ../src/player_box.py:2443 ../src/player_box.py:2876
@@ -638,9 +638,11 @@ msgid "Open Containing Directory"
 msgstr "打开所在文件夹"
 
 #: ../src/player_box.py:2867 ../src/player_box.py:2921
-#, fuzzy
-msgid "Load a subtitle"
-msgstr "载入字幕"
+msgid "Subtitle loaded"
+msgstr "已载入字幕"
+
+#~ msgid "Load subtitles"
+#~ msgstr "手动载入字幕"
 
 #~ msgid "Language"
 #~ msgstr "语言"

@@ -2439,7 +2439,7 @@ class PlayerBox(object):
         self.subtitles_control_menu = Menu([
                 # (down_sub_title_pixbuf, _("Auto-download Subtitles"), self.set_down_sub_title_bool),
                 (None, _("Search subtitles"), self.open_scan_gui_window),
-                (None, _("Load subtitles"), self.open_window_load_subtitle), 
+                (None, _("Load a subtitle"), self.open_window_load_subtitle), 
                 (None, _("Disable Subtitles"), self.subtitle_stop_key),
                 (None),
                 (None, _("Select Subtitles"), self.subtitles_select_menu),
@@ -2864,7 +2864,7 @@ class PlayerBox(object):
     def select_subtitle_event(self, subtitle, subtitle_path, subtitle_index):
         # print "select_subtitle_event"
         self.mp.sub_select(subtitle_index)
-        self.messagebox(_("Load a subtitle")) # 加载字幕.
+        self.messagebox(_("Subtitle loaded")) # 加载字幕.
         # print subtitle_index
         
     def delete_subtitle_event(self, subtitle, subtitle_path, subtitle_index):
@@ -2918,7 +2918,7 @@ class PlayerBox(object):
                 if video_subtitle:
                     self.sub_titles.add(video_subtitle)                    
                     self.mp.sub_select(int(self.sub_titles.get_index())-1)
-                    self.messagebox(_("Load a subtitle")) # 加载字幕
+                    self.messagebox(_("Subtitle loaded")) # 加载字幕
         else: 
             mv_dir = self.config.get("SubtitleSet", "specific_location_search")
             save_subtitle_path = mv_dir
