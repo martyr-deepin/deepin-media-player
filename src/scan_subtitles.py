@@ -236,7 +236,7 @@ class ScanGui(gobject.GObject):
         # self.list_view.draw_mask = self.draw_mask
         self.list_view.set_expand_column(0)
         # self.list_view.add_titles([_("Subtiles"), _("Language"), _("Duration")])        
-        self.list_view.add_titles([_("Subtiles")])        
+        self.list_view.add_titles([_("Subtiles")])
         self.scrolled_window = ScrolledWindow(0, 0)        
         self.scrolled_window.add_child(self.list_view)
 
@@ -348,13 +348,13 @@ class ScanGui(gobject.GObject):
         # print scan_name
         if is_network_connected():
             if len(scan_name) != 0:
-                self.scan_sub_sum_label.set_text(_("正在搜索字幕......"))
+                self.scan_sub_sum_label.set_text(_("Searching for subtitles")) # 正在搜索字幕......
                 # clear value.
                 path_thread_id = threading.Thread(target=self.scan_subtitles_function, args=(scan_name, ))
                 path_thread_id.setDaemon(True)
                 path_thread_id.start()
         else:        
-            self.scan_sub_sum_label.set_text(_("您的网络暂无链接"))
+            self.scan_sub_sum_label.set_text(_("No network connection established")) # 您的网络暂无链接.
     
     def scan_subtitles_function(self, scan_name):        
         # print "scan_subtitles_function:"
@@ -364,10 +364,10 @@ class ScanGui(gobject.GObject):
         self.scan_url_sub.scan_url_function(str(scan_name))
         self.sum_subtitle_num = self.scan_url_sub.sum_subtitles # save sum subtitles.
         
-        self.scan_sub_sum_label.set_text("%s: %s" % (_("Total search results"), str(self.scan_url_sub.sum_subtitles)))
         # print "scan_url_sum:", self.scan_url_sub.sum_subtitles
         if self.scan_url_sub.sum_subtitles > 0:
-            self.scan_url_sub.scan_page_index(1)
+            self.scan_sub_sum_label.set_text("%s: %s" % (_("Total search results"), str(self.scan_url_sub.sum_subtitles)))
+            self.scan_url_sub.scan_page_index(1)            
             self.scan_url_sub.get_sum_page()
             
             for key in self.scan_url_sub.mc_url_and_name_dict.keys():
@@ -375,7 +375,7 @@ class ScanGui(gobject.GObject):
                 
             self.play_list_add_scan_file()
         else:
-            self.scan_sub_sum_label.set_text("抱歉,没有搜索到相关字幕")
+            self.scan_sub_sum_label.set_text(_("Sorry, we couln't find any subtitle")) # 抱歉,没有搜索到相关字幕
             
     @post_gui
     def play_list_add_scan_file(self):    
@@ -440,7 +440,7 @@ class ScanGui(gobject.GObject):
                         if os.path.isfile(sub_dir_file):
                             subtitles_list.append(sub_dir_file)
             # messagebox infromtiom.   
-            self.scan_sub_sum_label.set_text("%s%s%s" % (_("Subtile has been saved to the"), "/tmp ", _("director")))
+            self.scan_sub_sum_label.set_text("%s%s" % (_("Subtile has been saved to the"), _("director")))
             # print "down_subtitle_function:", subtitles_list            
             # send event.
             self.emit("add-subtitle-file", subtitles_list)

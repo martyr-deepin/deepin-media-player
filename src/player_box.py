@@ -2864,7 +2864,7 @@ class PlayerBox(object):
     def select_subtitle_event(self, subtitle, subtitle_path, subtitle_index):
         # print "select_subtitle_event"
         self.mp.sub_select(subtitle_index)
-        self.messagebox("加载字幕")
+        self.messagebox(_("Load a subtitle")) # 加载字幕.
         # print subtitle_index
         
     def delete_subtitle_event(self, subtitle, subtitle_path, subtitle_index):
@@ -2873,28 +2873,28 @@ class PlayerBox(object):
     def stop_subtitle_event(self, subtitle):
         # print "stop_subtitle_event"
         self.mp.sub_stop()
-        self.messagebox("停止字幕")
+        self.messagebox(_("Disable Subtitles")) # 停止字幕
         
         
     def add_delay_subtitle_event(self, subtitle):
         # print "add_delay_subtitle_event"
         self.mp.sub_up_delay()
-        self.messagebox("字幕提前0.5秒")
+        self.messagebox(_("Forword by 0.5s")) # 字幕提前0.5秒
     
     def sub_delay_subtitle_event(self, subtitle):
         # print "sub_delay_subtitle_event"
-        self.messagebox("字幕延时0.5秒")
+        self.messagebox(_("Delay by 0.5s")) # 字幕延时0.5秒
         self.mp.sub_down_delay()
         
     def add_scale_subtitle_event(self, subtitle):
         # print "add_scale_subtitle_event"
         self.mp.sub_up_scale()
-        self.messagebox("增大字幕尺寸")
+        self.messagebox(_("Increase the Size of Characters")) # 增大字幕尺寸
         
     def sub_scale_subtitle_event(self, subtitle):
         # print "sub_scale_subtitle_event"
         self.mp.sub_down_scale()
-        self.messagebox("减少字幕尺寸")
+        self.messagebox(_("Decrease the Size of Characters")) # 减少字幕尺寸
     
     def clear_subtitle_event(self, subtitle, subtitle_len):
         print "clear_subtitle_event"
@@ -2918,7 +2918,7 @@ class PlayerBox(object):
                 if video_subtitle:
                     self.sub_titles.add(video_subtitle)                    
                     self.mp.sub_select(int(self.sub_titles.get_index())-1)
-                    self.messagebox("加载字幕")
+                    self.messagebox(_("Load a subtitle")) # 加载字幕
         else: 
             mv_dir = self.config.get("SubtitleSet", "specific_location_search")
             save_subtitle_path = mv_dir
