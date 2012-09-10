@@ -214,7 +214,7 @@ msgstr "啟用熱鍵"
 
 #: ../src/ini_gui.py:824 ../src/player_box.py:2882
 msgid "Forword by 0.5s"
-msgstr "快字幕提前5秒"
+msgstr "字幕提前0.5秒"
 
 #: ../src/ini_gui.py:825 ../src/player_box.py:2886
 msgid "Delay by 0.5s"
@@ -347,13 +347,12 @@ msgid "Search"
 msgstr "搜索"
 
 #: ../src/scan_subtitles.py:351
-#, fuzzy
 msgid "Searching for subtitles"
-msgstr "手動搜索字幕"
+msgstr "正在搜索字幕......"
 
 #: ../src/scan_subtitles.py:357
 msgid "No network connection established"
-msgstr ""
+msgstr "您的網絡暫無鏈接"
 
 #: ../src/scan_subtitles.py:367
 msgid "Total search results"
@@ -361,7 +360,7 @@ msgstr "搜索到字幕"
 
 #: ../src/scan_subtitles.py:378
 msgid "Sorry, we couln't find any subtitle"
-msgstr ""
+msgstr "抱歉,冇有搜索到相關字幕"
 
 #: ../src/scan_subtitles.py:387
 msgid "Download"
@@ -369,7 +368,7 @@ msgstr "下載"
 
 #: ../src/scan_subtitles.py:443
 msgid "Subtile has been saved to the"
-msgstr "字幕保存"
+msgstr "字幕保存到"
 
 #: ../src/scan_subtitles.py:443
 msgid "director"
@@ -641,7 +640,7 @@ msgstr "打開所在文件夾"
 #: ../src/player_box.py:2867 ../src/player_box.py:2921
 #, fuzzy
 msgid "Load a subtitle"
-msgstr "手動載入字幕"
+msgstr "載入字幕"
 
 #~ msgid "Language"
 #~ msgstr "語言"
