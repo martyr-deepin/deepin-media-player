@@ -2933,6 +2933,7 @@ class PlayerBox(object):
                     if self.mp.state == STARTING_PLAY:        
                         self.sub_titles.add(subtitle)
                 if self.mp.state == STARTING_PLAY:        
+                    self.messagebox(_("Subtitle loaded")) # 加载字幕
                     self.mp.sub_select(int(0))
         ##############################
         # delete dir.    
