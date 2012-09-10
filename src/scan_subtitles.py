@@ -420,22 +420,9 @@ class ScanGui(gobject.GObject):
                 cmd_line = "unrar x %s %s" % (temp_file_path, "/tmp/tmp_sub/")
                 os.system(cmd_line)
             elif file_type in [".zip"]:
-                import zipfile
-                
+                import zipfile                
                 zf = zipfile.ZipFile(temp_file_path)
                 zf.extractall("/tmp/tmp_sub")
-                # namelist = zf.namelist()
-                # dirlist = filter( lambda x: x.endswith( '/' ), namelist )
-                # filelist = filter( lambda x: not x.endswith( '/' ), namelist )
-                # for dir_ in dirlist:
-                #     for file_ in filelist:
-                        
-                # cmd_line = "7za x -y -o%s %s" % ("/tmp/tmp_sub", temp_file_path)
-                # os.system(cmd_line)
-                # if len(os.listdir("/tmp/tmp_sub")) <= 0:
-                #     cmd_line = "unzip %s -d %s"%(temp_file_path, "/tmp/tmp_sub")
-                #     os.system(cmd_line)
-                # z.close()
                 
             # scan dir.
             list_dir = os.listdir(TEMP_FILE_DIR)
@@ -460,28 +447,7 @@ class ScanGui(gobject.GObject):
             os.system("rm -rf %s"% (temp_file_path))
         else:
             self.scan_sub_sum_label.set_text(_("Failed to download the subtitle!"))
-        
-    # def messagebox_down_informtion(self):            
-        # self.scan_sub_sum_label.set_text("字幕下载中")
-        
-# scan_gui = ScanGui()
-# scan_gui.app.show_all()
-# gtk.gdk.threads_enter()
-# gtk.main()
-# gtk.gdk.threads_leave()
-
-# if __name__ == "__main__":
-#     scan_url_sub = ScanUrlSub()
-#     scan_url_sub.scan_url_function("功夫熊猫")
-#     print "搜索字幕总数:", scan_url_sub.sum_subtitles
-#     print '下一页需要的链接:', scan_url_sub.page_string
-#     scan_url_sub.scan_page_index(3)
-#     scan_url_sub.get_sum_page()
-#     print "第3页:搜索到的东西:", len(scan_url_sub.mc_url_and_name_dict.keys())
-#     print "=========================="
-#     for i in scan_url_sub.mc_url_and_name_dict.keys():
-#         print i
-
+                    
             
             
 class ListItem(gobject.GObject):
