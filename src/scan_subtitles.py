@@ -148,7 +148,7 @@ class ScanUrlSub:
             down_url_addr = down_url_addr[0].strip()
             down_url_addr = down_url_addr[1:][:-1]
             
-            print "down_url_addr", down_url_addr
+            # print "down_url_addr", down_url_addr
             try:
                 down_data = urllib.urlopen(down_url_addr)
                 # get_code = down_data.getcode()
@@ -292,10 +292,12 @@ class ScanGui(gobject.GObject):
         self.list_view.add_items(self.items)
     
     def list_view_double_click_item(self, ListView, item, column, offset_x, offset_y):
-        self.__down_subtitle_function(item.title)
+        self.down_subtitle_function_threadint()
+        # self.__down_subtitle_function(item.title)
         
-    def list_view_single_click_item(self, ListView, item, column, offset_x, offset_y):        
+    def list_view_single_click_item(self, ListView, item, column, offset_x, offset_y):
         self.highlight_item = item
+        # print self.highlight_item
             
     def top_hbox_init(self):        
         self.name_label = Label(_("Movie Name: "))
@@ -373,13 +375,19 @@ class ScanGui(gobject.GObject):
         
     def down_button_clicked(self, widget):
         '''down subtitle file.'''
-        if self.highlight_item:
-            self.__down_subtitle_function(self.highlight_item.title)
-        
+        if self.highlight_item.title:
+            self.down_subtitle_function_threadint()       
+            self.highlight_item = None
+            
     def close_button_clicked(self, widget): 
         '''quit scan sub window.'''
         self.app.destroy()
         
+    def down_subtitle_function_threadint(self):    
+        path_thread_id = threading.Thread(target=self.__down_subtitle_function, args=(self.highlight_item.title, ))
+        path_thread_id.setDaemon(True)
+        path_thread_id.start()        
+
     def __down_subtitle_function(self, title):    
         if self.scan_url_sub.down_subtitle(self.scan_url_sub.mc_url_and_name_dict[title]):
             # print self.scan_url_sub.save_file_name
