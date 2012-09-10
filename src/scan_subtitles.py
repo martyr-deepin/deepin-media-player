@@ -415,15 +415,15 @@ class ScanGui(gobject.GObject):
             file_name, file_type = os.path.splitext(self.scan_url_sub.save_file_name)
             temp_file_path = os.path.join("/tmp", self.scan_url_sub.save_file_name)
             
-            if ".rar" == file_type:
-                cmd_line = "unrar x %s %s" % (temp_file_path, "/tmp/tmp_sub/")
+            # if ".rar" == file_type:
+            #     cmd_line = "unrar x %s %s" % (temp_file_path, "/tmp/tmp_sub/")
+            #     os.system(cmd_line)
+            if file_type in [".zip", ".rar"]:
+                cmd_line = "7za x -y -o%s %s" % ("/tmp/tmp_sub", temp_file_path)
                 os.system(cmd_line)
-            elif ".zip" == file_type:
-                cmd_line = "7za x -o%s %s" % ("/tmp/tmp_sub", temp_file_path)
-                os.system(cmd_line)
-                if len(os.listdir("/tmp/tmp_sub")) <= 0:
-                    cmd_line = "unzip %s -d %s"%(temp_file_path, "/tmp/tmp_sub")
-                    os.system(cmd_line)
+                # if len(os.listdir("/tmp/tmp_sub")) <= 0:
+                #     cmd_line = "unzip %s -d %s"%(temp_file_path, "/tmp/tmp_sub")
+                #     os.system(cmd_line)
                 
             # scan dir.
             list_dir = os.listdir(TEMP_FILE_DIR)
