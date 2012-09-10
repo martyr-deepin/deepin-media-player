@@ -376,7 +376,7 @@ msgstr "文件夹"
 
 #: ../src/scan_subtitles.py:450
 msgid "Failed to download the subtitle!"
-msgstr "自动下载字幕"
+msgstr "字幕下载失败!"
 
 #: ../src/play_list_control_panel.py:67 ../src/player_box.py:2543
 msgid "Add File"
