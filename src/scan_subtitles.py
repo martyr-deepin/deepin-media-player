@@ -203,7 +203,7 @@ class ScanGui(gobject.GObject):
         gobject.GObject.__init__(self)
         # self.app = Application() 
         self.app = DialogBox(_("Search Subtitles"), 480, 350,
-                             mask_type=False,
+                             mask_type=DIALOG_MASK_MULTIPLE_PAGE,
                              modal=False,
                              window_hint=gtk.gdk.WINDOW_TYPE_HINT_DIALOG,
                              window_pos=gtk.WIN_POS_CENTER,
@@ -278,7 +278,7 @@ class ScanGui(gobject.GObject):
         except Exception, e:    
             print "Error", e
             
-    def add_subtitle_page(self):    
+    def add_subtitle_page(self):
         self.current_page += 1
         self.scan_url_sub.scan_page_index(self.current_page)
         
@@ -324,6 +324,7 @@ class ScanGui(gobject.GObject):
         self.top_hbox_align = gtk.Alignment()
         self.top_hbox_align.add(self.top_hbox)
         self.top_hbox_align.set(0, 0, 1, 1)
+        self.top_hbox_align.set_padding(5, 3, 0, 0)
         
         self.top_hbox.pack_start(self.name_label_align, False, False)
         self.top_hbox.pack_start(self.name_entry_align, True, True)
@@ -334,6 +335,7 @@ class ScanGui(gobject.GObject):
     def scan_button_clicked(self, widget):    
         scan_name = self.name_entry.get_text()
         if len(scan_name) != 0:
+            self.scan_sub_sum_label.set_text("正在搜索... ...")
             # clear value.
             path_thread_id = threading.Thread(target=self.scan_subtitles_function, args=(scan_name, ))
             path_thread_id.setDaemon(True)
@@ -349,7 +351,7 @@ class ScanGui(gobject.GObject):
         self.scan_sub_sum_label.set_text("%s: %s" % (_("Total search results"), str(self.scan_url_sub.sum_subtitles)))
         if self.scan_url_sub.sum_subtitles > 0:
             self.scan_url_sub.scan_page_index(1)
-            self.scan_url_sub.get_sum_page()        
+            self.scan_url_sub.get_sum_page()
             
             for key in self.scan_url_sub.mc_url_and_name_dict.keys():
                 self.items.append(ListItem(str(key)))
