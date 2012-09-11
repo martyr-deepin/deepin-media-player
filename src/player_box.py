@@ -59,7 +59,7 @@ from service import download_shooter_subtitle
 from user_guide import init_user_guide
 from code_to_utf_8 import auto_decode
 from subtitles import SubTitles
-from scan_subtitles import ScanGui
+from subtitle.scan_subtitles import ScanGui
 from lrc.osd_lrc import Lrc
 import threading
 import gtk
