@@ -441,14 +441,18 @@ class ScanGui(gobject.GObject):
                             os.rename(sub_dir_file, new_sub_dir_file)
                             subtitles_list.append(new_sub_dir_file)
             # messagebox infromtiom.   
+            gtk.gdk.threads_enter()
             self.scan_sub_sum_label.set_text("%s%s" % (_("Subtile has been saved to the"), _("director")))
+            gtk.gdk.threads_leave()
             # print "down_subtitle_function:", subtitles_list            
             # send event.
             self.emit("add-subtitle-file", subtitles_list)
             # delete down temp .
             os.system("rm -rf %s"% (temp_file_path))
         else:
+            gtk.gdk.threads_enter()
             self.scan_sub_sum_label.set_text(_("Failed to download the subtitle!"))
+            gtk.gdk.threads_leave()
                     
             
     def file_name_code_to_utf_8(self, file_name):
