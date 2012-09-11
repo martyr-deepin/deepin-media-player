@@ -2862,39 +2862,31 @@ class PlayerBox(object):
         map(lambda subtitle_file:subtitle.add(subtitle_file), subtitle_list)
         
     def select_subtitle_event(self, subtitle, subtitle_path, subtitle_index):
-        # print "select_subtitle_event"
         self.mp.sub_select(subtitle_index)
-        self.messagebox(_("Subtitle loaded")) # 加载字幕.
-        # print subtitle_index
+        self.messagebox(_("Subtitle loaded")) 
         
     def delete_subtitle_event(self, subtitle, subtitle_path, subtitle_index):
         print "delete_subtitle_event"
     
     def stop_subtitle_event(self, subtitle):
-        # print "stop_subtitle_event"
         self.mp.sub_stop()
-        self.messagebox(_("Disable Subtitles")) # 停止字幕
-        
-        
+        self.messagebox(_("Disable Subtitles")) 
+                
     def add_delay_subtitle_event(self, subtitle):
-        # print "add_delay_subtitle_event"
         self.mp.sub_up_delay()
-        self.messagebox(_("Forword by 0.5s")) # 字幕提前0.5秒
+        self.messagebox(_("Forword by 0.5s")) 
     
     def sub_delay_subtitle_event(self, subtitle):
-        # print "sub_delay_subtitle_event"
-        self.messagebox(_("Delay by 0.5s")) # 字幕延时0.5秒
+        self.messagebox(_("Delay by 0.5s")) 
         self.mp.sub_down_delay()
         
     def add_scale_subtitle_event(self, subtitle):
-        # print "add_scale_subtitle_event"
         self.mp.sub_up_scale()
-        self.messagebox(_("Increase the Size of Characters")) # 增大字幕尺寸
+        self.messagebox(_("Increase the Size of Characters"))
         
     def sub_scale_subtitle_event(self, subtitle):
-        # print "sub_scale_subtitle_event"
         self.mp.sub_down_scale()
-        self.messagebox(_("Decrease the Size of Characters")) # 减少字幕尺寸
+        self.messagebox(_("Decrease the Size of Characters"))
     
     def clear_subtitle_event(self, subtitle, subtitle_len):
         print "clear_subtitle_event"
@@ -2909,18 +2901,8 @@ class PlayerBox(object):
                 scan_gui.name_entry.set_text(str(scan_file_name))
         scan_gui.show_window()
         
-    def add_subtitle_file_event(self, ScanGui, sub_file_list):
-        # add subtitle file.
-        # if self.mp.state == STARTING_PLAY:
-            # mv_dir = os.path.split(self.mp.path)[0]
-            # for subtitle in sub_file_list:
-                # video_subtitle = self.mv_subtitle_to_movie(subtitle, mv_dir)
-                # if video_subtitle:
-                    # self.sub_titles.add(video_subtitle)                    
-                    # self.mp.sub_select(int(self.sub_titles.get_index())-1)
-                    # self.messagebox(_("Subtitle loaded")) # 加载字幕
-        # else: 
-        if True:
+    def add_subtitle_file_event(self, ScanGui, sub_file_list, new_count, old_count):
+        if sub_file_list:
             mv_dir = self.config.get("SubtitleSet", "specific_location_search")
             save_subtitle_path = mv_dir
             if save_subtitle_path[0:1] == "~":
@@ -2932,8 +2914,9 @@ class PlayerBox(object):
                     self.mv_subtitle_to_movie(subtitle, mv_dir)                    
                     if self.mp.state == STARTING_PLAY:        
                         self.sub_titles.add(subtitle)
-                if self.mp.state == STARTING_PLAY:        
-                    self.messagebox(_("Subtitle loaded")) # 加载字幕
+                        
+                if self.mp.state == STARTING_PLAY and (new_count == old_count):        
+                    self.messagebox(_("Subtitle loaded"))
                     self.mp.sub_select(int(0))
         ##############################
         # delete dir.    

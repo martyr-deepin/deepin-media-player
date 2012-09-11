@@ -193,16 +193,14 @@ import threading
 
 TEMP_FILE_DIR = "/tmp/tmp_sub"
 
-# gtk.gdk.threads_init()
 
 class ScanGui(gobject.GObject):
     __gsignals__ = {
         "add-subtitle-file" : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE,
-                            (gobject.TYPE_PYOBJECT,))
+                            (gobject.TYPE_PYOBJECT, gobject.TYPE_INT, gobject.TYPE_INT))
         }
     def __init__(self):
         gobject.GObject.__init__(self)
-        # self.app = Application() 
         self.app = DialogBox(_("Search Subtitles"), 480, 350,
                              mask_type=DIALOG_MASK_MULTIPLE_PAGE,
                              modal=False,
@@ -215,11 +213,9 @@ class ScanGui(gobject.GObject):
         self.row_height = 1
         self.current_page = 1
         self.sum_subtitle_num = 0
-        # self.format_command = {".rar":"unrar x %s %s",
-        #                        ".zip":"7za x -o%s"}
         self.down_to_copy_path = "/tmp/tmp_sub"
         self.highlight_item = None
-        
+        self.thread_count = 0
         # main_vbox init.
         self.main_vbox = gtk.VBox()
         self.main_vbox_align = gtk.Alignment()
@@ -228,14 +224,9 @@ class ScanGui(gobject.GObject):
         self.main_vbox_align.add(self.main_vbox)
         
         self.items = []
-        self.list_view = ListView(
-        [(lambda item: item.title, cmp)
-         # (lambda item: item.artist, cmp),
-         # (lambda item: item.length, cmp)
-         ])
+        self.list_view = ListView([(lambda item: item.title, cmp)])
         self.list_view.draw_mask = self.draw_mask
         self.list_view.set_expand_column(0)
-        # self.list_view.add_titles([_("Subtiles"), _("Language"), _("Duration")])        
         self.list_view.add_titles([_("Subtiles")])
         self.scrolled_window = ScrolledWindow(0, 0)        
         self.scrolled_window.add_child(self.list_view)
@@ -263,7 +254,6 @@ class ScanGui(gobject.GObject):
         cr.fill()
         
     def show_window(self):    
-        # self.app.window.show_all()
         self.app.show_all()
         
     def init_tmp_dir(self):    
@@ -348,23 +338,21 @@ class ScanGui(gobject.GObject):
         # print scan_name
         if is_network_connected():
             if len(scan_name) != 0:
-                self.scan_sub_sum_label.set_text(_("Searching for subtitles")) # 正在搜索字幕......
+                self.scan_sub_sum_label.set_text(_("Searching for subtitles")) 
                 # clear value.
                 path_thread_id = threading.Thread(target=self.scan_subtitles_function, args=(scan_name, ))
                 path_thread_id.setDaemon(True)
                 path_thread_id.start()
         else:        
-            self.scan_sub_sum_label.set_text(_("No network connection established")) # 您的网络暂无链接.
+            self.scan_sub_sum_label.set_text(_("No network connection established")) 
     
-    def scan_subtitles_function(self, scan_name):        
-        # print "scan_subtitles_function:"
+    def scan_subtitles_function(self, scan_name):
         self.list_view.clear()
         self.items = []
         self.current_page = 1
         self.scan_url_sub.scan_url_function(str(scan_name))
-        self.sum_subtitle_num = self.scan_url_sub.sum_subtitles # save sum subtitles.
+        self.sum_subtitle_num = self.scan_url_sub.sum_subtitles 
         
-        # print "scan_url_sum:", self.scan_url_sub.sum_subtitles
         if self.scan_url_sub.sum_subtitles > 0:
             self.scan_sub_sum_label.set_text("%s: %s" % (_("Total search results"), str(self.scan_url_sub.sum_subtitles)))
             self.scan_url_sub.scan_page_index(1)            
@@ -375,7 +363,7 @@ class ScanGui(gobject.GObject):
                 
             self.play_list_add_scan_file()
         else:
-            self.scan_sub_sum_label.set_text(_("Sorry, we couln't find any subtitle")) # 抱歉,没有搜索到相关字幕
+            self.scan_sub_sum_label.set_text(_("Sorry, we couln't find any subtitle")) 
             
     @post_gui
     def play_list_add_scan_file(self):    
@@ -397,30 +385,33 @@ class ScanGui(gobject.GObject):
     def down_button_clicked(self, widget):
         '''down subtitle file.'''
         if self.highlight_item.title:
-            self.down_subtitle_function_threadint()       
+            self.down_subtitle_function_threadint()
             self.highlight_item = None
             
     def close_button_clicked(self, widget): 
         '''quit scan sub window.'''
         self.app.destroy()
         
-    def down_subtitle_function_threadint(self):    
-        path_thread_id = threading.Thread(target=self.__down_subtitle_function, args=(self.highlight_item.title, ))
+    def down_subtitle_function_threadint(self):
+        path_thread_id = threading.Thread(target=self.__down_subtitle_function, args=(self.highlight_item.title, self.thread_count + 1))
+        path_thread_id.setName(self.thread_count)
+        # path_thread_id.getName()
         path_thread_id.setDaemon(True)
-        path_thread_id.start()        
-
-    def __down_subtitle_function(self, title):    
+        path_thread_id.start()
+        # print path_thread_id.ident
+        self.thread_count += 1
+        
+    def __down_subtitle_function(self, title, count):
         if self.scan_url_sub.down_subtitle(self.scan_url_sub.mc_url_and_name_dict[title]):
             # print self.scan_url_sub.save_file_name
             file_name, file_type = os.path.splitext(self.scan_url_sub.save_file_name)
             temp_file_path = os.path.join("/tmp", self.scan_url_sub.save_file_name)
             
-
             if ".rar" == file_type:
                 cmd_line = "unrar x %s %s" % (temp_file_path, "/tmp/tmp_sub/")
                 os.system(cmd_line)
             elif file_type in [".zip"]:
-                import zipfile                
+                import zipfile       
                 zf = zipfile.ZipFile(temp_file_path)
                 zf.extractall("/tmp/tmp_sub")
                 
@@ -446,15 +437,16 @@ class ScanGui(gobject.GObject):
             gtk.gdk.threads_leave()
             # print "down_subtitle_function:", subtitles_list            
             # send event.
-            self.emit("add-subtitle-file", subtitles_list)
+            self.emit("add-subtitle-file", subtitles_list, self.thread_count, count)
             # delete down temp .
             os.system("rm -rf %s"% (temp_file_path))
         else:
             gtk.gdk.threads_enter()
             self.scan_sub_sum_label.set_text(_("Failed to download the subtitle!"))
             gtk.gdk.threads_leave()
-                    
             
+        return count                        
+    
     def file_name_code_to_utf_8(self, file_name):
         import chardet
         encoding = chardet.detect(str(file_name))["encoding"]
