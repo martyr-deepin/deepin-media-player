@@ -21,6 +21,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import threading
+import gio
 import os
 from type_check import is_file_can_play, is_valid_dmp_file
 
@@ -66,5 +67,28 @@ def path_threads(path, mp):
 def get_paly_file_name(path):
     return os.path.splitext(os.path.split(path)[1])[0]
 
+def get_paly_file_type(path):
+    return os.path.splitext(os.path.split(path)[1])[1][1:]
 
+
+def length_to_time(length):
+    time_sec = int(float(length))
+    time_hour = 0
+    time_min = 0
     
+    if time_sec >= 3600:
+        time_hour = int(time_sec / 3600)
+        time_sec -= int(time_hour * 3600)
+        
+    if time_sec >= 60:
+        time_min = int(time_sec / 60)
+        time_sec -= int(time_min * 60)         
+        
+    return str("%s:%s:%s"%(str(time_add_zero(time_hour)), 
+                           str(time_add_zero(time_min)), 
+                           str(time_add_zero(time_sec))))
+
+def time_add_zero(time_to):    
+    if 0 <= time_to <= 9:
+        time_to = "0" + str(time_to)
+    return str(time_to)
