@@ -29,6 +29,7 @@ from dtk.ui.button import Button
 from dtk.ui.tab_window import TabBox
 from dtk.ui.line import HSeparator
 from utils    import get_paly_file_type, length_to_time, get_paly_file_name
+from utils import get_file_size
 import os
 import gtk
 import gobject
@@ -139,7 +140,9 @@ def video_string_to_information(pipe, video_path):
     # Get file icon.
     icon_size = 30
     video_information.icon = get_file_icon_pixbuf(video_path, icon_size)
-    print "icon:", video_information.icon
+    # print "icon:", video_information.icon
+    # Get file size.
+    video_information.file_size = get_file_size(video_path)
     # File type.
     video_information.file_type = get_paly_file_type(video_path)
     # Video section resolution.
@@ -201,20 +204,23 @@ class VideoInformGui(gobject.GObject):
         
     def init_video_widgets(self, path, video_information):        
         try:
+            # ini vlaue.
             video_information = video_information
+            tabs = "   "
+            #
             self.fixed_video      = gtk.Fixed()
             self.file_icon_image  = gtk.image_new_from_pixbuf(video_information.icon)
             self.first_hseparator = HSeparator(app_theme.get_shadow_color("hSeparator").get_color_info(),
        0, 35)
             self.first_hseparator_hbox = gtk.HBox()
             self.file_name_label  = Label(video_information.file_name, label_width=200)
-            self.file_type_label  = Label("文件类型:   %s" % (video_information.file_type))
-            self.resolution_label = Label("分 辨 率  :   %sx%s" % (video_information.resolution.width, video_information.resolution.height))
-            self.file_size_label  = Label("文件大小:   %s" % (video_information.file_size))
-            self.length_label     = Label("媒体时长:   %s" % (video_information.length)) # format(hour:min:sec)
+            self.file_type_label  = Label("文件类型:%s%s" % (tabs, video_information.file_type))
+            self.resolution_label = Label("分 辨 率  :%s%sx%s" % (tabs, video_information.resolution.width, video_information.resolution.height))
+            self.file_size_label  = Label("文件大小:%s%s" % (tabs, video_information.file_size))
+            self.length_label     = Label("媒体时长:%s%s" % (tabs, video_information.length)) # format(hour:min:sec)
             self.second_hseparator = HSeparator(app_theme.get_shadow_color("hSeparator").get_color_info(), 0, 35)
             self.second_hseparator_hbox = gtk.HBox()
-            describe = "文件路径:   %s" % (path)
+            describe = "文件路径:%s" % (tabs)
             self.file_path_label  = Label(describe, enable_select=False, wrap_width=420)
             # Init value.
             self.widget_offset_x = 30
@@ -253,22 +259,23 @@ class VideoInformGui(gobject.GObject):
             # Init value.
             self.widget_x = 20
             self.widget_y = 20
+            tabs = "   "
             #
             self.fixed_code = gtk.Fixed()
             self.video_strem_info_label = Label("视频流信息")
-            self.code_format_label      = Label('. 编码格式:   %s' % (info.code_information.video_section.code_format))
-            self.video_fps_label        = Label(". 视频帧率:   %s" % (info.code_information.video_section.video_fps))
-            self.video_display_asscept_label = Label(". 视频比率:   %s" % (info.code_information.video_section.display_asscept))
+            self.code_format_label      = Label('. 编码格式:%s%s' % (tabs, info.code_information.video_section.code_format))
+            self.video_fps_label        = Label(". 视频帧率:%s%s" % (tabs, info.code_information.video_section.video_fps))
+            self.video_display_asscept_label = Label(". 视频比率:%s%s" % (tabs, info.code_information.video_section.display_asscept))
             self.video_malv_label = Label(". 视频码率:   None")
-            self.video_resolution_label = Label(". 分 辨 率  :   %s" % (info.code_information.video_section.resolution))
+            self.video_resolution_label = Label(". 分 辨 率  :%s%s" % (tabs, info.code_information.video_section.resolution))
             self.hseparator = HSeparator(app_theme.get_shadow_color("hSeparator").get_color_info(), 0, 35)
             self.hseparator_hbox = gtk.HBox()
             self.audio_strem_info_label = Label("音频流信息")
-            self.audio_format_label     = Label(". 编码格式:   %s" % (info.code_information.audio_section.code_format))
-            self.audio_channels_number_label = Label(". 声 道 数  :   %s channels" % (info.code_information.audio_section.channels_number))
-            self.audio_weishu_label = Label(". 音频位数:   None")
-            self.audio_malv_label = Label(". 音频码率:   None")
-            self.audio_sampling_label = Label(". 采 样 数  :   %s Hz" % (info.code_information.audio_section.sampling_number))
+            self.audio_format_label     = Label(". 编码格式:%s%s" % (tabs, info.code_information.audio_section.code_format))
+            self.audio_channels_number_label = Label(". 声 道 数  :%s%s channels" % (tabs, info.code_information.audio_section.channels_number))
+            self.audio_weishu_label = Label(". 音频位数:%sNone" % (tabs))
+            self.audio_malv_label = Label(". 音频码率:%sNone" % (tabs))
+            self.audio_sampling_label = Label(". 采 样 数  :%s%s Hz" % (tabs, info.code_information.audio_section.sampling_number))
             # self.audio_bit_rate
             # Init widgets top left.
             self.widgets_top_left = [

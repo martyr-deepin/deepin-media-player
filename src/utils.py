@@ -92,3 +92,22 @@ def time_add_zero(time_to):
     if 0 <= time_to <= 9:
         time_to = "0" + str(time_to)
     return str(time_to)
+
+def get_file_size(path):        
+    if os.path.exists(path):
+        file_size = os.path.getsize(path)            
+        return size_to_format(file_size)
+    else:
+        return 0
+    
+diskunit = ['Byte', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB']
+def size_to_format(size, unit='Byte'):    
+    if size < 1024:
+        # print "size_to_format:", size
+        return '%.2f %s' % (size, unit)
+    else:
+        return size_to_format(size/1024.0, diskunit[diskunit.index(unit) + 1])
+    
+    
+    
+    
