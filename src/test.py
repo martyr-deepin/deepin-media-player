@@ -1,12 +1,12 @@
 #coding:utf-8
 
-from video_information.gui import VideoInformGui, get_video_information
+from video_information.gui import VideoInformGui
 import gtk
 
 if __name__ == "__main__":        
     def btn_clicked(widget):
-        video_inform_gui = VideoInformGui("/home/long/视频/fsdjflksdfj附近的色拉夫家死掉了分第三集哭了夫家死掉了分第三集看了夫123.rmvb")
-
+        path = "/home/long/视频/fsdjflksdfj附近的色拉夫家死掉了分第三集哭了夫家死掉了分第三集看了夫123.rmvb"
+        video_inform_gui = VideoInformGui(path)
         video_inform_gui.show_window()
                 
     win = gtk.Window(gtk.WINDOW_TOPLEVEL)

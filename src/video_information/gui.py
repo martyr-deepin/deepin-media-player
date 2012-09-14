@@ -27,6 +27,7 @@ from dtk.ui.dialog import DialogBox, DIALOG_MASK_MULTIPLE_PAGE
 from dtk.ui.label  import Label
 from dtk.ui.button import Button
 from dtk.ui.tab_window import TabBox
+from dtk.ui.entry import InputEntry
 from dtk.ui.line import HSeparator
 from utils    import get_paly_file_type, length_to_time, get_paly_file_name
 from utils import get_file_size
@@ -123,6 +124,9 @@ def video_string_to_information(pipe, video_path):
         elif line_text.startswith("ID_VIDEO_FORMAT="): # 编码格式.
             return_text = line_text.replace("ID_VIDEO_FORMAT=", "").split("\n")[0]
             video_information.code_information.video_section.code_format = return_text
+        elif line_text.startswith("ID_VIDEO_BITRATE="): # 视频码率
+            return_text = line_text.replace("ID_VIDEO_BITRATE=", "").split("\n")[0]
+            video_information.code_information.video_section.video_bit_rate = return_text
         elif line_text.startswith("ID_VIDEO_FPS="): # 视频帧率.
             return_text = line_text.replace("ID_VIDEO_FPS=", "").split("\n")[0]
             video_information.code_information.video_section.video_fps = return_text
@@ -130,6 +134,9 @@ def video_string_to_information(pipe, video_path):
         elif line_text.startswith("ID_AUDIO_FORMAT="): # 编码格式.
             return_text = line_text.replace("ID_AUDIO_FORMAT=", "").split("\n")[0]
             video_information.code_information.audio_section.code_format = return_text
+        elif line_text.startswith("ID_AUDIO_BITRATE="): # 音频码率
+            return_text = line_text.replace("ID_AUDIO_BITRATE=", "").split("\n")[0]
+            video_information.code_information.audio_section.audio_bit_rate = return_text
         elif line_text.startswith("ID_AUDIO_NCH="):   # 声道数.
             return_text = line_text.replace("ID_AUDIO_NCH=", "").split("\n")[0]
             video_information.code_information.audio_section.channels_number = return_text
@@ -205,8 +212,12 @@ class VideoInformGui(gobject.GObject):
     def init_video_widgets(self, path, video_information):        
         try:
             # ini vlaue.
+            self.open_path = path
             video_information = video_information
             tabs = "   "
+            describe = "文件路径:%s" % (tabs)
+            self.widget_offset_x = 30
+            self.widget_offset_y = 20
             #
             self.fixed_video      = gtk.Fixed()
             self.file_icon_image  = gtk.image_new_from_pixbuf(video_information.icon)
@@ -219,12 +230,10 @@ class VideoInformGui(gobject.GObject):
             self.file_size_label  = Label("文件大小:%s%s" % (tabs, video_information.file_size))
             self.length_label     = Label("媒体时长:%s%s" % (tabs, video_information.length)) # format(hour:min:sec)
             self.second_hseparator = HSeparator(app_theme.get_shadow_color("hSeparator").get_color_info(), 0, 35)
-            self.second_hseparator_hbox = gtk.HBox()
-            describe = "文件路径:%s" % (tabs)
+            self.second_hseparator_hbox = gtk.HBox()            
             self.file_path_label  = Label(describe, enable_select=False, wrap_width=420)
-            # Init value.
-            self.widget_offset_x = 30
-            self.widget_offset_y = 20
+            self.file_path_text = InputEntry(path)
+            self.open_file_path_btn = Button("打开目录")
             #
             # first_heparator_hbox.
             #
@@ -236,6 +245,15 @@ class VideoInformGui(gobject.GObject):
             self.second_hseparator_hbox.set_size_request(APP_WIDTH-15, 1)
             self.second_hseparator_hbox.pack_start(self.second_hseparator)
             #
+            # file_path_text.
+            #
+            # self.file_path_text.set_sensitive(False)
+            self.file_path_text.set_size(260, 25)
+            #
+            # open_file_path_btn.
+            #            
+            self.open_file_path_btn.connect("clicked", self.open_file_path_btn_clicked)
+            #
             self.widgets_list = [
                 (self.file_icon_image, self.widget_offset_x, self.widget_offset_y),
                 (self.file_name_label, self.widget_offset_x + video_information.icon.get_width() + 10, self.widget_offset_y + 10),
@@ -246,6 +264,8 @@ class VideoInformGui(gobject.GObject):
                 (self.length_label, self.widget_offset_x + 130, self.widget_offset_y + 85),
                 (self.second_hseparator_hbox, 0, self.widget_offset_y + 85),
                 (self.file_path_label, self.widget_offset_x, self.widget_offset_y + 140),
+                (self.file_path_text, self.widget_offset_x + 60, self.widget_offset_y + 136),
+                (self.open_file_path_btn, self.widget_offset_x + 325, self.widget_offset_y + 136)
             ]                       
             #
             for widget, x, y in self.widgets_list:
@@ -254,9 +274,13 @@ class VideoInformGui(gobject.GObject):
         except Exception, e:                
             print "init_widgets[error]", e
             
+    def open_file_path_btn_clicked(self, widget):
+        os.system("nautilus %s" % (str(self.open_path)))
+            
     def init_code_widgets(self, path, info):
         try:
             # Init value.
+            self.copy_clipboard = gtk.Clipboard()
             self.widget_x = 20
             self.widget_y = 20
             tabs = "   "
@@ -265,18 +289,18 @@ class VideoInformGui(gobject.GObject):
             self.video_strem_info_label = Label("视频流信息")
             self.code_format_label      = Label('. 编码格式:%s%s' % (tabs, info.code_information.video_section.code_format))
             self.video_fps_label        = Label(". 视频帧率:%s%s" % (tabs, info.code_information.video_section.video_fps))
-            self.video_display_asscept_label = Label(". 视频比率:%s%s" % (tabs, info.code_information.video_section.display_asscept))
-            self.video_malv_label = Label(". 视频码率:   None")
+            self.video_display_asscept_label = Label(". 显示比率:%s%s" % (tabs, info.code_information.video_section.display_asscept))
+            self.video_malv_label = Label(". 视频码率:%s%s kbps" % (tabs, int(info.code_information.video_section.video_bit_rate)/1000))
             self.video_resolution_label = Label(". 分 辨 率  :%s%s" % (tabs, info.code_information.video_section.resolution))
             self.hseparator = HSeparator(app_theme.get_shadow_color("hSeparator").get_color_info(), 0, 35)
             self.hseparator_hbox = gtk.HBox()
             self.audio_strem_info_label = Label("音频流信息")
             self.audio_format_label     = Label(". 编码格式:%s%s" % (tabs, info.code_information.audio_section.code_format))
             self.audio_channels_number_label = Label(". 声 道 数  :%s%s channels" % (tabs, info.code_information.audio_section.channels_number))
-            self.audio_weishu_label = Label(". 音频位数:%sNone" % (tabs))
-            self.audio_malv_label = Label(". 音频码率:%sNone" % (tabs))
+            self.audio_weishu_label = Label(". 音频位数:%s%s bits" % (tabs, int(info.code_information.audio_section.channels_number)*8))
+            self.audio_malv_label = Label(". 音频码率:%s%s kbps" % (tabs, int(info.code_information.audio_section.audio_bit_rate)/1000))
             self.audio_sampling_label = Label(". 采 样 数  :%s%s Hz" % (tabs, info.code_information.audio_section.sampling_number))
-            # self.audio_bit_rate
+            self.copy_info_btn = Button("复制信息")
             # Init widgets top left.
             self.widgets_top_left = [
                 self.video_strem_info_label,
@@ -294,8 +318,12 @@ class VideoInformGui(gobject.GObject):
             #
             # hseparator
             #
-            self.hseparator_hbox.set_size_request(APP_WIDTH-15, 1)
+            self.hseparator_hbox.set_size_request(APP_WIDTH - 15, 1)
             self.hseparator_hbox.pack_start(self.hseparator)            
+            #
+            # copy_info_btn
+            #
+            self.copy_info_btn.connect("clicked", self.copy_info_btn_clicked)
             # Init widgets top right.
             self.widgets_top_right = [
                 self.video_malv_label,
@@ -330,7 +358,24 @@ class VideoInformGui(gobject.GObject):
                 widget_bottom_right_y += 20
             #    
             self.fixed_code.put(self.hseparator_hbox, 0, widget_top_left_y-22)
-            
+            self.fixed_code.put(self.copy_info_btn, 370, 245)
         except Exception, e:
             print "init_code_widgets[error]", e
+        
+    def copy_info_btn_clicked(self, widget):        
+        copy_info_text = "%s\n\n%s\t%s\n\n%s\t%s\n\n%s\n\n------------------------------------------------\n\n%s\n\n%s\t\t%s\n\n%s\t%s\n\n%s\n\n" % (self.video_strem_info_label.get_text(), 
+                           self.code_format_label.get_text(),
+                           self.video_malv_label.get_text(),
+                          self.video_fps_label.get_text(),
+                          self.video_resolution_label.get_text(),
+                          self.video_display_asscept_label.get_text(),
+                          self.audio_strem_info_label.get_text(),
+                          self.audio_format_label.get_text(),
+                          self.audio_malv_label.get_text(),
+                          self.audio_channels_number_label.get_text(),
+                          self.audio_sampling_label.get_text(),
+                          self.audio_weishu_label.get_text(),
+                          )
+        self.copy_clipboard.set_text(copy_info_text)
+        
         

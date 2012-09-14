@@ -61,6 +61,7 @@ from code_to_utf_8 import auto_decode
 from subtitles import SubTitles
 from subtitle.scan_subtitles import ScanGui
 from lrc.osd_lrc import Lrc
+from video_information.gui import VideoInformGui
 import threading
 import gtk
 import os
@@ -2470,12 +2471,15 @@ class PlayerBox(object):
                 (None, _("Video"), screen_menu),
                 (menu_volume_pixbufs, _("Audio"), channel_select),
                 (menu_subtitle_pixbufs, _("Subtitles"), self.subtitles_control_menu),
-                (menu_setting_pixbufs, _("Preferences"), self.config_gui)
+                (menu_setting_pixbufs, _("Preferences"), self.config_gui),
+                (None, "屬性", self.menu_open_info_window_dialog)
                 ], True)
         
+        if self.mp.state == 0:
+            self.screen_right_root_menu.set_menu_item_sensitive_by_index(13, False)
+            
         self.screen_right_root_menu.show((int(event.x_root), int(event.y_root)), (0, 0))
         
-
 #         右键菜单 添加
 # 1.手动载入字幕
 # 2.字幕选择（出三级菜单）
@@ -2967,5 +2971,9 @@ class PlayerBox(object):
         
     def subtitle_load_subtitle_key(self):
         self.sub_titles.select(0)        
-
+        
+    # right key menu.    
+    def menu_open_info_window_dialog(self):        
+        video_inform_gui = VideoInformGui(self.mp.path)
+        video_inform_gui.show_window()
         
