@@ -41,7 +41,7 @@ import gobject
 # Video section.
 class VideoSection(object):
     def __init__(self):     
-        self.flags = False   
+        # self.flags = False   
         self.code_format      = None        
         self.video_bit_rate   = None
         self.video_fps        = None
@@ -51,7 +51,7 @@ class VideoSection(object):
 # Audio section.
 class AudioSection(object):
     def __init__(self):
-        self.flags = False
+        # self.flags = False
         self.code_format      = None
         self.audio_bit_rate   = None
         self.channels_number  = None
@@ -61,7 +61,7 @@ class AudioSection(object):
 # code information.        
 class CodeInFormation(object):
     def __init__(self):
-        self.flags = False
+        # self.flags = False
         # Video section.
         self.video_section = VideoSection()
         # Audio section.
@@ -76,7 +76,7 @@ class Resolution(object):
 # video information.
 class VideoInFormation(object):
     def __init__(self):
-        self.flags = False
+        # self.flags = False
         # Player file icon.
         self.icon = None
         # File name.
@@ -99,8 +99,8 @@ def get_video_information(video_path):
     
 def video_string_to_information(pipe, video_path):    
     video_information = VideoInFormation()
-    if pipe:
-        video_information.flags = True
+    # if pipe:
+    #     video_information.flags = True
     #
     while True: 
         try:
@@ -200,11 +200,13 @@ class VideoInformGui(gobject.GObject):
         #
         self.close_button.connect("clicked", lambda w : self.app.destroy())        
         #
-        self.app.body_box.pack_start(self.tab_box)
         self.app.right_button_box.set_buttons([self.close_button])
+        self.app.body_box.pack_start(self.tab_box)        
         
     def show_window(self):
         self.app.show_all()
+        # set file path entry start.
+        self.file_path_text.entry.move_to_start()
 
     def get_information(self, path):    
         self.init_video_widgets(path)
@@ -224,7 +226,7 @@ class VideoInformGui(gobject.GObject):
             self.first_hseparator = HSeparator(app_theme.get_shadow_color("hSeparator").get_color_info(),
        0, 35)
             self.first_hseparator_hbox = gtk.HBox()
-            self.file_name_label  = Label(video_information.file_name, label_width=200)
+            self.file_name_label  = Label(video_information.file_name, label_width = 350)
             self.file_type_label  = Label("文件类型:%s%s" % (tabs, video_information.file_type))
             self.resolution_label = Label("分 辨 率  :%s%sx%s" % (tabs, video_information.resolution.width, video_information.resolution.height))
             self.file_size_label  = Label("文件大小:%s%s" % (tabs, video_information.file_size))
@@ -248,7 +250,7 @@ class VideoInformGui(gobject.GObject):
             # file_path_text.
             #
             # self.file_path_text.set_sensitive(False)
-            self.file_path_text.set_size(260, 25)
+            self.file_path_text.set_size(260, 25)            
             #
             # open_file_path_btn.
             #            

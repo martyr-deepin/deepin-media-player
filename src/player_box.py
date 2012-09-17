@@ -2449,7 +2449,13 @@ class PlayerBox(object):
                 ])
         
         self.subtitles_control_menu.set_menu_item_sensitive_by_index(4, bool(len(self.subtitles_select_menu_item)))
-                        
+        
+        # get video information.
+        menu_open_window_dialog = None
+        if self.mp.state == STARTING_PLAY:
+            menu_open_window_dialog = self.menu_open_info_window_dialog
+        self.right_key_menu_video_info = (None, "屬性", menu_open_window_dialog)
+        
         # 代码需要重构.
         menu_full_pixbufs = (self.menu_full_normal_pixbuf, self.menu_full_hover_pixbuf, self.menu_full_none_pixbuf)
         menu_window_mode_pixbufs =  (self.menu_window_mode_normal_pixbuf, self.menu_window_mode_hover_pixbuf, self.menu_window_mode_none_pixbuf)
@@ -2472,7 +2478,7 @@ class PlayerBox(object):
                 (menu_volume_pixbufs, _("Audio"), channel_select),
                 (menu_subtitle_pixbufs, _("Subtitles"), self.subtitles_control_menu),
                 (menu_setting_pixbufs, _("Preferences"), self.config_gui),
-                (None, "屬性", self.menu_open_info_window_dialog)
+                self.right_key_menu_video_info
                 ], True)
         
         if self.mp.state == 0:
