@@ -2481,7 +2481,7 @@ class PlayerBox(object):
                 self.right_key_menu_video_info
                 ], True)
         
-        if self.mp.state == 0:
+        if self.mp.state == STOPING_PLAY:
             self.screen_right_root_menu.set_menu_item_sensitive_by_index(13, False)
             
         self.screen_right_root_menu.show((int(event.x_root), int(event.y_root)), (0, 0))
@@ -2549,7 +2549,13 @@ class PlayerBox(object):
                 self.the_last_new_play_file = None
             else:    
                 self.the_last_new_play_file = Menu(self.the_last_new_play_file_list)
-                
+            # right key video information.    
+            # self.right_key_menu_video_info = None    
+            play_list_menu_info_dialog = None
+            if self.open_file_name:
+                play_list_menu_info_dialog = self.play_list_menu_open_info_window_dialog
+            self.right_key_menu_video_info = (None, "属性", play_list_menu_info_dialog)
+
             self.play_list_root_menu = Menu([(None, _("Add File"), self.add_file),
                                              (None, _("Add Directory"), self.add_file_dir),
                                              (None, _("Add URL"), self.open_url_dialog_window),
@@ -2563,11 +2569,14 @@ class PlayerBox(object):
                                              (None, _("Sort"), self.menu2),
                                              # (None, "视图", None),
                                              (None),
-                                             (None, _("Open Containing Directory"), self.open_current_file_dir)
+                                             (None, _("Open Containing Directory"), self.open_current_file_dir),
+                                             self.right_key_menu_video_info
                                              ],
                                             True)
 
-
+            if len(self.mp.play_list) <= 0:                
+                self.play_list_root_menu.set_menu_item_sensitive_by_index(13, False)
+                
             self.play_list_root_menu.show((int(event.x_root), int(event.y_root)), (0, 0))
 
     def sigle_play(self):
@@ -2742,7 +2751,8 @@ class PlayerBox(object):
 
         os.system("nautilus %s" % (file_name))
         self.open_file_name = ""
-
+        
+        
     def open_current_file_dir_path(self, list_view, list_item, column, offset_x, offset_y):
         self.open_file_name = self.play_list_dict[list_item.title]
         
@@ -2982,4 +2992,10 @@ class PlayerBox(object):
     def menu_open_info_window_dialog(self):        
         video_inform_gui = VideoInformGui(self.mp.path)
         video_inform_gui.show_window()
+        
+    # play list key menu.
+    def play_list_menu_open_info_window_dialog(self):
+        video_info_gui = VideoInformGui(self.open_file_name)
+        video_info_gui.show_window()
+
         
