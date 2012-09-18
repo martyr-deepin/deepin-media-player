@@ -62,6 +62,7 @@ from subtitles import SubTitles
 from subtitle.scan_subtitles import ScanGui
 from lrc.osd_lrc import Lrc
 from video_information.gui import VideoInformGui
+from switch_audio.audio import SwitchAudio
 import threading
 import gtk
 import os
@@ -1944,6 +1945,8 @@ class PlayerBox(object):
         ai_load_bool = self.config.get("SubtitleSet", "ai_load_subtitle")
         if "True" == ai_load_bool:
             self.sub_titles.select(0)
+        # Init self video subtitle and audio lang.    
+        self.media_player_start_sub_and_audio_lang(mplayer)
         ###########################################################
         # Init last new play file menu.
         self.the_last_new_play_file_list = self.last_new_play_file_function.set_file_time(mplayer.path)
@@ -1997,6 +2000,19 @@ class PlayerBox(object):
                         
                 if "True" == self.config.get("SubtitleSet", "ai_load_subtitle") and save_down_file and os.path.exists(save_down_file):
                     self.load_subtitle(save_down_file)
+        
+    def media_player_start_sub_and_audio_lang(self, mplayer):                
+        # load self video subtitle and audio lang.
+        switch_audio = SwitchAudio()
+        switch_audio.connect("add-switch-sid-file", self.add_switch_sid_file)
+        switch_audio.connect("add-switch-aid-file", self.add_switch_aid_file)
+        switch_audio.get_video_information(mplayer.path)
+        
+    def add_switch_sid_file(self, SwitchAudio, switch_subtitles_list, number, name, lang):    
+        self.sub_titles.add("%s(%s)-%s" % (name, lang, number), aid=False)
+    
+    def add_switch_aid_file(self, SwitchAudio, switch_audio_list, number, name, lang):    
+        print "%s(%s)-%s" % (name, lang, number)
         
     def media_player_start_set_aspect(self, mplayer):
         # config gui -> [Fileplay] video_file_open = ?

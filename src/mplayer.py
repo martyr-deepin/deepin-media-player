@@ -554,7 +554,12 @@ class  Mplayer(gobject.GObject):
         '''Active mute'''
         self.volumebool = True
         self.cmd('mute 1\n')
+                
+    def off_switch_audio(self):
+        self.switch_audio(-1)
         
+    def switch_audio(self, number):
+        self.cmd('switch_audio %s\n'% str(number))
         
     ## video Control ##
     # brightness.

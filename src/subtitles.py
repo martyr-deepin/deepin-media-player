@@ -83,8 +83,8 @@ class SubTitles(gobject.GObject):
             if scan_subtitle_list:    
                 self.emit("scan-subtitle-event", scan_subtitle_list)
             
-    def add(self, path):
-        if os.path.exists(path):
+    def add(self, path, aid=True):
+        if os.path.exists(path) and aid:
             # read subtitle file.
             with open(path, "r") as read_fp:
                 fp_str = read_fp.read()            
@@ -95,6 +95,9 @@ class SubTitles(gobject.GObject):
                 write_fp.write(code_to_utf_8_str)
         
             self.__subtitle_list.append(path) # save subtitle path.
+            self.emit("add-subtitle-event", str(path), len(self.__subtitle_list) -1)
+        elif not aid:    
+            self.__subtitle_list.append(path)
             self.emit("add-subtitle-event", str(path), len(self.__subtitle_list) -1)
         else:    
             print "add lose..."
