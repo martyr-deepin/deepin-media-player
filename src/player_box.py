@@ -2453,15 +2453,16 @@ class PlayerBox(object):
         switch_audio_menu = Menu(map(lambda audio_tuple: audio_tuple, self.switch_audio_menu))
         
         self.audio_lang_menu = (None, "配音选择", switch_audio_menu)
-        
-        channel_select = Menu([
-                (normal_channel_pixbuf, _("Stereo"),  self.normal_channel),
+        channel_select_left_right = Menu([(normal_channel_pixbuf, _("Stereo"),  self.normal_channel),
                 (left_channel_pixbuf,   _("Left"),    self.left_channel),
-                (right_channel_pixbuf,  _("Right"),    self.right_channel),
-                self.audio_lang_menu
+                (right_channel_pixbuf,  _("Right"),    self.right_channel),])
+
+        channel_select = Menu([
+                (None, "声道选择", channel_select_left_right),
+                self.audio_lang_menu,
                 ])
         if len(self.switch_audio_menu) <= 0:
-            channel_select.set_menu_item_sensitive_by_index(3, False)
+            channel_select.set_menu_item_sensitive_by_index(1, False)
 
         down_sub_title_pixbuf = None
         if self.down_sub_title_bool:
