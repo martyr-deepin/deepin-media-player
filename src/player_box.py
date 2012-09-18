@@ -83,6 +83,7 @@ ASCEPT_2_35X1_STATE = "2.35:1"
 
 class PlayerBox(object):
     def __init__ (self, app, argv_path_list):
+        self.switch_audio_menu = []
         # Init pixuf.
         self.init_system_pixbuf()
         # Init lrc show system.
@@ -125,7 +126,7 @@ class PlayerBox(object):
         self.init_last_new_play_file()
         # same name id init.
         self.get_same_name_id = None        
-                
+        
         # playlist.
         self.add_play_list_length_id = None
         self.show_or_hide_play_list_bool = False
@@ -296,26 +297,26 @@ class PlayerBox(object):
         self.subtitles_select_menu_item = []
         self.sub_titles = SubTitles()
         self.sub_titles.connect("add-subtitle-event",
-                             self.add_subtitle_event)
+                                self.add_subtitle_event)
         self.sub_titles.connect("scan-subtitle-event",
-                             self.scan_subtitle_event)
+                                self.scan_subtitle_event)
         self.sub_titles.connect("select-subtitle-event",
-                             self.select_subtitle_event)
+                                self.select_subtitle_event)
         self.sub_titles.connect("delete-subtitle-event",
-                             self.delete_subtitle_event)
+                                self.delete_subtitle_event)
         self.sub_titles.connect("stop-subtitle-event",
-                             self.stop_subtitle_event)
+                                self.stop_subtitle_event)
         self.sub_titles.connect("add-delay-subtitle-event",
-                             self.add_delay_subtitle_event)
+                                self.add_delay_subtitle_event)
         self.sub_titles.connect("sub-delay-subtitle-event",
-                             self.sub_delay_subtitle_event)
+                                self.sub_delay_subtitle_event)
         self.sub_titles.connect("add-scale-subtitle-event",
-                             self.add_scale_subtitle_event)
+                                self.add_scale_subtitle_event)
         self.sub_titles.connect("sub-scale-subtitle-event",
-                             self.sub_scale_subtitle_event)
+                                self.sub_scale_subtitle_event)
         self.sub_titles.connect("clear-subtitle-event",
-                             self.clear_subtitle_event)
-                
+                                self.clear_subtitle_event)
+        
     def init_preview_window(self):
         self.preview = PreView()
         
@@ -2011,12 +2012,31 @@ class PlayerBox(object):
     def add_switch_sid_file(self, SwitchAudio, switch_subtitles_list, number, name, lang):    
         self.sub_titles.add("%s(%s)-%s" % (name, lang, number), aid=False)
     
-    def add_switch_aid_file(self, SwitchAudio, switch_audio_list, number, name, lang):    
-        print "%s(%s)-%s" % (name, lang, number)
+    def add_switch_aid_file(self, SwitchAudio, switch_audio_list, number, name, lang):
+        menu_info = "%s(%s)-%s" % (name, lang, number)                
+        channel_pixbuf = None
+        if int(number) == 0:
+            channel_pixbuf = (self.select_channel_normal_pixbuf, 
+                              self.select_channel_hover_pixbuf, 
+                              self.select_channel_none_pixbuf)        
+        self.switch_audio_menu.append((channel_pixbuf, menu_info, lambda : self.mp_switch_audio(number)))
+        
+    def mp_switch_audio(self, number):    
+        self.mp.switch_audio(int(number))                
+        for audio_number in range(0, len(self.switch_audio_menu)):
+            self.switch_audio_menu[audio_number] = (None, 
+                                                    self.switch_audio_menu[audio_number][1], 
+                                                    self.switch_audio_menu[audio_number][2])
+            
+        channel_pixbuf = (self.select_channel_normal_pixbuf, self.select_channel_hover_pixbuf, self.select_channel_none_pixbuf)
+        self.switch_audio_menu[int(number)] = (channel_pixbuf,
+                                               self.switch_audio_menu[int(number)][1],
+                                               self.switch_audio_menu[int(number)][2]
+                                               )
         
     def media_player_start_set_aspect(self, mplayer):
         # config gui -> [Fileplay] video_file_open = ?
-        video_open_type = self.config.get("FilePlay", "video_file_open")                            
+        video_open_type = self.config.get("FilePlay", "video_file_open")
         
         if video_open_type:
             if VIDEO_ADAPT_WINDOW_STATE == video_open_type: 
@@ -2056,6 +2076,7 @@ class PlayerBox(object):
         
     def media_player_end(self, mplayer, play_bool):
         '''player end.'''                        
+        self.switch_audio_menu = [] # clear switch audio lang.
         self.video_width = self.video_height = None        
         # play end set show time label zero.
         # show time label.
@@ -2425,15 +2446,23 @@ class PlayerBox(object):
             normal_channel_pixbuf = channel_pixbuf
         elif self.mp.channel_state == left_channel_state:    
             left_channel_pixbuf = channel_pixbuf
-        elif self.mp.channel_state == right_channel_state:    
-            right_channel_pixbuf = channel_pixbuf        
+        elif self.mp.channel_state == right_channel_state:
+            right_channel_pixbuf = channel_pixbuf
+        
+        # Add Audio lang menu.
+        switch_audio_menu = Menu(map(lambda audio_tuple: audio_tuple, self.switch_audio_menu))
+        
+        self.audio_lang_menu = (None, "配音选择", switch_audio_menu)
         
         channel_select = Menu([
                 (normal_channel_pixbuf, _("Stereo"),  self.normal_channel),
                 (left_channel_pixbuf,   _("Left"),    self.left_channel),
-                (right_channel_pixbuf,  _("Right"),    self.right_channel)
+                (right_channel_pixbuf,  _("Right"),    self.right_channel),
+                self.audio_lang_menu
                 ])
-        
+        if len(self.switch_audio_menu) <= 0:
+            channel_select.set_menu_item_sensitive_by_index(3, False)
+
         down_sub_title_pixbuf = None
         if self.down_sub_title_bool:
             down_sub_title_pixbuf = (self.down_sub_title_norma_pixbuf, self.down_sub_title_hover_pixbuf, self.down_sub_title_none_pixbuf)

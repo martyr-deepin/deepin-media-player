@@ -283,6 +283,7 @@ class  Mplayer(gobject.GObject):
         gobject.GObject.__init__(self)
         
         self.xid = xid 
+        self.aid_number  = 0
         self.mplayer_pid = 0
         self.state = STOPING_STATE
         self.vide_bool = False
@@ -558,8 +559,9 @@ class  Mplayer(gobject.GObject):
     def off_switch_audio(self):
         self.switch_audio(-1)
         
-    def switch_audio(self, number):
+    def switch_audio(self, number):        
         self.cmd('switch_audio %s\n'% str(number))
+        self.aid_number = number
         
     ## video Control ##
     # brightness.
