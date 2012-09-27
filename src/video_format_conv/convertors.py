@@ -22,7 +22,13 @@
 
 import gobject
 
-class Convertors(gobject.GObject):
+class Format:
     def __init__(self):
-        pass
+        self.source_file = ""
+        self.output_file = ""
+        self.codecaps = None
     
+class Convertors(gobject.GObject):
+    def __init__(self, _format):
+        self.__format = _format
+        
