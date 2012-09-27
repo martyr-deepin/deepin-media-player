@@ -20,3 +20,35 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import os
+import xml.etree.ElementTree
+
+#
+class ConvXML(object):
+    def __init__(self):
+        self.tree = None
+    
+    def read_xml(self, xml_file):
+        if os.path.exists(xml_file):
+            self.tree = xml.etree.ElementTree.parse(xml_file)
+            
+    def get_value(self):       
+        if self.tree:
+            try:
+                for child in self.tree.getroot().getchildren():
+                    if child.tag == "make":
+                        print "<make>%s</make>" % child.text.strip()
+                    elif child.tag == "version":    
+                        print "<version>%s</version>" % child.text.strip()
+                    elif child.tag == "author":    
+                        self.get_child_value(child)
+            except Exception, e:
+                print "get_value:[Error]", e
+                
+    def get_child_value(self, secction):            
+        for child in secction.getchildren():
+            if child.tag == "name":
+                pass
+            elif child.tag == "email":
+                pass
+            
