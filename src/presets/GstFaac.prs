@@ -1,0 +1,13 @@
+[_presets_]
+version=0.10
+element-name=GstFaac
+
+[Quality Low]
+_meta/comment=Low quality
+bitrate=96000
+
+[Quality Normal]
+bitrate=128000
+
+[Quality High]
+bitrate=200000

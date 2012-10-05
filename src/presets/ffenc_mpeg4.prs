@@ -1,0 +1,26 @@
+[_presets_]
+version=0.10
+element-name=ffenc_mpeg4
+
+[Quality Low]
+_meta/comment=Low quality
+pass=2
+quantizer=11
+
+[Quality Normal]
+_meta/comment=Normal quality
+pass=2
+quantizer=8
+
+[Quality High]
+_meta/comment=High quality
+pass=2
+quantizer=5
+
+[Pass 1]
+_meta/comment=First pass
+pass=512
+
+[Pass 2]
+_meta/comment=Second pass
+pass=1024

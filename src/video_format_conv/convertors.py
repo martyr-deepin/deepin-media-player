@@ -25,9 +25,11 @@ import gst
 import codecfinder
 import glib
 import presets
+import os
 
 NULL  = gst.STATE_NULL
 PAUSE = gst.STATE_PAUSED
+PLAYING = gst.STATE_PLAYING
 
 # 保存视频格式转化的各个信息
 class FormatInfo: 
@@ -67,7 +69,7 @@ class Convertors(gobject.GObject):
         self.__format_info = _format_info
         self.container = self.__format_info.CONTAINERCHOICE
         self.audiocaps = self.__format_info.AUDIOCODECVALUE
-        if False != self.__format_info:
+        if False != self.container:
             self.containercaps = gst.Caps(codecfinder.containermap(self.__format_info.CONTAINERCHOICE))
         else:    
             if self.audiocaps.intersect(gst.Caps("audio/mpeg, mpegversion=1, layer=3")):
@@ -133,7 +135,7 @@ class Convertors(gobject.GObject):
             audiopreset="Quality Normal"
             videopreset="Quality Normal"
             
-        if False == self.container:    
+        if False == self.container:
             if self.audiocaps.intersect(gst.Caps("audio/mpeg, mpegversion=4")):
                 self.audiocaps=gst.Caps("audio/mpeg, mpegversion=4, stream-format=adts")
             elif self.audiocaps.intersect(gst.Caps("audio/x-flac")):
@@ -151,6 +153,7 @@ class Convertors(gobject.GObject):
             if (False != self.videocaps):
                 self.videoprofile = gst.pbutils.EncodingVideoProfile (gst.Caps(self.videocaps), videopreset, gst.caps_new_any(), 0)
                 self.encodebinprofile.add_profile(self.videoprofile)
+                
         self.encodebin = gst.element_factory_make ("encodebin", None)
         self.encodebin.set_property("profile", self.encodebinprofile)
         self.encodebin.set_property("avoid-reencoding", True)
@@ -171,9 +174,9 @@ class Convertors(gobject.GObject):
                        
                 self.deinterlacer.link(self.colorspaceconversion)
                 self.colorspaceconversion.link(self.videoflipper)
-                self.deinterlacer.set_state(gst.STATE_PAUSED)
-                self.colorspaceconversion.set_state(gst.STATE_PAUSED)
-                self.videoflipper.set_state(gst.STATE_PAUSED)
+                self.deinterlacer.set_state(PAUSE)
+                self.colorspaceconversion.set_state(PAUSE)
+                self.videoflipper.set_state(PAUSE)
 
         self.remuxcaps = gst.Caps()
         if self.audiopasstoggle:
@@ -263,6 +266,7 @@ class Convertors(gobject.GObject):
         rmax = preset.vcodec.rate[1].num / float(preset.vcodec.rate[1].denom)
         rmaxtest = preset.vcodec.rate[1]
         orate = self.fratenum / self.frateden 
+        
         if orate > rmax:
             num = preset.vcodec.rate[1].num
             denom = preset.vcodec.rate[1].denom
@@ -291,18 +295,25 @@ class Convertors(gobject.GObject):
     def on_message(self, bus, message): 
         __type = message.type
         if gst.MESSAGE_EOS == __type: # 结束
-            self.player.set_state(NULL)
+            if self.passcounter == 0:
+                if os.access(self.cachefile, os.F_OK):
+                    os.remove(self.cachefile)
             self.emit("convertors-eos")
+            self.player.set_state(NULL)            
         elif gst.MESSAGE_ERROR == __type: # 错误信息
-            self.player.set_state(NULL)
             (err, debug) = message.parse_error()
+            gst.DEBUG_BIN_TO_DOT_FILE (self.pipeline, gst.DEBUG_GRAPH_SHOW_ALL, 'transmageddon.dot')
             self.emit("convertors-error", err.message) # 发送错误信息给GUI界面.
         elif gst.MESSAGE_ASYNC_DONE == __type: # 更新进度条
             self.emit("convertors-update-progressbar") # 发送更新信号给GUI界面更新进度条.         
-            
+        elif gst.MESSAGE_APPLICATION:    
+            self.pipeline.set_state(NULL)
+            self.pipeline.remove(self.uridecoder)
+        return True    
+    
     def OnDynamicPad(self, uridecodebin, src_pad):
        origin = src_pad.get_caps()
-       if (self.container==False):
+       if (False == self.container):
            a =  origin.to_string()
            if a.startswith("audio/"):
                sinkpad = self.encodebin.get_static_pad("audio_0")
@@ -316,14 +327,9 @@ class Convertors(gobject.GObject):
                    if d.startswith("audio/"):
                        src_pad.link(sinkpad)
            else:
-               # Checking if its a subtitle pad which we can't deal with
-               # currently.0
-               # Making sure that when we remove video from a file we don't
-               # bother with the video pad.
                c = origin.to_string()
                if not c.startswith("text/"):
                    if not (c.startswith("video/") and (self.videocaps == False)):
-                       # print "creating sinkpad"
                        sinkpad = self.encodebin.emit("request-pad", origin)
                if c.startswith("audio/"):
                    src_pad.link(sinkpad)
@@ -335,26 +341,23 @@ class Convertors(gobject.GObject):
                    else:
                        srccaps=src_pad.get_caps()
                        srcstring=srccaps.to_string()
-                       #print "source pad is " + str(srcstring)
+
                        sinkcaps=sinkpad.get_caps()
                        sinkstring=sinkcaps.to_string()
-                       #print "sinkpad is " + str(sinkstring)
+
                        src_pad.link(sinkpad)
 
-       # Grab element from encodebin which supports tagsetter interface and set app name
-       # to Transmageddon
        GstTagSetterType = gobject.type_from_name("GstTagSetter")
        tag_setting_element=self.encodebin.get_by_interface(GstTagSetterType)
-       if tag_setting_element != None:
+       if None != tag_setting_element:
            taglist=gst.TagList()
-           taglist[gst.TAG_ENCODER] = "Transmageddon encoder" # this should probably be set to
-	                                                      # string combining audio+video encoder
-                                                              # implementations
+           taglist[gst.TAG_ENCODER] = "Transmageddon encoder"
+           
            taglist[gst.TAG_APPLICATION_NAME] = "Transmageddon transcoder"
            tag_setting_element.merge_tags(taglist, gst.TAG_MERGE_APPEND)
 
     def Pipeline (self, state):
-        if state == ("playing"):
-            self.pipeline.set_state(gst.STATE_PLAYING)
-        elif state == ("null"):
-            self.pipeline.set_state(gst.STATE_NULL)            
+        if ("playing") == state:
+            self.pipeline.set_state(PLAYING)
+        elif ("null") == state:
+            self.pipeline.set_state(NULL)            

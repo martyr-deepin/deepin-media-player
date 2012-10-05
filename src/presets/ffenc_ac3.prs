@@ -1,0 +1,29 @@
+[_presets_]
+version=0.10
+element-name=ffenc_ac3
+
+[Quality Low]
+_meta/comment=Low quality
+bitrate=128000
+
+[Quality Normal]
+_meta/comment=Medium quality
+bitrate=256000
+
+[Quality High]
+_meta/comment=High quality
+bitrate=448000
+
+# The PS3 (and maybe other Blu-Ray devices refuse to play low-bitrate AC3 files
+
+[BD Quality Low]
+_meta/comment=Low quality
+bitrate=256000
+
+[BD Quality Normal]
+_meta/comment=Medium quality
+bitrate=448000
+
+[BD Quality High]
+_meta/comment=High quality
+bitrate=640000

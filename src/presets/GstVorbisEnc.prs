@@ -1,0 +1,15 @@
+[_presets_]
+version=0.10
+element-name=GstVorbisEnc
+
+[Quality Low]
+_meta/comment=Low quality
+quality=0.1
+
+[Quality Normal]
+_meta/comment=Low quality
+quality=0.3
+
+[Quality High]
+_meta/comment=Low quality
+quality=0.6
