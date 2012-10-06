@@ -206,10 +206,8 @@ class Convertors(gobject.GObject):
         self.pipeline.add(self.transcodefileoutput)
         self.encodebin.link(self.transcodefileoutput)
 
-        self.uridecoder.set_state(PAUSE)
-  
+        self.uridecoder.set_state(PAUSE)  
         self.BusMessages = self.BusWatcher()
-
         self.uridecoder.connect("no-more-pads", self.noMorePads)            
                     
     def reverse_lookup(self, v):    
