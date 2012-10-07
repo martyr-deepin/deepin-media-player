@@ -22,9 +22,6 @@
 
 import gobject
 import gst
-import codecfinder
-import glib
-import presets
 import os
 
 NULL  = gst.STATE_NULL
@@ -35,6 +32,7 @@ PLAYING = gst.STATE_PLAYING
 class FormatInfo: 
     def __init__(self):
         self.filechosen = "" # FILECHOSEN = ""
+        self.outputfilename = ""
         self.FILENAME = ""
         self.DESTDIR = ""
         self.CONTAINERCHOICE = ""
@@ -73,9 +71,30 @@ class Convertors(gobject.GObject):
         # uri file name.
         self.uridecoder = gst.element_factory_make("uridecodebin", "uridecoder")
         self.uridecoder.set_property("uri", self.__format_info.filechosen)
+        self.remuxcaps = gst.Caps()
+        # self.remuxcaps append append_structure
+        self.uridecoder.set_property("caps", self.remuxcaps)
         
+        self.encodebin = gst.element_factory_make("encodebin", None)
+        
+        self.videoflipper = gst.element_factory_make("videoflip")
+        self.pipeline.add(self.videoflipper)
+        
+        self.deinterlacer = gst.element_factory_make("deinterlace")
+        self.pipeline.add(self.deinterlacer)
+        
+        self.colorspaceconversion = gst.element_factory_make("ffmpegcolorspace")
+        self.pipeline.add(self.colorspaceconversion)
+        
+        self.deinterlacer.link(self.colorspaceconversion)
+        self.colorspaceconversion.link(self.videoflipper)
+        
+        self.transcodefileoutput = gst.element_factory_make("filesink", "")
+        self.transcodefileoutput.set_property("location", self.__format_info.outputfilename)        
         
         self.pipeline.add(self.uridecoder)
+        self.pipeline.add(self.transcodefileoutput)
+        self.encodebin.link(self.transcodefileoutput)
         
         # connect bus message.
         bus = self.pipeline.get_bus()
@@ -100,5 +119,4 @@ class Convertors(gobject.GObject):
             self.pipeline.set_state(NULL)
             self.pipeline.remove(self.uridecoder)
             
-        return True    
-        
+        return True        
