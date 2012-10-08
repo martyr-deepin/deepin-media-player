@@ -24,6 +24,80 @@ import gobject
 import gst
 import os
 
+
+containermap = { 'Ogg' : "application/ogg",
+                 'Matroska' : "video/x-matroska",
+                 'MXF' : "application/mxf",
+                 'AVI' : "video/x-msvideo", 
+                 'Quicktime' : "video/quicktime,variant=apple",
+                 'MPEG4' : "video/quicktime,variant=iso",
+                 'MPEG PS' : "video/mpeg,mpegversion=2,systemstream=true",
+                 'MPEG TS' : "video/mpegts,systemstream=true,packetsize=188",
+                 'AVCHD/BD' : "video/mpegts,systemstream=true,packetsize=192",
+                 'FLV' : "video/x-flv",
+                 '3GPP' : "video/quicktime,variant=3gpp",
+                 'ASF' : "video/x-ms-asf, parsed=true",
+                 'WebM' : "video/webm",
+                 'No container' : False}
+
+csuffixmap =   { 'Ogg' : ".ogg", 
+                 'Matroska' : ".mkv", 
+                 'MXF' : ".mxf", 
+                 'AVI' : ".avi", 
+                 'Quicktime' : ".mov", 
+                 'MPEG4' : ".mp4", 
+                 'MPEG PS' : ".mpg", 
+                 'MPEG TS' : ".ts", 
+                 'AVCHD/BD' : ".m2ts", 
+                 'FLV' : ".flv", 
+                 '3GPP' : ".3gp",
+                 'ASF' : ".asf", 
+                 'WebM' : ".webm", 
+                 'No container' : ".null" }
+
+audiosuffixmap =   { 'Ogg' : ".ogg", 
+                     'Matroska' : ".mkv", 
+                     'MXF' : ".mxf", 
+                     'AVI' : ".avi", 
+                     'Quicktime' : ".m4a",
+                     'MPEG4' : ".mp4",     
+                     'MPEG PS' : ".mpg", 
+                     'MPEG TS' : ".ts", 
+                     'FLV' : ".flv", 
+                     '3GPP' : ".3gp", 
+                     'ASF' : ".wma", 
+                     'WebM' : ".webm" }
+
+nocontainersuffixmap = {
+    'audio/mpeg, mpegversion=(int)1, layer=(int)3' : ".mp3", 
+    'audio/mpeg, mpegversion=(int)4, stream-format=(string)adts' : ".aac", 
+    'audio/x-flac' : ".flac" }
+
+codecmap = { 'Vorbis' : "audio/x-vorbis", 
+             'FLAC' : "audio/x-flac", 
+             'mp3' : "audio/mpeg, mpegversion=(int)1, layer=(int)3", 
+             'AAC' : "audio/mpeg,mpegversion=4", 
+             'AC3' : "audio/x-ac3", 
+             'Speex' : "audio/x-speex",
+             'Celt Ultra' : "audio/x-celt", 
+             'ALAC' : "audio/x-alac", 
+             'Windows Media Audio 2' : "audio/x-wma, wmaversion=(int)2", 
+             'Theora' : "video/x-theora", 
+             'Dirac' : "video/x-dirac", 
+             'H264' : "video/x-h264", 
+             'MPEG2' : "video/mpeg,mpegversion=2,systemstream=false", 
+             'MPEG4' : "video/mpeg,mpegversion=4", 
+             'xvid' : "video/x-xvid", 
+             'Windows Media Video 2' : "video/x-wmv,wmvversion=2", 
+             'dnxhd' : "video/x-dnxhd", 
+             'divx5' : "video/x-divx,divxversion=5", 
+             'divx4' : "video/x-divx,divxversion=4", 
+             'AMR-NB' : "audio/AMR", 
+             'H263+' : "video/x-h263,variant=itu,h263version=h263p", 
+             'On2 vp8' : "video/x-vp8", 
+             'mp2' : "audio/mpeg,mpegversion=(int)1, layer=(int)2", 
+             'MPEG1' : "video/mpeg,mpegversion=(int)1,systemstream=false"}
+
 NULL  = gst.STATE_NULL
 PAUSE = gst.STATE_PAUSED
 PLAYING = gst.STATE_PLAYING
@@ -31,11 +105,14 @@ PLAYING = gst.STATE_PLAYING
 # 保存视频格式转化的各个信息
 class FormatInfo: 
     def __init__(self):
-        self.filechosen = "" # FILECHOSEN = ""
+        self.filechosen = "" # FILECHOSEN
         self.outputfilename = ""
+        self.containerchoice = "" #CONTAINERCHOICE // 视频格式(.avi | .ogg | .rmvb | .flv)
+        self.videocaps = ""
+        
         self.FILENAME = ""
         self.DESTDIR = ""
-        self.CONTAINERCHOICE = ""
+        
         self.AUDIOCODECVALUE = ""
         self.VIDEOCODECVALUE = ""
         self.PRESET = ""
@@ -68,33 +145,49 @@ class Convertors(gobject.GObject):
         # create pipeline.
         self.pipeline = gst.Pipeline("pipeline")
         self.pipeline.set_state(PAUSE)                    
-        # uri file name.
-        self.uridecoder = gst.element_factory_make("uridecodebin", "uridecoder")
+        
+        audiopreset=None
+        videopreset=None
+        # get video format to containercaps.
+        self.containercaps = gst.Caps(containermap[self.format_info.containerchoice])        
+        self.encodebinprofile = gst.pbutils.EncodingContainerProfile("containerformat", None , self.containercaps, None)
+        self.audiocaps = gst.Caps("audio/x-flac")
+        self.audioprofile = gst.pbutils.EncodingAudioProfile(gst.Caps(self.audiocaps), audiopreset, gst.caps_new_any(), 0)
+        self.videoprofile = gst.pbutils.EncodingVideoProfile(gst.Caps(self.__format_info.videocaps), videopreset, gst.caps_new_any(), 0)
+        self.encodebinprofile.add_profile(self.audioprofile)
+        self.encodebinprofile.add_profile(self.videoprofile)
+        
+        # create element factory.
+        self.uridecoder = gst.element_factory_make("uridecodebin", "uridecoder")                                
+        self.encodebin = gst.element_factory_make("encodebin", None)        
+        self.videoflipper = gst.element_factory_make("videoflip")                
+        self.deinterlacer = gst.element_factory_make("deinterlace")                
+        self.colorspaceconversion = gst.element_factory_make("ffmpegcolorspace")        
+        self.fileoutput = gst.element_factory_make("filesink")
+               
+        # set property.
         self.uridecoder.set_property("uri", self.__format_info.filechosen)
+        self.encodebin.set_property("profile", self.encodebinprofile) # set profile encodebinprofile.
+        self.encodebin.set_property("avoid-reencoding", True)
+        self.fileoutput.set_property("location", self.__format_info.outputfilename)
+        
+        # create Caps.
         self.remuxcaps = gst.Caps()
         # self.remuxcaps append append_structure
         self.uridecoder.set_property("caps", self.remuxcaps)
-        
-        self.encodebin = gst.element_factory_make("encodebin", None)
-        
-        self.videoflipper = gst.element_factory_make("videoflip")
+                
+        # pipeline add element factory.
+        self.pipeline.add(self.uridecoder)
+        self.pipeline.add(self.encodebin)
         self.pipeline.add(self.videoflipper)
-        
-        self.deinterlacer = gst.element_factory_make("deinterlace")
         self.pipeline.add(self.deinterlacer)
+        self.pipeline.add(self.colorspaceconversion) 
+        self.pipeline.add(self.fileoutput)
         
-        self.colorspaceconversion = gst.element_factory_make("ffmpegcolorspace")
-        self.pipeline.add(self.colorspaceconversion)
-        
+        # link.
+        self.encodebin.link(self.fileoutput)        
         self.deinterlacer.link(self.colorspaceconversion)
         self.colorspaceconversion.link(self.videoflipper)
-        
-        self.transcodefileoutput = gst.element_factory_make("filesink", "")
-        self.transcodefileoutput.set_property("location", self.__format_info.outputfilename)        
-        
-        self.pipeline.add(self.uridecoder)
-        self.pipeline.add(self.transcodefileoutput)
-        self.encodebin.link(self.transcodefileoutput)
         
         # connect bus message.
         bus = self.pipeline.get_bus()
@@ -111,12 +204,21 @@ class Convertors(gobject.GObject):
             self.player.set_state(NULL)
         elif gst.MESSAGE_ERROR == __type: # 错误信息
             (err, debug) = message.parse_error()
-            # gst.DEBUG_BIN_TO_DOT_FILE (self.pipeline, gst.DEBUG_GRAPH_SHOW_ALL, 'transmageddon.dot')
+            # gst.DEBUG_BIN_TO_DOT_FILE (self.pipeline, gst.DEBUG_GRAPH_SHOW_ALL, 'convertors.dot')
             self.emit("convertors-error", err.message) # 发送错误信息给GUI界面.
         elif gst.MESSAGE_ASYNC_DONE == __type: # 更新进度条
             self.emit("convertors-update-progressbar") # 发送更新信号给GUI界面更新进度条.
-        elif gst.MESSAGE_APPLICATION:    
+        elif gst.MESSAGE_APPLICATION:
             self.pipeline.set_state(NULL)
             self.pipeline.remove(self.uridecoder)
             
-        return True        
+        return True
+
+    
+if __name__ == "__main__":    
+    format_info = FormatInfo()
+    format_info.filechosen = "/home/long/视频/123.rmvb"
+    format_info.outputfilename = "/home/long/视频/234.rmvb"
+    Convertors(format_info)
+
+    
