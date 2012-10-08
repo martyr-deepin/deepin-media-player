@@ -22,8 +22,9 @@
 
 import gobject
 import gst
+import gst.pbutils
 import os
-
+import glib
 
 containermap = { 'Ogg' : "application/ogg",
                  'Matroska' : "video/x-matroska",
@@ -98,6 +99,8 @@ codecmap = { 'Vorbis' : "audio/x-vorbis",
              'mp2' : "audio/mpeg,mpegversion=(int)1, layer=(int)2", 
              'MPEG1' : "video/mpeg,mpegversion=(int)1,systemstream=false"}
 
+gobject.threads_init()
+
 NULL  = gst.STATE_NULL
 PAUSE = gst.STATE_PAUSED
 PLAYING = gst.STATE_PLAYING
@@ -106,12 +109,12 @@ PLAYING = gst.STATE_PLAYING
 class FormatInfo: 
     def __init__(self):
         self.filechosen = "" # FILECHOSEN
-        self.outputfilename = ""
+        self.outputfilename = "" # OUTPUTNAME
         self.containerchoice = "" #CONTAINERCHOICE // 视频格式(.avi | .ogg | .rmvb | .flv)
         self.videocaps = ""
         
         self.FILENAME = ""
-        self.DESTDIR = ""
+        # self.DESTDIR = ""
         
         self.AUDIOCODECVALUE = ""
         self.VIDEOCODECVALUE = ""
@@ -123,7 +126,7 @@ class FormatInfo:
         self.ACHANNELS = ""
         self.MULTIPASS = ""
         self.PASSCOUNTER = ""
-        self.OUTPUTNAME = ""
+        
         self.TIMESTAMP = ""
         self.ROTATIONVALUE = ""
         self.AUDIOPASSTOGGLE = ""
@@ -137,19 +140,19 @@ class Convertors(gobject.GObject):
         'convertors-update-progressbar' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, ()),
         'convertors-eos' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, ()),
         'convertors-error' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,))
-            }    
+        }    
+    
     def __init__(self, _format_info):
         gobject.GObject.__init__(self)
         #
         self.__format_info = _format_info
         # create pipeline.
         self.pipeline = gst.Pipeline("pipeline")
-        self.pipeline.set_state(PAUSE)                    
         
         audiopreset=None
         videopreset=None
         # get video format to containercaps.
-        self.containercaps = gst.Caps(containermap[self.format_info.containerchoice])        
+        self.containercaps = gst.Caps(containermap[self.__format_info.containerchoice])
         self.encodebinprofile = gst.pbutils.EncodingContainerProfile("containerformat", None , self.containercaps, None)
         self.audiocaps = gst.Caps("audio/x-flac")
         self.audioprofile = gst.pbutils.EncodingAudioProfile(gst.Caps(self.audiocaps), audiopreset, gst.caps_new_any(), 0)
@@ -158,12 +161,12 @@ class Convertors(gobject.GObject):
         self.encodebinprofile.add_profile(self.videoprofile)
         
         # create element factory.
-        self.uridecoder = gst.element_factory_make("uridecodebin", "uridecoder")                                
-        self.encodebin = gst.element_factory_make("encodebin", None)        
+        self.uridecoder = gst.element_factory_make("uridecodebin", "uridecoder")
+        self.encodebin = gst.element_factory_make("encodebin", None)
         self.videoflipper = gst.element_factory_make("videoflip")                
         self.deinterlacer = gst.element_factory_make("deinterlace")                
         self.colorspaceconversion = gst.element_factory_make("ffmpegcolorspace")        
-        self.fileoutput = gst.element_factory_make("filesink")
+        self.fileoutput = gst.element_factory_make("filesink", "fileoutput")
                
         # set property.
         self.uridecoder.set_property("uri", self.__format_info.filechosen)
@@ -172,8 +175,9 @@ class Convertors(gobject.GObject):
         self.fileoutput.set_property("location", self.__format_info.outputfilename)
         
         # create Caps.
-        self.remuxcaps = gst.Caps()
-        # self.remuxcaps append append_structure
+        self.remuxcaps = gst.Caps()        
+        # self.remuxcaps append append_structure        
+        
         self.uridecoder.set_property("caps", self.remuxcaps)
                 
         # pipeline add element factory.
@@ -185,16 +189,28 @@ class Convertors(gobject.GObject):
         self.pipeline.add(self.fileoutput)
         
         # link.
-        self.encodebin.link(self.fileoutput)        
+        self.encodebin.link(self.fileoutput)
         self.deinterlacer.link(self.colorspaceconversion)
         self.colorspaceconversion.link(self.videoflipper)
         
+        self.pipeline.set_state(gst.STATE_PAUSED)
+        self.encodebin.set_state(gst.STATE_PAUSED)
+        self.deinterlacer.set_state(gst.STATE_PAUSED)
+        self.colorspaceconversion.set_state(gst.STATE_PAUSED)
+        self.videoflipper.set_state(gst.STATE_PAUSED)
+        self.uridecoder.set_state(gst.STATE_PAUSED)
+        
         # connect bus message.
         bus = self.pipeline.get_bus()
-        bus.add_watch(self.on_message)
+        bus.add_watch(self.on_message)        
+                
+        self.uridecoder.connect("pad-added", self.OnDynamicPad)
+        self.uridecoder.connect("no-more-pads", self.noMorePads)
         
     def on_message(self, bus, message):
         __type = message.type
+        
+        print "on_message function.................", __type
         
         if gst.MESSAGE_EOS == __type: # 结束
             if self.passcounter == 0:
@@ -213,12 +229,49 @@ class Convertors(gobject.GObject):
             self.pipeline.remove(self.uridecoder)
             
         return True
+        
+    def OnDynamicPad(self, uridecodebin, src_pad):
+        print "OnDynamicPad function ................."
+        origin = src_pad.get_caps()
+        # sinkpad = self.encodebin.emit("request-pad", origin)
+        # src_pad.link(sinkpad)
+    
+    def noMorePads(self, dbin):    
+        print "noMorePads function .................."
+        # if (self.multipass == False) or (self.passcounter == int(0)):
+           # self.transcodefileoutput.set_state(gst.STATE_PAUSED)           
+           # print "******************"
+        glib.idle_add(self.idlePlay)
 
+    def idlePlay(self, state):       
+        self.Pipeline("playing")
+        return False
+        
+    def Pipeline (self, state):
+        if state == ("playing"):
+            self.pipeline.set_state(gst.STATE_PLAYING)
+        elif state == ("null"):
+            self.pipeline.set_state(gst.STATE_NULL)
+    
     
 if __name__ == "__main__":    
+    import gtk
+    def convertors_error(NONE, error_string):
+        print "convertors_error:" , error_string
+        
+    def convertors_eof(source):    
+        print "source:", source
+        
+    def ProgressBarUpdate(source):    
+        print "ProgressBarUpdate function :", source
+        
     format_info = FormatInfo()
-    format_info.filechosen = "/home/long/视频/123.rmvb"
-    format_info.outputfilename = "/home/long/视频/234.rmvb"
-    Convertors(format_info)
-
-    
+    format_info.filechosen = "file:///home/long/视频/123.rmvb"
+    format_info.outputfilename = "/home/long/视频/234.rmvb"    
+    format_info.containerchoice = "Ogg"
+    format_info.videocaps = "video/x-theora"
+    convertors = Convertors(format_info)
+    convertors.connect('convertors-error', convertors_error)
+    convertors.connect("convertors-eos", convertors_eof)
+    convertors.connect("convertors-update-progressbar", ProgressBarUpdate)
+    gtk.main()
