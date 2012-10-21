@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+
+<device>
+    <make>HTC</make>
+    <model>Android G1</model>
+    <description>Profile for Google G1 phone</description>
+    <author>
+        <name>Christian Schaller</name>
+        <email>uraeus@linuxrising.org</email>
+    </author>
+    <version>1.0</version>
+    <icon>file://ipod.svg</icon>
+    <default>Normal</default>
+    
+   
+    <profile>
+        <name>Normal</name>
+        <container>video/quicktime,variant=iso</container>
+        <extension>mp4</extension>
+        <audio>
+            <name>audio/mpeg,mpegversion=4, base-profile=lc</name>
+            <channels>1, 2</channels>
+            <samplerate>44100</samplerate>
+        </audio>
+        <video>
+            <name>video/x-h264, profile=constrained-baseline</name>
+            <passes>2</passes>
+            <pixelaspectratio>0/0</pixelaspectratio>
+            <width>320, 480</width>
+            <height>240, 320</height>
+            <framerate>1, 30</framerate>
+        </video>
+    </profile>
+</device>

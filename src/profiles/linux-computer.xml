@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+
+<device>
+    <make>Generic</make>
+    <model>Linux Computer</model>
+    <description>Profile for Linux Computer</description>
+    <author>
+        <name>Christian Schaller</name>
+        <email>christian.schaller@collabora.co.uk</email>
+    </author>
+    <version>1.0</version>
+    <icon>file://computer.svg</icon>
+    <default>Normal</default>
+    <profile>
+        <name>Normal</name>
+        <container>application/ogg</container>
+        <extension>ogg</extension>
+        <audio>
+            <name>audio/x-vorbis, rate=44100</name>
+            <channels>1, 2</channels>
+        </audio>
+        <video>
+            <name>video/x-theora</name>
+            <border>N</border>
+            <passes>0</passes>
+            <pixelaspectratio>0/0</pixelaspectratio>
+            <width>320, 1920</width>
+            <height>240, 1080</height>
+            <framerate>1, 30</framerate>
+        </video>
+    </profile>
+    <profile>
+        <name>Live Input</name>
+        <container>application/ogg</container>
+        <extension>ogg</extension>
+        <audio>
+            <name>audio/x-vorbis</name>
+            <presets>
+                <preset>bitrate=192000</preset>
+            </presets>
+        </audio>
+        <video>
+            <name>video/x-theora</name>
+            <width>320, 1920</width>
+            <height>240, 1080</height>
+            <framerate>1, 30</framerate>
+        </video>
+    </profile>
+    <profile>
+        <name>High</name>
+        <container>application/ogg</container>
+        <extension>ogg</extension>
+        <audio>
+            <name>audio/x-vorbis</name>
+            <presets>
+                <preset>Quality High</preset>
+            </presets>
+        </audio>
+        <video>
+            <name>video/x-dirac</name>
+            <border>N</border>
+            <passes>0</passes>
+            <pixelaspectratio>0/0</pixelaspectratio>
+            <width>320, 1920</width>
+            <height>240, 1080</height>
+            <framerate>1, 60</framerate>
+        </video>
+    </profile>
+</device>
+

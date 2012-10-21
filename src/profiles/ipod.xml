@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+
+<device>
+    <make>Apple</make>
+    <model>iPod Nano</model>
+    <description>Profile for Apple iPod Nano</description>
+    <author>
+        <name>Joe Example</name>
+        <email>mr.example@example.org</email>
+    </author>
+    <version>1.0</version>
+    <icon>file://ipod.svg</icon>
+    <default>Normal</default>
+    <profile>
+        <name>Normal</name>
+        <container>video/quicktime,variant=apple</container>
+        <extension>m4v</extension>
+        <audio>
+            <name>audio/mpeg,mpegversion=4, base-profile=lc, rate=44100</name>
+            <channels>1, 2</channels>
+        </audio>
+        <video>
+            <name>video/x-h264, profile=constrained-baseline</name>
+            <passes>2</passes>
+            <pixelaspectratio>0/0</pixelaspectratio>
+            <width>320, 640</width>
+            <height>240, 480</height>
+            <framerate>1, 30</framerate>
+        </video>
+    </profile>
+</device>

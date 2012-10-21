@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+
+<device>
+    <make>Motorola</make>
+    <model>KRZR K1v</model>
+    <description>Profile for Motorola KRZR K1v</description>
+    <author>
+        <name>Christian Schaller</name>
+        <email>uraeus@gnome.org</email>
+    </author>
+    <version>1.0</version>
+    <icon>file://phone.svg</icon>
+    <default>Normal</default>
+
+    <profile>
+        <name>Normal</name>
+        <container>video/quicktime,variant=iso</container>
+        <extension>mp4</extension>
+        <audio>
+            <name>audio/mpeg,mpegversion=4, base-profile=lc, rate=44100</name>
+            <channels>1, 2</channels>
+        </audio>
+        <video>
+            <name>video/mpeg,mpegversion=4</name>  
+            <border>Y</border>
+            <passes>0</passes>
+            <pixelaspectratio>12/11</pixelaspectratio>
+            <width>176, 176</width>
+            <height>144, 144</height>
+            <framerate>1,15</framerate>
+        </video>
+    </profile>
+</device>

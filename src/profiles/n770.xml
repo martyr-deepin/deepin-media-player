@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+
+<device>
+    <make>Nokia</make>
+    <model>N770</model>
+    <description>Profile for Nokia N770</description>
+    <author>
+        <name>Christian Schaller</name>
+        <email>christian.schaller@collabora.co.uk</email>
+    </author>
+    <version>1.0</version>
+    <icon>file://ipod.svg</icon>
+    <default>Normal</default>
+    
+    <profile>
+        <name>Normal</name>
+        <container>video/x-msvideo</container>
+        <extension>avi</extension>
+        <audio>
+            <name>audio/mpeg,mpegversion=1,layer=3, rate=44100</name>
+            <presets>
+                <preset>
+                    CBR Quality Low, Profile Constant Bitrate
+                </preset>
+            </presets>
+            <channels>1, 2</channels>
+        </audio>
+        <video>
+            <name>video/mpeg,mpegversion=4</name>
+            <border>N</border>
+            <passes>0</passes>
+            <pixelaspectratio>0/0</pixelaspectratio>
+            <presets>
+                <preset>
+                    Quality Low, Profile Simple
+                </preset>
+            </presets>
+            <width>60, 352</width>
+            <height>60, 208</height>
+            <framerate>1, 15</framerate>
+        </video>
+    </profile>
+</device>

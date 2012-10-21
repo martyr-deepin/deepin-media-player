@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+
+<device>
+    <make>Nokia</make>
+    <model>N900</model>
+    <description>profiles for Nokia N900</description>
+    <author>
+        <name>Stefan Kost</name>
+        <email>ensonic@users.sf.net</email>
+    </author>
+    <version>1.0</version>
+    <icon>file://Nokia_N900.svg</icon>
+    <default>Normal (mpeg4)</default>
+    
+    <profile>
+        <name>Normal</name>
+        <container>video/quicktime,variant=iso</container>
+        <extension>mp4</extension>
+        <audio>
+            <name>audio/mpeg,mpegversion=4, base-profile=lc, rate=48000</name>
+            <channels>1, 2</channels>
+        </audio>
+        <video>
+            <name>video/x-h264, profile=constrained-baseline</name>
+            <passes>0</passes>
+            <pixelaspectratio>0/0</pixelaspectratio>
+            <width>240, 800</width>
+            <height>140, 480</height>
+            <framerate>1, 25</framerate>
+        </video>
+    </profile>
+    <profile>
+        <name>Normal (mpeg4)</name>
+        <container>video/quicktime,variant=iso</container>
+        <extension>mp4</extension>
+        <audio>
+            <name>audio/mpeg,mpegversion=4, base-profile=lc, rate=48000</name>
+            <channels>1, 2</channels>
+        </audio>
+        <video>
+            <name>video/mpeg,mpegversion=4,systemstream=false,profile=simple</name>
+            <border>N</border>
+            <passes>0</passes>
+            <pixelaspectratio>0/0</pixelaspectratio>
+            <presets>
+                <preset>
+                    Quality Normal, Profile Simple
+                </preset>
+            </presets>
+            <width>240, 800</width>
+            <height>140, 480</height>
+            <framerate>1, 25</framerate>
+        </video>
+    </profile>
+</device>

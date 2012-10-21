@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+
+<device>
+    <make>Sony</make>
+    <model>Playstation 3</model>
+    <description>Profile for Playstation 3</description>
+    <author>
+        <name>Daniel G. Taylor</name>
+        <email>dan@programmer-art.org</email>
+    </author>
+    <version>1.0</version>
+    <icon>file://ps3.svg</icon>
+    <default>Normal</default>
+    
+    <profile>
+        <name>Normal</name>
+        <container>video/mpegts,systemstream=true,packetsize=192</container>
+        <extension>ts</extension>
+        <audio>
+            <name>audio/x-ac3, rate=44100</name>
+            <channels>1, 6</channels>
+        </audio>
+        <video>
+            <name>video/x-h264, profile=constrained-baseline</name>
+            <passes>2</passes>
+            <pixelaspectratio>0/0</pixelaspectratio>
+            <width>320, 1920</width>
+            <height>240, 1080</height>
+            <framerate>1, 30</framerate>
+        </video>
+    </profile>
+</device>
+

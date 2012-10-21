@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+
+<device>
+    <make>HTML5</make>
+    <model>WebM</model>
+    <description>Profile for HTML5 video</description>
+    <author>
+        <name>Christian Schaller</name>
+        <email>christian.schaller@collabora.co.uk</email>
+    </author>
+    <version>1.0</version>
+    <icon>file://computer.svg</icon>
+    <default>Normal</default>
+    <profile>
+        <name>Normal</name>
+        <container>video/webm</container>
+        <extension>webm</extension>
+        <audio>
+            <name>audio/x-vorbis, rate=44100</name>
+            <channels>1, 2</channels>
+        </audio>
+        <video>
+            <name>video/x-vp8</name>
+            <passes>0</passes>
+            <pixelaspectratio>0/0</pixelaspectratio>
+            <width>320, 1920</width>
+            <height>240, 1080</height>
+            <framerate>1, 30</framerate>
+        </video>
+    </profile>
+</device>
+

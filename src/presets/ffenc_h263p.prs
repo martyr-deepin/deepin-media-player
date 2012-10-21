@@ -1,0 +1,23 @@
+[_presets_]
+version=0.10
+element-name=ffenc_h263p
+
+[Quality Low]
+_meta/comment=Low quality
+bitrate=200000
+
+[Quality Normal]
+_meta/comment=Normal quality
+bitrate=400000
+
+[Quality High]
+_meta/comment=High quality
+bitrate=700000
+
+[Pass 1]
+_meta/comment=First pass
+pass=512
+
+[Pass 2]
+_meta/comment=Second pass
+pass=1024

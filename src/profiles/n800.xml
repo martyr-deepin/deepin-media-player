@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+
+<device>
+    <make>Nokia</make>
+    <model>N800/N810</model>
+    <description>profiles for Nokia N800/N810</description>
+    <author>
+        <name>Christian Schaller</name>
+        <email>christian.schaller@collabora.co.uk</email>
+    </author>
+    <version>1.0</version>
+    <icon>file://ipod.svg</icon>
+    <default>Normal</default>
+
+    <profile>
+        <name>Normal</name>
+        <container>video/quicktime,variant=iso</container>
+        <extension>mp4</extension>
+        <audio>
+            <name>audio/mpeg,mpegversion=4, base-profile=lc, rate=44100</name>
+            <channels>1, 2</channels>
+        </audio>
+        <video>
+            <name>video/x-h264, profile=constrained-baseline</name>
+            <passes>0</passes>
+            <pixelaspectratio>0/0</pixelaspectratio>
+            <width>240, 352</width>
+            <height>140, 208</height>
+            <framerate>1, 23</framerate>
+        </video>
+    </profile>
+</device>

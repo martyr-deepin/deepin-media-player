@@ -1,0 +1,15 @@
+[_presets_]
+version=0.10
+element-name=GstTheoraEnc
+
+[Quality Low]
+_meta/comment=Low quality
+quality=8
+
+[Quality Normal]
+_meta/comment=Normal quality
+quality=16
+
+[Quality High]
+_meta/comment=High quality
+quality=32
