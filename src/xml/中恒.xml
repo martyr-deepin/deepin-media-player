@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<device>
+	<profile>
+		<name>k9</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>k8</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>sx30+</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+</device>

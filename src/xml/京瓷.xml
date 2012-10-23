@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<device>
+	<profile>
+		<name>ksp8000</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>rise</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>
+	<profile>
+		<name>digno_s</name>
+		<width>720</width>
+		<height>1280</height>
+	</profile>
+	<profile>
+		<name>hydro</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>
+</device>

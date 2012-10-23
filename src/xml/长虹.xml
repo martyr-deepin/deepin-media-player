@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<device>
+	<profile>
+		<name>v518</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>
+	<profile>
+		<name>h5018</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>
+	<profile>
+		<name>v7</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>v8</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>m18</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>
+	<profile>
+		<name>t638</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+</device>

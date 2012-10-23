@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<device>
+	<profile>
+		<name>s9500</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>v9200</name>
+		<width>240</width>
+		<height>320</height>
+	</profile>
+</device>

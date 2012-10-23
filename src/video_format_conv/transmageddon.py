@@ -464,7 +464,7 @@ class TransmageddonUI:
 
        self.waiting_for_signal="False"
        
-       self.TopWindow.show_all() # show TopWindow.
+       # self.TopWindow.show_all() # show TopWindow.
        
    # Get all preset values
    def reverse_lookup(self,v):
@@ -864,22 +864,27 @@ class TransmageddonUI:
            achannels=False
 
        # print "transcoder values - filechoice: " + str(filechoice) + " - filename: " + str(self.filename) + " - outputdirectory: " + str(self.outputdirectory) + " - self.container: " + str(self.container) + " - audiocodec: " + str(audiocodec) + " - videocodec: " + str(videocodec), " -self.devicename: " + str(self.devicename) + "- vheight:" + str(vheight), " - vwidth: " + str(vwidth) + " - achannels: " + str(achannels) + " - self.multipass " + str(self.multipass) + " - self.passcounter: " + str(self.passcounter) + " -self.outputfilename: " + str(self.outputfilename) + " - self.timestamp: " + str(self.timestamp) + " - self.rotationvalue: " + str(self.rotationvalue) + " - self.audiopasstoggle: " + str(self.audiopasstoggle) + " - self.videopasstoggle: " + str(self.videopasstoggle) + " - self.interlaced: " + str(self.interlaced) + " - self.inputvideocaps: " + str(self.inputvideocaps)
-       print "*****************************************"
-       print "vheight:", vheight
-       print "vwidth:", vwidth
+       # print "*****************************************"
+       # print "vheight:", vheight
+       # print "vwidth:", vwidth
        # print "ratenum:", ratenum
        # print "ratednom:", ratednom
-       print "*****************************************"
+       # print "*****************************************"
        # self._transcoder
+       new_width, new_height = (None, None)
+       model_text = self.form.model_combo.get_active_text()
+       if model_text != "No Model":
+          new_width, new_height = self.form.model_dict[model_text]
+          
+          
        transcoder = transcoder_engine.Transcoder(filechoice, self.filename,
                         self.outputdirectory, self.container, audiocodec, 
                         videocodec, self.devicename, 
                         vheight, vwidth, ratenum, ratednom, achannels, 
                         self.multipass, self.passcounter, self.outputfilename,
                         self.timestamp, self.rotationvalue, self.audiopasstoggle, 
-                        self.videopasstoggle, self.interlaced, self.inputvideocaps)
+                        self.videopasstoggle, self.interlaced, self.inputvideocaps, int(new_width), int(new_height))
         
-
        # transcoder.connect("ready-for-querying", self.ProgressBarUpdate)
        # transcoder.connect("got-eos", self._on_eos)
        # transcoder.connect("got-error", self.show_error)       

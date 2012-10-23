@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<device>
+	<profile>
+		<name>e235</name>
+		<width>240</width>
+		<height>320</height>
+	</profile>
+	<profile>
+		<name>d135</name>
+		<width>240</width>
+		<height>320</height>
+	</profile>
+</device>
