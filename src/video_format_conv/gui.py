@@ -58,8 +58,8 @@ class Form(DialogBox):
     def draw_dialogbox_mask(self, cr, x, y, width, height):
         pass
                 
-    def init_value(self):
-        self.read_xml = ReadXml("../xml")
+    def init_value(self): 
+        self.read_xml = ReadXml("/usr/share/deepin-media-player/src/xml/")
         self.model_dict = {}
         # left.
         self.left_x = 20

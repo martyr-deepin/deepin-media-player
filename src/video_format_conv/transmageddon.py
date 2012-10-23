@@ -156,7 +156,9 @@ supported_audio_container_map = {
 
 class TransmageddonUI:
    """This class loads the GtkBuilder file of the UI"""
-   def __init__(self):
+   def __init__(self, conv_list=[]):
+       # conv task list.
+       self.conv_list = conv_list
        # Transmageddon conv task list init.
        self.conv_task_gui = ConvTAskGui() # task list gui.
        self.conv_task_gui.start_btn.connect("clicked", self.conv_task_gui_start_btn_clicked)

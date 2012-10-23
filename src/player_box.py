@@ -63,6 +63,7 @@ from subtitle.scan_subtitles import ScanGui
 from lrc.osd_lrc import Lrc
 from video_information.gui import VideoInformGui
 from switch_audio.audio import SwitchAudio
+from video_format_conv.transmageddon import TransmageddonUI
 import threading
 import gtk
 import os
@@ -83,6 +84,7 @@ ASCEPT_2_35X1_STATE = "2.35:1"
 
 class PlayerBox(object):
     def __init__ (self, app, argv_path_list):
+        self.save_getcwd = os.getcwd()
         self.switch_audio_menu = []
         # Init pixuf.
         self.init_system_pixbuf()
@@ -961,11 +963,33 @@ class PlayerBox(object):
 
     '''Play list control'''
     def delete_play_list_file(self, list_view, list_item):
-        # delete file of play list.
+        # delete file of play list.        
         play_list_dict_save = self.play_list_dict
+        
         for list_item_i in list_item:
             self.mp.del_playlist(play_list_dict_save[list_item_i.title])
+            
+    '''play list format conv'''        
+    def format_conv_play_list_files(self):
+        # format conv file of play list.
+        conv_items = []
+        self.select_rows = self.play_list.list_view.select_rows
+        self.items = self.play_list.list_view.items
+        
+        for row in self.select_rows:
+            conv_items.append(self.items[row])
 
+        list_item = conv_items
+        play_list_dict_save = self.play_list_dict
+        conv_video_fiel_list = []
+        
+        for item in list_item:
+            conv_video_fiel_list.append(play_list_dict_save[item.title])
+            print play_list_dict_save[item.title]
+        ########################    
+        conv = TransmageddonUI()
+
+    
     def add_play_list(self, mplayer, path): # mplayer signal: "add-path"
         '''Play list add play file timeout.[100-1028 a play file].'''
         if self.add_play_list_length_id:
@@ -2615,16 +2639,18 @@ class PlayerBox(object):
                                              (None, _("Sort"), self.menu2),
                                              # (None, "视图", None),
                                              (None),
+                                             (None, "格式转换", self.format_conv_play_list_files),
                                              (None, _("Open Containing Directory"), self.open_current_file_dir),
                                              self.right_key_menu_video_info
                                              ],
                                             True)
 
             if len(self.mp.play_list) <= 0:                
-                self.play_list_root_menu.set_menu_item_sensitive_by_index(13, False)
+                self.play_list_root_menu.set_menu_item_sensitive_by_index(12, False)
+                self.play_list_root_menu.set_menu_item_sensitive_by_index(13, False)                
                 
             self.play_list_root_menu.show((int(event.x_root), int(event.y_root)), (0, 0))
-
+            
     def sigle_play(self):
         if self.mp:
             self.mp.play_list_state = SINGLE_PLAYING_STATE # 0

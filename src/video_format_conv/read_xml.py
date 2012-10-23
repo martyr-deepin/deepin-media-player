@@ -6,10 +6,11 @@ import xml.etree.ElementTree
 class ReadXml(object):
     def __init__(self, directory):
         self.brand_dict = {}
+        # print os.path.exists("/usr/share/deepin-media-player-private/src/xml/")
         if os.path.exists(directory):
             self.__load_directory(directory)
         else:
-            print "directory error!!"
+            print "directory error!!", directory
             
     def __load_directory(self, directory):
         for filename in os.listdir(directory):
