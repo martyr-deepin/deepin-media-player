@@ -466,7 +466,7 @@ class TransmageddonUI:
 
        self.waiting_for_signal="False"
        
-       # self.TopWindow.show_all() # show TopWindow.
+       self.TopWindow.show_all() # show TopWindow.
        
    # Get all preset values
    def reverse_lookup(self,v):
@@ -873,7 +873,7 @@ class TransmageddonUI:
        # print "ratednom:", ratednom
        # print "*****************************************"
        # self._transcoder
-       new_width, new_height = (None, None)
+       new_width, new_height = (int(vwidth), int(vheight))
        model_text = self.form.model_combo.get_active_text()
        if model_text != "No Model":
           new_width, new_height = self.form.model_dict[model_text]
