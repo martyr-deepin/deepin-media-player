@@ -39,7 +39,7 @@ class Transcoder(gobject.GObject):
             'got-eos' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, []),
             'got-error' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,))
                     }
-
+   
    def __init__(self, FILECHOSEN, FILENAME, DESTDIR, CONTAINERCHOICE, AUDIOCODECVALUE, VIDEOCODECVALUE, PRESET, 
                       OHEIGHT, OWIDTH, FRATENUM, FRATEDEN, ACHANNELS, MULTIPASS, PASSCOUNTER, OUTPUTNAME, 
                       TIMESTAMP, ROTATIONVALUE, AUDIOPASSTOGGLE, VIDEOPASSTOGGLE, INTERLACED, INPUTVIDEOCAPS,
@@ -85,13 +85,14 @@ class Transcoder(gobject.GObject):
        self.timestamp = TIMESTAMP
        self.rotationvalue = int(ROTATIONVALUE)
        self.vbox = {}
-       
-       if NEW_HEIGHT and NEW_WIDTH:
+              
+       if NEW_HEIGHT != None and NEW_WIDTH != None:
           self.new_width = NEW_WIDTH
           self.new_height = NEW_HEIGHT
        else:   
-          self.new_width = int(self.owidth)
-          self.new_height = int(self.oheight)
+          if NEW_HEIGHT != 0 and NEW_WIDTH != 0:
+             self.new_width = int(self.owidth)
+             self.new_height = int(self.oheight)
        
        # switching width and height around for rotationchoices where it makes sense
        if self.rotationvalue == 1 or self.rotationvalue == 3:
@@ -106,10 +107,6 @@ class Transcoder(gobject.GObject):
            self.cachefile = (str (glib.get_user_cache_dir()) + "/" + \
                    "multipass-cache-file" + self.timestamp + ".log")
 
-       for vcap in self.videocaps:
-          vcap["height"] = self.new_height
-          vcap["width"] = self.new_width
-          
        # gather preset data if relevant
        if self.preset != "nopreset":
            height, width, num, denom, pixelaspectratio = self.provide_presets()

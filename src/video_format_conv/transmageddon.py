@@ -157,6 +157,9 @@ supported_audio_container_map = {
 class TransmageddonUI:
    """This class loads the GtkBuilder file of the UI"""
    def __init__(self, conv_list=[]):
+       self.form = Form()
+       self.form.show_all()
+       self.form.hide_setting()      
        # conv task list.
        self.conv_list = conv_list
        # Transmageddon conv task list init.
@@ -183,42 +186,43 @@ class TransmageddonUI:
 
        # these dynamic comboboxes allow us to support files with multiple streams eventually
        def dynamic_comboboxes_audio(streams,extra = []):
-           streams=1 # this will become a variable once we support multiple streams
-           vbox = gtk.VBox()
+           # streams=1 # this will become a variable once we support multiple streams
+               vbox = gtk.VBox()
            
-           x=-1
-           while x < (streams-1):
-               x=x+1
+           # x=-1
+           # while x < (streams-1):
+               # x=x+1
                # print "x is " + str(x)
-               store = gtk.ListStore(gobject.TYPE_STRING, *extra)
-               combo = gtk.ComboBox(store)
-               text_cell = gtk.CellRendererText()
-               combo.pack_start(text_cell, True)
-               combo.add_attribute(text_cell, 'text', 0)
-               self.audiorows.append(combo)
-               vbox.add(self.audiorows[x])
-           return vbox
+               # store = gtk.ListStore(gobject.TYPE_STRING, *extra)
+               # combo = gtk.ComboBox(store)
+               # text_cell = gtk.CellRendererText()
+               # combo.pack_start(text_cell, True)
+               # combo.add_attribute(text_cell, 'text', 0)
+               # self.audiorows.append(combo)
+               self.audiorows.append(self.form.bit_rate_combo)
+               # vbox.add(self.audiorows[0])
+               # return vbox
+               return self.form.bit_rate_combo
        
        def dynamic_comboboxes_video(streams,extra = []):
-           streams=1
-           vbox = gtk.VBox()
+           # streams=1
+               vbox = gtk.VBox()
            
-           x=-1
-           while x < (streams-1):
-               x=x+1
-               store = gtk.ListStore(gobject.TYPE_STRING, *extra)
-               combo = gtk.ComboBox(store)
+           # x=-1
+           # while x < (streams-1):
+               # x=x+1
+               # store = gtk.ListStore(gobject.TYPE_STRING, *extra)
+               # combo = gtk.ComboBox(store)
                # combo = NewComboBox()
-               text_cell = gtk.CellRendererText()
-               combo.pack_start(text_cell, True)
-               combo.add_attribute(text_cell, 'text', 0)
-               self.videorows.append(combo)
-               vbox.add(self.videorows[x])
-           return vbox
-
-       self.form = Form()
-       self.form.show_all()
-       self.form.hide_setting()
+               # text_cell = gtk.CellRendererText()
+               # combo.pack_start(text_cell, True)
+               # combo.add_attribute(text_cell, 'text', 0)
+               # self.videorows.append(combo)
+               self.videorows.append(self.form.frame_rate_combo)
+               # vbox.add(self.videorows[0])
+               # return vbox
+               return self.form.frame_rate_combo
+       
        #Define functionality of our button and main window
        # self.TopWindow = self.builder.get_object("TopWindow")
        self.TopWindow = gtk.Window(gtk.WINDOW_TOPLEVEL)
@@ -293,9 +297,9 @@ class TransmageddonUI:
        self.rotationchoice.connect("changed", self.on_rotationchoice_changed)       
        # 
        # CodecBox.       
-       self.CodecBox.attach(self.audiobox, 0, 1, 1, 2, yoptions = gtk.FILL)
-       self.CodecBox.attach(self.videobox, 2, 3, 1, 2, yoptions = gtk.FILL)
-       self.CodecBox.show_all()
+       # self.CodecBox.attach(self.audiobox, 0, 1, 1, 2, yoptions = gtk.FILL)
+       # self.CodecBox.attach(self.videobox, 2, 3, 1, 2, yoptions = gtk.FILL)
+       # self.CodecBox.show_all()
        # transcodebutton.
        self.transcodebutton.connect("clicked", self.on_transcodebutton_clicked)
        # cancelbutton.
@@ -304,21 +308,21 @@ class TransmageddonUI:
        #
        # add child widgets.
        #
-       self.hbox_button.pack_start(self.cancelbutton, True, True)
-       self.hbox_button.pack_start(self.transcodebutton, True, True)       
+       # self.hbox_button.pack_start(self.cancelbutton, True, True)
+       # self.hbox_button.pack_start(self.transcodebutton, True, True)       
        # self.vbox1.pack_start(self.FileChooser, False, False)
-       self.vbox1.pack_start(self.videoinformation, True, True) # 视频高度/宽度
-       self.vbox1.pack_start(self.audioinformation, True, True) # 音频通道
-       self.vbox1.pack_start(self.videocodec, False, False) # 视频信息
-       self.vbox1.pack_start(self.audiocodec, False, False) # 音频信息
-       self.vbox1.pack_start(self.presetchoice, False, False)
-       self.vbox1.pack_start(self.containerchoice, False, False)
-       self.vbox1.pack_start(self.CodecBox, False, False)
-       self.vbox1.pack_start(self.rotationchoice, False, False)
-       self.vbox1.pack_start(self.ProgressBar, False, False)
-       self.vbox1.pack_start(self.hbox_button, False, False)
-       self.vbox1.pack_start(self.StatusBar, False, False)
-       self.TopWindow.add(self.vbox1)
+       # self.vbox1.pack_start(self.videoinformation, True, True) # 视频高度/宽度
+       # self.vbox1.pack_start(self.audioinformation, True, True) # 音频通道
+       # self.vbox1.pack_start(self.videocodec, False, False) # 视频信息
+       # self.vbox1.pack_start(self.audiocodec, False, False) # 音频信息
+       # self.vbox1.pack_start(self.presetchoice, False, False)
+       # self.vbox1.pack_start(self.containerchoice, False, False)
+       # self.vbox1.pack_start(self.CodecBox, False, False)
+       # self.vbox1.pack_start(self.rotationchoice, False, False)
+       # self.vbox1.pack_start(self.ProgressBar, False, False)
+       # self.vbox1.pack_start(self.hbox_button, False, False)
+       # self.vbox1.pack_start(self.StatusBar, False, False)
+       # self.TopWindow.add(self.vbox1)
        
        def get_file_path_from_dnd_dropped_uri(self, uri):
            # get the path to file
@@ -453,7 +457,7 @@ class TransmageddonUI:
        preset_list = sorted(presets.get().items(),
                             key = (lambda x: x[1].make + x[1].model))
        for x, (name, device) in enumerate(preset_list):
-           print "device:", device
+           # print "device:", device
            self.presetchoice.append_text(str(device))
            devicelist.append(str(device))
            shortname.append(str(name))
@@ -466,7 +470,7 @@ class TransmageddonUI:
 
        self.waiting_for_signal="False"
        
-       self.TopWindow.show_all() # show TopWindow.
+       # self.TopWindow.show_all() # show TopWindow.
        
    # Get all preset values
    def reverse_lookup(self,v):
@@ -875,10 +879,12 @@ class TransmageddonUI:
        # self._transcoder
        new_width, new_height = (int(vwidth), int(vheight))
        model_text = self.form.model_combo.get_active_text()
+       
        if model_text != "No Model":
           new_width, new_height = self.form.model_dict[model_text]
           
-          
+       print "new_width:", new_width   
+       # VIDEOCODECVALUE -->> videocodec   
        transcoder = transcoder_engine.Transcoder(filechoice, self.filename,
                         self.outputdirectory, self.container, audiocodec, 
                         videocodec, self.devicename, 
@@ -1053,13 +1059,17 @@ class TransmageddonUI:
 
        # clean up stuff from previous run
        self.houseclean=True # set this to avoid triggering events when cleaning out menus
-       for c in self.audiocodecs: # 
-           self.audiorows[0].remove_text(0)
+       self.audiorows[0].clear_items()
+       # self.audiorows[0].append_text("")
+       # for c in self.audiocodecs: # 
+       #     self.audiorows[0].remove_text(0)
        self.audiocodecs =[]
        if self.havevideo==True:
            if self.container != False:
-               for c in self.videocodecs:
-                   self.videorows[0].remove_text(0)
+               self.videorows[0].clear_items()
+               # self.videorows[0].append_text("")
+               # for c in self.videocodecs:
+               #     self.videorows[0].remove_text(0)
                self.videocodecs=[]
        self.houseclean=False
       # end of housecleaning
@@ -1182,7 +1192,7 @@ class TransmageddonUI:
    def on_rotationchoice_changed(self, widget, text):
        self.rotationvalue = self.rotationchoice.get_active()
 
-   def on_audiocodec_changed(self, widget):
+   def on_audiocodec_changed(self, widget, text):
        if (self.houseclean == False and self.usingpreset==False):
            self.AudioCodec = self.audiocodecs[self.audiorows[0].get_active()]
            if self.container != False:
@@ -1191,7 +1201,7 @@ class TransmageddonUI:
        elif self.usingpreset==True:
            self.AudioCodec = gst.Caps(self.presetaudiocodec)    
 
-   def on_videocodec_changed(self, widget):
+   def on_videocodec_changed(self, widget, text):
        if (self.houseclean == False and self.usingpreset==False):
            if self.container != False:
                self.VideoCodec = self.videocodecs[self.videorows[0].get_active()]

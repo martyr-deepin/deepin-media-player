@@ -327,10 +327,10 @@ def _load_video_codec(root): # <video>
             codec.container = child.text.strip()
         elif child.tag == "width":
             codec.width = _parse_range(child.text.strip())
-            print "codec.width:", codec.width
+            # print "codec.width:", codec.width
         elif child.tag == "height":
             codec.height = _parse_range(child.text.strip())
-            print "codec.height:", codec.height
+            # print "codec.height:", codec.height
         elif child.tag == "pixelaspectratio": # 
             codec.aspectratio = _parse_range(child.text.strip(), Fraction)
         elif child.tag == "framerate":
@@ -402,7 +402,7 @@ def load(filename):
             device.author = _load_author(child)
         elif child.tag == "version":
             device.version = child.text.strip()
-            print "device.version:", device.version
+            # print "device.version:", device.version
         elif child.tag == "profile": # 
             profile = (_load_preset(child)) #
             device.presets[profile.name] = profile # 
@@ -428,12 +428,12 @@ def load_directory(directory):
         @return: A dictionary of all the loaded devices
     """
     global _presets
-    print "load_directory function:"
-    print "==========================", directory
+    # print "load_directory function:"
+    # print "==========================", directory
     for filename in os.listdir(directory):
         if filename.endswith("xml"):
-            print "filename:", filename
-            print "_preset[filename[:-4]:", os.path.join(directory, filename)
+            # print "filename:", filename
+            # print "_preset[filename[:-4]:", os.path.join(directory, filename)
             _presets[filename[:-4]] = load(os.path.join(directory, filename)) # 
             # /home/long/软件/bin/video_conv/source/src/../profiles/psp [filename]
             # _preset["xml file name"] = directory + filename

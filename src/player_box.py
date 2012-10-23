@@ -987,7 +987,7 @@ class PlayerBox(object):
             conv_video_fiel_list.append(play_list_dict_save[item.title])
             print play_list_dict_save[item.title]
         ########################    
-        conv = TransmageddonUI()
+        conv = TransmageddonUI(conv_video_fiel_list)
 
     
     def add_play_list(self, mplayer, path): # mplayer signal: "add-path"

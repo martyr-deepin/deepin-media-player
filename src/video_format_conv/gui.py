@@ -82,14 +82,14 @@ class Form(DialogBox):
         self.main_fixed = gtk.Fixed()
         self.brand_label = Label("品牌 : ")
         self.format_label = Label("格式 : ")        
-        self.bit_rate_label = Label("码率 : ")
-        self.frame_rate_label = Label("帧率 : ")
+        self.bit_rate_label = Label("音频编码器 : ")
+        self.frame_rate_label = Label("视频编码器 : ")
         self.path_label = Label("路径 : ")
         self.model_label = Label("    型号 : ")
         self.ratio_label = Label("分辨率 : ")        
         
         self.brand_combo = NewComboBox(110) #ComboBox(supported_containers_imtes, 100, max_width=110)
-        self.format_combo = NewComboBox(110) #ComboBox(supported_containers_imtes, 100, max_width=110) # connect 
+        self.format_combo = NewComboBox(110) #ComboBox(supported_containers_imtes, 100, max_width=110) # connect         
         self.bit_rate_combo = NewComboBox(110) #ComboBox(supported_containers_imtes, 100)
         self.frame_rate_combo = NewComboBox(110) #ComboBox(supported_containers_imtes, 100)
         self.path_entry = InputEntry()
@@ -124,6 +124,7 @@ class Form(DialogBox):
         # ratio_combo.
         self.ratio_combo.prepend_text("No Ratio")
         
+        # self.format_combo.set_active(0)        
         # path_entry.
         PATH_ENTRY_WIDTH = 240
         PATH_ENTRY_HEIGHT = 25
