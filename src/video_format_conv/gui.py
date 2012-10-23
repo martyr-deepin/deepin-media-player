@@ -30,28 +30,13 @@ from dtk.ui.button import Button
 from dtk.ui.label import Label
 from dtk.ui.combo import ComboBox
 from new_combobox import NewComboBox
+from read_xml import ReadXml
 
 import gtk
 
 FORM_WIDTH = 465
 FORM_HEIGHT = 280
 
-supported_containers_imtes = [ # supported_containers
-        ["Ogg", 0], 
-        ["Matroska", 1], 
-        ["AVI", 2], 	
-        ["MPEG PS", 3],	
-        ["MPEG TS", 4],	
-        ["AVCHD/BD", 5], 	
-        ["FLV", 6], 	
-        ["Quicktime", 7], 
-        ["MPEG4", 8], 
-        ["3GPP", 9], 
-        ["MXF", 10], 
-        ["ASF", 11], 		
-        ["WebM", 12], 
-        ["No container (Audio-only)", 13]
-        ]
 
 class Form(DialogBox):
     def __init__(self):
@@ -74,6 +59,8 @@ class Form(DialogBox):
         pass
                 
     def init_value(self):
+        self.read_xml = ReadXml("../xml")
+        self.model_dict = {}
         # left.
         self.left_x = 20
         self.left_y = 20
@@ -106,7 +93,7 @@ class Form(DialogBox):
         self.bit_rate_combo = NewComboBox(110) #ComboBox(supported_containers_imtes, 100)
         self.frame_rate_combo = NewComboBox(110) #ComboBox(supported_containers_imtes, 100)
         self.path_entry = InputEntry()
-        self.model_combo = NewComboBox(110) #ComboBox(supported_containers_imtes, 100)        
+        self.model_combo = NewComboBox(110) #ComboBox(supported_containers_imtes, 100)
         self.ratio_combo = NewComboBox(110) #ComboBox(supported_containers_imtes, 100) # Resolution
         
         self.modify_chooser_btn = FileChooserButton("选择") # connect self.FileChooser
@@ -119,6 +106,23 @@ class Form(DialogBox):
         self.align.set(1, 0, 1, 0)
         self.align.set_padding(0, 0, 0, 200)
         self.right_button_box.set_buttons([self.align, self.start_btn, self.close_btn])
+        
+        # brand_combo.
+        brand_items = []
+        i = 0
+        for brand in self.read_xml.brand_dict.keys():
+            brand_items.append((brand, i))
+            i += 1
+            # print brand
+            # self.brand_combo.append_text(brand)
+        self.brand_combo.set_items(brand_items)    
+        self.brand_combo.prepend_text("No Presets")
+        self.brand_combo.connect("changed", self.brand_combo_item_selected)
+        # model_combo.
+        self.model_combo.prepend_text("No Model")
+        self.model_combo.connect("changed", self.model_combo_item_selected)
+        # ratio_combo.
+        self.ratio_combo.prepend_text("No Ratio")
         
         # path_entry.
         PATH_ENTRY_WIDTH = 240
@@ -156,6 +160,37 @@ class Form(DialogBox):
         self.body_box.pack_start(self.main_fixed, True, True)            
         self.hide_setting()
                 
+    def brand_combo_item_selected(self, combo, item_content):
+        self.model_combo.clear_items()
+        self.ratio_combo.clear_items()
+        if item_content != "No Presets":
+            # print "item_value:", self.read_xml.brand_dict[item_content]
+            self.model_dict = self.read_xml.load(self.read_xml.brand_dict[item_content])
+            # print 'self.model_dict:', self.model_dict
+            if self.model_dict != {}:
+                model_items = []
+                i = 0
+                for model in self.model_dict:            
+                    # self.model_combo.append_text(model)
+                    model_items.append((model, i))
+                    i += 1
+                self.model_combo.set_items(model_items)    
+                self.model_combo.droplist.set_size_request(-1, self.model_combo.droplist_height)
+                self.model_combo.set_active(0)
+            else:    
+                self.model_combo.append_text("No Model")
+                self.ratio_combo.append_text("No Ratio")    
+        else:        
+            # clear model and ratio all text.
+            self.model_combo.append_text("No Model")
+            self.ratio_combo.append_text("No Ratio")    
+            
+    def model_combo_item_selected(self, combo, item_content):        
+        if len(item_content):
+            width, height = self.model_dict[item_content]
+            self.ratio_combo.clear_items()
+            self.ratio_combo.prepend_text("%s x %s"%(width, height))
+        
     def higt_set_btn_clicked(self, widget):    
         if self.higt_set_bool:
             self.hide_setting()

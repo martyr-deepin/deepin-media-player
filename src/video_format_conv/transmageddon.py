@@ -239,12 +239,12 @@ class TransmageddonUI:
        # self.CodecBox = self.builder.get_object("CodecBox")
        self.CodecBox = gtk.Table() 
        # self.presetchoice = self.builder.get_object("presetchoice")
-       # self.presetsmodel = gtk.ListStore(gobject.TYPE_STRING)
-       # self.presetchoice = gtk.ComboBox(self.presetsmodel)
-       self.presetchoice = self.form.brand_combo # NewComboBox(110)
-       # self.cellrenderertext1 = gtk.CellRendererText()
-       # self.presetchoice.pack_start(self.cellrenderertext1, True)
-       # self.presetchoice.add_attribute(self.cellrenderertext1, 'text', 0)
+       self.presetsmodel = gtk.ListStore(gobject.TYPE_STRING)
+       self.presetchoice = gtk.ComboBox(self.presetsmodel)
+       # self.presetchoice = self.form.brand_combo # NewComboBox(110)
+       self.cellrenderertext1 = gtk.CellRendererText()
+       self.presetchoice.pack_start(self.cellrenderertext1, True)
+       self.presetchoice.add_attribute(self.cellrenderertext1, 'text', 0)
        # self.containerchoice = self.builder.get_object("containerchoice")
        # self.containerchoice = gtk.ListStore(gobject.TYPE_STRING)       
        # self.containerchoice = gtk.ComboBox(self.containerchoice)
@@ -309,8 +309,8 @@ class TransmageddonUI:
        self.vbox1.pack_start(self.audioinformation, True, True) # 音频通道
        self.vbox1.pack_start(self.videocodec, False, False) # 视频信息
        self.vbox1.pack_start(self.audiocodec, False, False) # 音频信息
-       # self.vbox1.pack_start(self.presetchoice, False, False)
-       # self.vbox1.pack_start(self.containerchoice, False, False)
+       self.vbox1.pack_start(self.presetchoice, False, False)
+       self.vbox1.pack_start(self.containerchoice, False, False)
        self.vbox1.pack_start(self.CodecBox, False, False)
        self.vbox1.pack_start(self.rotationchoice, False, False)
        self.vbox1.pack_start(self.ProgressBar, False, False)
@@ -1119,7 +1119,7 @@ class TransmageddonUI:
                        self.audiocodecs.append("pass")
                        self.audiopassmenuno=(len(self.audiocodecs))-1
 
-   def on_containerchoice_changed(self, widget):
+   def on_containerchoice_changed(self, widget, text):
        self.CodecBox.set_sensitive(True)
        self.ProgressBar.set_fraction(0.0)
        self.ProgressBar.set_text(_("Transcoding Progress"))
@@ -1172,7 +1172,7 @@ class TransmageddonUI:
                self.transcodebutton.set_sensitive(True)
            print "======================================="    
            
-   def on_rotationchoice_changed(self, widget):
+   def on_rotationchoice_changed(self, widget, text):
        self.rotationvalue = self.rotationchoice.get_active()
 
    def on_audiocodec_changed(self, widget):
