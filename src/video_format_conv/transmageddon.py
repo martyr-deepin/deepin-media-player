@@ -162,6 +162,7 @@ class TransmageddonUI:
        self.form.hide_setting()      
        # conv task list.
        self.conv_list = conv_list
+       self.conv_dict = {} # save conv state{filename, self.audiodata...}.
        # Transmageddon conv task list init.
        self.conv_task_gui = ConvTAskGui() # task list gui.
        self.conv_task_gui.start_btn.connect("clicked", self.conv_task_gui_start_btn_clicked)
@@ -470,8 +471,15 @@ class TransmageddonUI:
 
        self.waiting_for_signal="False"
        
-       # self.TopWindow.show_all() # show TopWindow.
+       self.TopWindow.show_all() # show TopWindow.
        
+       for conv in self.conv_list:
+          self.FileChooser.set_filename(conv)
+          self.push_all(conv)
+          
+       # for key in self.conv_dict.keys():
+          # print "key:", self.conv_dict[key]
+          
    # Get all preset values
    def reverse_lookup(self,v):
        for k in codecfinder.codecmap:
@@ -479,19 +487,19 @@ class TransmageddonUI:
                return k
 
    def provide_presets(self, devicename):  #
-       print "provide_presets:"
+       # print "provide_presets:"
        devices = presets.get() # presets.py return _presets
-       print "devices:", devices
+       # print "devices:", devices
        device = devices[devicename]
-       print "device:", device
+       # print "device:", device
        preset = device.presets["Normal"] # get { container, videc , audec, extension... } 
-       print "preset:", preset.vcodec.width # test input.
+       # print "preset:", preset.vcodec.width # test input.
        self.usingpreset=True
        self.containerchoice.set_active(-1) # resetting to -1 to ensure population of menu triggers
        self.presetaudiocodec = preset.acodec.name
-       print "self.presetaudiocodec", self.presetaudiocodec
+       # print "self.presetaudiocodec", self.presetaudiocodec
        self.presetvideocodec = preset.vcodec.name
-       print "self.presetvideocodec:", self.presetvideocodec
+       # print "self.presetvideocodec:", self.presetvideocodec
        if preset.container == "application/ogg":
            self.containerchoice.set_active(0)
        elif preset.container == "video/x-matroska":
@@ -784,11 +792,10 @@ class TransmageddonUI:
                
    # define the behaviour of the other buttons
    def on_FileChooser_file_set(self, widget, filename, uri):
-       print "on_FileChooser_file_set:"
-       # self.filename = self.builder.get_object ("FileChooser").get_filename()
+       # print "on_FileChooser_file_set:"
        self.form.path_entry.set_text(filename) # 现实完整路径
        self.filename = self.FileChooser.get_filename()
-       print "self.filename:", self.filename
+       # print "self.filename:", self.filename
        self.audiodata = {}
        if self.filename is not None: 
            self.haveaudio=False #make sure to reset these for each file
@@ -809,6 +816,25 @@ class TransmageddonUI:
                self.nocontaineroptiontoggle=False
            self.containerchoice.set_sensitive(True)
 
+   def push_all(self, key):        
+      self.conv_dict[key] = (self.filename, 
+                             self.audiodata,
+                             self.haveaudio,
+                             self.havevideo,
+                             self.discovered,
+                             self.nocontaineroptiontoggle,
+                             self.bogus
+                             )
+               
+   def pop_all(self, key):   
+      self.filename = self.conv_dict[key][0]
+      self.audiodata = self.conv_dict[key][1]
+      self.haveaudio = self.conv_dict[key][2]
+      self.havevideo = self.conv_dict[key][3]
+      self.discovered = self.conv_dict[key][4]
+      self.nocontaineroptiontoggle = self.conv_dict[key][5]
+      self.bogus = self.conv_dict[key][6]
+      
    def conv_task_gui_start_btn_clicked(self, widget):      
       # ??
       self.start_conv_function()
@@ -834,8 +860,6 @@ class TransmageddonUI:
       self.conv_task_gui.list_view.items[self.task_index].set_status_icon("wait")
       
    def _start_transcoding(self): 
-       # filechoice = self.builder.get_object ("FileChooser").get_uri()
-       # self.filename = self.builder.get_object ("FileChooser").get_filename()
        filechoice = self.FileChooser.get_uri()
        self.filename = self.FileChooser.get_filename()
        
@@ -869,36 +893,31 @@ class TransmageddonUI:
            audiocodec=False
            achannels=False
 
-       # print "transcoder values - filechoice: " + str(filechoice) + " - filename: " + str(self.filename) + " - outputdirectory: " + str(self.outputdirectory) + " - self.container: " + str(self.container) + " - audiocodec: " + str(audiocodec) + " - videocodec: " + str(videocodec), " -self.devicename: " + str(self.devicename) + "- vheight:" + str(vheight), " - vwidth: " + str(vwidth) + " - achannels: " + str(achannels) + " - self.multipass " + str(self.multipass) + " - self.passcounter: " + str(self.passcounter) + " -self.outputfilename: " + str(self.outputfilename) + " - self.timestamp: " + str(self.timestamp) + " - self.rotationvalue: " + str(self.rotationvalue) + " - self.audiopasstoggle: " + str(self.audiopasstoggle) + " - self.videopasstoggle: " + str(self.videopasstoggle) + " - self.interlaced: " + str(self.interlaced) + " - self.inputvideocaps: " + str(self.inputvideocaps)
-       # print "*****************************************"
-       # print "vheight:", vheight
-       # print "vwidth:", vwidth
-       # print "ratenum:", ratenum
-       # print "ratednom:", ratednom
-       # print "*****************************************"
-       # self._transcoder
        new_width, new_height = (int(vwidth), int(vheight))
        model_text = self.form.model_combo.get_active_text()
        
        if model_text != "No Model":
           new_width, new_height = self.form.model_dict[model_text]
           
-       print "new_width:", new_width   
-       # VIDEOCODECVALUE -->> videocodec   
-       transcoder = transcoder_engine.Transcoder(filechoice, self.filename,
-                        self.outputdirectory, self.container, audiocodec, 
-                        videocodec, self.devicename, 
-                        vheight, vwidth, ratenum, ratednom, achannels, 
-                        self.multipass, self.passcounter, self.outputfilename,
-                        self.timestamp, self.rotationvalue, self.audiopasstoggle, 
-                        self.videopasstoggle, self.interlaced, self.inputvideocaps, int(new_width), int(new_height))
-        
-       # transcoder.connect("ready-for-querying", self.ProgressBarUpdate)
-       # transcoder.connect("got-eos", self._on_eos)
-       # transcoder.connect("got-error", self.show_error)       
-       
-       self.task_list.append(transcoder)
-       self.conv_task_gui.list_view.add_items([MediaItem()])
+       import urllib
+       for conv in self.conv_list:   
+          filechoice = "file://" + urllib.quote(conv)
+          self.filename = conv
+          self.outputfilename = str(len(conv)) + self.outputfilename
+          
+          transcoder = transcoder_engine.Transcoder(
+                           filechoice, self.filename,
+                           self.outputdirectory, self.container, audiocodec, 
+                           videocodec, self.devicename, 
+                           vheight, vwidth, ratenum, ratednom, achannels, 
+                           self.multipass, self.passcounter, self.outputfilename,
+                           self.timestamp, self.rotationvalue, self.audiopasstoggle, 
+                           self.videopasstoggle, self.interlaced, self.inputvideocaps, 
+                           int(new_width), int(new_height))
+               
+          self.task_list.append(transcoder)
+          self.conv_task_gui.list_view.add_items([MediaItem()])
+          
        self.conv_task_gui.show_all()
        
        return True
@@ -989,12 +1008,6 @@ class TransmageddonUI:
    # starts the transcoding
    def on_transcodebutton_clicked(self, widget): # 确定按钮 事件.
        self.containertoggle = False
-       # self.FileChooser.set_sensitive(False)
-       # self.containerchoice.set_sensitive(False)
-       # self.presetchoice.set_sensitive(False)
-       # self.CodecBox.set_sensitive(False)
-       # self.transcodebutton.set_sensitive(False)
-       # self.rotationchoice.set_sensitive(False)
        self.cancelbutton.set_sensitive(True)
        # self.ProgressBar.set_fraction(0.0)
        # create a variable with a timestamp code
@@ -1177,9 +1190,9 @@ class TransmageddonUI:
            self.usingpreset=True
            self.ProgressBar.set_fraction(0.0)
            self.devicename = self.presetchoices[presetchoice]
-           print "======================================"
-           print "on_presetchoice_changed:"
-           print "self.devicename", self.devicename
+           # print "======================================"
+           # print "on_presetchoice_changed:"
+           # print "self.devicename", self.devicename
            self.provide_presets(self.devicename)
            self.containerchoice.set_sensitive(False)
            self.CodecBox.set_sensitive(False)
@@ -1187,7 +1200,7 @@ class TransmageddonUI:
            # if self.builder.get_object("containerchoice").get_active_text():
            if self.containerchoice.get_active_text():
                self.transcodebutton.set_sensitive(True)
-           print "======================================="    
+           # print "======================================="    
            
    def on_rotationchoice_changed(self, widget, text):
        self.rotationvalue = self.rotationchoice.get_active()

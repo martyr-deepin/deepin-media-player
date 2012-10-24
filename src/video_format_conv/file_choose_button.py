@@ -38,6 +38,12 @@ class FileChooserButton(Button):
         # button connect signal (clicked).
         self.connect("clicked", self.fil_choose_button_clicked)
         
+    def set_filename(self, filename):    
+        import urllib
+        self.uri = "file://" + urllib.quote(filename)
+        self.filename = filename
+        self.emit("changed", self.filename, self.uri)
+        
     def fil_choose_button_clicked(self, widget):    
         '''button clicked event connect function'''
         dialog = gtk.FileChooserDialog("Select Files",
@@ -52,7 +58,7 @@ class FileChooserButton(Button):
         if res == gtk.RESPONSE_OK:
             # self.set_label(dialog.get_filename()) # set button label.
             self.filename = dialog.get_filename() # save filename.
-            self.uri = dialog.get_uri() # save uri.            
+            self.uri = dialog.get_uri() # save uri.
             self.emit("changed", self.filename, self.uri)
         dialog.destroy() # destroy select file of dialog window.
         
