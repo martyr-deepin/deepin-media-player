@@ -33,6 +33,7 @@ from new_combobox import NewComboBox
 from read_xml import ReadXml
 
 import gtk
+import os
 
 FORM_WIDTH = 465
 FORM_HEIGHT = 280
@@ -84,19 +85,21 @@ class Form(DialogBox):
         self.format_label = Label("格式 : ")        
         self.bit_rate_label = Label("音频编码器 : ")
         self.frame_rate_label = Label("视频编码器 : ")
-        self.path_label = Label("路径 : ")
+        self.path_label = Label("输出目录 : ")
         self.model_label = Label("    型号 : ")
         self.ratio_label = Label("分辨率 : ")        
         
+        self.path_entry = InputEntry()
+        self.save_path_entry = InputEntry()
         self.brand_combo = NewComboBox(110) #ComboBox(supported_containers_imtes, 100, max_width=110)
         self.format_combo = NewComboBox(110) #ComboBox(supported_containers_imtes, 100, max_width=110) # connect         
         self.bit_rate_combo = NewComboBox(110) #ComboBox(supported_containers_imtes, 100)
-        self.frame_rate_combo = NewComboBox(110) #ComboBox(supported_containers_imtes, 100)
-        self.path_entry = InputEntry()
+        self.frame_rate_combo = NewComboBox(110) #ComboBox(supported_containers_imtes, 100)        
         self.model_combo = NewComboBox(110) #ComboBox(supported_containers_imtes, 100)
         self.ratio_combo = NewComboBox(110) #ComboBox(supported_containers_imtes, 100) # Resolution
         
         self.modify_chooser_btn = FileChooserButton("选择") # connect self.FileChooser
+        self.save_chooser_btn = Button("更改")
         self.start_btn = Button("开始")
         self.close_btn = Button("关闭")
         self.higt_set_bool = False
@@ -123,13 +126,15 @@ class Form(DialogBox):
         self.model_combo.connect("changed", self.model_combo_item_selected)
         # ratio_combo.
         self.ratio_combo.prepend_text("No Ratio")
+        self.save_chooser_btn.connect("clicked", self.save_chooser_btn_clicked)
         
         # self.format_combo.set_active(0)        
         # path_entry.
         PATH_ENTRY_WIDTH = 240
         PATH_ENTRY_HEIGHT = 25
-        self.path_entry.set_sensitive(False)
-        self.path_entry.set_size(PATH_ENTRY_WIDTH, PATH_ENTRY_HEIGHT)
+        self.save_path_entry.set_sensitive(False)
+        self.save_path_entry.set_text(self.get_home_path())
+        self.save_path_entry.set_size(PATH_ENTRY_WIDTH, PATH_ENTRY_HEIGHT)
         self.close_btn.connect("clicked", lambda w : self.destroy())
         # higt_set_btn.
         self.higt_set_btn.connect("clicked", self.higt_set_btn_clicked)
@@ -138,10 +143,11 @@ class Form(DialogBox):
         #
         self.left_widgets = [self.brand_label, self.brand_combo, self.format_label, self.format_combo,
                              self.bit_rate_label, self.bit_rate_combo, self.frame_rate_label, self.frame_rate_combo,
-                             self.path_label, self.path_entry, self.modify_chooser_btn]
+                             self.path_label, self.save_path_entry, self.save_chooser_btn]
         # add left widgets.
         for widget in self.left_widgets:
-            self.main_fixed.put(widget, 0, 0)
+            if widget:
+                self.main_fixed.put(widget, 0, 0)
         #    
         self.right_widgets = [(self.model_label, self.model_combo),
                               (self.ratio_label, self.ratio_combo)]
@@ -161,6 +167,33 @@ class Form(DialogBox):
         self.body_box.pack_start(self.main_fixed, True, True)            
         self.hide_setting()
                 
+    def get_home_path(self):
+        return os.path.expanduser("~")
+        
+    def save_chooser_btn_clicked(self, widget):    
+        '''保存目录... ...'''
+        self.show_open_dir_dialog_window()
+        
+    def show_open_dir_dialog_window(self):
+        open_dialog = gtk.FileChooserDialog(
+                         "选择目录",
+                         None,
+                         gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER,
+                         (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
+                          gtk.STOCK_OPEN, gtk.RESPONSE_OK)
+                         )        
+        # current floader set.
+        open_dialog.set_current_folder(self.get_home_path())
+        # run dir dialog window.
+        res = open_dialog.run()
+        
+        if res == gtk.RESPONSE_OK:
+            path_string = open_dialog.get_filename()
+            if path_string:
+                self.save_path_entry.set_text(path_string)
+        # destroy dialog window.        
+        open_dialog.destroy()       
+    
     def brand_combo_item_selected(self, combo, item_content):
         self.model_combo.clear_items()
         self.ratio_combo.clear_items()
@@ -234,7 +267,7 @@ class Form(DialogBox):
         #     
         self.left_widgets = [(self.brand_label, self.brand_combo, None),
                              (self.format_label, self.format_combo, None),
-                             (self.path_label, self.path_entry, self.modify_chooser_btn),
+                             (self.path_label, self.save_path_entry, self.save_chooser_btn),
                              ]
         
         self.move_left_widgets()        
@@ -249,7 +282,7 @@ class Form(DialogBox):
                              (self.format_label, self.format_combo, None),
                              (self.bit_rate_label, self.bit_rate_combo, None),
                              (self.frame_rate_label, self.frame_rate_combo, None),
-                             (self.path_label, self.path_entry, self.modify_chooser_btn),
+                             (self.path_label, self.save_path_entry, self.save_chooser_btn),
                              ]
         self.move_left_widgets()
         self.show_all()

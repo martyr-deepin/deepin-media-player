@@ -471,7 +471,7 @@ class TransmageddonUI:
 
        self.waiting_for_signal="False"
        
-       self.TopWindow.show_all() # show TopWindow.
+       # self.TopWindow.show_all() # show TopWindow.
        
        for conv in self.conv_list:
           self.FileChooser.set_filename(conv)
@@ -900,10 +900,18 @@ class TransmageddonUI:
           new_width, new_height = self.form.model_dict[model_text]
           
        import urllib
+       # get set output path.
+       out_path = self.form.save_path_entry.get_text()       
+       if not len(out_path):
+          out_path = os.path.expanduser("~")
+       print "out_path:", out_path
+       self.outputdirectory = out_path # output path.   
+       # add conv task.
        for conv in self.conv_list:   
           filechoice = "file://" + urllib.quote(conv)
-          self.filename = conv
-          self.outputfilename = str(len(conv)) + self.outputfilename
+          self.filename = conv                    
+          name = os.path.splitext(os.path.split(conv)[1])[0]
+          self.outputfilename =  name + self.outputfilename
           
           transcoder = transcoder_engine.Transcoder(
                            filechoice, self.filename,
