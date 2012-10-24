@@ -157,16 +157,17 @@ supported_audio_container_map = {
 class TransmageddonUI:
    """This class loads the GtkBuilder file of the UI"""
    def __init__(self, conv_list=[]):
-       self.form = Form()
-       self.form.show_all()
+       self.form = Form()              
+       self.form.show_all()       
        self.form.hide_setting()      
+       self.form.show_and_hide_task_btn.connect("clicked", self.conv_task_gui_show_and_hide_task_btn_clicked)
        # conv task list.
        self.conv_list = conv_list
        self.conv_dict = {} # save conv state{filename, self.audiodata...}.
        # Transmageddon conv task list init.
        self.conv_task_gui = ConvTAskGui() # task list gui.
        self.conv_task_gui.start_btn.connect("clicked", self.conv_task_gui_start_btn_clicked)
-       self.conv_task_gui.pause_btn.connect("clicked", self.conv_task_gui_pause_btn_clicked)
+       self.conv_task_gui.pause_btn.connect("clicked", self.conv_task_gui_pause_btn_clicked)       
        self.task_list = []
        self.task_index = 0
        #Set up i18n
@@ -835,6 +836,12 @@ class TransmageddonUI:
       self.nocontaineroptiontoggle = self.conv_dict[key][5]
       self.bogus = self.conv_dict[key][6]
       
+   def conv_task_gui_show_and_hide_task_btn_clicked(self, widget):   
+      if not self.conv_task_gui.get_visible():
+         self.conv_task_gui.show_all()
+      else:   
+         self.conv_task_gui.hide_all()
+      
    def conv_task_gui_start_btn_clicked(self, widget):      
       # ??
       self.start_conv_function()
@@ -906,12 +913,14 @@ class TransmageddonUI:
           out_path = os.path.expanduser("~")
        print "out_path:", out_path
        self.outputdirectory = out_path # output path.   
+       # _format = self.outputfilename[-3:]
        # add conv task.
-       for conv in self.conv_list:   
+       for conv in self.conv_list:             
           filechoice = "file://" + urllib.quote(conv)
           self.filename = conv                    
           name = os.path.splitext(os.path.split(conv)[1])[0]
-          self.outputfilename =  name + self.outputfilename
+          name_time = datetime.datetime.now()
+          self.outputfilename =  name + "-LD-%s." % (name_time) + self.container
           
           transcoder = transcoder_engine.Transcoder(
                            filechoice, self.filename,
@@ -921,10 +930,13 @@ class TransmageddonUI:
                            self.multipass, self.passcounter, self.outputfilename,
                            self.timestamp, self.rotationvalue, self.audiopasstoggle, 
                            self.videopasstoggle, self.interlaced, self.inputvideocaps, 
-                           int(new_width), int(new_height))
-               
+                           int(new_width), int(new_height))          
+          
           self.task_list.append(transcoder)
-          self.conv_task_gui.list_view.add_items([MediaItem()])
+          media_item = MediaItem()
+          media_item.set_name(name)
+          media_item.set_format(self.container)
+          self.conv_task_gui.list_view.add_items([media_item])
           
        self.conv_task_gui.show_all()
        

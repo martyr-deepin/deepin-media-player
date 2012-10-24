@@ -24,5 +24,5 @@ if __name__ == "__main__":
     # #
     # win.add(btn)
     # win.show_all()
-    hwg = TransmageddonUI(["/home/long/视频/色拉英语乐园/色拉英语乐园-第2集.rmvb"])
+    hwg = TransmageddonUI(["/home/howl/123.rmvb"])
     gtk.main()

@@ -989,7 +989,21 @@ class PlayerBox(object):
         ########################    
         conv = TransmageddonUI(conv_video_fiel_list)
 
-    
+    def open_conv_dialog_window(self):
+        open_dialog = gtk.FileChooserDialog("选择转换文件",
+                                            None,
+                                            gtk.FILE_CHOOSER_ACTION_OPEN,
+                                            (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
+                                             gtk.STOCK_OPEN, gtk.RESPONSE_OK))
+        open_dialog.set_current_folder(get_home_path())
+        res = open_dialog.run()
+        
+        if res == gtk.RESPONSE_OK:
+            path_string = open_dialog.get_filename()
+            if path_string:
+                TransmageddonUI([path_string])
+        open_dialog.destroy()       
+        
     def add_play_list(self, mplayer, path): # mplayer signal: "add-path"
         '''Play list add play file timeout.[100-1028 a play file].'''
         if self.add_play_list_length_id:
@@ -2357,6 +2371,7 @@ class PlayerBox(object):
                                      (menu_volume_pixbufs, _("Audio"), self.volume_menu),
                                      # (None, "字幕", self.subtitle_menu),
                                      (None, _("Take Screenshots"), self.sort_menu),
+                                     (None, "格式转换", self.open_conv_dialog_window),
                                      (None, _("New Features"), init_user_guide),
                                      (menu_setting_pixbufs, _("Preferences"), self.config_gui),
                                      # (None, "总在最前", None),

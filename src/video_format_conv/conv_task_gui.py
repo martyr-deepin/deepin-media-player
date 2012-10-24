@@ -75,6 +75,10 @@ class MediaItem(gobject.GObject):
         self.update()
         self.index = None
         
+    def set_name(self, name):    
+        self.name = name
+        self.emit_redraw_request()
+        
     def set_text(self, text):
         if text == "Done Transcoding":
             self.set_status_icon("success")
@@ -87,6 +91,10 @@ class MediaItem(gobject.GObject):
         if 0.0 <= value <= 1.0:
             self.progress_ratio = value
             self.emit_redraw_request()
+        
+    def set_format(self, _format):        
+        self.format = _format
+        self.emit_redraw_request()
         
     def set_status_icon(self, name):
         if name == "wait":
@@ -119,11 +127,13 @@ class MediaItem(gobject.GObject):
         '''Emit redraw-request signal.'''
         self.emit("redraw-request")
         
-    def update(self, title="icon_pixbuf", length="progress_buffer"):
+    def update(self, title="icon_pixbuf", name="Linux deepin", length="progress_buffer", _format="rmvb"):
         '''Update.'''
         # Update.
         self.title = title
+        self.name = name
         self.length = length
+        self.format = _format
         
         # Calculate item size.
         self.title_padding_x = 10
@@ -131,10 +141,20 @@ class MediaItem(gobject.GObject):
         (self.title_width, self.title_height) = get_content_size(self.title, DEFAULT_FONT_SIZE) #DEFAULT_FONT_SIZE
         self.title_width = 20
         
-        self.length_padding_x = 20
+        self.name_padding_x = 10
+        self.name_padding_y = 5
+        (self.name_width, self.name_height) = get_content_size(self.name, DEFAULT_FONT_SIZE) #DEFAULT_FONT_SIZE
+        self.name_width = 50
+        
+        self.length_padding_x = 50
         self.length_padding_y = 5
         (self.length_width, self.length_height) = get_content_size(self.length, DEFAULT_FONT_SIZE) #DEFAULT_FONT_SIZE
-        self.length_width = 150
+        self.length_width = 30
+        
+        self.format_padding_x = 10
+        self.format_padding_y = 5
+        (self.format_width, self.format_height) = get_content_size(self.format, DEFAULT_FONT_SIZE) #DEFAULT_FONT_SIZE
+        self.format_width = 30
         
         # ProgressBar buffer.
         self.progress_ratio = 0.0
@@ -176,7 +196,14 @@ class MediaItem(gobject.GObject):
             draw_pixbuf(cr, self.status_icon_press, icon_x, icon_y)
         else:    
             draw_pixbuf(cr, self.status_icon, icon_x, icon_y)
-
+        
+    def render_name(self, cr, rect, in_selection, in_highlight):            
+        rect.x += self.name_padding_x
+        draw_text(cr, self.name, 
+                  rect.x, rect.y, rect.width, rect.height, 
+                  DEFAULT_FONT_SIZE, "#000000", 
+                  alignment=ALIGN_START)
+        
         
     def render_length(self, cr, rect, in_selection, in_highlight):
         '''Render length.'''
@@ -186,19 +213,32 @@ class MediaItem(gobject.GObject):
         progress_y = rect.y + (rect.height - self.progress_h) / 2
         progress_rect = gtk.gdk.Rectangle(progress_x, progress_y, self.progress_w, self.progress_h)
         self.progress_buffer.render(cr, progress_rect)        
-                
+        
+    def render_format(self, cr, rect, in_selection, in_highlight):
+        rect.x += self.format_padding_x
+        draw_text(cr, self.format, 
+                  rect.x, rect.y, rect.width, rect.height, 
+                  DEFAULT_FONT_SIZE, "#000000", 
+                  alignment=ALIGN_START)
+        
     def get_column_sizes(self):
         '''Get sizes.'''
         return [(self.title_width + self.title_padding_x * 2, 
                  self.title_height + self.title_padding_y * 2),
+                (self.name_width + self.name_padding_x * 2,                 
+                 self.name_height + self.name_padding_y * 2),                
                 (self.length_width + self.length_padding_x * 2,                 
                  self.length_height + self.length_padding_y * 2),
+                (self.format_width + self.format_padding_x * 2,  
+                 self.format_height + self.format_padding_y * 2),                                                
                 ]    
     
     def get_renders(self):
         '''Get render callbacks.'''
         return [self.render_title,
-                self.render_length]
+                self.render_name,
+                self.render_length,
+                self.render_format]
         
 if __name__ == "__main__":
     value = 0.01

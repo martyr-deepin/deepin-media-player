@@ -81,12 +81,12 @@ class Form(DialogBox):
         self.connect("destroy", lambda w : self.destroy())
         # Init widgets.
         self.main_fixed = gtk.Fixed()
-        self.brand_label = Label("品牌 : ")
-        self.format_label = Label("格式 : ")        
+        self.brand_label = Label("手机品牌 : ")
+        self.format_label = Label("输出格式 : ")        
         self.bit_rate_label = Label("音频编码器 : ")
         self.frame_rate_label = Label("视频编码器 : ")
         self.path_label = Label("输出目录 : ")
-        self.model_label = Label("    型号 : ")
+        self.model_label = Label("手机型号 : ")
         self.ratio_label = Label("分辨率 : ")        
         
         self.path_entry = InputEntry()
@@ -104,11 +104,19 @@ class Form(DialogBox):
         self.close_btn = Button("关闭")
         self.higt_set_bool = False
         self.higt_set_btn = Button("高级")
-        self.align = gtk.Alignment()
-        self.align.add(self.higt_set_btn)
-        self.align.set(1, 0, 1, 0)
-        self.align.set_padding(0, 0, 0, 200)
-        self.right_button_box.set_buttons([self.align, self.start_btn, self.close_btn])
+        self.show_and_hide_task_btn = Button("任务管理器")
+        
+        self.higt_hbox = gtk.HBox()
+        self.higt_hbox.pack_start(self.higt_set_btn)
+        self.higt_hbox.pack_start(self.show_and_hide_task_btn)
+        
+        self.higt_align = gtk.Alignment()
+        # self.align.add(self.higt_set_btn)
+        self.higt_align.add(self.higt_hbox)
+        self.higt_align.set(1, 0, 1, 0)
+        self.higt_align.set_padding(0, 0, 0, 113)
+        
+        self.right_button_box.set_buttons([self.higt_align, self.start_btn, self.close_btn])
         
         # brand_combo.
         brand_items = []
