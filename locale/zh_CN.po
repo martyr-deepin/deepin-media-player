@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-25 10:42+0800\n"
+"POT-Creation-Date: 2012-10-25 17:35+0800\n"
 "PO-Revision-Date: 2012-07-12 15:53+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -131,7 +131,7 @@ msgid "About us"
 msgstr "关于我们"
 
 #: ../src/ini_gui.py:155 ../src/scan_subtitles.py:377
-#: ../src/video_format_conv/gui.py:106 ../src/subtitle/scan_subtitles.py:378
+#: ../src/video_format_conv/gui.py:138 ../src/subtitle/scan_subtitles.py:378
 msgid "Close"
 msgstr "关闭"
 
@@ -651,7 +651,7 @@ msgid "Task Manager for format conversion"
 msgstr "格式转换任务管理器"
 
 #: ../src/video_format_conv/conv_task_gui.py:65
-#: ../src/video_format_conv/gui.py:105
+#: ../src/video_format_conv/gui.py:137
 msgid "Start"
 msgstr "开始"
 
@@ -660,49 +660,311 @@ msgid "Format converter"
 msgstr "格式转换器"
 
 #: ../src/video_format_conv/gui.py:86
+msgid "intel"
+msgstr "英特尔"
+
+#: ../src/video_format_conv/gui.py:86
+msgid "zte"
+msgstr "中兴"
+
+#: ../src/video_format_conv/gui.py:86
+msgid "hasee"
+msgstr "神舟"
+
+#: ../src/video_format_conv/gui.py:87
+msgid "apple"
+msgstr "苹果"
+
+#: ../src/video_format_conv/gui.py:87
+msgid "nokia"
+msgstr "诺基亚"
+
+#: ../src/video_format_conv/gui.py:87
+msgid "alcatel"
+msgstr "阿尔卡特"
+
+#: ../src/video_format_conv/gui.py:88
+msgid "google"
+msgstr "谷歌"
+
+#: ../src/video_format_conv/gui.py:88
+msgid "asus"
+msgstr "华硕"
+
+#: ../src/video_format_conv/gui.py:88
+msgid "hp"
+msgstr "惠普"
+
+#: ../src/video_format_conv/gui.py:89
+msgid "sony"
+msgstr "索尼"
+
+#: ../src/video_format_conv/gui.py:89
+msgid "hedy"
+msgstr "七喜"
+
+#: ../src/video_format_conv/gui.py:90
+msgid "archos"
+msgstr "爱可视"
+
+#: ../src/video_format_conv/gui.py:90
+msgid "boway"
+msgstr "邦华"
+
+#: ../src/video_format_conv/gui.py:90
+msgid "bird"
+msgstr "波导"
+
+#: ../src/video_format_conv/gui.py:91
+msgid "vivo"
+msgstr "步步高"
+
+#: ../src/video_format_conv/gui.py:91
+msgid "great wall"
+msgstr "长城"
+
+#: ../src/video_format_conv/gui.py:91
+msgid "changhong"
+msgstr "长虹"
+
+#: ../src/video_format_conv/gui.py:92
+msgid "skyworth"
+msgstr "创维"
+
+#: ../src/video_format_conv/gui.py:92
+msgid "dell"
+msgstr "戴尔"
+
+#: ../src/video_format_conv/gui.py:92
+msgid "philips"
+msgstr "飞利浦"
+
+#: ../src/video_format_conv/gui.py:93
+msgid "toshiba"
+msgstr "东芝"
+
+#: ../src/video_format_conv/gui.py:93
+msgid "amazon"
+msgstr "亚马逊"
+
+#: ../src/video_format_conv/gui.py:93
+msgid "sdo"
+msgstr "盛大"
+
+#: ../src/video_format_conv/gui.py:94
+msgid "disney"
+msgstr "迪士尼"
+
+#: ../src/video_format_conv/gui.py:94
+msgid "haier"
+msgstr "海尔"
+
+#: ../src/video_format_conv/gui.py:94
+msgid "fujitsu"
+msgstr "富士通"
+
+#: ../src/video_format_conv/gui.py:95
+msgid "acer"
+msgstr "宏碁"
+
+#: ../src/video_format_conv/gui.py:95
+msgid "lenovo"
+msgstr "联想"
+
+#: ../src/video_format_conv/gui.py:95
+msgid "gigabyte"
+msgstr "技嘉"
+
+#: ../src/video_format_conv/gui.py:96
+msgid "xiaomi"
+msgstr "小米"
+
+#: ../src/video_format_conv/gui.py:96
+msgid "huawei"
+msgstr "华为"
+
+#: ../src/video_format_conv/gui.py:96
+msgid "blackberry"
+msgstr "黑莓"
+
+#: ../src/video_format_conv/gui.py:97
+msgid "motorola"
+msgstr "摩托罗拉"
+
+#: ../src/video_format_conv/gui.py:97
+msgid "sangsung"
+msgstr "三星"
+
+#: ../src/video_format_conv/gui.py:97
+msgid "meizu "
+msgstr "魅族"
+
+#: ../src/video_format_conv/gui.py:98
+msgid "benq"
+msgstr "明基"
+
+#: ../src/video_format_conv/gui.py:98
+msgid "panasonic"
+msgstr "松下"
+
+#: ../src/video_format_conv/gui.py:98
+msgid "sony ericsson"
+msgstr "索爱"
+
+#: ../src/video_format_conv/gui.py:99
+msgid "pioneer"
+msgstr "先锋"
+
+#: ../src/video_format_conv/gui.py:99
+msgid "hyundai"
+msgstr "现代"
+
+#: ../src/video_format_conv/gui.py:99
+msgid "newman"
+msgstr "纽曼"
+
+#: ../src/video_format_conv/gui.py:100
+msgid "coolpad"
+msgstr "酷派"
+
+#: ../src/video_format_conv/gui.py:100
+msgid "malata"
+msgstr "万利达"
+
+#: ../src/video_format_conv/gui.py:101
+msgid "sharp"
+msgstr "夏普"
+
+#: ../src/video_format_conv/gui.py:101
+msgid "gionee"
+msgstr "金立"
+
+#: ../src/video_format_conv/gui.py:101
+msgid "k-touch"
+msgstr "天语"
+
+#: ../src/video_format_conv/gui.py:102
+msgid "Pantech"
+msgstr "泛泰"
+
+#: ../src/video_format_conv/gui.py:102
+msgid "hisense"
+msgstr "海信"
+
+#: ../src/video_format_conv/gui.py:102
+msgid "teclast"
+msgstr "台电"
+
+#: ../src/video_format_conv/gui.py:103
+msgid "cube"
+msgstr "酷比"
+
+#: ../src/video_format_conv/gui.py:103
+msgid "amoi"
+msgstr "夏新"
+
+#: ../src/video_format_conv/gui.py:103
+msgid "doov"
+msgstr "朵唯"
+
+#: ../src/video_format_conv/gui.py:104
+msgid "minte"
+msgstr "明泰"
+
+#: ../src/video_format_conv/gui.py:104
+msgid "dopod"
+msgstr "多普达"
+
+#: ../src/video_format_conv/gui.py:104
+msgid "eton"
+msgstr "亿通"
+
+#: ../src/video_format_conv/gui.py:105
+msgid "cherr"
+msgstr "齐乐"
+
+#: ../src/video_format_conv/gui.py:105
+msgid "gaoxinqi"
+msgstr "高新奇"
+
+#: ../src/video_format_conv/gui.py:105
+msgid "konka"
+msgstr "康佳"
+
+#: ../src/video_format_conv/gui.py:106
+msgid "viewsonic"
+msgstr "优派"
+
+#: ../src/video_format_conv/gui.py:106
+msgid "xibo"
+msgstr "西铂"
+
+#: ../src/video_format_conv/gui.py:106
+msgid "hosin"
+msgstr "欧新"
+
+#: ../src/video_format_conv/gui.py:107
+msgid "apanda"
+msgstr "首派"
+
+#: ../src/video_format_conv/gui.py:107
+msgid "iocean"
+msgstr "欧盛"
+
+#: ../src/video_format_conv/gui.py:107
+msgid "mastone"
+msgstr "万事通"
+
+#: ../src/video_format_conv/gui.py:118
 msgid "phone brand : "
 msgstr "手机品牌 : "
 
-#: ../src/video_format_conv/gui.py:87
+#: ../src/video_format_conv/gui.py:119
 msgid "Output format : "
 msgstr "输出格式 : "
 
-#: ../src/video_format_conv/gui.py:88
+#: ../src/video_format_conv/gui.py:120
 msgid "Audio encoder : "
 msgstr "音频编码器 : "
 
-#: ../src/video_format_conv/gui.py:89
+#: ../src/video_format_conv/gui.py:121
 msgid "Video encoder : "
 msgstr "视频编码器 : "
 
-#: ../src/video_format_conv/gui.py:90
+#: ../src/video_format_conv/gui.py:122
 msgid "Output directory : "
 msgstr "指定位置 : "
 
-#: ../src/video_format_conv/gui.py:91
+#: ../src/video_format_conv/gui.py:123
 msgid "Phone model : "
 msgstr "手机型号 : "
 
-#: ../src/video_format_conv/gui.py:92
+#: ../src/video_format_conv/gui.py:124
 msgid "Resolution : "
 msgstr "分辨率 : "
 
-#: ../src/video_format_conv/gui.py:104
+#: ../src/video_format_conv/gui.py:136
 msgid "Change"
 msgstr "更改"
 
-#: ../src/video_format_conv/gui.py:108
+#: ../src/video_format_conv/gui.py:140
 msgid "Advanced"
 msgstr "高级"
 
-#: ../src/video_format_conv/gui.py:109
+#: ../src/video_format_conv/gui.py:141
 msgid "Task manager"
 msgstr "任务管理器"
 
-#: ../src/video_format_conv/gui.py:191
+#: ../src/video_format_conv/gui.py:226
 #, fuzzy
 msgid "Choose a directory"
 msgstr "打开文件夹"
+
+#~ msgid "ZTE"
+#~ msgstr "中兴"
+
+#~ msgid "HASEE"
+#~ msgstr "神舟"
 
 #~ msgid "Format converter : "
 #~ msgstr "格式"

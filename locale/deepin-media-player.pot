@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-25 10:42+0800\n"
+"POT-Creation-Date: 2012-10-25 17:35+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -131,7 +131,7 @@ msgid "About us"
 msgstr ""
 
 #: ../src/ini_gui.py:155 ../src/scan_subtitles.py:377
-#: ../src/video_format_conv/gui.py:106 ../src/subtitle/scan_subtitles.py:378
+#: ../src/video_format_conv/gui.py:138 ../src/subtitle/scan_subtitles.py:378
 msgid "Close"
 msgstr ""
 
@@ -646,7 +646,7 @@ msgid "Task Manager for format conversion"
 msgstr ""
 
 #: ../src/video_format_conv/conv_task_gui.py:65
-#: ../src/video_format_conv/gui.py:105
+#: ../src/video_format_conv/gui.py:137
 msgid "Start"
 msgstr ""
 
@@ -655,45 +655,301 @@ msgid "Format converter"
 msgstr ""
 
 #: ../src/video_format_conv/gui.py:86
-msgid "phone brand : "
+msgid "intel"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:86
+msgid "zte"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:86
+msgid "hasee"
 msgstr ""
 
 #: ../src/video_format_conv/gui.py:87
-msgid "Output format : "
+msgid "apple"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:87
+msgid "nokia"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:87
+msgid "alcatel"
 msgstr ""
 
 #: ../src/video_format_conv/gui.py:88
-msgid "Audio encoder : "
+msgid "google"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:88
+msgid "asus"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:88
+msgid "hp"
 msgstr ""
 
 #: ../src/video_format_conv/gui.py:89
-msgid "Video encoder : "
+msgid "sony"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:89
+msgid "hedy"
 msgstr ""
 
 #: ../src/video_format_conv/gui.py:90
-msgid "Output directory : "
+msgid "archos"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:90
+msgid "boway"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:90
+msgid "bird"
 msgstr ""
 
 #: ../src/video_format_conv/gui.py:91
-msgid "Phone model : "
+msgid "vivo"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:91
+msgid "great wall"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:91
+msgid "changhong"
 msgstr ""
 
 #: ../src/video_format_conv/gui.py:92
-msgid "Resolution : "
+msgid "skyworth"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:92
+msgid "dell"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:92
+msgid "philips"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:93
+msgid "toshiba"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:93
+msgid "amazon"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:93
+msgid "sdo"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:94
+msgid "disney"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:94
+msgid "haier"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:94
+msgid "fujitsu"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:95
+msgid "acer"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:95
+msgid "lenovo"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:95
+msgid "gigabyte"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:96
+msgid "xiaomi"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:96
+msgid "huawei"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:96
+msgid "blackberry"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:97
+msgid "motorola"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:97
+msgid "sangsung"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:97
+msgid "meizu "
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:98
+msgid "benq"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:98
+msgid "panasonic"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:98
+msgid "sony ericsson"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:99
+msgid "pioneer"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:99
+msgid "hyundai"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:99
+msgid "newman"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:100
+msgid "coolpad"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:100
+msgid "malata"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:101
+msgid "sharp"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:101
+msgid "gionee"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:101
+msgid "k-touch"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:102
+msgid "Pantech"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:102
+msgid "hisense"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:102
+msgid "teclast"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:103
+msgid "cube"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:103
+msgid "amoi"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:103
+msgid "doov"
 msgstr ""
 
 #: ../src/video_format_conv/gui.py:104
+msgid "minte"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:104
+msgid "dopod"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:104
+msgid "eton"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:105
+msgid "cherr"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:105
+msgid "gaoxinqi"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:105
+msgid "konka"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:106
+msgid "viewsonic"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:106
+msgid "xibo"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:106
+msgid "hosin"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:107
+msgid "apanda"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:107
+msgid "iocean"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:107
+msgid "mastone"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:118
+msgid "phone brand : "
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:119
+msgid "Output format : "
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:120
+msgid "Audio encoder : "
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:121
+msgid "Video encoder : "
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:122
+msgid "Output directory : "
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:123
+msgid "Phone model : "
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:124
+msgid "Resolution : "
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:136
 msgid "Change"
 msgstr ""
 
-#: ../src/video_format_conv/gui.py:108
+#: ../src/video_format_conv/gui.py:140
 msgid "Advanced"
 msgstr ""
 
-#: ../src/video_format_conv/gui.py:109
+#: ../src/video_format_conv/gui.py:141
 msgid "Task manager"
 msgstr ""
 
-#: ../src/video_format_conv/gui.py:191
+#: ../src/video_format_conv/gui.py:226
 msgid "Choose a directory"
 msgstr ""

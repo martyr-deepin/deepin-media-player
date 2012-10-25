@@ -81,6 +81,34 @@ class Form(DialogBox):
         # move.
         self.move_offset_x = 0
         self.move_offset_y = 0
+        # init brand EN list.
+        self.brand_dict = {
+            "intel" : _("intel"), "zte"   : _("zte"), "hasee" : _("hasee"),
+            "apple" : _("apple"), "nokia" : _("nokia"), "alcatel" : _("alcatel"), 
+            "google" : _("google"), "asus" : _("asus"), "hp" : _("hp"), 
+            "sony" : _("sony"), "hedy" : _("hedy"), 
+            "archos" : _("archos"), "boway" : _("boway"), "bird" : _("bird"), 
+            "vivo" : _("vivo"), "great wall" : _("great wall"), "changhong" : _("changhong"), 
+            "skyworth" : _("skyworth"), "dell" : _("dell"), "philips" : _("philips"), 
+            "toshiba" : _("toshiba"), "amazon" : _("amazon"), "sdo" : _("sdo"), 
+            "disney" : _("disney"), "haier" : _("haier"), "fujitsu" : _("fujitsu"), 
+            "acer" : _("acer"), "lenovo" : _("lenovo"), "gigabyte" : _("gigabyte"), 
+            "xiaomi" : _("xiaomi"), "huawei" : _("huawei"), "blackberry" : _("blackberry"), 
+            "motorola" : _("motorola"), "sangsung" : _("sangsung"), "meizu " : _("meizu "), 
+            "benq" : _("benq"), "panasonic" : _("panasonic"), "sony ericsson" : _("sony ericsson"), 
+            "pioneer" : _("pioneer"), "hyundai" : _("hyundai"), "newman" : _("newman"), 
+            "coolpad" : _("coolpad"), "malata" : _("malata"), "malata" : _("malata"), 
+            "sharp" : _("sharp"), "gionee" : _("gionee"), "k-touch" : _("k-touch"), 
+            "Pantech" : _("Pantech"), "hisense" : _("hisense"), "teclast" : _("teclast"), 
+            "cube" : _("cube"), "amoi" : _("amoi"), "doov" : _("doov"), 
+            "minte" : _("minte"), "dopod" : _("dopod"), "eton" : _("eton"), 
+            "cherr" : _("cherr"), "gaoxinqi" : _("gaoxinqi"), "konka" : _("konka"), 
+            "viewsonic" : _("viewsonic"), "xibo" : _("xibo"), "hosin" : _("hosin"), 
+            "apanda" : _("apanda"), "iocean" : _("iocean"), "mastone" : _("mastone")
+            }        
+        
+        # for item in self.vendor_dict.items():
+        #     print "***: %s" % (str(item))
         
     def InitializeComponent(self):
         # Init form event.
@@ -124,10 +152,15 @@ class Form(DialogBox):
         
         self.right_button_box.set_buttons([self.higt_align, self.start_btn, self.close_btn])
         
+        # for brand in self.brand_en_list:
+        #     print "brand:", brand
         # brand_combo.
         brand_items = []
         for brand in self.read_xml.brand_dict.keys():
-            brand_items.append((brand, brand))
+            brand_po = brand
+            if self.brand_dict.has_key(brand):
+                brand_po = self.brand_dict[brand]
+            brand_items.append((brand_po, brand))
             # print brand
             # self.brand_combo.append_text(brand)
         self.brand_combo.set_items(brand_items)    
