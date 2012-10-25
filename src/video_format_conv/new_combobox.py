@@ -41,8 +41,8 @@ class NewComboBox(ComboBox):
         # self.set_sensitive(set_bool) # [True/False]
         
     def emit_connect_function(self, combo, item_content, item_value, item_index):
-        
-        self.emit("changed", item_content)
+        # print "item_value:", item_value, item_index
+        self.emit("changed", item_value)
         
         self.label.label_width = 80        
         self.label.update_size()
@@ -65,9 +65,9 @@ class NewComboBox(ComboBox):
         
     def prepend_text(self, text):
         temp_imtes = []
-        temp_imtes.append([text, 0])
+        temp_imtes.append([text, text])
         for item in self.items:
-            temp_imtes.append([item[0], int(item[1]) + 1])
+            temp_imtes.append([item[0], item[1]])
         self.set_items(temp_imtes, 0, max_width=self.max_width)
         self.droplist.set_size_request(-1, self.droplist_height)
         
@@ -84,7 +84,7 @@ class NewComboBox(ComboBox):
         return self.select_index
     
     def append_text(self, text):
-        self.items.append([text, len(self.items)])
+        self.items.append([text, text])
         self.set_items(self.items, 0, max_width=self.max_width)
         self.droplist.set_size_request(-1, self.droplist_height)
         

@@ -126,10 +126,8 @@ class Form(DialogBox):
         
         # brand_combo.
         brand_items = []
-        i = 0
         for brand in self.read_xml.brand_dict.keys():
-            brand_items.append((brand, i))
-            i += 1
+            brand_items.append((brand, brand))
             # print brand
             # self.brand_combo.append_text(brand)
         self.brand_combo.set_items(brand_items)    
@@ -219,11 +217,9 @@ class Form(DialogBox):
             # print 'self.model_dict:', self.model_dict
             if self.model_dict != {}:
                 model_items = []
-                i = 0
                 for model in self.model_dict:            
                     # self.model_combo.append_text(model)
-                    model_items.append((model, i))
-                    i += 1
+                    model_items.append((model, model))
                 self.model_combo.set_items(model_items)    
                 self.model_combo.droplist.set_size_request(-1, self.model_combo.droplist_height)
                 self.model_combo.set_active(0)
