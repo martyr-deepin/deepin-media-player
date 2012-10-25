@@ -45,7 +45,7 @@ class AboutDialog:
        x.set_version("0.20")
        x.set_name("Transmageddon")
        x.set_authors(Authors)
-       x.set_translator_credits(_("translator-credits"))
+       x.set_translator_credits("translator-credits")
        x.set_artists(Artists)
        x.set_logo_icon_name("transmageddon")
        x.set_license(LGPL)   

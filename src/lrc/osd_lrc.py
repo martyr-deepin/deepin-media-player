@@ -63,6 +63,10 @@ class Lrc(gobject.GObject):
         self.time_delay = time_delay
         self.timeout_add_id = gtk.timeout_add(self.time_delay, self.draw_lrc_timeout_add)
         
+    def stop_timeout(self):    
+        if self.timeout_add_id:
+            gtk.timeout_remove(self.timeout_add_id) # remove timeout id.
+
     def draw_lrc_timeout_add(self):    
         self.padding_width += self.offset_width
         self.emit("lrc-changed")
@@ -71,6 +75,11 @@ class Lrc(gobject.GObject):
     def init_font(self, font_type=INIT_FONT_TYPE, font_size=INIT_FONT_SIZE):
         self.font_type = font_type
         self.font_size = font_size
+        self.emit("lrc-changed")
+        
+    def set_position(self, offset_x_, offset_y_):    
+        self.offset_x = offset_x_
+        self.offset_y = offset_y_
         self.emit("lrc-changed")
         
     def show_text(self, lrc_text): 
@@ -85,16 +94,20 @@ class Lrc(gobject.GObject):
         
         context = pangocairo.CairoContext(cr)
         layout = context.create_layout()
-        layout.set_font_description(pango.FontDescription("%s %s" % (self.font_type, self.font_size)))        
+        layout.set_font_description(pango.FontDescription("%s %s" % (self.font_type, self.font_size)))
         # Set font text string.        
         layout.set_text(ch)
         # Get font width and height.
-        ch_width, ch_height = layout.get_pixel_size()                        
+        ch_width, ch_height = layout.get_pixel_size()
         # Background font.
         cr.move_to(self.offset_x, self.offset_y)
         cr.set_source_rgb(1, 0, 0)
         context.show_layout(layout)
         # Mov rectangle(offset_x, offset_y, padding_width, padding_height).
+        # print "padding_width:", self.padding_width
+        # print "ch_width:", ch_width
+        if self.padding_width == ch_width:
+            self.stop_timeout()
         cr.save()
         cr.rectangle(self.offset_x, self.offset_y, self.padding_width, ch_height)
         cr.clip()        
@@ -110,8 +123,9 @@ if __name__ == "__main__":
         cr.set_source_rgba(1.0, 1.0, 1.0, 0.1)
         cr.set_operator(cairo.OPERATOR_SOURCE)
         cr.paint()
-
-        lrc.expose_lrc_text_function(cr)
+        # print lrc_list
+        for lrc in lrc_list:
+            lrc.expose_lrc_text_function(cr)
         return True
     
     def active_expose_window(LRC):
@@ -136,12 +150,14 @@ if __name__ == "__main__":
     win.set_colormap(gtk.gdk.Screen().get_rgba_colormap())
     # win.set_type_hint(gtk.gdk.WINDOW_TYPE_HINT_DIALOG)    
     win.add_events(gtk.gdk.ALL_EVENTS_MASK)
-    
-    lrc = Lrc()    
-    lrc.show_text("深度LINUX DEEPIN 深度影音")    
-    lrc.init_timeout(500)
-    lrc.connect("lrc-changed", active_expose_window)
-    
+    lrc_list = []
+    for i in range(1, 10):
+        lrc = Lrc()    
+        lrc.show_text("深度LINUX DEEPIN 深度影音")
+        lrc.init_timeout(i)
+        lrc.set_position(1, 10*i)
+        lrc.connect("lrc-changed", active_expose_window)
+        lrc_list.append(lrc)    
     ################################################
     win.connect("expose-event", test_osd_lrc_function)
     win.connect("realize", realize_win)

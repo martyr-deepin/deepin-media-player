@@ -70,7 +70,7 @@ def get_path(*parts):
         if os.path.exists(full):
             return full
     else:
-        raise IOError(_("Can't find %(path)s in any known prefix!") % {
+        raise IOError("Can't find %(path)s in any known prefix!" % {
             "path": path,
         })
 

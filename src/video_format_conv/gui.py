@@ -35,6 +35,8 @@ from read_xml import ReadXml
 import gtk
 import os
 
+from locales import _
+
 FORM_WIDTH = 465
 FORM_HEIGHT = 280
 
@@ -42,7 +44,7 @@ FORM_HEIGHT = 280
 class Form(DialogBox):
     def __init__(self):
         DialogBox.__init__(self, 
-                           "格式转换器", 
+                           _("Format converter"), 
                            FORM_WIDTH, FORM_HEIGHT- 80, 
                            mask_type=DIALOG_MASK_MULTIPLE_PAGE,
                            modal=False,
@@ -81,13 +83,13 @@ class Form(DialogBox):
         self.connect("destroy", lambda w : self.destroy())
         # Init widgets.
         self.main_fixed = gtk.Fixed()
-        self.brand_label = Label("手机品牌 : ")
-        self.format_label = Label("输出格式 : ")        
-        self.bit_rate_label = Label("音频编码器 : ")
-        self.frame_rate_label = Label("视频编码器 : ")
-        self.path_label = Label("输出目录 : ")
-        self.model_label = Label("手机型号 : ")
-        self.ratio_label = Label("分辨率 : ")        
+        self.brand_label = Label(_("phone brand : "))
+        self.format_label = Label(_("Output format : "))        
+        self.bit_rate_label = Label(_("Audio encoder : "))
+        self.frame_rate_label = Label(_("Video encoder : "))
+        self.path_label = Label(_("Output directory : "))
+        self.model_label = Label(_("Phone model : "))
+        self.ratio_label = Label(_("Resolution : "))        
         
         self.path_entry = InputEntry()
         self.save_path_entry = InputEntry()
@@ -99,12 +101,12 @@ class Form(DialogBox):
         self.ratio_combo = NewComboBox(110) #ComboBox(supported_containers_imtes, 100) # Resolution
         
         self.modify_chooser_btn = FileChooserButton("选择") # connect self.FileChooser
-        self.save_chooser_btn = Button("更改")
-        self.start_btn = Button("开始")
-        self.close_btn = Button("关闭")
+        self.save_chooser_btn = Button(_("Change"))
+        self.start_btn = Button(_("Start"))
+        self.close_btn = Button(_("Close"))
         self.higt_set_bool = False
-        self.higt_set_btn = Button("高级")
-        self.show_and_hide_task_btn = Button("任务管理器")
+        self.higt_set_btn = Button(_("Advanced"))
+        self.show_and_hide_task_btn = Button(_("Task manager"))
         
         self.higt_hbox = gtk.HBox()
         self.higt_hbox.pack_start(self.higt_set_btn)
@@ -159,6 +161,8 @@ class Form(DialogBox):
         #    
         self.right_widgets = [(self.model_label, self.model_combo),
                               (self.ratio_label, self.ratio_combo)]
+        
+        self.right_x += 40
         # add right widgets.
         for label, combo in self.right_widgets:
             padding_width, padding_height = label.get_size_request()
@@ -184,7 +188,7 @@ class Form(DialogBox):
         
     def show_open_dir_dialog_window(self):
         open_dialog = gtk.FileChooserDialog(
-                         "选择目录",
+                         _("Choose a directory"),
                          None,
                          gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER,
                          (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,

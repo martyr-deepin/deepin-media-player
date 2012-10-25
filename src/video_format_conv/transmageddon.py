@@ -399,7 +399,7 @@ class TransmageddonUI:
        # set default values for various variables
        self.AudioCodec = "vorbis"
        self.VideoCodec = "theora"
-       self.ProgressBar.set_text(_("Transcoding Progress"))
+       self.ProgressBar.set_text("Transcoding Progress")
        self.container = False
        self.vsourcecaps = False
        self.asourcecaps = False
@@ -435,17 +435,17 @@ class TransmageddonUI:
            self.containerchoice.append_text(str(i))
            
        # add i18n "No container"option
-       self.containerchoice.append_text(_("No container (Audio-only)"))
+       self.containerchoice.append_text("No container (Audio-only)")
 
        # Populate the rotatation box
-       self.rotationlist = [_("No rotation (default)"),\
-                            _("Clockwise 90 degrees"), \
-                            _("Rotate 180 degrees"),
-                            _("Counterclockwise 90 degrees"), \
-                            _("Horizontal flip"),
-                            _("Vertical flip"), \
-                            _("Upper left diagonal flip"),
-                            _("Upper right diagnonal flip") ]
+       self.rotationlist = ["No rotation (default)",\
+                            "Clockwise 90 degrees", \
+                            "Rotate 180 degrees",
+                            "Counterclockwise 90 degrees", \
+                            "Horizontal flip",
+                            "Vertical flip", \
+                            "Upper left diagonal flip",
+                            "Upper right diagnonal flip" ]
 
        for y in self.rotationlist: 
            self.rotationchoice.append_text(y)
@@ -468,7 +468,7 @@ class TransmageddonUI:
           shortname.append(str(name))
           
        self.presetchoices = dict(zip(devicelist, shortname))          
-       self.presetchoice.prepend_text(_("No Presets"))
+       self.presetchoice.prepend_text("No Presets")
 
        self.waiting_for_signal="False"
        
@@ -576,18 +576,18 @@ class TransmageddonUI:
                    rem = 0.1
                min = rem / 60
                sec = rem % 60
-               time_rem = _("%(min)d:%(sec)02d") % {
+               time_rem = "%(min)d:%(sec)02d" % {
                    "min": min,
                    "sec": sec,
                    }
                if percent_remain > 0.5:
                    if self.passcounter == int(0):
                        txt = "Estimated time remaining: %(time)s"
-                       self.ProgressBar.set_text(_(txt) % \
+                       self.ProgressBar.set_text(txt % \
                                {'time': str(time_rem)})
                    else:
                        txt = "Pass %(count)d time remaining: %(time)s"
-                       self.ProgressBar.set_text(_(txt) % { \
+                       self.ProgressBar.set_text(txt % { \
                                'count': self.passcounter, \
                                'time': str(time_rem), })
                return True
@@ -607,7 +607,7 @@ class TransmageddonUI:
    def _on_eos(self, source):
        context_id = self.StatusBar.get_context_id("EOS")
        if (self.multipass ==  False) or (self.passcounter == int(0)):
-           self.StatusBar.push(context_id, (_("File saved to %(dir)s") % \
+           self.StatusBar.push(context_id, ("File saved to %(dir)s" % \
                    {'dir': self.outputdirectory}))
            self.FileChooser.set_sensitive(True)
            self.containerchoice.set_sensitive(True)
@@ -634,10 +634,10 @@ class TransmageddonUI:
                                  # this toggle to avoid errors when cleaning
                                  # the codec comboboxes
        else:
-           self.StatusBar.push(context_id, (_("Pass %(count)d Complete") % \
+           self.StatusBar.push(context_id, ("Pass %(count)d Complete" % \
                    {'count': self.passcounter}))
            self.start_time = False
-           self.ProgressBar.set_text(_("Start next pass"))
+           self.ProgressBar.set_text("Start next pass")
            if self.passcounter == (self.multipass-1):
                self.passcounter = int(0)
                self._start_transcoding()
@@ -692,7 +692,7 @@ class TransmageddonUI:
                self.containerchoice.set_active(-1) # set this here to ensure it happens even with quick audio-only
                self.containerchoice.set_active(0)
            if self.haveaudio==False:
-               self.audioinformation.set_markup(''.join(('<small>', _("No Audio"), '</small>')))
+               self.audioinformation.set_markup(''.join(('<small>', "No Audio", '</small>')))
                self.audiocodec.set_markup(''.join(('<small>', "",'</small>')))
 
            if isinstance(i, gst.pbutils.DiscovererVideoInfo):
@@ -713,7 +713,7 @@ class TransmageddonUI:
 
            self.discover_done=True
            if self.havevideo==False:
-               self.videoinformation.set_markup(''.join(('<small>', _("No Video"), '</small>')))
+               self.videoinformation.set_markup(''.join(('<small>', "No Video", '</small>')))
                self.videocodec.set_markup(''.join(('<small>', "",
                                       '</small>')))
            if self.waiting_for_signal == True:
@@ -803,7 +803,7 @@ class TransmageddonUI:
            self.havevideo=False #
            self.mediacheck(self.filename)
            self.ProgressBar.set_fraction(0.0)
-           self.ProgressBar.set_text(_("Transcoding Progress"))
+           self.ProgressBar.set_text("Transcoding Progress")
            if (self.havevideo==False and self.nocontaineroptiontoggle==False):
                self.nocontaineroptiontoggle=True
            else:
@@ -960,7 +960,7 @@ class TransmageddonUI:
        elif donemessage == gst.pbutils.INSTALL_PLUGINS_NOT_FOUND:
            context_id = self.StatusBar.get_context_id("EOS")
            self.StatusBar.push(context_id, \
-                   _("Plugins not found, choose different codecs."))
+                   "Plugins not found, choose different codecs.")
            self.FileChooser.set_sensitive(True)
            self.containerchoice.set_sensitive(True)
            self.CodecBox.set_sensitive(True)
@@ -968,7 +968,7 @@ class TransmageddonUI:
            self.transcodebutton.set_sensitive(True)
        elif donemessage == gst.pbutils.INSTALL_PLUGINS_USER_ABORT:
            context_id = self.StatusBar.get_context_id("EOS")
-           self.StatusBar.push(context_id, _("Codec installation aborted."))
+           self.StatusBar.push(context_id, "Codec installation aborted.")
            self.FileChooser.set_sensitive(True)
            self.containerchoice.set_sensitive(True)
            self.CodecBox.set_sensitive(True)
@@ -976,7 +976,7 @@ class TransmageddonUI:
            self.transcodebutton.set_sensitive(True)
        else:
            context_id = self.StatusBar.get_context_id("EOS")
-           self.StatusBar.push(context_id, _("Missing plugin installation failed: ")) + gst.pbutils.InstallPluginsReturn()
+           self.StatusBar.push(context_id, "Missing plugin installation failed: ") + gst.pbutils.InstallPluginsReturn()
 
    def check_for_elements(self):
        if self.container==False:
@@ -1047,12 +1047,12 @@ class TransmageddonUI:
                self.ContainerFormatSuffix = codecfinder.csuffixmap[container]
        self.outputfilename = str(self.nosuffix+self.timestamp+self.ContainerFormatSuffix)
        context_id = self.StatusBar.get_context_id("EOS")
-       self.StatusBar.push(context_id, (_("Writing %(filename)s") % {'filename': self.outputfilename}))
+       self.StatusBar.push(context_id, ("Writing %(filename)s" % {'filename': self.outputfilename}))
        if self.multipass == False:
-           self.ProgressBar.set_text(_("Transcoding Progress"))
+           self.ProgressBar.set_text("Transcoding Progress")
        else:
            self.passcounter=int(1)
-           self.ProgressBar.set_text(_("Pass %(count)d Progress") % {'count': self.passcounter})
+           self.ProgressBar.set_text("Pass %(count)d Progress" % {'count': self.passcounter})
        if self.haveaudio:
            if self.audiodata.has_key("samplerate"):
                self.check_for_elements()
@@ -1080,7 +1080,7 @@ class TransmageddonUI:
        self._cancel_encoding = \
                transcoder_engine.Transcoder.Pipeline(self._transcoder,"null")
        self.ProgressBar.set_fraction(0.0)
-       self.ProgressBar.set_text(_("Transcoding Progress"))
+       self.ProgressBar.set_text("Transcoding Progress")
        context_id = self.StatusBar.get_context_id("EOS")
        self.StatusBar.pop(context_id)
        self.audiopasstoggle=False
@@ -1154,25 +1154,25 @@ class TransmageddonUI:
                    self.videorows[0].set_active(0)
 
                    #add a 'No Video option'
-                   self.videorows[0].append_text(_("No Video"))
+                   self.videorows[0].append_text("No Video")
                    self.videocodecs.append("novid")
                    self.videonovideomenuno=(len(self.videocodecs))-1
                       
                    # add the Passthrough option 
                    if self.videopass==True:
-                       self.videorows[0].append_text(_("Video passthrough"))
+                       self.videorows[0].append_text("Video passthrough")
                        self.videocodecs.append("pass")
                        self.videopassmenuno=(len(self.videocodecs))-1
                    
                    if self.audiopass==True:
-                       self.audiorows[0].append_text(_("Audio passthrough"))
+                       self.audiorows[0].append_text("Audio passthrough")
                        self.audiocodecs.append("pass")
                        self.audiopassmenuno=(len(self.audiocodecs))-1
 
    def on_containerchoice_changed(self, widget, text):
        self.CodecBox.set_sensitive(True)
        self.ProgressBar.set_fraction(0.0)
-       self.ProgressBar.set_text(_("Transcoding Progress"))
+       self.ProgressBar.set_text("Transcoding Progress")
        # if self.builder.get_object("containerchoice").get_active() == self.nocontainernumber: containerchoice
        if self.containerchoice.get_active() == self.nocontainernumber:
                self.container = False
@@ -1192,7 +1192,7 @@ class TransmageddonUI:
        # presetchoice = self.builder.get_object ("presetchoice").get_active_text ()
        presetchoice = self.presetchoice.get_active_text ()
        self.ProgressBar.set_fraction(0.0)
-       if presetchoice == _("No Presets"):
+       if presetchoice == "No Presets":
            self.usingpreset=False
            self.devicename = "nopreset"
            self.containerchoice.set_sensitive(True)
@@ -1263,20 +1263,20 @@ class TransmageddonUI:
            self.cancelbutton.set_sensitive(False)
            self.transcodebutton.set_sensitive(True)
            self.ProgressBar.set_fraction(0.0)
-           # self.ProgressBar.set_text(_("Transcoding Progress"))
+           # self.ProgressBar.set_text("Transcoding Progress")
            self.ProgressBar.set_text("show_error")
            if error_string=="noaudioparser":
-               error_message = _("No audio parser, passthrough not available")
+               error_message = "No audio parser, passthrough not available"
                codecs = supported_container_map[self.container]
                self.AudioCodec = codecs[0]
                self.audiopasstoggle = False
            elif error_string=="novideoparser":
-               error_message= _("No video parser, passthrough not available")
+               error_message= "No video parser, passthrough not available"
                codecs = supported_container_map[self.container]
                self.VideoCodec = codecs[1]
                self.videopasstoggle = False
            else:
-               error_message=_("Uknown error")
+               error_message="Uknown error"
        else:
          error_message = error_string
        context_id = self.StatusBar.get_context_id("EOS")

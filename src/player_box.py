@@ -91,7 +91,7 @@ class PlayerBox(object):
         # Init lrc show system.
         # self.lrc = Lrc()        
         # self.lrc.init_timeout(200)
-        # self.lrc.show_text("Linux Deepin 深度影音 窗体歌词测试...\n开发人员 强烈测试和推荐")
+        # self.lrc.show_text("Linux Deepin 深度影音 窗体歌词测试...开发人员 强烈测试和推荐")
         # self.lrc.connect("lrc-changed", self.active_expose_window_screen)
         # signal and double.
         self.double_bool = False
@@ -2371,7 +2371,7 @@ class PlayerBox(object):
                                      (menu_volume_pixbufs, _("Audio"), self.volume_menu),
                                      # (None, "字幕", self.subtitle_menu),
                                      (None, _("Take Screenshots"), self.sort_menu),
-                                     (None, "格式转换", self.open_conv_dialog_window),
+                                     (None, _("Format conversion"), self.open_conv_dialog_window),
                                      (None, _("New Features"), init_user_guide),
                                      (menu_setting_pixbufs, _("Preferences"), self.config_gui),
                                      # (None, "总在最前", None),
@@ -2654,7 +2654,7 @@ class PlayerBox(object):
                                              (None, _("Sort"), self.menu2),
                                              # (None, "视图", None),
                                              (None),
-                                             (None, "格式转换", self.format_conv_play_list_files),
+                                             (None, _("Format conversion"), self.format_conv_play_list_files),
                                              (None, _("Open Containing Directory"), self.open_current_file_dir),
                                              self.right_key_menu_video_info
                                              ],

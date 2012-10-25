@@ -31,6 +31,8 @@ from dtk.ui.button import Button
 
 from new_progressbar import NewProgressBar as ProgressBar
 
+from locales import _
+
 import gtk
 import gobject
 
@@ -40,7 +42,7 @@ FORM_HEIGHT = 400
 class ConvTAskGui(DialogBox):
     def __init__(self):
         DialogBox.__init__(self, 
-                           "格式转化任务管理器", 
+                           _("Task Manager for format conversion"), 
                            FORM_WIDTH, FORM_HEIGHT, 
                            mask_type=DIALOG_MASK_MULTIPLE_PAGE,
                            close_callback=self.hide_all,
@@ -60,8 +62,8 @@ class ConvTAskGui(DialogBox):
         self.scrolled_window.set_policy(gtk.POLICY_NEVER, gtk.POLICY_AUTOMATIC)
         self.scrolled_window.add_child(self.list_view)
         
-        self.start_btn = Button("开始")
-        self.pause_btn = Button("暂停")
+        self.start_btn = Button(_("Start"))
+        self.pause_btn = Button(_("Pause"))
         self.right_button_box.set_buttons([self.start_btn, self.pause_btn])
         
 class MediaItem(gobject.GObject):

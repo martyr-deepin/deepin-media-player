@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-10 14:55+0800\n"
+"POT-Creation-Date: 2012-10-25 10:42+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,11 +17,64 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/toolbar.py:74 ../src/player_box.py:2215 ../src/player_box.py:2391
+#: ../src/play_control_panel.py:48 ../src/player_box.py:1074
+msgid "Stop"
+msgstr ""
+
+#: ../src/play_control_panel.py:56 ../src/player_box.py:1115
+#: ../src/player_box.py:2347 ../src/player_box.py:2432
+msgid "Prev"
+msgstr ""
+
+#: ../src/play_control_panel.py:59 ../src/player_box.py:1104
+#: ../src/player_box.py:2369 ../src/player_box.py:2561
+msgid "Play"
+msgstr ""
+
+#: ../src/play_control_panel.py:67 ../src/player_box.py:1121
+#: ../src/player_box.py:2348 ../src/player_box.py:2433
+msgid "Next"
+msgstr ""
+
+#: ../src/play_control_panel.py:75 ../src/ini_gui.py:536
+#: ../src/player_box.py:398 ../src/player_box.py:2355
+#: ../src/player_box.py:2553
+msgid "Open File"
+msgstr ""
+
+#: ../src/togglehoverbutton.py:126 ../src/ini_gui.py:318 ../src/ini_gui.py:636
+#: ../src/ini_gui.py:988 ../src/ini_gui.py:1053 ../src/player_box.py:2344
+#: ../src/mplayer.py:224
+msgid "Full Screen"
+msgstr ""
+
+#: ../src/togglehoverbutton.py:135 ../src/player_box.py:2345
+#: ../src/player_box.py:2558
+msgid "Standard Mode"
+msgstr ""
+
+#: ../src/togglehoverbutton.py:144 ../src/ini_gui.py:646
+#: ../src/player_box.py:2346 ../src/player_box.py:2559
+msgid "Concise Mode"
+msgstr ""
+
+#: ../src/open_button.py:382
+msgid "Enter URL"
+msgstr ""
+
+#: ../src/open_button.py:382
+msgid "Please Enter a Valid URL"
+msgstr ""
+
+#: ../src/play_list_button.py:35
+msgid "Playlist"
+msgstr ""
+
+#: ../src/toolbar.py:74 ../src/player_box.py:2291 ../src/player_box.py:2468
 msgid "100%"
 msgstr ""
 
-#: ../src/toolbar.py:84 ../src/player_box.py:2217 ../src/player_box.py:2393
+#: ../src/toolbar.py:84 ../src/player_box.py:2293 ../src/player_box.py:2470
 msgid "200%"
 msgstr ""
 
@@ -29,36 +82,7 @@ msgstr ""
 msgid "Keep above"
 msgstr ""
 
-#: ../src/main.py:63 ../src/ini_gui.py:1341
-msgid "Deepin Media Player"
-msgstr ""
-
-#: ../src/play_control_panel.py:48 ../src/player_box.py:1033
-msgid "Stop"
-msgstr ""
-
-#: ../src/play_control_panel.py:56 ../src/player_box.py:1074
-#: ../src/player_box.py:2271 ../src/player_box.py:2355
-msgid "Prev"
-msgstr ""
-
-#: ../src/play_control_panel.py:59 ../src/player_box.py:1063
-#: ../src/player_box.py:2293 ../src/player_box.py:2469
-msgid "Play"
-msgstr ""
-
-#: ../src/play_control_panel.py:67 ../src/player_box.py:1080
-#: ../src/player_box.py:2272 ../src/player_box.py:2356
-msgid "Next"
-msgstr ""
-
-#: ../src/play_control_panel.py:75 ../src/ini_gui.py:536
-#: ../src/player_box.py:393 ../src/player_box.py:2279
-#: ../src/player_box.py:2461
-msgid "Open File"
-msgstr ""
-
-#: ../src/ini_gui.py:104 ../src/player_box.py:2299 ../src/player_box.py:2473
+#: ../src/ini_gui.py:104 ../src/player_box.py:2376 ../src/player_box.py:2565
 msgid "Preferences"
 msgstr ""
 
@@ -92,21 +116,22 @@ msgid "Other"
 msgstr ""
 
 #: ../src/ini_gui.py:139 ../src/ini_gui.py:265 ../src/ini_gui.py:276
-#: ../src/ini_gui.py:1105 ../src/player_box.py:2472
+#: ../src/ini_gui.py:1105 ../src/player_box.py:2564
 msgid "Subtitles"
 msgstr ""
 
 #: ../src/ini_gui.py:140 ../src/ini_gui.py:170 ../src/ini_gui.py:266
-#: ../src/ini_gui.py:277 ../src/ini_gui.py:1182 ../src/player_box.py:2724
+#: ../src/ini_gui.py:277 ../src/ini_gui.py:1182 ../src/player_box.py:2830
 msgid "Screenshot"
 msgstr ""
 
 #: ../src/ini_gui.py:141 ../src/ini_gui.py:267 ../src/ini_gui.py:278
-#: ../src/player_box.py:2286
+#: ../src/player_box.py:2362
 msgid "About us"
 msgstr ""
 
-#: ../src/ini_gui.py:155 ../src/scan_subtitles.py:389
+#: ../src/ini_gui.py:155 ../src/scan_subtitles.py:377
+#: ../src/video_format_conv/gui.py:106 ../src/subtitle/scan_subtitles.py:378
 msgid "Close"
 msgstr ""
 
@@ -124,12 +149,6 @@ msgstr ""
 
 #: ../src/ini_gui.py:316
 msgid "Last Closed Size"
-msgstr ""
-
-#: ../src/ini_gui.py:318 ../src/ini_gui.py:636 ../src/ini_gui.py:988
-#: ../src/ini_gui.py:1053 ../src/togglehoverbutton.py:126
-#: ../src/mplayer.py:224 ../src/player_box.py:2268
-msgid "Full Screen"
 msgstr ""
 
 #: ../src/ini_gui.py:334
@@ -173,8 +192,8 @@ msgid "Previous"
 msgstr ""
 
 #: ../src/ini_gui.py:556 ../src/ini_gui.py:1155 ../src/ini_gui.py:1278
-#: ../src/player_box.py:408 ../src/player_box.py:2280
-#: ../src/player_box.py:2462
+#: ../src/player_box.py:413 ../src/player_box.py:2356
+#: ../src/player_box.py:2554
 msgid "Open Directory"
 msgstr ""
 
@@ -183,19 +202,19 @@ msgstr ""
 msgid "Pause/Play"
 msgstr ""
 
-#: ../src/ini_gui.py:586 ../src/player_box.py:2182
+#: ../src/ini_gui.py:586 ../src/player_box.py:2258
 msgid "Volumn Up"
 msgstr ""
 
-#: ../src/ini_gui.py:596 ../src/player_box.py:2093
+#: ../src/ini_gui.py:596 ../src/player_box.py:2169
 msgid "Forward"
 msgstr ""
 
-#: ../src/ini_gui.py:606 ../src/player_box.py:2183
+#: ../src/ini_gui.py:606 ../src/player_box.py:2259
 msgid "Volumn Down"
 msgstr ""
 
-#: ../src/ini_gui.py:616 ../src/player_box.py:2107
+#: ../src/ini_gui.py:616 ../src/player_box.py:2183
 msgid "Rewind"
 msgstr ""
 
@@ -203,20 +222,15 @@ msgstr ""
 msgid "Mute"
 msgstr ""
 
-#: ../src/ini_gui.py:646 ../src/togglehoverbutton.py:144
-#: ../src/player_box.py:2270 ../src/player_box.py:2467
-msgid "Concise Mode"
-msgstr ""
-
 #: ../src/ini_gui.py:818
 msgid "Enable Keyboard Shortcuts"
 msgstr ""
 
-#: ../src/ini_gui.py:824 ../src/player_box.py:2882
+#: ../src/ini_gui.py:824 ../src/player_box.py:2984
 msgid "Forword by 0.5s"
 msgstr ""
 
-#: ../src/ini_gui.py:825 ../src/player_box.py:2886
+#: ../src/ini_gui.py:825 ../src/player_box.py:2987
 msgid "Delay by 0.5s"
 msgstr ""
 
@@ -224,11 +238,11 @@ msgstr ""
 msgid "Loading Subtiles"
 msgstr ""
 
-#: ../src/ini_gui.py:829 ../src/player_box.py:2892
+#: ../src/ini_gui.py:829 ../src/player_box.py:2992
 msgid "Increase the Size of Characters"
 msgstr ""
 
-#: ../src/ini_gui.py:830 ../src/player_box.py:2897
+#: ../src/ini_gui.py:830 ../src/player_box.py:2996
 msgid "Decrease the Size of Characters"
 msgstr ""
 
@@ -248,7 +262,7 @@ msgstr ""
 msgid "Rotate Clockwise"
 msgstr ""
 
-#: ../src/ini_gui.py:972 ../src/player_box.py:2146 ../src/player_box.py:2297
+#: ../src/ini_gui.py:972 ../src/player_box.py:2222 ../src/player_box.py:2373
 msgid "Take Screenshots"
 msgstr ""
 
@@ -269,14 +283,14 @@ msgid "Scroll"
 msgstr ""
 
 #: ../src/ini_gui.py:987 ../src/ini_gui.py:988 ../src/ini_gui.py:989
-#: ../src/ini_gui.py:1042 ../src/mplayer.py:219 ../src/player_box.py:671
-#: ../src/player_box.py:1694 ../src/player_box.py:1702
+#: ../src/ini_gui.py:1042 ../src/player_box.py:676 ../src/player_box.py:1735
+#: ../src/player_box.py:1743 ../src/mplayer.py:219
 msgid "Disabled"
 msgstr ""
 
-#: ../src/ini_gui.py:989 ../src/ini_gui.py:1053 ../src/mplayer.py:225
-#: ../src/player_box.py:691 ../src/player_box.py:706 ../src/player_box.py:709
-#: ../src/player_box.py:894 ../src/player_box.py:904 ../src/player_box.py:2842
+#: ../src/ini_gui.py:989 ../src/ini_gui.py:1053 ../src/player_box.py:696
+#: ../src/player_box.py:711 ../src/player_box.py:714 ../src/player_box.py:899
+#: ../src/player_box.py:909 ../src/player_box.py:2949 ../src/mplayer.py:225
 msgid "Volumn"
 msgstr ""
 
@@ -312,6 +326,10 @@ msgstr ""
 msgid "Keep Current Aspect Ratio"
 msgstr ""
 
+#: ../src/ini_gui.py:1341 ../src/main.py:63
+msgid "Deepin Media Player"
+msgstr ""
+
 #: ../src/ini_gui.py:1346
 msgid "Version:"
 msgstr ""
@@ -325,313 +343,357 @@ msgid ""
 "Deepin Media Player is free software licensed under GNU GPLv3.\n"
 msgstr ""
 
-#: ../src/scan_subtitles.py:206
-msgid "Search Subtitles"
-msgstr ""
-
-#: ../src/scan_subtitles.py:239
-msgid "Subtiles"
-msgstr ""
-
-#: ../src/scan_subtitles.py:314
-msgid "Movie Name: "
-msgstr ""
-
-#: ../src/scan_subtitles.py:328
-msgid "Search"
-msgstr ""
-
-#: ../src/scan_subtitles.py:351
-msgid "Searching for subtitles"
-msgstr ""
-
-#: ../src/scan_subtitles.py:357
-msgid "No network connection established"
-msgstr ""
-
-#: ../src/scan_subtitles.py:369
-msgid "Total search results"
-msgstr ""
-
-#: ../src/scan_subtitles.py:378
-msgid "Sorry, we couln't find any subtitle"
-msgstr ""
-
-#: ../src/scan_subtitles.py:387
-msgid "Download"
-msgstr ""
-
-#: ../src/scan_subtitles.py:443
-msgid "Subtile has been saved to the"
-msgstr ""
-
-#: ../src/scan_subtitles.py:443
-msgid "director"
-msgstr ""
-
-#: ../src/scan_subtitles.py:450
-msgid "Failed to download the subtitle!"
-msgstr ""
-
-#: ../src/play_list_control_panel.py:67 ../src/player_box.py:2543
+#: ../src/play_list_control_panel.py:67 ../src/player_box.py:2644
 msgid "Add File"
 msgstr ""
 
-#: ../src/play_list_control_panel.py:68 ../src/player_box.py:2547
+#: ../src/play_list_control_panel.py:68 ../src/player_box.py:2648
 msgid "Remove Selected"
 msgstr ""
 
-#: ../src/open_button.py:382
-msgid "Enter URL"
-msgstr ""
-
-#: ../src/open_button.py:382
-msgid "Please Enter a Valid URL"
-msgstr ""
-
-#: ../src/togglehoverbutton.py:135 ../src/player_box.py:2269
-#: ../src/player_box.py:2466
-msgid "Standard Mode"
-msgstr ""
-
-#: ../src/play_list_button.py:35
-msgid "Playlist"
-msgstr ""
-
-#: ../src/player_box.py:410 ../src/player_box.py:2463
+#: ../src/player_box.py:415 ../src/player_box.py:2555
 msgid "Open URL"
 msgstr ""
 
-#: ../src/player_box.py:700 ../src/player_box.py:912
+#: ../src/player_box.py:705 ../src/player_box.py:917
 msgid "Mute: enabled"
 msgstr ""
 
-#: ../src/player_box.py:815 ../src/player_box.py:820
+#: ../src/player_box.py:820 ../src/player_box.py:825
 msgid "Screenshot Saved"
 msgstr ""
 
-#: ../src/player_box.py:834
+#: ../src/player_box.py:839
 msgid "Screenshot Copied to Clipboard"
 msgstr ""
 
-#: ../src/player_box.py:1049
+#: ../src/player_box.py:1090
 msgid "No Media Selected"
 msgstr ""
 
-#: ../src/player_box.py:1066
+#: ../src/player_box.py:1107 ../src/video_format_conv/conv_task_gui.py:66
 msgid "Pause"
 msgstr ""
 
-#: ../src/player_box.py:1086
+#: ../src/player_box.py:1127
 msgid "Select Directory"
 msgstr ""
 
-#: ../src/player_box.py:1104 ../src/player_box.py:2949
+#: ../src/player_box.py:1145 ../src/player_box.py:3045
 msgid "Select Files"
 msgstr ""
 
-#: ../src/player_box.py:1136
+#: ../src/player_box.py:1177
 msgid "Failed to Open Selected File"
 msgstr ""
 
-#: ../src/player_box.py:2095 ../src/player_box.py:2109
+#: ../src/player_box.py:2171 ../src/player_box.py:2185
 msgid "s"
 msgstr ""
 
-#: ../src/player_box.py:2147
+#: ../src/player_box.py:2223
 msgid "Open Screenshot Directory"
 msgstr ""
 
-#: ../src/player_box.py:2148
+#: ../src/player_box.py:2224
 msgid "Set Screenshot Directory"
 msgstr ""
 
-#: ../src/player_box.py:2151
+#: ../src/player_box.py:2227
 msgid "Import Subtitles"
 msgstr ""
 
-#: ../src/player_box.py:2152 ../src/player_box.py:2445
+#: ../src/player_box.py:2228 ../src/player_box.py:2531
 msgid "Select Subtitles"
 msgstr ""
 
-#: ../src/player_box.py:2153
+#: ../src/player_box.py:2229
 msgid "Remove Subtitles"
 msgstr ""
 
-#: ../src/player_box.py:2173 ../src/player_box.py:2415
+#: ../src/player_box.py:2249 ../src/player_box.py:2495
 msgid "Stereo"
 msgstr ""
 
-#: ../src/player_box.py:2174 ../src/player_box.py:2416
+#: ../src/player_box.py:2250 ../src/player_box.py:2496
 msgid "Left"
 msgstr ""
 
-#: ../src/player_box.py:2175 ../src/player_box.py:2417
+#: ../src/player_box.py:2251 ../src/player_box.py:2497
 msgid "Right"
 msgstr ""
 
-#: ../src/player_box.py:2179
+#: ../src/player_box.py:2255
 msgid "Channels"
 msgstr ""
 
-#: ../src/player_box.py:2184
+#: ../src/player_box.py:2260
 msgid "Mute/Umute"
 msgstr ""
 
-#: ../src/player_box.py:2207 ../src/player_box.py:2383
+#: ../src/player_box.py:2283 ../src/player_box.py:2460
 msgid "Original"
 msgstr ""
 
-#: ../src/player_box.py:2214 ../src/player_box.py:2390
+#: ../src/player_box.py:2290 ../src/player_box.py:2467
 msgid "50%"
 msgstr ""
 
-#: ../src/player_box.py:2216 ../src/player_box.py:2392
+#: ../src/player_box.py:2292 ../src/player_box.py:2469
 msgid "150%"
 msgstr ""
 
-#: ../src/player_box.py:2252 ../src/player_box.py:2343
-#: ../src/player_box.py:2527
+#: ../src/player_box.py:2328 ../src/player_box.py:2420
+#: ../src/player_box.py:2622
 msgid "Play (single)"
 msgstr ""
 
-#: ../src/player_box.py:2253 ../src/player_box.py:2344
-#: ../src/player_box.py:2528
+#: ../src/player_box.py:2329 ../src/player_box.py:2421
+#: ../src/player_box.py:2623
 msgid "Play (ordered)"
 msgstr ""
 
-#: ../src/player_box.py:2254 ../src/player_box.py:2345
-#: ../src/player_box.py:2529
+#: ../src/player_box.py:2330 ../src/player_box.py:2422
+#: ../src/player_box.py:2624
 msgid "Shuffle"
 msgstr ""
 
-#: ../src/player_box.py:2255 ../src/player_box.py:2346
-#: ../src/player_box.py:2530
+#: ../src/player_box.py:2331 ../src/player_box.py:2423
+#: ../src/player_box.py:2625
 msgid "Repeat"
 msgstr ""
 
-#: ../src/player_box.py:2256 ../src/player_box.py:2347
-#: ../src/player_box.py:2531
+#: ../src/player_box.py:2332 ../src/player_box.py:2424
+#: ../src/player_box.py:2626
 msgid "Repeat List"
 msgstr ""
 
-#: ../src/player_box.py:2274 ../src/player_box.py:2358
+#: ../src/player_box.py:2350 ../src/player_box.py:2435
 msgid "Forward 5s"
 msgstr ""
 
-#: ../src/player_box.py:2275 ../src/player_box.py:2359
+#: ../src/player_box.py:2351 ../src/player_box.py:2436
 msgid "Rewind 5s"
 msgstr ""
 
-#: ../src/player_box.py:2276 ../src/player_box.py:2468
-#: ../src/player_box.py:2552
+#: ../src/player_box.py:2352 ../src/player_box.py:2560
+#: ../src/player_box.py:2653
 msgid "Play Order"
 msgstr ""
 
-#: ../src/player_box.py:2284
+#: ../src/player_box.py:2360
 msgid "Help"
 msgstr ""
 
-#: ../src/player_box.py:2285
+#: ../src/player_box.py:2361
 msgid "Issues"
 msgstr ""
 
-#: ../src/player_box.py:2292
+#: ../src/player_box.py:2368
 msgid "File"
 msgstr ""
 
-#: ../src/player_box.py:2294 ../src/player_box.py:2470
+#: ../src/player_box.py:2370 ../src/player_box.py:2562
 msgid "Video"
 msgstr ""
 
-#: ../src/player_box.py:2295 ../src/player_box.py:2471
+#: ../src/player_box.py:2371 ../src/player_box.py:2563
 msgid "Audio"
 msgstr ""
 
-#: ../src/player_box.py:2298
+#: ../src/player_box.py:2374 ../src/player_box.py:2657
+msgid "Format conversion"
+msgstr ""
+
+#: ../src/player_box.py:2375
 msgid "New Features"
 msgstr ""
 
-#: ../src/player_box.py:2304
+#: ../src/player_box.py:2381
 msgid "Quit"
 msgstr ""
 
-#: ../src/player_box.py:2430
+#: ../src/player_box.py:2516
 msgid "Enlarge"
 msgstr ""
 
-#: ../src/player_box.py:2431
+#: ../src/player_box.py:2517
 msgid "Decrease"
 msgstr ""
 
-#: ../src/player_box.py:2435
+#: ../src/player_box.py:2521
 msgid "0.5 seconds forword"
 msgstr ""
 
-#: ../src/player_box.py:2436
+#: ../src/player_box.py:2522
 msgid "0.5 sceconds delay"
 msgstr ""
 
-#: ../src/player_box.py:2441
+#: ../src/player_box.py:2527
 msgid "Search subtitles"
 msgstr ""
 
-#: ../src/player_box.py:2442
+#: ../src/player_box.py:2528
 msgid "Load a subtitle"
 msgstr ""
 
-#: ../src/player_box.py:2443 ../src/player_box.py:2876
+#: ../src/player_box.py:2529 ../src/player_box.py:2980
 msgid "Disable Subtitles"
 msgstr ""
 
-#: ../src/player_box.py:2446
+#: ../src/player_box.py:2532
 msgid "Size of Subtitles"
 msgstr ""
 
-#: ../src/player_box.py:2447
+#: ../src/player_box.py:2533
 msgid "Subtitle Synchronization"
 msgstr ""
 
-#: ../src/player_box.py:2465
+#: ../src/player_box.py:2557
 msgid "Full Screen On/Off"
 msgstr ""
 
-#: ../src/player_box.py:2534
+#: ../src/player_box.py:2629
 msgid "By Name"
 msgstr ""
 
-#: ../src/player_box.py:2535
+#: ../src/player_box.py:2630
 msgid "By Type"
 msgstr ""
 
-#: ../src/player_box.py:2544
+#: ../src/player_box.py:2645
 msgid "Add Directory"
 msgstr ""
 
-#: ../src/player_box.py:2545
+#: ../src/player_box.py:2646
 msgid "Add URL"
 msgstr ""
 
-#: ../src/player_box.py:2548
+#: ../src/player_box.py:2649
 msgid "Clear Playlist"
 msgstr ""
 
-#: ../src/player_box.py:2549
+#: ../src/player_box.py:2650
 msgid "Remove Unavailable Files"
 msgstr ""
 
-#: ../src/player_box.py:2551
+#: ../src/player_box.py:2652
 msgid "Recent Played"
 msgstr ""
 
-#: ../src/player_box.py:2553
+#: ../src/player_box.py:2654
 msgid "Sort"
 msgstr ""
 
-#: ../src/player_box.py:2556
+#: ../src/player_box.py:2658
 msgid "Open Containing Directory"
 msgstr ""
 
-#: ../src/player_box.py:2867 ../src/player_box.py:2921
+#: ../src/player_box.py:2973 ../src/player_box.py:3026
 msgid "Subtitle loaded"
+msgstr ""
+
+#: ../src/scan_subtitles.py:204 ../src/subtitle/scan_subtitles.py:204
+msgid "Search Subtitles"
+msgstr ""
+
+#: ../src/scan_subtitles.py:230 ../src/subtitle/scan_subtitles.py:231
+msgid "Subtiles"
+msgstr ""
+
+#: ../src/scan_subtitles.py:304 ../src/subtitle/scan_subtitles.py:305
+msgid "Movie Name: "
+msgstr ""
+
+#: ../src/scan_subtitles.py:318 ../src/subtitle/scan_subtitles.py:319
+msgid "Search"
+msgstr ""
+
+#: ../src/scan_subtitles.py:341 ../src/subtitle/scan_subtitles.py:342
+msgid "Searching for subtitles"
+msgstr ""
+
+#: ../src/scan_subtitles.py:347 ../src/subtitle/scan_subtitles.py:348
+msgid "No network connection established"
+msgstr ""
+
+#: ../src/scan_subtitles.py:357 ../src/subtitle/scan_subtitles.py:358
+msgid "Total search results"
+msgstr ""
+
+#: ../src/scan_subtitles.py:366 ../src/subtitle/scan_subtitles.py:367
+msgid "Sorry, we couln't find any subtitle"
+msgstr ""
+
+#: ../src/scan_subtitles.py:375 ../src/subtitle/scan_subtitles.py:376
+msgid "Download"
+msgstr ""
+
+#: ../src/scan_subtitles.py:436 ../src/subtitle/scan_subtitles.py:437
+msgid "Subtile has been saved to the"
+msgstr ""
+
+#: ../src/scan_subtitles.py:436 ../src/subtitle/scan_subtitles.py:437
+msgid "director"
+msgstr ""
+
+#: ../src/scan_subtitles.py:445 ../src/subtitle/scan_subtitles.py:446
+msgid "Failed to download the subtitle!"
+msgstr ""
+
+#: ../src/video_format_conv/conv_task_gui.py:45
+msgid "Task Manager for format conversion"
+msgstr ""
+
+#: ../src/video_format_conv/conv_task_gui.py:65
+#: ../src/video_format_conv/gui.py:105
+msgid "Start"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:47
+msgid "Format converter"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:86
+msgid "phone brand : "
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:87
+msgid "Output format : "
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:88
+msgid "Audio encoder : "
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:89
+msgid "Video encoder : "
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:90
+msgid "Output directory : "
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:91
+msgid "Phone model : "
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:92
+msgid "Resolution : "
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:104
+msgid "Change"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:108
+msgid "Advanced"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:109
+msgid "Task manager"
+msgstr ""
+
+#: ../src/video_format_conv/gui.py:191
+msgid "Choose a directory"
 msgstr ""
