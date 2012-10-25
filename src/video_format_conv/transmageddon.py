@@ -911,7 +911,7 @@ class TransmageddonUI:
        out_path = self.form.save_path_entry.get_text()       
        if not len(out_path):
           out_path = os.path.expanduser("~")
-       print "out_path:", out_path
+       # print "out_path:", out_path
        self.outputdirectory = out_path # output path.   
        # _format = self.outputfilename[-3:]
        # add conv task.
@@ -1168,6 +1168,8 @@ class TransmageddonUI:
                        self.audiorows[0].append_text("Audio passthrough")
                        self.audiocodecs.append("pass")
                        self.audiopassmenuno=(len(self.audiocodecs))-1
+       else:
+          self.videorows[0].set_sensitive(False)
 
    def on_containerchoice_changed(self, widget, text):
        self.CodecBox.set_sensitive(True)

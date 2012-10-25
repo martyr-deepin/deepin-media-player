@@ -26,6 +26,8 @@ import pangocairo
 import pango
 import gobject
 
+from timer import Timer
+
 TEST_LRC = "深度影音播放器 歌词测试播放"
 INIT_FONT_TYPE = "文泉驿等宽微米黑"
 INIT_FONT_SIZE = 25
@@ -37,40 +39,40 @@ class Lrc(gobject.GObject):
         }
     def __init__(self):
         gobject.GObject.__init__(self)
+        self.timer = Timer(100)
+        self.timer.connect("Tick", self.timer_tick_event)
         self.pango_list = pango.AttrList()        
         self.lrc_text = ""
+        # position and size.
         self.offset_x = 0
         self.offset_y = 0
         self.offset_width = 1
         self.padding_width = 0
         self.padding_height = 0
-        self.time_delay = 0
+        # show bool value.
         self.show_lrc_bool = True
-        self.timeout_add_bool = True
-        self.timeout_add_id = None
         # Init function.
         self.init_font()
         
     def start_lrc(self):    
-        self.timeout_add_bool = True
+        self.timer.Enabled = True
         
     def stop_lrc(self):    
-        self.timeout_add_bool = False
+        self.timer.Enabled = False
+        
+    def timer_tick_event(self, Tick):    
+        self.draw_lrc_timeout_add()
         
     def init_timeout(self, time_delay=0):     
-        if self.timeout_add_id:
-            gtk.timeout_remove(self.timeout_add_id) # remove timeout id.
-        self.time_delay = time_delay
-        self.timeout_add_id = gtk.timeout_add(self.time_delay, self.draw_lrc_timeout_add)
+        self.timer.Interval = time_delay
+        # self.timer.Enabled = True
         
-    def stop_timeout(self):    
-        if self.timeout_add_id:
-            gtk.timeout_remove(self.timeout_add_id) # remove timeout id.
+    def stop_timeout(self):
+        self.timer.Enabled = False
 
     def draw_lrc_timeout_add(self):    
         self.padding_width += self.offset_width
         self.emit("lrc-changed")
-        return self.timeout_add_bool
     
     def init_font(self, font_type=INIT_FONT_TYPE, font_size=INIT_FONT_SIZE):
         self.font_type = font_type
@@ -106,7 +108,7 @@ class Lrc(gobject.GObject):
         # Mov rectangle(offset_x, offset_y, padding_width, padding_height).
         # print "padding_width:", self.padding_width
         # print "ch_width:", ch_width
-        if self.padding_width == ch_width:
+        if self.padding_width == ch_width:            
             self.stop_timeout()
         cr.save()
         cr.rectangle(self.offset_x, self.offset_y, self.padding_width, ch_height)
@@ -125,7 +127,7 @@ if __name__ == "__main__":
         cr.paint()
         # print lrc_list
         for lrc in lrc_list:
-            lrc.expose_lrc_text_function(cr)
+            lrc.expose_lrc_text_function(cr)            
         return True
     
     def active_expose_window(LRC):
@@ -157,7 +159,8 @@ if __name__ == "__main__":
         lrc.init_timeout(i)
         lrc.set_position(1, 10*i)
         lrc.connect("lrc-changed", active_expose_window)
-        lrc_list.append(lrc)    
+        lrc.start_lrc()
+        lrc_list.append(lrc)            
     ################################################
     win.connect("expose-event", test_osd_lrc_function)
     win.connect("realize", realize_win)

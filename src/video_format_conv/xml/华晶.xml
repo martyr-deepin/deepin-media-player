@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<device>
+	<profile>
+		<name>t8680hd</name>
+		<width>240</width>
+		<height>400</height>
+	</profile>
+	<profile>
+		<name>t8680</name>
+		<width>240</width>
+		<height>400</height>
+	</profile>
+	<profile>
+		<name>leo</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>a806hd</name>
+		<width>240</width>
+		<height>320</height>
+	</profile>
+</device>

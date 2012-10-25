@@ -59,10 +59,14 @@ class Form(DialogBox):
         self.draw_mask = self.draw_dialogbox_mask
         
     def draw_dialogbox_mask(self, cr, x, y, width, height):
-        pass
+        padding_height = 26
+        cr.set_source_rgba(1, 1, 1, 1.0)
+        cr.rectangle(x, y + padding_height, width, height - padding_height - 38)
+        cr.fill()
                 
     def init_value(self): 
-        self.read_xml = ReadXml("/usr/share/deepin-media-player/src/xml/")
+        read_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "xml")
+        self.read_xml = ReadXml(read_path)
         self.model_dict = {}
         # left.
         self.left_x = 20
@@ -89,7 +93,7 @@ class Form(DialogBox):
         self.frame_rate_label = Label(_("Video encoder : "))
         self.path_label = Label(_("Output directory : "))
         self.model_label = Label(_("Phone model : "))
-        self.ratio_label = Label(_("Resolution : "))        
+        self.ratio_label = Label('    ' + _("Resolution : "))        
         
         self.path_entry = InputEntry()
         self.save_path_entry = InputEntry()
