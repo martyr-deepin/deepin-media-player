@@ -37,7 +37,7 @@ import os
 
 from locales import _
 
-FORM_WIDTH = 465
+FORM_WIDTH = 425
 FORM_HEIGHT = 280
 
 
@@ -47,6 +47,7 @@ class Form(DialogBox):
                            _("Format converter"), 
                            FORM_WIDTH, FORM_HEIGHT- 80, 
                            mask_type=DIALOG_MASK_MULTIPLE_PAGE,
+                           close_callback=self.hide_all,
                            modal=False,
                            window_hint=gtk.gdk.WINDOW_TYPE_HINT_DIALOG,
                            window_pos=gtk.WIN_POS_CENTER,
@@ -74,7 +75,8 @@ class Form(DialogBox):
         self.left_offset_x = 0
         self.left_offset_y = 0
         # right.
-        self.right_x = 200
+        # self.right_x = 200
+        self.right_x = 180
         self.right_y = 20
         self.right_offset_x = 0
         self.right_offset_y = 0
@@ -107,12 +109,10 @@ class Form(DialogBox):
             "apanda" : _("apanda"), "iocean" : _("iocean"), "mastone" : _("mastone")
             }        
         
-        # for item in self.vendor_dict.items():
-        #     print "***: %s" % (str(item))
-        
     def InitializeComponent(self):
         # Init form event.
-        self.connect("destroy", lambda w : self.destroy())
+        # self.connect("destroy", lambda w : self.destroy())
+        self.connect("destroy", lambda w : self.hide_all())
         # Init widgets.
         self.main_fixed = gtk.Fixed()
         self.brand_label = Label(_("phone brand : "))
@@ -138,17 +138,18 @@ class Form(DialogBox):
         self.close_btn = Button(_("Close"))
         self.higt_set_bool = False
         self.higt_set_btn = Button(_("Advanced"))
+        
         self.show_and_hide_task_btn = Button(_("Task manager"))
         
         self.higt_hbox = gtk.HBox()
         self.higt_hbox.pack_start(self.higt_set_btn)
-        self.higt_hbox.pack_start(self.show_and_hide_task_btn)
+        # self.higt_hbox.pack_start(self.show_and_hide_task_btn)
         
         self.higt_align = gtk.Alignment()
         # self.align.add(self.higt_set_btn)
         self.higt_align.add(self.higt_hbox)
         self.higt_align.set(1, 0, 1, 0)
-        self.higt_align.set_padding(0, 0, 0, 113)
+        self.higt_align.set_padding(0, 0, 0, 170)
         
         self.right_button_box.set_buttons([self.higt_align, self.start_btn, self.close_btn])
         
@@ -163,24 +164,41 @@ class Form(DialogBox):
             brand_items.append((brand_po, brand))
             # print brand
             # self.brand_combo.append_text(brand)
+        # ratio combo. %s x %s    
+        self.__ratio_list = ["176 x 220", "240 x 320", "320 x 240", 
+                           "320 x 480", "400 x 240", "480 x 800", 
+                           "540 x 960", "600 x 1024", "640 x 480", 
+                           "720 x 1280", "800 x 480", "800 x 600", 
+                           "1024 x 600", "1024 x 768", "1152 x 864", 
+                           "1280 x 800", "1366 x 768", "1400 x 1050",
+                           "1600 x 1200", "1920 x 1080", "1920 x 1200", 
+                           "2048 x 1536", "2560 x 1600"
+                           ]    
+        self.ratio_items = []
+        for ratio in self.__ratio_list:
+            self.ratio_items.append((ratio, ratio))
+                
         self.brand_combo.set_items(brand_items)    
         self.brand_combo.prepend_text("No Presets")
         self.brand_combo.connect("changed", self.brand_combo_item_selected)
         # model_combo.
+        self.model_combo.set_sensitive(False)
         self.model_combo.prepend_text("No Model")
         self.model_combo.connect("changed", self.model_combo_item_selected)
         # ratio_combo.
+        self.ratio_combo.set_items(self.ratio_items)
         self.ratio_combo.prepend_text("No Ratio")
         self.save_chooser_btn.connect("clicked", self.save_chooser_btn_clicked)
         
-        # self.format_combo.set_active(0)        
+        # self.format_combo.set_active(0)                
+        
         # path_entry.
-        PATH_ENTRY_WIDTH = 240
-        PATH_ENTRY_HEIGHT = 25
+        PATH_ENTRY_WIDTH = 235
+        PATH_ENTRY_HEIGHT = 23
         self.save_path_entry.set_sensitive(False)
         self.save_path_entry.set_text(self.get_home_path())
         self.save_path_entry.set_size(PATH_ENTRY_WIDTH, PATH_ENTRY_HEIGHT)
-        self.close_btn.connect("clicked", lambda w : self.destroy())
+        self.close_btn.connect("clicked", lambda w : self.hide_all())
         # higt_set_btn.
         self.higt_set_btn.connect("clicked", self.higt_set_btn_clicked)
         
@@ -204,7 +222,7 @@ class Form(DialogBox):
             padding_y = int(padding_height/3.5)
             self.main_fixed.put(label,
                                 self.right_x,
-                                self.right_y + self.right_offset_y - padding_y)
+                                self.right_y + self.right_offset_y - padding_y + 3)
             self.main_fixed.put(combo, 
                                 self.right_x + padding_width + 5, 
                                 self.right_y + self.right_offset_y - padding_y) 
@@ -228,7 +246,7 @@ class Form(DialogBox):
                          gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER,
                          (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
                           gtk.STOCK_OPEN, gtk.RESPONSE_OK)
-                         )        
+                         )
         # current floader set.
         open_dialog.set_current_folder(self.get_home_path())
         # run dir dialog window.
@@ -244,42 +262,49 @@ class Form(DialogBox):
     def brand_combo_item_selected(self, combo, item_content):
         self.model_combo.clear_items()
         self.ratio_combo.clear_items()
-        if item_content != "No Presets":
-            # print "item_value:", self.read_xml.brand_dict[item_content]
+        #
+        try:
             self.model_dict = self.read_xml.load(self.read_xml.brand_dict[item_content])
-            # print 'self.model_dict:', self.model_dict
-            if self.model_dict != {}:
-                model_items = []
-                for model in self.model_dict:            
-                    # self.model_combo.append_text(model)
-                    model_items.append((model, model))
-                self.model_combo.set_items(model_items)    
-                self.model_combo.droplist.set_size_request(-1, self.model_combo.droplist_height)
-                self.model_combo.set_active(0)
-            else:    
-                self.model_combo.append_text("No Model")
-                self.ratio_combo.append_text("No Ratio")    
+        except Exception, e:    
+            print "brand_combo_item_selected[error]:", e
+            self.model_dict = {}
+        #    
+        if item_content != "No Presets" and self.model_dict != {}:
+            model_items = []
+            for model in self.model_dict:
+                model_items.append((model, model))
+            self.model_combo.set_items(model_items)    
+            self.model_combo.droplist.set_size_request(-1, self.model_combo.droplist_height)
+            self.model_combo.set_active(0)            
+            self.model_combo.set_sensitive(True)
         else:        
             # clear model and ratio all text.
             self.model_combo.append_text("No Model")
-            self.ratio_combo.append_text("No Ratio")    
+            self.model_combo.set_sensitive(False)            
+            # add ratios.
+            self.ratio_combo.set_items(self.ratio_items)
+            self.ratio_combo.prepend_text('No Ratio')
             
+        
     def model_combo_item_selected(self, combo, item_content):        
         if len(item_content):
             width, height = self.model_dict[item_content]
             self.ratio_combo.clear_items()
             self.ratio_combo.prepend_text("%s x %s"%(width, height))
         
+    def hide_set_window_hints(self):        
+        self.hide_setting()
+        self.set_geometry_hints(None, FORM_WIDTH, FORM_HEIGHT-80, FORM_WIDTH, FORM_HEIGHT-80, -1, -1, -1, -1, -1, -1)
+        self.set_size_request(FORM_WIDTH, FORM_HEIGHT-80)
+        
     def higt_set_btn_clicked(self, widget):    
         if self.higt_set_bool:
-            self.hide_setting()
-            self.set_geometry_hints(None, FORM_WIDTH, FORM_HEIGHT-80, FORM_WIDTH, FORM_HEIGHT-80, -1, -1, -1, -1, -1, -1)
-            self.set_size_request(FORM_WIDTH, FORM_HEIGHT-80)
-            # self.set_geometry_hints(None, FORM_WIDTH, FORM_HEIGHT, -1, -1, -1, -1, -1, -1, -1, -1)
+            self.hide_set_window_hints()
         else:    
             self.show_setting()
             self.set_geometry_hints(None, FORM_WIDTH, FORM_HEIGHT, FORM_WIDTH, FORM_HEIGHT, -1, -1, -1, -1, -1, -1)
             self.set_size_request(FORM_WIDTH, FORM_HEIGHT+80) 
+            
         self.higt_set_bool = not self.higt_set_bool
         
     def move_left_widgets(self):        
@@ -295,11 +320,13 @@ class Form(DialogBox):
                                 self.left_x, 
                                 self.left_y + self.left_offset_y)
             # main fixed add other widget.            
+            # print other
             self.main_fixed.move(other, 
                                 self.left_x + padding_width + other_padding_x, 
                                 self.left_y + self.left_offset_y - padding_y)
             if button:
                 # main fixed add button widget.                
+                padding_y += 1
                 self.main_fixed.move(button, 
                                     self.left_x + padding_width + other.get_size_request()[0] + button_padding_x, 
                                     self.left_y + self.left_offset_y - padding_y) 

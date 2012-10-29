@@ -925,11 +925,11 @@ msgstr "输出格式 : "
 
 #: ../src/video_format_conv/gui.py:120
 msgid "Audio encoder : "
-msgstr "音频编码器 : "
+msgstr "音频编码 : "
 
 #: ../src/video_format_conv/gui.py:121
 msgid "Video encoder : "
-msgstr "视频编码器 : "
+msgstr "视频编码 : "
 
 #: ../src/video_format_conv/gui.py:122
 msgid "Output directory : "

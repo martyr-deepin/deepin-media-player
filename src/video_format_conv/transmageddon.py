@@ -160,7 +160,7 @@ class TransmageddonUI:
        self.form = Form()              
        self.form.show_all()       
        self.form.hide_setting()      
-       self.form.show_and_hide_task_btn.connect("clicked", self.conv_task_gui_show_and_hide_task_btn_clicked)
+       # self.form.show_and_hide_task_btn.connect("clicked", self.conv_task_gui_show_and_hide_task_btn_clicked)
        # conv task list.
        self.conv_list = conv_list
        self.conv_dict = {} # save conv state{filename, self.audiodata...}.
@@ -188,94 +188,43 @@ class TransmageddonUI:
 
        # these dynamic comboboxes allow us to support files with multiple streams eventually
        def dynamic_comboboxes_audio(streams,extra = []):
-           # streams=1 # this will become a variable once we support multiple streams
-               vbox = gtk.VBox()
-           
-           # x=-1
-           # while x < (streams-1):
-               # x=x+1
-               # print "x is " + str(x)
-               # store = gtk.ListStore(gobject.TYPE_STRING, *extra)
-               # combo = gtk.ComboBox(store)
-               # text_cell = gtk.CellRendererText()
-               # combo.pack_start(text_cell, True)
-               # combo.add_attribute(text_cell, 'text', 0)
-               # self.audiorows.append(combo)
+               vbox = gtk.VBox()           
                self.audiorows.append(self.form.bit_rate_combo)
-               # vbox.add(self.audiorows[0])
-               # return vbox
                return self.form.bit_rate_combo
        
        def dynamic_comboboxes_video(streams,extra = []):
-           # streams=1
                vbox = gtk.VBox()
-           
-           # x=-1
-           # while x < (streams-1):
-               # x=x+1
-               # store = gtk.ListStore(gobject.TYPE_STRING, *extra)
-               # combo = gtk.ComboBox(store)
-               # combo = NewComboBox()
-               # text_cell = gtk.CellRendererText()
-               # combo.pack_start(text_cell, True)
-               # combo.add_attribute(text_cell, 'text', 0)
-               # self.videorows.append(combo)
                self.videorows.append(self.form.frame_rate_combo)
-               # vbox.add(self.videorows[0])
-               # return vbox
                return self.form.frame_rate_combo
        
        #Define functionality of our button and main window
        # self.TopWindow = self.builder.get_object("TopWindow")
        self.TopWindow = gtk.Window(gtk.WINDOW_TOPLEVEL)
        self.vbox1 = gtk.VBox()       
-       # self.FileChooser = self.builder.get_object("FileChooser")
        # self.FileChooser = gtk.FileChooserButton("选择文件")
        # self.FileChooser = FileChooserButton("选择文件")
        self.FileChooser = self.form.modify_chooser_btn     
-       # self.videoinformation = self.builder.get_object("videoinformation") # GtkLabel
-       # self.audioinformation = self.builder.get_object("audioinformation") # GtkLabel
        self.videoinformation = gtk.Label("Video height/width:")
        self.audioinformation = gtk.Label("Audio Channels:")
-       # self.videocodec = self.builder.get_object("videocodec")
-       # self.audiocodec = self.builder.get_object("audiocodec")
        self.videocodec = gtk.Label("Video codec:")
        self.audiocodec = gtk.Label("Audio codec:")
        
        self.audiobox = dynamic_comboboxes_audio([gobject.TYPE_PYOBJECT])
        self.videobox = dynamic_comboboxes_video([gobject.TYPE_PYOBJECT])
-       # self.CodecBox = self.builder.get_object("CodecBox")
        self.CodecBox = gtk.Table() 
-       # self.presetchoice = self.builder.get_object("presetchoice")
        self.presetsmodel = gtk.ListStore(gobject.TYPE_STRING)
        self.presetchoice = gtk.ComboBox(self.presetsmodel)
        # self.presetchoice = self.form.brand_combo # NewComboBox(110)
        self.cellrenderertext1 = gtk.CellRendererText()
        self.presetchoice.pack_start(self.cellrenderertext1, True)
        self.presetchoice.add_attribute(self.cellrenderertext1, 'text', 0)
-       # self.containerchoice = self.builder.get_object("containerchoice")
-       # self.containerchoice = gtk.ListStore(gobject.TYPE_STRING)       
-       # self.containerchoice = gtk.ComboBox(self.containerchoice)
        self.containerchoice = self.form.format_combo # NewComboBox(110)
-       # self.cellrenderertext2 = gtk.CellRendererText()
-       # self.containerchoice.pack_start(self.cellrenderertext2, True)
-       # self.containerchoice.add_attribute(self.cellrenderertext2, 'text', 0)
-       # self.rotationchoice = self.builder.get_object("rotationchoice")
-       # self.rotationmodel = gtk.ListStore(gobject.TYPE_STRING)
-       # self.rotationchoice = gtk.ComboBox(self.rotationmodel)              
        self.rotationchoice = NewComboBox(110)
-       # self.cellrenderertext3 = gtk.CellRendererText()
-       # self.rotationchoice.pack_start(self.cellrenderertext3, True)
-       # self.rotationchoice.add_attribute(self.cellrenderertext3, 'text', 0)
 
        self.hbox_button = gtk.HBox()
-       # self.transcodebutton = self.builder.get_object("transcodebutton")
        self.transcodebutton = self.form.start_btn # Button("开始转换") #gtk.Button("transcodebutton")   
-       # self.cancelbutton = self.builder.get_object("cancelbutton")
        self.cancelbutton = Button("停止转换") #gtk.Button("cancelbutton")
-       # self.ProgressBar = self.builder.get_object("ProgressBar")
        self.ProgressBar = gtk.ProgressBar()
-       # self.StatusBar = self.builder.get_object("StatusBar")
        self.StatusBar = gtk.Statusbar()
        self.audiorows[0].connect("changed", self.on_audiocodec_changed)
        self.videorows[0].connect("changed", self.on_videocodec_changed)
@@ -298,10 +247,6 @@ class TransmageddonUI:
        # rotationchoice.
        self.rotationchoice.connect("changed", self.on_rotationchoice_changed)       
        # 
-       # CodecBox.       
-       # self.CodecBox.attach(self.audiobox, 0, 1, 1, 2, yoptions = gtk.FILL)
-       # self.CodecBox.attach(self.videobox, 2, 3, 1, 2, yoptions = gtk.FILL)
-       # self.CodecBox.show_all()
        # transcodebutton.
        self.transcodebutton.connect("clicked", self.on_transcodebutton_clicked)
        # cancelbutton.
@@ -836,21 +781,23 @@ class TransmageddonUI:
       self.nocontaineroptiontoggle = self.conv_dict[key][5]
       self.bogus = self.conv_dict[key][6]
       
-   def conv_task_gui_show_and_hide_task_btn_clicked(self, widget):   
-      if not self.conv_task_gui.get_visible():
-         self.conv_task_gui.show_all()
+   def conv_task_gui_show_and_hide_task_btn_clicked(self, widget):  # 123456 
+      if not self.conv_task_gui.get_visible(): 
+         self.conv_task_gui.show_all() 
       else:   
-         self.conv_task_gui.hide_all()
+         self.conv_task_gui.hide_all() 
       
-   def conv_task_gui_start_btn_clicked(self, widget):      
+   def conv_task_gui_start_btn_clicked(self, widget):
       # ??
-      self.start_conv_function()
+      # self.start_conv_function()
+      self.task_list[self.task_index].Pipeline("playing")      
       
    def start_conv_function(self):   
       try:
+         print "self.task_index:", self.task_index
          self.task_list[self.task_index].Pipeline("playing")
-         self.task_list[self.task_index].Pipeline("pause")
-         self.task_list[self.task_index].Pipeline("playing")
+         # self.task_list[self.task_index].Pipeline("pause")
+         # self.task_list[self.task_index].Pipeline("playing")
       
          self._transcoder = self.task_list[self.task_index]
          self._transcoder.connect("ready-for-querying", self.ProgressBarUpdate)
@@ -859,6 +806,7 @@ class TransmageddonUI:
 
          self.conv_task_gui.list_view.items[self.task_index].set_status_icon("working")
          self.ProgressBar = self.conv_task_gui.list_view.items[self.task_index]      
+         self.conv_task_gui.queue_draw()
       except Exception, e:   
          print "start_conv_function[error]:", e
       
@@ -938,10 +886,16 @@ class TransmageddonUI:
           media_item.set_format(self.container)
           self.conv_task_gui.list_view.add_items([media_item])
           
-       self.conv_task_gui.show_all()
+       
+       self.conv_task_gui.show_all()       
+       self.start_conv_function()   
+       gtk.timeout_add(1000, self.restart_start_btn)
        
        return True
 
+   def restart_start_btn(self): # .
+      self.task_list[self.task_index].Pipeline("playing")
+      
    def donemessage(self, donemessage, null):
        if donemessage == gst.pbutils.INSTALL_PLUGINS_SUCCESS:
            # print "success " + str(donemessage)
@@ -1067,7 +1021,9 @@ class TransmageddonUI:
                    self._start_transcoding()
            else:
                self.waiting_for_signal="True"
-
+       #hide format conv from.
+       self.form.hide_all()        
+       
    def on_cancelbutton_clicked(self, widget): # 取消按钮 事件.
        self.FileChooser.set_sensitive(True)
        self.containerchoice.set_sensitive(True)

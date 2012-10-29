@@ -162,6 +162,8 @@ class PlayerBox(object):
         self.init_toolbar()
         self.init_bottom_toolbar()
         self.init_playlist()
+                        
+        self.conv_from = None
         
         # Child widget add to vbox.
         self.vbox.pack_start(self.screen_frame_event, True, True)
@@ -200,7 +202,7 @@ class PlayerBox(object):
         # vbox add to main_hbox
         self.main_vbox.pack_start(self.hbox, True, True) # screen and progressbar
         self.main_vbox.pack_start(self.bottom_main_vbox, False, False)
-
+        
         '''Hide preview window.'''
         self.bottom_play_control_hbox_vframe_event_box.connect("motion-notify-event", self.hide_preview_function)
 
@@ -985,10 +987,23 @@ class PlayerBox(object):
         
         for item in list_item:
             conv_video_fiel_list.append(play_list_dict_save[item.title])
-            print play_list_dict_save[item.title]
+            # print play_list_dict_save[item.title]            
         ########################    
-        conv = TransmageddonUI(conv_video_fiel_list)
-
+        self.open_format_conv_dialog_window(conv_video_fiel_list)
+            
+    def open_format_conv_dialog_window(self, conv_video_fiel_list):
+        if not self.conv_from: 
+            self.conv_from = TransmageddonUI(conv_video_fiel_list)
+        else:            
+            self.conv_from.conv_list  = conv_video_fiel_list
+            self.conv_from_show_all()            
+            
+    def conv_from_show_all(self):        
+            self.conv_from.form.show_all()
+            self.conv_from.form.higt_set_bool = True
+            self.conv_from.form.higt_set_btn_clicked(self.conv_from.form.start_btn)
+            self.conv_from.form.brand_combo.set_active(0)
+                    
     def open_conv_dialog_window(self):
         open_dialog = gtk.FileChooserDialog("选择转换文件",
                                             None,
@@ -1000,9 +1015,21 @@ class PlayerBox(object):
         
         if res == gtk.RESPONSE_OK:
             path_string = open_dialog.get_filename()
+            open_dialog.destroy()
             if path_string:
-                TransmageddonUI([path_string])
-        open_dialog.destroy()       
+                self.open_format_conv_dialog_window([path_string])
+        else:
+            open_dialog.destroy()        
+        
+    def show_and_hide_task_conv_gui(self):
+        try:
+            if not self.conv_from.conv_task_gui.get_visible():
+                self.conv_from.conv_task_gui.show_all()
+            else:    
+                self.conv_from.conv_task_gui.hide_all()
+        except Exception, e:        
+            print "show_and_hide_task_conv_gui[error]:", e
+            print "no run conv_from... ...!!"
         
     def add_play_list(self, mplayer, path): # mplayer signal: "add-path"
         '''Play list add play file timeout.[100-1028 a play file].'''
@@ -2365,13 +2392,17 @@ class PlayerBox(object):
         menu_volume_pixbufs = (self.menu_volume_normal_pixbuf, self.menu_volume_hover_pixbuf, self.menu_volume_none_pixbuf)
         menu_setting_pixbufs = (self.menu_setting_normal_pixbuf, self.menu_setting_hover_pixbuf, self.menu_setting_none_pixbuf)
         menu_quit_pixbufs = (self.menu_quit_normal_pixbuf, self.menu_quit_hover_pixbuf, self.menu_quit_none_pixbuf)
+        
+        format_menu = Menu([(None, _("Format conversion"), self.open_conv_dialog_window),
+                            (None, _("任务管理器"), self.show_and_hide_task_conv_gui)
+                            ])
         self.title_root_menu = Menu([(None, _("File"), self.file_menu),
                                      (None, _("Play"), self.play_menu),
                                      (None, _("Video"), self.screen_menu),
                                      (menu_volume_pixbufs, _("Audio"), self.volume_menu),
                                      # (None, "字幕", self.subtitle_menu),
                                      (None, _("Take Screenshots"), self.sort_menu),
-                                     (None, _("Format conversion"), self.open_conv_dialog_window),
+                                     (None, _("格式转化"), format_menu),
                                      (None, _("New Features"), init_user_guide),
                                      (menu_setting_pixbufs, _("Preferences"), self.config_gui),
                                      # (None, "总在最前", None),
