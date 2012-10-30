@@ -36,8 +36,9 @@ from locales import _
 import gtk
 import gobject
 
-FORM_WIDTH  = 300
-FORM_HEIGHT = 400
+# 350, 450
+FORM_WIDTH  = 350
+FORM_HEIGHT = 450
 
 class ConvTAskGui(DialogBox):
     def __init__(self):
