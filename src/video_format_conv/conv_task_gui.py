@@ -35,10 +35,21 @@ from locales import _
 
 import gtk
 import gobject
+import pango
 
-DEFAULT_FONT_SIZE = 9
+DEFAULT_FONT_SIZE = 8
 FORM_WIDTH  = 350
 FORM_HEIGHT = 450
+
+def render_item_text(cr, content, rect, in_select, in_highlight, align=pango.ALIGN_LEFT, font_size=8, error=False):
+    if in_select or in_highlight:
+        color = app_theme.get_color("simpleSelectItem").get_color()
+    else:    
+        color = app_theme.get_color("labelText").get_color()
+
+    if error:    
+        color = "#ff0000"        
+    draw_text(cr, content, rect.x, rect.y, rect.width, rect.height, font_size, color, alignment=align)
 
 class ConvTAskGui(DialogBox):
     def __init__(self):
@@ -208,10 +219,11 @@ class MediaItem(gobject.GObject):
         
     def render_name(self, cr, rect, in_selection, in_highlight):            
         rect.x += self.name_padding_x
-        draw_text(cr, self.name, 
-                  rect.x, rect.y, rect.width, rect.height, 
-                  DEFAULT_FONT_SIZE, "#000000", 
-                  alignment=ALIGN_START)        
+        render_item_text(cr, self.name, rect, in_selection, in_highlight)
+        # draw_text(cr, self.name, 
+        #           rect.x, rect.y, rect.width, rect.height, 
+        #           DEFAULT_FONT_SIZE, "#000000", 
+        #           alignment=ALIGN_START)        
         
     def render_length(self, cr, rect, in_selection, in_highlight):
         '''Render length.'''
@@ -224,10 +236,11 @@ class MediaItem(gobject.GObject):
         
     def render_format(self, cr, rect, in_selection, in_highlight):
         rect.x += self.format_padding_x
-        draw_text(cr, self.format, 
-                  rect.x, rect.y, rect.width, rect.height, 
-                  DEFAULT_FONT_SIZE, "#000000", 
-                  alignment=ALIGN_START)
+        render_item_text(cr, self.format, rect, in_selection, in_highlight)
+        # draw_text(cr, self.format, 
+        #           rect.x, rect.y, rect.width, rect.height, 
+        #           DEFAULT_FONT_SIZE, "#000000", 
+        #           alignment=ALIGN_START)
         
     def get_column_sizes(self):
         '''Get sizes.'''

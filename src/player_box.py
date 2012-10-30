@@ -1005,7 +1005,7 @@ class PlayerBox(object):
             self.conv_from.form.brand_combo.set_active(0)
                     
     def open_conv_dialog_window(self):
-        open_dialog = gtk.FileChooserDialog("选择转换文件",
+        open_dialog = gtk.FileChooserDialog(_("Select a file"),
                                             None,
                                             gtk.FILE_CHOOSER_ACTION_OPEN,
                                             (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
@@ -2393,8 +2393,8 @@ class PlayerBox(object):
         menu_setting_pixbufs = (self.menu_setting_normal_pixbuf, self.menu_setting_hover_pixbuf, self.menu_setting_none_pixbuf)
         menu_quit_pixbufs = (self.menu_quit_normal_pixbuf, self.menu_quit_hover_pixbuf, self.menu_quit_none_pixbuf)
         
-        format_menu = Menu([(None, _("Format conversion"), self.open_conv_dialog_window),
-                            (None, _("任务管理器"), self.show_and_hide_task_conv_gui)
+        format_menu = Menu([(None, _("format conversion"), self.open_conv_dialog_window),
+                            (None, _("task manager"), self.show_and_hide_task_conv_gui)
                             ])
         self.title_root_menu = Menu([(None, _("File"), self.file_menu),
                                      (None, _("Play"), self.play_menu),
@@ -2402,7 +2402,7 @@ class PlayerBox(object):
                                      (menu_volume_pixbufs, _("Audio"), self.volume_menu),
                                      # (None, "字幕", self.subtitle_menu),
                                      (None, _("Take Screenshots"), self.sort_menu),
-                                     (None, _("格式转化"), format_menu),
+                                     (None, _("Format conversion"), format_menu),
                                      (None, _("New Features"), init_user_guide),
                                      (menu_setting_pixbufs, _("Preferences"), self.config_gui),
                                      # (None, "总在最前", None),

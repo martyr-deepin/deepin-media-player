@@ -15,6 +15,7 @@
  "buttonBorderPrelight" : "#FFFFFF",
  "buttonBorderActive" : "#FFFFFF",
  "buttonFont" : "#000000",
+  "simpleSelectItem" : "#FFFFFF",
  },	
  "alpha_colors" : {
      "frame" : ("#000000", 0.5),
