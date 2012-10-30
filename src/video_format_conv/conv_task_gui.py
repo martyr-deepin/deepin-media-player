@@ -62,9 +62,12 @@ class ConvTAskGui(DialogBox):
         self.scrolled_window.set_policy(gtk.POLICY_NEVER, gtk.POLICY_AUTOMATIC)
         self.scrolled_window.add_child(self.list_view)
         
-        self.start_btn = Button(_("Start"))
+        # self.start_btn = Button(_("Start"))
         self.pause_btn = Button(_("Pause"))
-        self.right_button_box.set_buttons([self.start_btn, self.pause_btn])
+        self.close_btn = Button(_("Close"))
+        # self.right_button_box.set_buttons([self.start_btn, self.pause_btn, self.close_btn])
+        self.right_button_box.set_buttons([self.pause_btn, self.close_btn])
+        
         
 class MediaItem(gobject.GObject):
     '''List item.'''    

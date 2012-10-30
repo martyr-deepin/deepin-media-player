@@ -25,6 +25,7 @@ from skin import app_theme
 from dtk.ui.draw import draw_vlinear
 from dtk.ui.dialog import DialogBox, DIALOG_MASK_MULTIPLE_PAGE
 from dtk.ui.entry import InputEntry
+from dtk.ui.draw import draw_vlinear
 from file_choose_button import FileChooserButton
 from dtk.ui.button import Button
 from dtk.ui.label import Label
@@ -60,11 +61,13 @@ class Form(DialogBox):
         self.draw_mask = self.draw_dialogbox_mask
         
     def draw_dialogbox_mask(self, cr, x, y, width, height):
-        padding_height = 26
-        cr.set_source_rgba(1, 1, 1, 1.0)
-        cr.rectangle(x, y + padding_height, width, height - padding_height - 38)
+        color_info_list = [(0,  ("#FFFFFF", 0.0)),
+                           (0.2, ("#FFFFFF", 0.9)),
+                           (1, ("#FFFFFF", 0.9))
+                           ]
+        draw_vlinear(cr, x, y, width, height, color_info_list)
         cr.fill()
-                
+        
     def init_value(self): 
         read_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "xml")
         self.read_xml = ReadXml(read_path)
@@ -153,8 +156,6 @@ class Form(DialogBox):
         
         self.right_button_box.set_buttons([self.higt_align, self.start_btn, self.close_btn])
         
-        # for brand in self.brand_en_list:
-        #     print "brand:", brand
         # brand_combo.
         brand_items = []
         for brand in self.read_xml.brand_dict.keys():
@@ -162,32 +163,27 @@ class Form(DialogBox):
             if self.brand_dict.has_key(brand):
                 brand_po = self.brand_dict[brand]
             brand_items.append((brand_po, brand))
-            # print brand
-            # self.brand_combo.append_text(brand)
-        # ratio combo. %s x %s    
+            
         self.__ratio_list = ["176 x 220", "240 x 320", "320 x 240", 
                            "320 x 480", "400 x 240", "480 x 800", 
                            "540 x 960", "600 x 1024", "640 x 480", 
                            "720 x 1280", "800 x 480", "800 x 600", 
-                           "1024 x 600", "1024 x 768", "1152 x 864", 
-                           "1280 x 800", "1366 x 768", "1400 x 1050",
-                           "1600 x 1200", "1920 x 1080", "1920 x 1200", 
-                           "2048 x 1536", "2560 x 1600"
+                           "1024 x 600", "1024 x 768", "1152 x 864",
                            ]    
         self.ratio_items = []
         for ratio in self.__ratio_list:
             self.ratio_items.append((ratio, ratio))
                 
         self.brand_combo.set_items(brand_items)    
-        self.brand_combo.prepend_text("No Presets")
+        self.brand_combo.prepend_text(_("No Presets"))
         self.brand_combo.connect("changed", self.brand_combo_item_selected)
         # model_combo.
         self.model_combo.set_sensitive(False)
-        self.model_combo.prepend_text("No Model")
+        self.model_combo.prepend_text(_("No Model"))
         self.model_combo.connect("changed", self.model_combo_item_selected)
         # ratio_combo.
         self.ratio_combo.set_items(self.ratio_items)
-        self.ratio_combo.prepend_text("No Ratio")
+
         self.save_chooser_btn.connect("clicked", self.save_chooser_btn_clicked)
         
         # self.format_combo.set_active(0)                
@@ -235,7 +231,7 @@ class Form(DialogBox):
     def get_home_path(self):
         return os.path.expanduser("~")
         
-    def save_chooser_btn_clicked(self, widget):    
+    def save_chooser_btn_clicked(self, widget):
         '''保存目录... ...'''
         self.show_open_dir_dialog_window()
         
@@ -269,7 +265,7 @@ class Form(DialogBox):
             print "brand_combo_item_selected[error]:", e
             self.model_dict = {}
         #    
-        if item_content != "No Presets" and self.model_dict != {}:
+        if item_content != _("No Presets") and self.model_dict != {}:
             model_items = []
             for model in self.model_dict:
                 model_items.append((model, model))
@@ -277,14 +273,14 @@ class Form(DialogBox):
             self.model_combo.droplist.set_size_request(-1, self.model_combo.droplist_height)
             self.model_combo.set_active(0)            
             self.model_combo.set_sensitive(True)
+            self.model_label.set_sensitive(True)
         else:        
             # clear model and ratio all text.
-            self.model_combo.append_text("No Model")
+            self.model_combo.append_text(_("No Model"))
             self.model_combo.set_sensitive(False)            
+            self.model_label.set_sensitive(False)
             # add ratios.
             self.ratio_combo.set_items(self.ratio_items)
-            self.ratio_combo.prepend_text('No Ratio')
-            
         
     def model_combo_item_selected(self, combo, item_content):        
         if len(item_content):

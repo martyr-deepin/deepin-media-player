@@ -45,7 +45,7 @@ class Transcoder(gobject.GObject):
                       TIMESTAMP, ROTATIONVALUE, AUDIOPASSTOGGLE, VIDEOPASSTOGGLE, INTERLACED, INPUTVIDEOCAPS,
                       NEW_WIDTH=None, NEW_HEIGHT=None):
        gobject.GObject.__init__(self)
-
+       self.state_label = "pause"
        # Choose plugin based on Container name
        self.container = CONTAINERCHOICE
        self.audiocaps = AUDIOCODECVALUE
@@ -398,6 +398,7 @@ class Transcoder(gobject.GObject):
            tag_setting_element.merge_tags(taglist, gst.TAG_MERGE_APPEND)
 
    def Pipeline (self, state):
+       self.state_label = state
        if state == ("playing"):
            self.pipeline.set_state(gst.STATE_PLAYING)
        elif state == ("pause"):

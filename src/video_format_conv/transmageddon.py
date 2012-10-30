@@ -40,7 +40,8 @@ import about
 import presets
 import utils
 import datetime
-from gettext import gettext as _
+from locales import _
+# from gettext import gettext as _
 import gettext
 
 try:
@@ -166,8 +167,10 @@ class TransmageddonUI:
        self.conv_dict = {} # save conv state{filename, self.audiodata...}.
        # Transmageddon conv task list init.
        self.conv_task_gui = ConvTAskGui() # task list gui.
-       self.conv_task_gui.start_btn.connect("clicked", self.conv_task_gui_start_btn_clicked)
+       # self.conv_task_gui.start_btn.connect("clicked", self.conv_task_gui_start_btn_clicked)
        self.conv_task_gui.pause_btn.connect("clicked", self.conv_task_gui_pause_btn_clicked)       
+       self.conv_task_gui.close_btn.connect("clicked", lambda w : self.conv_task_gui.hide_all())
+       
        self.task_list = []
        self.task_index = 0
        #Set up i18n
@@ -188,7 +191,7 @@ class TransmageddonUI:
 
        # these dynamic comboboxes allow us to support files with multiple streams eventually
        def dynamic_comboboxes_audio(streams,extra = []):
-               vbox = gtk.VBox()           
+               vbox = gtk.VBox()
                self.audiorows.append(self.form.bit_rate_combo)
                return self.form.bit_rate_combo
        
@@ -562,9 +565,10 @@ class TransmageddonUI:
            self.transcodebutton.set_sensitive(True)
            self.rotationchoice.set_sensitive(True)
            self.start_time = False
-           self.ProgressBar.set_text("Done Transcoding")           
+           self.ProgressBar.set_text("Done Transcoding")          
            # self.task_index = min(self.task_index + 1, len(self.task_list) - 1) # task 
            self.task_list[self.task_index].Pipeline("null") # close Pipeline.
+           self.conv_task_gui.list_view.items[self.task_index].set_status_icon("success") # set status icon.
            self.task_index += 1
            self.ProgressBar.set_fraction(1.0)
            self.ProgressBar = gtk.ProgressBar() # restart .
@@ -787,18 +791,19 @@ class TransmageddonUI:
       else:   
          self.conv_task_gui.hide_all() 
       
-   def conv_task_gui_start_btn_clicked(self, widget):
-      # ??
-      # self.start_conv_function()
-      self.task_list[self.task_index].Pipeline("playing")      
+   def conv_task_gui_pause_play(self):      
+      self.task_list[self.task_index].Pipeline("pause")
+      self.conv_task_gui.list_view.items[self.task_index].set_status_icon("wait")
+      
+   def conv_task_gui_staring_play(self):
+      self.task_list[self.task_index].Pipeline("playing")
+      self.conv_task_gui.list_view.items[self.task_index].set_status_icon("working")
       
    def start_conv_function(self):   
       try:
-         print "self.task_index:", self.task_index
-         self.task_list[self.task_index].Pipeline("playing")
-         # self.task_list[self.task_index].Pipeline("pause")
-         # self.task_list[self.task_index].Pipeline("playing")
-      
+         # print "self.task_index:", self.task_index
+         self.task_list[self.task_index].Pipeline("playing")      
+         
          self._transcoder = self.task_list[self.task_index]
          self._transcoder.connect("ready-for-querying", self.ProgressBarUpdate)
          self._transcoder.connect("got-eos", self._on_eos)
@@ -810,10 +815,14 @@ class TransmageddonUI:
       except Exception, e:   
          print "start_conv_function[error]:", e
       
-   def conv_task_gui_pause_btn_clicked(self, widget):   
-      self.task_list[self.task_index].Pipeline("pause")
-      self.conv_task_gui.list_view.items[self.task_index].set_status_icon("wait")
-      
+   def conv_task_gui_pause_btn_clicked(self, widget):
+      if widget.label == _("Pause"):
+         widget.set_label(_("continue"))
+         self.conv_task_gui_pause_play()
+      else:   
+         widget.set_label(_("Pause"))
+         self.conv_task_gui_staring_play()
+               
    def _start_transcoding(self): 
        filechoice = self.FileChooser.get_uri()
        self.filename = self.FileChooser.get_filename()
