@@ -21,6 +21,7 @@ from skin import app_theme
 from file_choose_button import FileChooserButton
 from dtk.ui.button import Button
 from dtk.ui.label import Label
+from dtk.ui.menu import Menu
 from new_combobox import NewComboBox
 from conv_task_gui import ConvTAskGui, MediaItem
 from gui import Form
@@ -170,8 +171,12 @@ class TransmageddonUI:
        # self.conv_task_gui.start_btn.connect("clicked", self.conv_task_gui_start_btn_clicked)
        self.conv_task_gui.pause_btn.connect("clicked", self.conv_task_gui_pause_btn_clicked)       
        self.conv_task_gui.close_btn.connect("clicked", lambda w : self.conv_task_gui.hide_all())
-       
+       self.conv_task_gui.list_view.connect("button-press-event", self.show_popup_menu)
+       self.conv_task_gui.list_view.connect("single-click-item",  self.save_open_selsect_file_name)
+       self.conv_task_gui.list_view.connect("delete-select-items", self.delete_task_list)
+               
        self.task_list = []
+       self.conv_task_list = []
        self.task_index = 0
        #Set up i18n
        gettext.bindtextdomain("transmageddon","../../share/locale")
@@ -568,7 +573,12 @@ class TransmageddonUI:
            self.ProgressBar.set_text("Done Transcoding")          
            # self.task_index = min(self.task_index + 1, len(self.task_list) - 1) # task 
            self.task_list[self.task_index].Pipeline("null") # close Pipeline.
-           self.conv_task_gui.list_view.items[self.task_index].set_status_icon("success") # set status icon.
+           self.task_list[self.task_index].conv_flags = 1 # conv done.
+           try:
+              self.conv_task_gui.list_view.items[self.task_index].set_status_icon("success") # set status icon.
+           except Exception, e:   
+              print "_on_eos[error]:", e
+              
            self.task_index += 1
            self.ProgressBar.set_fraction(1.0)
            self.ProgressBar = gtk.ProgressBar() # restart .
@@ -791,7 +801,7 @@ class TransmageddonUI:
       self.nocontaineroptiontoggle = self.conv_dict[key][5]
       self.bogus = self.conv_dict[key][6]
       
-   def conv_task_gui_show_and_hide_task_btn_clicked(self, widget):  # 123456 
+   def conv_task_gui_show_and_hide_task_btn_clicked(self, widget): 
       if not self.conv_task_gui.get_visible(): 
          self.conv_task_gui.show_all() 
       else:   
@@ -807,7 +817,6 @@ class TransmageddonUI:
       
    def start_conv_function(self):   
       try:
-         # print "self.task_index:", self.task_index
          self.task_list[self.task_index].Pipeline("playing")      
          
          self._transcoder = self.task_list[self.task_index]
@@ -829,6 +838,70 @@ class TransmageddonUI:
          widget.set_label(_("Pause"))
          self.conv_task_gui_staring_play()
                
+   def show_popup_menu(self, widget, event):
+      if 3 == event.button:
+         self.root_menu = Menu([(None, "打开目录", self.open_conv_file_dir),
+                                 None,
+                                (None, "删除", self.delete_conv_task_file),
+                                (None, "清除已完成任务",self.clear_succeed_conv_task_file)
+                                ], True)
+
+         self.root_menu.show((int(event.x_root), int(event.y_root)), (0, 0))
+         
+   def clear_succeed_conv_task_file(self):
+      pass
+   
+   def delete_conv_task_file(self):      
+      self.select_rows = self.conv_task_gui.list_view.select_rows
+      self.items = self.conv_task_gui.list_view.items      
+      temp_task_list = []
+      for row in self.select_rows:
+         temp_task_list.append(self.task_list[row])
+         # print "task:", self.task_list[row]
+      for temp_task in temp_task_list:   
+         self.task_list.remove(temp_task)
+         
+      # delete select.   
+      self.conv_task_gui.list_view.delete_select_items()      
+      
+   def delete_task_list(self, list_view, list_item):      
+      # clear items.
+      self.conv_task_gui.list_view.items = []      
+      # find task index.
+      self.task_index = 0
+      for task in self.task_list:
+         if task.conv_flags:
+            self.task_index += 1
+            break
+      # restart draw media item list view.   
+      for transcoder in self.task_list:
+         media_item = MediaItem()
+         media_item.set_name(transcoder.name)
+         media_item.path = transcoder.outputdirectory
+         media_item.set_format(transcoder.container)
+         # set state icon.
+         if transcoder.conv_flags:
+            media_item.set_status_icon("success")
+         # else:   
+         #    media_item.set_status_icon("wait")
+         self.conv_task_gui.list_view.add_items([media_item])
+         self.conv_task_list.append(media_item)
+         
+      if self.conv_task_gui.list_view.items != []:   
+         # start run task. 
+         self.conv_task_gui.show_all()       
+         self.start_conv_function()   
+         gtk.timeout_add(1000, self.restart_start_btn)
+         
+      # queue draw gui.
+      self.conv_task_gui.queue_draw()
+      
+   def open_conv_file_dir(self):
+      os.system("nautilus %s" % (self.list_view_select_file_dir))
+                
+   def save_open_selsect_file_name(self, list_view, list_item, column, offset_x, offset_y):  
+      self.list_view_select_file_dir = list_item.get_path()
+      
    def _start_transcoding(self): 
        filechoice = self.FileChooser.get_uri()
        self.filename = self.FileChooser.get_filename()
@@ -895,12 +968,17 @@ class TransmageddonUI:
                            self.videopasstoggle, self.interlaced, self.inputvideocaps, 
                            int(new_width), int(new_height))          
           
+          transcoder.name = name
+          transcoder.outputdirectory = self.outputdirectory
+          transcoder.container = self.container
+          
           self.task_list.append(transcoder)
           media_item = MediaItem()
-          media_item.set_name(name)
-          media_item.set_format(self.container)
+          media_item.set_name(transcoder.name)
+          media_item.path = transcoder.outputdirectory
+          media_item.set_format(transcoder.container)
           self.conv_task_gui.list_view.add_items([media_item])
-          
+          self.conv_task_list.append(media_item)
        
        self.conv_task_gui.show_all()       
        self.start_conv_function()   
@@ -1147,19 +1225,18 @@ class TransmageddonUI:
        self.CodecBox.set_sensitive(True)
        self.ProgressBar.set_fraction(0.0)
        self.ProgressBar.set_text("Transcoding Progress")
-       # if self.builder.get_object("containerchoice").get_active() == self.nocontainernumber: containerchoice
+       
        if self.containerchoice.get_active() == self.nocontainernumber:
                self.container = False
                self.videorows[0].set_active(self.videonovideomenuno)
                self.videorows[0].set_sensitive(False)
        else:
-           # if self.builder.get_object("containerchoice").get_active()!= -1:
            if self.containerchoice.get_active()!= -1:
-               # self.container = self.builder.get_object ("containerchoice").get_active_text ()
                self.container = self.containerchoice.get_active_text ()
                if self.discover_done == True:
                    self.check_for_passthrough(self.container)
            self.transcodebutton.set_sensitive(True)
+           
        self.populate_menu_choices()
 
    def on_presetchoice_changed(self, widget):

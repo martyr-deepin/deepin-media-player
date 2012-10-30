@@ -80,8 +80,7 @@ class ConvTAskGui(DialogBox):
         self.pause_btn = Button(_("Pause"))
         self.close_btn = Button(_("Close"))
         # self.right_button_box.set_buttons([self.start_btn, self.pause_btn, self.close_btn])
-        self.right_button_box.set_buttons([self.pause_btn, self.close_btn])
-        
+        self.right_button_box.set_buttons([self.pause_btn, self.close_btn])        
         
         
 class MediaItem(gobject.GObject):
@@ -94,7 +93,14 @@ class MediaItem(gobject.GObject):
         gobject.GObject.__init__(self)
         self.update()
         self.index = None
+        self.path = None
         
+    def get_path(self):    
+        return self.path
+    
+    def get_name(self):    
+        return self.name
+    
     def set_name(self, name):    
         self.name = name
         self.emit_redraw_request()

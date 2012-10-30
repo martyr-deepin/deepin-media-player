@@ -46,6 +46,11 @@ class Transcoder(gobject.GObject):
                       NEW_WIDTH=None, NEW_HEIGHT=None):
        gobject.GObject.__init__(self)
        self.state_label = "pause"
+       self.conv_flags = 0
+       self.name = ""
+       self.outputdirectory = ""
+       self.container = ""
+       
        # Choose plugin based on Container name
        self.container = CONTAINERCHOICE
        self.audiocaps = AUDIOCODECVALUE
