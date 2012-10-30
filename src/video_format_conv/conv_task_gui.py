@@ -21,11 +21,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from skin import app_theme
-from dtk.ui.dialog import DialogBox, DIALOG_MASK_MULTIPLE_PAGE
+from dtk.ui.dialog import DialogBox, DIALOG_MASK_MULTIPLE_PAGE, DIALOG_MASK_SINGLE_PAGE
 from dtk.ui.listview import ListView, get_content_size
 from dtk.ui.progressbar import ProgressBuffer
 from dtk.ui.scrolled_window import ScrolledWindow
-from dtk.ui.constant import DEFAULT_FONT_SIZE,ALIGN_END, ALIGN_START
+from dtk.ui.constant import ALIGN_END, ALIGN_START
 from dtk.ui.draw import draw_text, draw_pixbuf
 from dtk.ui.button import Button
 
@@ -36,7 +36,7 @@ from locales import _
 import gtk
 import gobject
 
-# 350, 450
+DEFAULT_FONT_SIZE = 9
 FORM_WIDTH  = 350
 FORM_HEIGHT = 450
 
@@ -45,7 +45,7 @@ class ConvTAskGui(DialogBox):
         DialogBox.__init__(self, 
                            _("Task Manager for format conversion"), 
                            FORM_WIDTH, FORM_HEIGHT, 
-                           mask_type=DIALOG_MASK_MULTIPLE_PAGE,
+                           mask_type=DIALOG_MASK_SINGLE_PAGE, #DIALOG_MASK_MULTIPLE_PAGE,
                            close_callback=self.hide_all,
                            modal=False,
                            window_hint=gtk.gdk.WINDOW_TYPE_HINT_DIALOG,
@@ -56,10 +56,12 @@ class ConvTAskGui(DialogBox):
         # add widgets.
         self.body_box.pack_start(self.scrolled_window, False, False)
         
+        
     def init_widgets(self):
         
         self.scrolled_window = ScrolledWindow()
         self.list_view = ListView()                
+        self.list_view.draw_mask = self.get_mask_func(self.list_view)
         self.scrolled_window.set_policy(gtk.POLICY_NEVER, gtk.POLICY_AUTOMATIC)
         self.scrolled_window.add_child(self.list_view)
         
@@ -68,6 +70,7 @@ class ConvTAskGui(DialogBox):
         self.close_btn = Button(_("Close"))
         # self.right_button_box.set_buttons([self.start_btn, self.pause_btn, self.close_btn])
         self.right_button_box.set_buttons([self.pause_btn, self.close_btn])
+        
         
         
 class MediaItem(gobject.GObject):
@@ -142,31 +145,31 @@ class MediaItem(gobject.GObject):
         self.format = _format
         
         # Calculate item size.
-        self.title_padding_x = 10
-        self.title_padding_y = 5
-        (self.title_width, self.title_height) = get_content_size(self.title, DEFAULT_FONT_SIZE) #DEFAULT_FONT_SIZE
-        self.title_width = 20
+        # self.title_padding_x = 10
+        # self.title_padding_y = 5
+        # (self.title_width, self.title_height) = get_content_size(self.title, DEFAULT_FONT_SIZE) #DEFAULT_FONT_SIZE
+        # self.title_width = 20
         
         self.name_padding_x = 10
         self.name_padding_y = 5
         (self.name_width, self.name_height) = get_content_size(self.name, DEFAULT_FONT_SIZE) #DEFAULT_FONT_SIZE
-        self.name_width = 50
+        self.name_width = 80
         
-        self.length_padding_x = 50
+        self.length_padding_x = 80
         self.length_padding_y = 5
         (self.length_width, self.length_height) = get_content_size(self.length, DEFAULT_FONT_SIZE) #DEFAULT_FONT_SIZE
-        self.length_width = 30
+        self.length_width = 10
         
         self.format_padding_x = 10
         self.format_padding_y = 5
-        (self.format_width, self.format_height) = get_content_size(self.format, DEFAULT_FONT_SIZE) #DEFAULT_FONT_SIZE
-        self.format_width = 30
+        (self.format_width, self.format_height) = get_content_size(self.format, 9) #DEFAULT_FONT_SIZE
+        # self.format_width = 30
         
         # ProgressBar buffer.
         self.progress_ratio = 0.0
         self.progress_padding_x = 10
         self.progress_padding_y = 5
-        self.progress_w, self.progress_h = 200, 10                
+        self.progress_w, self.progress_h = 200, 10
         self.progress_buffer = ProgressBuffer()
         
         self.status_icon = None
@@ -188,15 +191,15 @@ class MediaItem(gobject.GObject):
         # Init icon state.        
         self.set_status_icon("wait")        
         # set icon[position]->> x and y.
-        self.status_icon_padding_x = 10
+        self.status_icon_padding_x = 5
         self.status_icon_padding_y = 5        
         # get icon width and height .
         self.status_icon_w, self.status_icon_h = (self.status_icon.get_width(), self.status_icon.get_height())
         
     def render_title(self, cr, rect, in_selection, in_highlight):
         '''Render title.'''
-        rect.x += self.title_padding_x
-        icon_x = rect.x + self.status_icon_padding_x
+        rect.x += self.status_icon_padding_x # title_padding_x
+        icon_x = rect.x + self.status_icon_padding_x # self.status_icon_padding_x
         icon_y = rect.y + (rect.height - self.status_icon_h) / 2
         if in_selection:
             draw_pixbuf(cr, self.status_icon_press, icon_x, icon_y)
@@ -208,8 +211,7 @@ class MediaItem(gobject.GObject):
         draw_text(cr, self.name, 
                   rect.x, rect.y, rect.width, rect.height, 
                   DEFAULT_FONT_SIZE, "#000000", 
-                  alignment=ALIGN_START)
-        
+                  alignment=ALIGN_START)        
         
     def render_length(self, cr, rect, in_selection, in_highlight):
         '''Render length.'''
@@ -229,8 +231,8 @@ class MediaItem(gobject.GObject):
         
     def get_column_sizes(self):
         '''Get sizes.'''
-        return [(self.title_width + self.title_padding_x * 2, 
-                 self.title_height + self.title_padding_y * 2),
+        return [(self.status_icon_w + self.status_icon_padding_x * 2, 
+                 self.status_icon_h + self.status_icon_padding_y * 2),
                 (self.name_width + self.name_padding_x * 2,                 
                  self.name_height + self.name_padding_y * 2),                
                 (self.length_width + self.length_padding_x * 2,                 
