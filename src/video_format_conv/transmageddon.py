@@ -840,33 +840,54 @@ class TransmageddonUI:
                
    def show_popup_menu(self, widget, event):
       if 3 == event.button:
-         self.root_menu = Menu([(None, "打开目录", self.open_conv_file_dir),
+         self.root_menu = Menu([(None, _("打开目录"), self.open_conv_file_dir),
                                  None,
-                                (None, "删除", self.delete_conv_task_file),
-                                (None, "清除已完成任务",self.clear_succeed_conv_task_file)
+                                (None, _("删除"), self.delete_conv_task_file),
+                                (None, _("清除已完成任务"),self.clear_succeed_conv_task_file)
                                 ], True)
 
          self.root_menu.show((int(event.x_root), int(event.y_root)), (0, 0))
          
    def clear_succeed_conv_task_file(self):
-      pass
-   
-   def delete_conv_task_file(self):      
+      temp_task_list = []
+      task_i = 0
+      for task in self.task_list:
+         if task.conv_flags:
+            del self.conv_task_gui.list_view.items[task_i]
+            temp_task_list.append(task)
+         else:   
+            task_i += 1
+            task.Pipeline("pause") # pause task.                                                
+      # delete transcoder task.      
+      for temp_task in temp_task_list:
+         self.task_list.remove(temp_task)
+      # restart start task.
+      if temp_task_list != [] and self.task_list != []:
+         self.task_index = 0
+         self.conv_task_gui.show_all()
+         self.start_conv_function()
+         gtk.timeout_add(1200, self.restart_start_btn)
+      else:         
+         self.task_list[self.task_index].Pipeline("playing")
+         
+   def delete_conv_task_file(self):
       self.select_rows = self.conv_task_gui.list_view.select_rows
-      self.items = self.conv_task_gui.list_view.items      
+      self.items = self.conv_task_gui.list_view.items
       temp_task_list = []
       for row in self.select_rows:
-         temp_task_list.append(self.task_list[row])
-         # print "task:", self.task_list[row]
-      for temp_task in temp_task_list:   
+         if not self.task_list[row].conv_flags:
+            self.task_list[row].Pipeline("null") # set pipiline null.
+         temp_task_list.append(self.task_list[row]) # add to temp task list.
+
+      for temp_task in temp_task_list:
          self.task_list.remove(temp_task)
          
       # delete select.   
-      self.conv_task_gui.list_view.delete_select_items()      
+      self.conv_task_gui.list_view.delete_select_items()
       
    def delete_task_list(self, list_view, list_item):      
       # clear items.
-      self.conv_task_gui.list_view.items = []      
+      self.conv_task_gui.list_view.items = []  
       # find task index.
       self.task_index = 0
       for task in self.task_list:
@@ -882,19 +903,13 @@ class TransmageddonUI:
          # set state icon.
          if transcoder.conv_flags:
             media_item.set_status_icon("success")
-         # else:   
-         #    media_item.set_status_icon("wait")
          self.conv_task_gui.list_view.add_items([media_item])
-         self.conv_task_list.append(media_item)
          
-      if self.conv_task_gui.list_view.items != []:   
+      if self.conv_task_gui.list_view.items != []:
          # start run task. 
-         self.conv_task_gui.show_all()       
-         self.start_conv_function()   
-         gtk.timeout_add(1000, self.restart_start_btn)
-         
-      # queue draw gui.
-      self.conv_task_gui.queue_draw()
+         self.conv_task_gui.show_all()
+         self.start_conv_function()
+         gtk.timeout_add(1200, self.restart_start_btn)
       
    def open_conv_file_dir(self):
       os.system("nautilus %s" % (self.list_view_select_file_dir))
