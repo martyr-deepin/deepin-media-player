@@ -602,7 +602,13 @@ class TransmageddonUI:
    def succeed(self, discoverer, info, error):
        result=gst.pbutils.DiscovererInfo.get_result(info)
        streaminfo=info.get_stream_info()
-       container = streaminfo.get_caps()
+       try:
+          container = streaminfo.get_caps()
+       except Exception, e:   
+          print "succeed[error]:", e
+          # self.form.bit_rate_combo.prepend_text("No A")
+          self.form.frame_rate_combo.prepend_text("No Video")
+          
        seekbool = info.get_seekable()
        clipduration=info.get_duration()
 

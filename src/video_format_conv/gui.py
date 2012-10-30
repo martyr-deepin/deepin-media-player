@@ -164,6 +164,7 @@ class Form(DialogBox):
                            ]    
         self.ratio_items = []
         for ratio in self.__ratio_list:
+            self.ratio_combo.append_text(ratio)
             self.ratio_items.append((ratio, ratio))
                 
         self.brand_combo.set_items(brand_items)    
@@ -174,10 +175,12 @@ class Form(DialogBox):
         self.model_combo.prepend_text(_("No Model"))
         self.model_combo.connect("changed", self.model_combo_item_selected)
         # ratio_combo.
-        self.ratio_combo.set_items(self.ratio_items)
+        # self.ratio_combo.set_items(self.ratio_items)
+        # for ratio in self.ratio_combo:
+            # self.ratio_combo.append((ratio, ratio))
 
         self.save_chooser_btn.connect("clicked", self.save_chooser_btn_clicked)
-        
+        # format combo.
         # self.format_combo.set_active(0)                
         
         # path_entry.
@@ -272,7 +275,8 @@ class Form(DialogBox):
             self.model_combo.set_sensitive(False)            
             self.model_label.set_sensitive(False)
             # add ratios.
-            self.ratio_combo.set_items(self.ratio_items)
+            for ratio in self.ratio_items:
+                self.ratio_combo.append_text(ratio[0])
         
     def model_combo_item_selected(self, combo, item_content):        
         if len(item_content):
