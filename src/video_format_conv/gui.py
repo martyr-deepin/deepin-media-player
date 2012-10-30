@@ -23,7 +23,7 @@
 
 from skin import app_theme
 from dtk.ui.draw import draw_vlinear
-from dtk.ui.dialog import DialogBox, DIALOG_MASK_MULTIPLE_PAGE
+from dtk.ui.dialog import DialogBox, DIALOG_MASK_SINGLE_PAGE
 from dtk.ui.entry import InputEntry
 from dtk.ui.draw import draw_vlinear
 from file_choose_button import FileChooserButton
@@ -47,9 +47,10 @@ class Form(DialogBox):
         DialogBox.__init__(self, 
                            _("Format converter"), 
                            FORM_WIDTH, FORM_HEIGHT- 80, 
-                           mask_type=DIALOG_MASK_MULTIPLE_PAGE,
+                           mask_type=DIALOG_MASK_SINGLE_PAGE,
                            close_callback=self.hide_all,
                            modal=False,
+                           
                            window_hint=gtk.gdk.WINDOW_TYPE_HINT_DIALOG,
                            window_pos=gtk.WIN_POS_CENTER,
                            resizable=False
@@ -58,15 +59,6 @@ class Form(DialogBox):
         self.init_value()
         # Init all widgets.
         self.InitializeComponent()
-        self.draw_mask = self.draw_dialogbox_mask
-        
-    def draw_dialogbox_mask(self, cr, x, y, width, height):
-        color_info_list = [(0,  ("#FFFFFF", 0.0)),
-                           (0.2, ("#FFFFFF", 0.9)),
-                           (1, ("#FFFFFF", 0.9))
-                           ]
-        draw_vlinear(cr, x, y, width, height, color_info_list)
-        cr.fill()
         
     def init_value(self): 
         read_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "xml")
