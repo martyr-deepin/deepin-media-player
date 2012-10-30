@@ -1141,6 +1141,7 @@ class TransmageddonUI:
                        self.audiopassmenuno=(len(self.audiocodecs))-1
        else:
           self.videorows[0].set_sensitive(False)
+          self.videorows[0].prepend_text("No Video")
 
    def on_containerchoice_changed(self, widget, text):
        self.CodecBox.set_sensitive(True)
