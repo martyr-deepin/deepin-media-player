@@ -987,7 +987,7 @@ msgstr "继续"
 
 #: ../src/video_format_conv/conv_task_gui.py:57
 msgid "Task Manager for format conversion"
-msgstr "格式转换任务管理器"
+msgstr "任务管理器"
 
 #~ msgid "ZTE"
 #~ msgstr "中兴"
