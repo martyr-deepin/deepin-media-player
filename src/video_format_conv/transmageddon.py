@@ -965,7 +965,7 @@ class TransmageddonUI:
        new_width, new_height = (int(vwidth), int(vheight))
        model_text = self.form.model_combo.get_active_text()
        
-       if model_text != "No Model":
+       if model_text != _("No Model"):
           new_width, new_height = self.form.model_dict[model_text]
        else:   
           ratio_text = self.form.ratio_combo.get_active_text().replace(" x ", "-").split("-")
