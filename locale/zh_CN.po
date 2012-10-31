@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-31 11:27+0800\n"
+"POT-Creation-Date: 2012-10-31 12:32+0800\n"
 "PO-Revision-Date: 2012-07-12 15:53+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -973,6 +973,7 @@ msgid "No Presets"
 msgstr "自定义"
 
 #: ../src/video_format_conv/gui.py:175 ../src/video_format_conv/gui.py:274
+#: ../src/video_format_conv/transmageddon.py:968
 msgid "No Model"
 msgstr "自定义"
 
@@ -981,24 +982,25 @@ msgid "Choose a directory"
 msgstr "打开文件夹"
 
 #: ../src/video_format_conv/transmageddon.py:539
-msgid "剩余时间 : "
-msgstr ""
+msgid "Time remaining : "
+msgstr "剩余时间 : "
 
 #: ../src/video_format_conv/transmageddon.py:842
 msgid "continue"
 msgstr "继续"
 
 #: ../src/video_format_conv/transmageddon.py:850
-msgid "打开目录"
-msgstr ""
+#, fuzzy
+msgid "Open a directory"
+msgstr "打开文件夹"
 
 #: ../src/video_format_conv/transmageddon.py:852
-msgid "删除"
-msgstr ""
+msgid "Delete"
+msgstr "删除"
 
 #: ../src/video_format_conv/transmageddon.py:853
-msgid "清除已完成任务"
-msgstr ""
+msgid "Remove complete tasks"
+msgstr "清除已完成任务"
 
 #: ../src/video_format_conv/conv_task_gui.py:57
 msgid "Task Manager for format conversion"

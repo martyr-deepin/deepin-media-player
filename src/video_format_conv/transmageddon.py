@@ -536,7 +536,7 @@ class TransmageddonUI:
                #
                # print "time_rem:", time_rem # add progress info to task gui.
                if self.conv_task_gui.pause_btn.label == _("Pause"):
-                  self.conv_task_gui.show_time_label.set_text(_("剩余时间 : ") + time_rem)
+                  self.conv_task_gui.show_time_label.set_text(_("Time remaining : ") + time_rem)
                else:   
                   self.conv_task_gui.show_time_label.set_text("")
                #               
@@ -847,10 +847,10 @@ class TransmageddonUI:
                
    def show_popup_menu(self, widget, event):
       if 3 == event.button:
-         self.root_menu = Menu([(None, _("打开目录"), self.open_conv_file_dir),
+         self.root_menu = Menu([(None, _("Open a directory"), self.open_conv_file_dir),
                                  None,
-                                (None, _("删除"), self.delete_conv_task_file),
-                                (None, _("清除已完成任务"),self.clear_succeed_conv_task_file)
+                                (None, _("Delete"), self.delete_conv_task_file),
+                                (None, _("Remove complete tasks"),self.clear_succeed_conv_task_file)
                                 ], True)
 
          self.root_menu.show((int(event.x_root), int(event.y_root)), (0, 0))
