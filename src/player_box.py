@@ -747,7 +747,8 @@ class PlayerBox(object):
                 self.keymap[config_key] = connect_fun        
               
             self.keymap["Escape"] = self.key_quit_full        
-              
+            self.keymap["KP_Enter"] = self.key_return  
+            
         if sub_key_bool == "True":    
             for section , argv, connect_fun in [
                 ("SubKey", "subkey_load_key", self.subtitle_load_subtitle_key), 
@@ -779,7 +780,7 @@ class PlayerBox(object):
         keyval_name = get_keyevent_name(event)
         # Init config keys.
         self.init_config_key()
-        
+        # print "keyval_name:", keyval_name
         if self.keymap.has_key(keyval_name):
             self.keymap[keyval_name]()
             
