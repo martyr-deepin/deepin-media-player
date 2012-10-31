@@ -165,7 +165,7 @@ class Form(DialogBox):
         for ratio in self.__ratio_list:
             self.ratio_combo.append_text(ratio)
             self.ratio_items.append((ratio, ratio))
-                
+        self.ratio_combo.set_active(5)            
         self.brand_combo.set_items(brand_items)
         
         self.brand_combo.prepend_text(_("No Presets"))
@@ -278,7 +278,8 @@ class Form(DialogBox):
             # add ratios.
             for ratio in self.ratio_items:
                 self.ratio_combo.append_text(ratio[0])
-        
+            self.ratio_combo.set_active(5)    
+            
     def model_combo_item_selected(self, combo, item_content):        
         if len(item_content):
             width, height = self.model_dict[item_content]
@@ -292,11 +293,12 @@ class Form(DialogBox):
         
     def higt_set_btn_clicked(self, widget):    
         if self.higt_set_bool:
-            self.hide_set_window_hints()
+            self.hide_set_window_hints()            
         else:    
             self.show_setting()
             self.set_geometry_hints(None, FORM_WIDTH, FORM_HEIGHT, FORM_WIDTH, FORM_HEIGHT, -1, -1, -1, -1, -1, -1)
             self.set_size_request(FORM_WIDTH, FORM_HEIGHT+80) 
+            self.higt_set_btn.hide()
             
         self.higt_set_bool = not self.higt_set_bool
         
