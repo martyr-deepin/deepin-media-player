@@ -75,8 +75,8 @@ TARGET_TYPE_URI_LIST = 80
 dnd_list = [ ( 'text/uri-list', 0, TARGET_TYPE_URI_LIST ) ]
 
 supported_containers = [
+        "AVI",		#2           
         "3GPP",		#9   
-        "AVI",		#2        
         "MPEG4",	#8        
         "MPEG PS",	#3
         "MPEG TS",	#4        
@@ -497,7 +497,8 @@ class TransmageddonUI:
    # Query interface only available on uridecoder, not decodebin2)
    # FORMAT_TIME only value implemented by all plugins used
    # a lot of original code from gst-python synchronizer.py example
-   def Increment_Progressbar(self):
+   def Increment_Progressbar(self):      
+       # self.conv_task_gui.show_time_label.set_text(_("..."))
        if self.start_time == False:  
            self.start_time = time.time()
        try:
