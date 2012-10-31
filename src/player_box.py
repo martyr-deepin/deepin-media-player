@@ -64,6 +64,7 @@ from lrc.osd_lrc import Lrc
 from video_information.gui import VideoInformGui
 from switch_audio.audio import SwitchAudio
 from video_format_conv.transmageddon import TransmageddonUI
+from video_format_conv.conv_task_gui import ConvTAskGui
 import threading
 import gtk
 import os
@@ -164,6 +165,7 @@ class PlayerBox(object):
         self.init_playlist()
                         
         self.conv_from = None
+        self.task_conv_gui = None
         
         # Child widget add to vbox.
         self.vbox.pack_start(self.screen_frame_event, True, True)
@@ -994,10 +996,12 @@ class PlayerBox(object):
             
     def open_format_conv_dialog_window(self, conv_video_fiel_list):
         if not self.conv_from: 
-            self.conv_from = TransmageddonUI(conv_video_fiel_list)
+            self.conv_from = TransmageddonUI(conv_video_fiel_list)            
+            if self.conv_task_gui:
+                self.conv_from.conv_task_gui = self.conv_task_gui
         else:            
             self.conv_from.conv_list  = conv_video_fiel_list
-            self.conv_from_show_all()            
+            self.conv_from_show_all()
             
     def conv_from_show_all(self):        
             self.conv_from.form.show_all()
@@ -1031,6 +1035,8 @@ class PlayerBox(object):
         except Exception, e:        
             print "show_and_hide_task_conv_gui[error]:", e
             print "no run conv_from... ...!!"
+            self.conv_task_gui = ConvTAskGui()
+            self.conv_task_gui.show_all()
         
     def add_play_list(self, mplayer, path): # mplayer signal: "add-path"
         '''Play list add play file timeout.[100-1028 a play file].'''

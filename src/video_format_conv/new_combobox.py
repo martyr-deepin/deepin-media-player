@@ -28,13 +28,12 @@ import gobject
 
 class NewComboBox(ComboBox):
     __gsignals__ = {
-        "changed" : (gobject.SIGNAL_RUN_LAST,
-                     gobject.TYPE_NONE, (gobject.TYPE_STRING,))
+        "changed" : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_STRING,))
     }
     def __init__(self, max_width=120):        
         ComboBox.__init__(self, [["", 0]], 80, max_width=80)
         self.connect("item-selected", self.emit_connect_function)
-        
+        self.set_policy() # emit.
         self.max_width = max_width
         self.droplist_height = 80
         self.items = []
@@ -45,25 +44,28 @@ class NewComboBox(ComboBox):
     def emit_connect_function(self, combo, item_content, item_value, item_index):
         # print "item_value:", item_value, item_index
         self.emit("changed", item_value)
-        self.set_policy() # emit.
+        
         self.label.label_width = 80        
         self.label.update_size()
         self.queue_draw()
         self.droplist.set_size_request(108, self.droplist_height)
+        self.set_policy() # emit.
         
     def set_active(self, index):
         self.set_select_index(index)
-        self.set_policy() # emit.
+        
         self.emit("changed", self.label.get_text())
         self.label.label_width = 80        
         self.label.update_size()
         self.queue_draw()
         
         self.droplist.set_size_request(108, self.droplist_height)
+        self.set_policy() # emit.
         
     def remove_text(self, index):
         self.items.remove(self.items[index])
         self.set_items(self.items, 0, max_width=self.max_width)
+        self.set_policy() # emit.
         
     def prepend_text(self, text):
         temp_imtes = []
@@ -73,11 +75,12 @@ class NewComboBox(ComboBox):
         self.set_items(temp_imtes, 0, max_width=self.max_width)
         self.droplist.set_size_request(-1, self.droplist_height)
         
-        self.label.label_width = 80        
+        self.label.label_width = 80
         self.label.update_size()
         self.queue_draw()
         
         self.droplist.set_size_request(108, self.droplist_height)
+        self.set_policy() # emit.
         
     def get_active_text(self):
         return self.label.get_text()
@@ -95,6 +98,7 @@ class NewComboBox(ComboBox):
         self.queue_draw()
         
         self.droplist.set_size_request(108, self.droplist_height)
+        self.set_policy() # emit.
         
     def clear_items(self):    
         self.items = []

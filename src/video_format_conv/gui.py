@@ -50,10 +50,9 @@ class Form(DialogBox):
                            mask_type=DIALOG_MASK_SINGLE_PAGE,
                            close_callback=self.hide_all,
                            modal=False,                           
-                           # window_hint=gtk.gdk.WINDOW_TYPE_HINT_DIALOG,
-                           window_hint=gtk.gdk.WINDOW_TYPE_HINT_NORMAL,
+                           window_hint=gtk.gdk.WINDOW_TYPE_HINT_DIALOG,
                            window_pos=gtk.WIN_POS_CENTER,
-                           resizable=False
+                           resizable=False,
                            )                        
         # Init value.
         self.init_value()

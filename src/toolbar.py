@@ -41,7 +41,7 @@ class ToolBar(object):
         self.show = False
         self.hbox = gtk.HBox()
         
-        self.panel = Panel(APP_WIDTH - 350, PANEL_HEIGHT + 5, window_type=gtk.WINDOW_POPUP)        
+        self.panel = Panel(APP_WIDTH - 350, PANEL_HEIGHT + 5, window_type=gtk.WINDOW_POPUP)     
         self.panel.connect("enter-notify-event", self.show_panel_toolbar)
         self.panel.connect("leave-notify-event", self.hide_panel_toolbar)
         self.panel.connect("focus-out-event", self.focus_hide_toolbar)
