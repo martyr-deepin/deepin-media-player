@@ -177,21 +177,19 @@ class MediaItem(gobject.GObject):
         (self.name_width, self.name_height) = get_content_size(self.name, DEFAULT_FONT_SIZE) #DEFAULT_FONT_SIZE
         self.name_width = 80
         
-        self.length_padding_x = 80
+        self.length_padding_x = 50
         self.length_padding_y = 5
         (self.length_width, self.length_height) = get_content_size(self.length, DEFAULT_FONT_SIZE) #DEFAULT_FONT_SIZE
-        self.length_width = 10
         
-        self.format_padding_x = 10
+        self.format_padding_x = 5
         self.format_padding_y = 5
-        (self.format_width, self.format_height) = get_content_size(self.format, 9) #DEFAULT_FONT_SIZE
-        # self.format_width = 30
+        (self.format_width, self.format_height) = get_content_size(self.format, 8) #DEFAULT_FONT_SIZE        
         
         # ProgressBar buffer.
         self.progress_ratio = 0.0
-        self.progress_padding_x = 10
+        self.progress_padding_x = 30
         self.progress_padding_y = 5
-        self.progress_w, self.progress_h = 200, 10
+        self.progress_w, self.progress_h = 100, 10
         self.progress_buffer = ProgressBuffer()
         
         self.status_icon = None
@@ -231,10 +229,6 @@ class MediaItem(gobject.GObject):
     def render_name(self, cr, rect, in_selection, in_highlight):            
         rect.x += self.name_padding_x
         render_item_text(cr, self.name, rect, in_selection, in_highlight)
-        # draw_text(cr, self.name, 
-        #           rect.x, rect.y, rect.width, rect.height, 
-        #           DEFAULT_FONT_SIZE, "#000000", 
-        #           alignment=ALIGN_START)        
         
     def render_length(self, cr, rect, in_selection, in_highlight):
         '''Render length.'''
@@ -248,18 +242,14 @@ class MediaItem(gobject.GObject):
     def render_format(self, cr, rect, in_selection, in_highlight):
         rect.x += self.format_padding_x
         render_item_text(cr, self.format, rect, in_selection, in_highlight)
-        # draw_text(cr, self.format, 
-        #           rect.x, rect.y, rect.width, rect.height, 
-        #           DEFAULT_FONT_SIZE, "#000000", 
-        #           alignment=ALIGN_START)
         
     def get_column_sizes(self):
         '''Get sizes.'''
         return [(self.status_icon_w + self.status_icon_padding_x * 2, 
                  self.status_icon_h + self.status_icon_padding_y * 2),
-                (self.name_width + self.name_padding_x * 2,                 
+                (self.name_width + self.name_padding_x * 5,                 
                  self.name_height + self.name_padding_y * 2),                
-                (self.length_width + self.length_padding_x * 2,                 
+                (self.length_width + self.length_padding_x + 20,                 
                  self.length_height + self.length_padding_y * 2),
                 (self.format_width + self.format_padding_x * 2,  
                  self.format_height + self.format_padding_y * 2),                                                
