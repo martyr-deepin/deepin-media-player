@@ -75,16 +75,16 @@ TARGET_TYPE_URI_LIST = 80
 dnd_list = [ ( 'text/uri-list', 0, TARGET_TYPE_URI_LIST ) ]
 
 supported_containers = [
+        "3GPP",		#9   
+        "AVI",		#2        
+        "MPEG4",	#8        
+        "MPEG PS",	#3
+        "MPEG TS",	#4        
         "Ogg",		#0
         "Matroska",	#1
-        "AVI",		#2
-        "MPEG PS",	#3
-        "MPEG TS",	#4
         "AVCHD/BD",	#5
         "FLV",		#6
         "Quicktime",	#7
-        "MPEG4",	#8
-        "3GPP",		#9
         "MXF",		#10
         "ASF", 		#11
         "I can not get this item to show for some reason",
