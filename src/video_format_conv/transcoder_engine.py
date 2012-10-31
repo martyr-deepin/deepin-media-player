@@ -100,6 +100,11 @@ class Transcoder(gobject.GObject):
              self.new_height = int(self.oheight)
              
        if type(self.videocaps) != bool:
+          if self.new_height > self.new_width:
+             temp_value = self.new_height
+             self.new_height = self.new_width
+             self.new_width = temp_value
+             
           for vcap in self.videocaps:
              vcap["height"] = int(self.new_height)
              vcap["width"] = int(self.new_width)
@@ -119,7 +124,7 @@ class Transcoder(gobject.GObject):
            
        # gather preset data if relevant
        if self.preset != "nopreset":
-           print "preset preset preset.............."
+           # print "preset preset preset.............."
            height, width, num, denom, pixelaspectratio = self.provide_presets()
            for acap in self.audiocaps:
                acap["channels"] = self.channels

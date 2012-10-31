@@ -157,20 +157,22 @@ class Form(DialogBox):
             brand_items.append((brand_po, brand))
             
         self.__ratio_list = ["176 x 220", "240 x 320", "320 x 240", 
-                           "320 x 480", "400 x 240", "480 x 800", 
-                           "540 x 960", "600 x 1024", "640 x 480", 
-                           "720 x 1280", "800 x 480", "800 x 600", 
-                           "1024 x 600", "1024 x 768", "1152 x 864",
-                           ]    
+                             "320 x 480", "400 x 240", "480 x 800", 
+                             "540 x 960", "600 x 1024", "640 x 480", 
+                             "720 x 1280", "800 x 480", "800 x 600", 
+                             "1024 x 600", "1024 x 768", "1152 x 864",
+                             ]    
         self.ratio_items = []
         for ratio in self.__ratio_list:
             self.ratio_combo.append_text(ratio)
             self.ratio_items.append((ratio, ratio))
                 
-        self.brand_combo.set_items(brand_items)    
+        self.brand_combo.set_items(brand_items)
+        
         self.brand_combo.prepend_text(_("No Presets"))
         self.brand_combo.connect("changed", self.brand_combo_item_selected)
         # model_combo.
+        self.model_label.set_sensitive(False)
         self.model_combo.set_sensitive(False)
         self.model_combo.prepend_text(_("No Model"))
         self.model_combo.connect("changed", self.model_combo_item_selected)

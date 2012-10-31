@@ -34,16 +34,18 @@ class NewComboBox(ComboBox):
     def __init__(self, max_width=120):        
         ComboBox.__init__(self, [["", 0]], 80, max_width=80)
         self.connect("item-selected", self.emit_connect_function)
-                
+        
         self.max_width = max_width
         self.droplist_height = 80
         self.items = []
-        # self.set_sensitive(set_bool) # [True/False]
+
+    def set_policy(self):    
+        self.droplist.item_scrolled_window.set_policy(gtk.POLICY_NEVER, gtk.POLICY_AUTOMATIC)
         
     def emit_connect_function(self, combo, item_content, item_value, item_index):
         # print "item_value:", item_value, item_index
         self.emit("changed", item_value)
-        
+        self.set_policy() # emit.
         self.label.label_width = 80        
         self.label.update_size()
         self.queue_draw()
@@ -51,7 +53,7 @@ class NewComboBox(ComboBox):
         
     def set_active(self, index):
         self.set_select_index(index)
-        
+        self.set_policy() # emit.
         self.emit("changed", self.label.get_text())
         self.label.label_width = 80        
         self.label.update_size()

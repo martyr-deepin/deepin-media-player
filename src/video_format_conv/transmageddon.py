@@ -117,7 +117,7 @@ supported_video_codecs = [
 
 # Maps containers to the codecs they support.  The first two elements are
 # "special" in that they are the default audio/video selections for that
-# container.
+# container modify code. # 123456
 supported_video_container_map = {
     'Ogg':        [ 'Theora', 'Dirac', 'On2 vp8' ],
     'MXF':        [ 'H264', 'MPEG2', 'MPEG4' ],
@@ -1235,6 +1235,8 @@ class TransmageddonUI:
                        self.videocodecs.append(gst.Caps(codecfinder.codecmap[c]))
                    for c in video_codecs: # I can't update the menu with loop append
                        self.videorows[0].append_text(c)
+                       
+                   self.form.frame_rate_label.set_sensitive(True)    
                    self.videorows[0].set_sensitive(True)
                    self.videorows[0].set_active(0)
 
@@ -1243,7 +1245,7 @@ class TransmageddonUI:
                    self.videocodecs.append("novid")
                    self.videonovideomenuno=(len(self.videocodecs))-1
                       
-                   # add the Passthrough option 
+                   # add the Passthrough option.
                    if self.videopass==True:
                        self.videorows[0].append_text("Video passthrough")
                        self.videocodecs.append("pass")
@@ -1254,6 +1256,7 @@ class TransmageddonUI:
                        self.audiocodecs.append("pass")
                        self.audiopassmenuno=(len(self.audiocodecs))-1
        else:
+          self.form.frame_rate_label.set_sensitive(False)
           self.videorows[0].set_sensitive(False)
           self.videorows[0].prepend_text("No Video")
 
