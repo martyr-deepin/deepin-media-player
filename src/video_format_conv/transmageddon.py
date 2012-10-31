@@ -533,6 +533,7 @@ class TransmageddonUI:
                    "min": min,
                    "sec": sec,
                    }
+               print "time_rem:", time_rem
                if percent_remain > 0.5:
                    if self.passcounter == int(0):
                        txt = "Estimated time remaining: %(time)s"
