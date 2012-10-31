@@ -553,6 +553,7 @@ class TransmageddonUI:
                                'time': str(time_rem), })
                return True
            else:
+               self.conv_task_gui.show_time_label.set_text(_("staing conv..."))
                self.ProgressBar.set_fraction(0.0)
                return False
        else:
