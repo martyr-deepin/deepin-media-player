@@ -528,9 +528,11 @@ class TransmageddonUI:
                    rem = (timespent / percent) * percent_remain
                else: 
                    rem = 0.1
-               min = rem / 60
+               hour = rem / 60    
+               min = hour / 60
                sec = rem % 60
-               time_rem = "%(min)02d:%(sec)02d" % {
+               time_rem = "%(hour)02d:%(min)02d:%(sec)02d" % {
+                   "hour": hour,
                    "min": min,
                    "sec": sec,
                    }

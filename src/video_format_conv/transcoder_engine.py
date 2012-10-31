@@ -77,7 +77,7 @@ class Transcoder(gobject.GObject):
        self.inputvideocaps = INPUTVIDEOCAPS
        self.doaudio= False
        self.preset = PRESET
-       print "self.preset:", self.preset
+       # print "self.preset:", self.preset
        self.oheight = OHEIGHT
        self.owidth = OWIDTH
        self.fratenum = FRATENUM
@@ -98,10 +98,11 @@ class Transcoder(gobject.GObject):
           if NEW_HEIGHT != 0 and NEW_WIDTH != 0:
              self.new_width = int(self.owidth)
              self.new_height = int(self.oheight)
-       
-       for vcap in self.videocaps:
-          vcap["height"] = int(self.new_height)
-          vcap["width"] = int(self.new_width)
+             
+       if type(self.videocaps) != bool:
+          for vcap in self.videocaps:
+             vcap["height"] = int(self.new_height)
+             vcap["width"] = int(self.new_width)
              
        # switching width and height around for rotationchoices where it makes sense
        if self.rotationvalue == 1 or self.rotationvalue == 3:
