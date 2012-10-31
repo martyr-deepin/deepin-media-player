@@ -423,7 +423,6 @@ msgid "Screenshot Copied to Clipboard"
 msgstr "截图已保存到剪贴板"
 
 #: ../src/player_box.py:1009
-#, fuzzy
 msgid "Select a file"
 msgstr "深度影音打开文件对话框"
 
@@ -990,7 +989,6 @@ msgid "continue"
 msgstr "继续"
 
 #: ../src/video_format_conv/transmageddon.py:850
-#, fuzzy
 msgid "Open a directory"
 msgstr "打开文件夹"
 

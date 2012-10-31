@@ -181,7 +181,7 @@ class MediaItem(gobject.GObject):
         self.length_padding_y = 5
         (self.length_width, self.length_height) = get_content_size(self.length, DEFAULT_FONT_SIZE) #DEFAULT_FONT_SIZE
         
-        self.format_padding_x = 5
+        self.format_padding_x = 0
         self.format_padding_y = 5
         (self.format_width, self.format_height) = get_content_size(self.format, 8) #DEFAULT_FONT_SIZE        
         
