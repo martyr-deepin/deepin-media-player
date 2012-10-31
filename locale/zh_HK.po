@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-31 12:32+0800\n"
+"POT-Creation-Date: 2012-10-31 15:51+0800\n"
 "PO-Revision-Date: 2012-07-12 15:53+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -430,9 +430,9 @@ msgstr "深度影音打開文件對話框"
 msgid "No Media Selected"
 msgstr "冇有可播放文件"
 
-#: ../src/player_box.py:1135 ../src/video_format_conv/transmageddon.py:538
-#: ../src/video_format_conv/transmageddon.py:841
-#: ../src/video_format_conv/transmageddon.py:845
+#: ../src/player_box.py:1135 ../src/video_format_conv/transmageddon.py:539
+#: ../src/video_format_conv/transmageddon.py:842
+#: ../src/video_format_conv/transmageddon.py:846
 #: ../src/video_format_conv/conv_task_gui.py:81
 msgid "Pause"
 msgstr "暫停"
@@ -972,7 +972,7 @@ msgid "No Presets"
 msgstr "自定義"
 
 #: ../src/video_format_conv/gui.py:175 ../src/video_format_conv/gui.py:274
-#: ../src/video_format_conv/transmageddon.py:968
+#: ../src/video_format_conv/transmageddon.py:969
 msgid "No Model"
 msgstr "自定義"
 
@@ -980,23 +980,27 @@ msgstr "自定義"
 msgid "Choose a directory"
 msgstr "打開文件夾"
 
-#: ../src/video_format_conv/transmageddon.py:539
+#: ../src/video_format_conv/transmageddon.py:540
 msgid "Time remaining : "
 msgstr "剩餘時間 : "
 
-#: ../src/video_format_conv/transmageddon.py:842
+#: ../src/video_format_conv/transmageddon.py:829
+msgid "Converting"
+msgstr "正在轉換中"
+
+#: ../src/video_format_conv/transmageddon.py:843
 msgid "continue"
 msgstr "繼續"
 
-#: ../src/video_format_conv/transmageddon.py:850
+#: ../src/video_format_conv/transmageddon.py:851
 msgid "Open a directory"
 msgstr "打開文件夾"
 
-#: ../src/video_format_conv/transmageddon.py:852
+#: ../src/video_format_conv/transmageddon.py:853
 msgid "Delete"
 msgstr "刪除"
 
-#: ../src/video_format_conv/transmageddon.py:853
+#: ../src/video_format_conv/transmageddon.py:854
 msgid "Remove complete tasks"
 msgstr "清除已完成任務"
 

@@ -552,8 +552,7 @@ class TransmageddonUI:
                                'count': self.passcounter, \
                                'time': str(time_rem), })
                return True
-           else:
-               self.conv_task_gui.show_time_label.set_text(_("staing conv..."))
+           else:               
                self.ProgressBar.set_fraction(0.0)
                return False
        else:
@@ -827,7 +826,7 @@ class TransmageddonUI:
    def start_conv_function(self):   
       try:
          self.task_list[self.task_index].Pipeline("playing")      
-         
+         self.conv_task_gui.show_time_label.set_text(_("Converting"))
          self._transcoder = self.task_list[self.task_index]
          self._transcoder.connect("ready-for-querying", self.ProgressBarUpdate)
          self._transcoder.connect("got-eos", self._on_eos)
