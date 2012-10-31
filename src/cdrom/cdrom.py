@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#! /Usrh/bin/env python
 # -*- coding: utf-8 -*-
 
 # Copyright (C) 2012 Deepin, Inc.
@@ -20,15 +20,46 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-'''
-挂载问题: mount /etc/mtab [动态更新 mtab，mtab 总是保持着当前系统中已挂载的分区信息]
+import fcntl
+import os
 
-DVD :
-[] GDK_Right  ->>> dvdnav 4
-[] GDK_Left   ->>> dvdnav 3
-[] GDK_Up     ->>> dvdnav 1
-[] GDK_Down   ->>> dvdnav 2
-[] GDK_Return ->>> dvdnav 6
-[] GDK_Home   ->>> dvdnav menu
-[] 
-'''
+OPEN_CDROM = 0x5309
+CLOSE_CDROM = 0x5319
+
+def scan_cdrom():
+    cdrom_list = []
+    dev_name_list = os.listdir("/dev")
+    for name in dev_name_list:
+        if name.startswith("cdrom"):
+            cdrom_list.append(os.path.join("/dev", name))
+    return cdrom_list        
+
+def ioctl_cdrom(cdrom, CDROM_MASK):    
+    try:
+        cd_device = cdrom
+        if os.path.islink(cd_device):
+            base_path = os.path.dirname(cd_device)
+            if not cd_device[0] == '/':
+                cd_device = os.path.join(base_path, cd_device)
+            # cdrom mask: { OPEN_CDROM-> open. | CLOSE_CDROM-> close. }
+            cdrom = os.open(cd_device, os.O_RDONLY | os.O_NONBLOCK)
+            fcntl.ioctl(cdrom, CDROM_MASK, 0)
+            os.close(cdrom)
+    except Exception, e:     
+        print "close cdrom [error]:", e
+
+def open_cdrom(cdrom):
+    ioctl_cdrom(cdrom, OPEN_CDROM)
+        
+def close_cdrom(cdrom):
+    ioctl_cdrom(cdrom, CLOSE_CDROM)
+        
+if __name__ == "__main__":     
+    cdrom_list = scan_cdrom()
+
+    for cdrom in cdrom_list:
+        open_cdrom(cdrom)
+        
+    for cdrom in cdrom_list:
+        close_cdrom(cdrom)
+                               

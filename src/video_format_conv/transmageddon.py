@@ -868,7 +868,11 @@ class TransmageddonUI:
          self.start_conv_function()
          gtk.timeout_add(1200, self.restart_start_btn)
       else:         
-         self.task_list[self.task_index].Pipeline("playing")
+         try:
+            if not self.task_list[self.task_index].conv_flags:
+               self.task_list[self.task_index].Pipeline("playing")
+         except Exception, e:      
+            print "clear_succeed_conv_task_file[error]:", e
          
    def delete_conv_task_file(self):
       self.select_rows = self.conv_task_gui.list_view.select_rows
