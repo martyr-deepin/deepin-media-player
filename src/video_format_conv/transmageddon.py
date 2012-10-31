@@ -961,6 +961,13 @@ class TransmageddonUI:
        
        if model_text != "No Model":
           new_width, new_height = self.form.model_dict[model_text]
+       else:   
+          ratio_text = self.form.ratio_combo.get_active_text().replace(" x ", "-").split("-")
+          new_width = ratio_text[0]
+          new_height = ratio_text[1]
+          # print "active_text:", ratio_text
+          # print "new_width:", new_width
+          # print "new_height:", new_height
           
        import urllib
        # get set output path.
@@ -986,7 +993,7 @@ class TransmageddonUI:
                            self.multipass, self.passcounter, self.outputfilename,
                            self.timestamp, self.rotationvalue, self.audiopasstoggle, 
                            self.videopasstoggle, self.interlaced, self.inputvideocaps, 
-                           int(new_width), int(new_height))          
+                           int(new_width), int(new_height))
           
           transcoder.name = name
           transcoder.outputdirectory = self.outputdirectory

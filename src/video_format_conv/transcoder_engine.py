@@ -99,6 +99,10 @@ class Transcoder(gobject.GObject):
              self.new_width = int(self.owidth)
              self.new_height = int(self.oheight)
        
+       for vcap in self.videocaps:
+          vcap["height"] = int(self.new_height)
+          vcap["width"] = int(self.new_width)
+             
        # switching width and height around for rotationchoices where it makes sense
        if self.rotationvalue == 1 or self.rotationvalue == 3:
            nwidth = self.oheight
@@ -111,9 +115,10 @@ class Transcoder(gobject.GObject):
        if self.multipass != False:
            self.cachefile = (str (glib.get_user_cache_dir()) + "/" + \
                    "multipass-cache-file" + self.timestamp + ".log")
-
+           
        # gather preset data if relevant
        if self.preset != "nopreset":
+           print "preset preset preset.............."
            height, width, num, denom, pixelaspectratio = self.provide_presets()
            for acap in self.audiocaps:
                acap["channels"] = self.channels
@@ -123,7 +128,7 @@ class Transcoder(gobject.GObject):
                vcap["framerate"] = gst.Fraction(num, denom)
                if pixelaspectratio != gst.Fraction(0, 0):
                    vcap["pixel-aspect-ratio"] = pixelaspectratio
-
+                   
 
        # Create transcoding pipeline
        self.pipeline = gst.Pipeline("TranscodingPipeline")
