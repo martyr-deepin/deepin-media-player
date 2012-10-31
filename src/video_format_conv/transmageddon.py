@@ -971,9 +971,10 @@ class TransmageddonUI:
        if model_text != _("No Model"):
           new_width, new_height = self.form.model_dict[model_text]
        else:   
-          ratio_text = self.form.ratio_combo.get_active_text().replace(" x ", "-").split("-")
-          new_width = ratio_text[0]
-          new_height = ratio_text[1]
+          if type(videocodec) != bool:
+             ratio_text = self.form.ratio_combo.get_active_text().replace(" x ", "-").split("-")
+             new_width = ratio_text[0]
+             new_height = ratio_text[1]
           # print "active_text:", ratio_text
           # print "new_width:", new_width
           # print "new_height:", new_height

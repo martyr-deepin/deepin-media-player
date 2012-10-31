@@ -166,7 +166,7 @@ class Form(DialogBox):
             self.ratio_combo.append_text(ratio)
             self.ratio_items.append((ratio, ratio))
         self.ratio_combo.set_active(5)            
-        self.brand_combo.set_items(brand_items)
+        self.brand_combo.set_items(brand_items, 0, max_width=200)
         
         self.brand_combo.prepend_text(_("No Presets"))
         self.brand_combo.connect("changed", self.brand_combo_item_selected)
@@ -265,8 +265,9 @@ class Form(DialogBox):
             model_items = []
             for model in self.model_dict:
                 model_items.append((model, model))
-            self.model_combo.set_items(model_items)    
-            self.model_combo.droplist.set_size_request(-1, self.model_combo.droplist_height)
+            self.model_combo.set_items(model_items, 0, max_width=200)    
+            
+            # self.model_combo.droplist.set_size_request(-1, self.model_combo.droplist_height)
             self.model_combo.set_active(0)            
             self.model_combo.set_sensitive(True)
             self.model_label.set_sensitive(True)
