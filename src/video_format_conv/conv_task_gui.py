@@ -187,7 +187,8 @@ class MediaItem(gobject.GObject):
         
         # ProgressBar buffer.
         self.progress_ratio = 0.0
-        self.progress_padding_x = 30
+        # self.progress_padding_x = 30
+        self.progress_padding_x = 25
         self.progress_padding_y = 5
         self.progress_w, self.progress_h = 100, 10
         self.progress_buffer = ProgressBuffer()
@@ -247,11 +248,12 @@ class MediaItem(gobject.GObject):
         '''Get sizes.'''
         return [(self.status_icon_w + self.status_icon_padding_x * 2, 
                  self.status_icon_h + self.status_icon_padding_y * 2),
-                (self.name_width + self.name_padding_x * 5,                 
+                (self.name_width + self.name_padding_x * 2 + 30,                 
                  self.name_height + self.name_padding_y * 2),                
-                (self.length_width + self.length_padding_x + 20,                 
+                (self.length_width + self.length_padding_x + 12,                 
                  self.length_height + self.length_padding_y * 2),
-                (self.format_width + self.format_padding_x * 2,  
+                # (self.format_width + self.format_padding_x * 2,  
+                (self.format_width,  
                  self.format_height + self.format_padding_y * 2),                                                
                 ]    
     
