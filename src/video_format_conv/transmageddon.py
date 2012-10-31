@@ -991,8 +991,12 @@ class TransmageddonUI:
           filechoice = "file://" + urllib.quote(conv)
           self.filename = conv                    
           name = os.path.splitext(os.path.split(conv)[1])[0]
-          name_time = datetime.datetime.now()
-          self.outputfilename =  name + "-LD-%s." % (name_time) + self.container
+          name_time = datetime.datetime.now()             
+          container_fromat = ''
+          if type(self.container) != bool:
+             container_fromat = self.container             
+             
+          self.outputfilename =  name + "-LD-%s.%s" % (name_time,  container_fromat)
           
           transcoder = transcoder_engine.Transcoder(
                            filechoice, self.filename,
@@ -1269,6 +1273,7 @@ class TransmageddonUI:
                self.container = False
                self.videorows[0].set_active(self.videonovideomenuno)
                self.videorows[0].set_sensitive(False)
+               self.form.frame_rate_label.set_sensitive(False)
        else:
            if self.containerchoice.get_active()!= -1:
                self.container = self.containerchoice.get_active_text ()

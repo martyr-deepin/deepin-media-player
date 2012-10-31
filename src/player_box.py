@@ -165,7 +165,7 @@ class PlayerBox(object):
         self.init_playlist()
                         
         self.conv_from = None
-        self.task_conv_gui = None
+        self.conv_task_gui = None
         
         # Child widget add to vbox.
         self.vbox.pack_start(self.screen_frame_event, True, True)
