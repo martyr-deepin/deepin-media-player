@@ -28,7 +28,7 @@ from dtk.ui.scrolled_window import ScrolledWindow
 from dtk.ui.constant import ALIGN_END, ALIGN_START
 from dtk.ui.draw import draw_text, draw_pixbuf
 from dtk.ui.button import Button
-
+from dtk.ui.label import Label
 from new_progressbar import NewProgressBar as ProgressBar
 
 from locales import _
@@ -77,12 +77,18 @@ class ConvTAskGui(DialogBox):
         self.scrolled_window.add_child(self.list_view)
         
         # self.start_btn = Button(_("Start"))
+        self.show_time_label = Label("")
         self.pause_btn = Button(_("Pause"))
         self.close_btn = Button(_("Close"))
+        
+        self.show_time_label_align = gtk.Alignment()
+        self.show_time_label_align.set(0.0, 0.5, 0.0, 0.0)
+        self.show_time_label_align.set_padding(0, 0, 0, 50)
+        self.show_time_label_align.add(self.show_time_label)
+                        
         # self.right_button_box.set_buttons([self.start_btn, self.pause_btn, self.close_btn])
-        self.right_button_box.set_buttons([self.pause_btn, self.close_btn])        
-        
-        
+        self.right_button_box.set_buttons([self.show_time_label_align, self.pause_btn, self.close_btn])        
+                
 class MediaItem(gobject.GObject):
     '''List item.'''    
     __gsignals__ = {

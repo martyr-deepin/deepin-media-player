@@ -529,11 +529,14 @@ class TransmageddonUI:
                    rem = 0.1
                min = rem / 60
                sec = rem % 60
-               time_rem = "%(min)d:%(sec)02d" % {
+               time_rem = "%(min)02d:%(sec)02d" % {
                    "min": min,
                    "sec": sec,
                    }
-               print "time_rem:", time_rem
+               #
+               # print "time_rem:", time_rem # add progress info to task gui.
+               self.conv_task_gui.show_time_label.set_text(_("剩余时间 : ") + time_rem) # 123456
+               #               
                if percent_remain > 0.5:
                    if self.passcounter == int(0):
                        txt = "Estimated time remaining: %(time)s"
