@@ -535,7 +535,10 @@ class TransmageddonUI:
                    }
                #
                # print "time_rem:", time_rem # add progress info to task gui.
-               self.conv_task_gui.show_time_label.set_text(_("剩余时间 : ") + time_rem) # 123456
+               if self.conv_task_gui.pause_btn.label == _("Pause"):
+                  self.conv_task_gui.show_time_label.set_text(_("剩余时间 : ") + time_rem)
+               else:   
+                  self.conv_task_gui.show_time_label.set_text("")
                #               
                if percent_remain > 0.5:
                    if self.passcounter == int(0):
@@ -559,7 +562,6 @@ class TransmageddonUI:
    # use it for the progressbar
    def ProgressBarUpdate(self, source):
        gobject.timeout_add(500, self.Increment_Progressbar)
-       # print "ProgressBar timeout_add startet"
        
    def _on_eos(self, source):
        context_id = self.StatusBar.get_context_id("EOS")
@@ -574,6 +576,7 @@ class TransmageddonUI:
            self.transcodebutton.set_sensitive(True)
            self.rotationchoice.set_sensitive(True)
            self.start_time = False
+           self.conv_task_gui.show_time_label.set_text("")
            self.ProgressBar.set_text("Done Transcoding")          
            # self.task_index = min(self.task_index + 1, len(self.task_list) - 1) # task 
            self.task_list[self.task_index].Pipeline("null") # close Pipeline.
@@ -838,7 +841,7 @@ class TransmageddonUI:
       if widget.label == _("Pause"):
          widget.set_label(_("continue"))
          self.conv_task_gui_pause_play()
-      else:   
+      else:            
          widget.set_label(_("Pause"))
          self.conv_task_gui_staring_play()
                

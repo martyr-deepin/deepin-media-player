@@ -82,12 +82,11 @@ class ConvTAskGui(DialogBox):
         self.close_btn = Button(_("Close"))
         
         self.show_time_label_align = gtk.Alignment()
-        self.show_time_label_align.set(0.0, 0.5, 0.0, 0.0)
-        self.show_time_label_align.set_padding(0, 0, 0, 50)
+        self.show_time_label_align.set(0.0, 0.5, 1.0, 1.0)
         self.show_time_label_align.add(self.show_time_label)
                         
-        # self.right_button_box.set_buttons([self.start_btn, self.pause_btn, self.close_btn])
-        self.right_button_box.set_buttons([self.show_time_label_align, self.pause_btn, self.close_btn])        
+        self.left_button_box.set_buttons([self.show_time_label_align])
+        self.right_button_box.set_buttons([self.pause_btn, self.close_btn])        
                 
 class MediaItem(gobject.GObject):
     '''List item.'''    
