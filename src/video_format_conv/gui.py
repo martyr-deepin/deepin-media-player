@@ -220,7 +220,7 @@ class Form(DialogBox):
         # self.path_label, self.save_path_entry, self.save_chooser_btn
         self.save_path_hbox_ali = gtk.Alignment()
         self.save_path_hbox = gtk.HBox()
-        self.save_path_hbox_ali.set_padding(5, 5, 15, 0)
+        self.save_path_hbox_ali.set_padding(5, 5, 16, 0)
         self.save_path_hbox_ali.add(self.save_path_hbox)
                 
         save_chooser_btn_ali = gtk.Alignment()
