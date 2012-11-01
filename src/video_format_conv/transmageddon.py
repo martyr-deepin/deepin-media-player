@@ -388,7 +388,8 @@ class TransmageddonUI:
            self.containerchoice.append_text(str(i))
            
        # add i18n "No container"option
-       self.containerchoice.append_text("No container (Audio-only)")
+       # self.containerchoice.append_text("No container (Audio-only)") # 不输出视频，只有音频
+       self.containerchoice.append_text(_("Audio-only"))
 
        # Populate the rotatation box
        self.rotationlist = ["No rotation (default)",\
@@ -993,11 +994,9 @@ class TransmageddonUI:
           self.filename = conv                    
           name = os.path.splitext(os.path.split(conv)[1])[0]
           name_time = datetime.datetime.now()             
-          container_fromat = ''
-          if type(self.container) != bool:
-             container_fromat = self.container             
+          container_fromat = self.ContainerFormatSuffix
              
-          self.outputfilename =  name + "-LD-%s.%s" % (name_time,  container_fromat)
+          self.outputfilename =  name + "-LD-%s%s" % (name_time,  container_fromat)
           
           transcoder = transcoder_engine.Transcoder(
                            filechoice, self.filename,
@@ -1017,7 +1016,7 @@ class TransmageddonUI:
           media_item = MediaItem()
           media_item.set_name(transcoder.name)
           media_item.path = transcoder.outputdirectory
-          media_item.set_format(transcoder.container)
+          media_item.set_format(container_fromat[1:])
           self.conv_task_gui.list_view.add_items([media_item])
           self.conv_task_list.append(media_item)
        
@@ -1275,7 +1274,7 @@ class TransmageddonUI:
                self.videorows[0].set_active(self.videonovideomenuno)
                self.videorows[0].set_sensitive(False)
                self.form.frame_rate_label.set_sensitive(False)
-       else:
+       else:          
            if self.containerchoice.get_active()!= -1:
                self.container = self.containerchoice.get_active_text ()
                if self.discover_done == True:

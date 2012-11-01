@@ -253,7 +253,7 @@ class MediaItem(gobject.GObject):
                 (self.length_width + self.length_padding_x + 12,                 
                  self.length_height + self.length_padding_y * 2),
                 # (self.format_width + self.format_padding_x * 2,  
-                (self.format_width,  
+                (self.format_width + 20,  
                  self.format_height + self.format_padding_y * 2),                                                
                 ]    
     
