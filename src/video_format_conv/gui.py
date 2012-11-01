@@ -209,13 +209,13 @@ class Form(DialogBox):
         self.format_ratio_hbox = gtk.HBox()
         self.format_ratio_hbox.pack_start(self.format_hbox_ali, False, False)
         self.format_ratio_hbox.pack_start(self.ratio_hbox_ali, False, False)
+                
+        self.frame_rate_hbox_ali, self.frame_rate_hbox = self.create_hbox(bottom, top, 15, 0, self.frame_rate_label, self.frame_rate_combo)
+        self.bit_rate_hbox_ali, self.bit_rate_hbox = self.create_hbox(bottom, top, 50, 0, self.bit_rate_label, self.bit_rate_combo)
         
-        self.bit_rate_hbox_ali, self.bit_rate_hbox = self.create_hbox(bottom, top, 15, 0, self.bit_rate_label, self.bit_rate_combo)
-        self.frame_rate_hbox_ali, self.frame_rate_hbox = self.create_hbox(bottom, top, 50, 0, self.frame_rate_label, self.frame_rate_combo)
-        
-        self.bit_frame_hbox = gtk.HBox()
-        self.bit_frame_hbox.pack_start(self.bit_rate_hbox_ali, False, False)
+        self.bit_frame_hbox = gtk.HBox()        
         self.bit_frame_hbox.pack_start(self.frame_rate_hbox_ali, False, False)
+        self.bit_frame_hbox.pack_start(self.bit_rate_hbox_ali, False, False)
         
         # self.path_label, self.save_path_entry, self.save_chooser_btn
         self.save_path_hbox_ali = gtk.Alignment()
