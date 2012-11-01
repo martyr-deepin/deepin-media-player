@@ -46,7 +46,7 @@ containermap = { 'Ogg' : "application/ogg", \
         'FLV' : "video/x-flv", \
         '3GPP' : "video/quicktime,variant=3gpp", \
         'ASF' : "video/x-ms-asf, parsed=true", \
-        'WebM' : "video/webm", \
+        'WebM' : "video/webm", 
         'No container' : False }
 
 csuffixmap =   { 'Ogg' : ".ogg", \
@@ -61,7 +61,7 @@ csuffixmap =   { 'Ogg' : ".ogg", \
         'FLV' : ".flv", \
         '3GPP' : ".3gp",
         'ASF' : ".asf", \
-        'WebM' : ".webm", \
+        'WebM' : ".webm", 
         'No container' : ".null" }
 
 audiosuffixmap =   { 'Ogg' : ".ogg", \
@@ -75,7 +75,7 @@ audiosuffixmap =   { 'Ogg' : ".ogg", \
         'FLV' : ".flv", \
         '3GPP' : ".3gp", \
         'ASF' : ".wma", \
-        'WebM' : ".webm" }
+        'WebM' : ".webm"}
 
 nocontainersuffixmap = {
          'audio/mpeg, mpegversion=(int)1, layer=(int)3' : ".mp3", \
@@ -90,14 +90,14 @@ codecmap = { 'Vorbis' : "audio/x-vorbis", \
         'Speex' : "audio/x-speex",
         'Celt Ultra' : "audio/x-celt", \
         'ALAC' : "audio/x-alac", \
-        'Windows Media Audio 2' : "audio/x-wma, wmaversion=(int)2", \
+        'WMA' : "audio/x-wma, wmaversion=(int)2", # Windows Media Audio 2
         'Theora' : "video/x-theora", \
         'Dirac' : "video/x-dirac", \
         'H264' : "video/x-h264", \
         'MPEG2' : "video/mpeg,mpegversion=2,systemstream=false", \
         'MPEG4' : "video/mpeg,mpegversion=4", \
         'xvid' : "video/x-xvid", \
-        'Windows Media Video 2' : "video/x-wmv,wmvversion=2", \
+        'WMV' : "video/x-wmv,wmvversion=2", # Windows Media Video 2
         'dnxhd' : "video/x-dnxhd", \
         'divx5' : "video/x-divx,divxversion=5", \
         'divx4' : "video/x-divx,divxversion=4", \

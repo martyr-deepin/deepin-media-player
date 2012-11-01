@@ -124,7 +124,7 @@ supported_video_container_map = {
     'Matroska':   [ 'Dirac', 'Theora', 'H264', 'On2 vp8',
                     'MPEG4', 'MPEG2', 'xvid', 'H263+' ],
     'AVI':        [ 'H264', 'Dirac', 'MPEG2', 'MPEG4', 'xvid',
-                    'Windows Media Video 2', 'On2 vp8' ],
+                    'WMV', 'On2 vp8' ], # Windows Media Video 2
     'Quicktime':  [ 'H264', 'Dirac', 'MPEG2', 'MPEG4', 'On2 vp8' ],
     'MPEG4':      [ 'H264', 'MPEG2', 'MPEG4' ],
     'FLV':        [ 'H264'],
@@ -132,7 +132,7 @@ supported_video_container_map = {
     'MPEG PS':    [ 'MPEG2', 'MPEG1', 'H264', 'MPEG4' ],
     'MPEG TS':    [ 'MPEG2', 'MPEG1', 'H264', 'MPEG4', 'Dirac' ],
     'AVCHD/BD':   [ 'H264' ],
-    'ASF':        [ 'Windows Media Video 2' ],
+    'ASF':        [ 'WMV' ], # Windows Media Video 2
     'WebM':       [ 'On2 vp8']
 }
 
@@ -140,7 +140,7 @@ supported_audio_container_map = {
     'Ogg':         [ 'Vorbis', 'FLAC', 'Speex', 'Celt Ultra' ],
     'MXF':         [ 'mp3', 'AAC', 'AC3' ],
     'Matroska':    [ 'FLAC', 'AAC', 'AC3', 'Vorbis' ],
-    'AVI':         [ 'mp3', 'AC3', 'Windows Media Audio 2' ],
+    'AVI':         [ 'mp3', 'AC3', 'WMA' ], # Windows Media Audio 2
     'Quicktime':   [ 'AAC', 'AC3', 'mp3' ],
     'MPEG4':       [ 'AAC', 'mp3' ],
     '3GPP':        [ 'AAC', 'mp3', 'AMR-NB' ],
@@ -148,7 +148,7 @@ supported_audio_container_map = {
     'MPEG TS':     [ 'mp3', 'AC3', 'AAC', 'mp2' ],
     'AVCHD/BD':    [ 'AC3' ],
     'FLV':         [ 'mp3' ],
-    'ASF':         [ 'Windows Media Audio 2', 'mp3'],
+    'ASF':         [ 'WMA', 'mp3'], # Windows Media Audio 2
     'WebM':        [ 'Vorbis']
 
     # "No container" is 13th option here (0-12)
