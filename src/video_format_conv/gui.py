@@ -40,14 +40,15 @@ import os
 from locales import _
 
 FORM_WIDTH = 425
-FORM_HEIGHT = 280
+# FORM_HEIGHT = 280
+FORM_HEIGHT = 180
 
 
 class Form(DialogBox):
     def __init__(self):
         DialogBox.__init__(self, 
                            _("Format converter"), 
-                           FORM_WIDTH, FORM_HEIGHT- 80, 
+                           FORM_WIDTH, FORM_HEIGHT, 
                            mask_type=DIALOG_MASK_SINGLE_PAGE,
                            close_callback=self.hide_all,
                            modal=False,                           
@@ -189,24 +190,28 @@ class Form(DialogBox):
         self.higt_set_btn.connect("clicked", self.higt_set_btn_clicked)
         
         # form body box add main fixed.
+        self.body_table_ali = gtk.Alignment()
+        self.body_table_ali.set_padding(6, 0, 0, 0)
         self.body_table = gtk.Table(rows=6, columns=4, homogeneous=False)
+        self.body_table_ali.add(self.body_table)
+        
         self.brand_model_hbox = gtk.HBox()    
-        bottom, top = 5, 0
-        self.brand_hbox_ali, self.brand_hbox = self.create_hbox(bottom, top, 0, 45, self.brand_label, self.brand_combo)
-        self.model_hbox_ali, self.model_hbox = self.create_hbox(bottom, top, 0, 0, self.model_label, self.model_combo)
+        top, bottom = 5, 5
+        self.brand_hbox_ali, self.brand_hbox = self.create_hbox(bottom, top, 15, 0, self.brand_label, self.brand_combo)
+        self.model_hbox_ali, self.model_hbox = self.create_hbox(bottom, top, 50, 0, self.model_label, self.model_combo)
         
         self.brand_model_hbox.pack_start(self.brand_hbox_ali, False, False)
         self.brand_model_hbox.pack_start(self.model_hbox_ali, False, False)
         
-        self.format_hbox_ali, self.format_hbox = self.create_hbox(bottom, top, 0, 45, self.format_label, self.format_combo)
-        self.ratio_hbox_ali, ratio_hbox = self.create_hbox(bottom, top, 0, 0, self.ratio_label, self.ratio_combo)
+        self.format_hbox_ali, self.format_hbox = self.create_hbox(bottom, top, 15, 0, self.format_label, self.format_combo)
+        self.ratio_hbox_ali, ratio_hbox = self.create_hbox(bottom, top, 50, 0, self.ratio_label, self.ratio_combo)
         
         self.format_ratio_hbox = gtk.HBox()
         self.format_ratio_hbox.pack_start(self.format_hbox_ali, False, False)
         self.format_ratio_hbox.pack_start(self.ratio_hbox_ali, False, False)
         
-        self.bit_rate_hbox_ali, self.bit_rate_hbox = self.create_hbox(bottom, top, 0, 45, self.bit_rate_label, self.bit_rate_combo)
-        self.frame_rate_hbox_ali, self.frame_rate_hbox = self.create_hbox(bottom, top, 0, 0, self.frame_rate_label, self.frame_rate_combo)
+        self.bit_rate_hbox_ali, self.bit_rate_hbox = self.create_hbox(bottom, top, 15, 0, self.bit_rate_label, self.bit_rate_combo)
+        self.frame_rate_hbox_ali, self.frame_rate_hbox = self.create_hbox(bottom, top, 50, 0, self.frame_rate_label, self.frame_rate_combo)
         
         self.bit_frame_hbox = gtk.HBox()
         self.bit_frame_hbox.pack_start(self.bit_rate_hbox_ali, False, False)
@@ -215,11 +220,11 @@ class Form(DialogBox):
         # self.path_label, self.save_path_entry, self.save_chooser_btn
         self.save_path_hbox_ali = gtk.Alignment()
         self.save_path_hbox = gtk.HBox()
-        self.save_path_hbox_ali.set_padding(5, 5, 2, 0)
+        self.save_path_hbox_ali.set_padding(5, 5, 15, 0)
         self.save_path_hbox_ali.add(self.save_path_hbox)
                 
         save_chooser_btn_ali = gtk.Alignment()
-        save_chooser_btn_ali.set_padding(0, 0, 12, 0)
+        save_chooser_btn_ali.set_padding(0, 0, 15, 0)
         save_chooser_btn_ali.add(self.save_chooser_btn)
         
         self.save_path_hbox.pack_start(self.path_label, False, False)
@@ -228,26 +233,25 @@ class Form(DialogBox):
         
         # left right top, bottom.
         '''brand_model_hbox.'''
-        self.body_table.attach(self.brand_model_hbox, 0, 1, 0, 1, gtk.EXPAND, gtk.EXPAND)
+        # self.body_table.attach(self.brand_model_hbox, 0, 1, 0, 1, gtk.EXPAND, gtk.EXPAND)
+        self.body_table.attach(self.brand_model_hbox, 0, 1, 0, 1, gtk.FILL, gtk.FILL)
         # self.body_table.attach(self.model_hbox, 1, 2, 0, 1, gtk.EXPAND, gtk.EXPAND)
         # self.body_table.attach(self.model_hbox, 2, 3, 0, 1, gtk.EXPAND, gtk.EXPAND)
         # self.body_table.attach(self.model_hbox, 3, 4, 0, 1, gtk.EXPAND, gtk.EXPAND)
         '''format_ratio_hbox.'''
-        self.body_table.attach(self.format_ratio_hbox, 0, 1, 1, 2, gtk.EXPAND, gtk.EXPAND)
+        # self.body_table.attach(self.format_ratio_hbox, 0, 1, 1, 2, gtk.EXPAND, gtk.EXPAND)
+        self.body_table.attach(self.format_ratio_hbox, 0, 1, 1, 2, gtk.FILL, gtk.FILL)
         # self.body_table.attach(self.format_combo, 1, 2, 1, 2, gtk.EXPAND, gtk.EXPAND)
         # self.body_table.attach(self.ratio_hbox, 2, 3, 1, 2, gtk.EXPAND, gtk.EXPAND)
         # self.body_table.attach(self.ratio_combo, 3, 4, 1, 2, gtk.EXPAND, gtk.EXPAND)
         '''bit_frame_hbox.'''
-        self.body_table.attach(self.bit_frame_hbox, 0, 1, 2, 3, gtk.EXPAND, gtk.EXPAND)
+        # self.body_table.attach(self.bit_frame_hbox, 0, 1, 2, 3, gtk.EXPAND, gtk.EXPAND)
+        self.body_table.attach(self.bit_frame_hbox, 0, 1, 2, 3, gtk.FILL, gtk.FILL)
         '''save_path_hbox.'''
-        self.body_table.attach(self.save_path_hbox_ali, 0, 1, 3, 4, gtk.EXPAND, gtk.EXPAND)
-        #
-        self.temp_label1 = Label("   ")
-        self.body_table.attach(self.temp_label1, 0, 1, 4, 5, gtk.EXPAND, gtk.EXPAND)
-        self.temp_label2 = Label("   ")
-        self.body_table.attach(self.temp_label2, 0, 1, 5, 6, gtk.EXPAND, gtk.EXPAND)
-        
-        self.body_box.pack_start(self.body_table, True, True)
+        # self.body_table.attach(self.save_path_hbox_ali, 0, 1, 3, 4, gtk.EXPAND, gtk.EXPAND)
+        self.body_table.attach(self.save_path_hbox_ali, 0, 1, 3, 4, gtk.FILL, gtk.FILL)
+                
+        self.body_box.pack_start(self.body_table_ali, True, True)
         self.hide_setting()
         
     def create_hbox(self, top, bottom, left, right, child1, child2):
@@ -324,7 +328,7 @@ class Form(DialogBox):
             
     def higt_set_btn_clicked(self, widget):    
         if not self.higt_set_bool:
-            self.hide_all_new()
+            self.hide_all_new()            
         else:    
             self.show_all_new()
             
@@ -333,21 +337,24 @@ class Form(DialogBox):
     def show_all_new(self):    
         self.show_all()
         self.hide_setting()
-        self.temp_label1.show_all()
-        self.temp_label2.show_all()                
-        self.higt_set_btn.show_all()
+        self.higt_set_btn.show_all()        
         
     def hide_all_new(self):    
-        self.temp_label1.hide_all()
-        self.temp_label2.hide_all()
         self.higt_set_btn.hide_all()
         self.show_setting()
         
     def hide_setting(self):
         self.bit_frame_hbox.hide_all()
-    
+        self.set_geometry_hints(None, FORM_WIDTH, FORM_HEIGHT, 
+                                FORM_WIDTH, FORM_HEIGHT, -1, -1, -1, -1, -1, -1)
+        self.set_size_request(FORM_WIDTH, FORM_HEIGHT)
+        
     def show_setting(self):
         self.bit_frame_hbox.show_all()
+        add_width = 30
+        self.set_geometry_hints(None, FORM_WIDTH, FORM_HEIGHT + add_width, 
+                                FORM_WIDTH, FORM_HEIGHT + add_width, -1, -1, -1, -1, -1, -1)
+        self.set_size_request(FORM_WIDTH, FORM_HEIGHT + add_width)        
     
 if __name__ == "__main__":
     form = Form()
