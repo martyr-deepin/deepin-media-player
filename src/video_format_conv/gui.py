@@ -30,6 +30,7 @@ from file_choose_button import FileChooserButton
 from dtk.ui.button import Button
 from dtk.ui.label import Label
 from dtk.ui.combo import ComboBox
+from dtk.ui.utils import container_remove_all
 from new_combobox import NewComboBox
 from read_xml import ReadXml
 
@@ -119,12 +120,12 @@ class Form(DialogBox):
         
         self.path_entry = InputEntry()
         self.save_path_entry = InputEntry()
-        self.brand_combo = NewComboBox(110) #ComboBox(supported_containers_imtes, 100, max_width=110)
-        self.format_combo = NewComboBox(110) #ComboBox(supported_containers_imtes, 100, max_width=110) # connect         
-        self.bit_rate_combo = NewComboBox(110) #ComboBox(supported_containers_imtes, 100)
-        self.frame_rate_combo = NewComboBox(110) #ComboBox(supported_containers_imtes, 100)        
-        self.model_combo = NewComboBox(110) #ComboBox(supported_containers_imtes, 100)
-        self.ratio_combo = NewComboBox(110) #ComboBox(supported_containers_imtes, 100) # Resolution
+        self.brand_combo = NewComboBox(108)
+        self.format_combo = NewComboBox(108)
+        self.bit_rate_combo = NewComboBox(108)
+        self.frame_rate_combo = NewComboBox(108)
+        self.model_combo = NewComboBox(108) 
+        self.ratio_combo = NewComboBox(108) 
         
         self.modify_chooser_btn = FileChooserButton("选择") # connect self.FileChooser
         self.save_chooser_btn = Button(_("Change"))
@@ -137,24 +138,15 @@ class Form(DialogBox):
         
         self.higt_hbox = gtk.HBox()
         self.higt_hbox.pack_start(self.higt_set_btn)
-        # self.higt_hbox.pack_start(self.show_and_hide_task_btn)
         
         self.higt_align = gtk.Alignment()
-        # self.align.add(self.higt_set_btn)
         self.higt_align.add(self.higt_hbox)
         self.higt_align.set(1, 0, 1, 0)
-        self.higt_align.set_padding(0, 0, 0, 170)
         
-        self.right_button_box.set_buttons([self.higt_align, self.start_btn, self.close_btn])
+        self.left_button_box.set_buttons([self.higt_align])
+        self.right_button_box.set_buttons([self.start_btn, self.close_btn])
         
-        # brand_combo.
-        brand_items = []
-        for brand in self.read_xml.brand_dict.keys():
-            brand_po = brand
-            if self.brand_dict.has_key(brand):
-                brand_po = self.brand_dict[brand]
-            brand_items.append((brand_po, brand))
-            
+        # ratio_combo.
         self.__ratio_list = ["176 x 220", "240 x 320", "320 x 240", 
                              "320 x 480", "400 x 240", "480 x 800", 
                              "540 x 960", "600 x 1024", "640 x 480", 
@@ -166,7 +158,15 @@ class Form(DialogBox):
             self.ratio_combo.append_text(ratio)
             self.ratio_items.append((ratio, ratio))
         self.ratio_combo.set_active(5)            
-        self.brand_combo.set_items(brand_items, 0, max_width=200)
+        # brand_combo.
+        brand_items = []
+        for brand in self.read_xml.brand_dict.keys():
+            brand_po = brand
+            if self.brand_dict.has_key(brand):
+                brand_po = self.brand_dict[brand]
+            brand_items.append((brand_po, brand))
+        
+        self.brand_combo.set_items(brand_items, 0, fixed_width=self.brand_combo.max_width)
         
         self.brand_combo.prepend_text(_("No Presets"))
         self.brand_combo.connect("changed", self.brand_combo_item_selected)
@@ -175,18 +175,12 @@ class Form(DialogBox):
         self.model_combo.set_sensitive(False)
         self.model_combo.prepend_text(_("No Model"))
         self.model_combo.connect("changed", self.model_combo_item_selected)
-        # ratio_combo.
-        # self.ratio_combo.set_items(self.ratio_items)
-        # for ratio in self.ratio_combo:
-            # self.ratio_combo.append((ratio, ratio))
 
         self.save_chooser_btn.connect("clicked", self.save_chooser_btn_clicked)
-        # format combo.
-        # self.format_combo.set_active(0)                
         
         # path_entry.
-        PATH_ENTRY_WIDTH = 235
-        PATH_ENTRY_HEIGHT = 23
+        PATH_ENTRY_WIDTH = 240
+        PATH_ENTRY_HEIGHT = 25
         self.save_path_entry.set_sensitive(False)
         self.save_path_entry.set_text(self.get_home_path())
         self.save_path_entry.set_size(PATH_ENTRY_WIDTH, PATH_ENTRY_HEIGHT)
@@ -194,36 +188,77 @@ class Form(DialogBox):
         # higt_set_btn.
         self.higt_set_btn.connect("clicked", self.higt_set_btn_clicked)
         
-        ''' add all widgets. '''
-        #
-        self.left_widgets = [self.brand_label, self.brand_combo, self.format_label, self.format_combo,
-                             self.bit_rate_label, self.bit_rate_combo, self.frame_rate_label, self.frame_rate_combo,
-                             self.path_label, self.save_path_entry, self.save_chooser_btn]
-        # add left widgets.
-        for widget in self.left_widgets:
-            if widget:
-                self.main_fixed.put(widget, 0, 0)
-        #    
-        self.right_widgets = [(self.model_label, self.model_combo),
-                              (self.ratio_label, self.ratio_combo)]
-        
-        self.right_x += 40
-        # add right widgets.
-        for label, combo in self.right_widgets:
-            padding_width, padding_height = label.get_size_request()
-            padding_y = int(padding_height/3.5)
-            self.main_fixed.put(label,
-                                self.right_x,
-                                self.right_y + self.right_offset_y - padding_y + 3)
-            self.main_fixed.put(combo, 
-                                self.right_x + padding_width + 5, 
-                                self.right_y + self.right_offset_y - padding_y) 
-            self.right_offset_y += 40
-            
         # form body box add main fixed.
-        self.body_box.pack_start(self.main_fixed, True, True)            
-        self.hide_setting()
+        self.body_table = gtk.Table(rows=6, columns=4, homogeneous=False)
+        self.brand_model_hbox = gtk.HBox()    
+        bottom, top = 5, 0
+        self.brand_hbox_ali, self.brand_hbox = self.create_hbox(bottom, top, 0, 45, self.brand_label, self.brand_combo)
+        self.model_hbox_ali, self.model_hbox = self.create_hbox(bottom, top, 0, 0, self.model_label, self.model_combo)
+        
+        self.brand_model_hbox.pack_start(self.brand_hbox_ali, False, False)
+        self.brand_model_hbox.pack_start(self.model_hbox_ali, False, False)
+        
+        self.format_hbox_ali, self.format_hbox = self.create_hbox(bottom, top, 0, 45, self.format_label, self.format_combo)
+        self.ratio_hbox_ali, ratio_hbox = self.create_hbox(bottom, top, 0, 0, self.ratio_label, self.ratio_combo)
+        
+        self.format_ratio_hbox = gtk.HBox()
+        self.format_ratio_hbox.pack_start(self.format_hbox_ali, False, False)
+        self.format_ratio_hbox.pack_start(self.ratio_hbox_ali, False, False)
+        
+        self.bit_rate_hbox_ali, self.bit_rate_hbox = self.create_hbox(bottom, top, 0, 45, self.bit_rate_label, self.bit_rate_combo)
+        self.frame_rate_hbox_ali, self.frame_rate_hbox = self.create_hbox(bottom, top, 0, 0, self.frame_rate_label, self.frame_rate_combo)
+        
+        self.bit_frame_hbox = gtk.HBox()
+        self.bit_frame_hbox.pack_start(self.bit_rate_hbox_ali, False, False)
+        self.bit_frame_hbox.pack_start(self.frame_rate_hbox_ali, False, False)
+        
+        # self.path_label, self.save_path_entry, self.save_chooser_btn
+        self.save_path_hbox_ali = gtk.Alignment()
+        self.save_path_hbox = gtk.HBox()
+        self.save_path_hbox_ali.set_padding(5, 5, 2, 0)
+        self.save_path_hbox_ali.add(self.save_path_hbox)
                 
+        save_chooser_btn_ali = gtk.Alignment()
+        save_chooser_btn_ali.set_padding(0, 0, 12, 0)
+        save_chooser_btn_ali.add(self.save_chooser_btn)
+        
+        self.save_path_hbox.pack_start(self.path_label, False, False)
+        self.save_path_hbox.pack_start(self.save_path_entry, False, False)
+        self.save_path_hbox.pack_start(save_chooser_btn_ali, False, False)
+        
+        # left right top, bottom.
+        '''brand_model_hbox.'''
+        self.body_table.attach(self.brand_model_hbox, 0, 1, 0, 1, gtk.EXPAND, gtk.EXPAND)
+        # self.body_table.attach(self.model_hbox, 1, 2, 0, 1, gtk.EXPAND, gtk.EXPAND)
+        # self.body_table.attach(self.model_hbox, 2, 3, 0, 1, gtk.EXPAND, gtk.EXPAND)
+        # self.body_table.attach(self.model_hbox, 3, 4, 0, 1, gtk.EXPAND, gtk.EXPAND)
+        '''format_ratio_hbox.'''
+        self.body_table.attach(self.format_ratio_hbox, 0, 1, 1, 2, gtk.EXPAND, gtk.EXPAND)
+        # self.body_table.attach(self.format_combo, 1, 2, 1, 2, gtk.EXPAND, gtk.EXPAND)
+        # self.body_table.attach(self.ratio_hbox, 2, 3, 1, 2, gtk.EXPAND, gtk.EXPAND)
+        # self.body_table.attach(self.ratio_combo, 3, 4, 1, 2, gtk.EXPAND, gtk.EXPAND)
+        '''bit_frame_hbox.'''
+        self.body_table.attach(self.bit_frame_hbox, 0, 1, 2, 3, gtk.EXPAND, gtk.EXPAND)
+        '''save_path_hbox.'''
+        self.body_table.attach(self.save_path_hbox_ali, 0, 1, 3, 4, gtk.EXPAND, gtk.EXPAND)
+        #
+        self.temp_label1 = Label("   ")
+        self.body_table.attach(self.temp_label1, 0, 1, 4, 5, gtk.EXPAND, gtk.EXPAND)
+        self.temp_label2 = Label("   ")
+        self.body_table.attach(self.temp_label2, 0, 1, 5, 6, gtk.EXPAND, gtk.EXPAND)
+        
+        self.body_box.pack_start(self.body_table, True, True)
+        self.hide_setting()
+        
+    def create_hbox(self, top, bottom, left, right, child1, child2):
+        hbox_ali = gtk.Alignment()
+        hbox_ali.set_padding(top, bottom, left, right)
+        hbox = gtk.HBox()        
+        hbox_ali.add(hbox)
+        hbox.pack_start(child1, False, False)
+        hbox.pack_start(child2, False, False)
+        return hbox_ali, hbox
+        
     def get_home_path(self):
         return os.path.expanduser("~")
         
@@ -265,7 +300,7 @@ class Form(DialogBox):
             model_items = []
             for model in self.model_dict:
                 model_items.append((model, model))
-            self.model_combo.set_items(model_items, 0, max_width=200)    
+            self.model_combo.set_items(model_items, 0, fixed_width=self.model_combo.max_width)    
             
             # self.model_combo.droplist.set_size_request(-1, self.model_combo.droplist_height)
             self.model_combo.set_active(0)            
@@ -286,75 +321,34 @@ class Form(DialogBox):
             width, height = self.model_dict[item_content]
             self.ratio_combo.clear_items()
             self.ratio_combo.prepend_text("%s x %s"%(width, height))
-        
-    def hide_set_window_hints(self):        
-        self.hide_setting()
-        self.set_geometry_hints(None, FORM_WIDTH, FORM_HEIGHT-80, FORM_WIDTH, FORM_HEIGHT-80, -1, -1, -1, -1, -1, -1)
-        self.set_size_request(FORM_WIDTH, FORM_HEIGHT-80)
-        
-    def higt_set_btn_clicked(self, widget):    
-        if self.higt_set_bool:
-            self.hide_set_window_hints()            
-        else:    
-            self.show_setting()
-            self.set_geometry_hints(None, FORM_WIDTH, FORM_HEIGHT, FORM_WIDTH, FORM_HEIGHT, -1, -1, -1, -1, -1, -1)
-            self.set_size_request(FORM_WIDTH, FORM_HEIGHT+80) 
-            self.higt_set_btn.hide()
             
-        self.higt_set_bool = not self.higt_set_bool
-        
-    def move_left_widgets(self):        
-        self.init_value()
-        other_padding_x = 5
-        button_padding_x = 10
-        #
-        for label, other, button in self.left_widgets:
-            padding_width, padding_height = label.get_size_request()
-            padding_y = int(padding_height/3.5)
-            # main fixed add label widget.
-            self.main_fixed.move(label, 
-                                self.left_x, 
-                                self.left_y + self.left_offset_y)
-            # main fixed add other widget.            
-            # print other
-            self.main_fixed.move(other, 
-                                self.left_x + padding_width + other_padding_x, 
-                                self.left_y + self.left_offset_y - padding_y)
-            if button:
-                # main fixed add button widget.                
-                padding_y += 1
-                self.main_fixed.move(button, 
-                                    self.left_x + padding_width + other.get_size_request()[0] + button_padding_x, 
-                                    self.left_y + self.left_offset_y - padding_y) 
-            # set left offset y -> left_offset_y + 40. 
-            self.left_offset_y += 40                          
-        self.main_fixed.show_all()
-        
-    def hide_setting(self):    
-        # hide widget.
-        #     
-        self.left_widgets = [(self.brand_label, self.brand_combo, None),
-                             (self.format_label, self.format_combo, None),
-                             (self.path_label, self.save_path_entry, self.save_chooser_btn),
-                             ]
-        
-        self.move_left_widgets()        
-        
-        for hide_widget in [self.bit_rate_label, self.bit_rate_combo, self.frame_rate_label, self.frame_rate_combo]:
-            hide_widget.hide_all()
-        
-    def show_setting(self):
-        # show widget.
-        #
-        self.left_widgets = [(self.brand_label, self.brand_combo, None),
-                             (self.format_label, self.format_combo, None),
-                             (self.bit_rate_label, self.bit_rate_combo, None),
-                             (self.frame_rate_label, self.frame_rate_combo, None),
-                             (self.path_label, self.save_path_entry, self.save_chooser_btn),
-                             ]
-        self.move_left_widgets()
+    def higt_set_btn_clicked(self, widget):    
+        if not self.higt_set_bool:
+            self.hide_all_new()
+        else:    
+            self.show_all_new()
+            
+        self.higt_set_bool = not self.higt_set_bool                 
+               
+    def show_all_new(self):    
         self.show_all()
+        self.hide_setting()
+        self.temp_label1.show_all()
+        self.temp_label2.show_all()                
+        self.higt_set_btn.show_all()
         
+    def hide_all_new(self):    
+        self.temp_label1.hide_all()
+        self.temp_label2.hide_all()
+        self.higt_set_btn.hide_all()
+        self.show_setting()
+        
+    def hide_setting(self):
+        self.bit_frame_hbox.hide_all()
+    
+    def show_setting(self):
+        self.bit_frame_hbox.show_all()
+    
 if __name__ == "__main__":
     form = Form()
     form.show_all()

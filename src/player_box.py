@@ -1003,11 +1003,11 @@ class PlayerBox(object):
             self.conv_from.conv_list  = conv_video_fiel_list
             self.conv_from_show_all()
             
-    def conv_from_show_all(self):        
-            self.conv_from.form.show_all()
-            self.conv_from.form.higt_set_bool = True
-            self.conv_from.form.higt_set_btn_clicked(self.conv_from.form.start_btn)
-            self.conv_from.form.brand_combo.set_active(0)
+    def conv_from_show_all(self):
+        self.conv_from.form.show_all_new()
+        self.conv_from.form.higt_set_bool = True
+        self.conv_from.form.higt_set_btn_clicked(self.conv_from.form.start_btn)
+        self.conv_from.form.brand_combo.set_active(0)
                     
     def open_conv_dialog_window(self):
         open_dialog = gtk.FileChooserDialog(_("Select a file"),
@@ -1035,7 +1035,7 @@ class PlayerBox(object):
         except Exception, e:        
             print "show_and_hide_task_conv_gui[error]:", e
             print "no run conv_from... ...!!"
-            self.conv_task_gui = ConvTAskGui()
+            self.conv_task_gui = ConvTAskGui()            
             self.conv_task_gui.show_all()
         
     def add_play_list(self, mplayer, path): # mplayer signal: "add-path"
