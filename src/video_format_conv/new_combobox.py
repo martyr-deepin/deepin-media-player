@@ -20,7 +20,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from skin import app_theme
 from dtk.ui.combo import ComboBox
 
 import gtk
@@ -30,48 +29,30 @@ class NewComboBox(ComboBox):
     __gsignals__ = {
         "changed" : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_STRING,))
     }
-    def __init__(self, max_width, set_droplist = False, droplist_height=80):        # fixed_width=
-        ComboBox.__init__(self, [["", 0]], 80, fixed_width=max_width)
-        self.set_droplist = set_droplist
+    def __init__(self, fixed_width, droplist_height=80):        # fixed_width=
+        ComboBox.__init__(self, [["", 0]], droplist_height, fixed_width=fixed_width)
         self.connect("item-selected", self.emit_connect_function)
-        self.set_policy() # emit.
-        self.max_width = max_width
-        self.droplist_height = droplist_height
+        self.fixed_width = fixed_width
         self.items = []
 
-    def set_policy(self):    
-        self.droplist.item_scrolled_window.set_policy(gtk.POLICY_NEVER, gtk.POLICY_AUTOMATIC)
-        
     def emit_connect_function(self, combo, item_content, item_value, item_index):
         # print "item_value:", item_value, item_index
         self.emit("changed", item_value)        
-        if self.set_droplist:
-            self.droplist.set_size_request(-1, self.droplist_height)
-        self.set_policy() # emit.
         
     def set_active(self, index):
         self.set_select_index(index)        
         self.emit("changed", self.label.get_text())
-        if self.set_droplist:
-            self.droplist.set_size_request(-1, self.droplist_height)
-        self.set_policy() # emit.
         
     def remove_text(self, index):
         self.items.remove(self.items[index])
-        self.set_items(self.items, 0, fixed_width=self.max_width)
-        if self.set_droplist:
-            self.droplist.set_size_request(-1, self.droplist_height)
-        self.set_policy() # emit.
+        self.set_items(self.items, 0, fixed_width=self.fixed_width)
         
     def prepend_text(self, text):
         temp_imtes = []
         temp_imtes.append([text, text])
         for item in self.items:
             temp_imtes.append([item[0], item[1]])
-        self.set_items(temp_imtes, 0, fixed_width=self.max_width)
-        if self.set_droplist:
-            self.droplist.set_size_request(-1, self.droplist_height)
-        self.set_policy() # emit.
+        self.set_items(temp_imtes, 0, fixed_width=self.fixed_width)
         
     def get_active_text(self):
         return self.label.get_text()
@@ -81,10 +62,7 @@ class NewComboBox(ComboBox):
     
     def append_text(self, text):
         self.items.append([text, text])
-        self.set_items(self.items, 0, fixed_width=self.max_width)
-        if self.set_droplist:
-            self.droplist.set_size_request(-1, self.droplist_height)
-        self.set_policy() # emit.
+        self.set_items(self.items, 0, fixed_width=self.fixed_width)
         
     def clear_items(self):    
         self.items = []

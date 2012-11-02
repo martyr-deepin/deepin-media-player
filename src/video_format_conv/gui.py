@@ -121,8 +121,8 @@ class Form(DialogBox):
         
         self.path_entry = InputEntry()
         self.save_path_entry = InputEntry()
-        self.brand_combo = NewComboBox(108, True)
-        self.format_combo = NewComboBox(108, True)
+        self.brand_combo = NewComboBox(108)
+        self.format_combo = NewComboBox(108)
         self.bit_rate_combo = NewComboBox(108)
         self.frame_rate_combo = NewComboBox(108)
         self.model_combo = NewComboBox(108) 
@@ -167,7 +167,7 @@ class Form(DialogBox):
                 brand_po = self.brand_dict[brand]
             brand_items.append((brand_po, brand))
         
-        self.brand_combo.set_items(brand_items, 0, fixed_width=self.brand_combo.max_width)
+        self.brand_combo.set_items(brand_items, 0, fixed_width=self.brand_combo.fixed_width)
         
         self.brand_combo.prepend_text(_("No Presets"))
         self.brand_combo.connect("changed", self.brand_combo_item_selected)
@@ -304,7 +304,7 @@ class Form(DialogBox):
             model_items = []
             for model in self.model_dict:
                 model_items.append((model, model))
-            self.model_combo.set_items(model_items, 0, fixed_width=self.model_combo.max_width)    
+            self.model_combo.set_items(model_items, 0, fixed_width=self.model_combo.fixed_width)    
             
             # self.model_combo.droplist.set_size_request(-1, self.model_combo.droplist_height)
             self.model_combo.set_active(0)            
