@@ -74,22 +74,57 @@ if (major == 2) and (minor < 18):
 TARGET_TYPE_URI_LIST = 80
 dnd_list = [ ( 'text/uri-list', 0, TARGET_TYPE_URI_LIST ) ]
 
+
+name_to_supported_containers_map = {
+   "avi" : "AVI",		#2           
+   "3gp" : "3GPP",		#9   
+   "mp4" : "MPEG4",	#8        
+   "mpg" : "MPEG PS",	#3
+   "ts"  : "MPEG TS",	#4        
+   "ogg" : "Ogg",		#0
+   "mkv" : "Matroska",	#1
+   "m2ts": "AVCHD/BD",	#5
+   "flv" : "FLV",		#6
+   "mov" : "Quicktime",	#7
+   "mxf" : "MXF",		#10
+   "asf" : "ASF", 		#11
+   "webm": "WebM",		#12
+   _("Audio-only") : _("Audio-only")
+   }
+
 supported_containers = [
-        "AVI",		#2           
-        "3GPP",		#9   
-        "MPEG4",	#8        
-        "MPEG PS",	#3
-        "MPEG TS",	#4        
-        "Ogg",		#0
-        "Matroska",	#1
-        "AVCHD/BD",	#5
-        "FLV",		#6
-        "Quicktime",	#7
-        "MXF",		#10
-        "ASF", 		#11
+        "avi",		#2           
+        "3gp",		#9   
+        "mp4",	#8        
+        "mpg",	#3
+        "ts",	#4        
+        "ogg",		#0
+        "mkv",	#1
+        "m2ts",	#5
+        "flv",		#6
+        "mov",	#7
+        "mxf",		#10
+        "asf", 		#11
         "I can not get this item to show for some reason",
-        "WebM"		#12
+        "webm"		#12
 ]
+
+# supported_containers = [
+#         "AVI",		#2           
+#         "3GPP",		#9   
+#         "MPEG4",	#8        
+#         "MPEG PS",	#3
+#         "MPEG TS",	#4        
+#         "Ogg",		#0
+#         "Matroska",	#1
+#         "AVCHD/BD",	#5
+#         "FLV",		#6
+#         "Quicktime",	#7
+#         "MXF",		#10
+#         "ASF", 		#11
+#         "I can not get this item to show for some reason",
+#         "WebM"		#12
+# ]
 
 supported_audio_codecs = [
        "vorbis",
@@ -1071,7 +1106,7 @@ class TransmageddonUI:
            videostatus=True
        else:
            # containerchoice = self.builder.get_object ("containerchoice").get_active_text ()
-           containerchoice = self.containerchoice.get_active_text()
+           containerchoice = name_to_supported_containers_map[self.containerchoice.get_active_text()]
            containerstatus = codecfinder.get_muxer_element(codecfinder.containermap[containerchoice])
            if self.havevideo:
                if self.videopasstoggle != True:
@@ -1124,7 +1159,7 @@ class TransmageddonUI:
        self.nosuffix = os.path.splitext(os.path.basename(self.filename))[0]
        # pick output suffix
        # container = self.builder.get_object ("containerchoice").get_active_text ()
-       container = self.containerchoice.get_active_text()
+       container = name_to_supported_containers_map[self.containerchoice.get_active_text()]
        if self.container==False: # deal with container less formats
            self.ContainerFormatSuffix = codecfinder.nocontainersuffixmap[gst.Caps.to_string(self.AudioCodec)]
        else:
@@ -1276,7 +1311,7 @@ class TransmageddonUI:
                self.form.frame_rate_label.set_sensitive(False)
        else:          
            if self.containerchoice.get_active()!= -1:
-               self.container = self.containerchoice.get_active_text ()
+               self.container = name_to_supported_containers_map[self.containerchoice.get_active_text ()]
                if self.discover_done == True:
                    self.check_for_passthrough(self.container)
            self.transcodebutton.set_sensitive(True)
@@ -1297,7 +1332,7 @@ class TransmageddonUI:
            self.passcounter = False
            self.rotationchoice.set_sensitive(True)
            # if self.builder.get_object("containerchoice").get_active_text():
-           if self.containerchoice.get_active_text():
+           if name_to_supported_containers_map[self.containerchoice.get_active_text()]:
                self.populate_menu_choices()
                self.CodecBox.set_sensitive(True)
                self.transcodebutton.set_sensitive(True)
@@ -1313,7 +1348,7 @@ class TransmageddonUI:
            self.CodecBox.set_sensitive(False)
            self.rotationchoice.set_sensitive(False)
            # if self.builder.get_object("containerchoice").get_active_text():
-           if self.containerchoice.get_active_text():
+           if name_to_supported_containers_map[self.containerchoice.get_active_text()]:
                self.transcodebutton.set_sensitive(True)
            # print "======================================="    
            
