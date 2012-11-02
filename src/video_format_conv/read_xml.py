@@ -2,10 +2,12 @@
 
 import os
 import xml.etree.ElementTree
+import collections
 
 class ReadXml(object):
     def __init__(self, directory):
-        self.brand_dict = {}
+        # self.brand_dict = {} #         
+        self.brand_dict = collections.OrderedDict()
         read_path = directory
         if os.path.exists(read_path):
             self.__load_directory(read_path)
@@ -13,9 +15,13 @@ class ReadXml(object):
             print "directory error!!", read_path
             
     def __load_directory(self, directory):
-        for filename in os.listdir(directory):
+        path_list = os.listdir(directory)
+        if path_list != []:
+            path_list.sort()
+        for filename in path_list: #             
             if filename.endswith("xml"):
-                self.brand_dict[filename[:-4]] = os.path.join(directory, filename)
+                print "filename:", filename
+                self.brand_dict[filename[:-4]] = os.path.join(directory, filename) #
                 
     def __load_profile(self, root):
         name = ""
