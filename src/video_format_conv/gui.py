@@ -121,8 +121,8 @@ class Form(DialogBox):
         
         self.path_entry = InputEntry()
         self.save_path_entry = InputEntry()
-        self.brand_combo = NewComboBox(108)
-        self.format_combo = NewComboBox(108)
+        self.brand_combo = NewComboBox(108, True)
+        self.format_combo = NewComboBox(108, True)
         self.bit_rate_combo = NewComboBox(108)
         self.frame_rate_combo = NewComboBox(108)
         self.model_combo = NewComboBox(108) 
