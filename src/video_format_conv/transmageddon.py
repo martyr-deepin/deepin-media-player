@@ -1246,9 +1246,10 @@ class TransmageddonUI:
                self.audiorows[0].set_active(0)
                self.audiocodecs.append(self.presetaudiocodec)
            elif self.container==False: # special setup for container less case, looks ugly, but good enough for now
-               self.audiorows[0].append_text(str(gst.pbutils.get_codec_description("audio/mpeg, mpegversion=(int)1, layer=(int)3")))
-               self.audiorows[0].append_text(str(gst.pbutils.get_codec_description("audio/mpeg, mpegversion=4, stream-format=adts")))
-               self.audiorows[0].append_text(str(gst.pbutils.get_codec_description("audio/x-flac")))
+               # self.audiorows[0].append_text(str(gst.pbutils.get_codec_description("audio/mpeg, mpegversion=(int)1, layer=(int)3")))
+               # self.audiorows[0].append_text(str(gst.pbutils.get_codec_description("audio/mpeg, mpegversion=4, stream-format=adts")))
+               audio_only_select_code = str(gst.pbutils.get_codec_description("audio/x-flac"))               
+               self.audiorows[0].append_text(audio_only_select_code)
                self.audiocodecs.append(gst.Caps("audio/mpeg, mpegversion=(int)1, layer=(int)3"))
                self.audiocodecs.append(gst.Caps("audio/mpeg, mpegversion=4, stream-format=adts"))
                self.audiocodecs.append(gst.Caps("audio/x-flac"))
