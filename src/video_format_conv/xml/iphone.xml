@@ -1,32 +1,28 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>iphone</name>
-		<width>320</width>
-		<height>480</height>
-	</profile>
-  
-	<profile>
-		<name>iphone3gs</name>
-		<width>320</width>
-		<height>480</height>
-	</profile>	
-  
+		<name>iphone4</name>
+		<width>640</width>
+		<height>960</height>
+	</profile>			
 	<profile>
 		<name>iphone4s</name>
 		<width>640</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>iphone4</name>
-		<width>640</width>
-		<height>960</height>
-	</profile>	
-	
-	<profile>
 		<name>iphone5</name>
 		<width>640</width>
 		<height>1136</height>
-	</profile>	
-  
+	</profile>	  
+	<profile>
+		<name>iphone3</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>	  		
+	<profile>
+		<name>iphone</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>    
 </device>

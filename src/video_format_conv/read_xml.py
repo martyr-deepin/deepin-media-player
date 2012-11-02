@@ -20,7 +20,7 @@ class ReadXml(object):
             path_list.sort()
         for filename in path_list: #             
             if filename.endswith("xml"):
-                print "filename:", filename
+                # print "filename:", filename
                 self.brand_dict[filename[:-4]] = os.path.join(directory, filename) #
                 
     def __load_profile(self, root):
@@ -42,7 +42,7 @@ class ReadXml(object):
     
     def load(self, filename):
         tree = xml.etree.ElementTree.parse(filename)
-        model_dict = {}
+        model_dict = collections.OrderedDict()
         for child in tree.getroot().getchildren():
             if child.tag == "profile":
                 name, width, height = self.__load_profile(child)
