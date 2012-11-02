@@ -121,12 +121,13 @@ class Form(DialogBox):
         
         self.path_entry = InputEntry()
         self.save_path_entry = InputEntry()
-        self.brand_combo = NewComboBox(108)
-        self.format_combo = NewComboBox(108)
-        self.bit_rate_combo = NewComboBox(108)
-        self.frame_rate_combo = NewComboBox(108)
-        self.model_combo = NewComboBox(108) 
-        self.ratio_combo = NewComboBox(108) 
+        fixed_width = 108
+        self.brand_combo = NewComboBox(fixed_width)
+        self.format_combo = NewComboBox(fixed_width)
+        self.bit_rate_combo = NewComboBox(fixed_width)
+        self.frame_rate_combo = NewComboBox(fixed_width)
+        self.model_combo = NewComboBox(fixed_width) 
+        self.ratio_combo = NewComboBox(fixed_width) 
         
         self.modify_chooser_btn = FileChooserButton("选择") # connect self.FileChooser
         self.save_chooser_btn = Button(_("Change"))

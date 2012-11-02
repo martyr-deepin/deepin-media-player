@@ -925,7 +925,7 @@ msgstr "萬事通"
 
 #: ../src/video_format_conv/gui.py:114
 msgid "phone brand : "
-msgstr "手機品牌 : "
+msgstr "設備品牌 : "
 
 #: ../src/video_format_conv/gui.py:115
 msgid "Output format : "
@@ -945,7 +945,7 @@ msgstr "指定位置 : "
 
 #: ../src/video_format_conv/gui.py:119
 msgid "Phone model : "
-msgstr "手機型號 : "
+msgstr "設備型號 : "
 
 #: ../src/video_format_conv/gui.py:120
 msgid "Resolution : "

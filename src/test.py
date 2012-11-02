@@ -4,6 +4,7 @@ from skin import app_theme
 from video_format_conv.transmageddon import TransmageddonUI
 from video_information.gui import VideoInformGui
 import gtk
+import os
 
 if __name__ == "__main__":        
     # def btn_clicked(widget):
@@ -24,5 +25,7 @@ if __name__ == "__main__":
     # #
     # win.add(btn)
     # win.show_all()
-    hwg = TransmageddonUI(["/home/howl/123.rmvb"])
+    test_file = os.path.join(os.path.dirname(os.path.realpath(__file__)), "video_format_conv/test.mp3")
+    # print 'test_file:', test_file
+    hwg = TransmageddonUI([test_file])
     gtk.main()

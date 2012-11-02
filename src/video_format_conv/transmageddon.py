@@ -884,12 +884,16 @@ class TransmageddonUI:
          print "start_conv_function[error]:", e
       
    def conv_task_gui_pause_btn_clicked(self, widget):
-      if widget.label == _("Pause"):
-         widget.set_label(_("continue"))
-         self.conv_task_gui_pause_play()
-      else:            
-         widget.set_label(_("Pause"))
-         self.conv_task_gui_staring_play()
+      try:
+         if self.task_list[self.task_index].state_label != "null":
+            if widget.label == _("Pause"):
+               widget.set_label(_("continue"))
+               self.conv_task_gui_pause_play()
+            else:            
+               widget.set_label(_("Pause"))
+               self.conv_task_gui_staring_play()
+      except Exception, e:         
+         print "conv_task_gui_pause_btn_clicked:", e
                
    def show_popup_menu(self, widget, event):
       if 3 == event.button:
