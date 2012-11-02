@@ -76,37 +76,37 @@ dnd_list = [ ( 'text/uri-list', 0, TARGET_TYPE_URI_LIST ) ]
 
 
 name_to_supported_containers_map = {
-   "avi" : "AVI",		#2           
-   "3gp" : "3GPP",		#9   
-   "mp4" : "MPEG4",	#8        
-   "mpg" : "MPEG PS",	#3
-   "ts"  : "MPEG TS",	#4        
-   "ogg" : "Ogg",		#0
-   "mkv" : "Matroska",	#1
-   "m2ts": "AVCHD/BD",	#5
-   "flv" : "FLV",		#6
-   "mov" : "Quicktime",	#7
-   "mxf" : "MXF",		#10
-   "asf" : "ASF", 		#11
-   "webm": "WebM",		#12
+   "AVI" : "AVI",		#2           
+   "3GP" : "3GPP",		#9   
+   "MP4" : "MPEG4",	#8        
+   "MPG" : "MPEG PS",	#3
+   "TS"  : "MPEG TS",	#4        
+   "OGG" : "Ogg",		#0
+   "MKV" : "Matroska",	#1
+   "M2TS": "AVCHD/BD",	#5
+   "FLV" : "FLV",		#6
+   "MOV" : "Quicktime",	#7
+   "MXF" : "MXF",		#10
+   "ASF" : "ASF", 		#11
+   "WebM": "WebM",		#12
    _("Audio-only") : _("Audio-only")
    }
 
 supported_containers = [
-        "avi",		#2           
-        "3gp",		#9   
-        "mp4",	#8        
-        "mpg",	#3
-        "ts",	#4        
-        "ogg",		#0
-        "mkv",	#1
-        "m2ts",	#5
-        "flv",		#6
-        "mov",	#7
-        "mxf",		#10
-        "asf", 		#11
+        "AVI",		#2           
+        "3GP",		#9   
+        "MP4",	#8        
+        "MPG",	#3
+        "TS",	#4        
+        "OGG",		#0
+        "MKV",	#1
+        "M2TS",	#5
+        "FLV",		#6
+        "MOV",	#7
+        "MXF",		#10
+        "ASF", 		#11
         "I can not get this item to show for some reason",
-        "webm"		#12
+        "WebM"		#12
 ]
 
 # supported_containers = [
@@ -177,20 +177,20 @@ supported_video_container_map = {
 
 supported_audio_container_map = {
     'Ogg':         [ 'Vorbis', 'FLAC', 'Speex', 'Celt Ultra' ],
-    'MXF':         [ 'mp3', 'AAC', 'AC3' ],
+    'MXF':         [ 'MP3', 'AAC', 'AC3' ],
     'Matroska':    [ 'FLAC', 'AAC', 'AC3', 'Vorbis' ],
     # 'AVI':         [ 'mp3', 'AC3', 'WMA' ], # Windows Media Audio 2
-    'AVI':         [ 'mp3', 'AC3', 'WMA' ],   
-    'Quicktime':   [ 'AAC', 'AC3', 'mp3' ],
-    'MPEG4':       [ 'AAC', 'mp3' ],
+    'AVI':         [ 'MP3', 'AC3', 'WMA' ],   
+    'Quicktime':   [ 'AAC', 'AC3', 'MP3' ],
+    'MPEG4':       [ 'AAC', 'MP3' ],
     # '3GPP':        [ 'AAC', 'mp3', 'AMR-NB' ],
     '3GPP':        [ 'AAC', 'AMR-NB' ],
     # 'MPEG PS':     [ 'mp3', 'AC3', 'AAC', 'mp2' ],
-    'MPEG PS':     [ 'mp3', 'AC3' ],
-    'MPEG TS':     [ 'mp3', 'AC3', 'AAC', 'mp2' ],
+    'MPEG PS':     [ 'MP3', 'AC3' ],
+    'MPEG TS':     [ 'MP3', 'AC3', 'AAC', 'MP2' ],
     'AVCHD/BD':    [ 'AC3' ],
-    'FLV':         [ 'mp3' ],
-    'ASF':         [ 'WMA', 'mp3'], # Windows Media Audio 2
+    'FLV':         [ 'MP3' ],
+    'ASF':         [ 'WMA', 'MP3'], # Windows Media Audio 2
     'WebM':        [ 'Vorbis']
 
     # "No container" is 13th option here (0-12)
@@ -1262,10 +1262,23 @@ class TransmageddonUI:
            else:
                audio_codecs = []
                audio_codecs = supported_audio_container_map[self.container]
-               for c in audio_codecs:
-                   self.audiocodecs.append(gst.Caps(codecfinder.codecmap[c]))
+               import copy
+               temp_audio_codecs = copy.copy(audio_codecs)
+               
+               c_i = 0
+               for c in temp_audio_codecs:  
+                  if c == "MP3":                     
+                     temp_audio_codecs[c_i] = "mp3"
+                  elif c == "MP2":   
+                     temp_audio_codecs[c_i] = "mp2"
+                  c_i += 1                     
+               
                for c in audio_codecs:
                    self.audiorows[0].append_text(c)
+                  
+               for c in temp_audio_codecs:
+                   self.audiocodecs.append(gst.Caps(codecfinder.codecmap[c]))
+                   
            self.audiorows[0].set_sensitive(True)
            self.audiorows[0].set_active(0)
        else:
@@ -1370,7 +1383,11 @@ class TransmageddonUI:
 
    def on_audiocodec_changed(self, widget, text):
        if (self.houseclean == False and self.usingpreset==False):
-           self.AudioCodec = self.audiocodecs[self.audiorows[0].get_active()]
+           audio_codec = self.audiorows[0].get_active()
+           # print "audio_codec:", audio_codec
+           # if audio_codec == "MP3":
+           #    audio_codec = "mp3"
+           self.AudioCodec = self.audiocodecs[audio_codec]
            if self.container != False:
                if self.audiorows[0].get_active() ==  self.audiopassmenuno:
                    self.audiopasstoggle=True
