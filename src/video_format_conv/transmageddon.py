@@ -158,13 +158,17 @@ supported_video_container_map = {
     'MXF':        [ 'H264', 'MPEG2', 'MPEG4' ],
     'Matroska':   [ 'Dirac', 'Theora', 'H264', 'On2 vp8',
                     'MPEG4', 'MPEG2', 'xvid', 'H263+' ],
-    'AVI':        [ 'H264', 'Dirac', 'MPEG2', 'MPEG4', 'xvid',
-                    'WMV', 'On2 vp8' ], # Windows Media Video 2
+    # 'AVI':        [ 'H264', 'Dirac', 'MPEG2', 'MPEG4', 'xvid',
+    #                 'WMV', 'On2 vp8' ], # Windows Media Video 2
+    'AVI':        [ 'H264', 'MPEG4', 'xvid'],
     'Quicktime':  [ 'H264', 'Dirac', 'MPEG2', 'MPEG4', 'On2 vp8' ],
-    'MPEG4':      [ 'H264', 'MPEG2', 'MPEG4' ],
+    # 'MPEG4':      [ 'H264', 'MPEG2', 'MPEG4' ],
+    'MPEG4':      [ 'H264', 'MPEG4' ],
     'FLV':        [ 'H264'],
-    '3GPP':       [ 'H264', 'MPEG2', 'MPEG4', 'H263+' ],
-    'MPEG PS':    [ 'MPEG2', 'MPEG1', 'H264', 'MPEG4' ],
+    # '3GPP':       [ 'H264', 'MPEG2', 'MPEG4', 'H263+' ],
+    '3GPP':       [ 'MPEG4', 'H263+' ],    
+    # 'MPEG PS':    [ 'MPEG2', 'MPEG1', 'H264', 'MPEG4' ],
+    'MPEG PS':    [ 'MPEG2',  'H264'],
     'MPEG TS':    [ 'MPEG2', 'MPEG1', 'H264', 'MPEG4', 'Dirac' ],
     'AVCHD/BD':   [ 'H264' ],
     'ASF':        [ 'WMV' ], # Windows Media Video 2
@@ -175,11 +179,14 @@ supported_audio_container_map = {
     'Ogg':         [ 'Vorbis', 'FLAC', 'Speex', 'Celt Ultra' ],
     'MXF':         [ 'mp3', 'AAC', 'AC3' ],
     'Matroska':    [ 'FLAC', 'AAC', 'AC3', 'Vorbis' ],
-    'AVI':         [ 'mp3', 'AC3', 'WMA' ], # Windows Media Audio 2
+    # 'AVI':         [ 'mp3', 'AC3', 'WMA' ], # Windows Media Audio 2
+    'AVI':         [ 'mp3', 'AC3', 'WMA' ],   
     'Quicktime':   [ 'AAC', 'AC3', 'mp3' ],
     'MPEG4':       [ 'AAC', 'mp3' ],
-    '3GPP':        [ 'AAC', 'mp3', 'AMR-NB' ],
-    'MPEG PS':     [ 'mp3', 'AC3', 'AAC', 'mp2' ],
+    # '3GPP':        [ 'AAC', 'mp3', 'AMR-NB' ],
+    '3GPP':        [ 'AAC', 'AMR-NB' ],
+    # 'MPEG PS':     [ 'mp3', 'AC3', 'AAC', 'mp2' ],
+    'MPEG PS':     [ 'mp3', 'AC3' ],
     'MPEG TS':     [ 'mp3', 'AC3', 'AAC', 'mp2' ],
     'AVCHD/BD':    [ 'AC3' ],
     'FLV':         [ 'mp3' ],
@@ -663,7 +670,7 @@ class TransmageddonUI:
        except Exception, e:   
           print "succeed[error]:", e
           # self.form.bit_rate_combo.prepend_text("No A")
-          self.form.frame_rate_combo.prepend_text("No Video")
+          self.form.frame_rate_combo.prepend_text(_("No Video"))
           
        seekbool = info.get_seekable()
        clipduration=info.get_duration()
@@ -724,7 +731,7 @@ class TransmageddonUI:
 
            self.discover_done=True
            if self.havevideo==False:
-               self.videoinformation.set_markup(''.join(('<small>', "No Video", '</small>')))
+               self.videoinformation.set_markup(''.join(('<small>', _("No Video"), '</small>')))
                self.videocodec.set_markup(''.join(('<small>', "",
                                       '</small>')))
            if self.waiting_for_signal == True:
@@ -1273,6 +1280,7 @@ class TransmageddonUI:
                    for c in video_codecs:
                        self.videocodecs.append(gst.Caps(codecfinder.codecmap[c]))
                    for c in video_codecs: # I can't update the menu with loop append
+                       # print "c:", c
                        self.videorows[0].append_text(c)
                        
                    self.form.frame_rate_label.set_sensitive(True)    
@@ -1280,24 +1288,24 @@ class TransmageddonUI:
                    self.videorows[0].set_active(0)
 
                    #add a 'No Video option'
-                   self.videorows[0].append_text("No Video")
+                   self.videorows[0].append_text(_("No Video"))
                    self.videocodecs.append("novid")
                    self.videonovideomenuno=(len(self.videocodecs))-1
                       
                    # add the Passthrough option.
-                   if self.videopass==True:
-                       self.videorows[0].append_text("Video passthrough")
-                       self.videocodecs.append("pass")
-                       self.videopassmenuno=(len(self.videocodecs))-1
+                   # if self.videopass==True:
+                   #     self.videorows[0].append_text("Video passthrough")
+                   #     self.videocodecs.append("pass")
+                   #     self.videopassmenuno=(len(self.videocodecs))-1
                    
-                   if self.audiopass==True:
-                       self.audiorows[0].append_text("Audio passthrough")
-                       self.audiocodecs.append("pass")
-                       self.audiopassmenuno=(len(self.audiocodecs))-1
+                   # if self.audiopass==True:
+                   #     self.audiorows[0].append_text("Audio passthrough")
+                   #     self.audiocodecs.append("pass")
+                   #     self.audiopassmenuno=(len(self.audiocodecs))-1
        else:
           self.form.frame_rate_label.set_sensitive(False)
           self.videorows[0].set_sensitive(False)
-          self.videorows[0].prepend_text("No Video")
+          self.videorows[0].prepend_text(_("No Video"))
 
    def on_containerchoice_changed(self, widget, text):
        self.CodecBox.set_sensitive(True)
@@ -1409,10 +1417,20 @@ class TransmageddonUI:
                error_message="Uknown error"
        else:
          error_message = error_string
+         
+       self.conv_task_gui.show_time_label.set_text(_(error_message))  
+       self.conv_task_gui.list_view.items[self.task_index].set_status_icon("error")
+       self.task_list[self.task_index].Pipeline("null")
+       self.task_index = 0
+       gtk.timeout_add(3000, self.clear_error_label_show)
+       
        context_id = self.StatusBar.get_context_id("EOS")
        self.StatusBar.push(context_id, error_message)
 
-
+   def clear_error_label_show(self):
+      self.conv_task_gui.show_time_label.set_text("")  
+      return False
+   
    def on_debug_activate(self, widget):
        dotfile = "/tmp/transmageddon-debug-graph.dot"
        pngfile = "/tmp/transmageddon-pipeline.png"

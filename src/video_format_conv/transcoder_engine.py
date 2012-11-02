@@ -104,10 +104,12 @@ class Transcoder(gobject.GObject):
              temp_value = self.new_height
              self.new_height = self.new_width
              self.new_width = temp_value
-             
-          for vcap in self.videocaps:
-             vcap["height"] = int(self.new_height)
-             vcap["width"] = int(self.new_width)
+          try:   
+             for vcap in self.videocaps:
+                vcap["height"] = int(self.new_height)
+                vcap["width"] = int(self.new_width)
+          except Exception, e:      
+             print "transcoder_engine[error]:", e             
              
        # switching width and height around for rotationchoices where it makes sense
        if self.rotationvalue == 1 or self.rotationvalue == 3:

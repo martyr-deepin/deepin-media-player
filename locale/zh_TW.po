@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-31 15:51+0800\n"
+"POT-Creation-Date: 2012-11-02 10:24+0800\n"
 "PO-Revision-Date: 2012-07-12 15:53+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -22,8 +22,8 @@ msgid "Deepin Media Player"
 msgstr "深度影音"
 
 #: ../src/mplayer.py:219 ../src/ini_gui.py:987 ../src/ini_gui.py:988
-#: ../src/ini_gui.py:989 ../src/ini_gui.py:1042 ../src/player_box.py:678
-#: ../src/player_box.py:1763 ../src/player_box.py:1771
+#: ../src/ini_gui.py:989 ../src/ini_gui.py:1042 ../src/player_box.py:680
+#: ../src/player_box.py:1769 ../src/player_box.py:1777
 msgid "Disabled"
 msgstr "禁用"
 
@@ -34,38 +34,38 @@ msgstr "暫停/播放"
 
 #: ../src/mplayer.py:224 ../src/ini_gui.py:318 ../src/ini_gui.py:636
 #: ../src/ini_gui.py:988 ../src/ini_gui.py:1053
-#: ../src/togglehoverbutton.py:126 ../src/player_box.py:2372
+#: ../src/togglehoverbutton.py:126 ../src/player_box.py:2378
 msgid "Full Screen"
 msgstr "全屏"
 
 #: ../src/mplayer.py:225 ../src/ini_gui.py:989 ../src/ini_gui.py:1053
-#: ../src/player_box.py:698 ../src/player_box.py:713 ../src/player_box.py:716
-#: ../src/player_box.py:902 ../src/player_box.py:912 ../src/player_box.py:2981
+#: ../src/player_box.py:700 ../src/player_box.py:715 ../src/player_box.py:718
+#: ../src/player_box.py:904 ../src/player_box.py:914 ../src/player_box.py:2987
 msgid "Volumn"
 msgstr "音量"
 
-#: ../src/play_control_panel.py:48 ../src/player_box.py:1102
+#: ../src/play_control_panel.py:48 ../src/player_box.py:1108
 msgid "Stop"
 msgstr "停止"
 
-#: ../src/play_control_panel.py:56 ../src/player_box.py:1143
-#: ../src/player_box.py:2375 ../src/player_box.py:2464
+#: ../src/play_control_panel.py:56 ../src/player_box.py:1149
+#: ../src/player_box.py:2381 ../src/player_box.py:2470
 msgid "Prev"
 msgstr "上一首"
 
-#: ../src/play_control_panel.py:59 ../src/player_box.py:1132
-#: ../src/player_box.py:2401 ../src/player_box.py:2593
+#: ../src/play_control_panel.py:59 ../src/player_box.py:1138
+#: ../src/player_box.py:2407 ../src/player_box.py:2599
 msgid "Play"
 msgstr "播放"
 
-#: ../src/play_control_panel.py:67 ../src/player_box.py:1149
-#: ../src/player_box.py:2376 ../src/player_box.py:2465
+#: ../src/play_control_panel.py:67 ../src/player_box.py:1155
+#: ../src/player_box.py:2382 ../src/player_box.py:2471
 msgid "Next"
 msgstr "下一首"
 
 #: ../src/play_control_panel.py:75 ../src/ini_gui.py:536
-#: ../src/player_box.py:400 ../src/player_box.py:2383
-#: ../src/player_box.py:2585
+#: ../src/player_box.py:402 ../src/player_box.py:2389
+#: ../src/player_box.py:2591
 msgid "Open File"
 msgstr "打開文件"
 
@@ -118,7 +118,7 @@ msgid "Download"
 msgstr "下載"
 
 #: ../src/scan_subtitles.py:377 ../src/ini_gui.py:155
-#: ../src/video_format_conv/gui.py:133
+#: ../src/video_format_conv/gui.py:134
 #: ../src/video_format_conv/conv_task_gui.py:82
 #: ../src/subtitle/scan_subtitles.py:378
 msgid "Close"
@@ -136,7 +136,7 @@ msgstr "文件夾"
 msgid "Failed to download the subtitle!"
 msgstr "字幕下載失敗!"
 
-#: ../src/ini_gui.py:104 ../src/player_box.py:2408 ../src/player_box.py:2597
+#: ../src/ini_gui.py:104 ../src/player_box.py:2414 ../src/player_box.py:2603
 msgid "Preferences"
 msgstr "選項"
 
@@ -170,17 +170,17 @@ msgid "Other"
 msgstr "其它快捷鍵"
 
 #: ../src/ini_gui.py:139 ../src/ini_gui.py:265 ../src/ini_gui.py:276
-#: ../src/ini_gui.py:1105 ../src/player_box.py:2596
+#: ../src/ini_gui.py:1105 ../src/player_box.py:2602
 msgid "Subtitles"
 msgstr "字幕"
 
 #: ../src/ini_gui.py:140 ../src/ini_gui.py:170 ../src/ini_gui.py:266
-#: ../src/ini_gui.py:277 ../src/ini_gui.py:1182 ../src/player_box.py:2862
+#: ../src/ini_gui.py:277 ../src/ini_gui.py:1182 ../src/player_box.py:2868
 msgid "Screenshot"
 msgstr "截圖設置"
 
 #: ../src/ini_gui.py:141 ../src/ini_gui.py:267 ../src/ini_gui.py:278
-#: ../src/player_box.py:2390
+#: ../src/player_box.py:2396
 msgid "About us"
 msgstr "關於我們"
 
@@ -241,24 +241,24 @@ msgid "Previous"
 msgstr "上一個"
 
 #: ../src/ini_gui.py:556 ../src/ini_gui.py:1155 ../src/ini_gui.py:1278
-#: ../src/player_box.py:415 ../src/player_box.py:2384
-#: ../src/player_box.py:2586
+#: ../src/player_box.py:417 ../src/player_box.py:2390
+#: ../src/player_box.py:2592
 msgid "Open Directory"
 msgstr "打開文件夾"
 
-#: ../src/ini_gui.py:586 ../src/player_box.py:2286
+#: ../src/ini_gui.py:586 ../src/player_box.py:2292
 msgid "Volumn Up"
 msgstr "增大音量"
 
-#: ../src/ini_gui.py:596 ../src/player_box.py:2197
+#: ../src/ini_gui.py:596 ../src/player_box.py:2203
 msgid "Forward"
 msgstr "快進"
 
-#: ../src/ini_gui.py:606 ../src/player_box.py:2287
+#: ../src/ini_gui.py:606 ../src/player_box.py:2293
 msgid "Volumn Down"
 msgstr "減小音量"
 
-#: ../src/ini_gui.py:616 ../src/player_box.py:2211
+#: ../src/ini_gui.py:616 ../src/player_box.py:2217
 msgid "Rewind"
 msgstr "快退"
 
@@ -267,7 +267,7 @@ msgid "Mute"
 msgstr "靜音"
 
 #: ../src/ini_gui.py:646 ../src/togglehoverbutton.py:144
-#: ../src/player_box.py:2374 ../src/player_box.py:2591
+#: ../src/player_box.py:2380 ../src/player_box.py:2597
 msgid "Concise Mode"
 msgstr "簡潔模式"
 
@@ -275,11 +275,11 @@ msgstr "簡潔模式"
 msgid "Enable Keyboard Shortcuts"
 msgstr "啟用熱鍵"
 
-#: ../src/ini_gui.py:824 ../src/player_box.py:3016
+#: ../src/ini_gui.py:824 ../src/player_box.py:3022
 msgid "Forword by 0.5s"
 msgstr "字幕提前0.5秒"
 
-#: ../src/ini_gui.py:825 ../src/player_box.py:3019
+#: ../src/ini_gui.py:825 ../src/player_box.py:3025
 msgid "Delay by 0.5s"
 msgstr "字幕延時0.5秒"
 
@@ -287,11 +287,11 @@ msgstr "字幕延時0.5秒"
 msgid "Loading Subtiles"
 msgstr "自動載入字幕"
 
-#: ../src/ini_gui.py:829 ../src/player_box.py:3024
+#: ../src/ini_gui.py:829 ../src/player_box.py:3030
 msgid "Increase the Size of Characters"
 msgstr "增大字幕尺寸"
 
-#: ../src/ini_gui.py:830 ../src/player_box.py:3028
+#: ../src/ini_gui.py:830 ../src/player_box.py:3034
 msgid "Decrease the Size of Characters"
 msgstr "減小字幕尺寸"
 
@@ -311,7 +311,7 @@ msgstr "逆時針旋轉"
 msgid "Rotate Clockwise"
 msgstr "順時針旋轉"
 
-#: ../src/ini_gui.py:972 ../src/player_box.py:2250 ../src/player_box.py:2405
+#: ../src/ini_gui.py:972 ../src/player_box.py:2256 ../src/player_box.py:2411
 msgid "Take Screenshots"
 msgstr "截圖"
 
@@ -381,11 +381,11 @@ msgstr ""
 "\n"
 "深度音樂播放器是自由軟件，遵循自由軟件基金會發布的GNU通用公共許可證第三版。\n"
 
-#: ../src/toolbar.py:74 ../src/player_box.py:2319 ../src/player_box.py:2500
+#: ../src/toolbar.py:74 ../src/player_box.py:2325 ../src/player_box.py:2506
 msgid "100%"
 msgstr "1倍尺寸"
 
-#: ../src/toolbar.py:84 ../src/player_box.py:2321 ../src/player_box.py:2502
+#: ../src/toolbar.py:84 ../src/player_box.py:2327 ../src/player_box.py:2508
 msgid "200%"
 msgstr "2倍尺寸"
 
@@ -393,614 +393,626 @@ msgstr "2倍尺寸"
 msgid "Keep above"
 msgstr "置頂"
 
-#: ../src/play_list_control_panel.py:67 ../src/player_box.py:2676
+#: ../src/play_list_control_panel.py:67 ../src/player_box.py:2682
 msgid "Add File"
 msgstr "添加文件"
 
-#: ../src/play_list_control_panel.py:68 ../src/player_box.py:2680
+#: ../src/play_list_control_panel.py:68 ../src/player_box.py:2686
 msgid "Remove Selected"
 msgstr "刪除選中項"
 
-#: ../src/togglehoverbutton.py:135 ../src/player_box.py:2373
-#: ../src/player_box.py:2590
+#: ../src/togglehoverbutton.py:135 ../src/player_box.py:2379
+#: ../src/player_box.py:2596
 msgid "Standard Mode"
 msgstr "普通模式"
 
-#: ../src/player_box.py:417 ../src/player_box.py:2587
+#: ../src/player_box.py:419 ../src/player_box.py:2593
 msgid "Open URL"
 msgstr "打開網址"
 
-#: ../src/player_box.py:707 ../src/player_box.py:920
+#: ../src/player_box.py:709 ../src/player_box.py:922
 msgid "Mute: enabled"
 msgstr "開啟靜音"
 
-#: ../src/player_box.py:823 ../src/player_box.py:828
+#: ../src/player_box.py:825 ../src/player_box.py:830
 msgid "Screenshot Saved"
 msgstr "截圖已保存"
 
-#: ../src/player_box.py:842
+#: ../src/player_box.py:844
 msgid "Screenshot Copied to Clipboard"
 msgstr "截圖已保存到剪貼板"
 
-#: ../src/player_box.py:1009
+#: ../src/player_box.py:1013
 msgid "Select a file"
 msgstr "深度影音打開文件對話框"
 
-#: ../src/player_box.py:1118
+#: ../src/player_box.py:1124
 msgid "No Media Selected"
 msgstr "冇有可播放文件"
 
-#: ../src/player_box.py:1135 ../src/video_format_conv/transmageddon.py:539
-#: ../src/video_format_conv/transmageddon.py:842
-#: ../src/video_format_conv/transmageddon.py:846
+#: ../src/player_box.py:1141 ../src/video_format_conv/transmageddon.py:579
+#: ../src/video_format_conv/transmageddon.py:882
+#: ../src/video_format_conv/transmageddon.py:886
 #: ../src/video_format_conv/conv_task_gui.py:81
 msgid "Pause"
 msgstr "暫停"
 
-#: ../src/player_box.py:1155
+#: ../src/player_box.py:1161
 msgid "Select Directory"
 msgstr "深度影音打開文件夾對話框"
 
-#: ../src/player_box.py:1173 ../src/player_box.py:3077
+#: ../src/player_box.py:1179 ../src/player_box.py:3083
 msgid "Select Files"
 msgstr "深度影音打開文件對話框"
 
-#: ../src/player_box.py:1205
+#: ../src/player_box.py:1211
 msgid "Failed to Open Selected File"
 msgstr "無效的文件"
 
-#: ../src/player_box.py:2199 ../src/player_box.py:2213
+#: ../src/player_box.py:2205 ../src/player_box.py:2219
 msgid "s"
 msgstr "秒"
 
-#: ../src/player_box.py:2251
+#: ../src/player_box.py:2257
 msgid "Open Screenshot Directory"
 msgstr "打開截圖目錄"
 
-#: ../src/player_box.py:2252
+#: ../src/player_box.py:2258
 msgid "Set Screenshot Directory"
 msgstr "設置截圖保存目錄"
 
-#: ../src/player_box.py:2255
+#: ../src/player_box.py:2261
 msgid "Import Subtitles"
 msgstr "載入字幕"
 
-#: ../src/player_box.py:2256 ../src/player_box.py:2563
+#: ../src/player_box.py:2262 ../src/player_box.py:2569
 msgid "Select Subtitles"
 msgstr "字幕選擇"
 
-#: ../src/player_box.py:2257
+#: ../src/player_box.py:2263
 msgid "Remove Subtitles"
 msgstr "移除字幕"
 
-#: ../src/player_box.py:2277 ../src/player_box.py:2527
+#: ../src/player_box.py:2283 ../src/player_box.py:2533
 msgid "Stereo"
 msgstr "立體聲道"
 
-#: ../src/player_box.py:2278 ../src/player_box.py:2528
+#: ../src/player_box.py:2284 ../src/player_box.py:2534
 msgid "Left"
 msgstr "左聲道"
 
-#: ../src/player_box.py:2279 ../src/player_box.py:2529
+#: ../src/player_box.py:2285 ../src/player_box.py:2535
 msgid "Right"
 msgstr "右聲道"
 
-#: ../src/player_box.py:2283
+#: ../src/player_box.py:2289
 msgid "Channels"
 msgstr "聲道選擇"
 
-#: ../src/player_box.py:2288
+#: ../src/player_box.py:2294
 msgid "Mute/Umute"
 msgstr "靜音/還原"
 
-#: ../src/player_box.py:2311 ../src/player_box.py:2492
+#: ../src/player_box.py:2317 ../src/player_box.py:2498
 msgid "Original"
 msgstr "默認值"
 
-#: ../src/player_box.py:2318 ../src/player_box.py:2499
+#: ../src/player_box.py:2324 ../src/player_box.py:2505
 msgid "50%"
 msgstr "0.5倍尺寸"
 
-#: ../src/player_box.py:2320 ../src/player_box.py:2501
+#: ../src/player_box.py:2326 ../src/player_box.py:2507
 msgid "150%"
 msgstr "1.5倍尺寸"
 
-#: ../src/player_box.py:2356 ../src/player_box.py:2452
-#: ../src/player_box.py:2654
+#: ../src/player_box.py:2362 ../src/player_box.py:2458
+#: ../src/player_box.py:2660
 msgid "Play (single)"
 msgstr "單個播放"
 
-#: ../src/player_box.py:2357 ../src/player_box.py:2453
-#: ../src/player_box.py:2655
+#: ../src/player_box.py:2363 ../src/player_box.py:2459
+#: ../src/player_box.py:2661
 msgid "Play (ordered)"
 msgstr "順序播放"
 
-#: ../src/player_box.py:2358 ../src/player_box.py:2454
-#: ../src/player_box.py:2656
+#: ../src/player_box.py:2364 ../src/player_box.py:2460
+#: ../src/player_box.py:2662
 msgid "Shuffle"
 msgstr "隨機播放"
 
-#: ../src/player_box.py:2359 ../src/player_box.py:2455
-#: ../src/player_box.py:2657
+#: ../src/player_box.py:2365 ../src/player_box.py:2461
+#: ../src/player_box.py:2663
 msgid "Repeat"
 msgstr "單個循環"
 
-#: ../src/player_box.py:2360 ../src/player_box.py:2456
-#: ../src/player_box.py:2658
+#: ../src/player_box.py:2366 ../src/player_box.py:2462
+#: ../src/player_box.py:2664
 msgid "Repeat List"
 msgstr "列表循環"
 
-#: ../src/player_box.py:2378 ../src/player_box.py:2467
+#: ../src/player_box.py:2384 ../src/player_box.py:2473
 msgid "Forward 5s"
 msgstr "快進5秒"
 
-#: ../src/player_box.py:2379 ../src/player_box.py:2468
+#: ../src/player_box.py:2385 ../src/player_box.py:2474
 msgid "Rewind 5s"
 msgstr "快退5秒"
 
-#: ../src/player_box.py:2380 ../src/player_box.py:2592
-#: ../src/player_box.py:2685
+#: ../src/player_box.py:2386 ../src/player_box.py:2598
+#: ../src/player_box.py:2691
 msgid "Play Order"
 msgstr "播放順序"
 
-#: ../src/player_box.py:2388
+#: ../src/player_box.py:2394
 msgid "Help"
 msgstr "幫助信息"
 
-#: ../src/player_box.py:2389
+#: ../src/player_box.py:2395
 msgid "Issues"
 msgstr "問題反饋"
 
-#: ../src/player_box.py:2397
+#: ../src/player_box.py:2403
 msgid "format conversion"
 msgstr "格式轉換"
 
-#: ../src/player_box.py:2398
+#: ../src/player_box.py:2404
 msgid "task manager"
 msgstr "任務管理器"
 
-#: ../src/player_box.py:2400
+#: ../src/player_box.py:2406
 msgid "File"
 msgstr "文件"
 
-#: ../src/player_box.py:2402 ../src/player_box.py:2594
+#: ../src/player_box.py:2408 ../src/player_box.py:2600
 msgid "Video"
 msgstr "畫面"
 
-#: ../src/player_box.py:2403 ../src/player_box.py:2595
+#: ../src/player_box.py:2409 ../src/player_box.py:2601
 msgid "Audio"
 msgstr "聲音"
 
-#: ../src/player_box.py:2406 ../src/player_box.py:2689
+#: ../src/player_box.py:2412 ../src/player_box.py:2695
 msgid "Format conversion"
 msgstr "格式轉換"
 
-#: ../src/player_box.py:2407
+#: ../src/player_box.py:2413
 msgid "New Features"
 msgstr "查看新特性"
 
-#: ../src/player_box.py:2413
+#: ../src/player_box.py:2419
 msgid "Quit"
 msgstr "退出"
 
-#: ../src/player_box.py:2548
+#: ../src/player_box.py:2554
 msgid "Enlarge"
 msgstr "增大尺寸"
 
-#: ../src/player_box.py:2549
+#: ../src/player_box.py:2555
 msgid "Decrease"
 msgstr "減小尺寸"
 
-#: ../src/player_box.py:2553
+#: ../src/player_box.py:2559
 msgid "0.5 seconds forword"
 msgstr "提前0.5秒"
 
-#: ../src/player_box.py:2554
+#: ../src/player_box.py:2560
 msgid "0.5 sceconds delay"
 msgstr "延時0.5秒"
 
-#: ../src/player_box.py:2559
+#: ../src/player_box.py:2565
 msgid "Search subtitles"
 msgstr "手動搜索字幕"
 
-#: ../src/player_box.py:2560
+#: ../src/player_box.py:2566
 msgid "Load a subtitle"
 msgstr "手動載入字幕"
 
-#: ../src/player_box.py:2561 ../src/player_box.py:3012
+#: ../src/player_box.py:2567 ../src/player_box.py:3018
 msgid "Disable Subtitles"
 msgstr "字幕停止"
 
-#: ../src/player_box.py:2564
+#: ../src/player_box.py:2570
 msgid "Size of Subtitles"
 msgstr "字幕尺寸"
 
-#: ../src/player_box.py:2565
+#: ../src/player_box.py:2571
 msgid "Subtitle Synchronization"
 msgstr "字幕同步"
 
-#: ../src/player_box.py:2589
+#: ../src/player_box.py:2595
 msgid "Full Screen On/Off"
 msgstr "全屏/退出"
 
-#: ../src/player_box.py:2661
+#: ../src/player_box.py:2667
 msgid "By Name"
 msgstr "按名稱"
 
-#: ../src/player_box.py:2662
+#: ../src/player_box.py:2668
 msgid "By Type"
 msgstr "按類型"
 
-#: ../src/player_box.py:2677
+#: ../src/player_box.py:2683
 msgid "Add Directory"
 msgstr "添加文件夾"
 
-#: ../src/player_box.py:2678
+#: ../src/player_box.py:2684
 msgid "Add URL"
 msgstr "添加URL"
 
-#: ../src/player_box.py:2681
+#: ../src/player_box.py:2687
 msgid "Clear Playlist"
 msgstr "清空播放列表"
 
-#: ../src/player_box.py:2682
+#: ../src/player_box.py:2688
 msgid "Remove Unavailable Files"
 msgstr "刪除無效文件"
 
-#: ../src/player_box.py:2684
+#: ../src/player_box.py:2690
 msgid "Recent Played"
 msgstr "最近播放文件"
 
-#: ../src/player_box.py:2686
+#: ../src/player_box.py:2692
 msgid "Sort"
 msgstr "排序"
 
-#: ../src/player_box.py:2690
+#: ../src/player_box.py:2696
 msgid "Open Containing Directory"
 msgstr "打開所在文件夾"
 
-#: ../src/player_box.py:3005 ../src/player_box.py:3058
+#: ../src/player_box.py:3011 ../src/player_box.py:3064
 msgid "Subtitle loaded"
 msgstr "已載入字幕"
 
-#: ../src/video_format_conv/gui.py:48
+#: ../src/video_format_conv/gui.py:50
 msgid "Format converter"
 msgstr "格式轉換器"
 
-#: ../src/video_format_conv/gui.py:83
+#: ../src/video_format_conv/gui.py:84
 msgid "intel"
 msgstr "英特爾"
 
-#: ../src/video_format_conv/gui.py:83
+#: ../src/video_format_conv/gui.py:84
 msgid "zte"
 msgstr "中興"
 
-#: ../src/video_format_conv/gui.py:83
+#: ../src/video_format_conv/gui.py:84
 msgid "hasee"
 msgstr "神舟"
 
-#: ../src/video_format_conv/gui.py:84
+#: ../src/video_format_conv/gui.py:85
 msgid "apple"
 msgstr "蘋果"
 
-#: ../src/video_format_conv/gui.py:84
+#: ../src/video_format_conv/gui.py:85
 msgid "nokia"
 msgstr "諾基亞"
 
-#: ../src/video_format_conv/gui.py:84
+#: ../src/video_format_conv/gui.py:85
 msgid "alcatel"
 msgstr "阿爾卡特"
 
-#: ../src/video_format_conv/gui.py:85
+#: ../src/video_format_conv/gui.py:86
 msgid "google"
 msgstr "穀歌"
 
-#: ../src/video_format_conv/gui.py:85
+#: ../src/video_format_conv/gui.py:86
 msgid "asus"
 msgstr "華碩"
 
-#: ../src/video_format_conv/gui.py:85
+#: ../src/video_format_conv/gui.py:86
 msgid "hp"
 msgstr "惠普"
 
-#: ../src/video_format_conv/gui.py:86
+#: ../src/video_format_conv/gui.py:87
 msgid "sony"
 msgstr "索尼"
 
-#: ../src/video_format_conv/gui.py:86
+#: ../src/video_format_conv/gui.py:87
 msgid "hedy"
 msgstr "七喜"
 
-#: ../src/video_format_conv/gui.py:87
+#: ../src/video_format_conv/gui.py:88
 msgid "archos"
 msgstr "愛可視"
 
-#: ../src/video_format_conv/gui.py:87
+#: ../src/video_format_conv/gui.py:88
 msgid "boway"
 msgstr "邦華"
 
-#: ../src/video_format_conv/gui.py:87
+#: ../src/video_format_conv/gui.py:88
 msgid "bird"
 msgstr "波導"
 
-#: ../src/video_format_conv/gui.py:88
+#: ../src/video_format_conv/gui.py:89
 msgid "vivo"
 msgstr "步步高"
 
-#: ../src/video_format_conv/gui.py:88
+#: ../src/video_format_conv/gui.py:89
 msgid "great wall"
 msgstr "長城"
 
-#: ../src/video_format_conv/gui.py:88
+#: ../src/video_format_conv/gui.py:89
 msgid "changhong"
 msgstr "長虹"
 
-#: ../src/video_format_conv/gui.py:89
+#: ../src/video_format_conv/gui.py:90
 msgid "skyworth"
 msgstr "創維"
 
-#: ../src/video_format_conv/gui.py:89
+#: ../src/video_format_conv/gui.py:90
 msgid "dell"
 msgstr "戴爾"
 
-#: ../src/video_format_conv/gui.py:89
+#: ../src/video_format_conv/gui.py:90
 msgid "philips"
 msgstr "飛利浦"
 
-#: ../src/video_format_conv/gui.py:90
+#: ../src/video_format_conv/gui.py:91
 msgid "toshiba"
 msgstr "東芝"
 
-#: ../src/video_format_conv/gui.py:90
+#: ../src/video_format_conv/gui.py:91
 msgid "amazon"
 msgstr "亞馬遜"
 
-#: ../src/video_format_conv/gui.py:90
+#: ../src/video_format_conv/gui.py:91
 msgid "sdo"
 msgstr "盛大"
 
-#: ../src/video_format_conv/gui.py:91
+#: ../src/video_format_conv/gui.py:92
 msgid "disney"
 msgstr "迪士尼"
 
-#: ../src/video_format_conv/gui.py:91
+#: ../src/video_format_conv/gui.py:92
 msgid "haier"
 msgstr "海爾"
 
-#: ../src/video_format_conv/gui.py:91
+#: ../src/video_format_conv/gui.py:92
 msgid "fujitsu"
 msgstr "富士通"
 
-#: ../src/video_format_conv/gui.py:92
+#: ../src/video_format_conv/gui.py:93
 msgid "acer"
 msgstr "宏碁"
 
-#: ../src/video_format_conv/gui.py:92
+#: ../src/video_format_conv/gui.py:93
 msgid "lenovo"
 msgstr "聯想"
 
-#: ../src/video_format_conv/gui.py:92
+#: ../src/video_format_conv/gui.py:93
 msgid "gigabyte"
 msgstr "技嘉"
 
-#: ../src/video_format_conv/gui.py:93
+#: ../src/video_format_conv/gui.py:94
 msgid "xiaomi"
 msgstr "小米"
 
-#: ../src/video_format_conv/gui.py:93
+#: ../src/video_format_conv/gui.py:94
 msgid "huawei"
 msgstr "華為"
 
-#: ../src/video_format_conv/gui.py:93
+#: ../src/video_format_conv/gui.py:94
 msgid "blackberry"
 msgstr "黑莓"
 
-#: ../src/video_format_conv/gui.py:94
+#: ../src/video_format_conv/gui.py:95
 msgid "motorola"
 msgstr "摩托羅拉"
 
-#: ../src/video_format_conv/gui.py:94
+#: ../src/video_format_conv/gui.py:95
 msgid "sangsung"
 msgstr "三星"
 
-#: ../src/video_format_conv/gui.py:94
+#: ../src/video_format_conv/gui.py:95
 msgid "meizu "
 msgstr "魅族"
 
-#: ../src/video_format_conv/gui.py:95
+#: ../src/video_format_conv/gui.py:96
 msgid "benq"
 msgstr "明基"
 
-#: ../src/video_format_conv/gui.py:95
+#: ../src/video_format_conv/gui.py:96
 msgid "panasonic"
 msgstr "鬆下"
 
-#: ../src/video_format_conv/gui.py:95
+#: ../src/video_format_conv/gui.py:96
 msgid "sony ericsson"
 msgstr "索愛"
 
-#: ../src/video_format_conv/gui.py:96
+#: ../src/video_format_conv/gui.py:97
 msgid "pioneer"
 msgstr "先鋒"
 
-#: ../src/video_format_conv/gui.py:96
+#: ../src/video_format_conv/gui.py:97
 msgid "hyundai"
 msgstr "現代"
 
-#: ../src/video_format_conv/gui.py:96
+#: ../src/video_format_conv/gui.py:97
 msgid "newman"
 msgstr "紐曼"
 
-#: ../src/video_format_conv/gui.py:97
+#: ../src/video_format_conv/gui.py:98
 msgid "coolpad"
 msgstr "酷派"
 
-#: ../src/video_format_conv/gui.py:97
+#: ../src/video_format_conv/gui.py:98
 msgid "malata"
 msgstr "萬利達"
 
-#: ../src/video_format_conv/gui.py:98
+#: ../src/video_format_conv/gui.py:99
 msgid "sharp"
 msgstr "夏普"
 
-#: ../src/video_format_conv/gui.py:98
+#: ../src/video_format_conv/gui.py:99
 msgid "gionee"
 msgstr "金立"
 
-#: ../src/video_format_conv/gui.py:98
+#: ../src/video_format_conv/gui.py:99
 msgid "k-touch"
 msgstr "天語"
 
-#: ../src/video_format_conv/gui.py:99
+#: ../src/video_format_conv/gui.py:100
 msgid "Pantech"
 msgstr "泛泰"
 
-#: ../src/video_format_conv/gui.py:99
+#: ../src/video_format_conv/gui.py:100
 msgid "hisense"
 msgstr "海信"
 
-#: ../src/video_format_conv/gui.py:99
+#: ../src/video_format_conv/gui.py:100
 msgid "teclast"
 msgstr "台電"
 
-#: ../src/video_format_conv/gui.py:100
+#: ../src/video_format_conv/gui.py:101
 msgid "cube"
 msgstr "酷比"
 
-#: ../src/video_format_conv/gui.py:100
+#: ../src/video_format_conv/gui.py:101
 msgid "amoi"
 msgstr "夏新"
 
-#: ../src/video_format_conv/gui.py:100
+#: ../src/video_format_conv/gui.py:101
 msgid "doov"
 msgstr "朵唯"
 
-#: ../src/video_format_conv/gui.py:101
+#: ../src/video_format_conv/gui.py:102
 msgid "minte"
 msgstr "明泰"
 
-#: ../src/video_format_conv/gui.py:101
+#: ../src/video_format_conv/gui.py:102
 msgid "dopod"
 msgstr "多普達"
 
-#: ../src/video_format_conv/gui.py:101
+#: ../src/video_format_conv/gui.py:102
 msgid "eton"
 msgstr "億通"
 
-#: ../src/video_format_conv/gui.py:102
+#: ../src/video_format_conv/gui.py:103
 msgid "cherr"
 msgstr "齊樂"
 
-#: ../src/video_format_conv/gui.py:102
+#: ../src/video_format_conv/gui.py:103
 msgid "gaoxinqi"
 msgstr "高新奇"
 
-#: ../src/video_format_conv/gui.py:102
+#: ../src/video_format_conv/gui.py:103
 msgid "konka"
 msgstr "康佳"
 
-#: ../src/video_format_conv/gui.py:103
+#: ../src/video_format_conv/gui.py:104
 msgid "viewsonic"
 msgstr "優派"
 
-#: ../src/video_format_conv/gui.py:103
+#: ../src/video_format_conv/gui.py:104
 msgid "xibo"
 msgstr "西鉑"
 
-#: ../src/video_format_conv/gui.py:103
+#: ../src/video_format_conv/gui.py:104
 msgid "hosin"
 msgstr "歐新"
 
-#: ../src/video_format_conv/gui.py:104
+#: ../src/video_format_conv/gui.py:105
 msgid "apanda"
 msgstr "首派"
 
-#: ../src/video_format_conv/gui.py:104
+#: ../src/video_format_conv/gui.py:105
 msgid "iocean"
 msgstr "歐盛"
 
-#: ../src/video_format_conv/gui.py:104
+#: ../src/video_format_conv/gui.py:105
 msgid "mastone"
 msgstr "萬事通"
 
-#: ../src/video_format_conv/gui.py:113
+#: ../src/video_format_conv/gui.py:114
 msgid "phone brand : "
 msgstr "手機品牌 : "
 
-#: ../src/video_format_conv/gui.py:114
+#: ../src/video_format_conv/gui.py:115
 msgid "Output format : "
 msgstr "輸出格式 : "
 
-#: ../src/video_format_conv/gui.py:115
+#: ../src/video_format_conv/gui.py:116
 msgid "Audio encoder : "
 msgstr "音頻編碼 : "
 
-#: ../src/video_format_conv/gui.py:116
+#: ../src/video_format_conv/gui.py:117
 msgid "Video encoder : "
 msgstr "視頻編碼 : "
 
-#: ../src/video_format_conv/gui.py:117
+#: ../src/video_format_conv/gui.py:118
 msgid "Output directory : "
 msgstr "指定位置 : "
 
-#: ../src/video_format_conv/gui.py:118
+#: ../src/video_format_conv/gui.py:119
 msgid "Phone model : "
 msgstr "手機型號 : "
 
-#: ../src/video_format_conv/gui.py:119
+#: ../src/video_format_conv/gui.py:120
 msgid "Resolution : "
 msgstr "分辨率 : "
 
-#: ../src/video_format_conv/gui.py:131
+#: ../src/video_format_conv/gui.py:132
 msgid "Change"
 msgstr "更改"
 
-#: ../src/video_format_conv/gui.py:132
+#: ../src/video_format_conv/gui.py:133
 msgid "Start"
 msgstr "開始"
 
-#: ../src/video_format_conv/gui.py:135
+#: ../src/video_format_conv/gui.py:136
 msgid "Advanced"
 msgstr "高級"
 
-#: ../src/video_format_conv/gui.py:137
+#: ../src/video_format_conv/gui.py:138
 msgid "Task manager"
 msgstr "任務管理器"
 
-#: ../src/video_format_conv/gui.py:171 ../src/video_format_conv/gui.py:263
+#: ../src/video_format_conv/gui.py:172 ../src/video_format_conv/gui.py:303
 msgid "No Presets"
 msgstr "自定義"
 
-#: ../src/video_format_conv/gui.py:175 ../src/video_format_conv/gui.py:274
-#: ../src/video_format_conv/transmageddon.py:969
+#: ../src/video_format_conv/gui.py:177 ../src/video_format_conv/gui.py:315
+#: ../src/video_format_conv/transmageddon.py:1009
 msgid "No Model"
 msgstr "自定義"
 
-#: ../src/video_format_conv/gui.py:235
+#: ../src/video_format_conv/gui.py:275
 msgid "Choose a directory"
 msgstr "打開文件夾"
 
-#: ../src/video_format_conv/transmageddon.py:540
+#: ../src/video_format_conv/transmageddon.py:92
+#: ../src/video_format_conv/transmageddon.py:429
+msgid "Audio-only"
+msgstr "僅有音頻"
+
+#: ../src/video_format_conv/transmageddon.py:580
 msgid "Time remaining : "
 msgstr "剩餘時間 : "
 
-#: ../src/video_format_conv/transmageddon.py:829
+#: ../src/video_format_conv/transmageddon.py:668
+#: ../src/video_format_conv/transmageddon.py:729
+#: ../src/video_format_conv/transmageddon.py:1286
+#: ../src/video_format_conv/transmageddon.py:1303
+msgid "No Video"
+msgstr "無視頻"
+
+#: ../src/video_format_conv/transmageddon.py:869
 msgid "Converting"
 msgstr "正在轉換中"
 
-#: ../src/video_format_conv/transmageddon.py:843
+#: ../src/video_format_conv/transmageddon.py:883
 msgid "continue"
 msgstr "繼續"
 
-#: ../src/video_format_conv/transmageddon.py:851
+#: ../src/video_format_conv/transmageddon.py:891
 msgid "Open a directory"
 msgstr "打開文件夾"
 
-#: ../src/video_format_conv/transmageddon.py:853
+#: ../src/video_format_conv/transmageddon.py:893
 msgid "Delete"
 msgstr "刪除"
 
-#: ../src/video_format_conv/transmageddon.py:854
+#: ../src/video_format_conv/transmageddon.py:894
 msgid "Remove complete tasks"
 msgstr "清除已完成任務"
 
@@ -1024,10 +1036,6 @@ msgstr "任務管理器"
 #, fuzzy
 #~ msgid "No Audio"
 #~ msgstr "聲音"
-
-#, fuzzy
-#~ msgid "No Video"
-#~ msgstr "畫面"
 
 #, fuzzy
 #~ msgid "Video passthrough"
