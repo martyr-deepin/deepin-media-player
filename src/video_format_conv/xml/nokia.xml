@@ -81,7 +81,7 @@
 		<height>640</height>
 	</profile>
 	<profile>
-		<name>lumia_920t</name>
+		<name>lumia 920t</name>
 		<width>768</width>
 		<height>1280</height>
 	</profile>
@@ -136,12 +136,12 @@
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>lumia_822</name>
+		<name>lumia 822</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>lumia_820</name>
+		<name>lumia 820</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
@@ -241,7 +241,7 @@
 		<height>160</height>
 	</profile>
 	<profile>
-		<name>lumia_810</name>
+		<name>lumia 810</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -316,7 +316,7 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>lumia_1000</name>
+		<name>lumia 1000</name>
 		<width>768</width>
 		<height>1024</height>
 	</profile>
@@ -336,7 +336,7 @@
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>lumia_719c</name>
+		<name>lumia 719c</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -381,7 +381,7 @@
 		<height>640</height>
 	</profile>
 	<profile>
-		<name>lumia_610c</name>
+		<name>lumia 610c</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -471,7 +471,7 @@
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>lumia_900</name>
+		<name>lumia 900</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -491,7 +491,7 @@
 		<height>160</height>
 	</profile>
 	<profile>
-		<name>lumia_920</name>
+		<name>lumia 920</name>
 		<width>768</width>
 		<height>1280</height>
 	</profile>
@@ -501,7 +501,7 @@
 		<height>640</height>
 	</profile>
 	<profile>
-		<name>lumia_800c</name>
+		<name>lumia 800c</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -521,12 +521,12 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>x6-00_16g</name>
+		<name>x6-00 16g</name>
 		<width>360</width>
 		<height>640</height>
 	</profile>
 	<profile>
-		<name>lumia_910</name>
+		<name>lumia 910</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -541,12 +541,12 @@
 		<height>640</height>
 	</profile>
 	<profile>
-		<name>tiviti_9210</name>
+		<name>tiviti 9210</name>
 		<width>1920</width>
 		<height>1200</height>
 	</profile>
 	<profile>
-		<name>lumia_610</name>
+		<name>lumia 610</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -566,7 +566,7 @@
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>lumia_510</name>
+		<name>lumia 510</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -586,7 +586,7 @@
 		<height>160</height>
 	</profile>
 	<profile>
-		<name>lumia_610_nfc</name>
+		<name>lumia 610 nfc</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -631,7 +631,7 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>n8_32g</name>
+		<name>n8 32g</name>
 		<width>360</width>
 		<height>640</height>
 	</profile>

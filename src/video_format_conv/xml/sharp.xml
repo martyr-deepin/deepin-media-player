@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>007sh_kt</name>
+		<name>007sh kt</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
@@ -21,7 +21,7 @@
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>pantone_5</name>
+		<name>pantone 5</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
@@ -56,7 +56,7 @@
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>sportio_water_beat</name>
+		<name>sportio water beat</name>
 		<width>480</width>
 		<height>960</height>
 	</profile>
@@ -76,7 +76,7 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>aquos_phone_sl_is15sh</name>
+		<name>aquos phone sl is15sh</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
@@ -201,7 +201,7 @@
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>841sh_s</name>
+		<name>841sh s</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>

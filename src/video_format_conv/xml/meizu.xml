@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>mx4_16g</name>
+		<name>mx4 16g</name>
 		<width>640</width>
 		<height>960</height>
 	</profile>
@@ -16,12 +16,12 @@
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>mx_quad-core_64g</name>
+		<name>mx quad-core 64g</name>
 		<width>640</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>mx_quad-core</name>
+		<name>mx quad-core</name>
 		<width>640</width>
 		<height>960</height>
 	</profile>
@@ -31,7 +31,7 @@
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>m8_16g</name>
+		<name>m8 16g</name>
 		<width>480</width>
 		<height>720</height>
 	</profile>
@@ -41,7 +41,7 @@
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>mx_re</name>
+		<name>mx re</name>
 		<width>640</width>
 		<height>960</height>
 	</profile>

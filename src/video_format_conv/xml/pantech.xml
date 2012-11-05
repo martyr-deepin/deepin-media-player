@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>vega_r3</name>
+		<name>vega r3</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
@@ -21,7 +21,7 @@
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>vega_s5</name>
+		<name>vega s5</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
@@ -36,12 +36,12 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>vega_racer_2</name>
+		<name>vega racer 2</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>vega_racer</name>
+		<name>vega racer</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -56,7 +56,7 @@
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>vega_im-a650s</name>
+		<name>vega im-a650s</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -66,17 +66,17 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>mirach_a</name>
+		<name>mirach a</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>star_q_4g_lte</name>
+		<name>star q 4g lte</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>laser_slider</name>
+		<name>laser slider</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -86,12 +86,12 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>vega_lte</name>
+		<name>vega lte</name>
 		<width>800</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>vega_no_5</name>
+		<name>vega no 5</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>

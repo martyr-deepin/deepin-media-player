@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>optimus_vu_2</name>
+		<name>optimus vu 2</name>
 		<width>768</width>
 		<height>1024</height>
 	</profile>
@@ -81,7 +81,7 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>optimus_g2x</name>
+		<name>optimus g2x</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -96,7 +96,7 @@
 		<height>220</height>
 	</profile>
 	<profile>
-		<name>optimus_pad_2</name>
+		<name>optimus pad 2</name>
 		<width>768</width>
 		<height>1280</height>
 	</profile>
@@ -111,7 +111,7 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>rumor_reflex</name>
+		<name>rumor reflex</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
@@ -181,7 +181,7 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>optimus_pad_lte</name>
+		<name>optimus pad lte</name>
 		<width>1280</width>
 		<height>768</height>
 	</profile>
@@ -216,12 +216,12 @@
 		<height>1024</height>
 	</profile>
 	<profile>
-		<name>optimus_note</name>
+		<name>optimus note</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>optimus_lte_tag</name>
+		<name>optimus lte tag</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -231,7 +231,7 @@
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>optimus_m+</name>
+		<name>optimus m+</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
@@ -256,7 +256,7 @@
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>gelato_nfc</name>
+		<name>gelato nfc</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
@@ -301,7 +301,7 @@
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>optimus_lte_2</name>
+		<name>optimus lte 2</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
@@ -316,7 +316,7 @@
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>optimus_hub</name>
+		<name>optimus hub</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
@@ -326,7 +326,7 @@
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>mytouch_q</name>
+		<name>mytouch q</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -346,7 +346,7 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>xpression_c395</name>
+		<name>xpression c395</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
@@ -396,17 +396,17 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>lucid_4g</name>
+		<name>lucid 4g</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>optimus_q2</name>
+		<name>optimus q2</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>optimus_eye</name>
+		<name>optimus eye</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
@@ -416,7 +416,7 @@
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>optimus_s</name>
+		<name>optimus s</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
@@ -476,7 +476,7 @@
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>optimus_3d_2</name>
+		<name>optimus 3d 2</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>

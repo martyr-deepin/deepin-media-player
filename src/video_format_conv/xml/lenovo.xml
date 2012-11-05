@@ -6,12 +6,12 @@
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>lephone_a580</name>
+		<name>lephone a580</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>lepad_s2005</name>
+		<name>lepad s2005</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -21,22 +21,22 @@
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>lephone_s2_td-scdma</name>
+		<name>lephone s2 td-scdma</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>lepad_a2107_16g</name>
+		<name>lepad a2107 16g</name>
 		<width>600</width>
 		<height>1024</height>
 	</profile>
 	<profile>
-		<name>lephone_s686</name>
+		<name>lephone s686</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>lephone_s560</name>
+		<name>lephone s560</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -51,27 +51,27 @@
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>lephone_k2</name>
+		<name>lephone k2</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>lephone_a360</name>
+		<name>lephone a360</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>lephone_s880i</name>
+		<name>lephone s880i</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>lephone_s880</name>
+		<name>lephone s880</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>lephone_p700i</name>
+		<name>lephone p700i</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -81,7 +81,7 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>lepad_k2</name>
+		<name>lepad k2</name>
 		<width>1920</width>
 		<height>1200</height>
 	</profile>
@@ -91,32 +91,32 @@
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>lephone_a800</name>
+		<name>lephone a800</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>lephone_s720</name>
+		<name>lephone s720</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>lephone_s1</name>
+		<name>lephone s1</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>lephone_a298t</name>
+		<name>lephone a298t</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>lephone_a780</name>
+		<name>lephone a780</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>lephone_s2</name>
+		<name>lephone s2</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -126,7 +126,7 @@
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>lephone_c101</name>
+		<name>lephone c101</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -136,32 +136,32 @@
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>lephone_s760</name>
+		<name>lephone s760</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>lephone_a789</name>
+		<name>lephone a789</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>thinkpad_tablet_2</name>
+		<name>thinkpad tablet 2</name>
 		<width>1366</width>
 		<height>768</height>
 	</profile>
 	<profile>
-		<name>lephone_p700</name>
+		<name>lephone p700</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>lephone_p70</name>
+		<name>lephone p70</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>lephone_a798t</name>
+		<name>lephone a798t</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
@@ -171,7 +171,7 @@
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>lephone_a660</name>
+		<name>lephone a660</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -196,7 +196,7 @@
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>lepad_a1_16g</name>
+		<name>lepad a1 16g</name>
 		<width>600</width>
 		<height>1024</height>
 	</profile>
@@ -206,17 +206,17 @@
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>lephone_a710e</name>
+		<name>lephone a710e</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>lephone_s850e</name>
+		<name>lephone s850e</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>lephone_3gc100</name>
+		<name>lephone 3gc100</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -231,17 +231,17 @@
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>ideapad_k1</name>
+		<name>ideapad k1</name>
 		<width>1280</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>lephone_a370</name>
+		<name>lephone a370</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>lephone_s680</name>
+		<name>lephone s680</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -256,22 +256,22 @@
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>lephone_s870e</name>
+		<name>lephone s870e</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>lepad_k1</name>
+		<name>lepad k1</name>
 		<width>1280</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>lephone_a690</name>
+		<name>lephone a690</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>lepad_p1</name>
+		<name>lepad p1</name>
 		<width>1280</width>
 		<height>800</height>
 	</profile>
@@ -296,7 +296,7 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>lepad_k2110</name>
+		<name>lepad k2110</name>
 		<width>1280</width>
 		<height>800</height>
 	</profile>
@@ -306,27 +306,27 @@
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>lephone_a520</name>
+		<name>lephone a520</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>lephone_k800</name>
+		<name>lephone k800</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>lephone_a500</name>
+		<name>lephone a500</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>lepad_a1</name>
+		<name>lepad a1</name>
 		<width>600</width>
 		<height>1024</height>
 	</profile>
 	<profile>
-		<name>lepad_a2107_4g</name>
+		<name>lepad a2107 4g</name>
 		<width>600</width>
 		<height>1024</height>
 	</profile>
@@ -336,7 +336,7 @@
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>lepad_a2109</name>
+		<name>lepad a2109</name>
 		<width>1280</width>
 		<height>800</height>
 	</profile>
@@ -346,32 +346,32 @@
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>lephone_k860</name>
+		<name>lephone k860</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>lepad_s2007</name>
+		<name>lepad s2007</name>
 		<width>800</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>lephone_w101</name>
+		<name>lephone w101</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>lephone_w100</name>
+		<name>lephone w100</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>lephone_a1</name>
+		<name>lephone a1</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>lephone_a300</name>
+		<name>lephone a300</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>

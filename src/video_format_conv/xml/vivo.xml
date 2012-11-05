@@ -1,42 +1,42 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>vivo_s7</name>
+		<name>vivo s7</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>vivo_s6</name>
+		<name>vivo s6</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>vivo_e1</name>
+		<name>vivo e1</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>vivo_s1</name>
+		<name>vivo s1</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>vivo_e3</name>
+		<name>vivo e3</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>vivo_x1</name>
+		<name>vivo x1</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>vivo_v1</name>
+		<name>vivo v1</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>vivo_v2</name>
+		<name>vivo v2</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
@@ -46,7 +46,7 @@
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>vivo_s9</name>
+		<name>vivo s9</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
@@ -56,7 +56,7 @@
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>vivo_s3</name>
+		<name>vivo s3</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
@@ -66,7 +66,7 @@
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>vivo_e1t</name>
+		<name>vivo e1t</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
@@ -76,17 +76,17 @@
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>vivo_y1</name>
+		<name>vivo y1</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>vivo_s12</name>
+		<name>vivo s12</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>vivo_s6t</name>
+		<name>vivo s6t</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>

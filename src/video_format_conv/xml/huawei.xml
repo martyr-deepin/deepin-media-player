@@ -41,7 +41,7 @@
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>i_xiang</name>
+		<name>i xiang</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
@@ -51,7 +51,7 @@
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>ascend_g330c</name>
+		<name>ascend g330c</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -116,7 +116,7 @@
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>smakit_s7</name>
+		<name>smakit s7</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -191,7 +191,7 @@
 		<height>128</height>
 	</profile>
 	<profile>
-		<name>ascend_y100</name>
+		<name>ascend y100</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
@@ -226,7 +226,7 @@
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>g500_pro</name>
+		<name>g500 pro</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
@@ -236,7 +236,7 @@
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>pulse_mini</name>
+		<name>pulse mini</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
@@ -276,7 +276,7 @@
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>mediapad_s7-301up</name>
+		<name>mediapad s7-301up</name>
 		<width>800</width>
 		<height>1280</height>
 	</profile>
@@ -311,7 +311,7 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>mediapad_10</name>
+		<name>mediapad 10</name>
 		<width>1920</width>
 		<height>1200</height>
 	</profile>
@@ -331,12 +331,12 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>impulse_4g</name>
+		<name>impulse 4g</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>ascend_g600</name>
+		<name>ascend g600</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
@@ -351,12 +351,12 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>ascend_p1_s</name>
+		<name>ascend p1 s</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>ascend_d_quad</name>
+		<name>ascend d quad</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
@@ -386,7 +386,7 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>mytouch_q</name>
+		<name>mytouch q</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -396,7 +396,7 @@
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>ascend_x</name>
+		<name>ascend x</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -411,7 +411,7 @@
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>ascend_d_quad_xl</name>
+		<name>ascend d quad xl</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
@@ -426,7 +426,7 @@
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>ascend_p1_wcdma</name>
+		<name>ascend p1 wcdma</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
@@ -451,17 +451,17 @@
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>activa_4g</name>
+		<name>activa 4g</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>ascend_y201_pro</name>
+		<name>ascend y201 pro</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>u8800_pro</name>
+		<name>u8800 pro</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -486,7 +486,7 @@
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>ascend_y200</name>
+		<name>ascend y200</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
@@ -501,7 +501,7 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>mediapad_s7-301u</name>
+		<name>mediapad s7-301u</name>
 		<width>800</width>
 		<height>1280</height>
 	</profile>
@@ -531,7 +531,7 @@
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>u8350_boulder</name>
+		<name>u8350 boulder</name>
 		<width>320</width>
 		<height>240</height>
 	</profile>

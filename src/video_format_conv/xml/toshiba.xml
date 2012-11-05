@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>at200_32g</name>
+		<name>at200 32g</name>
 		<width>1280</width>
 		<height>800</height>
 	</profile>

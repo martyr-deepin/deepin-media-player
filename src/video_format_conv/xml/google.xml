@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>nexus_one</name>
+		<name>nexus one</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>

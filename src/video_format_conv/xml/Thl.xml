@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>w3_2</name>
+		<name>w3 2</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
@@ -16,7 +16,7 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>v12_2</name>
+		<name>v12 2</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>

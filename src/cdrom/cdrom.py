@@ -46,7 +46,7 @@ def ioctl_cdrom(cdrom, CDROM_MASK):
             fcntl.ioctl(cdrom, CDROM_MASK, 0)
             os.close(cdrom)
     except Exception, e:     
-        print "close cdrom [error]:", e
+        print "close cdrom {ioctl_cdrom | function}[error]:", e
 
 def open_cdrom(cdrom):
     ioctl_cdrom(cdrom, OPEN_CDROM)
@@ -58,6 +58,7 @@ if __name__ == "__main__":
     cdrom_list = scan_cdrom()
 
     for cdrom in cdrom_list:
+        print "cdrom:", cdrom
         open_cdrom(cdrom)
         
     for cdrom in cdrom_list:

@@ -6,12 +6,12 @@
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>sgpt212cn_h</name>
+		<name>sgpt212cn h</name>
 		<width>1024</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>xperia_go</name>
+		<name>xperia go</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
@@ -36,7 +36,7 @@
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>sgpt112cn_s</name>
+		<name>sgpt112cn s</name>
 		<width>1280</width>
 		<height>800</height>
 	</profile>
@@ -61,7 +61,7 @@
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>xperia_vl</name>
+		<name>xperia vl</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
@@ -81,7 +81,7 @@
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>xperia_tipo_dual</name>
+		<name>xperia tipo dual</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
@@ -131,17 +131,17 @@
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>sgpt211cn_s</name>
+		<name>sgpt211cn s</name>
 		<width>1024</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>sgpt111cn_s</name>
+		<name>sgpt111cn s</name>
 		<width>1280</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>xperia_miro</name>
+		<name>xperia miro</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>

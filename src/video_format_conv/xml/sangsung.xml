@@ -91,12 +91,12 @@
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>galaxy_trend</name>
+		<name>galaxy trend</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>galaxy_teos</name>
+		<name>galaxy teos</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
@@ -131,17 +131,17 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>galaxy_siii_lte</name>
+		<name>galaxy siii lte</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>galaxy_s3_mini</name>
+		<name>galaxy s3 mini</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>galaxy_tab_p3100</name>
+		<name>galaxy tab p3100</name>
 		<width>600</width>
 		<height>1024</height>
 	</profile>
@@ -166,7 +166,7 @@
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>galaxy_tab_p3108</name>
+		<name>galaxy tab p3108</name>
 		<width>600</width>
 		<height>1024</height>
 	</profile>
@@ -206,17 +206,17 @@
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>i8510_16g</name>
+		<name>i8510 16g</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>360_m1</name>
+		<name>360 m1</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>galaxy_sii_4g</name>
+		<name>galaxy sii 4g</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -231,12 +231,12 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>ativ_s_32g</name>
+		<name>ativ s 32g</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>galaxy_3d</name>
+		<name>galaxy 3d</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -306,12 +306,12 @@
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>f480_ace_hugo_boss</name>
+		<name>f480 ace hugo boss</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>exhibit_ii_4g</name>
+		<name>exhibit ii 4g</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -351,7 +351,7 @@
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>galaxy_chat</name>
+		<name>galaxy chat</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
@@ -371,7 +371,7 @@
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>galaxy_m_pro</name>
+		<name>galaxy m pro</name>
 		<width>480</width>
 		<height>320</height>
 	</profile>
@@ -411,7 +411,7 @@
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>champ_deluxe_duos</name>
+		<name>champ deluxe duos</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
@@ -451,12 +451,12 @@
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>galaxy_appeal</name>
+		<name>galaxy appeal</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>galaxy_music</name>
+		<name>galaxy music</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
@@ -481,7 +481,7 @@
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>galaxy_attain_4g</name>
+		<name>galaxy attain 4g</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
@@ -516,7 +516,7 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>galaxy_proclaim</name>
+		<name>galaxy proclaim</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
@@ -546,7 +546,7 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>i9000_16g</name>
+		<name>i9000 16g</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -586,7 +586,7 @@
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>i9100_32g</name>
+		<name>i9100 32g</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -631,7 +631,7 @@
 		<height>640</height>
 	</profile>
 	<profile>
-		<name>galaxy_sii_plus</name>
+		<name>galaxy sii plus</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -641,7 +641,7 @@
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>galaxy_note_iii</name>
+		<name>galaxy note iii</name>
 		<width>1080</width>
 		<height>1920</height>
 	</profile>
@@ -696,7 +696,7 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>s3778_wcdma</name>
+		<name>s3778 wcdma</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
@@ -726,7 +726,7 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>i9070_16g</name>
+		<name>i9070 16g</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -761,7 +761,7 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>galaxy_sii_duo</name>
+		<name>galaxy sii duo</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -791,7 +791,7 @@
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>galaxy_r_style</name>
+		<name>galaxy r style</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
@@ -811,7 +811,7 @@
 		<height>240</height>
 	</profile>
 	<profile>
-		<name>intensity_iii</name>
+		<name>intensity iii</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
@@ -826,7 +826,7 @@
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>360_h1</name>
+		<name>360 h1</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -851,7 +851,7 @@
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>s8500_8g</name>
+		<name>s8500 8g</name>
 		<width>800</width>
 		<height>480</height>
 	</profile>
@@ -906,17 +906,17 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>galaxy_sii_skyrocket</name>
+		<name>galaxy sii skyrocket</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>galaxy_rush</name>
+		<name>galaxy rush</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>n7100_64g</name>
+		<name>n7100 64g</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
@@ -936,7 +936,7 @@
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>galaxy_stellar_4g_lte</name>
+		<name>galaxy stellar 4g lte</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -956,7 +956,7 @@
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>galaxy_note_lte</name>
+		<name>galaxy note lte</name>
 		<width>800</width>
 		<height>1280</height>
 	</profile>
@@ -976,7 +976,7 @@
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>n7100_32g</name>
+		<name>n7100 32g</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
@@ -991,7 +991,7 @@
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>impulse_4g</name>
+		<name>impulse 4g</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -1011,12 +1011,12 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>flight_ii</name>
+		<name>flight ii</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>galaxy_sii_x</name>
+		<name>galaxy sii x</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -1036,7 +1036,7 @@
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>epic_2</name>
+		<name>epic 2</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -1056,7 +1056,7 @@
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>eternity_ii</name>
+		<name>eternity ii</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
@@ -1091,7 +1091,7 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>galaxy_music_duos</name>
+		<name>galaxy music duos</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
@@ -1256,7 +1256,7 @@
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>ativ_s</name>
+		<name>ativ s</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
@@ -1266,7 +1266,7 @@
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>wave_ii</name>
+		<name>wave ii</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -1306,7 +1306,7 @@
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>i8910_hd</name>
+		<name>i8910 hd</name>
 		<width>360</width>
 		<height>640</height>
 	</profile>
@@ -1326,7 +1326,7 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>tocco_icon</name>
+		<name>tocco icon</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
@@ -1391,12 +1391,12 @@
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>galaxy_sii_lte</name>
+		<name>galaxy sii lte</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>galaxy_s2_mini</name>
+		<name>galaxy s2 mini</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -1416,7 +1416,7 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>galaxy_s_advance</name>
+		<name>galaxy s advance</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -1446,7 +1446,7 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>galaxy_tab_11_6</name>
+		<name>galaxy tab 11 6</name>
 		<width>2560</width>
 		<height>1600</height>
 	</profile>
@@ -1491,12 +1491,12 @@
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>i8350_omnia_w</name>
+		<name>i8350 omnia w</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>galaxy_s_pro</name>
+		<name>galaxy s pro</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -1536,7 +1536,7 @@
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>galaxy_pocket</name>
+		<name>galaxy pocket</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
@@ -1586,12 +1586,12 @@
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>galaxy_pocket_pocke</name>
+		<name>galaxy pocket pocke</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>galaxy_tab_p3110</name>
+		<name>galaxy tab p3110</name>
 		<width>600</width>
 		<height>1024</height>
 	</profile>
@@ -1606,7 +1606,7 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>galaxy_y_pro_duos</name>
+		<name>galaxy y pro duos</name>
 		<width>320</width>
 		<height>240</height>
 	</profile>
@@ -1621,12 +1621,12 @@
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>galaxy_note_s</name>
+		<name>galaxy note s</name>
 		<width>800</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>galaxy_k</name>
+		<name>galaxy k</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>

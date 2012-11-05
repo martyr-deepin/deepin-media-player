@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>mytouch_3g_slide</name>
+		<name>mytouch 3g slide</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>sensation_4g</name>
+		<name>sensation 4g</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
@@ -21,7 +21,7 @@
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>one_x_16g</name>
+		<name>one x 16g</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
@@ -31,7 +31,7 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>runnymede_2</name>
+		<name>runnymede 2</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -41,12 +41,12 @@
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>j_isw13ht</name>
+		<name>j isw13ht</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>touch_cruise_ii</name>
+		<name>touch cruise ii</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
@@ -91,7 +91,7 @@
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>one_s</name>
+		<name>one s</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
@@ -116,7 +116,7 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>droid_incredible_4g</name>
+		<name>droid incredible 4g</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
@@ -136,7 +136,7 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>desire_c</name>
+		<name>desire c</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
@@ -151,7 +151,7 @@
 		<height>1794</height>
 	</profile>
 	<profile>
-		<name>7_mozart</name>
+		<name>7 mozart</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -166,17 +166,17 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>one_xxl</name>
+		<name>one xxl</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>shuangqing_s</name>
+		<name>shuangqing s</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>7_trophy</name>
+		<name>7 trophy</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -211,12 +211,12 @@
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>evo_3d_cdma2000</name>
+		<name>evo 3d cdma2000</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>one_v+</name>
+		<name>one v+</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
@@ -226,12 +226,12 @@
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>evo_one</name>
+		<name>evo one</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>windows_phone_8x</name>
+		<name>windows phone 8x</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
@@ -241,7 +241,7 @@
 		<height>1024</height>
 	</profile>
 	<profile>
-		<name>windows_phone_8s</name>
+		<name>windows phone 8s</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -266,7 +266,7 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>one_vx</name>
+		<name>one vx</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
@@ -281,7 +281,7 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>titan_ii</name>
+		<name>titan ii</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -301,7 +301,7 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>t3333_touch2</name>
+		<name>t3333 touch2</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
@@ -331,7 +331,7 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>mytouch_2</name>
+		<name>mytouch 2</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
@@ -346,17 +346,17 @@
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>one_st</name>
+		<name>one st</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>one_su</name>
+		<name>one su</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>one_x+</name>
+		<name>one x+</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
@@ -366,7 +366,7 @@
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>evo_4g_lte</name>
+		<name>evo 4g lte</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
@@ -406,7 +406,7 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>ville_c</name>
+		<name>ville c</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
@@ -436,12 +436,12 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>one_xl</name>
+		<name>one xl</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>evo_design_4g</name>
+		<name>evo design 4g</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
@@ -466,7 +466,7 @@
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>mytouch_4g</name>
+		<name>mytouch 4g</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -486,7 +486,7 @@
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>mecha_s</name>
+		<name>mecha s</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
@@ -501,7 +501,7 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>evo_4g</name>
+		<name>evo 4g</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -531,7 +531,7 @@
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>j_butterfly</name>
+		<name>j butterfly</name>
 		<width>1080</width>
 		<height>1920</height>
 	</profile>
@@ -561,7 +561,7 @@
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>mytouch_4g_slide</name>
+		<name>mytouch 4g slide</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>

@@ -1,22 +1,17 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>kindle_fire_2</name>
+		<name>kindle fire</name>
 		<width>600</width>
 		<height>1024</height>
 	</profile>
 	<profile>
-		<name>kindle_fire</name>
-		<width>600</width>
-		<height>1024</height>
-	</profile>
-	<profile>
-		<name>kindle_fire_hd_8.9</name>
+		<name>kindle fire hd 8.9</name>
 		<width>1920</width>
 		<height>1200</height>
 	</profile>
 	<profile>
-		<name>kindle_fire_hd</name>
+		<name>kindle fire hd</name>
 		<width>1280</width>
 		<height>800</height>
 	</profile>
