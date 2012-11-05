@@ -1,22 +1,22 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>l200</name>
+		<name>L200</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>t388</name>
+		<name>T388</name>
 		<width>128</width>
 		<height>128</height>
 	</profile>
 	<profile>
-		<name>t718</name>
+		<name>T718</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>t806</name>
+		<name>T806</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>

@@ -1,152 +1,152 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>mytouch 3g slide</name>
+		<name>Mytouch 3g slide</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>sensation 4g</name>
+		<name>Sensation 4g</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>x720d</name>
+		<name>X720d</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>blast</name>
+		<name>Blast</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>one x 16g</name>
+		<name>One x 16g</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>a9188</name>
+		<name>A9188</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>runnymede 2</name>
+		<name>Runnymede 2</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>x515d</name>
+		<name>X515d</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>j isw13ht</name>
+		<name>J isw13ht</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>touch cruise ii</name>
+		<name>Touch cruise ii</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>s720t</name>
+		<name>S720t</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>x515m</name>
+		<name>X515m</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>g7</name>
+		<name>G7</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>g6</name>
+		<name>G6</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>g5</name>
+		<name>G5</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>g4</name>
+		<name>G4</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>a315c</name>
+		<name>A315c</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>g2</name>
+		<name>G2</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>one s</name>
+		<name>One s</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>g9</name>
+		<name>G9</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>s510</name>
+		<name>S510</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>z510d</name>
+		<name>Z510d</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>emerald</name>
+		<name>Emerald</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>droid incredible 4g</name>
+		<name>Droid incredible 4g</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>hd7s</name>
+		<name>Hd7s</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>a3380</name>
+		<name>A3380</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>radiant</name>
+		<name>Radiant</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>desire c</name>
+		<name>Desire c</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>merge</name>
+		<name>Merge</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>dix</name>
+		<name>Dix</name>
 		<width>1080</width>
 		<height>1794</height>
 	</profile>
@@ -156,22 +156,22 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>vision</name>
+		<name>Vision</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>eternity</name>
+		<name>Eternity</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>one xxl</name>
+		<name>One xxl</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>shuangqing s</name>
+		<name>Shuangqing s</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -181,237 +181,237 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>t9199</name>
+		<name>T9199</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>g22</name>
+		<name>G22</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>g23</name>
+		<name>G23</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>g20</name>
+		<name>G20</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>g21</name>
+		<name>G21</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>espresso</name>
+		<name>Espresso</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>evo 3d cdma2000</name>
+		<name>Evo 3d cdma2000</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>one v+</name>
+		<name>One v+</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>accord</name>
+		<name>Accord</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>evo one</name>
+		<name>Evo one</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>windows phone 8x</name>
+		<name>Windows phone 8x</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>flyer</name>
+		<name>Flyer</name>
 		<width>600</width>
 		<height>1024</height>
 	</profile>
 	<profile>
-		<name>windows phone 8s</name>
+		<name>Windows phone 8s</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>hd2</name>
+		<name>Hd2</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>trophy</name>
+		<name>Trophy</name>
 		<width>480</width>
 		<height>640</height>
 	</profile>
 	<profile>
-		<name>s710d</name>
+		<name>S710d</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>t8585</name>
+		<name>T8585</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>one vx</name>
+		<name>One vx</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>z560e</name>
+		<name>Z560e</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>t9292</name>
+		<name>T9292</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>titan ii</name>
+		<name>Titan ii</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>s715e</name>
+		<name>S715e</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>a320e</name>
+		<name>A320e</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>s610d</name>
+		<name>S610d</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>t3333 touch2</name>
+		<name>T3333 touch2</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>zeta</name>
+		<name>Zeta</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>a510c</name>
+		<name>A510c</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>a6390</name>
+		<name>A6390</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>vivid</name>
+		<name>Vivid</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>jetstream</name>
+		<name>Jetstream</name>
 		<width>1280</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>mytouch 2</name>
+		<name>Mytouch 2</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>c110e</name>
+		<name>C110e</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>rezound</name>
+		<name>Rezound</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>one st</name>
+		<name>One st</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>one su</name>
+		<name>One su</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>one x+</name>
+		<name>One x+</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>a310e</name>
+		<name>A310e</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>evo 4g lte</name>
+		<name>Evo 4g lte</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>x515e</name>
+		<name>X515e</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>t320e</name>
+		<name>T320e</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>t528d</name>
+		<name>T528d</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>t4242</name>
+		<name>T4242</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>t528t</name>
+		<name>T528t</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>t528w</name>
+		<name>T528w</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>elite</name>
+		<name>Elite</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>ville c</name>
+		<name>Ville c</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>t8788</name>
+		<name>T8788</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -421,197 +421,197 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>j</name>
+		<name>J</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>t328d</name>
+		<name>T328d</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>t328e</name>
+		<name>T328e</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>one xl</name>
+		<name>One xl</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>evo design 4g</name>
+		<name>Evo design 4g</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>t328w</name>
+		<name>T328w</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>t328t</name>
+		<name>T328t</name>
 		<width>480</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>pyramid</name>
+		<name>Pyramid</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>zenith</name>
+		<name>Zenith</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>mytouch 4g</name>
+		<name>Mytouch 4g</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>rio</name>
+		<name>Rio</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>t7373</name>
+		<name>T7373</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>g3</name>
+		<name>G3</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>mecha s</name>
+		<name>Mecha s</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>imagio</name>
+		<name>Imagio</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>t9188</name>
+		<name>T9188</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>evo 4g</name>
+		<name>Evo 4g</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>proto</name>
+		<name>Proto</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>glacier</name>
+		<name>Glacier</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>status</name>
+		<name>Status</name>
 		<width>480</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>thunderbolt</name>
+		<name>Thunderbolt</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>a3360</name>
+		<name>A3360</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>j butterfly</name>
+		<name>J butterfly</name>
 		<width>1080</width>
 		<height>1920</height>
 	</profile>
 	<profile>
-		<name>x310e</name>
+		<name>X310e</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>g8</name>
+		<name>G8</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>z710e</name>
+		<name>Z710e</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>z710t</name>
+		<name>Z710t</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>c510e</name>
+		<name>C510e</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>mytouch 4g slide</name>
+		<name>Mytouch 4g slide</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>g19</name>
+		<name>G19</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>g18</name>
+		<name>G18</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>g17</name>
+		<name>G17</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>g16</name>
+		<name>G16</name>
 		<width>480</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>g15</name>
+		<name>G15</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>g14</name>
+		<name>G14</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>g13</name>
+		<name>G13</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>g12</name>
+		<name>G12</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>g11</name>
+		<name>G11</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>g10</name>
+		<name>G10</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>

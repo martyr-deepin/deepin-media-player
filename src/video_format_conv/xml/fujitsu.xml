@@ -1,47 +1,47 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>f-07d</name>
+		<name>F-07d</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>arrows z isw13f</name>
+		<name>Arrows z isw13f</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>t1981</name>
+		<name>T1981</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>stylistic m350 ca2</name>
+		<name>Stylistic m350 ca2</name>
 		<width>1024</width>
 		<height>600</height>
 	</profile>
 	<profile>
-		<name>arrows es</name>
+		<name>Arrows es</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>stylistic m532</name>
+		<name>Stylistic m532</name>
 		<width>1280</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>f704i</name>
+		<name>F704i</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>arrows kiss</name>
+		<name>Arrows kiss</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>arrows prototype</name>
+		<name>Arrows prototype</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>

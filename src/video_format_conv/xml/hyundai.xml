@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>h11</name>
+		<name>H11</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>h6</name>
+		<name>H6</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>

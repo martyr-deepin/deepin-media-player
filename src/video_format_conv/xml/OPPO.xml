@@ -1,82 +1,82 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>r817</name>
+		<name>R817</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>r811</name>
+		<name>R811</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>a115k</name>
+		<name>A115k</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>u529</name>
+		<name>U529</name>
 		<width>240</width>
 		<height>432</height>
 	</profile>
 	<profile>
-		<name>u539</name>
+		<name>U539</name>
 		<width>240</width>
 		<height>432</height>
 	</profile>
 	<profile>
-		<name>a615</name>
+		<name>A615</name>
 		<width>240</width>
 		<height>432</height>
 	</profile>
 	<profile>
-		<name>a613</name>
+		<name>A613</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>a115</name>
+		<name>A115</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>t15</name>
+		<name>T15</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>a520</name>
+		<name>A520</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>a90</name>
+		<name>A90</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>find 5</name>
+		<name>Find 5</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>u521</name>
+		<name>U521</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>u525</name>
+		<name>U525</name>
 		<width>240</width>
 		<height>432</height>
 	</profile>
 	<profile>
-		<name>r803</name>
+		<name>R803</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>r801</name>
+		<name>R801</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
@@ -86,72 +86,72 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>r805</name>
+		<name>R805</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>t703</name>
+		<name>T703</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>u701</name>
+		<name>U701</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>t29</name>
+		<name>T29</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>a129</name>
+		<name>A129</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>a209</name>
+		<name>A209</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>x905</name>
+		<name>X905</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>a121</name>
+		<name>A121</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>x907</name>
+		<name>X907</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>f15</name>
+		<name>F15</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>a201</name>
+		<name>A201</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>a125</name>
+		<name>A125</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>a203</name>
+		<name>A203</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>a127</name>
+		<name>A127</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>

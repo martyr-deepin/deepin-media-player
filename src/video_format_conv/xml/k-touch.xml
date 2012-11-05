@@ -1,137 +1,137 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>w800</name>
+		<name>W800</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>w806</name>
+		<name>W806</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>w808</name>
+		<name>W808</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>e760</name>
+		<name>E760</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>w780</name>
+		<name>W780</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>e688</name>
+		<name>E688</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>w700</name>
+		<name>W700</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>w606</name>
+		<name>W606</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>e806</name>
+		<name>E806</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>u2</name>
+		<name>U2</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>w686</name>
+		<name>W686</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>w680</name>
+		<name>W680</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>t580</name>
+		<name>T580</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>w689</name>
+		<name>W689</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>w688</name>
+		<name>W688</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>w650</name>
+		<name>W650</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>e619</name>
+		<name>E619</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>v6</name>
+		<name>V6</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>v8</name>
+		<name>V8</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>v9</name>
+		<name>V9</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>d159</name>
+		<name>D159</name>
 		<width>128</width>
 		<height>128</height>
 	</profile>
 	<profile>
-		<name>w710</name>
+		<name>W710</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>w619</name>
+		<name>W619</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>w806+</name>
+		<name>W806+</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>w719</name>
+		<name>W719</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>t6</name>
+		<name>T6</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>d8600</name>
+		<name>D8600</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>

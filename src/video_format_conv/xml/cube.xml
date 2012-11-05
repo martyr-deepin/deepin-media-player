@@ -1,82 +1,82 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>a106</name>
+		<name>A106</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>e70</name>
+		<name>E70</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>n62</name>
+		<name>N62</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>n60</name>
+		<name>N60</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>n69</name>
+		<name>N69</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>a660</name>
+		<name>A660</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>i60</name>
+		<name>I60</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>i90</name>
+		<name>I90</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>i50</name>
+		<name>I50</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>s306</name>
+		<name>S306</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>a209</name>
+		<name>A209</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>k9</name>
+		<name>K9</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>a109</name>
+		<name>A109</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>i55</name>
+		<name>I55</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>t550</name>
+		<name>T550</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>k6</name>
+		<name>K6</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>

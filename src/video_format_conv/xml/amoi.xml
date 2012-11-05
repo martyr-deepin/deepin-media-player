@@ -1,57 +1,57 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>n806</name>
+		<name>N806</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>n700</name>
+		<name>N700</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>n807</name>
+		<name>N807</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>n818</name>
+		<name>N818</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>v-phone</name>
+		<name>V-phone</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>n89</name>
+		<name>N89</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>f209</name>
+		<name>F209</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>n808</name>
+		<name>N808</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>n809</name>
+		<name>N809</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>n79</name>
+		<name>N79</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>n820</name>
+		<name>N820</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>

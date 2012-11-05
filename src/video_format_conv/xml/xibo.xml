@@ -1,37 +1,37 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>i9</name>
+		<name>I9</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>x810</name>
+		<name>X810</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>x610</name>
+		<name>X610</name>
 		<width>640</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>x920</name>
+		<name>X920</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>x3</name>
+		<name>X3</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>n580</name>
+		<name>N580</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>a330</name>
+		<name>A330</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>

@@ -1,77 +1,77 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>n80w</name>
+		<name>N80w</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>e920</name>
+		<name>E920</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>n620e</name>
+		<name>N620e</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>w718</name>
+		<name>W718</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>u80wg</name>
+		<name>U80wg</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>u78t</name>
+		<name>U78t</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>n86w</name>
+		<name>N86w</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>n75w</name>
+		<name>N75w</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>e899</name>
+		<name>E899</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>m520</name>
+		<name>M520</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>n88w</name>
+		<name>M88w</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>mix_x5</name>
+		<name>Mix_x5</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>w910</name>
+		<name>W910</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>n720e</name>
+		<name>N720e</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>d300</name>
+		<name>D300</name>
 		<width>128</width>
 		<height>160</height>
 	</profile>

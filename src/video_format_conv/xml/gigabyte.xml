@@ -1,42 +1,42 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>m1420</name>
+		<name>M1420</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>g1317s</name>
+		<name>G1317s</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>m1320</name>
+		<name>M1320</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>g1345</name>
+		<name>G1345</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>g1342</name>
+		<name>G1342</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>g1362</name>
+		<name>G1362</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>g1305</name>
+		<name>G1305</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>g1317d</name>
+		<name>G1317d</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>

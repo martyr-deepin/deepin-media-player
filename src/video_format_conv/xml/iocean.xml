@@ -1,22 +1,22 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>w7</name>
+		<name>W7</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>w180</name>
+		<name>W180</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>x6</name>
+		<name>X6</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>w7+</name>
+		<name>W7+</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>

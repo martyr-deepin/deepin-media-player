@@ -1,87 +1,87 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>u950</name>
+		<name>U950</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>e926</name>
+		<name>E926</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>eg968</name>
+		<name>Eg968</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>u8</name>
+		<name>U8</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>tg88</name>
+		<name>Tg88</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>eg906</name>
+		<name>Eg906</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>et919</name>
+		<name>Et919</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>eg900</name>
+		<name>Eg900</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>e910</name>
+		<name>E910</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>eg870</name>
+		<name>Eg870</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>t39</name>
+		<name>T39</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>e90</name>
+		<name>E90</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>t89</name>
+		<name>T89</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>eg950</name>
+		<name>Eg950</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>t96</name>
+		<name>T96</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>u860</name>
+		<name>U860</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>t92</name>
+		<name>T92</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>

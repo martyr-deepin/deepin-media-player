@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>p80w</name>
+		<name>P80w</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>e80w</name>
+		<name>E80w</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>

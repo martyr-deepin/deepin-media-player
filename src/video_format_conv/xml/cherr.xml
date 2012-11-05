@@ -1,47 +1,47 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>i58</name>
+		<name>I58</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>a90s</name>
+		<name>A90s</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>a70</name>
+		<name>A70</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>a51</name>
+		<name>A51</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>a50</name>
+		<name>A50</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>a4</name>
+		<name>A4</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>a709</name>
+		<name>A709</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>a91</name>
+		<name>A91</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>a90</name>
+		<name>A90</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>

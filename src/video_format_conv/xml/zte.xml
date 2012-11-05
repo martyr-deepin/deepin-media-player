@@ -1,37 +1,37 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>u280b</name>
+		<name>U280b</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>u960s</name>
+		<name>U960s</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>g882</name>
+		<name>G882</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>v970</name>
+		<name>V970</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>light tab</name>
+		<name>Light tab</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>u281</name>
+		<name>U281</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>u280</name>
+		<name>U280</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
@@ -96,17 +96,17 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>u950</name>
+		<name>U950</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>u880e</name>
+		<name>U880e</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>u880f</name>
+		<name>U880f</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -131,12 +131,12 @@
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>u795</name>
+		<name>U795</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>u880s</name>
+		<name>U880s</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
@@ -151,262 +151,262 @@
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>u930</name>
+		<name>U930</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>u812</name>
+		<name>U812</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>u970</name>
+		<name>U970</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>tu720</name>
+		<name>Tu720</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>n970</name>
+		<name>N970</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>n855d</name>
+		<name>N855d</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>v961</name>
+		<name>V961</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>v960</name>
+		<name>V960</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>v965</name>
+		<name>V965</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>grand x in</name>
+		<name>Grand x in</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>blade iii</name>
+		<name>Blade iii</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>style q</name>
+		<name>Style q</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>v985</name>
+		<name>V985</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>x920</name>
+		<name>X920</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>n910</name>
+		<name>N910</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>warp</name>
+		<name>Warp</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>n880</name>
+		<name>N880</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>v2</name>
+		<name>V2</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>u880</name>
+		<name>U880</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>link</name>
+		<name>Link</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>x850</name>
+		<name>X850</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>u885</name>
+		<name>U885</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>n960</name>
+		<name>N960</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>light tab 2</name>
+		<name>Light tab 2</name>
 		<width>600</width>
 		<height>1024</height>
 	</profile>
 	<profile>
-		<name>n600+</name>
+		<name>N600+</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>score</name>
+		<name>Score</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>score m</name>
+		<name>Score m</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>x950</name>
+		<name>X950</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>atrial</name>
+		<name>Atrial</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>u960s3</name>
+		<name>U960s3</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>u960s2</name>
+		<name>U960s2</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>ux990</name>
+		<name>Ux990</name>
 		<width>320</width>
 		<height>240</height>
 	</profile>
 	<profile>
-		<name>n720</name>
+		<name>N720</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>u830</name>
+		<name>U830</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>v788d</name>
+		<name>V788d</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>u722</name>
+		<name>U722</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>n8010</name>
+		<name>N8010</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>v98</name>
+		<name>V98</name>
 		<width>1366</width>
 		<height>768</height>
 	</profile>
 	<profile>
-		<name>x876</name>
+		<name>X876</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>era</name>
+		<name>Era</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>u236</name>
+		<name>U236</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>u985</name>
+		<name>U985</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>v889d</name>
+		<name>V889d</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>u900</name>
+		<name>U900</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>v899d</name>
+		<name>V899d</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>n760</name>
+		<name>N760</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>u960</name>
+		<name>U960</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>v889m</name>
+		<name>V889m</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>n700</name>
+		<name>N700</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>u788</name>
+		<name>U788</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>u232</name>
+		<name>U232</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>u805</name>
+		<name>U805</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>

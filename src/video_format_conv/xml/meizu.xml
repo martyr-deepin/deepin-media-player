@@ -1,52 +1,52 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>mx4 16g</name>
+		<name>Mx4 16g</name>
 		<width>640</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>m9</name>
+		<name>M9</name>
 		<width>640</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>mx2</name>
+		<name>Mx2</name>
 		<width>800</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>mx quad-core 64g</name>
+		<name>Mx quad-core 64g</name>
 		<width>640</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>mx quad-core</name>
+		<name>Mx quad-core</name>
 		<width>640</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>m031</name>
+		<name>M031</name>
 		<width>640</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>m8 16g</name>
+		<name>M8 16g</name>
 		<width>480</width>
 		<height>720</height>
 	</profile>
 	<profile>
-		<name>m9re</name>
+		<name>M9re</name>
 		<width>640</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>mx re</name>
+		<name>Mx re</name>
 		<width>640</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>mx</name>
+		<name>Mx</name>
 		<width>640</width>
 		<height>960</height>
 	</profile>

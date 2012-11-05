@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>medias tab n-06d lte</name>
+		<name>Medias tab n-06d lte</name>
 		<width>1280</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>es n-05d</name>
+		<name>Es n-05d</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>

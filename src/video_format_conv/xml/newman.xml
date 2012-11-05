@@ -1,17 +1,17 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>n8</name>
+		<name>N8</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>n1</name>
+		<name>N1</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>n2</name>
+		<name>N2</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>

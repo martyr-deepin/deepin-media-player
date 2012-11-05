@@ -1,47 +1,47 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>g7</name>
+		<name>G7</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>g6</name>
+		<name>G6</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>g3</name>
+		<name>G3</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>g1</name>
+		<name>G1</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>m58</name>
+		<name>M58</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>g9</name>
+		<name>G9</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>h86</name>
+		<name>H86</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>n81</name>
+		<name>N81</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>s60</name>
+		<name>S60</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>

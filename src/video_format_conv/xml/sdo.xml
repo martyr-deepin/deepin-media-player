@@ -1,17 +1,17 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>bambook</name>
+		<name>Bambook</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>bambook_s1</name>
+		<name>Bambook_s1</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>bambook s1 16gb</name>
+		<name>Bambook s1 16gb</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>

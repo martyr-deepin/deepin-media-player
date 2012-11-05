@@ -1,22 +1,22 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>xolo x900</name>
+		<name>Xolo x900</name>
 		<width>600</width>
 		<height>1024</height>
 	</profile>
 	<profile>
-		<name>san diego</name>
+		<name>San diego</name>
 		<width>600</width>
 		<height>1024</height>
 	</profile>
 	<profile>
-		<name>megafon mint</name>
+		<name>Megafon mint</name>
 		<width>600</width>
 		<height>1024</height>
 	</profile>
 	<profile>
-		<name>x86</name>
+		<name>X86</name>
 		<width>600</width>
 		<height>1024</height>
 	</profile>

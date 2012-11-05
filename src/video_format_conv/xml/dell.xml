@@ -1,42 +1,42 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>v04b</name>
+		<name>V04b</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>streak</name>
+		<name>Streak</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>aero</name>
+		<name>Aero</name>
 		<width>360</width>
 		<height>640</height>
 	</profile>
 	<profile>
-		<name>flash</name>
+		<name>Flash</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>venue</name>
+		<name>Venue</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>m01m</name>
+		<name>M01m</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>smoke</name>
+		<name>Smoke</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>d43</name>
+		<name>D43</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>

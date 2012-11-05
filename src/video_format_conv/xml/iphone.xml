@@ -1,27 +1,27 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>iphone4</name>
+		<name>Iphone4</name>
 		<width>640</width>
 		<height>960</height>
 	</profile>			
 	<profile>
-		<name>iphone4s</name>
+		<name>Iphone4s</name>
 		<width>640</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>iphone5</name>
+		<name>Iphone5</name>
 		<width>640</width>
 		<height>1136</height>
 	</profile>	  
 	<profile>
-		<name>iphone3</name>
+		<name>Iphone3</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>	  		
 	<profile>
-		<name>iphone</name>
+		<name>Iphone</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>    

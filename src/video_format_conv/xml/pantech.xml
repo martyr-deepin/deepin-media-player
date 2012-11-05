@@ -1,102 +1,102 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>vega r3</name>
+		<name>Vega r3</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>flex</name>
+		<name>Flex</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>a820l</name>
+		<name>A820l</name>
 		<width>800</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>ev269</name>
+		<name>Ev269</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>vega s5</name>
+		<name>Vega s5</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>a810s</name>
+		<name>A810s</name>
 		<width>800</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>burst</name>
+		<name>Burst</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>vega racer 2</name>
+		<name>Vega racer 2</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>vega racer</name>
+		<name>Vega racer</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>p8010</name>
+		<name>P8010</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>a800s</name>
+		<name>A800s</name>
 		<width>800</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>vega im-a650s</name>
+		<name>Vega im-a650s</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>breakout</name>
+		<name>Breakout</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>mirach a</name>
+		<name>Mirach a</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>star q 4g lte</name>
+		<name>Star q 4g lte</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>laser slider</name>
+		<name>Laser slider</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>is06</name>
+		<name>Is06</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>vega lte</name>
+		<name>Vega lte</name>
 		<width>800</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>vega no 5</name>
+		<name>Vega no 5</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>marauder</name>
+		<name>Marauder</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>

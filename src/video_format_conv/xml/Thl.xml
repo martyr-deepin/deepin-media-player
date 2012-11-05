@@ -1,57 +1,57 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>w3 2</name>
+		<name>W3 2</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>v12</name>
+		<name>V12</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>v11</name>
+		<name>V11</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>v12 2</name>
+		<name>V12 2</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>a1</name>
+		<name>A1</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>w3</name>
+		<name>W3</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>w2</name>
+		<name>W2</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>w1</name>
+		<name>W1</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>v7</name>
+		<name>V7</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>v8</name>
+		<name>V8</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>v9</name>
+		<name>V9</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>

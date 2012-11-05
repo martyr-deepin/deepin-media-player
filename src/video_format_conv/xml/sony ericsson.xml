@@ -1,262 +1,262 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>sk19i</name>
+		<name>Sk19i</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>mt11i</name>
+		<name>Mt11i</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>so-03d</name>
+		<name>So-03d</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>wt19i</name>
+		<name>Wt19i</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>st17i</name>
+		<name>St17i</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>u5i</name>
+		<name>U5i</name>
 		<width>360</width>
 		<height>640</height>
 	</profile>
 	<profile>
-		<name>j20</name>
+		<name>J20</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>c510</name>
+		<name>C510</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>ck15i</name>
+		<name>Ck15i</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>w9</name>
+		<name>W9</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>w8</name>
+		<name>W8</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>e15i</name>
+		<name>E15i</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>t715</name>
+		<name>T715</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>st18i</name>
+		<name>St18i</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>s312</name>
+		<name>S312</name>
 		<width>176</width>
 		<height>220</height>
 	</profile>
 	<profile>
-		<name>x10i hd</name>
+		<name>X10i hd</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>sk17i</name>
+		<name>Sk17i</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>u1</name>
+		<name>U1</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>lt15i</name>
+		<name>Lt15i</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>skl17</name>
+		<name>Skl17</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>u20i</name>
+		<name>U20i</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>wt13i</name>
+		<name>Wt13i</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>w20</name>
+		<name>W20</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>w995</name>
+		<name>W995</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>a8i</name>
+		<name>A8i</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>w508</name>
+		<name>W508</name>
 		<width>320</width>
 		<height>240</height>
 	</profile>
 	<profile>
-		<name>t707</name>
+		<name>T707</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>u10i</name>
+		<name>U10i</name>
 		<width>240</width>
 		<height>432</height>
 	</profile>
 	<profile>
-		<name>u100i</name>
+		<name>U100i</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>m1i</name>
+		<name>M1i</name>
 		<width>320</width>
 		<height>240</height>
 	</profile>
 	<profile>
-		<name>j105i</name>
+		<name>J105i</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>mt15i</name>
+		<name>Mt15i</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>w100i</name>
+		<name>W100i</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>s004</name>
+		<name>S004</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>w705</name>
+		<name>W705</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>gx1</name>
+		<name>Gx1</name>
 		<width>825</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>wt18i</name>
+		<name>Wt18i</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>w715</name>
+		<name>W715</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>x10i</name>
+		<name>X10i</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>u8i</name>
+		<name>U8i</name>
 		<width>360</width>
 		<height>640</height>
 	</profile>
 	<profile>
-		<name>u1i</name>
+		<name>U1i</name>
 		<width>360</width>
 		<height>640</height>
 	</profile>
 	<profile>
-		<name>j108i</name>
+		<name>J108i</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>x2i</name>
+		<name>X2i</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>st15i</name>
+		<name>St15i</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>w395c</name>
+		<name>W395c</name>
 		<width>176</width>
 		<height>220</height>
 	</profile>
 	<profile>
-		<name>w150i</name>
+		<name>W150i</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>w150</name>
+		<name>W150</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>e10i</name>
+		<name>E10i</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>e16i</name>
+		<name>E16i</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>lt18i</name>
+		<name>Lt18i</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>xperia play z1i</name>
+		<name>Xperia play z1i</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>g819</name>
+		<name>G819</name>
 		<width>360</width>
 		<height>640</height>
 	</profile>

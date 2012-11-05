@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>n900</name>
+		<name>N900</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>x2</name>
+		<name>X2</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
@@ -16,27 +16,27 @@
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>x6</name>
+		<name>X6</name>
 		<width>360</width>
 		<height>640</height>
 	</profile>
 	<profile>
-		<name>t7-00</name>
+		<name>T7-00</name>
 		<width>360</width>
 		<height>640</height>
 	</profile>
 	<profile>
-		<name>x5-00</name>
+		<name>X5-00</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>x1-01</name>
+		<name>X1-01</name>
 		<width>128</width>
 		<height>160</height>
 	</profile>
 	<profile>
-		<name>x1-00</name>
+		<name>X1-00</name>
 		<width>128</width>
 		<height>160</height>
 	</profile>
@@ -46,12 +46,12 @@
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>atlas</name>
+		<name>Atlas</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>x2-05</name>
+		<name>X2-05</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
@@ -61,7 +61,7 @@
 		<height>240</height>
 	</profile>
 	<profile>
-		<name>c3-01</name>
+		<name>C3-01</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
@@ -71,17 +71,17 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>n86</name>
+		<name>N86</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>c6</name>
+		<name>C6</name>
 		<width>360</width>
 		<height>640</height>
 	</profile>
 	<profile>
-		<name>lumia 920t</name>
+		<name>Lumia 920t</name>
 		<width>768</width>
 		<height>1280</height>
 	</profile>
@@ -101,12 +101,12 @@
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>c5-05</name>
+		<name>C5-05</name>
 		<width>360</width>
 		<height>640</height>
 	</profile>
 	<profile>
-		<name>c5-06</name>
+		<name>C5-06</name>
 		<width>360</width>
 		<height>640</height>
 	</profile>
@@ -116,7 +116,7 @@
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>c5-01</name>
+		<name>C5-01</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
@@ -126,7 +126,7 @@
 		<height>240</height>
 	</profile>
 	<profile>
-		<name>c5-03</name>
+		<name>C5-03</name>
 		<width>360</width>
 		<height>640</height>
 	</profile>
@@ -136,12 +136,12 @@
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>lumia 822</name>
+		<name>Lumia 822</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>lumia 820</name>
+		<name>Lumia 820</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
@@ -151,17 +151,17 @@
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>c2-01</name>
+		<name>C2-01</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>c2-03</name>
+		<name>C2-03</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>x3-02</name>
+		<name>X3-02</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
@@ -181,7 +181,7 @@
 		<height>640</height>
 	</profile>
 	<profile>
-		<name>w7</name>
+		<name>W7</name>
 		<width>360</width>
 		<height>640</height>
 	</profile>
@@ -216,7 +216,7 @@
 		<height>640</height>
 	</profile>
 	<profile>
-		<name>w8</name>
+		<name>W8</name>
 		<width>360</width>
 		<height>640</height>
 	</profile>
@@ -226,7 +226,7 @@
 		<height>640</height>
 	</profile>
 	<profile>
-		<name>c1-00</name>
+		<name>C1-00</name>
 		<width>128</width>
 		<height>160</height>
 	</profile>
@@ -236,17 +236,17 @@
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>c1-02</name>
+		<name>C1-02</name>
 		<width>128</width>
 		<height>160</height>
 	</profile>
 	<profile>
-		<name>lumia 810</name>
+		<name>Lumia 810</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>n97</name>
+		<name>N97</name>
 		<width>360</width>
 		<height>640</height>
 	</profile>
@@ -256,7 +256,7 @@
 		<height>240</height>
 	</profile>
 	<profile>
-		<name>e72</name>
+		<name>E72</name>
 		<width>320</width>
 		<height>240</height>
 	</profile>
@@ -266,7 +266,7 @@
 		<height>160</height>
 	</profile>
 	<profile>
-		<name>e72i</name>
+		<name>E72i</name>
 		<width>320</width>
 		<height>240</height>
 	</profile>
@@ -286,12 +286,12 @@
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>e8</name>
+		<name>E8</name>
 		<width>480</width>
 		<height>640</height>
 	</profile>
 	<profile>
-		<name>e5</name>
+		<name>E5</name>
 		<width>320</width>
 		<height>240</height>
 	</profile>
@@ -301,12 +301,12 @@
 		<height>68</height>
 	</profile>
 	<profile>
-		<name>e7</name>
+		<name>E7</name>
 		<width>360</width>
 		<height>640</height>
 	</profile>
 	<profile>
-		<name>e6</name>
+		<name>E6</name>
 		<width>480</width>
 		<height>640</height>
 	</profile>
@@ -316,7 +316,7 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>lumia 1000</name>
+		<name>Lumia 1000</name>
 		<width>768</width>
 		<height>1024</height>
 	</profile>
@@ -331,12 +331,12 @@
 		<height>640</height>
 	</profile>
 	<profile>
-		<name>c5-00i</name>
+		<name>C5-00i</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>lumia 719c</name>
+		<name>Lumia 719c</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -381,7 +381,7 @@
 		<height>640</height>
 	</profile>
 	<profile>
-		<name>lumia 610c</name>
+		<name>Lumia 610c</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -396,12 +396,12 @@
 		<height>640</height>
 	</profile>
 	<profile>
-		<name>e52</name>
+		<name>E52</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>n97mini</name>
+		<name>N97mini</name>
 		<width>360</width>
 		<height>640</height>
 	</profile>
@@ -411,27 +411,27 @@
 		<height>640</height>
 	</profile>
 	<profile>
-		<name>c3</name>
+		<name>C3</name>
 		<width>320</width>
 		<height>240</height>
 	</profile>
 	<profile>
-		<name>x3</name>
+		<name>X3</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>c7</name>
+		<name>C7</name>
 		<width>360</width>
 		<height>640</height>
 	</profile>
 	<profile>
-		<name>x7</name>
+		<name>X7</name>
 		<width>360</width>
 		<height>640</height>
 	</profile>
 	<profile>
-		<name>c5</name>
+		<name>C5</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
@@ -441,12 +441,12 @@
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>ace</name>
+		<name>Ace</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>glory</name>
+		<name>Glory</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -456,7 +456,7 @@
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>n97i</name>
+		<name>N97i</name>
 		<width>360</width>
 		<height>640</height>
 	</profile>
@@ -471,12 +471,12 @@
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>lumia 900</name>
+		<name>Lumia 900</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>x2-01</name>
+		<name>X2-01</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
@@ -491,7 +491,7 @@
 		<height>160</height>
 	</profile>
 	<profile>
-		<name>lumia 920</name>
+		<name>Lumia 920</name>
 		<width>768</width>
 		<height>1280</height>
 	</profile>
@@ -501,17 +501,17 @@
 		<height>640</height>
 	</profile>
 	<profile>
-		<name>lumia 800c</name>
+		<name>Lumia 800c</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>wp7</name>
+		<name>Wp7</name>
 		<width>360</width>
 		<height>640</height>
 	</profile>
 	<profile>
-		<name>c6-01</name>
+		<name>C6-01</name>
 		<width>360</width>
 		<height>640</height>
 	</profile>
@@ -521,12 +521,12 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>x6-00 16g</name>
+		<name>X6-00 16g</name>
 		<width>360</width>
 		<height>640</height>
 	</profile>
 	<profile>
-		<name>lumia 910</name>
+		<name>Lumia 910</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -541,12 +541,12 @@
 		<height>640</height>
 	</profile>
 	<profile>
-		<name>tiviti 9210</name>
+		<name>Tiviti 9210</name>
 		<width>1920</width>
 		<height>1200</height>
 	</profile>
 	<profile>
-		<name>lumia 610</name>
+		<name>Lumia 610</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -566,7 +566,7 @@
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>lumia 510</name>
+		<name>Lumia 510</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -586,7 +586,7 @@
 		<height>160</height>
 	</profile>
 	<profile>
-		<name>lumia 610 nfc</name>
+		<name>Lumia 610 nfc</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
@@ -596,12 +596,12 @@
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>n8</name>
+		<name>N8</name>
 		<width>360</width>
 		<height>640</height>
 	</profile>
 	<profile>
-		<name>n9</name>
+		<name>N9</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
@@ -611,12 +611,12 @@
 		<height>640</height>
 	</profile>
 	<profile>
-		<name>x6m</name>
+		<name>X6m</name>
 		<width>360</width>
 		<height>640</height>
 	</profile>
 	<profile>
-		<name>c1-01</name>
+		<name>C1-01</name>
 		<width>128</width>
 		<height>160</height>
 	</profile>
@@ -631,7 +631,7 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>n8 32g</name>
+		<name>N8 32g</name>
 		<width>360</width>
 		<height>640</height>
 	</profile>

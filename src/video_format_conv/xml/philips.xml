@@ -1,112 +1,112 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>d633</name>
+		<name>D633</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>v808</name>
+		<name>V808</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>x518</name>
+		<name>X518</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>w625</name>
+		<name>Wn625</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>w626</name>
+		<name>W626</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>w820</name>
+		<name>W820</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>f515</name>
+		<name>F515</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>w920</name>
+		<name>W920</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>w6350</name>
+		<name>W6350</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>w727</name>
+		<name>W727</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>w930</name>
+		<name>W930</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>x622</name>
+		<name>X622</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>x623</name>
+		<name>X623</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>x528</name>
+		<name>X528</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>v726</name>
+		<name>V726</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>w832</name>
+		<name>W832</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>x130</name>
+		<name>X130</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>w632</name>
+		<name>W632</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>w635</name>
+		<name>W635</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>w732</name>
+		<name>W732</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>w536</name>
+		<name>W536</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>w736</name>
+		<name>W736</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>

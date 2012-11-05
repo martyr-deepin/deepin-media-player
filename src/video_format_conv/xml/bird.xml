@@ -1,17 +1,17 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>w188</name>
+		<name>W188</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>f601</name>
+		<name>F601</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>e909</name>
+		<name>E909</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>

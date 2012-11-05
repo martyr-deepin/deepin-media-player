@@ -1,27 +1,27 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>n307</name>
+		<name>N307</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>n707</name>
+		<name>N707</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>n909</name>
+		<name>N909</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>e90</name>
+		<name>E90</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>n907</name>
+		<name>N907</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
@@ -36,32 +36,32 @@
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>m703</name>
+		<name>M703</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>e60</name>
+		<name>E60</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>x3</name>
+		<name>X3</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>n509</name>
+		<name>N509</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>x1</name>
+		<name>X1</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>n606</name>
+		<name>N606</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>

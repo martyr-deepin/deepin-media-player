@@ -1,97 +1,97 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>a919</name>
+		<name>A919</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>e588</name>
+		<name>E588</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>s600</name>
+		<name>S600</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>s900</name>
+		<name>S900</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>s606</name>
+		<name>S606</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>s500</name>
+		<name>S500</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>c995</name>
+		<name>C995</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>a890</name>
+		<name>A890</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>s800</name>
+		<name>S800</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>a990</name>
+		<name>A990</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>a968</name>
+		<name>A968</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>i908</name>
+		<name>I908</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>a996</name>
+		<name>A996</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>z99</name>
+		<name>Z99</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>w989</name>
+		<name>W989</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>a966</name>
+		<name>A966</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>w969</name>
+		<name>W969</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>d662</name>
+		<name>D662</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>s710</name>
+		<name>S710</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>

@@ -1,72 +1,72 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>ieva d720</name>
+		<name>Ieva d720</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>s920</name>
+		<name>S920</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>ieva d200t</name>
+		<name>Ieva d200t</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>ieva d3</name>
+		<name>Ieva d3</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>ieva d2</name>
+		<name>Ieva d2</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>ieva d700</name>
+		<name>Ieva d700</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>ieva d7</name>
+		<name>Ieva d7</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>ieva d5</name>
+		<name>Ieva d5</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>ieva d600</name>
+		<name>Ieva d600</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>s728</name>
+		<name>S728</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>s630</name>
+		<name>S630</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>ieva d710</name>
+		<name>Ieva d710</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>ieva d770</name>
+		<name>Ieva d770</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>ieva d210t</name>
+		<name>Ieva d210t</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>

@@ -1,147 +1,147 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>lt26w</name>
+		<name>Lt26w</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>sgpt212cn h</name>
+		<name>Sgpt212cn h</name>
 		<width>1024</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>xperia go</name>
+		<name>Xperia go</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>mt27i</name>
+		<name>Mt27i</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>lt22i</name>
+		<name>Lt22i</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>st26i</name>
+		<name>St26i</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>lt26i</name>
+		<name>Lt26i</name>
 		<width>768</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>sgpt112cn s</name>
+		<name>Sgpt112cn s</name>
 		<width>1280</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>st21i</name>
+		<name>St21i</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>st23i</name>
+		<name>St23i</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>mt25i</name>
+		<name>Mt25i</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>lt29i</name>
+		<name>Lt29i</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>xperia vl</name>
+		<name>Xperia vl</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>wt23i</name>
+		<name>Wt23i</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>lt28at</name>
+		<name>Lt28at</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>mt28i</name>
+		<name>Mt28i</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>xperia tipo dual</name>
+		<name>Xperia tipo dual</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>st25i</name>
+		<name>St25i</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>st27i</name>
+		<name>St27i</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>st27a</name>
+		<name>St27a</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>lt25c</name>
+		<name>Lt25c</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>lt26ii</name>
+		<name>Lt26ii</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>j20i</name>
+		<name>J20i</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>lt30p</name>
+		<name>Lt30p</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>lt28i</name>
+		<name>Lt28i</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>lt28h</name>
+		<name>Lt28h</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>sgpt211cn s</name>
+		<name>Sgpt211cn s</name>
 		<width>1024</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>sgpt111cn s</name>
+		<name>Sgpt111cn s</name>
 		<width>1280</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>xperia miro</name>
+		<name>Xperia miro</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>

@@ -1,82 +1,82 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>e330</name>
+		<name>E330</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>iconia tab w700 </name>
+		<name>Iconia tab w700 </name>
 		<width>1920</width>
 		<height>1080</height>
 	</profile>
 	<profile>
-		<name>at390</name>
+		<name>At390</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>iconia tab a210</name>
+		<name>Iconia tab a210</name>
 		<width>1280</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>ak330s</name>
+		<name>Ak330s</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>s500</name>
+		<name>S500</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>e400</name>
+		<name>E400</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>s100</name>
+		<name>S100</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>dx900</name>
+		<name>Dx900</name>
 		<width>480</width>
 		<height>640</height>
 	</profile>
 	<profile>
-		<name>w4</name>
+		<name>W4</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>iconia tab a110</name>
+		<name>Iconia tab a110</name>
 		<width>600</width>
 		<height>1024</height>
 	</profile>
 	<profile>
-		<name>a800</name>
+		<name>A800</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>iconia tab w510</name>
+		<name>Iconia tab w510</name>
 		<width>1280</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>s200</name>
+		<name>S200</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>iconia tab a501</name>
+		<name>Iconia tab a501</name>
 		<width>1280</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>liquid gallant duo</name>
+		<name>Liquid gallant duo</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>

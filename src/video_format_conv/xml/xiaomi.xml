@@ -1,52 +1,52 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>m2 32g</name>
+		<name>M2 32g</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>m1 cdma2000</name>
+		<name>M1 cdma2000</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>m1s cdma2000</name>
+		<name>M1s cdma2000</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>m1s wcdma</name>
+		<name>M1s wcdma</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>m1s</name>
+		<name>M1s</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>m1 qingchunban</name>
+		<name>M1 qingchunban</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>m1</name>
+		<name>M1</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>m1 wcdma</name>
+		<name>M1 wcdma</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>m1s qingchunban</name>
+		<name>M1s qingchunban</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>mi2</name>
+		<name>Mi2</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>

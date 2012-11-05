@@ -1,712 +1,712 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>mt917</name>
+		<name>Mt917</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>touch zine hd</name>
+		<name>Touch zine hd</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>droid razr maxx</name>
+		<name>Droid razr maxx</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>mt810lx</name>
+		<name>Mt810lx</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>mt620</name>
+		<name>Mt620</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>a3300c</name>
+		<name>A3300c</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>me300</name>
+		<name>Me300</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>xt320</name>
+		<name>Xt320</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>xt3</name>
+		<name>Xt3</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>droid xyboard mz607</name>
+		<name>Droid xyboard mz607</name>
 		<width>800</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>mt788</name>
+		<name>Mt788</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>ex232</name>
+		<name>Ex232</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>ex128</name>
+		<name>Ex128</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>me722</name>
+		<name>Me722</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>saygus vphone</name>
+		<name>Saygus vphone</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>smart</name>
+		<name>Smart</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>me600</name>
+		<name>Me600</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>xt883</name>
+		<name>Xt883</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>xt882</name>
+		<name>Xt882</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>xt885</name>
+		<name>Xt885</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>xt889</name>
+		<name>Xt889</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>xt550</name>
+		<name>Xt550</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>mb300</name>
+		<name>Mb300</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>a1680</name>
+		<name>A1680</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>devour a555</name>
+		<name>Devour a555</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>xt720</name>
+		<name>Xt720</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>wx445</name>
+		<name>Wx445</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>xt800+</name>
+		<name>Xt800+</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>xt685</name>
+		<name>Xt685</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>xt682</name>
+		<name>Xt682</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>xt681</name>
+		<name>Xt681</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>xt806</name>
+		<name>Xt806</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>ex223</name>
+		<name>Ex223</name>
 		<width>320</width>
 		<height>240</height>
 	</profile>
 	<profile>
-		<name>xt800</name>
+		<name>Xt800</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>quench xt5</name>
+		<name>Quench xt5</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>triumph</name>
+		<name>Triumph</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>mb200</name>
+		<name>Mb200</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>xt890</name>
+		<name>Xt890</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>droid</name>
+		<name>Droid</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>razr v</name>
+		<name>Razr v</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>a3100</name>
+		<name>A3100</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>titan</name>
+		<name>Titan</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>xt500</name>
+		<name>Xt500</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>xt502</name>
+		<name>Xt502</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>photon q 4g lte</name>
+		<name>Photon q 4g lte</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>droid 2 global</name>
+		<name>Droid 2 global</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>gleam+</name>
+		<name>Gleam+</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>mb860</name>
+		<name>Mb860</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>mb861</name>
+		<name>Mb861</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>xt610</name>
+		<name>Xt610</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>xt611</name>
+		<name>Xt611</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>xt615</name>
+		<name>Xt615</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>mh900 8g</name>
+		<name>Mh900 8g</name>
 		<width>600</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>wx270</name>
+		<name>Wx270</name>
 		<width>128</width>
 		<height>128</height>
 	</profile>
 	<profile>
-		<name>mt820</name>
+		<name>Mt820</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>xoom</name>
+		<name>Xoom</name>
 		<width>1280</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>devour</name>
+		<name>Devour</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>atrix 3</name>
+		<name>Atrix 3</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>mb710</name>
+		<name>Mb710</name>
 		<width>438</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>mb810</name>
+		<name>Mb810</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>me511</name>
+		<name>Me511</name>
 		<width>320</width>
 		<height>240</height>
 	</profile>
 	<profile>
-		<name>e11</name>
+		<name>E11</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>mb520</name>
+		<name>Mb520</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>mt810</name>
+		<name>Mt810</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>mb525</name>
+		<name>Mb525</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>mb526</name>
+		<name>Mb526</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>xt560</name>
+		<name>Xt560</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>a1210</name>
+		<name>A1210</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>defy pro</name>
+		<name>Defy pro</name>
 		<width>320</width>
 		<height>240</height>
 	</profile>
 	<profile>
-		<name>ve66</name>
+		<name>Ve66</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>xt894</name>
+		<name>Xt894</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>me502</name>
+		<name>Me502</name>
 		<width>320</width>
 		<height>240</height>
 	</profile>
 	<profile>
-		<name>me501</name>
+		<name>Me501</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>me811</name>
+		<name>Me811</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>mt870</name>
+		<name>Mt870</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>xoom2</name>
+		<name>Xoom2</name>
 		<width>1280</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>xt800w</name>
+		<name>Xt800w</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>a955</name>
+		<name>A955</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>ex211</name>
+		<name>Ex211</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>xt390</name>
+		<name>Xt390</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>atrix hd lte</name>
+		<name>Atrix hd lte</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>droid razr m</name>
+		<name>Droid razr m</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>xt928</name>
+		<name>Xt928</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>me525+</name>
+		<name>Me525+</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>xt760</name>
+		<name>Xt760</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>xt923</name>
+		<name>Xt923</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>xt926</name>
+		<name>Xt926</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>mb525+</name>
+		<name>Mb525+</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>xt925</name>
+		<name>Xt925</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>xt319</name>
+		<name>Xt319</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>me860</name>
+		<name>Me860</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>me863</name>
+		<name>Me863</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>me865</name>
+		<name>Me865</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>morrison</name>
+		<name>Morrison</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>me632</name>
+		<name>Me632</name>
 		<width>480</width>
 		<height>640</height>
 	</profile>
 	<profile>
-		<name>xt316</name>
+		<name>Xt316</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>droid razr maxx hd</name>
+		<name>Droid razr maxx hd</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>es400</name>
+		<name>Es400</name>
 		<width>480</width>
 		<height>640</height>
 	</profile>
 	<profile>
-		<name>mb508</name>
+		<name>Mb508</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>xt806lx</name>
+		<name>Xt806lx</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>ex200</name>
+		<name>Ex200</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>ex201</name>
+		<name>Ex201</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>mt716</name>
+		<name>Mt716</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>xt788</name>
+		<name>Xt788</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>xt626</name>
+		<name>Xt626</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>titanium</name>
+		<name>Titanium</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>xt912</name>
+		<name>Xt912</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>xt910</name>
+		<name>Xt910</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>mt710</name>
+		<name>Mt710</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>electrify2</name>
+		<name>Electrify2</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>mt720</name>
+		<name>Mt720</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>xt389</name>
+		<name>Xt389</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>pax</name>
+		<name>Pax</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>mt680</name>
+		<name>Mt680</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>mh900+</name>
+		<name>Mh900+</name>
 		<width>600</width>
 		<height>1024</height>
 	</profile>
 	<profile>
-		<name>xt553</name>
+		<name>Xt553</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>razr maxx hd</name>
+		<name>Razr maxx hd</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>xt300</name>
+		<name>Xt300</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>xt301</name>
+		<name>Xt301</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>xt711</name>
+		<name>Xt711</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>xt535</name>
+		<name>Xt535</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>xt910 maxx</name>
+		<name>Xt910 maxx</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>xt536</name>
+		<name>Xt536</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>xt531</name>
+		<name>Xt531</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>xt532</name>
+		<name>Xt532</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>i1</name>
+		<name>I1</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>defy</name>
+		<name>Defy</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>mt887</name>
+		<name>Mt887</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>xt907</name>
+		<name>Xt907</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>xt908</name>
+		<name>Xt908</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>a1260</name>
+		<name>A1260</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>mb855</name>
+		<name>Mb855</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>xt860</name>
+		<name>Xt860</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>me525</name>
+		<name>Me525</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>a3000</name>
+		<name>A3000</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>xt865</name>
+		<name>Xt865</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>droid x se</name>
+		<name>Droid x se</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>mb865</name>
+		<name>Mb865</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>ex118</name>
+		<name>Ex118</name>
 		<width>320</width>
 		<height>240</height>
 	</profile>
 	<profile>
-		<name>ex119</name>
+		<name>Ex119</name>
 		<width>320</width>
 		<height>240</height>
 	</profile>
 	<profile>
-		<name>xt702</name>
+		<name>Xt702</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>
 	<profile>
-		<name>xt701</name>
+		<name>Xt701</name>
 		<width>480</width>
 		<height>854</height>
 	</profile>

@@ -1,212 +1,212 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>s5830i</name>
+		<name>S5830i</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>i757</name>
+		<name>I757</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>i6320c</name>
+		<name>I6320c</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>transfix</name>
+		<name>Transfix</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>s5302</name>
+		<name>S5302</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>s5300</name>
+		<name>S5300</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>i717</name>
+		<name>I717</name>
 		<width>800</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>i899</name>
+		<name>I899</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>i8000u</name>
+		<name>I8000u</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>i579</name>
+		<name>I579</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>e1080c</name>
+		<name>E1080c</name>
 		<width>128</width>
 		<height>128</height>
 	</profile>
 	<profile>
-		<name>c3050c</name>
+		<name>C3050c</name>
 		<width>176</width>
 		<height>220</height>
 	</profile>
 	<profile>
-		<name>w999+</name>
+		<name>W999+</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>r570</name>
+		<name>R570</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>s7562</name>
+		<name>S7562</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>b9120</name>
+		<name>B9120</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>b5310u</name>
+		<name>B5310u</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>s7350c</name>
+		<name>S7350c</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>galaxy trend</name>
+		<name>Galaxy trend</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>galaxy teos</name>
+		<name>Galaxy teos</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>e1088c</name>
+		<name>E1088c</name>
 		<width>128</width>
 		<height>128</height>
 	</profile>
 	<profile>
-		<name>w289</name>
+		<name>W289</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>p6200</name>
+		<name>P6200</name>
 		<width>600</width>
 		<height>1024</height>
 	</profile>
 	<profile>
-		<name>e120l</name>
+		<name>E120l</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>b7510</name>
+		<name>B7510</name>
 		<width>320</width>
 		<height>240</height>
 	</profile>
 	<profile>
-		<name>i9188</name>
+		<name>I9188</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>galaxy siii lte</name>
+		<name>Galaxy siii lte</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>galaxy s3 mini</name>
+		<name>Galaxy s3 mini</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>galaxy tab p3100</name>
+		<name>Galaxy tab p3100</name>
 		<width>600</width>
 		<height>1024</height>
 	</profile>
 	<profile>
-		<name>i9210</name>
+		<name>I9210</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>n8000</name>
+		<name>N8000</name>
 		<width>1280</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>s7120u</name>
+		<name>S7120u</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>i908</name>
+		<name>I908</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>galaxy tab p3108</name>
+		<name>Galaxy tab p3108</name>
 		<width>600</width>
 		<height>1024</height>
 	</profile>
 	<profile>
-		<name>w999</name>
+		<name>W999</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>b7732</name>
+		<name>B7732</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>m580</name>
+		<name>M580</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>i9003</name>
+		<name>I9003</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>i559</name>
+		<name>I559</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>i9001</name>
+		<name>I9001</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>i5510</name>
+		<name>I5510</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>i8510 16g</name>
+		<name>I8510 16g</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
@@ -216,612 +216,612 @@
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>galaxy sii 4g</name>
+		<name>Galaxy sii 4g</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>s6500d</name>
+		<name>S6500d</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>i9008</name>
+		<name>I9008</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>ativ s 32g</name>
+		<name>Ativ s 32g</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>galaxy 3d</name>
+		<name>Galaxy 3d</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>n7102</name>
+		<name>N7102</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>n7100</name>
+		<name>N7100</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>s6888</name>
+		<name>S6888</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>s3778</name>
+		<name>S3778</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>i7500u</name>
+		<name>I7500u</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>m100s</name>
+		<name>M100s</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>n7108</name>
+		<name>N7108</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>c3370u</name>
+		<name>C3370u</name>
 		<width>176</width>
 		<height>220</height>
 	</profile>
 	<profile>
-		<name>s5610</name>
+		<name>S5610</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>p7500</name>
+		<name>P7500</name>
 		<width>1280</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>i8530</name>
+		<name>I8530</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>i8320</name>
+		<name>I8320</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>s5380</name>
+		<name>S5380</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>f480 ace hugo boss</name>
+		<name>F480 ace hugo boss</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>exhibit ii 4g</name>
+		<name>Exhibit ii 4g</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>p6210</name>
+		<name>P6210</name>
 		<width>600</width>
 		<height>1024</height>
 	</profile>
 	<profile>
-		<name>t699</name>
+		<name>T699</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>vibrant</name>
+		<name>Vibrant</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>i9800</name>
+		<name>I9800</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>s3500c</name>
+		<name>S3500c</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>s5578</name>
+		<name>S5578</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>s6108</name>
+		<name>S6108</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>galaxy chat</name>
+		<name>Galaxy chat</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>trender</name>
+		<name>Trender</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>b7610</name>
+		<name>B7610</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>i9228</name>
+		<name>I9228</name>
 		<width>800</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>galaxy m pro</name>
+		<name>Galaxy m pro</name>
 		<width>480</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>s6802</name>
+		<name>S6802</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>s6102</name>
+		<name>S6102</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>n8010</name>
+		<name>N8010</name>
 		<width>1280</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>c3518</name>
+		<name>C3518</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>s3650c</name>
+		<name>S3650c</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>i9220</name>
+		<name>I9220</name>
 		<width>800</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>s3850</name>
+		<name>S3850</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>champ deluxe duos</name>
+		<name>Champ deluxe duos</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>i329</name>
+		<name>I329</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>i9018</name>
+		<name>I9018</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>i8910</name>
+		<name>I8910</name>
 		<width>360</width>
 		<height>640</height>
 	</profile>
 	<profile>
-		<name>r720</name>
+		<name>R720</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>b5510</name>
+		<name>B5510</name>
 		<width>320</width>
 		<height>240</height>
 	</profile>
 	<profile>
-		<name>i9010</name>
+		<name>I9010</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>b5100</name>
+		<name>B5100</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>galaxy appeal</name>
+		<name>Galaxy appeal</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>galaxy music</name>
+		<name>Galaxy music</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>s7500</name>
+		<name>S7500</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>s5200c</name>
+		<name>S5200c</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>s7562i</name>
+		<name>S7562i</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>s5380d</name>
+		<name>S5380d</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>galaxy attain 4g</name>
+		<name>Galaxy attain 4g</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>s6102e</name>
+		<name>S6102e</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>s6352</name>
+		<name>S6352</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>m930</name>
+		<name>M930</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>bigfoot</name>
+		<name>Bigfoot</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>b7732u</name>
+		<name>B7732u</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>i9020</name>
+		<name>I9020</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>galaxy proclaim</name>
+		<name>Galaxy proclaim</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>e1070c</name>
+		<name>E1070c</name>
 		<width>128</width>
 		<height>128</height>
 	</profile>
 	<profile>
-		<name>c3222</name>
+		<name>C3222</name>
 		<width>220</width>
 		<height>176</height>
 	</profile>
 	<profile>
-		<name>i405</name>
+		<name>I405</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>s5830</name>
+		<name>S5830</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>i8700</name>
+		<name>I8700</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>i9000 16g</name>
+		<name>I9000 16g</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>s7550</name>
+		<name>S7550</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>n719</name>
+		<name>N719</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>i727</name>
+		<name>I727</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>i5500</name>
+		<name>I5500</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>i9088</name>
+		<name>I9088</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>c3500</name>
+		<name>C3500</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>s5330</name>
+		<name>S5330</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>i9100 32g</name>
+		<name>I9100 32g</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>i5508</name>
+		<name>I5508</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>s6500</name>
+		<name>S6500</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>s3601c</name>
+		<name>S3601c</name>
 		<width>176</width>
 		<height>220</height>
 	</profile>
 	<profile>
-		<name>t999</name>
+		<name>T999</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>c3310c</name>
+		<name>C3310c</name>
 		<width>176</width>
 		<height>220</height>
 	</profile>
 	<profile>
-		<name>e2558</name>
+		<name>E2558</name>
 		<width>128</width>
 		<height>160</height>
 	</profile>
 	<profile>
-		<name>m120s</name>
+		<name>M120s</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>i8910u</name>
+		<name>I8910u</name>
 		<width>360</width>
 		<height>640</height>
 	</profile>
 	<profile>
-		<name>galaxy sii plus</name>
+		<name>Galaxy sii plus</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>s5680</name>
+		<name>S5680</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>galaxy note iii</name>
+		<name>Galaxy note iii</name>
 		<width>1080</width>
 		<height>1920</height>
 	</profile>
 	<profile>
-		<name>i589</name>
+		<name>I589</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>i8150</name>
+		<name>I8150</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>i9250</name>
+		<name>I9250</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>s5690</name>
+		<name>S5690</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>e1200m</name>
+		<name>E1200m</name>
 		<width>128</width>
 		<height>128</height>
 	</profile>
 	<profile>
-		<name>i809</name>
+		<name>I809</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>s7250d</name>
+		<name>S7250d</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>s3930c</name>
+		<name>S3930c</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>s7530</name>
+		<name>S7530</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>i929</name>
+		<name>I929</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>s3778 wcdma</name>
+		<name>S3778 wcdma</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>w609</name>
+		<name>W609</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>e110s</name>
+		<name>E110s</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>t679</name>
+		<name>T679</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>i908l</name>
+		<name>I908l</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>i920</name>
+		<name>I920</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>i9070 16g</name>
+		<name>I9070 16g</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>e2600</name>
+		<name>E2600</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>i6410</name>
+		<name>I6410</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>i889</name>
+		<name>I889</name>
 		<width>800</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>p739</name>
+		<name>P739</name>
 		<width>1280</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>e3210</name>
+		<name>E3210</name>
 		<width>128</width>
 		<height>160</height>
 	</profile>
 	<profile>
-		<name>i8520</name>
+		<name>I8520</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>galaxy sii duo</name>
+		<name>Galaxy sii duo</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>i9520</name>
+		<name>I9520</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>t989</name>
+		<name>T989</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>i8250</name>
+		<name>I8250</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>i535</name>
+		<name>I535</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>w699</name>
+		<name>W699</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>galaxy r style</name>
+		<name>Galaxy r style</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>u380</name>
+		<name>U380</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>t889</name>
+		<name>T889</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>b6520</name>
+		<name>B6520</name>
 		<width>320</width>
 		<height>240</height>
 	</profile>
 	<profile>
-		<name>intensity iii</name>
+		<name>Intensity iii</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>s5520</name>
+		<name>S5520</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>e210</name>
+		<name>E210</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
@@ -831,692 +831,692 @@
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>i937</name>
+		<name>I937</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>i9070</name>
+		<name>I9070</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>i9260</name>
+		<name>I9260</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>f339</name>
+		<name>F339</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>s8500 8g</name>
+		<name>S8500 8g</name>
 		<width>800</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>p7300</name>
+		<name>P7300</name>
 		<width>1280</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>i6500u</name>
+		<name>I6500u</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>s5368</name>
+		<name>S5368</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>array</name>
+		<name>Array</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>s6700c</name>
+		<name>S6700c</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>s5560</name>
+		<name>S5560</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>i939</name>
+		<name>I939</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>w910</name>
+		<name>W910</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>w319</name>
+		<name>W319</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>s8530</name>
+		<name>S8530</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>galaxy sii skyrocket</name>
+		<name>Galaxy sii skyrocket</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>galaxy rush</name>
+		<name>Galaxy rush</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>n7100 64g</name>
+		<name>N7100 64g</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>t879</name>
+		<name>T879</name>
 		<width>800</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>i6330c</name>
+		<name>I6330c</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>m340s</name>
+		<name>M340s</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>galaxy stellar 4g lte</name>
+		<name>Galaxy stellar 4g lte</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>m8000</name>
+		<name>M8000</name>
 		<width>240</width>
 		<height>432</height>
 	</profile>
 	<profile>
-		<name>i9000</name>
+		<name>I9000</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>i509</name>
+		<name>I509</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>galaxy note lte</name>
+		<name>Galaxy note lte</name>
 		<width>800</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>e2652</name>
+		<name>E2652</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>w899</name>
+		<name>W899</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>s5560c</name>
+		<name>S5560c</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>n7100 32g</name>
+		<name>N7100 32g</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>s7230e</name>
+		<name>S7230e</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>i339</name>
+		<name>I339</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>impulse 4g</name>
+		<name>Impulse 4g</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>p6800</name>
+		<name>P6800</name>
 		<width>800</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>function</name>
+		<name>Function</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>i897</name>
+		<name>I897</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>flight ii</name>
+		<name>Flight ii</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>galaxy sii x</name>
+		<name>Galaxy sii x</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>p5100</name>
+		<name>P5100</name>
 		<width>1280</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>i9100g</name>
+		<name>I9100g</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>s5608u</name>
+		<name>S5608u</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>epic 2</name>
+		<name>Epic 2</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>b7320</name>
+		<name>B7320</name>
 		<width>320</width>
 		<height>240</height>
 	</profile>
 	<profile>
-		<name>d710</name>
+		<name>D710</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>s5660</name>
+		<name>S5660</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>eternity ii</name>
+		<name>Eternity ii</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>e2252</name>
+		<name>E2252</name>
 		<width>128</width>
 		<height>160</height>
 	</profile>
 	<profile>
-		<name>spica</name>
+		<name>Spica</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>p7310</name>
+		<name>P7310</name>
 		<width>1280</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>nori</name>
+		<name>Nori</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>m830</name>
+		<name>M830</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>i909</name>
+		<name>I909</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>galaxy music duos</name>
+		<name>Galaxy music duos</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>e1228</name>
+		<name>E1228</name>
 		<width>128</width>
 		<height>160</height>
 	</profile>
 	<profile>
-		<name>s579</name>
+		<name>S579</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>c3312</name>
+		<name>C3312</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>i699</name>
+		<name>I699</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>c3520</name>
+		<name>C3520</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>s5838</name>
+		<name>S5838</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>i5800</name>
+		<name>I5800</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>i519</name>
+		<name>I519</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>s7530e</name>
+		<name>S7530e</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>i8160</name>
+		<name>I8160</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>i9308</name>
+		<name>I9308</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>p1000</name>
+		<name>P1000</name>
 		<width>600</width>
 		<height>1024</height>
 	</profile>
 	<profile>
-		<name>star3</name>
+		<name>Star3</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>s3570</name>
+		<name>S3570</name>
 		<width>320</width>
 		<height>240</height>
 	</profile>
 	<profile>
-		<name>i9300</name>
+		<name>I9300</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>i8000</name>
+		<name>I8000</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>a927</name>
+		<name>A927</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>s5750e</name>
+		<name>S5750e</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>i9305</name>
+		<name>I9305</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>i619</name>
+		<name>I619</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>i5700</name>
+		<name>I5700</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>i779</name>
+		<name>I779</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>i917</name>
+		<name>I917</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>b3410c</name>
+		<name>B3410c</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>i777</name>
+		<name>I777</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>s5360</name>
+		<name>S5360</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>a597</name>
+		<name>A597</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>i997</name>
+		<name>I997</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>s3370</name>
+		<name>S3370</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>s8600</name>
+		<name>S8600</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>c3300k</name>
+		<name>C3300k</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>s5628i</name>
+		<name>S5628i</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>ativ s</name>
+		<name>Ativ s</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>s5670</name>
+		<name>S5670</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>wave ii</name>
+		<name>Wave ii</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>i919</name>
+		<name>I919</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>s5570</name>
+		<name>S5570</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>u485</name>
+		<name>U485</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>i927</name>
+		<name>I927</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>s7508</name>
+		<name>S7508</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>b7300c</name>
+		<name>B7300c</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>e210s</name>
+		<name>E210s</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>i8910 hd</name>
+		<name>I8910 hd</name>
 		<width>360</width>
 		<height>640</height>
 	</profile>
 	<profile>
-		<name>e2232</name>
+		<name>E2232</name>
 		<width>128</width>
 		<height>160</height>
 	</profile>
 	<profile>
-		<name>i919u</name>
+		<name>I919u</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>s8500</name>
+		<name>S8500</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>tocco icon</name>
+		<name>Tocco icon</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>i9200</name>
+		<name>I9200</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>e2330</name>
+		<name>E2330</name>
 		<width>128</width>
 		<height>160</height>
 	</profile>
 	<profile>
-		<name>i569</name>
+		<name>I569</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>w279</name>
+		<name>W279</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>b5702c</name>
+		<name>B5702c</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>s8003</name>
+		<name>S8003</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>doubletime</name>
+		<name>Doubletime</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>w709</name>
+		<name>W709</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>c5180</name>
+		<name>C5180</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>b5330</name>
+		<name>B5330</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>t959</name>
+		<name>T959</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>s5580</name>
+		<name>S5580</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>galaxy sii lte</name>
+		<name>Galaxy sii lte</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>galaxy s2 mini</name>
+		<name>Galaxy s2 mini</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>s5820</name>
+		<name>S5820</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>s5570i</name>
+		<name>S5570i</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>i9008l</name>
+		<name>I9008l</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>galaxy s advance</name>
+		<name>Galaxy s advance</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>i8370</name>
+		<name>I8370</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>i667</name>
+		<name>I667</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>i9108</name>
+		<name>I9108</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>b5722c</name>
+		<name>B5722c</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>i847</name>
+		<name>I847</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>galaxy tab 11 6</name>
+		<name>Galaxy tab 11 6</name>
 		<width>2560</width>
 		<height>1600</height>
 	</profile>
 	<profile>
-		<name>i9023</name>
+		<name>I9023</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>t759</name>
+		<name>T759</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>i9103</name>
+		<name>I9103</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>i9100</name>
+		<name>I9100</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>s8000c</name>
+		<name>S8000c</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>c6112c</name>
+		<name>C6112c</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>w799</name>
+		<name>W799</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>s5630c</name>
+		<name>S5630c</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>i8350 omnia w</name>
+		<name>I8350 omnia w</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>galaxy s pro</name>
+		<name>Galaxy s pro</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>s8500c</name>
+		<name>S8500c</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>i8750</name>
+		<name>I8750</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>b9062</name>
+		<name>B9062</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>c6712</name>
+		<name>C6712</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
@@ -1526,107 +1526,107 @@
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>f839</name>
+		<name>F839</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>w589</name>
+		<name>W589</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>galaxy pocket</name>
+		<name>Galaxy pocket</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>e2652w</name>
+		<name>E2652w</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>r880</name>
+		<name>R880</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>s6358</name>
+		<name>S6358</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>i577</name>
+		<name>I577</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>p7510</name>
+		<name>P7510</name>
 		<width>1280</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>i5801</name>
+		<name>I5801</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>s5628</name>
+		<name>S5628</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>e1260b</name>
+		<name>E1260b</name>
 		<width>160</width>
 		<height>128</height>
 	</profile>
 	<profile>
-		<name>s5230c</name>
+		<name>S5230c</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>galaxy pocket pocke</name>
+		<name>Galaxy pocket pocke</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>galaxy tab p3110</name>
+		<name>Galaxy tab p3110</name>
 		<width>600</width>
 		<height>1024</height>
 	</profile>
 	<profile>
-		<name>e210l</name>
+		<name>E210l</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>i9050</name>
+		<name>I9050</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>galaxy y pro duos</name>
+		<name>Galaxy y pro duos</name>
 		<width>320</width>
 		<height>240</height>
 	</profile>
 	<profile>
-		<name>b5210u</name>
+		<name>B5210u</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>p5110</name>
+		<name>P5110</name>
 		<width>800</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>galaxy note s</name>
+		<name>Galaxy note s</name>
 		<width>800</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>galaxy k</name>
+		<name>Galaxy k</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>

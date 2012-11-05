@@ -1,492 +1,492 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>optimus vu 2</name>
+		<name>Optimus vu 2</name>
 		<width>768</width>
 		<height>1024</height>
 	</profile>
 	<profile>
-		<name>c320</name>
+		<name>C320</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>p693</name>
+		<name>P693</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>gd900e</name>
+		<name>Gd900e</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>kh5200</name>
+		<name>Kh5200</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>enlighten</name>
+		<name>Enlighten</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>p880</name>
+		<name>P880</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>gt540</name>
+		<name>Gt540</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>gd910</name>
+		<name>Gd910</name>
 		<width>128</width>
 		<height>160</height>
 	</profile>
 	<profile>
-		<name>su870</name>
+		<name>Su870</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>p760</name>
+		<name>P760</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>ally</name>
+		<name>Ally</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>viper</name>
+		<name>Viper</name>
 		<width>480</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>lu6200</name>
+		<name>Lu6200</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>tb200</name>
+		<name>Tb200</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>su880</name>
+		<name>Su880</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>optimus g2x</name>
+		<name>Optimus g2x</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>e400</name>
+		<name>E400</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>gu220</name>
+		<name>Gu220</name>
 		<width>176</width>
 		<height>220</height>
 	</profile>
 	<profile>
-		<name>optimus pad 2</name>
+		<name>Optimus pad 2</name>
 		<width>768</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>gx500</name>
+		<name>Gx500</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>marquee</name>
+		<name>Marquee</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>rumor reflex</name>
+		<name>Rumor reflex</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>thrive</name>
+		<name>Thrive</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>t310</name>
+		<name>T310</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>su640</name>
+		<name>Su640</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>t500</name>
+		<name>T500</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>p940</name>
+		<name>P940</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>e720</name>
+		<name>E720</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>c660</name>
+		<name>C660</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>vs910</name>
+		<name>Vs910</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>bl20e</name>
+		<name>Bl20e</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>p705</name>
+		<name>P705</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>gw740</name>
+		<name>Gw740</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>t300</name>
+		<name>T300</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>e730</name>
+		<name>E730</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>optimus pad lte</name>
+		<name>Optimus pad lte</name>
 		<width>1280</width>
 		<height>768</height>
 	</profile>
 	<profile>
-		<name>gs500v</name>
+		<name>Gs500v</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>gw620</name>
+		<name>Gw620</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>ax840</name>
+		<name>Ax840</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>ls969</name>
+		<name>Ls969</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>e405f</name>
+		<name>E405f</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>f100s</name>
+		<name>F100s</name>
 		<width>768</width>
 		<height>1024</height>
 	</profile>
 	<profile>
-		<name>optimus note</name>
+		<name>Optimus note</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>optimus lte tag</name>
+		<name>Optimus lte tag</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>optimus2</name>
+		<name>Optimus2</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>optimus m+</name>
+		<name>Optimus m+</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>f100l</name>
+		<name>F100l</name>
 		<width>768</width>
 		<height>1024</height>
 	</profile>
 	<profile>
-		<name>gs290</name>
+		<name>Gs290</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>e740</name>
+		<name>E740</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>f160l</name>
+		<name>F160l</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>gelato nfc</name>
+		<name>Gelato nfc</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>ls970</name>
+		<name>Ls970</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>p725</name>
+		<name>P725</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>gm750</name>
+		<name>Gm750</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>p920</name>
+		<name>P920</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>gs100</name>
+		<name>Gs100</name>
 		<width>128</width>
 		<height>128</height>
 	</profile>
 	<profile>
-		<name>gs101</name>
+		<name>Gs101</name>
 		<width>128</width>
 		<height>128</height>
 	</profile>
 	<profile>
-		<name>vs700</name>
+		<name>Vs700</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>e510</name>
+		<name>E510</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>optimus lte 2</name>
+		<name>Optimus lte 2</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>ls860</name>
+		<name>Ls860</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>gt350</name>
+		<name>Gt350</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>optimus hub</name>
+		<name>Optimus hub</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>p520</name>
+		<name>P520</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>mytouch q</name>
+		<name>Mytouch q</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>p993</name>
+		<name>P993</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>p990</name>
+		<name>P990</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>ms840</name>
+		<name>Ms840</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>xpression c395</name>
+		<name>Xpression c395</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>mytouch</name>
+		<name>Mytouch</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>gd580</name>
+		<name>Gd580</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>s310</name>
+		<name>S310</name>
 		<width>176</width>
 		<height>220</height>
 	</profile>
 	<profile>
-		<name>le970</name>
+		<name>Le970</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>p350</name>
+		<name>P350</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>p355</name>
+		<name>P355</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>vs920</name>
+		<name>Vs920</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>e960</name>
+		<name>E960</name>
 		<width>768</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>ms910</name>
+		<name>Ms910</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>lucid 4g</name>
+		<name>Lucid 4g</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>optimus q2</name>
+		<name>Optimus q2</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>optimus eye</name>
+		<name>Optimus eye</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>kv510</name>
+		<name>Kv510</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>optimus s</name>
+		<name>Optimus s</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>us730</name>
+		<name>Us730</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>p970</name>
+		<name>P970</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>su760</name>
+		<name>Su760</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>nexus4</name>
+		<name>Nexus4</name>
 		<width>768</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>p870</name>
+		<name>P870</name>
 		<width>540</width>
 		<height>960</height>
 	</profile>
 	<profile>
-		<name>gd510</name>
+		<name>Gd510</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>e973</name>
+		<name>E973</name>
 		<width>768</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>p500</name>
+		<name>P500</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>p503</name>
+		<name>P503</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>bl20</name>
+		<name>Bl20</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>kp502</name>
+		<name>Kp502</name>
 		<width>240</width>
 		<height>400</height>
 	</profile>
 	<profile>
-		<name>optimus 3d 2</name>
+		<name>Optimus 3d 2</name>
 		<width>480</width>
 		<height>800</height>
 	</profile>
 	<profile>
-		<name>d1l</name>
+		<name>D1l</name>
 		<width>720</width>
 		<height>1280</height>
 	</profile>
 	<profile>
-		<name>t320</name>
+		<name>T320</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>

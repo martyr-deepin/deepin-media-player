@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>vr7</name>
+		<name>Vr7</name>
 		<width>240</width>
 		<height>320</height>
 	</profile>
 	<profile>
-		<name>ts3</name>
+		<name>Ts3</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>

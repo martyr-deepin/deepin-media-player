@@ -1,27 +1,27 @@
 <?xml version="1.0"?>
 <device>
 	<profile>
-		<name>zpad t8</name>
+		<name>Zpad t8</name>
 		<width>1024</width>
 		<height>768</height>
 	</profile>
 	<profile>
-		<name>e808</name>
+		<name>E808</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>i5</name>
+		<name>I5</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>z100</name>
+		<name>Z100</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
 	<profile>
-		<name>z100-a</name>
+		<name>Z100-a</name>
 		<width>320</width>
 		<height>480</height>
 	</profile>
