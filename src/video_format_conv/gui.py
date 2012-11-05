@@ -122,12 +122,12 @@ class Form(DialogBox):
         
         self.path_entry = InputEntry()
         self.save_path_entry = InputEntry()
-        fixed_width = 108
+        fixed_width = 108       
         self.brand_combo = NewComboBox(fixed_width)
         self.format_combo = NewComboBox(fixed_width)
         self.bit_rate_combo = NewComboBox(fixed_width)
         self.frame_rate_combo = NewComboBox(fixed_width)
-        self.model_combo = NewComboBox(fixed_width) 
+        self.model_combo = NewComboBox(fixed_width)
         self.ratio_combo = NewComboBox(fixed_width) 
         
         self.modify_chooser_btn = FileChooserButton("选择") # connect self.FileChooser
@@ -179,12 +179,13 @@ class Form(DialogBox):
         self.model_combo.set_sensitive(False)
         self.model_combo.prepend_text(_("No Model"))
         self.model_combo.connect("changed", self.model_combo_item_selected)
-
+        # 
+        self.save_chooser_btn.set_size_request(75, 21)
         self.save_chooser_btn.connect("clicked", self.save_chooser_btn_clicked)
         
         # path_entry.
         PATH_ENTRY_WIDTH = 240
-        PATH_ENTRY_HEIGHT = 25
+        PATH_ENTRY_HEIGHT = 22
         self.save_path_entry.set_sensitive(False)
         self.save_path_entry.set_text(self.get_home_path())
         self.save_path_entry.set_size(PATH_ENTRY_WIDTH, PATH_ENTRY_HEIGHT)
@@ -226,13 +227,17 @@ class Form(DialogBox):
         self.save_path_hbox_ali.set_padding(5, 5, 16, 0)
         self.save_path_hbox_ali.add(self.save_path_hbox)
                 
-        save_chooser_btn_ali = gtk.Alignment()
-        save_chooser_btn_ali.set_padding(0, 0, 15, 0)
-        save_chooser_btn_ali.add(self.save_chooser_btn)
+        self.save_path_entry_ali = gtk.Alignment()
+        self.save_path_entry_ali.set_padding(1, 0, 0, 0)
+        self.save_path_entry_ali.add(self.save_path_entry)
+        
+        self.save_chooser_btn_ali = gtk.Alignment()
+        self.save_chooser_btn_ali.set_padding(0, 0, 10, 0)
+        self.save_chooser_btn_ali.add(self.save_chooser_btn)
         
         self.save_path_hbox.pack_start(self.path_label, False, False)
-        self.save_path_hbox.pack_start(self.save_path_entry, False, False)
-        self.save_path_hbox.pack_start(save_chooser_btn_ali, False, False)
+        self.save_path_hbox.pack_start(self.save_path_entry_ali, False, False)
+        self.save_path_hbox.pack_start(self.save_chooser_btn_ali, False, False)
         
         # left right top, bottom.
         '''brand_model_hbox.'''
