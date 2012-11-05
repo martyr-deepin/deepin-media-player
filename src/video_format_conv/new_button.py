@@ -39,44 +39,22 @@ class LabelButton(gtk.Button):
     def label_button_expose_event(self, widget, event):    
         cr = widget.window.cairo_create()
         rect = widget.allocation
-        text_color = "#3145de"
-        line_color = "#3145de"
-        draw_bool = True
+        color = "#2685e3"
+        draw_line_bool = False
         
         if widget.state == gtk.STATE_NORMAL:
-            text_color = "#3145de"
-            line_color = "#3145de"
-            draw_bool = True
+            color = "#2685e3"
+            draw_line_bool = False
         elif widget.state == gtk.STATE_PRELIGHT:
-            text_color = "#0000FF"
-            line_color = "#0000FF"
-            draw_bool = True
+            color = "#257bd0"
+            draw_line_bool = True
         elif widget.state == gtk.STATE_ACTIVE:
-            text_color = "#0000FF"
-            line_color = "#0000FF"
-            draw_bool = True
+            color = "#257bd0"
+            draw_line_bool = True
         
         # draw text.
-        self.__draw_label_text(cr, rect, text_color)
-        # draw blue line.
-        self.__draw_blue_line(cr, rect,  line_color, draw_bool)
-        return True
-
-    def __draw_label_text(self, cr, rect, color):
-        draw_text(cr, "高级设置", rect.x, rect.y, rect.width, rect.height, text_color=color)
-        
-    def __draw_blue_line(self, cr, rect, color, draw_bool):        
-        if draw_bool:
-            y_padding = 6
-            width_padding = 48
-            # draw line.
-            cr.set_source_rgb(*color_hex_to_rgb(color))
-            cr.rectangle(rect.x, 
-                         rect.y + (rect.height / 2) + y_padding, 
-                         width_padding, 
-                         1)
-            cr.fill()                
-            
+        draw_text(cr, "高级设置", rect.x, rect.y, rect.width, rect.height, text_color=color, underline=draw_line_bool)
+        return True            
             
 if __name__ == "__main__":            
     win = gtk.Window(gtk.WINDOW_TOPLEVEL)
