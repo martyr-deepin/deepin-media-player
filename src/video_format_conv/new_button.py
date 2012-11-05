@@ -29,7 +29,9 @@ class LabelButton(gtk.Button):
     def __init__(self):
         gtk.Button.__init__(self)
         self.text = "高级设置"
-        self.set_size_request(50, 20)
+        width = 50
+        height = 20
+        self.set_size_request(width, height)
         # Init event.
         self.connect("expose-event", self.label_button_expose_event)
         
@@ -37,33 +39,43 @@ class LabelButton(gtk.Button):
     def label_button_expose_event(self, widget, event):    
         cr = widget.window.cairo_create()
         rect = widget.allocation
-        # draw text.
-        self.__draw_label_text(cr, rect)
-        # draw blue line.
-        self.__draw_blue_line(cr, rect, widget)
-        return True
-
-    def __draw_label_text(self, cr, rect):
-        draw_text(cr, "高级设置", rect.x, rect.y, rect.width, rect.height, text_color="#2685e3")
+        text_color = "#3145de"
+        line_color = "#3145de"
+        draw_bool = True
         
-    def __draw_blue_line(self, cr, rect, widget):
-        draw_bool = False
         if widget.state == gtk.STATE_NORMAL:
-            draw_bool = False
+            text_color = "#3145de"
+            line_color = "#3145de"
+            draw_bool = True
         elif widget.state == gtk.STATE_PRELIGHT:
+            text_color = "#0000FF"
+            line_color = "#0000FF"
             draw_bool = True
         elif widget.state == gtk.STATE_ACTIVE:
+            text_color = "#0000FF"
+            line_color = "#0000FF"
             draw_bool = True
         
+        # draw text.
+        self.__draw_label_text(cr, rect, text_color)
+        # draw blue line.
+        self.__draw_blue_line(cr, rect,  line_color, draw_bool)
+        return True
+
+    def __draw_label_text(self, cr, rect, color):
+        draw_text(cr, "高级设置", rect.x, rect.y, rect.width, rect.height, text_color=color)
+        
+    def __draw_blue_line(self, cr, rect, color, draw_bool):        
         if draw_bool:
+            y_padding = 6
+            width_padding = 48
             # draw line.
-            cr.set_source_rgb(*color_hex_to_rgb("#000010"))
-            # cr.set_source_rgb(*color_hex_to_rgb("#0000FF"))
+            cr.set_source_rgb(*color_hex_to_rgb(color))
             cr.rectangle(rect.x, 
-                         rect.y + (rect.height / 2) + 6, 
-                         48, 
+                         rect.y + (rect.height / 2) + y_padding, 
+                         width_padding, 
                          1)
-            cr.fill()                        
+            cr.fill()                
             
             
 if __name__ == "__main__":            
