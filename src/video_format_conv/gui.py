@@ -32,6 +32,7 @@ from dtk.ui.label import Label
 from dtk.ui.combo import ComboBox
 from dtk.ui.utils import container_remove_all
 from new_combobox import NewComboBox
+from new_button import LabelButton
 from read_xml import ReadXml
 
 import gtk
@@ -134,7 +135,7 @@ class Form(DialogBox):
         self.start_btn = Button(_("Start"))
         self.close_btn = Button(_("Close"))
         self.higt_set_bool = False
-        self.higt_set_btn = Button(_("Advanced"))
+        self.higt_set_btn = LabelButton()#Button(_("Advanced"))
         
         self.show_and_hide_task_btn = Button(_("Task manager"))
         
