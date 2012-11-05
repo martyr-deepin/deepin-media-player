@@ -22,7 +22,7 @@
 
 
 from dtk.ui.draw import draw_text
-
+from dtk.ui.utils import color_hex_to_rgb 
 import gtk
 
 class LabelButton(gtk.Button):
@@ -44,8 +44,8 @@ class LabelButton(gtk.Button):
         return True
 
     def __draw_label_text(self, cr, rect):
-        draw_text(cr, "高级设置", rect.x, rect.y, rect.width, rect.height, text_color="#0000FF")
-
+        draw_text(cr, "高级设置", rect.x, rect.y, rect.width, rect.height, text_color="#2685e3")
+        
     def __draw_blue_line(self, cr, rect, widget):
         draw_bool = False
         if widget.state == gtk.STATE_NORMAL:
@@ -57,10 +57,11 @@ class LabelButton(gtk.Button):
         
         if draw_bool:
             # draw line.
-            cr.set_source_rgb(0, 0, 1)
+            cr.set_source_rgb(*color_hex_to_rgb("#000010"))
+            # cr.set_source_rgb(*color_hex_to_rgb("#0000FF"))
             cr.rectangle(rect.x, 
-                         rect.y + (rect.height / 2) + 5, 
-                         50, 
+                         rect.y + (rect.height / 2) + 6, 
+                         48, 
                          1)
             cr.fill()                        
             

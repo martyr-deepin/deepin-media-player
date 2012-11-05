@@ -144,6 +144,7 @@ class Form(DialogBox):
         
         self.higt_align = gtk.Alignment()
         self.higt_align.add(self.higt_hbox)
+        self.higt_align.set_padding(0, 0, 7, 0)
         self.higt_align.set(1, 0, 1, 0)
         
         self.left_button_box.set_buttons([self.higt_align])
