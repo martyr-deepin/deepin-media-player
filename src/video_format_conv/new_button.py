@@ -23,12 +23,13 @@
 
 from dtk.ui.draw import draw_text
 from dtk.ui.utils import color_hex_to_rgb 
+from locales import _
 import gtk
 
 class LabelButton(gtk.Button):
     def __init__(self):
         gtk.Button.__init__(self)
-        self.text = "高级设置"
+        self.text = _("高级设置")
         width = 50
         height = 20
         self.set_size_request(width, height)

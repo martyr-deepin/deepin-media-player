@@ -58,10 +58,6 @@ def cdrom_type(cdrom_path):
         return CDROM_TYPE_VCD
     elif cdrom_cd(cdrom_file_list):
         return CDROM_TYPE_CD
-    elif cdrom_iso(cdrom_file_list):
-        return CDROM_TYPE_ISO
-    elif cdrom_data(cdrom_file_list):
-        return CDROM_TYPE_DATA
     else:
         return CDROM_ERROR
     
@@ -87,12 +83,6 @@ def cdrom_vcd(file_list):
 
 def cdrom_cd(file_list):
     pass
-
-def cdrom_iso(file_list):
-    pass
-
-def cdrom_data(file_list):
-    return True
 
 ###############################################################
 def scan_cdrom():
@@ -124,15 +114,17 @@ def close_cdrom(cdrom):
     ioctl_cdrom(cdrom, CLOSE_CDROM)
            
 if __name__ == "__main__":     
-    cdrom_list = scan_cdrom()
-    for cdrom in cdrom_list:
-        print "cdrom:", cdrom
-        open_cdrom(cdrom)
+    # cdrom_list = scan_cdrom()
+    # for cdrom in cdrom_list:
+    #     print "cdrom:", cdrom
+    #     open_cdrom(cdrom)
         
-    for cdrom in cdrom_list:
-        close_cdrom(cdrom)
+    # for cdrom in cdrom_list:
+    #     close_cdrom(cdrom)
         
     cd_type = cdrom_type("/media/DVD Video")
+    # cd_type = cdrom_type("/dev/cdrom")
+    
     if cd_type == CDROM_TYPE_EMPTY:
         print "你插入的数据光盘是空的"
     elif cd_type == CDROM_TYPE_DVD:
