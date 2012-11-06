@@ -664,7 +664,7 @@ msgstr "置頂"
 
 #: ../src/video_format_conv/gui.py:43
 msgid "('form_size', 455, 180)"
-msgstr ""
+msgstr "('form_size', 425, 180)"
 
 #: ../src/video_format_conv/gui.py:53
 msgid "Format converter"
@@ -977,27 +977,27 @@ msgstr "自定義"
 
 #: ../src/video_format_conv/gui.py:192
 msgid "('brand_position', 20)"
-msgstr ""
+msgstr "('brand_position', 0)"
 
 #: ../src/video_format_conv/gui.py:193
 msgid "('model_position', 20)"
-msgstr ""
+msgstr "('model_position', 0)"
 
 #: ../src/video_format_conv/gui.py:199
 msgid "('format_position', 12)"
-msgstr ""
+msgstr "('format_position', 0)"
 
 #: ../src/video_format_conv/gui.py:200
 msgid "('ratio_position', 18)"
-msgstr ""
+msgstr "('ratio_position', 0)"
 
 #: ../src/video_format_conv/gui.py:208
 msgid "('frame_position', 13)"
-msgstr ""
+msgstr "('frame_position', 0)"
 
 #: ../src/video_format_conv/gui.py:209
 msgid "('bit_rate_position', 28)"
-msgstr ""
+msgstr "('bit_rate_position', 0)"
 
 #: ../src/video_format_conv/gui.py:276
 msgid "Choose a directory"
@@ -1041,17 +1041,19 @@ msgstr "清除已完成任務"
 
 #: ../src/video_format_conv/new_button.py:32
 #: ../src/video_format_conv/new_button.py:59
-#, fuzzy
 msgid "Advanced settings"
-msgstr "高級"
+msgstr "高級設置"
 
 #: ../src/video_format_conv/new_button.py:33
 msgid "('button_size', 100)"
-msgstr ""
+msgstr "('button_size', 50)"
 
 #: ../src/video_format_conv/conv_task_gui.py:57
 msgid "Task Manager for format conversion"
 msgstr "任務管理器"
+
+#~ msgid "Advanced"
+#~ msgstr "高級"
 
 #~ msgid "ZTE"
 #~ msgstr "中興"
