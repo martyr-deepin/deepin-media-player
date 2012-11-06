@@ -29,8 +29,10 @@ import gtk
 class LabelButton(gtk.Button):
     def __init__(self):
         gtk.Button.__init__(self)
-        self.text = _("高级设置")
-        width = 50
+        self.text = _("Advanced settings")
+        width = eval(_("('button_size', 100)"))
+        # width = 50
+        width = width[1]
         height = 20
         self.set_size_request(width, height)
         # Init event.
@@ -54,7 +56,7 @@ class LabelButton(gtk.Button):
             draw_line_bool = True
         
         # draw text.
-        draw_text(cr, "高级设置", rect.x, rect.y, rect.width, rect.height, text_color=color, underline=draw_line_bool)
+        draw_text(cr, _("Advanced settings"), rect.x, rect.y, rect.width, rect.height, text_color=color, underline=draw_line_bool)
         return True            
             
 if __name__ == "__main__":            

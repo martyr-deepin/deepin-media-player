@@ -40,9 +40,11 @@ import os
 
 from locales import _
 
-FORM_WIDTH = 425
+form_size = eval(_("('form_size', 455, 180)"))
+
+FORM_WIDTH = int(form_size[1])
 # FORM_HEIGHT = 280
-FORM_HEIGHT = 180
+FORM_HEIGHT = int(form_size[2])
 
 
 class Form(DialogBox):
@@ -66,20 +68,7 @@ class Form(DialogBox):
         read_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "xml")
         self.read_xml = ReadXml(read_path)
         self.model_dict = {}
-        # left.
-        self.left_x = 20
-        self.left_y = 20
-        self.left_offset_x = 0
-        self.left_offset_y = 0
-        # right.
-        # self.right_x = 200
-        self.right_x = 180
-        self.right_y = 20
-        self.right_offset_x = 0
-        self.right_offset_y = 0
-        # move.
-        self.move_offset_x = 0
-        self.move_offset_y = 0
+
         # init brand EN list.
         self.brand_dict = {
             "intel" : _("intel"), "zte"   : _("zte"), "hasee" : _("hasee"),
@@ -111,7 +100,6 @@ class Form(DialogBox):
         # self.connect("destroy", lambda w : self.destroy())
         self.connect("destroy", lambda w : self.hide_all())
         # Init widgets.
-        self.main_fixed = gtk.Fixed()
         self.brand_label = Label(_("phone brand : "))
         self.format_label = Label(_("Output format : "))        
         self.bit_rate_label = Label(_("Audio encoder : "))
@@ -201,21 +189,26 @@ class Form(DialogBox):
         
         self.brand_model_hbox = gtk.HBox()    
         top, bottom = 5, 5
-        self.brand_hbox_ali, self.brand_hbox = self.create_hbox(bottom, top, 15, 0, self.brand_label, self.brand_combo)
-        self.model_hbox_ali, self.model_hbox = self.create_hbox(bottom, top, 50, 0, self.model_label, self.model_combo)
+        brand_position = eval(_("('brand_position', 20)"))
+        model_position = eval(_("('model_position', 20)"))
+        self.brand_hbox_ali, self.brand_hbox = self.create_hbox(bottom, top, 15 + int(brand_position[1]), 0, self.brand_label, self.brand_combo)
+        self.model_hbox_ali, self.model_hbox = self.create_hbox(bottom, top, 50 - int(model_position[1]), 0, self.model_label, self.model_combo)
         
         self.brand_model_hbox.pack_start(self.brand_hbox_ali, False, False)
         self.brand_model_hbox.pack_start(self.model_hbox_ali, False, False)
-        
-        self.format_hbox_ali, self.format_hbox = self.create_hbox(bottom, top, 15, 0, self.format_label, self.format_combo)
-        self.ratio_hbox_ali, ratio_hbox = self.create_hbox(bottom, top, 50, 0, self.ratio_label, self.ratio_combo)
+        format_position = eval(_("('format_position', 12)"))
+        ratio_position = eval(_("('ratio_position', 18)"))
+        self.format_hbox_ali, self.format_hbox = self.create_hbox(bottom, top, 15 + int(format_position[1]), 0, self.format_label, self.format_combo)
+        self.ratio_hbox_ali, ratio_hbox = self.create_hbox(bottom, top, 50 - int(ratio_position[1]), 0, self.ratio_label, self.ratio_combo)
         
         self.format_ratio_hbox = gtk.HBox()
         self.format_ratio_hbox.pack_start(self.format_hbox_ali, False, False)
         self.format_ratio_hbox.pack_start(self.ratio_hbox_ali, False, False)
                 
-        self.frame_rate_hbox_ali, self.frame_rate_hbox = self.create_hbox(bottom, top, 15, 0, self.frame_rate_label, self.frame_rate_combo)
-        self.bit_rate_hbox_ali, self.bit_rate_hbox = self.create_hbox(bottom, top, 50, 0, self.bit_rate_label, self.bit_rate_combo)
+        frame_rate_position = eval(_("('frame_position', 13)"))
+        bit_rate_position = eval(_("('bit_rate_position', 28)"))
+        self.frame_rate_hbox_ali, self.frame_rate_hbox = self.create_hbox(bottom, top, 15 + int(frame_rate_position[1]), 0, self.frame_rate_label, self.frame_rate_combo)
+        self.bit_rate_hbox_ali, self.bit_rate_hbox = self.create_hbox(bottom, top, 50 - int(bit_rate_position[1]), 0, self.bit_rate_label, self.bit_rate_combo)
         
         self.bit_frame_hbox = gtk.HBox()        
         self.bit_frame_hbox.pack_start(self.frame_rate_hbox_ali, False, False)
