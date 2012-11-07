@@ -162,7 +162,7 @@ def video_string_to_information(pipe, video_path):
             
 ###########################################################
 ### video information GUI.
-APP_TITLE = "属性"
+APP_TITLE = _("Properties")
 APP_WIDTH = 490
 APP_HEIGHT = 390
 
@@ -185,7 +185,7 @@ class VideoInformGui(gobject.GObject):
                              window_pos = gtk.WIN_POS_CENTER,
                              resizable = False)
         self.tab_box = TabBox()
-        self.close_button = Button("关闭")
+        self.close_button = Button(_("Close"))
         #
         # app.
         #
@@ -193,7 +193,7 @@ class VideoInformGui(gobject.GObject):
         #
         # tabbox.
         #        
-        items = [("视频信息", self.fixed_video), ("解码信息", self.fixed_code)] #
+        items = [(_("video information"), self.fixed_video), (_("decoding information"), self.fixed_code)] #
         self.tab_box.add_items(items)
         #
         # close_button.
@@ -217,7 +217,7 @@ class VideoInformGui(gobject.GObject):
             self.open_path = path
             video_information = video_information
             tabs = "   "
-            describe = "文件路径:%s" % (tabs)
+            describe = _("File path:") + "%s" % (tabs)
             self.widget_offset_x = 30
             self.widget_offset_y = 20
             #
@@ -227,15 +227,15 @@ class VideoInformGui(gobject.GObject):
        0, 35)
             self.first_hseparator_hbox = gtk.HBox()
             self.file_name_label  = Label(video_information.file_name, label_width = 350)
-            self.file_type_label  = Label("文件类型:%s%s" % (tabs, video_information.file_type))
-            self.resolution_label = Label("分 辨 率  :%s%sx%s" % (tabs, video_information.resolution.width, video_information.resolution.height))
-            self.file_size_label  = Label("文件大小:%s%s" % (tabs, video_information.file_size))
-            self.length_label     = Label("媒体时长:%s%s" % (tabs, video_information.length)) # format(hour:min:sec)
+            self.file_type_label  = Label(_("File type:") + "%s%s" % (tabs, video_information.file_type))
+            self.resolution_label = Label(_("Resolution:") + "%s%sx%s" % (tabs, video_information.resolution.width, video_information.resolution.height))
+            self.file_size_label  = Label(_("File size:") + "%s%s" % (tabs, video_information.file_size))
+            self.length_label     = Label(_("Duration") + "%s%s" % (tabs, video_information.length)) # format(hour:min:sec)
             self.second_hseparator = HSeparator(app_theme.get_shadow_color("hSeparator").get_color_info(), 0, 35)
             self.second_hseparator_hbox = gtk.HBox()            
             self.file_path_label  = Label(describe, enable_select=False, wrap_width=420)
             self.file_path_text = InputEntry(path)
-            self.open_file_path_btn = Button("打开目录")
+            self.open_file_path_btn = Button(_("Open directory"))
             #
             # first_heparator_hbox.
             #
@@ -288,21 +288,21 @@ class VideoInformGui(gobject.GObject):
             tabs = "   "
             #
             self.fixed_code = gtk.Fixed()
-            self.video_strem_info_label = Label("视频流信息")
-            self.code_format_label      = Label('. 编码格式:%s%s' % (tabs, info.code_information.video_section.code_format))
-            self.video_fps_label        = Label(". 视频帧率:%s%s" % (tabs, info.code_information.video_section.video_fps))
-            self.video_display_asscept_label = Label(". 显示比率:%s%s" % (tabs, info.code_information.video_section.display_asscept))
-            self.video_malv_label = Label(". 视频码率:%s%s kbps" % (tabs, int(info.code_information.video_section.video_bit_rate)/1000))
-            self.video_resolution_label = Label(". 分 辨 率  :%s%s" % (tabs, info.code_information.video_section.resolution))
+            self.video_strem_info_label = Label(_("Video stream info:"))
+            self.code_format_label      = Label(_('.Codec format:') + "%s%s" % (tabs, info.code_information.video_section.code_format))
+            self.video_fps_label        = Label(_(".Frame rate:") + "%s%s" % (tabs, info.code_information.video_section.video_fps))
+            self.video_display_asscept_label = Label(_(".Scaling") + "%s%s" % (tabs, info.code_information.video_section.display_asscept))
+            self.video_malv_label = Label(_(".Video bit rate:") + "%s%s " % (tabs, int(info.code_information.video_section.video_bit_rate)/1000) + "kbps")
+            self.video_resolution_label = Label(_(".Resolution:") + "%s%s" % (tabs, info.code_information.video_section.resolution))
             self.hseparator = HSeparator(app_theme.get_shadow_color("hSeparator").get_color_info(), 0, 35)
             self.hseparator_hbox = gtk.HBox()
-            self.audio_strem_info_label = Label("音频流信息")
-            self.audio_format_label     = Label(". 编码格式:%s%s" % (tabs, info.code_information.audio_section.code_format))
-            self.audio_channels_number_label = Label(". 声 道 数  :%s%s channels" % (tabs, info.code_information.audio_section.channels_number))
-            self.audio_weishu_label = Label(". 音频位数:%s%s bits" % (tabs, int(info.code_information.audio_section.channels_number)*8))
-            self.audio_malv_label = Label(". 音频码率:%s%s kbps" % (tabs, int(info.code_information.audio_section.audio_bit_rate)/1000))
-            self.audio_sampling_label = Label(". 采 样 数  :%s%s Hz" % (tabs, info.code_information.audio_section.sampling_number))
-            self.copy_info_btn = Button("复制信息")
+            self.audio_strem_info_label = Label(_("Audio stream info:"))
+            self.audio_format_label     = Label(_(".codec format:") + "%s%s" % (tabs, info.code_information.audio_section.code_format))
+            self.audio_channels_number_label = Label(_(".track number:") + "%s%s " % (tabs, info.code_information.audio_section.channels_number) + "channels")
+            self.audio_weishu_label = Label(_(".Audio digit:") + "%s%s " % (tabs, int(info.code_information.audio_section.channels_number)*8) + "bits")
+            self.audio_malv_label = Label(_(".Audio bit rate:") + "%s%s" % (tabs, int(info.code_information.audio_section.audio_bit_rate)/1000) + " kbps")
+            self.audio_sampling_label = Label(_(".Sampling") + "%s%s " % (tabs, info.code_information.audio_section.sampling_number) + "Hz")
+            self.copy_info_btn = Button(_("Copy info"))
             # Init widgets top left.
             self.widgets_top_left = [
                 self.video_strem_info_label,

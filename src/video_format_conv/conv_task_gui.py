@@ -88,6 +88,8 @@ class ConvTAskGui(DialogBox):
         self.left_button_box.set_buttons([self.show_time_label_align])
         self.right_button_box.set_buttons([self.pause_btn, self.close_btn])        
                 
+        self.close_btn.connect("clicked", lambda w : self.hide_all())
+        
 class MediaItem(gobject.GObject):
     '''List item.'''    
     __gsignals__ = {

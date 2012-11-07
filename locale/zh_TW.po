@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-07 01:12+0800\n"
+"POT-Creation-Date: 2012-11-07 11:19+0800\n"
 "PO-Revision-Date: 2012-07-12 15:53+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -290,6 +290,15 @@ msgstr "選項"
 msgid "Quit"
 msgstr "退出"
 
+#: ../src/player_box.py:2532
+msgid "Dubbing selection"
+msgstr ""
+
+#: ../src/player_box.py:2538
+#, fuzzy
+msgid "Audio channels"
+msgstr "聲道選擇"
+
 #: ../src/player_box.py:2554
 msgid "Enlarge"
 msgstr "增大尺寸"
@@ -325,6 +334,11 @@ msgstr "字幕尺寸"
 #: ../src/player_box.py:2571
 msgid "Subtitle Synchronization"
 msgstr "字幕同步"
+
+#: ../src/player_box.py:2580 ../src/player_box.py:2680
+#: ../src/video_information/gui.py:165
+msgid "Properties"
+msgstr ""
 
 #: ../src/player_box.py:2595
 msgid "Full Screen On/Off"
@@ -438,7 +452,8 @@ msgid "Other"
 msgstr "其它快捷鍵"
 
 #: ../src/ini_gui.py:155 ../src/scan_subtitles.py:377
-#: ../src/subtitle/scan_subtitles.py:378 ../src/video_format_conv/gui.py:124
+#: ../src/subtitle/scan_subtitles.py:378 ../src/video_information/gui.py:188
+#: ../src/video_format_conv/gui.py:124
 #: ../src/video_format_conv/conv_task_gui.py:82
 msgid "Close"
 msgstr "關閉"
@@ -661,6 +676,96 @@ msgstr "播放列表"
 #: ../src/toolbar.py:89
 msgid "Keep above"
 msgstr "置頂"
+
+#: ../src/video_information/gui.py:196
+msgid "video information"
+msgstr ""
+
+#: ../src/video_information/gui.py:196
+msgid "decoding information"
+msgstr ""
+
+#: ../src/video_information/gui.py:220
+#, fuzzy
+msgid "File path:"
+msgstr "保存類型： "
+
+#: ../src/video_information/gui.py:230
+#, fuzzy
+msgid "File type:"
+msgstr "保存類型： "
+
+#: ../src/video_information/gui.py:231
+#, fuzzy
+msgid "Resolution:"
+msgstr "分辨率 : "
+
+#: ../src/video_information/gui.py:232
+#, fuzzy
+msgid "File size:"
+msgstr "保存類型： "
+
+#: ../src/video_information/gui.py:233
+msgid "Duration"
+msgstr "時長"
+
+#: ../src/video_information/gui.py:238
+#, fuzzy
+msgid "Open directory"
+msgstr "打開文件夾"
+
+#: ../src/video_information/gui.py:291
+msgid "Video stream info:"
+msgstr ""
+
+#: ../src/video_information/gui.py:292
+msgid ".Codec format:"
+msgstr ""
+
+#: ../src/video_information/gui.py:293
+msgid ".Frame rate:"
+msgstr ""
+
+#: ../src/video_information/gui.py:294
+msgid ".Scaling"
+msgstr ""
+
+#: ../src/video_information/gui.py:295
+msgid ".Video bit rate:"
+msgstr ""
+
+#: ../src/video_information/gui.py:296
+#, fuzzy
+msgid ".Resolution:"
+msgstr "分辨率 : "
+
+#: ../src/video_information/gui.py:299
+msgid "Audio stream info:"
+msgstr ""
+
+#: ../src/video_information/gui.py:300
+msgid ".codec format:"
+msgstr ""
+
+#: ../src/video_information/gui.py:301
+msgid ".track number:"
+msgstr ""
+
+#: ../src/video_information/gui.py:302
+msgid ".Audio digit:"
+msgstr ""
+
+#: ../src/video_information/gui.py:303
+msgid ".Audio bit rate:"
+msgstr ""
+
+#: ../src/video_information/gui.py:304
+msgid ".Sampling"
+msgstr ""
+
+#: ../src/video_information/gui.py:305
+msgid "Copy info"
+msgstr ""
 
 #: ../src/video_format_conv/gui.py:43
 msgid "('form_size', 455, 180)"
@@ -1081,9 +1186,6 @@ msgstr "任務管理器"
 
 #~ msgid "Language"
 #~ msgstr "語言"
-
-#~ msgid "Duration"
-#~ msgstr "時長"
 
 #~ msgid "Total search results: 0"
 #~ msgstr "搜索的字幕總數: 0"

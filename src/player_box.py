@@ -2529,13 +2529,13 @@ class PlayerBox(object):
         # Add Audio lang menu.
         switch_audio_menu = Menu(map(lambda audio_tuple: audio_tuple, self.switch_audio_menu))
         
-        self.audio_lang_menu = (None, "配音选择", switch_audio_menu)
+        self.audio_lang_menu = (None, _("Dubbing selection"), switch_audio_menu)
         channel_select_left_right = Menu([(normal_channel_pixbuf, _("Stereo"),  self.normal_channel),
                 (left_channel_pixbuf,   _("Left"),    self.left_channel),
                 (right_channel_pixbuf,  _("Right"),    self.right_channel),])
 
         channel_select = Menu([
-                (None, "声道选择", channel_select_left_right),
+                (None, _("Audio channels"), channel_select_left_right),
                 self.audio_lang_menu,
                 ])
         if len(self.switch_audio_menu) <= 0:
@@ -2577,7 +2577,7 @@ class PlayerBox(object):
         menu_open_window_dialog = None
         if self.mp.state == STARTING_PLAY:
             menu_open_window_dialog = self.menu_open_info_window_dialog
-        self.right_key_menu_video_info = (None, "屬性", menu_open_window_dialog)
+        self.right_key_menu_video_info = (None, _("Properties"), menu_open_window_dialog)
         
         # 代码需要重构.
         menu_full_pixbufs = (self.menu_full_normal_pixbuf, self.menu_full_hover_pixbuf, self.menu_full_none_pixbuf)
@@ -2677,7 +2677,7 @@ class PlayerBox(object):
             play_list_menu_info_dialog = None
             if self.open_file_name:
                 play_list_menu_info_dialog = self.play_list_menu_open_info_window_dialog
-            self.right_key_menu_video_info = (None, "属性", play_list_menu_info_dialog)
+            self.right_key_menu_video_info = (None, _("Properties"), play_list_menu_info_dialog)
 
             self.play_list_root_menu = Menu([(None, _("Add File"), self.add_file),
                                              (None, _("Add Directory"), self.add_file_dir),
