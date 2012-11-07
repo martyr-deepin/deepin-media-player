@@ -292,10 +292,9 @@ msgstr "退出"
 
 #: ../src/player_box.py:2532
 msgid "Dubbing selection"
-msgstr ""
+msgstr "音軌選擇"
 
 #: ../src/player_box.py:2538
-#, fuzzy
 msgid "Audio channels"
 msgstr "聲道選擇"
 
@@ -338,7 +337,7 @@ msgstr "字幕同步"
 #: ../src/player_box.py:2580 ../src/player_box.py:2680
 #: ../src/video_information/gui.py:165
 msgid "Properties"
-msgstr ""
+msgstr "屬性"
 
 #: ../src/player_box.py:2595
 msgid "Full Screen On/Off"
@@ -679,93 +678,87 @@ msgstr "置頂"
 
 #: ../src/video_information/gui.py:196
 msgid "video information"
-msgstr ""
+msgstr "視頻信息"
 
 #: ../src/video_information/gui.py:196
 msgid "decoding information"
-msgstr ""
+msgstr "編碼信息"
 
 #: ../src/video_information/gui.py:220
-#, fuzzy
 msgid "File path:"
-msgstr "保存類型： "
+msgstr "文件路徑:"
 
 #: ../src/video_information/gui.py:230
-#, fuzzy
 msgid "File type:"
-msgstr "保存類型： "
+msgstr "文件類型:"
 
 #: ../src/video_information/gui.py:231
-#, fuzzy
 msgid "Resolution:"
-msgstr "分辨率 : "
+msgstr "分 辨 率  : "
 
 #: ../src/video_information/gui.py:232
-#, fuzzy
 msgid "File size:"
-msgstr "保存類型： "
+msgstr "文件大小:"
 
 #: ../src/video_information/gui.py:233
 msgid "Duration"
-msgstr "時長"
+msgstr "媒體時長:"
 
 #: ../src/video_information/gui.py:238
-#, fuzzy
 msgid "Open directory"
-msgstr "打開文件夾"
+msgstr "打開目錄"
 
 #: ../src/video_information/gui.py:291
 msgid "Video stream info:"
-msgstr ""
+msgstr "視頻流信息"
 
 #: ../src/video_information/gui.py:292
 msgid ".Codec format:"
-msgstr ""
+msgstr ". 編碼格式:"
 
 #: ../src/video_information/gui.py:293
 msgid ".Frame rate:"
-msgstr ""
+msgstr ". 視頻幀率:"
 
 #: ../src/video_information/gui.py:294
 msgid ".Scaling"
-msgstr ""
+msgstr ". 顯示比率:"
 
 #: ../src/video_information/gui.py:295
 msgid ".Video bit rate:"
-msgstr ""
+msgstr ". 視頻碼率:"
 
 #: ../src/video_information/gui.py:296
-#, fuzzy
 msgid ".Resolution:"
-msgstr "分辨率 : "
+msgstr ". 分 辨 率  : "
 
 #: ../src/video_information/gui.py:299
 msgid "Audio stream info:"
-msgstr ""
+msgstr "音頻流信息"
 
 #: ../src/video_information/gui.py:300
 msgid ".codec format:"
-msgstr ""
+msgstr ". 編碼格式:"
 
 #: ../src/video_information/gui.py:301
 msgid ".track number:"
-msgstr ""
+msgstr ". 聲 道 數  :"
 
 #: ../src/video_information/gui.py:302
 msgid ".Audio digit:"
-msgstr ""
+msgstr ". 音頻位數:"
 
 #: ../src/video_information/gui.py:303
 msgid ".Audio bit rate:"
-msgstr ""
+msgstr ". 音頻碼率:"
 
 #: ../src/video_information/gui.py:304
 msgid ".Sampling"
-msgstr ""
+msgstr ". 采 樣 數  :"
 
 #: ../src/video_information/gui.py:305
 msgid "Copy info"
-msgstr ""
+msgstr "複製信息"
 
 #: ../src/video_format_conv/gui.py:43
 msgid "('form_size', 455, 180)"
