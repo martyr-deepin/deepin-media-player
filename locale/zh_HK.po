@@ -27,7 +27,7 @@ msgstr "打開文件"
 #: ../src/player_box.py:2592 ../src/ini_gui.py:556 ../src/ini_gui.py:1155
 #: ../src/ini_gui.py:1278
 msgid "Open Directory"
-msgstr "打開文件夾"
+msgstr "打開資料夾"
 
 #: ../src/player_box.py:419 ../src/player_box.py:2593
 msgid "Open URL"
@@ -67,7 +67,7 @@ msgstr "停止"
 
 #: ../src/player_box.py:1124
 msgid "No Media Selected"
-msgstr "冇有可播放文件"
+msgstr "没有可播放文件"
 
 #: ../src/player_box.py:1138 ../src/player_box.py:2407
 #: ../src/player_box.py:2599 ../src/play_control_panel.py:59
