@@ -22,32 +22,71 @@
 
 import fcntl
 import os
+import dbus
+import gobject
+from pprint import pprint
+import gtk
 
-OPEN_CDROM  = 0x5309
-CLOSE_CDROM = 0x5319
+################################################
+###
+
+DESKTOP_UDISKS = "org.freedesktop.UDisks"
+DESKTOP_UDISKS_PATH = "/org/freedesktop/UDisks"
+DBUS_PROPERTIES = "org.freedesktop.DBus.Properties"
+UDISKS_DEVICE = 'org.freedesktop.UDisks.Device'
+
+from dbus.mainloop.glib import DBusGMainLoop
+    
+class Service(gobject.GObject):    
+    __gsignals__ = {
+        "Tick" : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE,
+                  ())
+        }    
+    def __init__(self):
+        gobject.GObject.__init__(self)
+        self.srx_list = []
+        DBusGMainLoop(set_as_default=True)
+        self.bus = dbus.SystemBus()
+        self.obj = self.bus.get_object(DESKTOP_UDISKS, DESKTOP_UDISKS_PATH)
+        devs = dbus.Interface(self.obj, DESKTOP_UDISKS)
+        # Init event.
+        devs.connect_to_signal("DeviceChanged", self.changed_drive)
+        # save sr?[0-x] [cdrom].
+        for dev in devs.EnumerateDevices():
+            if dev.split("/")[-1].startswith("sr"):
+                self.srx_list.append(str(dev))                
+        # test input.        
+        # for srx_path in self.srx_list:        
+            # obj = self.bus.get_object(DESKTOP_UDISKS, srx_path)
+            # device_props = dbus.Interface(obj, DBUS_PROPERTIES)
+            # label = device_props.Get(UDISKS_DEVICE, 'IdLabel')
+            
+    def load_drive(self, device):
+        print "load_drive:", device
+        
+    def changed_drive(self, device):
+        print "changed_drive:", device
+        obj = self.bus.get_object(DESKTOP_UDISKS, device)
+        device_props = dbus.Interface(obj, DBUS_PROPERTIES)
+        print 'model:', device_props.Get(UDISKS_DEVICE, "DriveModel")
+        print 'label:', device_props.Get(UDISKS_DEVICE, 'IdLabel')
+                
+################################################
+###
 # 光盘类型.
-CDROM_ERROR      = -1
-CDROM_TYPE_DVD   = 0
-CDROM_TYPE_VCD   = 1
-CDROM_TYPE_CD    = 2
-CDROM_TYPE_ISO   = 3
-CDROM_TYPE_DATA  = 4
-CDROM_TYPE_EMPTY = 5
+CDROM_ERROR      = -1 #
+CDROM_TYPE_DVD   = 0  # dvd.
+CDROM_TYPE_VCD   = 1  # vcd.
 # dvd.
 AUDIO_TS = "AUDIO_TS"
 VIDEO_TS = "VIDEO_TS"
 # vcd.
 MPEGAV  = "MPEGAV"
 SEGMENT = "SEGMENT"
-# cd.
 
-################################################
-###
 def cdrom_type(cdrom_path):
     try:
         cdrom_file_list = os.listdir(cdrom_path)
-        if len(cdrom_file_list) == 0:
-            return CDROM_TYPE_EMPTY
     except Exception, e:
         print "cdrom_type[error]:", e
         return CDROM_ERROR
@@ -56,8 +95,6 @@ def cdrom_type(cdrom_path):
         return CDROM_TYPE_DVD
     elif cdrom_vcd(cdrom_file_list):
         return CDROM_TYPE_VCD
-    elif cdrom_cd(cdrom_file_list):
-        return CDROM_TYPE_CD
     else:
         return CDROM_ERROR
     
@@ -81,10 +118,12 @@ def cdrom_vcd(file_list):
             segment_bool = True
     return (mpegav_bool and segment_bool)
 
-def cdrom_cd(file_list):
-    pass
-
 ###############################################################
+###
+
+OPEN_CDROM  = 0x5309
+CLOSE_CDROM = 0x5319
+
 def scan_cdrom():
     cdrom_list = []
     dev_name_list = os.listdir("/dev")
@@ -121,21 +160,15 @@ if __name__ == "__main__":
         
     # for cdrom in cdrom_list:
     #     close_cdrom(cdrom)
-        
-    cd_type = cdrom_type("/media/DVD Video")
-    # cd_type = cdrom_type("/dev/cdrom")
+    Service()
+    # mainloop = gobject.MainLoop()
+    # mainloop.run()    
+    gtk.main()
+    # cd_type = cdrom_type("/media/DVD Video")
     
-    if cd_type == CDROM_TYPE_EMPTY:
-        print "你插入的数据光盘是空的"
-    elif cd_type == CDROM_TYPE_DVD:
-        print "你插入的是DVD光盘"
-    elif cd_type == CDROM_TYPE_VCD:
-        print "你插入的是VCD光盘"
-    elif cd_type == CDROM_TYPE_CD:    
-        print "你插入的是CD光盘"
-    elif cd_type == CDROM_TYPE_ISO:    
-        print "你挂载的是ISO"
-    elif cd_type == CDROM_TYPE_DATA:    
-        print "你插入的是数据光盘"
-    elif cd_type == CDROM_ERROR:    
-        print "你没有插入光盘"
+    # if cd_type == CDROM_TYPE_DVD:
+    #     print "你插入的是DVD光盘"
+    # elif cd_type == CDROM_TYPE_VCD:
+    #     print "你插入的是VCD光盘"
+    # elif cd_type == CDROM_ERROR:
+    #     print "发生错误，不是DVD，VCD光盘！！"
