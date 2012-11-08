@@ -39,8 +39,8 @@ from dbus.mainloop.glib import DBusGMainLoop
     
 class Service(gobject.GObject):    
     __gsignals__ = {
-        "Tick" : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE,
-                  ())
+        "changed-cdrom" : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE,
+                          (gobject.TYPE_PYOBJECT, gobject.TYPE_STRING, ))
         }    
     def __init__(self):
         gobject.GObject.__init__(self)
@@ -57,20 +57,40 @@ class Service(gobject.GObject):
                 self.srx_list.append(str(dev))                
         # test input.        
         # for srx_path in self.srx_list:        
-            # obj = self.bus.get_object(DESKTOP_UDISKS, srx_path)
-            # device_props = dbus.Interface(obj, DBUS_PROPERTIES)
-            # label = device_props.Get(UDISKS_DEVICE, 'IdLabel')
+        #     obj = self.bus.get_object(DESKTOP_UDISKS, srx_path)
+        #     device_props = dbus.Interface(obj, DBUS_PROPERTIES)
+        #     label = device_props.Get(UDISKS_DEVICE, 'IdLabel')
+        #     if label != "":
+        #         print device_props.Get(UDISKS_DEVICE, "DeviceMountPaths")[0]
             
     def load_drive(self, device):
         print "load_drive:", device
         
     def changed_drive(self, device):
-        print "changed_drive:", device
-        obj = self.bus.get_object(DESKTOP_UDISKS, device)
-        device_props = dbus.Interface(obj, DBUS_PROPERTIES)
-        print 'model:', device_props.Get(UDISKS_DEVICE, "DriveModel")
-        print 'label:', device_props.Get(UDISKS_DEVICE, 'IdLabel')
-                
+        mount_path = None
+        # print "changed_drive:", device
+        if device.split("/")[-1].startswith("sr"):
+            obj = self.bus.get_object(DESKTOP_UDISKS, device)
+            device_props = dbus.Interface(obj, DBUS_PROPERTIES)
+            try:
+                mount_path = device_props.Get(UDISKS_DEVICE, 'DeviceMountPaths')
+                # print "mount_path:", mount_path
+                mount_path = mount_path[0]
+                # print os.listdir(mount_path)
+                cd_type = cdrom_type(mount_path)    
+            
+                if cd_type == CDROM_TYPE_DVD:
+                    print "你插入的是DVD光盘"
+                elif cd_type == CDROM_TYPE_VCD:
+                    print "你插入的是VCD光盘"
+                elif cd_type == CDROM_ERROR:
+                    print "发生错误，不是DVD，VCD光盘！！"
+
+                # send signal.
+                self.emit("changed-cdrom", device, mount_path)
+            except Exception, e:
+                print "changed_drive[error]:", e
+        
 ################################################
 ###
 # 光盘类型.
@@ -116,7 +136,7 @@ def cdrom_vcd(file_list):
             mpegav_bool = True
         elif file_.upper().startswith(SEGMENT):
             segment_bool = True
-    return (mpegav_bool and segment_bool)
+    return (mpegav_bool or segment_bool)
 
 ###############################################################
 ###
@@ -153,6 +173,12 @@ def close_cdrom(cdrom):
     ioctl_cdrom(cdrom, CLOSE_CDROM)
            
 if __name__ == "__main__":     
+    def changed_drive_cdrom(service, dev, mount_path):
+        print "发送一个信号来了...."
+        print "changed_drive_cdrom:",
+        print "dev:", dev
+        print "mount_path:", mount_path
+        
     # cdrom_list = scan_cdrom()
     # for cdrom in cdrom_list:
     #     print "cdrom:", cdrom
@@ -160,7 +186,8 @@ if __name__ == "__main__":
         
     # for cdrom in cdrom_list:
     #     close_cdrom(cdrom)
-    Service()
+    ser = Service()
+    ser.connect("changed-cdrom", changed_drive_cdrom)
     # mainloop = gobject.MainLoop()
     # mainloop.run()    
     gtk.main()
