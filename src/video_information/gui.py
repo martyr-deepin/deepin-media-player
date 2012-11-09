@@ -277,7 +277,7 @@ class VideoInformGui(gobject.GObject):
             print "init_widgets[error]", e
             
     def open_file_path_btn_clicked(self, widget):
-        os.system("nautilus %s" % (str(self.open_path)))
+        os.system("nautilus '%s'" % (str(self.open_path)))
             
     def init_code_widgets(self, path, info):
         try:
