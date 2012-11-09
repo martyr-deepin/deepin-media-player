@@ -229,9 +229,8 @@ class IniGui(DialogBox):
         
         other_key_dict = self.configure.other_key.get_other_set_state()
         for key in other_key_dict.keys():
-            # print str(_(other_key_dict[key]))
-            if self.ini.get("OtherKey",  key) != str(_(other_key_dict[key])):
-                self.ini.set("OtherKey", key, _(str(other_key_dict[key])))
+            if self.ini.get("OtherKey",  key) != str((other_key_dict[key])):
+                self.ini.set("OtherKey", key, str(other_key_dict[key]))
 
         sub_set_dict = self.configure.sub_set.get_subtitle_set_state()
         for key in sub_set_dict.keys():
@@ -1096,13 +1095,13 @@ class OtherKey(gtk.VBox):
                                      self.key_titles_right, self.widgets_right):
             text = widget.label.get_text()
             if text == "禁用":
-                text = _("Disabled")
+                text = "Disabled"
             elif text == "全屏":
-                text = _("Full Screen")
+                text = "Full Screen"
             elif text == "暂停/播放":    
-                text = _("Pause/Play")
+                text = "Pause/Play"
             elif text == "音量":    
-                text = _("Volumn")
+                text = "Volumn"
             other_set_dict[str(key_title)] = text
         return other_set_dict
     
