@@ -221,7 +221,7 @@ class IniGui(DialogBox):
         for key in play_control_dict.keys():
             if self.ini.get("PlayControl", key) != str(play_control_dict[key]):
                 self.ini.set("PlayControl", key, play_control_dict[key])
-
+                
         subkey_set_dict = self.configure.sub_key.get_subkey_set_state()
         for key in subkey_set_dict.keys():
             if self.ini.get("SubKey", key) != str(subkey_set_dict[key]):
@@ -229,8 +229,9 @@ class IniGui(DialogBox):
         
         other_key_dict = self.configure.other_key.get_other_set_state()
         for key in other_key_dict.keys():
+            # print str(_(other_key_dict[key]))
             if self.ini.get("OtherKey",  key) != str(_(other_key_dict[key])):
-                self.ini.set("OtherKey", key, other_key_dict[key])
+                self.ini.set("OtherKey", key, _(str(other_key_dict[key])))
 
         sub_set_dict = self.configure.sub_set.get_subtitle_set_state()
         for key in sub_set_dict.keys():
