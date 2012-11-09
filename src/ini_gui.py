@@ -21,18 +21,17 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from skin import app_theme
-from locales import _
 from ini import Config
 from mplayer import get_home_path
 
 from dtk.ui.utils import propagate_expose, is_left_button
-from dtk.ui.box import BackgroundBox, ImageBox
 from dtk.ui.dialog import DialogBox, DIALOG_MASK_MULTIPLE_PAGE
 from dtk.ui.button import Button
 from dtk.ui.entry import InputEntry, ShortcutKeyEntry
 from dtk.ui.combo import ComboBox
 from dtk.ui.draw import draw_vlinear
 from dtk.ui.label import Label
+from dtk.ui.box import BackgroundBox, ImageBox
 from dtk.ui.button import CheckButton, RadioButton
 from dtk.ui.line import HSeparator
 from dtk.ui.scrolled_window import ScrolledWindow
@@ -40,6 +39,7 @@ from dtk.ui.treeview import TreeView, TreeViewItem
 
 import gtk
 import pangocairo
+from locales import _
 
 font_test_window = gtk.Window(gtk.WINDOW_POPUP)
 font_test_window.set_default_size(0, 0)

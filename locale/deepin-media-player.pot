@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-07 11:19+0800\n"
+"POT-Creation-Date: 2012-11-09 16:55+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,9 +17,25 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: ../src/togglehoverbutton.py:126 ../src/player_box.py:2378
+#: ../src/ini_gui.py:318 ../src/ini_gui.py:636 ../src/ini_gui.py:988
+#: ../src/ini_gui.py:1053 ../src/mplayer.py:224
+msgid "Full Screen"
+msgstr ""
+
+#: ../src/togglehoverbutton.py:135 ../src/player_box.py:2379
+#: ../src/player_box.py:2596
+msgid "Standard Mode"
+msgstr ""
+
+#: ../src/togglehoverbutton.py:144 ../src/player_box.py:2380
+#: ../src/player_box.py:2597 ../src/ini_gui.py:646
+msgid "Concise Mode"
+msgstr ""
+
 #: ../src/player_box.py:402 ../src/player_box.py:2389
-#: ../src/player_box.py:2591 ../src/ini_gui.py:536
-#: ../src/play_control_panel.py:75
+#: ../src/player_box.py:2591 ../src/play_control_panel.py:75
+#: ../src/ini_gui.py:536
 msgid "Open File"
 msgstr ""
 
@@ -212,22 +228,6 @@ msgstr ""
 msgid "Repeat List"
 msgstr ""
 
-#: ../src/player_box.py:2378 ../src/ini_gui.py:318 ../src/ini_gui.py:636
-#: ../src/ini_gui.py:988 ../src/ini_gui.py:1053
-#: ../src/togglehoverbutton.py:126 ../src/mplayer.py:224
-msgid "Full Screen"
-msgstr ""
-
-#: ../src/player_box.py:2379 ../src/player_box.py:2596
-#: ../src/togglehoverbutton.py:135
-msgid "Standard Mode"
-msgstr ""
-
-#: ../src/player_box.py:2380 ../src/player_box.py:2597 ../src/ini_gui.py:646
-#: ../src/togglehoverbutton.py:144
-msgid "Concise Mode"
-msgstr ""
-
 #: ../src/player_box.py:2384 ../src/player_box.py:2473
 msgid "Forward 5s"
 msgstr ""
@@ -417,6 +417,61 @@ msgstr ""
 msgid "Decrease the Size of Characters"
 msgstr ""
 
+#: ../src/scan_subtitles.py:204 ../src/subtitle/scan_subtitles.py:204
+msgid "Search Subtitles"
+msgstr ""
+
+#: ../src/scan_subtitles.py:230 ../src/subtitle/scan_subtitles.py:231
+msgid "Subtiles"
+msgstr ""
+
+#: ../src/scan_subtitles.py:304 ../src/subtitle/scan_subtitles.py:305
+msgid "Movie Name: "
+msgstr ""
+
+#: ../src/scan_subtitles.py:318 ../src/subtitle/scan_subtitles.py:319
+msgid "Search"
+msgstr ""
+
+#: ../src/scan_subtitles.py:341 ../src/subtitle/scan_subtitles.py:342
+msgid "Searching for subtitles"
+msgstr ""
+
+#: ../src/scan_subtitles.py:347 ../src/subtitle/scan_subtitles.py:348
+msgid "No network connection established"
+msgstr ""
+
+#: ../src/scan_subtitles.py:357 ../src/subtitle/scan_subtitles.py:358
+msgid "Total search results"
+msgstr ""
+
+#: ../src/scan_subtitles.py:366 ../src/subtitle/scan_subtitles.py:367
+msgid "Sorry, we couln't find any subtitle"
+msgstr ""
+
+#: ../src/scan_subtitles.py:375 ../src/subtitle/scan_subtitles.py:376
+msgid "Download"
+msgstr ""
+
+#: ../src/scan_subtitles.py:377 ../src/ini_gui.py:155
+#: ../src/video_information/gui.py:188 ../src/subtitle/scan_subtitles.py:378
+#: ../src/video_format_conv/gui.py:124
+#: ../src/video_format_conv/conv_task_gui.py:82
+msgid "Close"
+msgstr ""
+
+#: ../src/scan_subtitles.py:436 ../src/subtitle/scan_subtitles.py:437
+msgid "Subtile has been saved to the"
+msgstr ""
+
+#: ../src/scan_subtitles.py:436 ../src/subtitle/scan_subtitles.py:437
+msgid "director"
+msgstr ""
+
+#: ../src/scan_subtitles.py:445 ../src/subtitle/scan_subtitles.py:446
+msgid "Failed to download the subtitle!"
+msgstr ""
+
 #: ../src/main.py:63 ../src/ini_gui.py:1341
 msgid "Deepin Media Player"
 msgstr ""
@@ -448,13 +503,6 @@ msgstr ""
 #: ../src/ini_gui.py:137 ../src/ini_gui.py:264 ../src/ini_gui.py:275
 #: ../src/ini_gui.py:955 ../src/ini_gui.py:1321
 msgid "Other"
-msgstr ""
-
-#: ../src/ini_gui.py:155 ../src/scan_subtitles.py:377
-#: ../src/subtitle/scan_subtitles.py:378 ../src/video_information/gui.py:188
-#: ../src/video_format_conv/gui.py:124
-#: ../src/video_format_conv/conv_task_gui.py:82
-msgid "Close"
 msgstr ""
 
 #: ../src/ini_gui.py:310
@@ -607,52 +655,8 @@ msgid ""
 "Deepin Media Player is free software licensed under GNU GPLv3.\n"
 msgstr ""
 
-#: ../src/scan_subtitles.py:204 ../src/subtitle/scan_subtitles.py:204
-msgid "Search Subtitles"
-msgstr ""
-
-#: ../src/scan_subtitles.py:230 ../src/subtitle/scan_subtitles.py:231
-msgid "Subtiles"
-msgstr ""
-
-#: ../src/scan_subtitles.py:304 ../src/subtitle/scan_subtitles.py:305
-msgid "Movie Name: "
-msgstr ""
-
-#: ../src/scan_subtitles.py:318 ../src/subtitle/scan_subtitles.py:319
-msgid "Search"
-msgstr ""
-
-#: ../src/scan_subtitles.py:341 ../src/subtitle/scan_subtitles.py:342
-msgid "Searching for subtitles"
-msgstr ""
-
-#: ../src/scan_subtitles.py:347 ../src/subtitle/scan_subtitles.py:348
-msgid "No network connection established"
-msgstr ""
-
-#: ../src/scan_subtitles.py:357 ../src/subtitle/scan_subtitles.py:358
-msgid "Total search results"
-msgstr ""
-
-#: ../src/scan_subtitles.py:366 ../src/subtitle/scan_subtitles.py:367
-msgid "Sorry, we couln't find any subtitle"
-msgstr ""
-
-#: ../src/scan_subtitles.py:375 ../src/subtitle/scan_subtitles.py:376
-msgid "Download"
-msgstr ""
-
-#: ../src/scan_subtitles.py:436 ../src/subtitle/scan_subtitles.py:437
-msgid "Subtile has been saved to the"
-msgstr ""
-
-#: ../src/scan_subtitles.py:436 ../src/subtitle/scan_subtitles.py:437
-msgid "director"
-msgstr ""
-
-#: ../src/scan_subtitles.py:445 ../src/subtitle/scan_subtitles.py:446
-msgid "Failed to download the subtitle!"
+#: ../src/play_list_button.py:35
+msgid "Playlist"
 msgstr ""
 
 #: ../src/open_button.py:382
@@ -661,10 +665,6 @@ msgstr ""
 
 #: ../src/open_button.py:382
 msgid "Please Enter a Valid URL"
-msgstr ""
-
-#: ../src/play_list_button.py:35
-msgid "Playlist"
 msgstr ""
 
 #: ../src/toolbar.py:89
@@ -1132,6 +1132,10 @@ msgstr ""
 msgid "Remove complete tasks"
 msgstr ""
 
+#: ../src/video_format_conv/conv_task_gui.py:57
+msgid "Task Manager for format conversion"
+msgstr ""
+
 #: ../src/video_format_conv/new_button.py:32
 #: ../src/video_format_conv/new_button.py:59
 msgid "Advanced settings"
@@ -1139,8 +1143,4 @@ msgstr ""
 
 #: ../src/video_format_conv/new_button.py:33
 msgid "('button_size', 100)"
-msgstr ""
-
-#: ../src/video_format_conv/conv_task_gui.py:57
-msgid "Task Manager for format conversion"
 msgstr ""

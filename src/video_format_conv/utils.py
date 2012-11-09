@@ -29,7 +29,7 @@ import logging
 import os
 import sys
 
-_ = gettext.gettext
+# _ = gettext.gettext
 
 def get_search_paths():
     """

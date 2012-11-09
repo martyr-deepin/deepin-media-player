@@ -49,7 +49,7 @@ import gst
 
 import utils
 
-_ = gettext.gettext
+# _ = gettext.gettext
 _presets = {}
 _log = logging.getLogger("transmageddon.presets")
 
