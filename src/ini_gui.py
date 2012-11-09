@@ -1089,7 +1089,10 @@ class OtherKey(gtk.VBox):
         #
         for key_title, widget in map(lambda key_title, widget:(key_title, widget),
                                      self.key_titles_left, self.widgets_left):
-            other_set_dict[str(key_title)] = widget.get_text()
+            text = widget.get_text()
+            if text == "禁用":
+                text = "Disabled"
+            other_set_dict[str(key_title)] = text
             
         for key_title, widget in map(lambda key_title, widget:(key_title, widget),
                                      self.key_titles_right, self.widgets_right):
