@@ -229,7 +229,7 @@ class IniGui(DialogBox):
         
         other_key_dict = self.configure.other_key.get_other_set_state()
         for key in other_key_dict.keys():
-            if self.ini.get("OtherKey",  key) != str(other_key_dict[key]):
+            if self.ini.get("OtherKey",  key) != str(_(other_key_dict[key])):
                 self.ini.set("OtherKey", key, other_key_dict[key])
 
         sub_set_dict = self.configure.sub_set.get_subtitle_set_state()
@@ -1039,24 +1039,25 @@ class OtherKey(gtk.VBox):
                 self.set_other_key_true()                
 
             # get config left value.
-            self.keys_left = ["=", "-", "w", "e", "Alt + a", _("Disabled")]    
+            self.keys_left = ["=", "-", "w", "e", "Alt + a", _("Disabled")]
             for_widgets_left = map(lambda title, widget, key:(title, widget, key), self.key_titles_left, self.widgets_left, self.keys_left)
             
             for title, widget, init_key in for_widgets_left:
                 key_value = self.ini.get("OtherKey", title)
-                widget.set_text(key_value)
+                widget.set_text(key_value)                
                 if key_value:
-                    widget.set_shortcut_key(key_value)
-                else:    
+                    widget.set_shortcut_key(_(str(key_value)))
+                else:                        
                     widget.set_shortcut_key(init_key)
             # get config right value.
             self.keys_right = [_("Pause/Play"), _("Full Screen"), _("Volumn")]
+            
             for_widgets_right = map(lambda title, widget, key:(title, widget, key), self.key_titles_right, self.widgets_right, self.keys_right)
             
             for title, widget, init_key in for_widgets_right:
                 key_value = self.ini.get("OtherKey", title)
-                if key_value:
-                    widget.label.set_text(key_value)
+                if key_value:                            
+                    widget.label.set_text(_(str(key_value)))
                 else:    
                     widget.label.set_text(init_key)
                     
@@ -1089,9 +1090,19 @@ class OtherKey(gtk.VBox):
         for key_title, widget in map(lambda key_title, widget:(key_title, widget),
                                      self.key_titles_left, self.widgets_left):
             other_set_dict[str(key_title)] = widget.get_text()
+            
         for key_title, widget in map(lambda key_title, widget:(key_title, widget),
                                      self.key_titles_right, self.widgets_right):
-            other_set_dict[str(key_title)] = widget.label.get_text()
+            text = widget.label.get_text()
+            if text == "禁用":
+                text = _("Disabled")
+            elif text == "全屏":
+                text = _("Full Screen")
+            elif text == "暂停/播放":    
+                text = _("Pause/Play")
+            elif text == "音量":    
+                text = _("Volumn")
+            other_set_dict[str(key_title)] = text
         return other_set_dict
     
 class SubSet(gtk.VBox):    
