@@ -2857,11 +2857,13 @@ class PlayerBox(object):
 
     def open_sort_image_dir(self):
         file_name = self.config.get("ScreenshotSet", "save_path")
-
+        # print "open_sort_image_dir:", file_name
         if file_name:
-            os.system("nautilus %s" % (file_name))
+            # os.system("nautilus %s" % (file_name))
+            os.system("xdg-open %s" % (file_name))
         else:
-            os.system("nautilus %s" % (get_home_path()))
+            # os.system("nautilus %s" % (get_home_path()))
+            os.system("xdg-open %s" % (get_home_path()))
 
     def open_sort_image_ini_gui(self):  #menu
         ini_gui = IniGui()
@@ -2874,7 +2876,8 @@ class PlayerBox(object):
         except:
             file_name = "~"
 
-        os.system("nautilus %s" % (file_name))
+        # os.system("nautilus %s" % (file_name))
+        os.system("xdg-open %s" % (file_name))
         self.open_file_name = ""
         
         

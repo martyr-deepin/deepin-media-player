@@ -973,7 +973,8 @@ class TransmageddonUI:
          gtk.timeout_add(1200, self.restart_start_btn)
       
    def open_conv_file_dir(self):
-      os.system("nautilus %s" % (self.list_view_select_file_dir))
+      # os.system("nautilus %s" % (self.list_view_select_file_dir))
+      os.system("xdg-open '%s'" % (self.list_view_select_file_dir))
                 
    def save_open_selsect_file_name(self, list_view, list_item, column, offset_x, offset_y):  
       self.list_view_select_file_dir = list_item.get_path()
