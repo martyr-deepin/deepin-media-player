@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-12 16:05+0800\n"
+"POT-Creation-Date: 2012-11-12 16:22+0800\n"
 "PO-Revision-Date: 2012-07-12 15:53+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -309,12 +309,13 @@ msgstr "問題反饋"
 msgid "About us"
 msgstr "關於我們"
 
-#: ../src/player_box.py:2403
-msgid "format conversion"
+#: ../src/player_box.py:2403 ../src/player_box.py:2412
+#: ../src/player_box.py:2695
+msgid "Format conversion"
 msgstr "格式轉換"
 
-#: ../src/player_box.py:2404
-msgid "task manager"
+#: ../src/player_box.py:2404 ../src/video_format_conv/gui.py:128
+msgid "Task manager"
 msgstr "任務管理器"
 
 #: ../src/player_box.py:2406
@@ -328,10 +329,6 @@ msgstr "畫面"
 #: ../src/player_box.py:2409 ../src/player_box.py:2601
 msgid "Audio"
 msgstr "聲音"
-
-#: ../src/player_box.py:2412 ../src/player_box.py:2695
-msgid "Format conversion"
-msgstr "格式轉換"
 
 #: ../src/player_box.py:2413
 msgid "New Features"
@@ -990,10 +987,6 @@ msgstr "更改"
 msgid "Start"
 msgstr "開始"
 
-#: ../src/video_format_conv/gui.py:128
-msgid "Task manager"
-msgstr "任務管理器"
-
 #: ../src/video_format_conv/gui.py:163 ../src/video_format_conv/gui.py:304
 msgid "No Presets"
 msgstr "自定義"
@@ -1154,6 +1147,12 @@ msgstr ". 采 樣 數  :"
 #: ../src/video_information/gui.py:308
 msgid "Copy info"
 msgstr "複製信息"
+
+#~ msgid "format conversion"
+#~ msgstr "格式轉換"
+
+#~ msgid "task manager"
+#~ msgstr "任務管理器"
 
 #~ msgid "Advanced"
 #~ msgstr "高級"

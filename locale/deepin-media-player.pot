@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-12 16:13+0800\n"
+"POT-Creation-Date: 2012-11-12 16:22+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -309,12 +309,13 @@ msgstr ""
 msgid "About us"
 msgstr ""
 
-#: ../src/player_box.py:2403
-msgid "format conversion"
+#: ../src/player_box.py:2403 ../src/player_box.py:2412
+#: ../src/player_box.py:2695
+msgid "Format conversion"
 msgstr ""
 
-#: ../src/player_box.py:2404
-msgid "task manager"
+#: ../src/player_box.py:2404 ../src/video_format_conv/gui.py:128
+msgid "Task manager"
 msgstr ""
 
 #: ../src/player_box.py:2406
@@ -327,10 +328,6 @@ msgstr ""
 
 #: ../src/player_box.py:2409 ../src/player_box.py:2601
 msgid "Audio"
-msgstr ""
-
-#: ../src/player_box.py:2412 ../src/player_box.py:2695
-msgid "Format conversion"
 msgstr ""
 
 #: ../src/player_box.py:2413
@@ -982,10 +979,6 @@ msgstr ""
 
 #: ../src/video_format_conv/gui.py:123
 msgid "Start"
-msgstr ""
-
-#: ../src/video_format_conv/gui.py:128
-msgid "Task manager"
 msgstr ""
 
 #: ../src/video_format_conv/gui.py:163 ../src/video_format_conv/gui.py:304
