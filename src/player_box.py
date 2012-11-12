@@ -68,6 +68,7 @@ from video_format_conv.conv_task_gui import ConvTAskGui
 import threading
 import gtk
 import os
+from tooltip import tooltip_text
 
 X_VIDEO_PLAY_0_5 = 1 << 0
 X_VIDEO_PLAY_1 = 1 << 1
@@ -1671,9 +1672,11 @@ class PlayerBox(object):
     def full_play_window(self, widget): #full_button
         '''Full player window.'''
         if not self.full_bool: # Full player window.
+            tooltip_text(self.toolbar.toolbar_full_button, _("Quit Full Screen"))
             self.set_window_full()
         else:
             self.set_window_quit_full()
+            tooltip_text(self.toolbar.toolbar_full_button, _("Full Screen"))
             if self.mode_state_bool:
                 self.concise_window_function()
             else:
