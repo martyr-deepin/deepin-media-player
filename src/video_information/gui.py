@@ -294,7 +294,7 @@ class VideoInformGui(gobject.GObject):
             self.video_strem_info_label = Label(_("Video stream info:"))
             self.code_format_label      = Label(_('.Codec format:') + "%s%s" % (tabs, info.code_information.video_section.code_format))
             self.video_fps_label        = Label(_(".Frame rate:") + "%s%s" % (tabs, info.code_information.video_section.video_fps))
-            self.video_display_asscept_label = Label(_(".Scaling") + "%s%s" % (tabs, info.code_information.video_section.display_asscept))
+            self.video_display_asscept_label = Label(_(".Scaling:") + "%s%s" % (tabs, info.code_information.video_section.display_asscept))
             self.video_malv_label = Label(_(".Video bit rate:") + "%s%s " % (tabs, int(info.code_information.video_section.video_bit_rate)/1000) + "kbps")
             self.video_resolution_label = Label(_(".Resolution:") + "%s%s" % (tabs, info.code_information.video_section.resolution))
             self.hseparator = HSeparator(app_theme.get_shadow_color("hSeparator").get_color_info(), 0, 35)

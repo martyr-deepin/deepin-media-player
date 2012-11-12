@@ -1116,7 +1116,7 @@ msgid ".Frame rate:"
 msgstr ". 視頻幀率:"
 
 #: ../src/video_information/gui.py:297
-msgid ".Scaling"
+msgid ".Scaling:"
 msgstr ". 顯示比率:"
 
 #: ../src/video_information/gui.py:298
