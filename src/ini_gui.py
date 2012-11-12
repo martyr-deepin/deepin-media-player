@@ -1101,7 +1101,7 @@ class OtherKey(gtk.VBox):
                 text = "Disabled"
             elif text == "全屏":
                 text = "Full Screen"
-            elif text == "暂停/播放":    
+            elif text in ["暂停/播放", "暫停/播放"]:
                 text = "Pause/Play"
             elif text == "音量":    
                 text = "Volumn"
