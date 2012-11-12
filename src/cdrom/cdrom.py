@@ -29,6 +29,14 @@ import gtk
 
 ################################################
 ###
+class CdromType(object):
+    def __init__(self):
+        self.id_label = None
+        self.mount_path = None        
+        self.type = None
+        self.
+################################################
+###
 
 DESKTOP_UDISKS = "org.freedesktop.UDisks"
 DESKTOP_UDISKS_PATH = "/org/freedesktop/UDisks"
@@ -55,6 +63,7 @@ class Service(gobject.GObject):
         for dev in devs.EnumerateDevices():
             if dev.split("/")[-1].startswith("sr"):
                 self.srx_list.append(str(dev))                
+                print "dev:", dev
         # test input.        
         # for srx_path in self.srx_list:        
         #     obj = self.bus.get_object(DESKTOP_UDISKS, srx_path)
@@ -74,6 +83,7 @@ class Service(gobject.GObject):
             device_props = dbus.Interface(obj, DBUS_PROPERTIES)
             try:
                 mount_path = device_props.Get(UDISKS_DEVICE, 'DeviceMountPaths')
+                print device_props.Get(UDISKS_DEVICE, 'DeviceMountPaths')
                 # print "mount_path:", mount_path
                 mount_path = mount_path[0]
                 # print os.listdir(mount_path)
@@ -89,7 +99,8 @@ class Service(gobject.GObject):
                 # send signal.
                 self.emit("changed-cdrom", device, mount_path)
             except Exception, e:
-                print "changed_drive[error]:", e
+                # print "changed_drive[error]:", e
+                pass
         
 ################################################
 ###

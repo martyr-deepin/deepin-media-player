@@ -158,6 +158,8 @@ def video_string_to_information(pipe, video_path):
     video_information.code_information.video_section.resolution = "%sx%s" % (video_width, video_height)
     # 显示的比率.
     video_information.code_information.video_section.display_asscept = str(round(float(video_width) / float(video_height), 3))
+    
+    video_information.file_name = get_paly_file_name(video_path)
     return video_information
             
 ###########################################################
@@ -170,6 +172,7 @@ class VideoInformGui(gobject.GObject):
     def __init__(self, path):
         gobject.GObject.__init__(self)
         # Init.
+        self.path = path
         video_information = get_video_information(path)
         # Init video widgets.
         self.init_video_widgets(path, video_information)
@@ -277,7 +280,7 @@ class VideoInformGui(gobject.GObject):
             print "init_widgets[error]", e
             
     def open_file_path_btn_clicked(self, widget):
-        os.system("nautilus '%s'" % (str(self.open_path)))
+        os.system("nautilus '%s'" % (str(self.path)))
             
     def init_code_widgets(self, path, info):
         try:
