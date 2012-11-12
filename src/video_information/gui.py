@@ -233,7 +233,7 @@ class VideoInformGui(gobject.GObject):
             self.file_type_label  = Label(_("File type:") + "%s%s" % (tabs, video_information.file_type))
             self.resolution_label = Label(_("Resolution:") + "%s%sx%s" % (tabs, video_information.resolution.width, video_information.resolution.height))
             self.file_size_label  = Label(_("File size:") + "%s%s" % (tabs, video_information.file_size))
-            self.length_label     = Label(_("Duration") + "%s%s" % (tabs, video_information.length)) # format(hour:min:sec)
+            self.length_label     = Label(_("Duration:") + "%s%s" % (tabs, video_information.length)) # format(hour:min:sec)
             self.second_hseparator = HSeparator(app_theme.get_shadow_color("hSeparator").get_color_info(), 0, 35)
             self.second_hseparator_hbox = gtk.HBox()            
             self.file_path_label  = Label(describe, enable_select=False, wrap_width=420)
@@ -304,7 +304,7 @@ class VideoInformGui(gobject.GObject):
             self.audio_channels_number_label = Label(_(".track number:") + "%s%s " % (tabs, info.code_information.audio_section.channels_number) + "channels")
             self.audio_weishu_label = Label(_(".Audio digit:") + "%s%s " % (tabs, int(info.code_information.audio_section.channels_number)*8) + "bits")
             self.audio_malv_label = Label(_(".Audio bit rate:") + "%s%s" % (tabs, int(info.code_information.audio_section.audio_bit_rate)/1000) + " kbps")
-            self.audio_sampling_label = Label(_(".Sampling") + "%s%s " % (tabs, info.code_information.audio_section.sampling_number) + "Hz")
+            self.audio_sampling_label = Label(_(".Sampling:") + "%s%s " % (tabs, info.code_information.audio_section.sampling_number) + "Hz")
             self.copy_info_btn = Button(_("Copy info"))
             # Init widgets top left.
             self.widgets_top_left = [

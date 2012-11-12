@@ -583,7 +583,7 @@ class PlayControl(gtk.VBox):
             
         self.play_or_pause_entry.set_size(entry_width, entry_height)
         # add volume.
-        self.add_volume_entry_label = Label(_("Volumn Up"))
+        self.add_volume_entry_label = Label(_("Volume Up"))
         self.add_volume_entry = ShortcutKeyEntry()
         text_string = self.ini.get("PlayControl", "add_volume_key")
         if text_string:
@@ -603,7 +603,7 @@ class PlayControl(gtk.VBox):
             
         self.seek_entry.set_size(entry_width, entry_height)
         # sub volume.
-        self.sub_volume_entry_label = Label(_("Volumn Down"))
+        self.sub_volume_entry_label = Label(_("Volume Down"))
         self.sub_volume_entry = ShortcutKeyEntry()
         text_string = self.ini.get("PlayControl", "sub_volume_key")
         if text_string:
@@ -986,7 +986,7 @@ class OtherKey(gtk.VBox):
                              ]
         self.widgets_right = [ComboBox([(_("Pause/Play"), 1), (_("Disabled"), 2)]),
                               ComboBox([(_("Full Screen"), 1), (_("Disabled"), 2)]),
-                              ComboBox([(_("Volumn"), 1),(_("Disabled"), 2)])
+                              ComboBox([(_("Volume"), 1),(_("Disabled"), 2)])
                               ]                
         # init other start set false.
         self.set_other_key_false()
@@ -1050,7 +1050,7 @@ class OtherKey(gtk.VBox):
                 else:                        
                     widget.set_shortcut_key(init_key)
             # get config right value.
-            self.keys_right = [_("Pause/Play"), _("Full Screen"), _("Volumn")]
+            self.keys_right = [_("Pause/Play"), _("Full Screen"), _("Volume")]
             
             for_widgets_right = map(lambda title, widget, key:(title, widget, key), self.key_titles_right, self.widgets_right, self.keys_right)
             
@@ -1104,7 +1104,7 @@ class OtherKey(gtk.VBox):
             elif text in ["暂停/播放", "暫停/播放"]:
                 text = "Pause/Play"
             elif text == "音量":    
-                text = "Volumn"
+                text = "Volume"
             other_set_dict[str(key_title)] = text
         return other_set_dict
     
