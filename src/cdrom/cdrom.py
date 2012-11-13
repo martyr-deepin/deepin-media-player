@@ -34,7 +34,7 @@ class CdromType(object):
         self.id_label = None
         self.mount_path = None        
         self.type = None
-        self.
+        # self.
 ################################################
 ###
 
