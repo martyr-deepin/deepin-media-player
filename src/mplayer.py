@@ -222,7 +222,7 @@ def init_mplayer_config():
                 # ("subtitle_advance_key", "["),
                 ("mouse_left_single_clicked", _("Pause/Play")),
                 ("mouse_left_double_clicked", _("Full Screen")),
-                ("mouse_wheel_event", _("Volumn")),
+                ("mouse_wheel_event", _("Volume")),
                 ]):
             config.set("OtherKey", argv, value)
 
