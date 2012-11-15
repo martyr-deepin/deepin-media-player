@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-12 16:55+0800\n"
+"POT-Creation-Date: 2012-11-15 11:43+0800\n"
 "PO-Revision-Date: 2012-07-12 15:53+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -16,77 +16,6 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-#: ../src/togglehoverbutton.py:126 ../src/player_box.py:1679
-#: ../src/player_box.py:2381 ../src/mplayer.py:224 ../src/ini_gui.py:318
-#: ../src/ini_gui.py:636 ../src/ini_gui.py:988 ../src/ini_gui.py:1053
-msgid "Full Screen"
-msgstr "全屏"
-
-#: ../src/togglehoverbutton.py:135 ../src/player_box.py:2382
-#: ../src/player_box.py:2599
-msgid "Standard Mode"
-msgstr "普通模式"
-
-#: ../src/togglehoverbutton.py:144 ../src/player_box.py:2383
-#: ../src/player_box.py:2600 ../src/ini_gui.py:646
-msgid "Concise Mode"
-msgstr "簡潔模式"
-
-#: ../src/scan_subtitles.py:204 ../src/subtitle/scan_subtitles.py:204
-msgid "Search Subtitles"
-msgstr "字幕選擇"
-
-#: ../src/scan_subtitles.py:230 ../src/subtitle/scan_subtitles.py:231
-msgid "Subtiles"
-msgstr "字幕"
-
-#: ../src/scan_subtitles.py:304 ../src/subtitle/scan_subtitles.py:305
-msgid "Movie Name: "
-msgstr "影片名:"
-
-#: ../src/scan_subtitles.py:318 ../src/subtitle/scan_subtitles.py:319
-msgid "Search"
-msgstr "搜索"
-
-#: ../src/scan_subtitles.py:341 ../src/subtitle/scan_subtitles.py:342
-msgid "Searching for subtitles"
-msgstr "正在搜索字幕......"
-
-#: ../src/scan_subtitles.py:347 ../src/subtitle/scan_subtitles.py:348
-msgid "No network connection established"
-msgstr "您的網絡暫無鏈接"
-
-#: ../src/scan_subtitles.py:357 ../src/subtitle/scan_subtitles.py:358
-msgid "Total search results"
-msgstr "搜索到字幕"
-
-#: ../src/scan_subtitles.py:366 ../src/subtitle/scan_subtitles.py:367
-msgid "Sorry, we couln't find any subtitle"
-msgstr "抱歉,冇有搜索到相關字幕"
-
-#: ../src/scan_subtitles.py:375 ../src/subtitle/scan_subtitles.py:376
-msgid "Download"
-msgstr "下載"
-
-#: ../src/scan_subtitles.py:377 ../src/ini_gui.py:155
-#: ../src/video_format_conv/gui.py:124
-#: ../src/video_format_conv/conv_task_gui.py:82
-#: ../src/video_information/gui.py:191 ../src/subtitle/scan_subtitles.py:378
-msgid "Close"
-msgstr "關閉"
-
-#: ../src/scan_subtitles.py:436 ../src/subtitle/scan_subtitles.py:437
-msgid "Subtile has been saved to the"
-msgstr "字幕保存到"
-
-#: ../src/scan_subtitles.py:436 ../src/subtitle/scan_subtitles.py:437
-msgid "director"
-msgstr "文件夾"
-
-#: ../src/scan_subtitles.py:445 ../src/subtitle/scan_subtitles.py:446
-msgid "Failed to download the subtitle!"
-msgstr "字幕下載失敗!"
 
 #: ../src/player_box.py:403 ../src/player_box.py:2392
 #: ../src/player_box.py:2594 ../src/ini_gui.py:536
@@ -105,14 +34,14 @@ msgid "Open URL"
 msgstr "打開網址"
 
 #: ../src/player_box.py:681 ../src/player_box.py:1772
-#: ../src/player_box.py:1780 ../src/mplayer.py:219 ../src/ini_gui.py:987
-#: ../src/ini_gui.py:988 ../src/ini_gui.py:989 ../src/ini_gui.py:1042
+#: ../src/player_box.py:1780 ../src/ini_gui.py:987 ../src/ini_gui.py:988
+#: ../src/ini_gui.py:989 ../src/ini_gui.py:1042 ../src/mplayer.py:219
 msgid "Disabled"
 msgstr "禁用"
 
 #: ../src/player_box.py:701 ../src/player_box.py:716 ../src/player_box.py:719
 #: ../src/player_box.py:905 ../src/player_box.py:915 ../src/player_box.py:2993
-#: ../src/ini_gui.py:989 ../src/ini_gui.py:1053
+#: ../src/ini_gui.py:989 ../src/ini_gui.py:1053 ../src/mplayer.py:225
 msgid "Volume"
 msgstr "音量"
 
@@ -177,6 +106,12 @@ msgstr "無效的文件"
 #: ../src/player_box.py:1675
 msgid "Quit Full Screen"
 msgstr "退出全屏"
+
+#: ../src/player_box.py:1679 ../src/player_box.py:2381 ../src/ini_gui.py:318
+#: ../src/ini_gui.py:636 ../src/ini_gui.py:988 ../src/ini_gui.py:1053
+#: ../src/togglehoverbutton.py:126 ../src/mplayer.py:224
+msgid "Full Screen"
+msgstr "全屏"
 
 #: ../src/player_box.py:2206 ../src/ini_gui.py:596
 msgid "Forward"
@@ -286,6 +221,16 @@ msgstr "單個循環"
 #: ../src/player_box.py:2667
 msgid "Repeat List"
 msgstr "列表循環"
+
+#: ../src/player_box.py:2382 ../src/player_box.py:2599
+#: ../src/togglehoverbutton.py:135
+msgid "Standard Mode"
+msgstr "普通模式"
+
+#: ../src/player_box.py:2383 ../src/player_box.py:2600 ../src/ini_gui.py:646
+#: ../src/togglehoverbutton.py:144
+msgid "Concise Mode"
+msgstr "簡潔模式"
 
 #: ../src/player_box.py:2387 ../src/player_box.py:2476
 msgid "Forward 5s"
@@ -473,32 +418,6 @@ msgstr "增大字幕尺寸"
 msgid "Decrease the Size of Characters"
 msgstr "減小字幕尺寸"
 
-#: ../src/main.py:63 ../src/ini_gui.py:1355
-msgid "Deepin Media Player"
-msgstr "深度影音"
-
-#: ../src/play_list_button.py:35
-msgid "Playlist"
-msgstr "播放列表"
-
-#: ../src/mplayer.py:223 ../src/ini_gui.py:576 ../src/ini_gui.py:987
-#: ../src/ini_gui.py:1053
-msgid "Pause/Play"
-msgstr "暫停/播放"
-
-#: ../src/mplayer.py:225
-#, fuzzy
-msgid "Volumn"
-msgstr "音量"
-
-#: ../src/open_button.py:382
-msgid "Enter URL"
-msgstr "輸入網址"
-
-#: ../src/open_button.py:382
-msgid "Please Enter a Valid URL"
-msgstr "請輸入有效的網址"
-
 #: ../src/ini_gui.py:132 ../src/ini_gui.py:162 ../src/ini_gui.py:169
 #: ../src/ini_gui.py:260 ../src/ini_gui.py:271 ../src/ini_gui.py:306
 msgid "Playback"
@@ -527,6 +446,13 @@ msgstr "字幕控製"
 #: ../src/ini_gui.py:955 ../src/ini_gui.py:1335
 msgid "Other"
 msgstr "其它快捷鍵"
+
+#: ../src/ini_gui.py:155 ../src/scan_subtitles.py:377
+#: ../src/video_information/gui.py:191 ../src/subtitle/scan_subtitles.py:378
+#: ../src/video_format_conv/conv_task_gui.py:82
+#: ../src/video_format_conv/gui.py:124
+msgid "Close"
+msgstr "關閉"
 
 #: ../src/ini_gui.py:310
 msgid "On Opening:"
@@ -583,6 +509,11 @@ msgstr "開啟熱鍵"
 #: ../src/ini_gui.py:546 ../src/ini_gui.py:566
 msgid "Previous"
 msgstr "上一個"
+
+#: ../src/ini_gui.py:576 ../src/ini_gui.py:987 ../src/ini_gui.py:1053
+#: ../src/mplayer.py:223
+msgid "Pause/Play"
+msgstr "暫停/播放"
 
 #: ../src/ini_gui.py:626
 msgid "Mute"
@@ -660,6 +591,10 @@ msgstr "保存類型： "
 msgid "Keep Current Aspect Ratio"
 msgstr "按當前顯示的畫面尺寸截圖"
 
+#: ../src/ini_gui.py:1355 ../src/main.py:63
+msgid "Deepin Media Player"
+msgstr "深度影音"
+
 #: ../src/ini_gui.py:1360
 msgid "Version:"
 msgstr "版本："
@@ -678,9 +613,157 @@ msgstr ""
 "\n"
 "深度音樂播放器是自由軟件，遵循自由軟件基金會發布的GNU通用公共許可證第三版。\n"
 
+#: ../src/play_list_button.py:35
+msgid "Playlist"
+msgstr "播放列表"
+
+#: ../src/open_button.py:382
+msgid "Enter URL"
+msgstr "輸入網址"
+
+#: ../src/open_button.py:382
+msgid "Please Enter a Valid URL"
+msgstr "請輸入有效的網址"
+
+#: ../src/scan_subtitles.py:204 ../src/subtitle/scan_subtitles.py:204
+msgid "Search Subtitles"
+msgstr "字幕選擇"
+
+#: ../src/scan_subtitles.py:230 ../src/subtitle/scan_subtitles.py:231
+msgid "Subtiles"
+msgstr "字幕"
+
+#: ../src/scan_subtitles.py:304 ../src/subtitle/scan_subtitles.py:305
+msgid "Movie Name: "
+msgstr "影片名:"
+
+#: ../src/scan_subtitles.py:318 ../src/subtitle/scan_subtitles.py:319
+msgid "Search"
+msgstr "搜索"
+
+#: ../src/scan_subtitles.py:341 ../src/subtitle/scan_subtitles.py:342
+msgid "Searching for subtitles"
+msgstr "正在搜索字幕......"
+
+#: ../src/scan_subtitles.py:347 ../src/subtitle/scan_subtitles.py:348
+msgid "No network connection established"
+msgstr "您的網絡暫無鏈接"
+
+#: ../src/scan_subtitles.py:357 ../src/subtitle/scan_subtitles.py:358
+msgid "Total search results"
+msgstr "搜索到字幕"
+
+#: ../src/scan_subtitles.py:366 ../src/subtitle/scan_subtitles.py:367
+msgid "Sorry, we couln't find any subtitle"
+msgstr "抱歉,冇有搜索到相關字幕"
+
+#: ../src/scan_subtitles.py:375 ../src/subtitle/scan_subtitles.py:376
+msgid "Download"
+msgstr "下載"
+
+#: ../src/scan_subtitles.py:436 ../src/subtitle/scan_subtitles.py:437
+msgid "Subtile has been saved to the"
+msgstr "字幕保存到"
+
+#: ../src/scan_subtitles.py:436 ../src/subtitle/scan_subtitles.py:437
+msgid "director"
+msgstr "文件夾"
+
+#: ../src/scan_subtitles.py:445 ../src/subtitle/scan_subtitles.py:446
+msgid "Failed to download the subtitle!"
+msgstr "字幕下載失敗!"
+
 #: ../src/toolbar.py:89
 msgid "Keep above"
 msgstr "置頂"
+
+#: ../src/video_information/gui.py:199
+msgid "video information"
+msgstr "視頻信息"
+
+#: ../src/video_information/gui.py:199
+msgid "decoding information"
+msgstr "編碼信息"
+
+#: ../src/video_information/gui.py:223
+msgid "File path:"
+msgstr "文件路徑:"
+
+#: ../src/video_information/gui.py:233
+msgid "File type:"
+msgstr "文件類型:"
+
+#: ../src/video_information/gui.py:234
+msgid "Resolution:"
+msgstr "分 辨 率  : "
+
+#: ../src/video_information/gui.py:235
+msgid "File size:"
+msgstr "文件大小:"
+
+#: ../src/video_information/gui.py:236
+msgid "Duration:"
+msgstr "媒體時長:"
+
+#: ../src/video_information/gui.py:241
+msgid "Open directory"
+msgstr "打開目錄"
+
+#: ../src/video_information/gui.py:294
+msgid "Video stream info:"
+msgstr "視頻流信息"
+
+#: ../src/video_information/gui.py:295
+msgid ".Codec format:"
+msgstr ". 編碼格式:"
+
+#: ../src/video_information/gui.py:296
+msgid ".Frame rate:"
+msgstr ". 視頻幀率:"
+
+#: ../src/video_information/gui.py:297
+msgid ".Scaling:"
+msgstr ". 顯示比率:"
+
+#: ../src/video_information/gui.py:298
+msgid ".Video bit rate:"
+msgstr ". 視頻碼率:"
+
+#: ../src/video_information/gui.py:299
+msgid ".Resolution:"
+msgstr ". 分 辨 率  : "
+
+#: ../src/video_information/gui.py:302
+msgid "Audio stream info:"
+msgstr "音頻流信息"
+
+#: ../src/video_information/gui.py:303
+msgid ".codec format:"
+msgstr ". 編碼格式:"
+
+#: ../src/video_information/gui.py:304
+msgid ".track number:"
+msgstr ". 聲 道 數  :"
+
+#: ../src/video_information/gui.py:305
+msgid ".Audio digit:"
+msgstr ". 音頻位數:"
+
+#: ../src/video_information/gui.py:306
+msgid ".Audio bit rate:"
+msgstr ". 音頻碼率:"
+
+#: ../src/video_information/gui.py:307
+msgid ".Sampling:"
+msgstr ". 采 樣 數  :"
+
+#: ../src/video_information/gui.py:308
+msgid "Copy info"
+msgstr "複製信息"
+
+#: ../src/video_format_conv/conv_task_gui.py:57
+msgid "Task Manager for format conversion"
+msgstr "任務管理器"
 
 #: ../src/video_format_conv/new_button.py:32
 #: ../src/video_format_conv/new_button.py:59
@@ -692,7 +775,8 @@ msgid "('button_size', 100)"
 msgstr "('button_size', 50)"
 
 #: ../src/video_format_conv/gui.py:43
-msgid "('form_size', 455, 180)"
+#, fuzzy
+msgid "('form_size', 500, 180)"
 msgstr "('form_size', 425, 180)"
 
 #: ../src/video_format_conv/gui.py:53
@@ -1028,10 +1112,6 @@ msgstr "('bit_rate_position', 0)"
 msgid "Choose a directory"
 msgstr "打開文件夾"
 
-#: ../src/video_format_conv/conv_task_gui.py:57
-msgid "Task Manager for format conversion"
-msgstr "任務管理器"
-
 #: ../src/video_format_conv/transmageddon.py:92
 #: ../src/video_format_conv/transmageddon.py:434
 msgid "Audio-only"
@@ -1068,89 +1148,9 @@ msgstr "刪除"
 msgid "Remove complete tasks"
 msgstr "清除已完成任務"
 
-#: ../src/video_information/gui.py:199
-msgid "video information"
-msgstr "視頻信息"
-
-#: ../src/video_information/gui.py:199
-msgid "decoding information"
-msgstr "編碼信息"
-
-#: ../src/video_information/gui.py:223
-msgid "File path:"
-msgstr "文件路徑:"
-
-#: ../src/video_information/gui.py:233
-msgid "File type:"
-msgstr "文件類型:"
-
-#: ../src/video_information/gui.py:234
-msgid "Resolution:"
-msgstr "分 辨 率  : "
-
-#: ../src/video_information/gui.py:235
-msgid "File size:"
-msgstr "文件大小:"
-
-#: ../src/video_information/gui.py:236
-msgid "Duration:"
-msgstr "媒體時長:"
-
-#: ../src/video_information/gui.py:241
-msgid "Open directory"
-msgstr "打開目錄"
-
-#: ../src/video_information/gui.py:294
-msgid "Video stream info:"
-msgstr "視頻流信息"
-
-#: ../src/video_information/gui.py:295
-msgid ".Codec format:"
-msgstr ". 編碼格式:"
-
-#: ../src/video_information/gui.py:296
-msgid ".Frame rate:"
-msgstr ". 視頻幀率:"
-
-#: ../src/video_information/gui.py:297
-msgid ".Scaling:"
-msgstr ". 顯示比率:"
-
-#: ../src/video_information/gui.py:298
-msgid ".Video bit rate:"
-msgstr ". 視頻碼率:"
-
-#: ../src/video_information/gui.py:299
-msgid ".Resolution:"
-msgstr ". 分 辨 率  : "
-
-#: ../src/video_information/gui.py:302
-msgid "Audio stream info:"
-msgstr "音頻流信息"
-
-#: ../src/video_information/gui.py:303
-msgid ".codec format:"
-msgstr ". 編碼格式:"
-
-#: ../src/video_information/gui.py:304
-msgid ".track number:"
-msgstr ". 聲 道 數  :"
-
-#: ../src/video_information/gui.py:305
-msgid ".Audio digit:"
-msgstr ". 音頻位數:"
-
-#: ../src/video_information/gui.py:306
-msgid ".Audio bit rate:"
-msgstr ". 音頻碼率:"
-
-#: ../src/video_information/gui.py:307
-msgid ".Sampling:"
-msgstr ". 采 樣 數  :"
-
-#: ../src/video_information/gui.py:308
-msgid "Copy info"
-msgstr "複製信息"
+#, fuzzy
+#~ msgid "Volumn"
+#~ msgstr "音量"
 
 #~ msgid "format conversion"
 #~ msgstr "格式轉換"

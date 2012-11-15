@@ -40,7 +40,7 @@ import os
 
 from locales import _
 
-form_size = eval(_("('form_size', 455, 180)"))
+form_size = eval(_("('form_size', 500, 180)"))
 
 FORM_WIDTH = int(form_size[1])
 # FORM_HEIGHT = 280
