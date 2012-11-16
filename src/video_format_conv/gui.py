@@ -54,9 +54,10 @@ class Form(DialogBox):
                            FORM_WIDTH, FORM_HEIGHT, 
                            mask_type=DIALOG_MASK_SINGLE_PAGE,
                            close_callback=self.hide_all,
-                           modal=False,                           
+                           modal=True,                           
                            window_hint=gtk.gdk.WINDOW_TYPE_HINT_DIALOG,
                            window_pos=gtk.WIN_POS_CENTER,
+                           # skip_taskbar_hint=False,
                            resizable=False,
                            )                        
         # Init value.

@@ -58,7 +58,7 @@ class ConvTAskGui(DialogBox):
                            FORM_WIDTH, FORM_HEIGHT, 
                            mask_type=DIALOG_MASK_SINGLE_PAGE, #DIALOG_MASK_MULTIPLE_PAGE,
                            close_callback=self.hide_all,
-                           modal=False,
+                           modal=True,
                            window_hint=gtk.gdk.WINDOW_TYPE_HINT_DIALOG,
                            window_pos=gtk.WIN_POS_CENTER,
                            resizable=False,
