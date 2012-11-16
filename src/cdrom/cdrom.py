@@ -24,17 +24,19 @@ import fcntl
 import os
 import dbus
 import gobject
-from pprint import pprint
 import gtk
+
 
 ################################################
 ###
 class CdromType(object):
-    def __init__(self):
-        self.id_label = None
-        self.mount_path = None        
+    def __init__(self):        
+        self.id_label = None                    
+        self.mount_path = None
         self.type = None
-        # self.
+        self.device_file = None
+        self.device_model = None
+        self.id_type = None        
 ################################################
 ###
 
@@ -52,6 +54,7 @@ class Service(gobject.GObject):
         }    
     def __init__(self):
         gobject.GObject.__init__(self)
+        self.cdrom_dict = {}
         self.srx_list = []
         DBusGMainLoop(set_as_default=True)
         self.bus = dbus.SystemBus()
@@ -63,44 +66,72 @@ class Service(gobject.GObject):
         for dev in devs.EnumerateDevices():
             if dev.split("/")[-1].startswith("sr"):
                 self.srx_list.append(str(dev))                
-                print "dev:", dev
-        # test input.        
-        # for srx_path in self.srx_list:        
-        #     obj = self.bus.get_object(DESKTOP_UDISKS, srx_path)
-        #     device_props = dbus.Interface(obj, DBUS_PROPERTIES)
-        #     label = device_props.Get(UDISKS_DEVICE, 'IdLabel')
-        #     if label != "":
-        #         print device_props.Get(UDISKS_DEVICE, "DeviceMountPaths")[0]
+                self.get_cdrom_info(dev)
+                
+        # print test.
+        for key in self.cdrom_dict.keys():
+            print "========================="
+            print "device_file:", self.cdrom_dict[key].device_file
+            print "mount_path:", self.cdrom_dict[key].mount_path
+            print "id_label:", self.cdrom_dict[key].id_label
+            print "id_type:", self.cdrom_dict[key].id_type
+            print "type:", self.cdrom_dict[key].type
             
-    def load_drive(self, device):
-        print "load_drive:", device
+    def get_vcd_info(self, dev):        
+        cmd = "mplayer -vo null -ao null -frames 0 -identify vcd://2 -dvd-device '%s'" % (dev)
+        pipe = os.popen(str(cmd))
+        
+    def get_dvd_info(self, dev):                
+        cmd = "mplayer -vo null -ao null -frames 0 -identify dvdnav:// -dvd-device '%s'" % (dev)
+        pipe = os.popen(str(cmd))
+        while True: 
+            try:
+                line_text = pipe.readline()
+            except StandardError:
+                break
+        
+            if not line_text:
+                break        
+
+            if line_text.startswith("TITLE"):
+                print "TITLE:", line_text
+            elif line_text.startswith("[mkv] Track ID"):
+                print "[mkv] Track ID:", line_text
+                    
+    def get_cdrom_info(self, dev):        
+        self.cdrom_dict[str(dev)] = CdromType()            
+        obj = self.bus.get_object(DESKTOP_UDISKS, dev)
+        device_props = dbus.Interface(obj, DBUS_PROPERTIES)
+        # save device file.
+        device_file = device_props.Get(UDISKS_DEVICE, "DeviceFile")
+        self.cdrom_dict[str(dev)].device_file = device_file
+        try:
+            # read cdrom type info.
+            mount_path = device_props.Get(UDISKS_DEVICE, 'DeviceMountPaths')
+            id_label = device_props.Get(UDISKS_DEVICE, "IdLabel")            
+            drive_model = device_props.Get(UDISKS_DEVICE, "DriveModel")
+            id_type = device_props.Get(UDISKS_DEVICE, "IdType")
+            type_ = cdrom_type(mount_path[0]) # save cdrom type.            
+            # save cdrom type info.            
+            self.cdrom_dict[str(dev)].id_label = id_label
+            self.cdrom_dict[str(dev)].mount_path = mount_path[0] # save mount path.
+            self.cdrom_dict[str(dev)].type = type_            
+            self.cdrom_dict[str(dev)].device_model = drive_model
+            self.cdrom_dict[str(dev)].id_type = id_type # iso9660
+            
+            return True
+        except Exception, e:
+            print "get_cdrom_info[Error]:", e
+            return False
         
     def changed_drive(self, device):
-        mount_path = None
-        # print "changed_drive:", device
         if device.split("/")[-1].startswith("sr"):
-            obj = self.bus.get_object(DESKTOP_UDISKS, device)
-            device_props = dbus.Interface(obj, DBUS_PROPERTIES)
-            try:
-                mount_path = device_props.Get(UDISKS_DEVICE, 'DeviceMountPaths')
-                print device_props.Get(UDISKS_DEVICE, 'DeviceMountPaths')
-                # print "mount_path:", mount_path
-                mount_path = mount_path[0]
-                # print os.listdir(mount_path)
-                cd_type = cdrom_type(mount_path)    
-            
-                if cd_type == CDROM_TYPE_DVD:
-                    print "你插入的是DVD光盘"
-                elif cd_type == CDROM_TYPE_VCD:
-                    print "你插入的是VCD光盘"
-                elif cd_type == CDROM_ERROR:
-                    print "发生错误，不是DVD，VCD光盘！！"
-
+            if(self.get_cdrom_info(device)):
                 # send signal.
-                self.emit("changed-cdrom", device, mount_path)
-            except Exception, e:
-                # print "changed_drive[error]:", e
-                pass
+                self.emit("changed-cdrom", 
+                          device,
+                          self.cdrom_dict[device].mount_path
+                          )
         
 ################################################
 ###
@@ -183,30 +214,87 @@ def open_cdrom(cdrom):
 def close_cdrom(cdrom):
     ioctl_cdrom(cdrom, CLOSE_CDROM)
            
-if __name__ == "__main__":     
-    def changed_drive_cdrom(service, dev, mount_path):
-        print "发送一个信号来了...."
-        print "changed_drive_cdrom:",
-        print "dev:", dev
-        print "mount_path:", mount_path
+if __name__ == "__main__":
+    import gtk    
+    def changed_cdrom(cdrom, device, mount_path):
+        print "发来一个信号!!"
+        print device, mount_path
         
-    # cdrom_list = scan_cdrom()
-    # for cdrom in cdrom_list:
-    #     print "cdrom:", cdrom
-    #     open_cdrom(cdrom)
-        
-    # for cdrom in cdrom_list:
-    #     close_cdrom(cdrom)
+    # clicked -->>> menu.    
+    def cdrom_btn_clicked(widget):
+        command = "mplayer -slave -quiet -input file=/tmp/cmd "
+        for key in ser.cdrom_dict.keys():
+            if widget.get_label() == ser.cdrom_dict[key].device_file:
+                if ser.cdrom_dict[key].type == CDROM_TYPE_DVD: # DVD.
+                    print "播放DVD光盘!!"
+                    if ser.cdrom_dict[key].mount_path:                        
+                        ser.get_dvd_info(ser.cdrom_dict[key].device_file)
+                        command += "-mouse-movements -nocache  dvdnav:// -dvd-device %s " % (ser.cdrom_dict[key].device_file)
+                        command += "-wid %s" % (play_win.window.xid)
+                        os.system(command)        
+                elif ser.cdrom_dict[key].type == CDROM_TYPE_VCD: # VCD.
+                    if ser.cdrom_dict[key].mount_path:
+                        command += "-nocache vcd://2 -dvd-device %s " % (ser.cdrom_dict[key].device_file)
+                        command += "-wid %s" % (play_win.window.xid)
+                        os.system(command)
+                    
+    main_win = gtk.Window(gtk.WINDOW_TOPLEVEL)
     ser = Service()
-    ser.connect("changed-cdrom", changed_drive_cdrom)
-    # mainloop = gobject.MainLoop()
-    # mainloop.run()    
-    gtk.main()
-    # cd_type = cdrom_type("/media/DVD Video")
+    ser.connect("changed-cdrom", changed_cdrom)
+    main_win.set_title("主界面!!")
+    btn_hbox = gtk.HBox()
+    for key in ser.cdrom_dict.keys():
+        temp_button = gtk.Button(ser.cdrom_dict[key].device_file)
+        temp_button.connect("clicked", cdrom_btn_clicked)
+        btn_hbox.pack_start(temp_button)
+    main_win.connect("destroy", lambda w : gtk.main_quit())
+    main_win.add(btn_hbox)
+    main_win.show_all()
     
-    # if cd_type == CDROM_TYPE_DVD:
-    #     print "你插入的是DVD光盘"
-    # elif cd_type == CDROM_TYPE_VCD:
-    #     print "你插入的是VCD光盘"
-    # elif cd_type == CDROM_ERROR:
-    #     print "发生错误，不是DVD，VCD光盘！！"
+    play_win = gtk.Window(gtk.WINDOW_TOPLEVEL)
+    play_win.set_size_request(350, 350)
+    play_win.set_title("多光驱测试!!")
+    play_win.connect('destroy', lambda w : gtk.main_quit())
+    play_win.show_all()
+    
+    gtk.main()
+    
+
+    
+    
+    
+'''    
+dvdnav <button_name>
+up      dvdnav 1\n
+down    dvdnav 2\n
+left    dvdnav 3\n
+right   dvdnav 4\n
+menu    dvdnav menu\n
+select  
+return  dvdnav 6\n
+prev
+mouse   dvdnav mouse\n
+
+switch_angle [value] 切换DVD的角度.
+switch_title [value] 切换dvd标题.
+switch_chaptet [value][type] 切换章节.
+sub_demux [value] 显示字幕
+
+cmd = "mplayer -vo null -ao null -frames 0 -identify '%s'" % (file_path)
+fp = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
+
+get_audio_bitrate   音频比特率
+get_audio_codec     音频编码器名称
+get_audio_samples   声道数
+get_file_name       专辑的元数据
+get_meta_artist     艺术家的元数据
+get_meta_comment    评论....
+get_meta_genre      流派
+get_meta_title      标题
+get_meta_track      音轨数量
+get_meta_year       年份
+get_video_bitrate   比特率
+get_video_codec     视频编码器名称
+get_video_resolution 视频分辨率
+
+'''
