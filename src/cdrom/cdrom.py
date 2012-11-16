@@ -239,6 +239,7 @@ if __name__ == "__main__":
                         os.system(command)
                     
     main_win = gtk.Window(gtk.WINDOW_TOPLEVEL)
+    main_win.add_events(gtk.gdk.ALL_EVENTS_MASK)
     ser = Service()
     ser.connect("changed-cdrom", changed_cdrom)
     main_win.set_title("主界面!!")
@@ -252,11 +253,11 @@ if __name__ == "__main__":
     main_win.show_all()
     
     play_win = gtk.Window(gtk.WINDOW_TOPLEVEL)
+    play_win.add_events(gtk.gdk.ALL_EVENTS_MASK)
     play_win.set_size_request(350, 350)
     play_win.set_title("多光驱测试!!")
     play_win.connect('destroy', lambda w : gtk.main_quit())
-    play_win.show_all()
-    
+    play_win.show_all()    
     gtk.main()
     
 
@@ -265,14 +266,13 @@ if __name__ == "__main__":
     
 '''    
 dvdnav <button_name>
-up      dvdnav 1\n
-down    dvdnav 2\n
-left    dvdnav 3\n
-right   dvdnav 4\n
+up      dvdnav up\n
+down    dvdnav down\n
+left    dvdnav left\n
+right   dvdnav right\n
 menu    dvdnav menu\n
-select  
-return  dvdnav 6\n
-prev
+select  dvdnav select\n
+prev    dvdnav prev\n
 mouse   dvdnav mouse\n
 
 switch_angle [value] 切换DVD的角度.

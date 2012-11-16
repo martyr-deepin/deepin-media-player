@@ -676,15 +676,39 @@ class  Mplayer(gobject.GObject):
                 return line
                             
     # cdrom [dvd, vcd, cd].        
-    def dvd_left(self):        
-        self.cmd('\n')
-    def dvd_right(self):
-        self.cmd('\n')
-    def dvd_up(self):    
-        self.cmd('\n')
-    def dvd_down(self):    
-        self.cmd('\n')
+    def dvd_up(self):
+        self.cmd('dvdnav up\n')
         
+    def dvd_down(self):    
+        self.cmd('dvdnav down\n')
+            
+    def dvd_left(self):        
+        self.cmd('dvdnav left\n')
+        
+    def dvd_right(self):
+        self.cmd('dvdnav right\n')
+        
+    def dvd_menu(self):    
+        self.cmd('dvdnav menu\n')
+        
+    def dvd_select(self):
+        self.cmd("dvdnav select\n")
+    
+    def dvd_prev(self):    
+        self.cmd("dvdnav prev\n")
+        
+    def dvd_mouse(self):    
+        self.cmd('dvdnav mouse\n')
+        
+    def switch_angle(self, value):    
+        self.cmd("switch_angle '%s'\n" % (value))
+        
+    def switch_title(self, value):    
+        self.cmd("switch_title '%s'\n" % (value))
+        
+    def switch_chaptet(self, value, type_):
+        self.cmd("switch_chaptet '%s' '%s'" % (value, type_))
+                
     ## Play control ##   
     def playwinmax(self):
         '''Filed play window.'''

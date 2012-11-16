@@ -1096,7 +1096,6 @@ class OtherKey(gtk.VBox):
             
         for key_title, widget in map(lambda key_title, widget:(key_title, widget),
                                      self.key_titles_right, self.widgets_right):
-            # print key_title
             if key_title in ["mouse_left_single_clicked"]:
                 if widget.select_index:
                     text = "Disabled"
@@ -1112,16 +1111,7 @@ class OtherKey(gtk.VBox):
                     text = "Disabled"
                 else:    
                     text = "Volume"
-            # print widget.select_index
-            # text = widget.label.get_text()
-            # if text == "禁用":
-            #     text = "Disabled"
-            # elif text == "全屏":
-            #     text = "Full Screen"
-            # elif text in ["暂停/播放", "暫停/播放"]:
-            #     text = "Pause/Play"
-            # elif text == "音量":    
-            #     text = "Volume"
+                    
             other_set_dict[str(key_title)] = text
         return other_set_dict
     
