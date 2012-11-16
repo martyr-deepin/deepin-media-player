@@ -607,7 +607,84 @@ class  Mplayer(gobject.GObject):
         if self.state == STARTING_STATE:
             self.cmd('hue -%s\n' % (hue_num))
     
+    # get play file info.        
+    def get_audio_bitrate(self): # 音频比特率
+        self.cmd("get_audio_bitrate\n")
+        return self.get_info("ANS_AUDIO_BITRATE=")
+                
+    def get_audio_codec(self): # 音频编码器名称
+        self.cmd("get_audio_codec\n")
+        return self.get_info("ANS_AUDIO_CODEC=")
+    
+    def get_audio_samples(self): # 采样数 声道数 
+        self.cmd("get_audio_samples\n")
+        return self.get_info("ANS_AUDIO_SAMPLES=")
+    
+    def get_file_name(self): # 专辑的元数据
+        self.cmd("get_file_name\n")
+        return self.get_info("ANS_FILENAME=")
+    
+    def get_meta_artist(self): # 艺术家的元数据
+        self.cmd("get_meta_artist\n")
+        return self.get_info("ANS_META_ARTIST=")
+        
+    def get_meta_comment(self): # 评论....
+        self.cmd("get_meta_comment\n")
+        return self.get_info("ANS_META_COMMENT=")
+    
+    def get_meta_genre(self): # 流派
+        self.cmd("get_meta_genre\n")
+        return self.get_info("ANS_META_GENRE=")
+        
+    def get_meta_title(self): # 标题
+        self.cmd("get_meta_title\n")
+        return self.get_info("ANS_META_TITLE=")
+    
+    def get_meta_track(self): # 音轨数量
+        self.cmd("get_meta_track\n")
+        return self.get_info("ANS_META_TRACK=")
+    
+    def get_meta_year(self): # 年份
+        self.cmd("get_meta_year\n")
+        return self.get_info("ANS_META_YEAR=")
+    
+    def get_video_bitrate(self): # 视频比特率
+        self.cmd("get_video_bitrate\n")
+        return self.get_info("ANS_VIDEO_BITRATE=")
+    
+    def get_video_codec(self): # 视频编码器名称
+        self.cmd("get_video_codec\n")
+        return self.get_info("ANS_VIDEO_CODEC=")
+        
+    def get_video_resolution(self): # 视频分辨率
+        self.cmd("get_video_resolution\n")
+        return self.get_info("ANS_VIDEO_RESOLUTION=")
+    
+    def get_info(self, info_flags): # get information
+        while True:
+            try:
+                line = self.mplayer_out.readline()
+            except StandardError:
+                break
+                            
+            if not line:
+                break
             
+            if line.startswith(info_flags):
+                return line.replace(info_flags, "")
+            else:
+                return line
+                            
+    # cdrom [dvd, vcd, cd].        
+    def dvd_left(self):        
+        self.cmd('\n')
+    def dvd_right(self):
+        self.cmd('\n')
+    def dvd_up(self):    
+        self.cmd('\n')
+    def dvd_down(self):    
+        self.cmd('\n')
+        
     ## Play control ##   
     def playwinmax(self):
         '''Filed play window.'''
