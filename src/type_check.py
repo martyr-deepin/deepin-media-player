@@ -22,7 +22,7 @@
 import urlparse
 import gio
 
-VIDEO_TYPES = ["video", "application/vnd.rn-realmedia"]
+VIDEO_TYPES = ["video", "application/vnd.rn-realmedia", "application/x-cd-image", "application/x-shockwave-flash"]
 AUDIO_TYPES = ["audio"]        
 HTML_TYPES = ["http", "https", "mms", "ftp", "sftp", "shttp"]
 SUBTITLE_TYPES = ["application/x-subrip", "text/x-ssa"]    

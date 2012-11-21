@@ -384,6 +384,8 @@ class PlayerBox(object):
         self.screen.activate()
 
         self.screen.connect("realize", self.init_media_player)
+        self.screen.connect("button-press-event", self.screen_button_press_event)
+        self.screen.connect("motion-notify-event", self.screen_dvd_motion_notify)
         self.screen.connect("motion-notify-event", self.modify_mouse_icon)
         self.screen.connect_after("expose-event", self.draw_background)        
         
@@ -1322,6 +1324,13 @@ class PlayerBox(object):
         cr.fill()
         return True
 
+    def screen_button_press_event(self, widget, event):
+        self.mp.dvd_mouse()
+        
+    def screen_dvd_motion_notify(self, widget, event):        
+        self.mp.dvd_mouse_pos(int(event.x),
+                              int(event.y))
+            
     def draw_background(self, widget, event):
         '''Draw screen mplayer view background.'''
         cr, x, y, w, h = allocation(widget)                
@@ -2397,7 +2406,11 @@ class PlayerBox(object):
         cdrom_menu_list = []
         #
         for key in ser.cdrom_dict.keys():
-            cdrom_menu_list.append((None, str(ser.cdrom_dict[key].device_file), lambda : self.play_dvd(ser.cdrom_dict[key].device_file)))
+            cdrom_menu_list.append(
+                (None, 
+                 str(ser.cdrom_dict[key].device_file), 
+                 lambda : self.play_dvd(ser.cdrom_dict[key].device_file, ser.cdrom_dict[key].mount_path))
+                )
         # add to cdrom_menu.    
         if cdrom_menu_list != []:    
             cdrom_menu = Menu(cdrom_menu_list)    
@@ -2442,8 +2455,9 @@ class PlayerBox(object):
             (button.get_allocation().width, 0))           
 
     '''Screen right key menu.'''
-    def play_dvd(self, dvd_path):
-        print "play_dvd:", dvd_path
+    def play_dvd(self, dvd_path, mount_path):
+        self.mp.play(dvd_path, mount_path)
+        print "play_dvd:", dvd_path, mount_path
         
     def screen_right_key_menu(self, event):
         
