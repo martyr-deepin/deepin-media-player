@@ -2399,12 +2399,15 @@ class PlayerBox(object):
         for key in ser.cdrom_dict.keys():
             cdrom_menu_list.append((None, str(ser.cdrom_dict[key].device_file), lambda : self.play_dvd(ser.cdrom_dict[key].device_file)))
         # add to cdrom_menu.    
-        cdrom_menu = Menu(cdrom_menu_list)    
+        if cdrom_menu_list != []:    
+            cdrom_menu = Menu(cdrom_menu_list)    
         # In title root menu.
         self.file_menu = Menu([(None, _("Open File"), self.add_file_clear),
                                (None, _("Open Directory"), self.add_file_dir_clear),
                                (None, _("Play DISC"), cdrom_menu)
                                ])
+        if cdrom_menu_list == []:
+            self.file_menu.set_menu_item_sensitive_by_index(2, False)
         
         # In title root menu.
         self.help_menu = Menu([(None, _("Help"), None),
