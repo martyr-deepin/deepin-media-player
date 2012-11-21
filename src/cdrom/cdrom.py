@@ -214,19 +214,14 @@ def open_cdrom(cdrom):
 def close_cdrom(cdrom):
     ioctl_cdrom(cdrom, CLOSE_CDROM)
            
-def mount_iso(iso_path):    
-    dest_path = "/tmp/deepin_iso"
-    
+def mount_iso(iso_path, dest_path="/tmp/deepin_media_player_iso"):        
     if not os.path.exists(dest_path):
-        os.makedirs(dest_path)
+        os.makedirs(dest_path)        
         
     bus = dbus.SystemBus()
-
     proxy = bus.get_object("com.linuxdeepin.mountservice", "/")
-
     interface = dbus.Interface(proxy, "com.linuxdeepin.mountservice")
-
-    result = interface.mount_iso(iso_path, dest_path)
+    result = interface.mount_iso(iso_path, dest_path)    
     return result
 
 if __name__ == "__main__":
@@ -274,11 +269,8 @@ if __name__ == "__main__":
     # play_win.connect('destroy', lambda w : gtk.main_quit())
     # play_win.show_all()    
     # gtk.main()
-    mount_iso("/home/long/Desktop/123.iso")
-
-    
-    
-    
+    mount_iso("/home/long/Desktop/test.iso")
+            
 '''    
 dvdnav <button_name>
 up      dvdnav up\n
