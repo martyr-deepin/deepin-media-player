@@ -2027,6 +2027,7 @@ class PlayerBox(object):
         mplayer.sub_del(0)
         # scan subtitle.
         self.media_player_start_scan_subtitle(mplayer)
+        
         # load subtitle.
         self.media_player_start_load_subtitle(mplayer)
         ai_load_bool = self.config.get("SubtitleSet", "ai_load_subtitle")
@@ -2062,11 +2063,11 @@ class PlayerBox(object):
 
         self.progressbar.set_pos(0)
         self.bottom_toolbar.progressbar.set_pos(0)
-            
+        
     def media_player_start_scan_subtitle(self, mplayer):
         print self.sub_titles.scan_subtitle(mplayer.path, os.path.split(mplayer.path)[0])
         
-    def media_player_start_load_subtitle(self, mplayer):    
+    def media_player_start_load_subtitle(self, mplayer):            
         # down subtitle.
         save_subtitle_path = self.config.get("SubtitleSet","specific_location_search")
         if save_subtitle_path:
@@ -2121,6 +2122,7 @@ class PlayerBox(object):
                                                )
         
     def media_player_start_set_aspect(self, mplayer):
+        # return True
         # config gui -> [Fileplay] video_file_open = ?
         video_open_type = self.config.get("FilePlay", "video_file_open")
         
@@ -2151,14 +2153,22 @@ class PlayerBox(object):
             elif AI_FULL_VIDEO_STATE == video_open_type:
                 self.key_return()                
          
-        # aspect set.                                    
-        if self.video_aspect_type != ASCEPT_NORMAL_STATE: # "默认"
-            self.set_ascept_function()
+        
+        if not mplayer.dvd_bool:        
+            # aspect set.                                    
+            if self.video_aspect_type != ASCEPT_NORMAL_STATE: # "默认"
+                self.set_ascept_function()
             
-        # full window.
-        if self.playwinmax_bool and (self.video_aspect_type == ASCEPT_NORMAL_STATE): # "默认"
-            self.mp.playwinmax()
-            self.playwinmax_bool = False
+            # full window.
+            if self.playwinmax_bool and (self.video_aspect_type == ASCEPT_NORMAL_STATE): # "默认"
+                self.mp.playwinmax()
+                self.playwinmax_bool = False
+        else:    
+            gtk.timeout_add(1020, self.dvd_show_prev_menu)
+            
+    def dvd_show_prev_menu(self):        
+        self.mp.dvd_prev()
+        return False
         
     def media_player_end(self, mplayer, play_bool):
         '''player end.'''                        

@@ -288,6 +288,7 @@ class  Mplayer(gobject.GObject):
         self.mplayer_pid = 0
         self.state = STOPING_STATE
         self.vide_bool = False
+        self.dvd_bool = False
         self.pause_bool = False
         self.lenState = 0
         self.path = ""
@@ -356,6 +357,7 @@ class  Mplayer(gobject.GObject):
                     command.append("-nocache")
                     command.append("dvdnav://")
                     command.append("-dvd-device")
+                    self.dvd_bool = True
                 elif type_ == CDROM_TYPE_VCD: # add vcd iso.
                     command.append("-nocache")
                     command.append("vcd://2")
@@ -399,6 +401,7 @@ class  Mplayer(gobject.GObject):
                 self.nomute()
             else:    
                 self.setvolume(self.volume)
+                
             # emit play-start.
             gobject.timeout_add(250, self.emit_play_start_event)
             
