@@ -65,6 +65,8 @@ from video_information.gui import VideoInformGui
 from switch_audio.audio import SwitchAudio
 from video_format_conv.transmageddon import TransmageddonUI
 from video_format_conv.conv_task_gui import ConvTAskGui
+from cdrom.cdrom import (Service, mount_iso)
+
 import threading
 import gtk
 import os
@@ -2388,11 +2390,22 @@ class PlayerBox(object):
                                (menu_b_seek_5_pixbufs, _("Rewind 5s"), self.key_left),
                                (menu_play_sequence_pixbufs, _("Play Order"), self.play_state_menu),
                                ])
+        
+        # cdrom 123456.
+        ser = Service()
+        cdrom_menu = None
+        cdrom_menu_list = []
+        #
+        for key in ser.cdrom_dict.keys():
+            cdrom_menu_list.append((None, str(ser.cdrom_dict[key].device_file), lambda : self.play_dvd(ser.cdrom_dict[key].device_file)))
+        # add to cdrom_menu.    
+        cdrom_menu = Menu(cdrom_menu_list)    
         # In title root menu.
         self.file_menu = Menu([(None, _("Open File"), self.add_file_clear),
-                               (None, _("Open Directory"), self.add_file_dir_clear)])
-                              # (None, "播放光盘", None)])
-
+                               (None, _("Open Directory"), self.add_file_dir_clear),
+                               (None, _("Play DISC"), cdrom_menu)
+                               ])
+        
         # In title root menu.
         self.help_menu = Menu([(None, _("Help"), None),
                                (None, _("Issues"), None),
@@ -2426,6 +2439,9 @@ class PlayerBox(object):
             (button.get_allocation().width, 0))           
 
     '''Screen right key menu.'''
+    def play_dvd(self, dvd_path):
+        print "play_dvd:", dvd_path
+        
     def screen_right_key_menu(self, event):
         
         # 0: single playing.      

@@ -69,13 +69,13 @@ class Service(gobject.GObject):
                 self.get_cdrom_info(dev)
                 
         # print test.
-        for key in self.cdrom_dict.keys():
-            print "========================="
-            print "device_file:", self.cdrom_dict[key].device_file
-            print "mount_path:", self.cdrom_dict[key].mount_path
-            print "id_label:", self.cdrom_dict[key].id_label
-            print "id_type:", self.cdrom_dict[key].id_type
-            print "type:", self.cdrom_dict[key].type
+        # for key in self.cdrom_dict.keys():
+        #     print "========================="
+        #     print "device_file:", self.cdrom_dict[key].device_file
+        #     print "mount_path:", self.cdrom_dict[key].mount_path
+        #     print "id_label:", self.cdrom_dict[key].id_label
+        #     print "id_type:", self.cdrom_dict[key].id_type
+        #     print "type:", self.cdrom_dict[key].type
             
     def get_vcd_info(self, dev):        
         cmd = "mplayer -vo null -ao null -frames 0 -identify vcd://2 -dvd-device '%s'" % (dev)
