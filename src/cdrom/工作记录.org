@@ -3,7 +3,10 @@
    [] 查看smplayer和gnome-mplayer源码,希望能从中找到屏幕DVD导航鼠标操作的原理.
    [] 查看论坛BUG反馈.
    [] 修复 swf 文件不支持BUG,添加 application/x-shockwave-flash.
-   [] 
+   [] 难题:深度影音中的鼠标无法移动DVD导航.最后解决问题, 
+      motion-notify-event中要添加 set_mouse_pos (给mplayer发送命令)
+	  button-press-event 中添加   dvdnav mouse
+   [] 但是最后经过测试后,发现问题,鼠标移动的位置不对.
 ** 星期二:   
 ** 星期三:
 ** 星期四:   
