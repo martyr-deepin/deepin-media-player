@@ -676,6 +676,9 @@ class  Mplayer(gobject.GObject):
                 return line
                             
     # cdrom [dvd, vcd, cd].        
+    def dvd_mouse_pos(self, x, y):        
+        self.cmd('set_mouse_pos %d %d\n' % (int(x), int(y)))
+        
     def dvd_up(self):
         self.cmd('dvdnav up\n')
         
