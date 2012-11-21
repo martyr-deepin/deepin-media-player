@@ -214,52 +214,67 @@ def open_cdrom(cdrom):
 def close_cdrom(cdrom):
     ioctl_cdrom(cdrom, CLOSE_CDROM)
            
-if __name__ == "__main__":
-    import gtk    
-    def changed_cdrom(cdrom, device, mount_path):
-        print "发来一个信号!!"
-        print device, mount_path
+def mount_iso(iso_path):    
+    dest_path = "/tmp/deepin_iso"
+    
+    if not os.path.exists(dest_path):
+        os.makedirs(dest_path)
         
-    # clicked -->>> menu.    
-    def cdrom_btn_clicked(widget):
-        command = "mplayer -slave -quiet -input file=/tmp/cmd "
-        for key in ser.cdrom_dict.keys():
-            if widget.get_label() == ser.cdrom_dict[key].device_file:
-                if ser.cdrom_dict[key].type == CDROM_TYPE_DVD: # DVD.
-                    print "播放DVD光盘!!"
-                    if ser.cdrom_dict[key].mount_path:                        
-                        ser.get_dvd_info(ser.cdrom_dict[key].device_file)
-                        command += "-mouse-movements -nocache  dvdnav:// -dvd-device %s " % (ser.cdrom_dict[key].device_file)
-                        command += "-wid %s" % (play_win.window.xid)
-                        os.system(command)        
-                elif ser.cdrom_dict[key].type == CDROM_TYPE_VCD: # VCD.
-                    if ser.cdrom_dict[key].mount_path:
-                        command += "-nocache vcd://2 -dvd-device %s " % (ser.cdrom_dict[key].device_file)
-                        command += "-wid %s" % (play_win.window.xid)
-                        os.system(command)
+    bus = dbus.SystemBus()
+
+    proxy = bus.get_object("com.linuxdeepin.mountservice", "/")
+
+    interface = dbus.Interface(proxy, "com.linuxdeepin.mountservice")
+
+    result = interface.mount_iso(iso_path, dest_path)
+    return result
+
+if __name__ == "__main__":
+    # import gtk    
+    # def changed_cdrom(cdrom, device, mount_path):
+    #     print "发来一个信号!!"
+    #     print device, mount_path
+        
+    # # clicked -->>> menu.    
+    # def cdrom_btn_clicked(widget):
+    #     command = "mplayer -slave -quiet -input file=/tmp/cmd "
+    #     for key in ser.cdrom_dict.keys():
+    #         if widget.get_label() == ser.cdrom_dict[key].device_file:
+    #             if ser.cdrom_dict[key].type == CDROM_TYPE_DVD: # DVD.
+    #                 print "播放DVD光盘!!"
+    #                 if ser.cdrom_dict[key].mount_path:                        
+    #                     ser.get_dvd_info(ser.cdrom_dict[key].device_file)
+    #                     command += "-mouse-movements -nocache  dvdnav:// -dvd-device %s " % (ser.cdrom_dict[key].device_file)
+    #                     command += "-wid %s" % (play_win.window.xid)
+    #                     os.system(command)        
+    #             elif ser.cdrom_dict[key].type == CDROM_TYPE_VCD: # VCD.
+    #                 if ser.cdrom_dict[key].mount_path:
+    #                     command += "-nocache vcd://2 -dvd-device %s " % (ser.cdrom_dict[key].device_file)
+    #                     command += "-wid %s" % (play_win.window.xid)
+    #                     os.system(command)
                     
-    main_win = gtk.Window(gtk.WINDOW_TOPLEVEL)
-    main_win.add_events(gtk.gdk.ALL_EVENTS_MASK)
-    ser = Service()
-    ser.connect("changed-cdrom", changed_cdrom)
-    main_win.set_title("主界面!!")
-    btn_hbox = gtk.HBox()
-    for key in ser.cdrom_dict.keys():
-        temp_button = gtk.Button(ser.cdrom_dict[key].device_file)
-        temp_button.connect("clicked", cdrom_btn_clicked)
-        btn_hbox.pack_start(temp_button)
-    main_win.connect("destroy", lambda w : gtk.main_quit())
-    main_win.add(btn_hbox)
-    main_win.show_all()
+    # main_win = gtk.Window(gtk.WINDOW_TOPLEVEL)
+    # main_win.add_events(gtk.gdk.ALL_EVENTS_MASK)
+    # ser = Service()
+    # ser.connect("changed-cdrom", changed_cdrom)
+    # main_win.set_title("主界面!!")
+    # btn_hbox = gtk.HBox()
+    # for key in ser.cdrom_dict.keys():
+    #     temp_button = gtk.Button(ser.cdrom_dict[key].device_file)
+    #     temp_button.connect("clicked", cdrom_btn_clicked)
+    #     btn_hbox.pack_start(temp_button)
+    # main_win.connect("destroy", lambda w : gtk.main_quit())
+    # main_win.add(btn_hbox)
+    # main_win.show_all()
     
-    play_win = gtk.Window(gtk.WINDOW_TOPLEVEL)
-    play_win.add_events(gtk.gdk.ALL_EVENTS_MASK)
-    play_win.set_size_request(350, 350)
-    play_win.set_title("多光驱测试!!")
-    play_win.connect('destroy', lambda w : gtk.main_quit())
-    play_win.show_all()    
-    gtk.main()
-    
+    # play_win = gtk.Window(gtk.WINDOW_TOPLEVEL)
+    # play_win.add_events(gtk.gdk.ALL_EVENTS_MASK)
+    # play_win.set_size_request(350, 350)
+    # play_win.set_title("多光驱测试!!")
+    # play_win.connect('destroy', lambda w : gtk.main_quit())
+    # play_win.show_all()    
+    # gtk.main()
+    mount_iso("/home/long/Desktop/123.iso")
 
     
     

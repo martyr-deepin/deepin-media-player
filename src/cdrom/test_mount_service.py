@@ -26,7 +26,7 @@ if __name__ == "__main__":
     
     iso_path = "/home/long/Desktop/test_dvd.iso"
 
-    dest_path = "/home/long/test_dvd/"
+    dest_path = "/tmp/deepin_iso/"
 
     bus = dbus.SystemBus()
 
