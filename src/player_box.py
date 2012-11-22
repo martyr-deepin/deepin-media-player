@@ -1653,6 +1653,10 @@ class PlayerBox(object):
         # self.mode_state_bool = True
         # Set toolbar state.
         self.set_toolbar_state()
+        gtk.timeout_add(100, self.set_full_aspect)
+        
+    def set_full_aspect(self):    
+        self.set_ascept_function()
 
     def set_window_quit_full(self):
         # # if True. play list show.
