@@ -1327,7 +1327,8 @@ class PlayerBox(object):
         return True
 
     def screen_button_press_event(self, widget, event):
-        self.mp.dvd_mouse()
+        if event.button == 1:
+            self.mp.dvd_mouse()
         
     def screen_dvd_motion_notify(self, widget, event):        
         self.mp.dvd_mouse_pos(int(event.x),
@@ -2641,6 +2642,29 @@ class PlayerBox(object):
         menu_volume_pixbufs = (self.menu_volume_normal_pixbuf, self.menu_volume_hover_pixbuf, self.menu_volume_none_pixbuf)
         menu_subtitle_pixbufs = (self.menu_subtitle_normal_pixbuf, self.menu_subtitle_hover_pixbuf, self.menu_subtitle_none_pixbuf)
         menu_setting_pixbufs = (self.menu_setting_normal_pixbuf, self.menu_setting_hover_pixbuf, self.menu_setting_none_pixbuf)
+        
+        
+        self.dvd_built_in_menu = Menu([
+                                       (None, _("up"), (lambda : self.mp.dvd_up())), 
+                                       (None, _("down"), (lambda : self.mp.dvd_down())),
+                                       (None, _("left"), (lambda : self.mp.dvd_left())),
+                                       (None, _("right"), (lambda : self.mp.dvd_right())), 
+                                       (None, _("select"), (lambda : self.mp.dvd_select())),
+                                       (None, _("prev"), (lambda : self.mp.dvd_prev())),
+                                       (None, _("menu"), (lambda : self.mp.dvd_menu())), 
+                                       # (None, _(""), None)
+                                       ])
+        if self.mp.dvd_bool: # dvd navigation menu.
+            self.dvd_navigation_menu = Menu([(None, _("Prev chapter"), None), 
+                                             (None, _("Next chapter"), None),
+                                             (None, _("Jump to"), None),
+                                             (None, _("DVD built-in menu"), self.dvd_built_in_menu),
+                                             (None, _("Dub"), None),
+                                             (None, _("Subitle"), None)
+                                             ])        
+        else:    
+            self.dvd_navigation_menu = None
+            
         self.screen_right_root_menu = Menu([
                 (None, _("Open File"),   self.add_file_clear),
                 (None, _("Open Directory"), self.add_file_dir_clear),
@@ -2654,12 +2678,16 @@ class PlayerBox(object):
                 (None, _("Video"), screen_menu),
                 (menu_volume_pixbufs, _("Audio"), channel_select),
                 (menu_subtitle_pixbufs, _("Subtitles"), self.subtitles_control_menu),
+                (None, _("DVD navigation"), self.dvd_navigation_menu),
                 (menu_setting_pixbufs, _("Preferences"), self.config_gui),
                 self.right_key_menu_video_info
                 ], True)
         
         if self.mp.state == STOPING_PLAY:
-            self.screen_right_root_menu.set_menu_item_sensitive_by_index(13, False)
+            self.screen_right_root_menu.set_menu_item_sensitive_by_index(14, False)
+            
+        if not self.mp.dvd_bool: # set disabled dvd menu.
+            self.screen_right_root_menu.set_menu_item_sensitive_by_index(12, False)
             
         self.screen_right_root_menu.show((int(event.x_root), int(event.y_root)), (0, 0))
         

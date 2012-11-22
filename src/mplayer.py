@@ -779,6 +779,9 @@ class  Mplayer(gobject.GObject):
     def quit(self):
         '''quit deepin media player.'''
         if self.state == STARTING_STATE:
+            # dvd bool.
+            self.dvd_bool = False
+            self.dvd_menu_bool = False
             
             self.stop_get_position_id()
             self.stop_eof_id()
