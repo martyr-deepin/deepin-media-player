@@ -746,8 +746,8 @@ class  Mplayer(gobject.GObject):
     ## Play control ##   
     def playwinmax(self):
         '''Filed play window.'''
-        # if self.state:
-        self.cmd('vo_fullscreen\n')
+        if not self.dvd_bool:
+            self.cmd('vo_fullscreen\n')
             
     def seek(self, seek_num):        
         '''Set rate of progress'''
