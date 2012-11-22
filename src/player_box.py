@@ -1140,10 +1140,12 @@ class PlayerBox(object):
 
     def start_button_time_pause(self): # start_button_clicked.
         if self.mp.pause_bool:
-            self.messagebox(_("Play"))
+            if (not self.mp.dvd_menu_bool):
+                self.messagebox(_("Play"))
             self.mp.start_play()            
         else:
-            self.messagebox(_("Pause"))
+            if (not self.mp.dvd_menu_bool):
+                self.messagebox(_("Pause"))
             self.mp.pause()
         return  False
 
@@ -1461,7 +1463,8 @@ class PlayerBox(object):
     def set_restart_aspect(self):
         self.screen_frame.set(0.0, 0.0, 1.0, 1.0)
         if self.playwinmax_bool and self.video_aspect_type != ASCEPT_NORMAL_STATE:
-            self.mp.playwinmax()
+            if not self.mp.dvd_bool:
+                self.mp.playwinmax()
             self.playwinmax_bool = False
 
         self.video_aspect_type = ASCEPT_NORMAL_STATE
@@ -1493,7 +1496,8 @@ class PlayerBox(object):
 
     def set_ascept_function(self):
         if not self.playwinmax_bool and self.video_aspect_type != ASCEPT_NORMAL_STATE:
-            self.mp.playwinmax()
+            if not self.dvd_bool:
+                self.mp.playwinmax()
             self.playwinmax_bool = True
 
         # Set screen frame ascept.

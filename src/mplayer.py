@@ -290,6 +290,7 @@ class  Mplayer(gobject.GObject):
         self.vide_bool = False
         self.dvd_bool = False
         self.pause_bool = False
+        self.dvd_menu_bool = True # test dvdnav menu.
         self.lenState = 0
         self.path = ""
         
@@ -766,7 +767,7 @@ class  Mplayer(gobject.GObject):
             self.emit("play-bseek", seek_num)
             
     def pause(self):
-        if (self.state == STARTING_STATE) and (not self.pause_bool):             
+        if (self.state == STARTING_STATE) and (not self.pause_bool) and (not self.dvd_menu_bool):             
             self.pause_bool = True
             self.cmd('pause \n')
 
