@@ -2476,7 +2476,7 @@ class PlayerBox(object):
     '''Screen right key menu.'''
     def play_dvd(self, dvd_path, mount_path):
         self.mp.play(dvd_path, mount_path)
-        print "play_dvd:", dvd_path, mount_path
+        # print "play_dvd:", dvd_path, mount_path
         
     def screen_right_key_menu(self, event):
         

@@ -359,6 +359,7 @@ class  Mplayer(gobject.GObject):
                     command.append("dvdnav://")
                     command.append("-dvd-device")
                     self.dvd_bool = True
+                    self.dvd_menu_bool = True
                 elif type_ == CDROM_TYPE_VCD: # add vcd iso.
                     command.append("-nocache")
                     command.append("vcd://2")
