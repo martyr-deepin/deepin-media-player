@@ -290,7 +290,7 @@ class  Mplayer(gobject.GObject):
         self.vide_bool = False
         self.dvd_bool = False
         self.pause_bool = False
-        self.dvd_menu_bool = True # test dvdnav menu.
+        self.dvd_menu_bool = False # test dvdnav menu.
         self.lenState = 0
         self.path = ""
         
