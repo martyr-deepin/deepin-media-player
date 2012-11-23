@@ -268,7 +268,7 @@ def get_dvd_info(dvd_path):
                         ID_DVD_TITLE_INDEX_CHAPTERS = "%s%s%s" % (ID_DVD_TITLE, title_index, CHAPTERS)
                         # print ID_DVD_TITLE_INDEX_CHAPTERS
                         if line_text.startswith(ID_DVD_TITLE_INDEX_CHAPTERS):
-                            title_chapters_number = line_text.replace(ID_DVD_TITLE_INDEX_CHAPTERS, "")
+                            title_chapters_number = compile_str.findall(line_text.replace(ID_DVD_TITLE_INDEX_CHAPTERS, ""))[0]
                         
                 # get chaters time.
                 line_text = fp.readline()
@@ -278,29 +278,34 @@ def get_dvd_info(dvd_path):
                 
                         
             
-            dvd_info_list.append(__save_dvd_info(title_index, int(float(title_length)), title_chapters_number, title_chapters))
+                dvd_info_list.append(__save_dvd_info(title_index, int(float(title_length)), title_chapters_number, title_chapters))
+            
         except Exception, e:
             print "[Error]cdrom.py--->>get_dvd_info:", e
             
     return dvd_info_list     
 
 def __save_dvd_info(title_index, title_length, title_chapters_number, title_chapters):
-    # print "title_index:", title_index
-    # print "title_length:", __length_to_time(title_length)
-    # print "title_chapters_number:", title_chapters_number
-    # print "title_chapters:",     
+    to_time = __length_to_time(title_length)
+    to_tuple = __chapters_time_to_tuple(title_chapters)
+    print "--------------------------------"
+    print "index:", title_index
+    print "to_time:", to_time
+    print "number:", title_chapters_number
+    print "to_tuple:", to_tuple
+    print "--------------------------------"
     dvd_info = (title_index,
-                __length_to_time(title_length), 
+                to_time,
                 title_chapters_number,
-                __chapters_time_to_tuple(title_chapters),
-                )
+                to_tuple)
     return dvd_info
 
 def __chapters_time_to_tuple(title_chapters):
+    temp_list = []
     for chapters in title_chapters:
         if chapters != "\n":
-            print chapters
-    return title_chapters
+            temp_list.append(chapters.strip())
+    return tuple(temp_list)
 
 def __length_to_time(title_length):
     time_sec = title_length
