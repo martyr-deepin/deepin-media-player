@@ -227,59 +227,110 @@ def mount_iso(iso_path, dest_path="/tmp/deepin_media_player_iso"):
     result = interface.mount_iso(iso_path, dest_path)    
     return result
 
+
+        
+import re
 def get_dvd_info(dvd_path):
+    # [title_index, title_length, chapters_number, title_chapters[tuple]]
+    dvd_info_list = []
+
     cmd = "mplayer -vo null -ao null -frames 0 -identify "
-    cmd += "dvd:// -dvd-device '%s'" % (dvd_path)
-    fp = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
-    cmd_str = fp.communicate()[0]
-    print cmd_str
+    cmd += "dvdnav:// -dvd-device '%s'" % (dvd_path)
+    fp = os.popen(cmd)
     
+    ID_DVD_TITLE = "ID_DVD_TITLE_"
+    LENGTH = "_LENGTH="
+    CHAPTERS = "_CHAPTERS="
+    # print fp.readline()
+    while True: 
+        try:
+            line_text = fp.readline()
+        except StandardError:
+            break
+        
+        if not line_text:
+            break
+        
+        # print line_text
+        try:
+            if line_text.startswith(ID_DVD_TITLE):
+                compile_str = re.compile(r"\d+")
+                # get title index and length.
+                index_str = line_text.replace(ID_DVD_TITLE, "").split("\n")[0]
+                title_index = compile_str.findall(index_str)[0]
+            
+                title_length = line_text.replace("%s%s%s" % (ID_DVD_TITLE, title_index, LENGTH), "")
+                # get chaters.            
+                line_text = fp.readline()
+                if len(title_index.strip()) > 0:
+                    if int(title_index.strip()) > 0:                    
+                        # get chaters number.
+                        ID_DVD_TITLE_INDEX_CHAPTERS = "%s%s%s" % (ID_DVD_TITLE, title_index, CHAPTERS)
+                        # print ID_DVD_TITLE_INDEX_CHAPTERS
+                        if line_text.startswith(ID_DVD_TITLE_INDEX_CHAPTERS):
+                            title_chapters_number = line_text.replace(ID_DVD_TITLE_INDEX_CHAPTERS, "")
+                        
+                # get chaters time.
+                line_text = fp.readline()
+                TITLE_INDEX_CHAPTERS = "TITLE %s, CHAPTERS:" % (title_index)
+                if line_text.startswith(TITLE_INDEX_CHAPTERS):
+                    title_chapters = line_text.replace(TITLE_INDEX_CHAPTERS, "").split(",")
+                
+                        
+            
+            dvd_info_list.append(__save_dvd_info(title_index, int(float(title_length)), title_chapters_number, title_chapters))
+        except Exception, e:
+            print "[Error]cdrom.py--->>get_dvd_info:", e
+            
+    return dvd_info_list     
+
+def __save_dvd_info(title_index, title_length, title_chapters_number, title_chapters):
+    # print "title_index:", title_index
+    # print "title_length:", __length_to_time(title_length)
+    # print "title_chapters_number:", title_chapters_number
+    # print "title_chapters:",     
+    dvd_info = (title_index,
+                __length_to_time(title_length), 
+                title_chapters_number,
+                __chapters_time_to_tuple(title_chapters),
+                )
+    return dvd_info
+
+def __chapters_time_to_tuple(title_chapters):
+    for chapters in title_chapters:
+        if chapters != "\n":
+            print chapters
+    return title_chapters
+
+def __length_to_time(title_length):
+    time_sec = title_length
+    time_hour = 0
+    time_min = 0
+    
+    if time_sec >= 3600:
+        time_hour = int(time_sec / 3600)
+        time_sec -= int(time_hour * 3600)
+        
+    if time_sec >= 60:
+        time_min = int(time_sec / 60)
+        time_sec -= int(time_min * 60)         
+        
+    return str("%s:%s:%s"%(str(__time_add_zero(time_hour)), 
+                           str(__time_add_zero(time_min)), 
+                           str(__time_add_zero(time_sec))))
+
+def __time_add_zero(time):
+    if 9 >= time >= 0:
+        return "0" + str(time)
+    else:
+        return time
+    
+
 if __name__ == "__main__":
     print get_dvd_info("/home/long/Desktop/test.iso")
-    # import gtk    
-    # def changed_cdrom(cdrom, device, mount_path):
-    #     print "发来一个信号!!"
-    #     print device, mount_path
-        
-    # # clicked -->>> menu.    
-    # def cdrom_btn_clicked(widget):
-    #     command = "mplayer -slave -quiet -input file=/tmp/cmd "
-    #     for key in ser.cdrom_dict.keys():
-    #         if widget.get_label() == ser.cdrom_dict[key].device_file:
-    #             if ser.cdrom_dict[key].type == CDROM_TYPE_DVD: # DVD.
-    #                 print "播放DVD光盘!!"
-    #                 if ser.cdrom_dict[key].mount_path:                        
-    #                     ser.get_dvd_info(ser.cdrom_dict[key].device_file)
-    #                     command += "-mouse-movements -nocache  dvdnav:// -dvd-device %s " % (ser.cdrom_dict[key].device_file)
-    #                     command += "-wid %s" % (play_win.window.xid)
-    #                     os.system(command)        
-    #             elif ser.cdrom_dict[key].type == CDROM_TYPE_VCD: # VCD.
-    #                 if ser.cdrom_dict[key].mount_path:
-    #                     print "播放vcd:!!", ser.cdrom_dict[key].device_file
-    #                     command += "-nocache vcd://2 -dvd-device %s " % (ser.cdrom_dict[key].device_file)
-    #                     command += "-wid %s" % (play_win.window.xid)
-    #                     os.system(command)
-                    
-    # main_win = gtk.Window(gtk.WINDOW_TOPLEVEL)
-    # main_win.add_events(gtk.gdk.ALL_EVENTS_MASK)
-    # ser = Service()
-    # ser.connect("changed-cdrom", changed_cdrom)
-    # main_win.set_title("主界面!!")
-    # btn_hbox = gtk.HBox()
-    # for key in ser.cdrom_dict.keys():
-    #     temp_button = gtk.Button(ser.cdrom_dict[key].device_file)
-    #     temp_button.connect("clicked", cdrom_btn_clicked)
-    #     btn_hbox.pack_start(temp_button)
-    # main_win.connect("destroy", lambda w : gtk.main_quit())
-    # main_win.add(btn_hbox)
-    # main_win.show_all()
+
     
-    # play_win = gtk.Window(gtk.WINDOW_TOPLEVEL)
-    # play_win.add_events(gtk.gdk.ALL_EVENTS_MASK)
-    # play_win.set_size_request(350, 350)
-    # play_win.set_title("多光驱测试!!")
-    # play_win.connect('destroy', lambda w : gtk.main_quit())
-    # play_win.show_all()    
-    # gtk.main()
-    # mount_iso("/home/long/Desktop/test.iso")    
-    
+'''
+switch_title [value]
+
+'''    
