@@ -3200,7 +3200,7 @@ class PlayerBox(object):
         
     # right key menu.    
     def menu_open_info_window_dialog(self):        
-        video_inform_gui = VideoInformGui(self.mp.path)
+        video_inform_gui = VideoInformGui(self.mp.path, self.mp.dvd_bool)
         video_inform_gui.show_window()
         
     # play list key menu.

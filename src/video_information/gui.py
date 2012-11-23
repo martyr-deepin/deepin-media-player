@@ -92,8 +92,13 @@ class VideoInFormation(object):
         # Code information.
         self.code_information = CodeInFormation()
 
-def get_video_information(video_path):    
-    cmd = "mplayer -identify -frames 5 -endpos 0 -vo null  '%s'" % (video_path)
+def get_video_information(video_path, dvd_type=False):    
+    if not dvd_type:
+        cmd = "mplayer -identify -frames 5 -endpos 0 -vo null  '%s'" % (video_path)
+    else:
+        cmd = "mplayer -vo null -ao null -frames 0 -identify "
+        cmd += "dvd:// -dvd-device '%s'" % (video_path)
+
     pipe = os.popen(str(cmd))
     return video_string_to_information(pipe, video_path)
     
@@ -169,11 +174,11 @@ APP_WIDTH = 490
 APP_HEIGHT = 390
 
 class VideoInformGui(gobject.GObject):
-    def __init__(self, path):
+    def __init__(self, path, dvd_type=False):
         gobject.GObject.__init__(self)
         # Init.
         self.path = path
-        video_information = get_video_information(path)
+        video_information = get_video_information(path, dvd_type)
         # Init video widgets.
         self.init_video_widgets(path, video_information)
         # init code widgets.
