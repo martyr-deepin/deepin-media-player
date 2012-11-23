@@ -23,6 +23,10 @@
 import os
 import gobject
 
+VIDEO_TYPE = 0
+DVD_TYPE = 1
+VCD_TYPE = 2
+
 class SwitchAudio(gobject.GObject):    
     __gsignals__ = {
         "add-switch-sid-file" : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE,
@@ -37,8 +41,13 @@ class SwitchAudio(gobject.GObject):
         self.switch_subtitles_list = []
         # self.get_video_information(player_path)
         
-    def get_video_information(self, video_path):
-        cmd = "mplayer -identify -frames 5 -endpos 0 -vo null '%s'" % (video_path)
+    def get_video_information(self, video_path, video_type=VIDEO_TYPE):
+        if video_type == VIDEO_TYPE:
+            cmd = "mplayer -identify -frames 5 -endpos 0 -vo null '%s'" % (video_path)
+        elif video_type == DVD_TYPE:
+            cmd = "mplayer -vo null -ao null -frames 0 -identify "
+            cmd += "dvd:// -dvd-device '%s'" % (video_path)
+
         pipe = os.popen(str(cmd))
         
         id_aid_id   = "ID_AUDIO_ID="
@@ -101,9 +110,7 @@ class SwitchAudio(gobject.GObject):
         #     print "%s(%s)-%s" % (audio_tuple[1], audio_tuple[2], audio_tuple[0])
         # print "test print info[subtitles_tuple]:"
         # for subtitles_tuple in self.switch_subtitles_list:
-        #     print "%s(%s)-%s" % (subtitles_tuple[1], subtitles_tuple[2], subtitles_tuple[0]) 
-            
-            
+        #     print "%s(%s)-%s" % (subtitles_tuple[1], subtitles_tuple[2], subtitles_tuple[0])                         
             
             
 if __name__ == "__main__":

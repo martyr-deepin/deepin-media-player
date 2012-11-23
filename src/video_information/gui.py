@@ -36,6 +36,9 @@ import gtk
 import gobject
 
 
+VIDEO_TYPE = 0        
+DVD_TYPE = 1
+VCD_TYPE = 2
 
 
 # Video section.
@@ -92,10 +95,11 @@ class VideoInFormation(object):
         # Code information.
         self.code_information = CodeInFormation()
 
-def get_video_information(video_path, dvd_type=False):    
-    if not dvd_type:
+
+def get_video_information(video_path, video_type=VIDEO_TYPE):    
+    if video_type == VIDEO_TYPE:
         cmd = "mplayer -identify -frames 5 -endpos 0 -vo null  '%s'" % (video_path)
-    else:
+    elif video_type == DVD_TYPE:
         cmd = "mplayer -vo null -ao null -frames 0 -identify "
         cmd += "dvd:// -dvd-device '%s'" % (video_path)
 
@@ -174,11 +178,11 @@ APP_WIDTH = 490
 APP_HEIGHT = 390
 
 class VideoInformGui(gobject.GObject):
-    def __init__(self, path, dvd_type=False):
+    def __init__(self, path, video_type=VIDEO_TYPE):
         gobject.GObject.__init__(self)
         # Init.
         self.path = path
-        video_information = get_video_information(path, dvd_type)
+        video_information = get_video_information(path, video_type)
         # Init video widgets.
         self.init_video_widgets(path, video_information)
         # init code widgets.

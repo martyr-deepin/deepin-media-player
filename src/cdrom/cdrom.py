@@ -235,6 +235,7 @@ def get_dvd_info(dvd_path):
     print cmd_str
     
 if __name__ == "__main__":
+    print get_dvd_info("/home/long/Desktop/test.iso")
     # import gtk    
     # def changed_cdrom(cdrom, device, mount_path):
     #     print "发来一个信号!!"
@@ -280,75 +281,5 @@ if __name__ == "__main__":
     # play_win.connect('destroy', lambda w : gtk.main_quit())
     # play_win.show_all()    
     # gtk.main()
-    # mount_iso("/home/long/Desktop/test.iso")
-    print get_dvd_info("/home/long/Desktop/test.iso")
+    # mount_iso("/home/long/Desktop/test.iso")    
     
-'''    
-dvdnav <button_name>
-up      dvdnav up\n
-down    dvdnav down\n
-left    dvdnav left\n
-right   dvdnav right\n
-menu    dvdnav menu\n
-select  dvdnav select\n
-prev    dvdnav prev\n
-mouse   dvdnav mouse\n
-
-switch_angle [value] 切换DVD的角度.
-switch_title [value] 切换dvd标题.
-switch_chaptet [value][type] 切换章节.
-sub_demux [value] 显示字幕
-
-cmd = "mplayer -vo null -ao null -frames 0 -identify '%s'" % (file_path)
-fp = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
-
-get_audio_bitrate   音频比特率
-get_audio_codec     音频编码器名称
-get_audio_samples   声道数
-get_file_name       专辑的元数据
-get_meta_artist     艺术家的元数据
-get_meta_comment    评论....
-get_meta_genre      流派
-get_meta_title      标题
-get_meta_track      音轨数量
-get_meta_year       年份
-get_video_bitrate   比特率
-get_video_codec     视频编码器名称
-get_video_resolution 视频分辨率
-
-多光驱检测.
- -------------------  ----------
-|Play DISC [播放光盘] | /dev/sr0 |
- -------------------  ----------
-                     | /dev/sr1 |
-                      ----------
-                     | /dev/sr2 |
-                      ----------
-当用户点击下去的时候,自行判断光驱内有无光盘.
-如果有光盘 : 判断是  dvd , vcd, 数据光盘, cd...
-
- ---------------------------- -------------
-| DVD navigation [dvd 导航]  |  上一章节     |
- ---------------------------- -------------
-                             | 下一章节     |
-                              -------------
-                             |   跳至      |
-                              -------------
-                             | dvd 内置菜单 |  
-                              -------------
-                             |   配音      |
-                              ------------- 
-                             |   字幕      |    
-                              -------------                     
-
-                   
-跳至-->> 标题 [ 章节1, 章节2, 章节n ]
-
-dvd内置菜单 []
-                     
-配音 [ 英语, ac3 48000HZ 16位 6, 
-      中文, ac3 48000HZ  16...,
-      英语 1(Director Comments 1), Ac3 480000HZ 16....]  
-                                     
-字幕 [ 关闭字幕, 中文 ]
-'''

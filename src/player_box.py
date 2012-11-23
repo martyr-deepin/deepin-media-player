@@ -50,7 +50,7 @@ from preview import PreView
 from ini_gui import IniGui
 from ini_gui import VIDEO_ADAPT_WINDOW_STATE, WINDOW_ADAPT_VIDEO_STATE, UP_CLOSE_VIDEO_STATE, AI_FULL_VIDEO_STATE
 from mplayer import Mplayer, get_length, get_home_path, length_to_time, get_vide_width_height
-from mplayer import SINGLE_PLAYING_STATE, ORDER_PLAYING_STATE, RANDOM_PLAYER_STATE, SINGLE_CYCLE_PLAYER, LIST_RECYCLE_PLAY
+from mplayer import SINGLE_PLAYING_STATE, ORDER_PLAYING_STATE, RANDOM_PLAYER_STATE, SINGLE_CYCLE_PLAYER, LIST_RECYCLE_PLAY, DVD_TYPE
 from playlist import PlayList, MediaItem
 from sort import Sort
 from open_button import OpenButton, ScreenMenu, OpenUrl
@@ -2098,27 +2098,30 @@ class PlayerBox(object):
                 if "True" == self.config.get("SubtitleSet", "ai_load_subtitle") and save_down_file and os.path.exists(save_down_file):
                     self.load_subtitle(save_down_file)
         
-    def media_player_start_sub_and_audio_lang(self, mplayer):                
+    def media_player_start_sub_and_audio_lang(self, mplayer):
         # load self video subtitle and audio lang.
         switch_audio = SwitchAudio()
         switch_audio.connect("add-switch-sid-file", self.add_switch_sid_file)
         switch_audio.connect("add-switch-aid-file", self.add_switch_aid_file)
-        switch_audio.get_video_information(mplayer.path)
+        switch_audio.get_video_information(mplayer.path, self.mp.video_type)
         
     def add_switch_sid_file(self, SwitchAudio, switch_subtitles_list, number, name, lang):    
-        self.sub_titles.add("%s(%s)-%s" % (name, lang, number), aid=False)
-    
-    def add_switch_aid_file(self, SwitchAudio, switch_audio_list, number, name, lang):
-        menu_info = "%s(%s)-%s" % (name, lang, number)                
-        channel_pixbuf = None
-        if int(number) == 0:
+        menu_info = "%s(%s)-%s" % (name, lang, number)
+        # add 
+        self.sub_titles.add(menu_info, aid=False)
+        
+    def add_switch_aid_file(self, SwitchAudio, switch_audio_list, number, name, lang): 
+        menu_info = "%s(%s)-%s" % (name, lang, number) 
+        channel_pixbuf = None 
+        if int(number) == 0 or not len(self.switch_audio_menu):
             channel_pixbuf = (self.select_channel_normal_pixbuf, 
                               self.select_channel_hover_pixbuf, 
-                              self.select_channel_none_pixbuf)        
-        self.switch_audio_menu.append((channel_pixbuf, menu_info, lambda : self.mp_switch_audio(number)))
+                              self.select_channel_none_pixbuf) 
+        # add  
+        self.switch_audio_menu.append((channel_pixbuf, menu_info, lambda : self.mp_switch_audio(number))) 
         
     def mp_switch_audio(self, number):    
-        self.mp.switch_audio(int(number))                
+        self.mp.switch_audio(int(number))
         for audio_number in range(0, len(self.switch_audio_menu)):
             self.switch_audio_menu[audio_number] = (None, 
                                                     self.switch_audio_menu[audio_number][1], 
@@ -3084,7 +3087,7 @@ class PlayerBox(object):
                 if item[1] == subtitle_path:
                     add_bool = False
                     
-            if add_bool:        
+            if add_bool or self.mp.video_type == DVD_TYPE:        
                 self.subtitles_select_menu_item.append((None, subtitle_path, lambda : self.sub_titles.select(index)))
                 self.mp.sub_add(subtitle_path)
                             
@@ -3200,7 +3203,7 @@ class PlayerBox(object):
         
     # right key menu.    
     def menu_open_info_window_dialog(self):        
-        video_inform_gui = VideoInformGui(self.mp.path, self.mp.dvd_bool)
+        video_inform_gui = VideoInformGui(self.mp.path, self.mp.video_type)
         video_inform_gui.show_window()
         
     # play list key menu.

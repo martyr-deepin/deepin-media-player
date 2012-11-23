@@ -249,6 +249,10 @@ def init_mplayer_config():
         # save ini config.
         config.save()
         
+VIDEO_TYPE = 0        
+DVD_TYPE = 1
+VCD_TYPE = 2
+
 class  Mplayer(gobject.GObject):
     '''deepin media player control layer'''
     __gsignals__ = {
@@ -289,6 +293,7 @@ class  Mplayer(gobject.GObject):
         self.state = STOPING_STATE
         self.vide_bool = False
         self.dvd_bool = False
+        self.video_type = VIDEO_TYPE
         self.pause_bool = False
         self.dvd_menu_bool = False # test dvdnav menu.
         self.lenState = 0
@@ -325,6 +330,7 @@ class  Mplayer(gobject.GObject):
         self.subtitle_scale_value = 1.0        
         
     def play(self, path, moun_path=None):            
+        self.video_type = VIDEO_TYPE
         self.path = path
         if not (self.state): # STOPING_STATE
             self.lenState = 1 
@@ -360,6 +366,7 @@ class  Mplayer(gobject.GObject):
                     command.append("-dvd-device")
                     self.dvd_bool = True
                     self.dvd_menu_bool = True
+                    self.video_type = DVD_TYPE
                 elif type_ == CDROM_TYPE_VCD: # add vcd iso.
                     command.append("-nocache")
                     command.append("vcd://2")
