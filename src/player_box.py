@@ -91,6 +91,7 @@ class PlayerBox(object):
         self.save_getcwd = os.getcwd()
         self.switch_audio_menu = []
         self.dvd_navigation_title_list = [] # save dvd title list.
+        self.title_index = 1
         # Init pixuf.
         self.init_system_pixbuf()
         # Init lrc show system.
@@ -2187,8 +2188,7 @@ class PlayerBox(object):
     def add_dvd_navigation_title_menu(self, mplayer):
         if mplayer.dvd_bool:
             self.dvd_navigation_title_list = get_dvd_title_info(mplayer.path)
-        #     for info in self.dvd_navigation_title_list:
-        #         print info
+            self.title_index = 1
         
     def media_player_end(self, mplayer, play_bool):
         '''player end.'''                        
@@ -2491,6 +2491,7 @@ class PlayerBox(object):
                 
     def jump_to_title_index(self, index):
         # print "jump_to_title_index:", index
+        self.title_index = int(index)
         self.mp.switch_title(int(index))
         
     def screen_right_key_menu(self, event):
@@ -2673,7 +2674,7 @@ class PlayerBox(object):
         jump_to_menu = None
         try:
             for title in self.dvd_navigation_title_list:
-                # print 'title[0]:', title[0]
+                # print 'title[2]:', title[2]
                 title_list.append(
                     (None, str("title %s %s" % (title[0], title[1])), self.jump_to_title_index, title[0])
 		)
@@ -2684,8 +2685,8 @@ class PlayerBox(object):
             jump_to_menu = Menu(title_list)
         
         if self.mp.dvd_bool: # dvd navigation menu.
-            self.dvd_navigation_menu = Menu([(None, _("Prev title"), None), 
-                                             (None, _("Next title"), None),
+            self.dvd_navigation_menu = Menu([(None, _("Prev title"), self.prev_title), 
+                                             (None, _("Next title"), self.next_title),
                                              (None, _("Jump to"), jump_to_menu),
                                              (None, _("DVD built-in menu"), dvd_built_in_menu),
                                              # (None, _("Dub"), None),
@@ -2732,6 +2733,19 @@ class PlayerBox(object):
 #   （提前0.5秒  快捷键）
 #    （延时0.5秒 快捷键）
     
+    def prev_title(self):    
+        if 1 <= self.title_index + 1 <= len(self.dvd_navigation_title_list):
+            self.title_index -= 1
+            print "prev_title...."
+            self.mp.prev_title(self.title_index)
+                
+    def next_title(self):    
+        if 1 <= self.title_index + 1 <= len(self.dvd_navigation_title_list):
+            self.title_index += 1
+            print "next_title..."
+            self.mp.prev_title(self.title_index)
+        
+        
     def set_down_sub_title_bool(self):    
         self.down_sub_title_bool = not self.down_sub_title_bool
         

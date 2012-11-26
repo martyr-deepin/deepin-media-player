@@ -745,6 +745,12 @@ class  Mplayer(gobject.GObject):
     def switch_angle(self, value):    
         self.cmd("switch_angle '%s'\n" % (value))
         
+    def next_title(self, value):    
+        self.switch_title(value)
+        
+    def prev_title(self, value):    
+        self.switch_title(value)
+        
     def switch_title(self, value):
         self.cmd("switch_title %d\n" % (int(value)))
         
