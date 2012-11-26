@@ -65,7 +65,7 @@ from video_information.gui import VideoInformGui
 from switch_audio.audio import SwitchAudio
 from video_format_conv.transmageddon import TransmageddonUI
 from video_format_conv.conv_task_gui import ConvTAskGui
-from cdrom.cdrom import (Service, mount_iso)
+from cdrom.cdrom import (Service, get_dvd_title_info, get_iso_type)
 
 import threading
 import gtk
@@ -90,6 +90,7 @@ class PlayerBox(object):
     def __init__ (self, app, argv_path_list):
         self.save_getcwd = os.getcwd()
         self.switch_audio_menu = []
+        self.dvd_navigation_title_list = [] # save dvd title list.
         # Init pixuf.
         self.init_system_pixbuf()
         # Init lrc show system.
@@ -2072,6 +2073,7 @@ class PlayerBox(object):
 
         self.progressbar.set_pos(0)
         self.bottom_toolbar.progressbar.set_pos(0)
+        self.add_dvd_navigation_title_menu(mplayer)
         
     def media_player_start_scan_subtitle(self, mplayer):
         print self.sub_titles.scan_subtitle(mplayer.path, os.path.split(mplayer.path)[0])
@@ -2181,6 +2183,12 @@ class PlayerBox(object):
     def dvd_show_prev_menu(self):        
         self.mp.dvd_prev()
         return False
+        
+    def add_dvd_navigation_title_menu(self, mplayer):
+        if mplayer.dvd_bool:
+            self.dvd_navigation_title_list = get_dvd_title_info(mplayer.path)
+        #     for info in self.dvd_navigation_title_list:
+        #         print info
         
     def media_player_end(self, mplayer, play_bool):
         '''player end.'''                        
@@ -2422,7 +2430,7 @@ class PlayerBox(object):
                                (menu_play_sequence_pixbufs, _("Play Order"), self.play_state_menu),
                                ])
         
-        # cdrom 123456.
+        # cdrom service[play DISC menu].
         ser = Service()
         cdrom_menu = None
         cdrom_menu_list = []
@@ -2431,7 +2439,7 @@ class PlayerBox(object):
             cdrom_menu_list.append(
                 (None, 
                  str(ser.cdrom_dict[key].device_file), 
-                 lambda : self.play_dvd(ser.cdrom_dict[key].device_file, ser.cdrom_dict[key].mount_path))
+                 self.play_dvd, ser.cdrom_dict[key].device_file, ser.cdrom_dict[key].device_model)
                 )
         # add to cdrom_menu.    
         if cdrom_menu_list != []:    
@@ -2477,9 +2485,13 @@ class PlayerBox(object):
             (button.get_allocation().width, 0))           
 
     '''Screen right key menu.'''
-    def play_dvd(self, dvd_path, mount_path):
-        self.mp.play(dvd_path, mount_path)
-        # print "play_dvd:", dvd_path, mount_path
+    def play_dvd(self, dvd_path, drive_model):
+        self.mp.play(dvd_path, get_iso_type(drive_model, False))
+        
+        
+    def jump_to_title_index(self, index):
+        print "jump_to_title_index:", index
+        self.mp.switch_title(int(index))
         
     def screen_right_key_menu(self, event):
         
@@ -2647,23 +2659,37 @@ class PlayerBox(object):
         menu_setting_pixbufs = (self.menu_setting_normal_pixbuf, self.menu_setting_hover_pixbuf, self.menu_setting_none_pixbuf)
         
         
-        self.dvd_built_in_menu = Menu([
-                                       (None, _("up"), (lambda : self.mp.dvd_up())), 
-                                       (None, _("down"), (lambda : self.mp.dvd_down())),
-                                       (None, _("left"), (lambda : self.mp.dvd_left())),
-                                       (None, _("right"), (lambda : self.mp.dvd_right())), 
-                                       (None, _("select"), (lambda : self.mp.dvd_select())),
-                                       (None, _("prev"), (lambda : self.mp.dvd_prev())),
-                                       (None, _("menu"), (lambda : self.mp.dvd_menu())), 
-                                       # (None, _(""), None)
-                                       ])
+        dvd_built_in_menu = Menu([
+                (None, _("up"), (lambda : self.mp.dvd_up())), 
+                (None, _("down"), (lambda : self.mp.dvd_down())),
+                (None, _("left"), (lambda : self.mp.dvd_left())),
+                (None, _("right"), (lambda : self.mp.dvd_right())), 
+                (None, _("select"), (lambda : self.mp.dvd_select())),
+                (None, _("prev"), (lambda : self.mp.dvd_prev())),
+                (None, _("menu"), (lambda : self.mp.dvd_menu())), 
+                # (None, _(""), None)
+                ])
+        title_list = []
+        jump_to_menu = None
+        try:
+            for title in self.dvd_navigation_title_list:
+                # print 'title[0]:', title[0]
+                title_list.append(
+                    (None, str("title %s %s" % (title[0], title[1])), self.jump_to_title_index, title[0])
+		)
+        except Exception, e:        
+            print "jump_to_menu:[error]-->>", e
+            
+        if title_list != []:
+            jump_to_menu = Menu(title_list)
+        
         if self.mp.dvd_bool: # dvd navigation menu.
-            self.dvd_navigation_menu = Menu([(None, _("Prev chapter"), None), 
-                                             (None, _("Next chapter"), None),
-                                             (None, _("Jump to"), None),
-                                             (None, _("DVD built-in menu"), self.dvd_built_in_menu),
-                                             (None, _("Dub"), None),
-                                             (None, _("Subitle"), None)
+            self.dvd_navigation_menu = Menu([(None, _("Prev title"), None), 
+                                             (None, _("Next title"), None),
+                                             (None, _("Jump to"), jump_to_menu),
+                                             (None, _("DVD built-in menu"), dvd_built_in_menu),
+                                             # (None, _("Dub"), None),
+                                             # (None, _("Subitle"), None)
                                              ])        
         else:    
             self.dvd_navigation_menu = None

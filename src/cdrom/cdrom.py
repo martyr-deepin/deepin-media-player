@@ -37,6 +37,8 @@ class CdromType(object):
         self.device_file = None
         self.device_model = None
         self.id_type = None        
+        self.cdrom_type = None        
+
 ################################################
 ###
 
@@ -110,18 +112,18 @@ class Service(gobject.GObject):
         self.cdrom_dict[str(dev)].device_file = device_file
         try:
             # read cdrom type info.
-            mount_path = device_props.Get(UDISKS_DEVICE, 'DeviceMountPaths')
-            id_label = device_props.Get(UDISKS_DEVICE, "IdLabel")            
+            # mount_path = device_props.Get(UDISKS_DEVICE, 'DeviceMountPaths')
+            # id_label = device_props.Get(UDISKS_DEVICE, "IdLabel")            
             drive_model = device_props.Get(UDISKS_DEVICE, "DriveModel")
-            id_type = device_props.Get(UDISKS_DEVICE, "IdType")
-            type_ = cdrom_type(mount_path[0]) # save cdrom type.            
+            # id_type = device_props.Get(UDISKS_DEVICE, "IdType")
+            # type_ = cdrom_type(mount_path[0]) # save cdrom type.            
             # save cdrom type info.            
-            self.cdrom_dict[str(dev)].id_label = id_label
-            self.cdrom_dict[str(dev)].mount_path = mount_path[0] # save mount path.
-            self.cdrom_dict[str(dev)].type = type_            
+            # self.cdrom_dict[str(dev)].id_label = id_label
+            # self.cdrom_dict[str(dev)].mount_path = mount_path[0] # save mount path.
+            # self.cdrom_dict[str(dev)].type = type_            
             self.cdrom_dict[str(dev)].device_model = drive_model
-            self.cdrom_dict[str(dev)].id_type = id_type # iso9660
-            
+            # self.cdrom_dict[str(dev)].id_type = id_type # iso9660
+            # self.cdrom_dict[str(dev)].cdrom_type = get_iso_type(drive_model, False)
             return True
         except Exception, e:
             print "get_cdrom_info[Error]:", e
@@ -143,15 +145,15 @@ CDROM_ERROR      = -1 #
 CDROM_TYPE_DVD   = 0  # dvd.
 CDROM_TYPE_VCD   = 1  # vcd.
 # dvd.
-AUDIO_TS = "AUDIO_TS"
-VIDEO_TS = "VIDEO_TS"
+AUDIO_TS = "/AUDIO_TS"
+VIDEO_TS = "/VIDEO_TS"
 # vcd.
-MPEGAV  = "MPEGAV"
-SEGMENT = "SEGMENT"
+MPEGAV  = "/MPEGAV"
+SEGMENT = "/SEGMENT"
 
 def cdrom_type(cdrom_path):
     try:
-        cdrom_file_list = os.listdir(cdrom_path)
+        cdrom_file_list = (cdrom_path).split("\n")
     except Exception, e:
         print "cdrom_type[error]:", e
         return CDROM_ERROR
@@ -216,21 +218,18 @@ def open_cdrom(cdrom):
         
 def close_cdrom(cdrom):
     ioctl_cdrom(cdrom, CLOSE_CDROM)
-           
-def mount_iso(iso_path, dest_path="/tmp/deepin_media_player_iso"):        
-    if not os.path.exists(dest_path):
-        os.makedirs(dest_path)        
+               
+def get_iso_type(iso_path, iso_bool=True):
+    if iso_bool:
+        iso_cmd = "isoinfo  -f -i %s" % (iso_path)
+    else:    
+        iso_cmd = "isoinfo dev=%s -f" % ("/dev/sr0")    
         
-    bus = dbus.SystemBus()
-    proxy = bus.get_object("com.linuxdeepin.mountservice", "/")
-    interface = dbus.Interface(proxy, "com.linuxdeepin.mountservice")
-    result = interface.mount_iso(iso_path, dest_path)    
-    return result
-
-
+    fp = os.popen(iso_cmd)
+    return cdrom_type(fp.read())
         
 import re
-def get_dvd_info(dvd_path):
+def get_dvd_title_info(dvd_path):
     # [title_index, title_length, chapters_number, title_chapters[tuple]]
     dvd_info_list = []
 
@@ -288,12 +287,12 @@ def get_dvd_info(dvd_path):
 def __save_dvd_info(title_index, title_length, title_chapters_number, title_chapters):
     to_time = __length_to_time(title_length)
     to_tuple = __chapters_time_to_tuple(title_chapters)
-    print "--------------------------------"
-    print "index:", title_index
-    print "to_time:", to_time
-    print "number:", title_chapters_number
-    print "to_tuple:", to_tuple
-    print "--------------------------------"
+    # print "--------------------------------"
+    # print "index:", title_index
+    # print "to_time:", to_time
+    # print "number:", title_chapters_number
+    # print "to_tuple:", to_tuple
+    # print "--------------------------------"
     dvd_info = (title_index,
                 to_time,
                 title_chapters_number,
@@ -330,9 +329,10 @@ def __time_add_zero(time):
     else:
         return time
     
-
 if __name__ == "__main__":
-    print get_dvd_info("/home/long/Desktop/test.iso")
+    print get_iso_type("/dev/sr0", False)
+    # for info in get_dvd_title_info("/dev/sr0"):
+        # print info
 
     
 '''

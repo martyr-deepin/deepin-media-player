@@ -1,8 +1,4 @@
 Media Player for Linux Deepin.
 
-# dbus service config. cd src/cdrom/dbus-service/
-sudo cp com.linuxdeepin.mountservice.service /usr/share/dbus-1/system-services/
-sudo cp com.linuxdeepin.mountservice.policy /usr/share/polkit-1/actions/
-sudo cp com.linuxdeepin.mountservice.conf /etc/dbus-1/system.d/
-sudo cp mountservice.py /usr/lib/
-sudo chmod u+x /usr/lib/mountservice.py
+[*] sudo apt-get install isoinfo.
+[*] dvdnav.

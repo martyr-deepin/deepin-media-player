@@ -41,7 +41,7 @@ import gobject
 import subprocess
 from type_check import is_valid_video_file, is_valid_url_file, is_file_can_play 
 from ini import Config
-from cdrom.cdrom import cdrom_type, mount_iso, CDROM_ERROR, CDROM_TYPE_DVD, CDROM_TYPE_VCD
+from cdrom.cdrom import cdrom_type, get_iso_type, CDROM_ERROR, CDROM_TYPE_DVD, CDROM_TYPE_VCD
 
 # play list state.
 # 0: single playing.      
@@ -329,7 +329,7 @@ class  Mplayer(gobject.GObject):
         self.play_list_state = SINGLE_PLAYING_STATE
         self.subtitle_scale_value = 1.0        
         
-    def play(self, path, moun_path=None):            
+    def play(self, path, cdrom_type=None):            
         self.video_type = VIDEO_TYPE
         self.path = path
         if not (self.state): # STOPING_STATE
@@ -350,12 +350,12 @@ class  Mplayer(gobject.GObject):
             if is_valid_url_file(self.path):
                 command += ['-nocache']
                 
-            if mount_iso(self.path, "/tmp/deepin_media_player_iso2") or moun_path != None: # mount iso.
+            if  self.path.endswith(".iso") or cdrom_type != None: # mount .iso
                 # type.
-                if moun_path == None:
-                    type_ = cdrom_type("/tmp/deepin_media_player_iso2")
+                if cdrom_type == None:
+                    type_ = get_iso_type(self.path)
                 else:    
-                    type_ = cdrom_type(moun_path)
+                    type_ = cdrom_type
                     
                 command.append("-input")
                 command.append("file=/tmp/cmd")
@@ -371,7 +371,7 @@ class  Mplayer(gobject.GObject):
                     command.append("-nocache")
                     command.append("vcd://2")
                     command.append("-dvd-device")
-                                
+
             # add path.                
             command.append(path)
             # add wid.
@@ -401,7 +401,7 @@ class  Mplayer(gobject.GObject):
             # IO_HUP[Monitor the pipeline is disconnected].
             self.eof_id = gobject.io_add_watch(self.mplayer_out, gobject.IO_HUP, self.mplayer_eof)
             self.state = STARTING_STATE
-            if moun_path == None:
+            if cdrom_type == None:
                 self.vide_bool = is_valid_video_file(self.path)
             else:    
                 self.vide_bool = 1 # dvd
@@ -745,8 +745,8 @@ class  Mplayer(gobject.GObject):
     def switch_angle(self, value):    
         self.cmd("switch_angle '%s'\n" % (value))
         
-    def switch_title(self, value):    
-        self.cmd("switch_title '%s'\n" % (value))
+    def switch_title(self, value):
+        self.cmd("switch_title %d\n" % (int(value)))
         
     def switch_chaptet(self, value, type_):
         self.cmd("switch_chaptet '%s' '%s'" % (value, type_))
