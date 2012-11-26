@@ -2439,7 +2439,7 @@ class PlayerBox(object):
             cdrom_menu_list.append(
                 (None, 
                  str(ser.cdrom_dict[key].device_file), 
-                 self.play_dvd, ser.cdrom_dict[key].device_file, ser.cdrom_dict[key].device_model)
+                 self.play_dvd, ser.cdrom_dict[key].device_file, ser.cdrom_dict[key].cdrom_type)
                 )
         # add to cdrom_menu.    
         if cdrom_menu_list != []:    
@@ -2485,12 +2485,12 @@ class PlayerBox(object):
             (button.get_allocation().width, 0))           
 
     '''Screen right key menu.'''
-    def play_dvd(self, dvd_path, drive_model):
-        self.mp.play(dvd_path, get_iso_type(drive_model, False))
-        
-        
+    def play_dvd(self, dvd_path, cdrom_type):
+        # print "cdrom_type:", cdrom_type
+        self.mp.play(dvd_path, cdrom_type)
+                
     def jump_to_title_index(self, index):
-        print "jump_to_title_index:", index
+        # print "jump_to_title_index:", index
         self.mp.switch_title(int(index))
         
     def screen_right_key_menu(self, event):

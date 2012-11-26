@@ -111,22 +111,24 @@ class Service(gobject.GObject):
         device_file = device_props.Get(UDISKS_DEVICE, "DeviceFile")
         self.cdrom_dict[str(dev)].device_file = device_file
         try:
-            # read cdrom type info.
-            # mount_path = device_props.Get(UDISKS_DEVICE, 'DeviceMountPaths')
-            # id_label = device_props.Get(UDISKS_DEVICE, "IdLabel")            
+            # read cdrom type info.            
+            # id_label = device_props.Get(UDISKS_DEVICE, "IdLabel")
             drive_model = device_props.Get(UDISKS_DEVICE, "DriveModel")
+            self.cdrom_dict[str(dev)].device_model = drive_model
             # id_type = device_props.Get(UDISKS_DEVICE, "IdType")
             # type_ = cdrom_type(mount_path[0]) # save cdrom type.            
             # save cdrom type info.            
             # self.cdrom_dict[str(dev)].id_label = id_label
-            # self.cdrom_dict[str(dev)].mount_path = mount_path[0] # save mount path.
+            mount_path = device_props.Get(UDISKS_DEVICE, 'DeviceMountPaths')
+            self.cdrom_dict[str(dev)].mount_path = mount_path[0] # save mount path.
             # self.cdrom_dict[str(dev)].type = type_            
-            self.cdrom_dict[str(dev)].device_model = drive_model
+            
             # self.cdrom_dict[str(dev)].id_type = id_type # iso9660
-            # self.cdrom_dict[str(dev)].cdrom_type = get_iso_type(drive_model, False)
+            self.cdrom_dict[str(dev)].cdrom_type = cdrom_type(self.cdrom_dict[str(dev)].mount_path, None)
             return True
         except Exception, e:
             print "get_cdrom_info[Error]:", e
+            self.cdrom_dict[str(dev)].cdrom_type = get_iso_type(drive_model, False)
             return False
         
     def changed_drive(self, device):
@@ -151,12 +153,16 @@ VIDEO_TS = "/VIDEO_TS"
 MPEGAV  = "/MPEGAV"
 SEGMENT = "/SEGMENT"
 
-def cdrom_type(cdrom_path):
+def cdrom_type(cdrom_path, mount_path=True):
     try:
-        cdrom_file_list = (cdrom_path).split("\n")
+        if mount_path:
+            cdrom_file_list = (cdrom_path).split("\n")
+        else:    
+            cdrom_file_list = os.listdir(cdrom_path)    
     except Exception, e:
         print "cdrom_type[error]:", e
         return CDROM_ERROR
+    
     # cdrom type.
     if cdrom_dvd(cdrom_file_list):
         return CDROM_TYPE_DVD
@@ -169,9 +175,9 @@ def cdrom_dvd(file_list):
     audio_ts_bool = False
     video_ts_bool = False
     for file_ in file_list:
-        if file_.upper().startswith(AUDIO_TS):
+        if AUDIO_TS.endswith(file_.upper()):
             audio_ts_bool = True
-        elif file_.upper().startswith(VIDEO_TS):
+        elif VIDEO_TS.endswith(file_.upper()):
             video_ts_bool = True            
     return (audio_ts_bool and video_ts_bool)
 
@@ -179,9 +185,9 @@ def cdrom_vcd(file_list):
     mpegav_bool = False
     segment_bool = False
     for file_ in file_list:
-        if file_.upper().startswith(MPEGAV):
+        if MPEGAV.endswith(file_.upper()):
             mpegav_bool = True
-        elif file_.upper().startswith(SEGMENT):
+        elif SEGMENT.endswith(file_.upper()):
             segment_bool = True
     return (mpegav_bool or segment_bool)
 
@@ -330,9 +336,9 @@ def __time_add_zero(time):
         return time
     
 if __name__ == "__main__":
-    print get_iso_type("/dev/sr0", False)
-    # for info in get_dvd_title_info("/dev/sr0"):
-        # print info
+    # print get_iso_type("/dev/sr0", False)
+    for info in get_dvd_title_info("/dev/sr0"):
+        print info
 
     
 '''
