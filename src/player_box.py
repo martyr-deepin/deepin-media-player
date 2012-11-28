@@ -1099,10 +1099,10 @@ class PlayerBox(object):
         self.mp.play(self.play_list_dict[list_item.title])
         self.mp.play_list_num = list_item.get_index()
 
-        self.play_control_panel.start_button.start_bool = False
-        self.play_control_panel.start_button.queue_draw()
-        self.bottom_toolbar.play_control_panel.start_button.start_bool = False
-        self.bottom_toolbar.play_control_panel.start_button.queue_draw()
+        self.play_control_panel.start_button.set_start_bool(False)
+        # self.play_control_panel.start_button.queue_draw()
+        self.bottom_toolbar.play_control_panel.start_button.set_start_bool(False)
+        # self.bottom_toolbar.play_control_panel.start_button.queue_draw()
 
         self.play_list.list_view.set_highlight(list_item)
 
@@ -1117,28 +1117,29 @@ class PlayerBox(object):
 
     def start_button_clicked(self, widget, start_bit):
         '''start or pause'''
-        if self.mp.state == STOPING_PLAY:
+        if self.mp.state == STOPING_PLAY and (not self.mp.dvd_menu_bool):
             self.mp.next() # Test pause.
-            self.play_control_panel.start_button.start_bool = False
-            self.play_control_panel.start_button.queue_draw()
-            self.bottom_toolbar.play_control_panel.start_button.start_bool = False
-            self.bottom_toolbar.play_control_panel.start_button.queue_draw()
+            self.play_control_panel.start_button.set_start_bool(False)
+            # self.play_control_panel.start_button.queue_draw()
+            self.bottom_toolbar.play_control_panel.start_button.set_start_bool(False)
+            # self.bottom_toolbar.play_control_panel.start_button.queue_draw()
             if STOPING_PLAY == self.mp.state: # NO player file.
-                self.play_control_panel.start_button.start_bool = True # start_button modify play state.
-                self.play_control_panel.start_button.queue_draw()
-                self.bottom_toolbar.play_control_panel.start_button.start_bool = True
-                self.bottom_toolbar.play_control_panel.start_button.queue_draw()
+                self.play_control_panel.start_button.set_start_bool(True) # start_button modify play state.
+                # self.play_control_panel.start_button.queue_draw()
+                self.bottom_toolbar.play_control_panel.start_button.set_start_bool(True)
+                # self.bottom_toolbar.play_control_panel.start_button.queue_draw()
                 self.messagebox(_("No Media Selected"))
                 self.show_open_dialog_window(False)
         else:
-            if 1 == start_bit:
-                self.bottom_toolbar.play_control_panel.start_button.start_bool = self.play_control_panel.start_button.start_bool
-                self.bottom_toolbar.play_control_panel.start_button.queue_draw()
-            elif 2 == start_bit:
-                self.play_control_panel.start_button.start_bool = self.bottom_toolbar.play_control_panel.start_button.start_bool
-                self.play_control_panel.start_button.queue_draw()
+            if not self.mp.dvd_menu_bool:
+                if 1 == start_bit:
+                    self.bottom_toolbar.play_control_panel.start_button.set_start_bool(self.play_control_panel.start_button.start_bool)
+                    # self.bottom_toolbar.play_control_panel.start_button.queue_draw()
+                elif 2 == start_bit:
+                    self.play_control_panel.start_button.set_start_bool(self.bottom_toolbar.play_control_panel.start_button.start_bool)
+                    # self.play_control_panel.start_button.queue_draw()
 
-            gtk.timeout_add(50, self.start_button_time_pause)
+                gtk.timeout_add(50, self.start_button_time_pause)
 
     def start_button_time_pause(self): # start_button_clicked.
         if self.mp.pause_bool:
@@ -1864,12 +1865,12 @@ class PlayerBox(object):
 
     def virtual_set_start_button_clicked(self):
         if self.mode_state_bool:
-            self.bottom_toolbar.play_control_panel.start_button.start_bool = not self.bottom_toolbar.play_control_panel.start_button.start_bool
-            self.bottom_toolbar.play_control_panel.start_button.queue_draw()
+            self.bottom_toolbar.play_control_panel.start_button.set_start_bool(not self.bottom_toolbar.play_control_panel.start_button.start_bool)
+            # self.bottom_toolbar.play_control_panel.start_button.queue_draw()
             self.start_button_clicked(self.bottom_toolbar.play_control_panel.start_button, 2)
         else:
-            self.play_control_panel.start_button.start_bool = not self.play_control_panel.start_button.start_bool
-            self.play_control_panel.start_button.queue_draw()
+            self.play_control_panel.start_button.set_start_bool(not self.play_control_panel.start_button.start_bool)
+            # self.play_control_panel.start_button.queue_draw()
             self.start_button_clicked(self.play_control_panel.start_button, 1)
 
         return False
@@ -2189,9 +2190,14 @@ class PlayerBox(object):
         if mplayer.dvd_bool:
             self.dvd_navigation_title_list = get_dvd_title_info(mplayer.path)
             self.title_index = 1
+            self.play_control_panel.start_button.set_stop_bool(True)
+        else:    
+            self.play_control_panel.start_button.set_stop_bool(False)
+            
         
     def media_player_end(self, mplayer, play_bool):
         '''player end.'''                        
+        self.play_control_panel.start_button.set_stop_bool(False)
         self.switch_audio_menu = [] # clear switch audio lang.
         self.video_width = self.video_height = None        
         # play end set show time label zero.
@@ -2270,10 +2276,10 @@ class PlayerBox(object):
         self.progressbar.set_pos(0)
         self.bottom_toolbar.progressbar.set_pos(0)
         self.screen.queue_draw()
-        self.play_control_panel.start_button.start_bool = True
-        self.play_control_panel.start_button.queue_draw()
-        self.bottom_toolbar.play_control_panel.start_button.start_bool = True
-        self.bottom_toolbar.play_control_panel.start_button.queue_draw()
+        self.play_control_panel.start_button.set_start_bool(True)
+        # self.play_control_panel.start_button.queue_draw()
+        self.bottom_toolbar.play_control_panel.start_button.set_start_bool(True)
+        # self.bottom_toolbar.play_control_panel.start_button.queue_draw()
 
     # Double buffer set.
     def unset_flags(self):

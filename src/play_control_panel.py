@@ -92,6 +92,7 @@ class StartButton(gtk.Button):
         
         gtk.Button.__init__(self)
         self.start_bool = True
+        self.stop_bool = False
         self.start_button_normal = start_button_normal
         self.start_button_hover = start_button_hover
         self.start_button_press = start_button_press
@@ -106,14 +107,21 @@ class StartButton(gtk.Button):
         self.cache_pixbuf = CachePixbuf()
         
     def clicked_button(self, widget):
-        self.start_bool = not self.start_bool
-        self.queue_draw()
-        
+        self.set_start_bool(not self.start_bool)
+                
+    def set_start_bool(self, start_bool):    
+        if not self.stop_bool:
+            self.start_bool = start_bool            
+            self.queue_draw()
+            
+    def set_stop_bool(self, stop_bool):
+        self.stop_bool = stop_bool
+            
     def expose_button(self, widget, event):
         cr = widget.window.cairo_create()
         rect = widget.allocation
         x,y,w,h = rect.x, rect.y, rect.width, rect.height
-        
+                    
         if widget.state == gtk.STATE_NORMAL:
             if self.start_bool:                
                 image = self.start_button_normal.get_pixbuf()
