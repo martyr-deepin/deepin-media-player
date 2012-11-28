@@ -75,31 +75,34 @@ class AsFileName(object):
                         else:
                             lex = arry_table[letter]
                             break
-                                                            
-                if letter >= len(arry_table) - 1:
-                    break
+
+                # if letter >= len(arry_table) - 1:
+                #     break
                 
                 temp_table_dict = {}                
-                for key in temp_files_dict.keys():                    
+                for key in temp_files_dict.keys():
                     save_number_token = ''
                     file_index = temp_files_dict[key][0]
                     temp_file = key.decode("utf-8")
-
-                    if sort_state == NUMBER_STATE:
+                    if sort_state == NUMBER_STATE:                        
+                        
                         while True:                        
                             if temp_file[file_index] == '.' or self.__is_number(temp_file[file_index]):
-                                if temp_file[file_index] == '.':                                    
+                                if temp_file[file_index] == '.':
                                     if not self.__is_number(temp_file[file_index + 1]):
                                         break                                   
                                 save_number_token += temp_file[file_index]
+                                # save_number_token = float(save_number_token)
                                 file_index += 1
                             else:    
-                                break
-
+                                break                            
+                        
                     if temp_file[file_index] == lex:
                         file_index += 1
                         if save_number_token == '' and temp_files_dict[key][1] != '': # sort flags.
                             save_number_token = float(temp_files_dict[key][1])
+                        else:    
+                            save_number_token = float(save_number_token)
                         temp_table_dict[key] = (file_index, save_number_token)
                                             
                 temp_files_dict = temp_table_dict
@@ -113,7 +116,7 @@ class AsFileName(object):
             temp_table.append(
                 (key, temp_files_dict[key][1]))
             
-        self.files_list = sorted(temp_table, cmp=lambda x,y:cmp(x[1], y[1]))
+        self.files_list = sorted(temp_table, key=lambda (value, id): id)
                 
     def __is_number(self, num):
         if '0' <= num <= '9':
@@ -165,10 +168,10 @@ class AsFileName(object):
         return os.path.isdir(path)
 
 if __name__ == "__main__":    
-    path = "/home/long/Desktop/gcc编译器使用/123色拉英语乐园-集100.rmvb"
-    # path = "/home/long/Desktop/色拉英语乐园/123色拉英语乐园-集100.#.rmvb"
+    path = "/home/long/Desktop/gcc编译器使用/色拉英语乐园-第10集.rmvb"
+    # path = "/home/long/Desktop/gcc编译器使用/123色拉英语乐园-集100.rmvb"
     # path = "/home/long/Desktop/gcc编译器使用/GCC编译器使用入门培训1.swf"
-    # path = "/home/long/Desktop/色拉英语乐园/色拉英语乐园-第9集.rmvb"
+    # path = "/home/long/Desktop/色拉英语乐园/色拉英语乐园-第10集.rmvb"
     as_file_name = AsFileName(path)
     for i in as_file_name.files_list:
         print i
