@@ -90,7 +90,7 @@ class AsFileName(object):
                             if temp_file[file_index] == '.' or self.__is_number(temp_file[file_index]):
                                 if temp_file[file_index] == '.':                                    
                                     if not self.__is_number(temp_file[file_index + 1]):
-                                        break                                    
+                                        break                                   
                                 save_number_token += temp_file[file_index]
                                 file_index += 1
                             else:    
@@ -113,7 +113,7 @@ class AsFileName(object):
             temp_table.append(
                 (key, temp_files_dict[key][1]))
             
-        self.files_list = temp_table
+        self.files_list = sorted(temp_table, cmp=lambda x,y:cmp(x[1], y[1]))
                 
     def __is_number(self, num):
         if '0' <= num <= '9':
@@ -165,7 +165,7 @@ class AsFileName(object):
         return os.path.isdir(path)
 
 if __name__ == "__main__":    
-    path = "/home/long/Desktop/gcc编译器使用/123色拉英语乐园-集100.#.rmvb"
+    path = "/home/long/Desktop/gcc编译器使用/123色拉英语乐园-集100.rmvb"
     # path = "/home/long/Desktop/色拉英语乐园/123色拉英语乐园-集100.#.rmvb"
     # path = "/home/long/Desktop/gcc编译器使用/GCC编译器使用入门培训1.swf"
     # path = "/home/long/Desktop/色拉英语乐园/色拉英语乐园-第9集.rmvb"
