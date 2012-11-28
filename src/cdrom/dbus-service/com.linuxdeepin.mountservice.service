@@ -1,4 +1,0 @@
-[D-BUS Service]
-Name=com.linuxdeepin.mountservice
-Exec=/usr/lib/mountservice.py
-User=root
