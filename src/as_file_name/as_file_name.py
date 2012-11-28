@@ -24,7 +24,10 @@ import os
 
 
 class AsFileName(object):
-    '''python能再恶心点吗?'''
+    '''
+    find as file name.
+    @path: file path name.
+    '''
     def __init__(self, path):
         '''public.'''
         self.files_list = self.__get_current_suffix_all_file(path)
@@ -49,9 +52,9 @@ class AsFileName(object):
         save_letter = letter
         temp_files_dict = {}        
         for file_ in self.files_list:
-            temp_files_dict[file_] = 0
+            temp_files_dict[file_] = (0, 0)
             
-        while True:            
+        while True: # lex.
             try:
                 # save state { number , none }.
                 lex = arry_table[letter]
@@ -59,15 +62,15 @@ class AsFileName(object):
                 if sort_state == NUMBER_STATE:
                     save_letter = letter
                     while True:                        
-                        if arry_table[letter] == ".": # 如果是小数点,查看一位是否为数字.
+                        if arry_table[letter] == ".": 
                             if self.__is_number(arry_table[letter+1]):
                                 letter += 1
                             else:    
-                                letter = save_letter # 如果小数点后面不是数字,则返回
+                                letter = save_letter 
                                 lex = arry_table[letter]
                                 sort_state = NONE_STATE
                                 break
-                        elif self.__is_number(arry_table[letter]): # 如果是数字继续搜索,始终保持前进一位 !!.
+                        elif self.__is_number(arry_table[letter]): 
                             letter += 1
                         else:
                             lex = arry_table[letter]
@@ -76,21 +79,28 @@ class AsFileName(object):
                 if letter >= len(arry_table) - 1:
                     break
                 
-                temp_table_dict = {}
+                temp_table_dict = {}                
                 for key in temp_files_dict.keys():                    
-                    file_index = temp_files_dict[key]
+                    save_number_token = ''
+                    file_index = temp_files_dict[key][0]
                     temp_file = key.decode("utf-8")
 
                     if sort_state == NUMBER_STATE:
                         while True:                        
                             if temp_file[file_index] == '.' or self.__is_number(temp_file[file_index]):
+                                if temp_file[file_index] == '.':                                    
+                                    if not self.__is_number(temp_file[file_index + 1]):
+                                        break                                    
+                                save_number_token += temp_file[file_index]
                                 file_index += 1
                             else:    
                                 break
-                            
+
                     if temp_file[file_index] == lex:
                         file_index += 1
-                        temp_table_dict[key] = file_index
+                        if save_number_token == '' and temp_files_dict[key][1] != '': # sort flags.
+                            save_number_token = float(temp_files_dict[key][1])
+                        temp_table_dict[key] = (file_index, save_number_token)
                                             
                 temp_files_dict = temp_table_dict
                 letter += 1                                                        
@@ -100,10 +110,11 @@ class AsFileName(object):
                 
         temp_table = []
         for key in temp_files_dict.keys():
-            temp_table.append(key)
+            temp_table.append(
+                (key, temp_files_dict[key][1]))
             
         self.files_list = temp_table
-        
+                
     def __is_number(self, num):
         if '0' <= num <= '9':
             return True
@@ -154,8 +165,9 @@ class AsFileName(object):
         return os.path.isdir(path)
 
 if __name__ == "__main__":    
-    # path = "/home/long/Desktop/色拉英语乐园/色拉英语乐园-1.3集100.#.rmvb"
-    path = "/home/long/Desktop/色拉英语乐园/123色拉英语乐园-集100.#.rmvb"
+    path = "/home/long/Desktop/gcc编译器使用/123色拉英语乐园-集100.#.rmvb"
+    # path = "/home/long/Desktop/色拉英语乐园/123色拉英语乐园-集100.#.rmvb"
+    # path = "/home/long/Desktop/gcc编译器使用/GCC编译器使用入门培训1.swf"
     # path = "/home/long/Desktop/色拉英语乐园/色拉英语乐园-第9集.rmvb"
     as_file_name = AsFileName(path)
     for i in as_file_name.files_list:
