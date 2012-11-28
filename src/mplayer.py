@@ -297,6 +297,7 @@ class  Mplayer(gobject.GObject):
         self.video_type = VIDEO_TYPE
         self.pause_bool = False
         self.dvd_menu_bool = False # test dvdnav menu.
+        self.sub_sum = 1
         self.lenState = 0
         self.path = ""
         
@@ -470,10 +471,13 @@ class  Mplayer(gobject.GObject):
         if self.state == STARTING_STATE: # STARTING_STATE
             self.cmd("sub_load '%s'\n" % (sub_file))
             
-    def sub_select(self, index):        
+    def sub_select(self, index, drag_sub=True):        
         if self.state == STARTING_STATE: # STARTING_STATE
             self.cmd('sub_select %s\n' % str(index))
-            
+            if drag_sub:
+                for sub_num in range(0, self.sub_sum):
+                    self.sub_del(sub_num)
+
     def sub_clear(self, end_index): # clear all subtitl file.
         if self.state == STARTING_STATE:
             for index in range(0, end_index):

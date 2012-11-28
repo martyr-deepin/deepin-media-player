@@ -24,7 +24,7 @@ import gtk
 import os
 import urllib
 from utils import path_threads
-from type_check import is_valid_dmp_file
+from type_check import is_valid_dmp_file, is_subtitle_file, is_valid_audio_file, is_valid_video_file
 
 pygtk.require('2.0')
 
@@ -37,25 +37,33 @@ def drag_drop(wid, context, x, y, time):
     wid.drag_get_data(context, context.targets[-1], time)
     return True
 
-def drag_data_received(wid, context, x, y, data, info, time, mp, play_list, widget_bool):    
-    if data.get_uris():
-        if widget_bool:            
-            mp.clear_playlist() # clear mplayer play list.    
+def drag_data_received(wid, context, x, y, data, info, time, mp, play_list, widget_bool):
         
+    if data.get_uris():
+        if widget_bool:                        
+            for f in data.get_uris():
+                path = urllib.unquote(f)[7:]
+                if os.path.isdir(path) or is_valid_dmp_file(path) or is_valid_audio_file(path) or is_valid_video_file(path):
+                    mp.clear_playlist() # clear mplayer play list.
+    
     for f in data.get_uris():
         path = urllib.unquote(f)[7:]
         # Add Dir.
         if os.path.isdir(path):            
             path_threads(path, mp)
-
         # Add .Dmp.    
         elif is_valid_dmp_file(path):
-            mp.load_playlist(path)
-            
+            mp.load_playlist(path)            
         # Add play file.    
+        elif is_subtitle_file(path):
+            # test drag sub.
+            mp.sub_add(path)
+            mp.sub_select(0, drag_sub=False)
         elif os.path.isfile(path):    
+            # mp.clear_playlist()
             mp.add_play_file(path)
-
+        
+            
     context.finish(True, False, time)    
     return True
 
