@@ -345,6 +345,11 @@ class  Mplayer(gobject.GObject):
                        '-double',
                        '-slave',
                        '-quiet']            
+            
+            # control deepin-media-player.
+            # command.append("-input")
+            # command.append("file=/tmp/deepin_media_player_cmd")
+
             # If path is url, must be add option `-nocache`,
             # otherwise, mplayer cache process can't quit normally.
             if is_valid_url_file(self.path):
@@ -357,8 +362,6 @@ class  Mplayer(gobject.GObject):
                 else:    
                     type_ = cdrom_type
                     
-                command.append("-input")
-                command.append("file=/tmp/cmd")
                 if type_ == CDROM_TYPE_DVD: # add dvd iso.
                     command.append("-mouse-movements")
                     command.append("-nocache")
