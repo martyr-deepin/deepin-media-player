@@ -337,6 +337,13 @@ class PlayerBox(object):
         # Init deepin media playbr config gui.
         self.config = Config(get_home_path() + "/.config/deepin-media-player/deepin_media_config.ini")
         self.config.connect("config-changed", self.modify_config_section_value)
+        # read { main , mplayer } pid.
+        # main_pid = self.config.get("MEDIA-PLAYER-PID", "main_pid")
+        # if main_pid != "None":
+        #     os.system("kill %s" % (main_pid))
+        # write main pid.
+        self.config.set("MEDIA-PLAYER-PID", "main_pid", os.getpid())
+        self.config.save()
         
     def init_last_new_play_file(self):    
         self.last_new_play_file_function = LastNewPlayFile()
@@ -1402,6 +1409,8 @@ class PlayerBox(object):
 
     def quit_player_window(self, widget):
         '''Quit player window.'''
+        self.config.set("MEDIA-PLAYER-PID", "main_pid", "None")
+        self.config.set("MEDIA-PLAYER-PID", "mplayer_pid", "None")
         self.quit_window_save_config()
         if self.mp:
             if self.mplayer_pid:
@@ -2056,6 +2065,7 @@ class PlayerBox(object):
         self.media_player_start_set_aspect(mplayer)        
         # Get mplayer pid.
         self.mplayer_pid = play_bool
+        self.save_mplayer_pid(play_bool)
         #play memory.
         config_bool = self.config.get("FilePlay", "memory_up_close_player_file_postion")
         if "true" == config_bool.lower():
@@ -2193,10 +2203,16 @@ class PlayerBox(object):
             self.play_control_panel.start_button.set_stop_bool(True)
         else:    
             self.play_control_panel.start_button.set_stop_bool(False)
-            
-        
+                    
+    def save_mplayer_pid(self, mplayer_pid):        
+        self.config.set("MEDIA-PLAYER-PID", "mplayer_pid", mplayer_pid)
+        self.config.save()
+
     def media_player_end(self, mplayer, play_bool):
         '''player end.'''                        
+                # write main pid.
+        self.config.set("MEDIA-PLAYER-PID", "mplayer_pid", "None")
+        self.config.save()
         self.play_control_panel.start_button.set_stop_bool(False)
         self.switch_audio_menu = [] # clear switch audio lang.
         self.video_width = self.video_height = None        
