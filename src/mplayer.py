@@ -168,7 +168,8 @@ def init_mplayer_config():
                 ("open_new_file_clear_play_list", "True"),
                 ("memory_up_close_player_file_postion", "True"),
                 ("find_play_file_relation_file", "False"),
-                ("mouse_progressbar_show_preview", "False")
+                ("mouse_progressbar_show_preview", "False"),
+                ("check_run_a_deepin_media_player", "False")
                 ]):
             config.set("FilePlay", argv, value)
             

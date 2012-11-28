@@ -337,10 +337,19 @@ class PlayerBox(object):
         # Init deepin media playbr config gui.
         self.config = Config(get_home_path() + "/.config/deepin-media-player/deepin_media_config.ini")
         self.config.connect("config-changed", self.modify_config_section_value)
-        # read { main , mplayer } pid.
-        # main_pid = self.config.get("MEDIA-PLAYER-PID", "main_pid")
-        # if main_pid != "None":
-        #     os.system("kill %s" % (main_pid))
+        # read { main , mplayer } pid
+        run_bool = self.config.get("FilePlay", "check_run_a_deepin_media_player")
+        # kill old deepin-media-player.
+        if run_bool and "false" == run_bool.lower():
+            main_pid = self.config.get("MEDIA-PLAYER-PID", "main_pid")
+            mplayer_pid = self.config.get("MEDIA-PLAYER-PID", "mplayer_pid")
+        
+            if main_pid != "None": # kill main pid.
+                os.system("kill %s" % (main_pid))
+                
+            if mplayer_pid != "None":  # kill mplayer pid.
+                print "mplayer_pid"
+            
         # write main pid.
         self.config.set("MEDIA-PLAYER-PID", "main_pid", os.getpid())
         self.config.save()

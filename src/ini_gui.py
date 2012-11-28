@@ -316,7 +316,7 @@ class FilePlay(gtk.VBox):
         self.close_position_radio_button = RadioButton(_("Last Closed Size"))
 
         self.full_window_radio_button = RadioButton(_("Full Screen"))    
-
+        
         set_num = self.ini.get("FilePlay", "video_file_open")
         
         # Set state(1, 2, 3, 4).
@@ -360,6 +360,13 @@ class FilePlay(gtk.VBox):
         if ini_bool and "true" == ini_bool.lower():
             self.show_preview_window_button.set_active(True)
             
+        # check run a deepin-media-player.
+        self.run_a_main_pid_radio_button = CheckButton(_("allow multiple instance deepin media player"))  
+        ini_bool = self.ini.get("FilePlay", "check_run_a_deepin_media_player")
+        self.run_a_main_pid_radio_button.set_active(False)
+        if ini_bool and "true" == ini_bool.lower():
+            self.run_a_main_pid_radio_button.set_active(True)
+        
         title_box = gtk.VBox(spacing=5)
         title_box.pack_start(self.label, False, False)
         title_box.pack_start(create_separator_box(), False, True)
@@ -380,7 +387,7 @@ class FilePlay(gtk.VBox):
         check_box.pack_start(self.file_play_postion_button, False, False)
         check_box.pack_start(self.find_file_play_button, False, False)
         check_box.pack_start(self.show_preview_window_button, False, False)
-        
+        check_box.pack_start(self.run_a_main_pid_radio_button, False, False)
         self.set_spacing(15)
         self.pack_start(title_box_align, False, True)
         self.pack_start(radio_table, False, True)
@@ -405,7 +412,7 @@ class FilePlay(gtk.VBox):
         video_file_dict["memory_up_close_player_file_postion"] = self.file_play_postion_button.get_active()
         video_file_dict["find_play_file_relation_file"] = self.find_file_play_button.get_active()
         video_file_dict["mouse_progressbar_show_preview"] = self.show_preview_window_button.get_active()
-        
+        video_file_dict["check_run_a_deepin_media_player"] = self.run_a_main_pid_radio_button.get_active()
         return video_file_dict
     
 class SystemSet(gtk.VBox):        
