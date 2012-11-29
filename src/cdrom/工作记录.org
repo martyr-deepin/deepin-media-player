@@ -33,7 +33,10 @@
    [] DVD 音轨，字幕，标题，章节... ..
 ** mplayer添加其它信息查看的接口.  [+]
 ** 网络视频.
-   [] code.google.com/p/p2p-mediaplayer/
+   [] code.google.com/p/p2p-mediaplayer/ /*代码参考*/
+   [] http://www.flvcd.com/
+   [] fireox, chorm 浏览器插件,点击播放的时候,可以调出我的深度影音,如果深度影音存在,则添加到网络列表.
+   []
 ** 将 可编辑的 po 交给李洪武，进行国际化的重新审核.
 
 
