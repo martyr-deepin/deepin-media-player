@@ -25,7 +25,7 @@ import os
 import urllib
 from utils import path_threads
 from type_check import is_valid_dmp_file, is_subtitle_file, is_valid_audio_file, is_valid_video_file
-
+from find_as import AsFileName
 pygtk.require('2.0')
 
 
@@ -62,6 +62,9 @@ def drag_data_received(wid, context, x, y, data, info, time, mp, play_list, widg
         elif os.path.isfile(path):    
             # mp.clear_playlist()
             mp.add_play_file(path)
+            for file_ in AsFileName(path).files_list:
+                mp.add_play_file(file_[0])
+
         
             
     context.finish(True, False, time)    

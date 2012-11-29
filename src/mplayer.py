@@ -43,6 +43,9 @@ from type_check import is_valid_video_file, is_valid_url_file, is_file_can_play
 from ini import Config
 from cdrom.cdrom import cdrom_type, get_iso_type, CDROM_ERROR, CDROM_TYPE_DVD, CDROM_TYPE_VCD
 
+
+
+
 # play list state.
 # 0: single playing.      
 SINGLE_PLAYING_STATE = 0
@@ -419,7 +422,7 @@ class  Mplayer(gobject.GObject):
             # emit play-start.
             gobject.timeout_add(250, self.emit_play_start_event)
             
-    def emit_play_start_event(self):
+    def emit_play_start_event(self):        
         self.channel_state = CHANNEL_NORMAL_STATE # 0
         self.emit("play-start", self.mplayer_pid)
         return False

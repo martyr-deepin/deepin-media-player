@@ -66,7 +66,7 @@ from switch_audio.audio import SwitchAudio
 from video_format_conv.transmageddon import TransmageddonUI
 from video_format_conv.conv_task_gui import ConvTAskGui
 from cdrom.cdrom import (Service, get_dvd_title_info, get_iso_type)
-
+from find_as import AsFileName
 import threading
 import gtk
 import os
@@ -1216,6 +1216,9 @@ class PlayerBox(object):
                 if not open_button:
                     self.mp.clear_playlist()
                     self.clear_play_list_bool = True 
+                    for file_ in AsFileName(path_string).files_list:
+                        self.mp.add_play_file(file_[0])
+
                 self.try_play(path_string)
                             
         open_dialog.destroy()
