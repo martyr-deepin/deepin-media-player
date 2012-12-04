@@ -3,4 +3,3 @@ Media Player for Linux Deepin.
 [*] sudo apt-get install isoinfo.
 [*] dvdnav.
 [*] wine qvod.exe movie_name. {hide | close}
-
