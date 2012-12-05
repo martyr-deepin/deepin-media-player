@@ -108,28 +108,32 @@ class QvodScan(object):
             print "mysql error %d:%s" % (e.args[0], e.args[1])
             
         for key in scan_index_dict.keys():
-            print "key:", key
-            scan_index_html = scan_index_dict[key]
-            read_buffer = self.__open_url_addr(scan_index_html % (1), None)
-            string_list = self.__read_buffer_to_code(read_buffer)
-            self.__get_scan_page_num(string_list)
-            for index in range(1, self.page_num + 1):             
-                read_buffer = self.__open_url_addr(scan_index_html % (index), None)
+            try:
+                print "key:", key
+                scan_index_html = scan_index_dict[key]
+                read_buffer = self.__open_url_addr(scan_index_html % (1), None)
                 string_list = self.__read_buffer_to_code(read_buffer)
+                self.__get_scan_page_num(string_list)
+                for index in range(1, self.page_num + 1):             
+                    read_buffer = self.__open_url_addr(scan_index_html % (index), None)
+                    string_list = self.__read_buffer_to_code(read_buffer)
                 
-                for info in self.__scan_get_qvod_info(string_list):
-                    #
-                    info.qvod_addr,info.image = self.__get_qvod_addr(info.addr)
-                    print "=========================="
-                    print "类型:", info.type
-                    print "地址:", info.addr
-                    print "名称:", info.name
-                    print "地区:", info.area                    
-                    print "日期:", info.date
-                    print "qvod地址:", info.qvod_addr
-                    print "图片地址:", info.image
-                    self.__save_to_mysql(cur, conn, info) # save to msyql.
-                    
+                    for info in self.__scan_get_qvod_info(string_list):
+                        #
+                        info.qvod_addr,info.image = self.__get_qvod_addr(info.addr)
+                        # print "=========================="
+                        # print "类型:", info.type
+                        # print "地址:", info.addr
+                        # print "名称:", info.name
+                        # print "地区:", info.area                    
+                        # print "日期:", info.date
+                        # print "qvod地址:", info.qvod_addr
+                        # print "图片地址:", info.image
+                        self.__save_to_mysql(cur, conn, info) # save to msyql.
+                        print info.name, "save to mysql..."
+            except Exception, e:        
+                print "for key in scan_index_dict[error]:", e
+                
         self.__close_mysql(cur, conn)
  
     def __get_qvod_addr(self, go_addr):
