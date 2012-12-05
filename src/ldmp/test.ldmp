@@ -1,0 +1,13 @@
+<version=0.12></version>
+<ldmp>
+    <vbox>
+        <vbox>
+          <button></button>
+          <button></button>
+          <video></video>
+        </vbox>
+	</vbox>
+	<hbox>
+	</hbox>
+</ldmp>
+
