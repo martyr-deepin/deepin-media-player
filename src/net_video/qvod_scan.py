@@ -36,7 +36,7 @@ SCAN_HTML = "http://www.hakuzy.com/search.asp?searchword="
 SCAN_HTML_PAGE = "http://www.hakuzy.com/search.asp?page=%d&searchword=%s&searchtype=-1"
 scan_index_dict = {
     "动作片":"/list/?1-%d.html",
-    "纪录片":"/list/?2-%d.html",
+    "纪录片":"/list/?2-%d.html", # 完成搜索
     "动漫片":"/list/?3-%d.html",
     "喜剧片":"/list/?4-%d.html",
     "科幻片":"/list/?5-%d.html",
@@ -48,7 +48,7 @@ scan_index_dict = {
     "大陆剧":"/list/?11-%d.html",
     "港台剧":"/list/?12-%d.html",
     "欧美剧":"/list/?13-%d.html",
-    "日韩剧":"/list/?14-%d.html",
+    "日韩剧":"/list/?14-%d.html", # 完成、
     "音乐":"/list/?15-%d.html",
     "QMV高清":"/list/?16-%d.html",
     }
@@ -108,13 +108,17 @@ class QvodScan(object):
             print "mysql error %d:%s" % (e.args[0], e.args[1])
             
         for key in scan_index_dict.keys():
+        # if True:    
             try:
+                key = "喜剧片"
                 print "key:", key
                 scan_index_html = scan_index_dict[key]
                 read_buffer = self.__open_url_addr(scan_index_html % (1), None)
                 string_list = self.__read_buffer_to_code(read_buffer)
                 self.__get_scan_page_num(string_list)
                 for index in range(1, self.page_num + 1):             
+                # if True:
+                    # index = 26
                     read_buffer = self.__open_url_addr(scan_index_html % (index), None)
                     string_list = self.__read_buffer_to_code(read_buffer)
                 
@@ -137,7 +141,8 @@ class QvodScan(object):
         self.__close_mysql(cur, conn)
  
     def __get_qvod_addr(self, go_addr):
-        qvod_addr_patter = r"<a>(.+)</a>"
+        # qvod_addr_patter = r"<a>(.+)</a>"
+        qvod_addr_patter = r"<a>(.+)[\||</a>]"
         image_patter = 'src="http://(.+)" width'
         read_buffer = self.__open_url_addr(go_addr, None)
         string_list = self.__read_buffer_to_code(read_buffer)
@@ -147,9 +152,16 @@ class QvodScan(object):
                 temp_image_result = "http://" + image_result[0]
             qvod_addr_result = self.__scan_findall(qvod_addr_patter, line)
             if qvod_addr_result != []:
+                if line.endswith("|"):
+                    return qvod_addr_result[0] + "|", temp_image_result
+                
                 result_string = ""
                 for result in qvod_addr_result[0].split("checked/> <a>"):
-                    result_string += result[:result.find("</a><!--")] + ","
+                    qvod_result_find = result[:result.find("</a><!--")]
+                    # if qvod_result_find.endswith("|"):
+                    # qvod_result_find = qvod_result_find[:-1]
+                    result_string += qvod_result_find + ","
+                    
                 return result_string, temp_image_result
                 
     def __save_to_mysql(self, cur, conn, info):
