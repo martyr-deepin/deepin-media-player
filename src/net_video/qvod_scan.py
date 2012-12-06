@@ -110,7 +110,7 @@ class QvodScan(object):
         for key in scan_index_dict.keys():
         # if True:    
             try:
-                key = "喜剧片"
+                # key = "动作片"
                 print "key:", key
                 scan_index_html = scan_index_dict[key]
                 read_buffer = self.__open_url_addr(scan_index_html % (1), None)
