@@ -1,174 +1,0 @@
-
-
-
-
-<!--
-
-/**********/**********/**********//**********//**********//**********//**********/
-  .--,       .--,
- ( (  \.---./  ) )
-  '.__/o   o\__.'
-     {=  ^  =}
-      >  -  <
-     /       \
-    //       \\
-   //|   .   |\\
-   "'\       /'"_.-~^`'-.
-      \  _  /--'         `
-    ___)( )(___
-   (((__) (__)))    高山仰止,景行行止.虽不能至,心向往之。
-   
-   
-   
-   商务,技术合作请发送邮件至：flvcd@126.com
-   
-/**********/**********/**********//**********//**********//**********//**********/
-
--->
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
-<title>正在为您解析，请耐心等候 - FLVCD硕鼠官网|FLV下载</title>
-<link href="css/clip.css" rel="stylesheet" type="text/css" />
-<SCRIPT LANGUAGE="JavaScript" src="js/zero/ZeroClipboard.js"></SCRIPT>
-<style type="text/css">
-<!--
-body {
-	background-color: #CCCCCC;
-}
-.blue {
-	color: #FFFFFF;
-	background-color: #688DB7;
-}
--->
-</style>
-<style type="text/css">
-<!--
-.vb {
-	font-family: "宋体";
-	font-size: 14px;
-	color: #000000;
-.STYLE10 {font-weight: bold}
--->
-</style>
-<link href="/base.css" rel="stylesheet" type="text/css" />
-<style type="text/css">
-<!--
-.STYLE4 {color: #333333}
-.STYLE7 {
-	color: #003366;
-	font-weight: bold;
-}
-.STYLE8 {color: #003366; font-weight: bold; font-size: 14px; }
-.STYLE9 {color: #339900}
-.STYLE10 {color: #000000}
-.STYLE11 {
-	font-size: 12px;
-	color: #333333;
-}
-.STYLE12 {font-size: 12px}
-.STYLE30 {color: #FFFFFF}
--->
-</style>
-<SCRIPT LANGUAGE="JavaScript" src="/js/flvcd.js?20120330"></SCRIPT>
-</head>
-
-<body>
-
-<table width="100%" border="0" align="center" bgcolor="#FFFFFF" >  <tr valign="top">    <th scope="col">      </th>  </tr>    <tr valign="top">    <th scope="col"><div align="left">      <table width="100%" border="0" >        <tr>          <th colspan="2" bgcolor="#F2F9F9" scope="col">          <div align="right" class="mn STYLE10">                      <a href="http://www.flvcd.com/teacher1.htm" target="_blank">新手入门</a>&nbsp;&nbsp;            <a href="http://www.flvcd.com/myset.php" target="_blank">偏好设置</a>&nbsp;&nbsp;            <a href="http://weibo.com/flvcd" target="_blank">官方微博</a>          </div>          </th>        </tr>        <tr>          <th width="40%" rowspan="3" scope="col"><div align="left"><a href="index.htm"><img src="logo.jpg" width="251" height="99" border="0" /></a></div></th>          <td width="60%">&nbsp;</td>        </tr>        <tr>          <td class="mn STYLE4"><div align="left"><span class="mn STYLE9">解析视频</span> 请输入所有 <a href="/url.php">支持网站</a> 的视频页面或专辑列表页面地址</div></td>        </tr>        <tr>          <td width="60%"><div align="left">              <form name="mainform" action="" method="get" onsubmit="return check()">                <input type="hidden" name="flag" />                <input type="hidden" name="format" />                <label>                <input name="kw" type="text" id="kw" size="45" style="font-size:18px;height:20px;padding-top:2px;" value=""/>                </label>                &nbsp;                <input type="submit" value="开始GO!" style="height:28px;font-size: 12px;color:#FFFFFF; background: #7094B8; border-width: thin thin thin thin; border-color: #CCCCFF #CCCCCC #CCCCCC #CCCCFF" />                &nbsp;              </form>          </div></td>        </tr>      </table>    </div></th>  </tr>    <tr valign="top">    <th colspan="2" scope="col"><div class="navPanel">        <div class="innerNavPanel">          <div class="buttons">          <div align="right">            <script type="text/javascript" src="http://www.flvcd.com/js/top_nav.js"></script>          </div>          </div>      </div>    </div></th>  </tr><SCRIPT LANGUAGE="JavaScript">
-<!--
-    document.title = "09.10最牛村小组通知 号召村民斗村民" + " - PPS视频解析 - FLVCD硕鼠官网|FLV下载";
-//-->
-</SCRIPT>
-  <tr valign="top" style="table-layout:fixed;word-wrap:break-word;word-break:break-all">
-    <th colspan="2" scope="col">
-	
-	<table width=100%  border=0 bgcolor=#F2F9F9>    
-    <tr valgin='top' >
-    <td align=left class="mn STYLE4">
-    <strong>当前解析视频：</strong>
-    09.10最牛村小组通知 号召村民斗村民    <strong>（请用右键"目标另存为"或硕鼠来快速下载.）</strong>
-    </td>
-    </tr>
-    </table>
-	<table width=100%  border=0>    
-    <tr valgin='top' >
-    <td align=left class="mn STYLE4">
-    <br>下载地址：
-    <a href="http://vurl.pps.tv/ugc/9/8c/9997f85b7f94b6786b3a82db5a2c144ddbf827bf/9997f85b7f94b6786b3a82db5a2c144ddbf827bf.pfv" target="_blank" class="link"onclick='_alert();return false;'>http://vurl.pps.tv/ugc/9/8c/9997f85b7f94b6786b3a82db5a2c144ddbf827bf/9997......4ddbf827bf.pfv</a> <span id="d_clip_button">复制文件名</span> <span id="d_clip_button2">复制地址</span>
-    <script type="text/javascript">var showclip = 1;var clipurl = "http://vurl.pps.tv/ugc/9/8c/9997f85b7f94b6786b3a82db5a2c144ddbf827bf/9997f85b7f94b6786b3a82db5a2c144ddbf827bf.pfv";var cliptitle = "09.10最牛村小组通知 号召村民斗村民.pfv";</script>
-    </td>
-    </tr>
-    <tr valgin='top' >
-    <td align=left class="mn STYLE4">
-    <br>花费时间：0秒　<form name="mform" action="downparse.php" method="post">
-<input type="hidden" name="t" value="0">
-<input type="hidden" name="name" value="09.10最牛村小组通知 号召村民斗村民">
-<input type="hidden" name="url" value="http://v.pps.tv/play_32JV2L.html#from_www">
-<input type="hidden" name="inf" value="<R>09.10最牛村小组通知 号召村民斗村民
-<T>0
-<F>http://v.pps.tv/play_32JV2L.html#from_www
-<$>
-<N>09.10最牛村小组通知 号召村民斗村民
-<P>PPS
-<U>http://vurl.pps.tv/ugc/9/8c/9997f85b7f94b6786b3a82db5a2c144ddbf827bf/9997f85b7f94b6786b3a82db5a2c144ddbf827bf.pfv
-<X>0001
-<&>
-          ">
-<strong><input type="submit" value="用硕鼠下载该视频" style="font-size: 15px;color:#FFFFFF; background: #7094B8; border-width: thin thin thin thin; border-color: #CCCCFF #CCCCCC #CCCCCC #CCCCFF;cursor:hand;" /></strong></form>
-<form action="get_m3u.php" method="post" name="m3uForm">
-<input type="hidden" name="inf" value="http://vurl.pps.tv/ugc/9/8c/9997f85b7f94b6786b3a82db5a2c144ddbf827bf/9997f85b7f94b6786b3a82db5a2c144ddbf827bf.pfv
-"/>
-<input type="hidden" name="filename" value="09.10最牛村小组通知 号召村民斗村民"/>
-&nbsp;&nbsp;<input type="submit" value="M3U列表" style="font-size: 15px;color:#FFFFFF; background: #7094B8; border-width: thin thin thin thin; border-color: #CCCCFF #CCCCCC #CCCCCC #CCCCFF;cursor:hand;" />
-</form>
-    </td>
-    </tr>
-    </table>
-    </th>
-  </tr>
-  <tr valign="top">
-    <th scope="col" align="left">
-        <table width="100%" border="0" align="left" style="table-layout:fixed;word-break:break-all;"> 
-         <tr valign="top">
-            <td scope="col" colspan="2">&nbsp;&nbsp;</td>
-          </tr>
-          <tr valign="top">
-            <td scope="col" colspan="2">&nbsp;&nbsp;</td>
-          </tr>
-          <tr valign="top">
-            <td scope="col" colspan="2" bgcolor="#f2f9f9"><div align="left" class="mn style10"><strong>赞助商链接</strong></div></td>
-          </tr>
-          <tr>
-              <td align="center" colspan="2">
-              <script type="text/javascript">
-alimama_pid="mm_10893854_911355_1876092";
-alimama_width=468;
-alimama_height=60;
-</script>
-<script src="http://a.alimama.cn/inf.js" type="text/javascript"></script>              </td>
-          </tr>
-          <tr>
-              <td align="center" colspan="2">
-              <a href="http://item.taobao.com/item.htm?id=5241911192" target="_blank"><img src="http://www.flvcd.com/image/partner/zhangyisheng.jpg" border="0"/></a>              </td>
-          </tr>
-                    <!--<tr>
-              <td align="center" colspan="2">
-                            </td>
-          </tr>-->
-                  </table>
-    
-    </th>
-  </tr>
-</table>
-<script type="text/javascript" src="js/clip.js"></script>
-<p align="center"></p>
-<hr/>
-<p align="center" class="mn STYLE30">Copyright&copy;<script type="text/javascript" src="http://www.flvcd.com/js/copyright.js"></script> 南京奋斗网络科技有限公司 版权所有 &nbsp;&nbsp;<script src='http://s63.cnzz.com/stat.php?id=764844&web_id=764844&show=pic' language='JavaScript' charset='gb2312'></script> </p>
-<p align="center" class="mn STYLE30"><a href="http://www.flvcd.com/about.php" class="bot" target="_blank">公司简介</a> | Powered by kisstudou and boloo</p>
-<p align="center" class="mn STYLE30"><B>联系我们：</B><img src="/image/email.jpg"> <b>官方QQ交流群：<script type="text/javascript" src="http://www.flvcd.com/js/qq-group.js?20120330"></script></b> <b><a href="http://weibo.com/flvcd" target="_blank">官方微博</a></b></p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-</body>
-</html>
