@@ -35,7 +35,7 @@ MAIN_HTML = "http://www.hakuzy.com/"
 SCAN_HTML = "http://www.hakuzy.com/search.asp?searchword="
 SCAN_HTML_PAGE = "http://www.hakuzy.com/search.asp?page=%d&searchword=%s&searchtype=-1"
 scan_index_dict = {
-    # "动作片":"/list/?1-%d.html",
+    "动作片":"/list/?1-%d.html",
     "纪录片":"/list/?2-%d.html", # 完成搜索
     "动漫片":"/list/?3-%d.html",
     "喜剧片":"/list/?4-%d.html",
@@ -110,15 +110,17 @@ class QvodScan(object):
         for key in scan_index_dict.keys():
         # if True:    
             try:
-                # key = "动作片"
+                # key = "纪录片"
                 print "key:", key
                 scan_index_html = scan_index_dict[key]
                 read_buffer = self.__open_url_addr(scan_index_html % (1), None)
                 string_list = self.__read_buffer_to_code(read_buffer)
                 self.__get_scan_page_num(string_list)
                 for index in range(1, self.page_num + 1):             
+                    import time
+                    time.sleep(5)
                 # if True:
-                    # index = 26
+                    # index = 2
                     read_buffer = self.__open_url_addr(scan_index_html % (index), None)
                     string_list = self.__read_buffer_to_code(read_buffer)
                 
@@ -134,7 +136,7 @@ class QvodScan(object):
                         # print "qvod地址:", info.qvod_addr
                         # print "图片地址:", info.image
                         self.__save_to_mysql(cur, conn, info) # save to msyql.
-                        print info.name, "save to mysql..."
+                        print info.name, "save to mysql...", self.page_num, "页", "下载:", index, "页"
             except Exception, e:        
                 print "for key in scan_index_dict[error]:", e
                 
@@ -165,6 +167,7 @@ class QvodScan(object):
                 return result_string, temp_image_result
                 
     def __save_to_mysql(self, cur, conn, info):
+        # print info.qvod_addr
         inser_sql = "insert into medias(name_hash,type,url,name,zone,date,qvod_url,img_url) values('%s','%s','%s','%s','%s','%s','%s','%s')"
         cur.execute(inser_sql % ("None",
                                  info.type,

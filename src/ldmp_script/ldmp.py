@@ -48,6 +48,7 @@ import gtk
          39    button
 ----------------------
          
+token_table_ = {0:}
 '''
 keyword_id_dict = {
     "version":30, "ldmp":31, "name":32,
