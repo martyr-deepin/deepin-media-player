@@ -85,6 +85,8 @@ class LDMP(ScrolledWindow):
     def __init__(self, hjustment=gtk.POLICY_AUTOMATIC, vadjustment=gtk.POLICY_AUTOMATIC):
         ScrolledWindow.__init__(self, hjustment, vadjustment)
         self.token_info_list = []
+        self.parsing_table = [] # 语法分析表.
+        self.product_list = [] # 产生式表.
         self.ldmp_script_file = None
         #.
         self.main_vbox = gtk.VBox() 
@@ -208,6 +210,9 @@ class TokenInfo(object):
         self.row  = None # token row.
         
 class Stack(object):
+    '''
+    LL(1) 语法分析.
+    '''
     def __init__(self):
         self.save_values = []
     
