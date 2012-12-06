@@ -34,14 +34,14 @@ import gtk
          07     /
 ----------------------
 关键字 |  ID  |   单词
-         20    version
-         21    ldmp
-         22    name
-         23    value
-         24    event
-         25    callback
-         26    vbox
-         27    hbox         
+         30    version
+         31    ldmp
+         32    name
+         33    value
+         34    event
+         35    callback
+         36    vbox
+         37    hbox         
 ----------------------
          
 '''

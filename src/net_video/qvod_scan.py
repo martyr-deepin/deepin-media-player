@@ -262,7 +262,10 @@ class QvodScan(object):
         except: # gb2312.
             # check gb2312.
             if chardet.detect(read_buffer)['encoding'] in ['GB2312']:
-                string_list = (read_buffer.decode('gbk').encode('utf-8')).split("\n")
+                try:
+                    string_list = (read_buffer.decode('gbk').encode('utf-8')).split("\n")
+                except:    
+                    string_list = read_buffer.decode('gbk', 'ignore').encode('utf-8').split("\n")
         return string_list
                     
     def __open_url_addr(self, scan_keyword, index=1):        
