@@ -36,7 +36,7 @@ SCAN_HTML = "http://www.hakuzy.com/search.asp?searchword="
 SCAN_HTML_PAGE = "http://www.hakuzy.com/search.asp?page=%d&searchword=%s&searchtype=-1"
 scan_index_dict = {
     "动作片":"/list/?1-%d.html",
-    "纪录片":"/list/?2-%d.html", # 完成搜索
+    "纪录片":"/list/?2-%d.html", 
     "动漫片":"/list/?3-%d.html",
     "喜剧片":"/list/?4-%d.html",
     "科幻片":"/list/?5-%d.html",
@@ -48,7 +48,7 @@ scan_index_dict = {
     "大陆剧":"/list/?11-%d.html",
     "港台剧":"/list/?12-%d.html",
     "欧美剧":"/list/?13-%d.html",
-    "日韩剧":"/list/?14-%d.html", # 完成、
+    "日韩剧":"/list/?14-%d.html", 
     "音乐":"/list/?15-%d.html",
     "QMV高清":"/list/?16-%d.html",
     }
@@ -110,7 +110,8 @@ class QvodScan(object):
         for key in scan_index_dict.keys():
         # if True:    
             try:
-                # key = "纪录片"
+            # if True:
+                # key = "欧美剧"
                 print "key:", key
                 scan_index_html = scan_index_dict[key]
                 read_buffer = self.__open_url_addr(scan_index_html % (1), None)
@@ -118,32 +119,33 @@ class QvodScan(object):
                 self.__get_scan_page_num(string_list)
                 for index in range(1, self.page_num + 1):             
                     import time
-                    time.sleep(5)
+                    time.sleep(3)
                 # if True:
-                    # index = 2
+                    # index = 9
                     read_buffer = self.__open_url_addr(scan_index_html % (index), None)
                     string_list = self.__read_buffer_to_code(read_buffer)
                 
                     for info in self.__scan_get_qvod_info(string_list):
-                        #
-                        info.qvod_addr,info.image = self.__get_qvod_addr(info.addr)
-                        # print "=========================="
-                        # print "类型:", info.type
-                        # print "地址:", info.addr
-                        # print "名称:", info.name
-                        # print "地区:", info.area                    
-                        # print "日期:", info.date
-                        # print "qvod地址:", info.qvod_addr
-                        # print "图片地址:", info.image
-                        self.__save_to_mysql(cur, conn, info) # save to msyql.
-                        print info.name, "save to mysql...", self.page_num, "页", "下载:", index, "页"
+                        if not self.__query_name(cur, info.name, info.type):
+                            info.qvod_addr,info.image = self.__get_qvod_addr(info.addr)
+                            # print "=========================="
+                            # print "类型:", info.type
+                            # print "地址:", info.addr
+                            # print "名称:", info.name
+                            # print "地区:", info.area                    
+                            # print "日期:", info.date
+                            # print "qvod地址:", info.qvod_addr
+                            # print "图片地址:", info.image
+                            # self.__save_to_mysql(cur, conn, info) # save to msyql.
+                            print info.name, "保存到数据库...", self.page_num, "页", "下载:", index, "页"
+                        else:    
+                            print "数据库已经存在...", info.name, "type:", info.type, "共", self.page_num, "页", "当前:", index, "页"
             except Exception, e:        
                 print "for key in scan_index_dict[error]:", e
                 
         self.__close_mysql(cur, conn)
  
     def __get_qvod_addr(self, go_addr):
-        # qvod_addr_patter = r"<a>(.+)</a>"
         qvod_addr_patter = r"<a>(.+)[\||</a>]"
         image_patter = 'src="http://(.+)" width'
         read_buffer = self.__open_url_addr(go_addr, None)
@@ -165,7 +167,15 @@ class QvodScan(object):
                     result_string += qvod_result_find + ","
                     
                 return result_string, temp_image_result
-                
+            
+    def __query_name(self, cur, name, type_):            
+        sql = "select name, type from medias where name='%s'" % name
+        cur.execute(sql)
+        for row in cur:
+            if row[0] == name and row[1] == type_:
+                return True
+        return False    
+        
     def __save_to_mysql(self, cur, conn, info):
         # print info.qvod_addr
         inser_sql = "insert into medias(name_hash,type,url,name,zone,date,qvod_url,img_url) values('%s','%s','%s','%s','%s','%s','%s','%s')"
@@ -176,7 +186,7 @@ class QvodScan(object):
                                  info.area,
                                  info.date,
                                  info.qvod_addr,
-                                 "image")
+                                 info.image)
                     )
         conn.commit()
         
@@ -276,11 +286,7 @@ class QvodScan(object):
             string_list = self.__to_code_utf_8(read_buffer).split("\n")
         except: # gb2312.
             # check gb2312.
-            if chardet.detect(read_buffer)['encoding'] in ['GB2312']:
-                try:
-                    string_list = (read_buffer.decode('gbk').encode('utf-8')).split("\n")
-                except:    
-                    string_list = read_buffer.decode('gbk', 'ignore').encode('utf-8').split("\n")
+            string_list = read_buffer.decode('gbk', 'ignore').encode('utf-8').split("\n")
         return string_list
                     
     def __open_url_addr(self, scan_keyword, index=1):        
