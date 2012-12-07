@@ -109,9 +109,9 @@ class QvodScan(object):
             
         for key in scan_index_dict.keys():
         # if True:    
-            try:
-            # if True:
-                # key = "欧美剧"
+            # try:
+            if True:
+                # key = "音乐"
                 print "key:", key
                 scan_index_html = scan_index_dict[key]
                 read_buffer = self.__open_url_addr(scan_index_html % (1), None)
@@ -121,11 +121,12 @@ class QvodScan(object):
                     import time
                     time.sleep(3)
                 # if True:
-                    # index = 9
+                    # index = 62
                     read_buffer = self.__open_url_addr(scan_index_html % (index), None)
                     string_list = self.__read_buffer_to_code(read_buffer)
                 
                     for info in self.__scan_get_qvod_info(string_list):
+                       try:
                         if not self.__query_name(cur, info.name, info.type):
                             info.qvod_addr,info.image = self.__get_qvod_addr(info.addr)
                             # print "=========================="
@@ -136,12 +137,14 @@ class QvodScan(object):
                             # print "日期:", info.date
                             # print "qvod地址:", info.qvod_addr
                             # print "图片地址:", info.image
-                            # self.__save_to_mysql(cur, conn, info) # save to msyql.
+                            self.__save_to_mysql(cur, conn, info) # save to msyql.
                             print info.name, "保存到数据库...", self.page_num, "页", "下载:", index, "页"
                         else:    
                             print "数据库已经存在...", info.name, "type:", info.type, "共", self.page_num, "页", "当前:", index, "页"
-            except Exception, e:        
-                print "for key in scan_index_dict[error]:", e
+                       except Exception, e:      
+                           print "info in self.__scan[error]:", e
+            # except Exception, e:        
+                # print "for key in scan_index_dict[error]:", e
                 
         self.__close_mysql(cur, conn)
  

@@ -24,38 +24,13 @@ from dtk.ui.scrolled_window import ScrolledWindow
 import gtk
 
 
-'''
-字符串常量 ID 02
-----------------------
-运算符 |  ID  | 单词
-         10     = 
-----------------------     
-界符号 |  ID  | 单词
-         05     <
-         06     >
-         07     /
-----------------------
-关键字 |  ID  |   单词
-         30    version
-         31    ldmp
-         32    name
-         33    value
-         34    event
-         35    callback
-         36    vbox
-         37    hbox         
-         38    entry
-         39    button
-----------------------
-         
-token_table_ = {0:}
-'''
 keyword_id_dict = {
     "version":30, "ldmp":31, "name":32,
     "value":33, "event":34, "callback":35,
     "vbox": 36, "hbox":37, "entry":38, "button":39
     }
 
+# /* 用于搜索关键字. */
 keyword_dict = {'a':[],
            'b':["button"],
            'c':["callback"],
@@ -268,7 +243,6 @@ class LDMP(ScrolledWindow):
 class TokenInfo(object):
     def __init__(self):
         self.id   = None
-        self.str  = None # token string.
         self.type = None # token type.
         self.row  = None # token row.
         
