@@ -70,8 +70,8 @@ class QvodScan(object):
         self.keyword = ""
                 
     def scan(self, scan_keyword):
-        read_buffer = self.__open_url_addr(scan_keyword)
         self.keyword = scan_keyword # save keyword.
+        read_buffer = self.__open_url_addr(scan_keyword)
         #
         if read_buffer:
             ######################################
@@ -81,6 +81,7 @@ class QvodScan(object):
             self.__get_scan_page_num(string_list)
             return True
         else:    
+            self.page_num = 0
             return False
         
     def get_main_index_info(self):
@@ -297,8 +298,9 @@ class QvodScan(object):
         if index:
             keyword = urllib.quote(self.__to_code_gb2312(scan_keyword))
             scan_html = SCAN_HTML_PAGE % (index, keyword)
-        else:    
+        else:                
             scan_html = MAIN_HTML + scan_keyword
+            # print scan_html
             
         if is_network_connected():
             url_open = urllib2.urlopen(scan_html)
@@ -356,15 +358,15 @@ class QvodScan(object):
     
 if __name__ == "__main__":    
     qvod_scan = QvodScan()
-    # qvod_scan.scan("功夫")    
-    qvod_scan.get_main_index_info()
+    qvod_scan.scan("国产")    
+    #qvod_scan.get_main_index_info()
     #######################################
-    # for info in qvod_scan.get_qvod_info(1):
-    #     print "=========================="
-    #     print "地址:", info.addr
-    #     print "名称:", info.name
-    #     print "地区:", info.area
-    #     print "类型:", info.type
-    #     print "日期:", info.date
+    for info in qvod_scan.get_qvod_info(1):
+        print "=========================="
+        print "地址:", info.addr
+        print "名称:", info.name
+        print "地区:", info.area
+        print "类型:", info.type
+        print "日期:", info.date
     #######################################
-    # print "总共有%d页" % (qvod_scan.page_num)
+    print "总共有%d页" % (qvod_scan.page_num)
