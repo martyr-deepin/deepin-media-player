@@ -20,15 +20,16 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import MySQLdb
+try:
+    import MySQLdb
+except Exception, e:    
+    print "MySQLdb no install!!", e
 import urllib2
 import urllib
 import chardet
 import re
 # import threading
 from dtk.ui.utils import is_network_connected
-
-
 
 
 MAIN_HTML = "http://www.hakuzy.com/"
@@ -129,7 +130,7 @@ class QvodScan(object):
                     for info in self.__scan_get_qvod_info(string_list):
                        try:
                         if not self.__query_name(cur, info.name, info.type):
-                            info.qvod_addr,info.image = self.__get_qvod_addr(info.addr)
+                            info.qvod_addr,info.image = self.get_qvod_addr(info.addr)
                             # print "=========================="
                             # print "类型:", info.type
                             # print "地址:", info.addr
@@ -149,7 +150,7 @@ class QvodScan(object):
                 
         self.__close_mysql(cur, conn)
  
-    def __get_qvod_addr(self, go_addr):
+    def get_qvod_addr(self, go_addr):
         qvod_addr_patter = r"<a>(.+)[\||</a>]"
         image_patter = 'src="http://(.+)" width'
         read_buffer = self.__open_url_addr(go_addr, None)
