@@ -154,7 +154,7 @@ if __name__ == "__main__":
         # info = QvodInfo()
         # qvod_sql.insert_data("medias", info)
         # qvod_sql.select_data("medias")
-        qvod_sql.clear_data("medias")
+        # qvod_sql.clear_data("medias")
         # for i in qvod_sql.get_query_data():
         #     print i[0]
         #     print i[1]
