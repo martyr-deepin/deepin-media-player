@@ -23,12 +23,32 @@
 import os
 import gtk
 
+# from dtk.ui.dialog import DialogBox, DIALOG_MASK_SINGLE_PAGE
+# from dtk.ui.scrolled_window import ScrolledWindow
+
+# from locales import _
 
 from qvod_scan import QvodScan
 from qvod_con import get_down_progress, get_movie_name, get_hash_str, check_qvod_url, cp_exe_to_down_dir, hide_down_qvod_exe, close_down_qvod_exe, run_down_qvod_exe
 
+
+FORM_WIDTH, FORM_HEIGHT = 800, 500
+
 class QvodScanGui(gtk.Window):
+# class QvodScanGui(DialogBox): 
     def __init__(self):
+        # DialogBox.__init__(self, 
+        #                    _("Qvod搜索下载器"), 
+        #                    FORM_WIDTH, FORM_HEIGHT, 
+        #                    mask_type=DIALOG_MASK_SINGLE_PAGE,
+        #                    close_callback=self.hide_all,
+        #                    modal=True,                           
+        #                    window_hint=gtk.gdk.WINDOW_TYPE_HINT_DIALOG,
+        #                    window_pos=gtk.WIN_POS_CENTER,
+        #                    skip_taskbar_hint=False,
+        #                    resizable=False,
+        #                    )                        
+        
         gtk.Window.__init__(self, gtk.WINDOW_TOPLEVEL)        
         self.qvod_down_dict = {}
         self.qvod = QvodScan()
@@ -40,6 +60,7 @@ class QvodScanGui(gtk.Window):
         self.scan_info_vbox = gtk.VBox()
         self.scan_page_hbox = gtk.HBox()
         self.scan_infO_scoll_win = gtk.ScrolledWindow()
+        # self.scan_infO_scoll_win = ScrolledWindow(2, 1)
         self.scan_infO_scoll_win.add_with_viewport(self.scan_info_vbox)
         #
         self.__init_scan_top()        
@@ -58,6 +79,7 @@ class QvodScanGui(gtk.Window):
         self.main_vbox.pack_start(self.scan_page_hbox, False, False)
         self.main_vbox.pack_start(self.hide_down_win_btn, False, False)
         self.add(self.main_vbox)
+        # self.body_box.pack_start(self.main_vbox, True, True)
         self.show_all()        
         gtk.timeout_add(1000, self.update_down_progressbar)
         
@@ -114,7 +136,9 @@ class QvodScanGui(gtk.Window):
         self.qvod_addr_win=None
         
     def scan_btn_clicked(self, widget):                    
+        print "***************", self.scan_text.get_text()
         if self.qvod.scan(self.scan_text.get_text()):
+            print "[[[[[[[[[[[[[[["
             self.update_scan_page_hbox()
             self.update_scan_info_vbox(1)
         # print "总共有%d页" % (self.qvod.page_num)        
@@ -165,11 +189,12 @@ class QvodScanGui(gtk.Window):
     def __temp_qvod_addr_down_clicked(self, widget, qvod_addr):
         movie_name = get_movie_name(qvod_addr)
         down_exe_addr = movie_name + "_" + get_hash_str(qvod_addr) + ".exe"
-        cp_exe_to_down_dir(down_exe_addr, "./down_movie/")
-        run_down_qvod_exe("./down_movie/" + down_exe_addr, movie_name)
-        self.qvod_down_dict["./down_movie/" + movie_name] = ("./down_movie/" + down_exe_addr, 0)
+        cp_exe_to_down_dir(down_exe_addr, "./net_video/down_movie/")
+        run_down_qvod_exe("./net_video/down_movie/" + down_exe_addr, movie_name)
+        self.qvod_down_dict["./net_video/down_movie/" + movie_name] = ("./net_video/down_movie/" + down_exe_addr, 0)
         self.update_down_win()
         self.down_win.show_all()
-if __name__ == "__main__":        
-    QvodScanGui()
-    gtk.main()
+        
+# if __name__ == "__main__":        
+#     QvodScanGui()
+#     gtk.main()

@@ -115,7 +115,7 @@ def check_file_exists(down_file):
     return os.path.exists(down_file)
     
 def cp_exe_to_down_dir(down_exe_addr_name, down_dir=""):
-    os.system("cp %s %s" % ("down_video.exe", down_dir + down_exe_addr_name))
+    os.system("cp %s %s" % ("./net_video/down_video.exe", down_dir + down_exe_addr_name))
     
 def run_down_qvod_exe(down_name, movie_name):
     import subprocess
@@ -130,10 +130,10 @@ def hide_down_qvod_exe_time(movie_name):
     
 def hide_down_qvod_exe(movie_name):    
     print movie_name
-    os.system("wine qvod.exe %s hide"%(movie_name))
+    os.system("wine ./net_video/qvod.exe %s hide"%(movie_name))
     
 def close_down_qvod_exe(down_name):
-    os.system("wine qvod.exe %s close"%(down_name))
+    os.system("wine ./net_video/qvod.exe %s close"%(down_name))
     
 if __name__ == "__main__":
     # test_url = "qvod://1234261716|202C8A841C0715CD03CAEF631A8E73E9F4D156E2|将爱进行到底DVD.rmvb|"

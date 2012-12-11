@@ -20,10 +20,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-try:
-    import MySQLdb
-except Exception, e:    
-    print "MySQLdb no install!!", e
 import urllib2
 import urllib
 import chardet
@@ -56,15 +52,18 @@ scan_index_dict = {
 
 class QvodInfo(object):
     def __init__(self):
-        self.movie_hash = None # 主键
         self.addr  = None  # 跳转地址.
-        self.anme  = None  # 影片名称
+        self.name  = None  # 影片名称
         self.area  = None  # 地区.
+        self.actor = "未填写"  # 影片演员.
+        self.direct = "未填写" # 影片导演.
         self.tyep  = None  # 类型.
         self.date  = None  # 上映日期.
         self.image = None  #
-        self.qvod_addr = None # qvod 地址
-
+        self.state = None  # 影片状态.
+        self.qvod_addr = "" # qvod 地址.
+        self.other     = None # 备注信息.
+        
 class QvodScan(object):
     def __init__(self):                    
         self.page_num = 0
@@ -85,120 +84,86 @@ class QvodScan(object):
             self.page_num = 0
             return False
         
-    def get_main_index_info(self):
-        try:
-            conn = MySQLdb.connect(host='localhost',
-                                   user='root',
-                                   passwd='root',
-                                   db='dp_media',
-                                   charset='utf8'
-                                   )        
-            cur = conn.cursor()                        
-            # cur.execute("select * from medias")
-            
-            # for row in cur:
-            #     print "=========================="
-            #     print "类型:", row[2]
-            #     print "地址:", row[3]
-            #     print "名称:", row[4]
-            #     print "地区:", row[5]                
-            #     print "日期:", row[6]
-            #     print "qvod地址:", row[7]
-            #     print "图片:", row[8]
-            
-        except MySQLdb.Error, e:
-            print "mysql error %d:%s" % (e.args[0], e.args[1])
-            
+    def get_main_index_info(self):        
         for key in scan_index_dict.keys():
-        # if True:    
-            # try:
-            if True:
-                # key = "音乐"
-                print "key:", key
-                scan_index_html = scan_index_dict[key]
-                read_buffer = self.__open_url_addr(scan_index_html % (1), None)
+            print "key:", key
+            scan_index_html = scan_index_dict[key]
+            read_buffer = self.__open_url_addr(scan_index_html % (1), None)
+            string_list = self.__read_buffer_to_code(read_buffer)
+            self.__get_scan_page_num(string_list)
+            for index in range(1, self.page_num + 1):             
+                import time
+                time.sleep(3)
+                read_buffer = self.__open_url_addr(scan_index_html % (index), None)
                 string_list = self.__read_buffer_to_code(read_buffer)
-                self.__get_scan_page_num(string_list)
-                for index in range(1, self.page_num + 1):             
-                    import time
-                    time.sleep(3)
-                # if True:
-                    # index = 62
-                    read_buffer = self.__open_url_addr(scan_index_html % (index), None)
-                    string_list = self.__read_buffer_to_code(read_buffer)
                 
-                    for info in self.__scan_get_qvod_info(string_list):
-                       try:
-                        if not self.__query_name(cur, info.name, info.type):
-                            info.qvod_addr,info.image = self.get_qvod_addr(info.addr)
-                            # print "=========================="
-                            # print "类型:", info.type
-                            # print "地址:", info.addr
-                            # print "名称:", info.name
-                            # print "地区:", info.area                    
-                            # print "日期:", info.date
-                            # print "qvod地址:", info.qvod_addr
-                            # print "图片地址:", info.image
-                            self.__save_to_mysql(cur, conn, info) # save to msyql.
-                            print info.name, "保存到数据库...", self.page_num, "页", "下载:", index, "页"
-                        else:    
-                            print "数据库已经存在...", info.name, "type:", info.type, "共", self.page_num, "页", "当前:", index, "页"
-                       except Exception, e:      
-                           print "info in self.__scan[error]:", e
-            # except Exception, e:        
-                # print "for key in scan_index_dict[error]:", e
-                
-        self.__close_mysql(cur, conn)
+                for info in self.__scan_get_qvod_info(string_list):
+                    # 返回 qvod地址, 图片地址, 状态, 备注, 演员, 导演.
+                    self.get_qvod_addr(info.addr, info)
+                    print "名称:", info.name
+                    print "地区:", info.area
+                    print "演员:", info.actor
+                    print "导演:", info.direct
+                    print "类型:", info.type
+                    print "日期:", info.date
+                    if info.state == '0':
+                        state = "完结"
+                    else:    
+                        state = "更新至" + str(info.state)
+                    print "影片状态:", state
+                    print "备注:", info.other
+                    print "qvod地址:"
+                    for addr in info.qvod_addr.split(","):
+                        if addr != "":
+                            print addr
  
-    def get_qvod_addr(self, go_addr):
+    def get_qvod_addr(self, go_addr, info):
+        temp_qvod_info = info
         qvod_addr_patter = r"<a>(.+)[\||</a>]"
         image_patter = 'src="http://(.+)" width'
+        other_patter = '<!--影片介绍开始代码-->(.+)<!--影片介绍结束代码-->'
+        state_patter = '<!--影片状态开始代码-->(.+)<!--影片状态结束代码-->'
+        actor_patter = '<!--影片演员开始代码-->(.+)<!--影片演员结束代码-->'
+        direct_patter = '<!--影片导演开始代码-->(.+)<!--影片导演结束代码-->'
+        
         read_buffer = self.__open_url_addr(go_addr, None)
-        string_list = self.__read_buffer_to_code(read_buffer)
-        for line in string_list:
+        string_list = self.__read_buffer_to_code(read_buffer)        
+        for line in string_list:            
+            # 获取演员.
+            actor_result = self.__scan_findall(actor_patter, line)
+            if actor_result != []:
+                temp_qvod_info.actor = actor_result[0]
+            # 获取导演.  
+            direct_result = self.__scan_findall(direct_patter, line)    
+            if direct_result != []:
+                temp_qvod_info.direct = direct_result[0]
+            # 获取图片地址.   
             image_result = self.__scan_findall(image_patter, line)
             if image_result != []:
-                temp_image_result = "http://" + image_result[0]
-            qvod_addr_result = self.__scan_findall(qvod_addr_patter, line)
+                temp_qvod_info.image = "http://" + image_result[0]
+            # 获取备注信息.   
+            other_result = self.__scan_findall(other_patter, line)               
+            if other_result != []:
+                other_result = other_result[0].strip()
+                if other_result.startswith("<p>") and other_result.endswith("</p>"):
+                    other_result = other_result[3:][:-4]
+                if other_result.endswith("</br>"):    
+                    other_result = other_result[:-5]
+                temp_qvod_info.other = other_result
+            # 获取影片状态.   
+            state_result = self.__scan_findall(state_patter, line)
+            if state_result != []:
+                temp_qvod_info.state = state_result[0]
+            # 获取所有QVOD地址.
+            qvod_addr_result = self.__scan_findall(qvod_addr_patter, line)                
             if qvod_addr_result != []:
                 if line.endswith("|"):
-                    return qvod_addr_result[0] + "|", temp_image_result
+                    temp_qvod_info.qvod_addr = qvod_addr_result[0] + "|"
                 
-                result_string = ""
                 for result in qvod_addr_result[0].split("checked/> <a>"):
                     qvod_result_find = result[:result.find("</a><!--")]
-                    # if qvod_result_find.endswith("|"):
-                    # qvod_result_find = qvod_result_find[:-1]
-                    result_string += qvod_result_find + ","
-                    
-                return result_string, temp_image_result
-            
-    def __query_name(self, cur, name, type_):            
-        sql = "select name, type from medias where name='%s'" % name
-        cur.execute(sql)
-        for row in cur:
-            if row[0] == name and row[1] == type_:
-                return True
-        return False    
-        
-    def __save_to_mysql(self, cur, conn, info):
-        # print info.qvod_addr
-        inser_sql = "insert into medias(name_hash,type,url,name,zone,date,qvod_url,img_url) values('%s','%s','%s','%s','%s','%s','%s','%s')"
-        cur.execute(inser_sql % ("None",
-                                 info.type,
-                                 info.addr,
-                                 info.name,
-                                 info.area,
-                                 info.date,
-                                 info.qvod_addr,
-                                 info.image)
-                    )
-        conn.commit()
-        
-    def __close_mysql(self, cur, conn):    
-        cur.close()
-        conn.close()
-        
+                    temp_qvod_info.qvod_addr += qvod_result_find + ","            
+                            
     def get_qvod_info(self, index):          
         read_buffer = self.__open_url_addr(self.keyword, index)
         string_list = self.__read_buffer_to_code(read_buffer)
@@ -263,7 +228,7 @@ class QvodScan(object):
                 qvod_info.date = date
                 qvod_info.type = type_                
                 qvod_info.area = area                
-                qvod_info.name = name                
+                qvod_info.name = name
                 # add to qvod_info_list.
                 qvod_info_list.append(qvod_info)
                 # print "=========================="
@@ -360,14 +325,27 @@ class QvodScan(object):
 if __name__ == "__main__":    
     qvod_scan = QvodScan()
     qvod_scan.scan("国产")    
-    #qvod_scan.get_main_index_info()
+    # qvod_scan.scan("功夫")    
+    # qvod_scan.get_main_index_info()
     #######################################
     for info in qvod_scan.get_qvod_info(1):
         print "=========================="
-        print "地址:", info.addr
+        qvod_scan.get_qvod_addr(info.addr, info)
         print "名称:", info.name
         print "地区:", info.area
+        print "演员:", info.actor
+        print "导演:", info.direct
         print "类型:", info.type
         print "日期:", info.date
+        if info.state == '0':
+            state = "完结"
+        else:    
+            state = "更新至" + info.state
+        print "影片状态:", state
+        print "备注:", info.other
+        print "qvod地址:"
+        for addr in info.qvod_addr.split(","):
+            if addr != "":
+                print addr
     #######################################
     print "总共有%d页" % (qvod_scan.page_num)
