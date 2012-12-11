@@ -27,7 +27,6 @@ import gtk
 # from dtk.ui.scrolled_window import ScrolledWindow
 
 # from locales import _
-
 from qvod_scan import QvodScan
 from qvod_con import get_down_progress, get_movie_name, get_hash_str, check_qvod_url, cp_exe_to_down_dir, hide_down_qvod_exe, close_down_qvod_exe, run_down_qvod_exe
 

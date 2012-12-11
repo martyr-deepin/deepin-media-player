@@ -44,14 +44,46 @@ class QvodSql(object):
     def open(self, sql_file_path):
         return self.__connect(sql_file_path) # conn sql file.
     
-    def create_table(self, table): # create database table.        
-        sql_create_cmd = "create table %s (id int not null primary key auto_increment,name varchar(500),type varchar(200),zone varchar(200),date varchar(200),img_url varchar(1000),qvod_url varchar(20000),desc varchar(5000),md5sum varchar(200))" % (table)
-        return self.execute(sql_create_cmd)
+    def create_table(self, table): # create database table.
+        sql_create_cmd = "create table %s "
+        sql_create_cmd += "(id integer primary key, "
+        sql_create_cmd += "name text, " # 影片名称
+        sql_create_cmd += "area text, " # 地区.
+        sql_create_cmd += "actor text, "# 影片演员.
+        sql_create_cmd += "direct text, "# 影片导演.
+        sql_create_cmd += "type text, "# 类型.
+        sql_create_cmd += "date text, "# 上映日期.
+        sql_create_cmd += "image text, "# 图片地址.
+        sql_create_cmd += "state text, "# 影片状态.
+        sql_create_cmd += "qvod_addr text, "# qvod 地址.
+        sql_create_cmd += "other text)" # 备注信息.
+        return self.execute(sql_create_cmd % (table))
     
     def del_table(self, table): # delete database table.       
         sql_del_cmd = "drop table %s" % (table)
         return self.execute(sql_del_cmd)
         
+    def insert_data(self, table, info):
+        sql_insert_cmd = "insert into %s values (null, " % (table)
+        sql_insert_cmd += "'" + info.name + "'" + ", "
+        sql_insert_cmd += "'" + info.area + "'" + ", "
+        sql_insert_cmd += "'" + info.actor + "'" + ", "
+        sql_insert_cmd += "'" + info.direct + "'" + ", "
+        sql_insert_cmd += "'" + info.type + "'" + ", "
+        sql_insert_cmd += "'" + info.date + "'" + ", "       
+        sql_insert_cmd += "'" + info.image + "'" + ", "
+        sql_insert_cmd += "'" + info.state + "'" + ", "
+        sql_insert_cmd += "'" + info.qvod_addr + "'" + ", "
+        sql_insert_cmd += "'" + info.other + "'"
+        sql_insert_cmd += ")"
+        return self.execute(sql_insert_cmd)
+    
+    def select_data(self, table, sql_select_cmd=""):
+        return self.execute("select * from %s %s" % (table, sql_select_cmd))
+        
+    def clear_data(self, table):
+        return self.execute("delete from %s where id > 0" % (table))
+    
     def execute(self, sql_cmd): # run sql cmd.
         if self.sql_cur and self.sql_conn:
             if SQL_CONNECT_STATE == SQL_CONNECT_SQLLIT:
@@ -63,10 +95,7 @@ class QvodSql(object):
                     print "execute [error]:", e
                     return False
         return False        
-        
-    def query_data(self, sql_query_cmd):
-        return self.execute(sql_query_cmd)
-        
+                    
     def get_query_data(self):
         return self.sql_cur.fetchall()
     
@@ -101,6 +130,19 @@ class QvodSql(object):
                 self.sql_conn.close()                
                 print "close : sql_conn and sql_cur."
                 
+class QvodInfo(object):
+    def __init__(self):
+        self.name = "功夫"
+        self.area = "中国"
+        self.actor = "深度"
+        self.direct = "深度"
+        self.type = "历史片"
+        self.date = "3000年上映"
+        self.image = "我来看看"
+        self.state = "100年"
+        self.qvod_addr = "qvod://2u3012jfdklsjfdsklfjdsklfjsdlkfdsl.rvmbjfldksfj|,qvod://fdsjflksjdfklsdjflkdsf.rvcfjd|,qvod://djkfljsdkfsdjlfksjdfkldsjflkdsjflksdfjsldfjk|,qvod://dsjfklsdjflsdkrmvbdfsjklfjdslkfj|,qvod://dsjfkldsfjlskdfjsldkfjsdklfjklsdfjkldsfjslakfjklsdfjslkdfj|"
+        self.other = "Linux Deepin是中国最大的LINUX发行版，统治中国LINUX桌面环境Linux Deepin是中国最大的LINUX发行版，统治中国LINUX桌面环境Linux Deepin是中国最大的LINUX发行版，统治中国LINUX桌面环境Linux Deepin是中国最大的LINUX发行版，统治中国LINUX桌面环境Linux Deepin是中国最大的LINUX发行版，统治中国LINUX桌面环境Linux Deepin是中国最大的LINUX发行版，统治中国LINUX桌面环境Linux Deepin是中国最大的LINUX发行版，统治中国LINUX桌面环境Linux Deepin是中国最大的LINUX发行版，统治中国LINUX桌面环境Linux Deepin是中国最大的LINUX发行版，统治中国LINUX桌面环境Linux Deepin是中国最大的LINUX发行版，统治中国LINUX桌面环境Linux Deepin是中国最大的LINUX发行版，统治中国LINUX桌面环境Linux Deepin是中国最大的LINUX发行版，统治中国LINUX桌面环境Linux Deepin是中国最大的LINUX发行版，统治中国LINUX桌面环境Linux Deepin是中国最大的LINUX发行版，统治中国LINUX桌面环境Linux Deepin是中国最大的LINUX发行版，统治中国LINUX桌面环境Linux Deepin是中国最大的LINUX发行版，统治中国LINUX桌面环境Linux Deepin是中国最大的LINUX发行版，统治中国LINUX桌面环境Linux Deepin是中国最大的LINUX发行版，统治中国LINUX桌面环境Linux Deepin是中国最大的LINUX发行版，统治中国LINUX桌面环境Linux Deepin是中国最大的LINUX发行版，统治中国LINUX桌面环境Linux Deepin是中国最大的LINUX发行版，统治中国LINUX桌面环境Linux Deepin是中国最大的LINUX发行版，统治中国LINUX桌面环境Linux Deepin是中国最大的LINUX发行版，统治中国LINUX桌面环境Linux Deepin是中国最大的LINUX发行版，统治中国LINUX桌面环境Linux Deepin是中国最大的LINUX发行版，统治中国LINUX桌面环境Linux Deepin是中国最大的LINUX发行版，统治中国LINUX桌面环境Linux Deepin是中国最大的LINUX发行版，统治中国LINUX桌面环境Linux Deepin是中国最大的LINUX发行版，统治中国LINUX桌面环境Linux Deepin是中国最大的LINUX发行版，统治中国LINUX桌面环境Linux Deepin是中国最大的LINUX发行版，统治中国LINUX桌面环境Linux Deepin是中国最大的LINUX发行版，统治中国LINUX桌面环境Linux Deepin是中国最大的LINUX发行版，统治中国LINUX桌面环境"
+                
 if __name__ == "__main__":        
     qvod_sql = QvodSql()
     if qvod_sql.open("db_media.db"):
@@ -109,9 +151,22 @@ if __name__ == "__main__":
         # qvod_sql.create_table("medias")
         print "test count:", qvod_sql.get_query_count("medias")
         # qvod_sql.del_table("medias")
-        # for i in range(0, 600):
-        #     print "inser ", i
-            # qvod_sql.execute("insert into medias values('fdjsfldfjsdlkfjsdlkfjsdjfkldsjflskfjksdlfjl', 'qvod://fjsdklfjsdlkfsjdlkfjsdlkfjsdklfjsdklfjsdlkfjsdlkfjdslkfjsdlkfjsdlkfjdslkfjsdklfjsdlkfjsdlkfjdsklfjsdlkfjsdklfjsdlkfjsldkfjldkf,qvod://fsdjfklsdjflsdkfjdsl.rvmsdfksdjflksdjflksdjflksfj,qvod://fdsjfklsdjflksdfjlsdkfjsdlkfjsdklfjsdlkfjsdklfsjdklfdsf,qvod://fjdsklfdsjlfksjdlfksdjlf,qvod://fjdsklfjsdlfjsdlfsdjfr.v|,qvod://djfsdklfjsldkfjdslkfjkf|%s')"%(i))
+        # info = QvodInfo()
+        # qvod_sql.insert_data("medias", info)
+        # qvod_sql.select_data("medias")
+        qvod_sql.clear_data("medias")
+        # for i in qvod_sql.get_query_data():
+        #     print i[0]
+        #     print i[1]
+        #     print i[2]
+        #     print i[3]
+        #     print i[4]
+        #     print i[5]
+        #     print i[6]
+        #     print i[7]
+        #     print i[8]
+        #     print i[9]
+        #     print i[10]
         # close qvod_sql.
         qvod_sql.close()
     else:    
