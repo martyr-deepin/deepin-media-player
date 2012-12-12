@@ -72,9 +72,14 @@ class QvodScanWidget(gtk.ScrolledWindow):
     def init_search_info(self): 
         self.search_info_ali = gtk.Alignment()
         self.search_info = SearchInfo()
+        self.search_info.save_info_btn.connect("select-index-event", self.save_info_btn_select_index_event)
         self.search_info_ali.add(self.search_info)
         self.search_info_ali.set(0.9, 0, 0.4, 0)
         self.search_info_ali.set_padding(50, 0, 0, 0)
+        
+    def save_info_btn_select_index_event(self, width, index, title):    
+        print "index:", index
+        print "text:", title
         
     def navigation_selece_index_event(self, widget, index, title):
         print "index:", index

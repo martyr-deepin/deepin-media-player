@@ -29,8 +29,7 @@ class Navigation(gtk.HBox):
     __gsignals__ = {
         "select-index-event":(gobject.SIGNAL_RUN_LAST,
                         gobject.TYPE_NONE,(gobject.TYPE_INT, gobject.TYPE_STRING,))
-        }    
-
+        }
     def __init__(self, title_list = []):
         gtk.HBox.__init__(self)
         #

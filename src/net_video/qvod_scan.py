@@ -33,7 +33,7 @@ SCAN_HTML = "http://www.hakuzy.com/search.asp?searchword="
 SCAN_HTML_PAGE = "http://www.hakuzy.com/search.asp?page=%d&searchword=%s&searchtype=-1"
 scan_index_dict = {
     "动作片":"/list/?1-%d.html",
-    "纪录片":"/list/?2-%d.html", 
+#    "纪录片":"/list/?2-%d.html", 
     "动漫片":"/list/?3-%d.html",
     "喜剧片":"/list/?4-%d.html",
     "科幻片":"/list/?5-%d.html",
