@@ -20,28 +20,31 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import os
 import gtk
 from function import draw_pixbuf
 
 class SearchBar(gtk.HBox):
     def __init__(self):
         gtk.HBox.__init__(self)
+        #
+        self.bg_pixbuf = gtk.gdk.pixbuf_new_from_file("widget/theme/search/searchframe.png")
+        #
         self.search_text = gtk.Entry()
+        # self.search_text.set_has_frame(False)
         self.search_text.set_size_request(420, self.search_text.get_size_request()[1])
         self.search_btn_ali = gtk.Alignment()
         self.search_btn  = SearchBtn()
         self.search_btn_ali.add(self.search_btn)
         self.search_btn_ali.set_padding(4, 0, 0, 0)
         self.pack_start(self.search_text, False, False)
-        self.pack_start(self.search_btn_ali, False, False)        
-        
+        self.pack_start(self.search_btn_ali, False, False)
+    
 class SearchBtn(gtk.Button):
     def __init__(self):
         gtk.Button.__init__(self)
-        self.normal_pixbuf = gtk.gdk.pixbuf_new_from_file("widget/theme/search/search_normal.png")
-        self.hover_pixbuf  = gtk.gdk.pixbuf_new_from_file("widget/theme/search/search_hover.png")
-        self.press_pixbuf  = gtk.gdk.pixbuf_new_from_file("widget/theme/search/search_press.png")
+        self.normal_pixbuf = gtk.gdk.pixbuf_new_from_file("widget/theme/search/search.png")
+        self.hover_pixbuf  = self.normal_pixbuf.scale_simple(self.normal_pixbuf.get_width() + 5, self.normal_pixbuf.get_height() + 5, gtk.gdk.INTERP_BILINEAR)
+        self.press_pixbuf  = self.normal_pixbuf
         #
         self.set_size_request(self.normal_pixbuf.get_width(), self.normal_pixbuf.get_height())
         self.add_events(gtk.gdk.ALL_EVENTS_MASK)

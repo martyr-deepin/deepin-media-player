@@ -21,57 +21,76 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import gtk
+from function import draw_pixbuf
 from function import color_hex_to_cairo, draw_text, alpha_color_hex_to_cairo
 import gobject
 
 class SearchInfo(gtk.HBox):
     def __init__(self):
         gtk.HBox.__init__(self)
-        self.pre_page_btn = PageBtn("上一页")
-        self.next_page_btn = PageBtn("下一页")
+        #
+        self.pre_page_btn_ali = gtk.Alignment()
+        self.pre_page_btn = PageBtn("widget/theme/info/left.png", "widget/theme/info/press_left.png")        
+        self.pre_page_btn_ali.add(self.pre_page_btn)
+        self.pre_page_btn_ali.set(0, 0.5, 1, 0)
+        #
+        self.next_page_btn_ali = gtk.Alignment()
+        self.next_page_btn = PageBtn("widget/theme/info/right.png", "widget/theme/info/press_right.png")
+        self.next_page_btn_ali.add(self.next_page_btn)
+        self.next_page_btn_ali.set(0, 0.5, 1, 0)
+        #
         self.save_info_btn = InfoBtn([
                 "乱世佳人(国产剧)", "国产凌凌漆(国语)", "国产凌凌漆(粤语)",
                 "兵临城下(国产) ", "(国产方兵临城下方阵 ", "(国兵临城下(百家争鸣",
                 "(国产)兵临城下武器", "COCO兵临城下泳装秀", "(国产兵临城下与启发"])        
-        self.pack_start(self.pre_page_btn, False, False)
+        self.pack_start(self.pre_page_btn_ali, False, False)
         self.pack_start(self.save_info_btn, False, False)
-        self.pack_start(self.next_page_btn, False, False)
+        self.pack_start(self.next_page_btn_ali, False, False)
         
 class PageBtn(gtk.Button):
-    def __init__(self, text=""):
+    def __init__(self, pixbuf="", press_pixbuf=""):
         gtk.Button.__init__(self)
-        self.text = text
-        height = 128 * 3        
-        self.set_size_request(80, height)
+        # init values.
+        self.press_bool = False
+        self.ratate_simple_num = 0
+        self.pixbuf = gtk.gdk.pixbuf_new_from_file(pixbuf)
+        self.press_pixbuf = gtk.gdk.pixbuf_new_from_file(press_pixbuf)
+        #
+        self.set_size_request(self.pixbuf.get_width() + 20,
+                              self.pixbuf.get_height() + 20)
         self.connect("expose-event", self.pagebtn_expose_event)
+        gtk.timeout_add(500, self.expose_ratate_simple_time)
         
+    def expose_ratate_simple_time(self):    
+        if self.press_bool:
+            self.ratate_simple_num = self.ratate_simple_num % 360
+            self.ratate_simple_num = min(360, self.ratate_simple_num + 90)
+            self.queue_draw()
+        return True    
+    
     def pagebtn_expose_event(self, widget, event):    
         cr = widget.window.cairo_create()
         rect = widget.allocation
-        height = 128 * 3
-        draw_x_padding = 15
-        draw_w = 50
-        draw_h = 150
-        cr.set_source_rgba(*alpha_color_hex_to_cairo(("#000000", 0.5)))
-        cr.rectangle(rect.x + draw_x_padding, 
-                     rect.y + height/2 - draw_h/2, 
-                     draw_w, 
-                     draw_h)
-        cr.fill()
-        draw_text_padding_x = 24
         #
+        temp_x_padding = 10
+        temp_y_padding = 10        
+            
         if widget.state == gtk.STATE_NORMAL:
-            text_color = "#FFFFFF"
+            self.press_bool = False
+            pixbuf = self.pixbuf
         elif widget.state == gtk.STATE_PRELIGHT:
-            text_color = "#FF0033"
+            pixbuf = self.pixbuf.scale_simple(self.pixbuf.get_width() + 15, self.pixbuf.get_height() + 15, gtk.gdk.INTERP_BILINEAR)
+            temp_y_padding, temp_x_padding = temp_x_padding/4, temp_y_padding/4
         elif widget.state == gtk.STATE_ACTIVE:
-            text_color = "#6600CC"
-
-        draw_text(cr, 
-                  rect.x + draw_x_padding + draw_text_padding_x, 
-                  rect.y + height/2, 
-                  self.text, 
-                  (text_color, 1))
+            self.press_bool = True
+            pixbuf = self.pixbuf.scale_simple(self.pixbuf.get_width() + 18, self.pixbuf.get_height() + 18, gtk.gdk.INTERP_BILINEAR)
+            pixbuf = pixbuf.rotate_simple(self.ratate_simple_num)
+            temp_y_padding, temp_x_padding = temp_x_padding/5, temp_y_padding/5
+        #   
+        draw_pixbuf(cr, 
+                    pixbuf, 
+                    rect.x + temp_x_padding, 
+                    rect.y + temp_y_padding)
         return True
 
 class InfoBtn(gtk.Button):
