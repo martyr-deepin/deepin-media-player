@@ -53,7 +53,7 @@ class PlayControlPanel(object):
                                    app_theme.get_pixbuf("bottom_buttons/pre_button_normal.png"),
                                    app_theme.get_pixbuf("bottom_buttons/pre_button_hover.png"),
                                    app_theme.get_pixbuf("bottom_buttons/pre_button_press.png"))        
-        tooltip_text(self.pre_button, _("Prev"))
+        tooltip_text(self.pre_button, _("Previous"))
         
         self.start_button = StartButton()
         tooltip_text(self.start_button, _("Play"))

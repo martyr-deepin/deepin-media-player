@@ -537,10 +537,10 @@ class PlayControl(gtk.VBox):
         entry_width = 150
         entry_height = 24
         # set PlayControl bool.
-        self.play_control_bool_checkbtn = CheckButton(_("Hotkeys Enabled"))
+        self.play_control_bool_checkbtn = CheckButton(_(" Enabled hotkeys"))
         self.play_control_bool_checkbtn.connect("button-press-event", self.set_play_control_all_sensitive)                
         # open file key.
-        self.open_file_entry_label = Label(_("Open File"))
+        self.open_file_entry_label = Label(_("Open file"))
         self.open_file_entry = ShortcutKeyEntry()
         text_string = self.ini.get("PlayControl", "open_file_key")
         if text_string:
@@ -560,7 +560,7 @@ class PlayControl(gtk.VBox):
             
         self.pre_a_entry.set_size(entry_width, entry_height)
         # open file dir.
-        self.open_file_dir_entry_label = Label(_("Open Directory"))
+        self.open_file_dir_entry_label = Label(_("Open directory"))
         self.open_file_dir_entry = ShortcutKeyEntry()
         text_string = self.ini.get("PlayControl", "open_file_dir_key")
         if text_string:
@@ -570,7 +570,7 @@ class PlayControl(gtk.VBox):
             
         self.open_file_dir_entry.set_size(entry_width, entry_height)
         # next a.
-        self.next_a_entry_label = Label(_("Previous"))
+        self.next_a_entry_label = Label(_("Next"))
         self.next_a_entry = ShortcutKeyEntry()
         text_string = self.ini.get("PlayControl", "next_a_key")
         if text_string:
@@ -590,7 +590,7 @@ class PlayControl(gtk.VBox):
             
         self.play_or_pause_entry.set_size(entry_width, entry_height)
         # add volume.
-        self.add_volume_entry_label = Label(_("Volume Up"))
+        self.add_volume_entry_label = Label(_("Increase Volume"))
         self.add_volume_entry = ShortcutKeyEntry()
         text_string = self.ini.get("PlayControl", "add_volume_key")
         if text_string:
@@ -610,7 +610,7 @@ class PlayControl(gtk.VBox):
             
         self.seek_entry.set_size(entry_width, entry_height)
         # sub volume.
-        self.sub_volume_entry_label = Label(_("Volume Down"))
+        self.sub_volume_entry_label = Label(_("Decrease Volume"))
         self.sub_volume_entry = ShortcutKeyEntry()
         text_string = self.ini.get("PlayControl", "sub_volume_key")
         if text_string:
@@ -650,7 +650,7 @@ class PlayControl(gtk.VBox):
             
         self.full_entry.set_size(entry_width, entry_height)
         # Concise mode.
-        self.concise_entry_label = Label(_("Concise Mode"))
+        self.concise_entry_label = Label(_("Compact mode"))
         self.concise_entry = ShortcutKeyEntry()
         text_string = self.ini.get("PlayControl", "concise_key")
         if text_string:
@@ -828,13 +828,13 @@ class SubKey(gtk.VBox):
         heparator_offset_y = title_offset_y + 25        
         # create widgets left, right label.
         widgets_label_left = [
-            Label(_("Forword by 0.5s")),
-            Label(_("Delay by 0.5s")),
-            Label(_("Loading Subtiles")),
+            Label(_("Delay-0.5s")),
+            Label(_("Delay+0.5s")),
+            Label(_("Loading subtiles")),
             ]
         widgets_label_right = [
-            Label(_("Increase the Size of Characters")),
-            Label(_("Decrease the Size of Characters")),
+            Label(_("Increase subtitle scale")),
+            Label(_("Decrease subtitle scale")),
             ]        
         # create widgets left.
         self.widgets_left = [
@@ -966,21 +966,21 @@ class OtherKey(gtk.VBox):
         self.heparator_hbox.pack_start(self.heparator)
         self.heparator_hbox.set_size_request(heparator_width, heparator_height)        
         # set other_key bool.        
-        self.other_key_bool_checkbtn = CheckButton(_("Hotkeys Enabled"))
+        self.other_key_bool_checkbtn = CheckButton(_(" Enabled hotkeys"))
         self.other_key_bool_checkbtn.connect("button-press-event", self.set_other_key_bool_checkbtn_press)
                 
         entry_width = 120
         entry_height = 24
         # init widgets label left and right.        
-        widgets_label_left = [Label(_("Increse Brightness")),
-                              Label(_("Decrease Brightness")),
-                              Label(_("Rotate Conterclockwise")),
-                              Label(_("Rotate Clockwise")),
-                              Label(_("Take Screenshots")),
-                              Label(_("Switch Audio Tracks")),
+        widgets_label_left = [Label(_("Increse brightness")),
+                              Label(_("Decrease brightness")),
+                              Label(_("Rotate conterclockwise")),
+                              Label(_("Rotate clockwise")),
+                              Label(_("Take screenshot")),
+                              Label(_("Switch audio tracks")),
                               ]
-        widgets_label_right = [Label(_("Left Click")),
-                               Label(_("Double Click")),
+        widgets_label_right = [Label(_("Left click")),
+                               Label(_("Double click")),
                                Label(_("Scroll"))
                                ]
         # init widgets Left and right.
@@ -1137,7 +1137,7 @@ class SubSet(gtk.VBox):
         self.heparator_hbox.pack_start(self.heparator)
         self.heparator_hbox.set_size_request(heparator_width, heparator_height)
         # Ai load subtitle.
-        self.ai_load_subtitle_checkbtn = CheckButton(_("Auto-load Subtitles"))
+        self.ai_load_subtitle_checkbtn = CheckButton(_("Load subtitles automatically"))
         ini_bool = self.ini.get("SubtitleSet", "ai_load_subtitle")
         self.ai_load_subtitle_checkbtn.set_active(False)
         if ini_bool and "true" == ini_bool.lower():            
@@ -1154,7 +1154,7 @@ class SubSet(gtk.VBox):
             self.specific_location_search_entry.set_text("~/.config/deepin-media-player/subtitle")
             
         self.specific_location_search_entry.set_size(entry_width, entry_height)
-        self.specific_location_search_button = Button(_("View"))
+        self.specific_location_search_button = Button(_("Browse"))
         self.specific_location_search_button.connect("clicked", self.load_path_to_sls_entry)
         sub_set_x = 20
         sub_set_y = 40
@@ -1214,13 +1214,13 @@ class ScreenShot(gtk.VBox):
         self.heparator_hbox.pack_start(self.heparator)
         self.heparator_hbox.set_size_request(heparator_width, heparator_height)                
         # Save clipboard.
-        self.save_clipboard_radio = RadioButton(_("Copy to Clipboard"))
+        self.save_clipboard_radio = RadioButton(_("Copy to clipboard"))
         # save clipboard radio event.
         self.save_clipboard_radio.connect("button-press-event", self.save_clipboard_radio_clicked)
         
         self.save_clipboard_radio_label = Label("")
         # Save File.
-        self.save_file_radio = RadioButton(_("Save File"))
+        self.save_file_radio = RadioButton(_("Folder"))
         self.save_file_radio.connect("button-press-event", self.save_file_radio_clicked)
         self.save_file_radio.set_active(True)
         self.save_file_radio_label = Label("")
@@ -1230,7 +1230,7 @@ class ScreenShot(gtk.VBox):
         self.save_path_entry = InputEntry()
             
         self.save_path_entry.set_size(entry_width, entry_height)                
-        self.save_path_button = Button(_("View"))
+        self.save_path_button = Button(_("Browse"))
         self.save_path_button.connect("clicked", self.save_path_to_save_path_entry_clicked)
         # Save type.
         self.save_type_label = Label(_("File Type:"))
@@ -1264,7 +1264,7 @@ class ScreenShot(gtk.VBox):
             self.save_type_combo.set_sensitive(False)                 
                  
         self.current_show_sort_label = Label("")
-        self.current_show_sort_check = CheckButton(_("Keep Current Aspect Ratio"))
+        self.current_show_sort_check = CheckButton(_("Keep current aspect ratio"))
         self.current_show_sort_check.set_active(False)
         ini_bool = self.ini.get("ScreenshotSet", "current_show_sort")
         if ini_bool and "true" == ini_bool.lower():
@@ -1372,7 +1372,7 @@ class About(gtk.VBox):
         logo_box.pack_start(logo_name, False, False)
         
         version_label = Label(_("Version:"))
-        version_content = Label("V1.0", light_color)
+        version_content = Label("V2.0", light_color)
         info_box = gtk.HBox(spacing=5)
         info_align = gtk.Alignment()
         info_align.set(0.5, 1, 1, 1)
@@ -1384,7 +1384,7 @@ class About(gtk.VBox):
         title_box.pack_start(logo_box, True, True)
         title_box.pack_start(info_align, True, True)
         
-        describe = _("Deepin Media Player is a video player designed for Linux users.\nIt support a variety of video formats, and features mode switching,\nVideo preview, online subtitles, screenshot taking and skin selection.\n\nDeepin Media Player is free software licensed under GNU GPLv3.\n")
+        describe = _("\t\t\t\t\t\tDeepin Media Player \n\tDeepin Media Player is a video player designed for Linux users. It support a variety of video formats, and features mode switching, video preview, online subtitles, screenshot taking and skin selection. \n\n\tDeepin Media Player is free software licensed under GNU GPLv3. ")
         
         describe_label = Label(describe, enable_select=False, wrap_width=457)
         main_box.pack_start(title_box, False, False)

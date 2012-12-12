@@ -86,7 +86,7 @@ class ToolBar(object):
                        
         self.toolbar_above_hframe = HorizontalFrame(5) 
         self.toolbar_above_button = ToggleHoverButton(self.show_panel_toolbar, [self.panel, self.panel.event])
-        tooltip_text(self.toolbar_above_button, _("Keep above"))
+        tooltip_text(self.toolbar_above_button, _("Always on Top"))
         self.toolbar_above_hframe.add(self.toolbar_above_button)
         
         self.hbox.pack_start(self.toolbar_radio_button, False, False)        

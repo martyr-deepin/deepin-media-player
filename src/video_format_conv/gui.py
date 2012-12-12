@@ -50,7 +50,7 @@ FORM_HEIGHT = int(form_size[2])
 class Form(DialogBox):
     def __init__(self):
         DialogBox.__init__(self, 
-                           _("Format converter"), 
+                           _("Convert"), 
                            FORM_WIDTH, FORM_HEIGHT, 
                            mask_type=DIALOG_MASK_SINGLE_PAGE,
                            close_callback=self.hide_all,
@@ -126,7 +126,7 @@ class Form(DialogBox):
         self.higt_set_bool = False
         self.higt_set_btn = LabelButton()#Button(_("Advanced"))
         
-        self.show_and_hide_task_btn = Button(_("Task manager"))
+        self.show_and_hide_task_btn = Button(_("Task Manager"))
         
         self.higt_hbox = gtk.HBox()
         self.higt_hbox.pack_start(self.higt_set_btn)

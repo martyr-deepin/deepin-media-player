@@ -110,7 +110,7 @@ class PlayerBox(object):
         self.point_bool = False
         self.above_bool = False # Set window above bool.
         self.full_bool = False  # Set window full bool.
-        self.mode_state_bool = False # Concise mode(True) and common mode(False).
+        self.mode_state_bool = False # Compact Mode(True) and common mode(False).
         self.show_toolbar_bool = False
         self.show_toolbar_focus_bool = True
         self.clear_play_list_bool = False # drag play file.
@@ -1172,7 +1172,7 @@ class PlayerBox(object):
         '''prev.'''
         if (len(self.mp.play_list) > 1):
             self.mp.pre()
-            self.messagebox(_("Prev"))
+            self.messagebox(_("Previous"))
             
     def next_button_clicked(self, widget):
         '''next'''
@@ -1455,7 +1455,7 @@ class PlayerBox(object):
         self.show_toolbar_bool = False
 
         self.panel_x, self.panel_y = self.screen_frame.window.get_root_origin()
-        if self.mode_state_bool: # Concise mode.
+        if self.mode_state_bool: # Compact Mode.
             self.toolbar.panel.move(self.panel_x, self.panel_y)
             self.bottom_toolbar.panel.move(
                 self.panel_x, 
@@ -1659,7 +1659,7 @@ class PlayerBox(object):
         self.app.window.show_all()
 
     def concise_window_function(self):
-        '''full window and concise mode'''
+        '''full window and Compact Mode'''
         self.app.hide_titlebar() # hide titlbar.
         self.progressbar.hide_progressbar()
         self.hide_bottom()
@@ -1764,7 +1764,7 @@ class PlayerBox(object):
         Hide progressbar.
         Hide playlist.
         Hide border of window.
-        [concise mode:]
+        [Compact Mode:]
         '''
         if self.show_or_hide_play_list_bool:
             self.play_list.hide_play_list()
@@ -1842,7 +1842,7 @@ class PlayerBox(object):
                 self.show_toolbar_bool = True
 
                 self.panel_x, self.panel_y = self.screen_frame.window.get_root_origin()
-                if self.mode_state_bool: # Concise mode.
+                if self.mode_state_bool: # Compact Mode.
                     self.toolbar.panel.move(self.panel_x, self.panel_y)
                 else:    # common mode.
                     self.toolbar.panel.move(self.panel_x + 2, self.panel_y + self.app.titlebar.allocation[3])
@@ -1857,7 +1857,7 @@ class PlayerBox(object):
             self.show_toolbar_bool = False
 
         # Show toolbar2.
-        if self.mode_state_bool or self.full_bool: # concise mode.
+        if self.mode_state_bool or self.full_bool: # Compact Mode.
             if self.screen_frame.allocation[3]-20 <= event.y < self.screen_frame.allocation[3]:
                 if self.show_toolbar_focus_bool:
                     self.bottom_toolbar.show_toolbar2()
@@ -2331,7 +2331,7 @@ class PlayerBox(object):
     def theme_menu_show(self, button):    
         '''Title root menu.'''
         #In title root menu.
-        self.sort_menu = Menu([(None, _("Take Screenshots"), self.key_sort_image),
+        self.sort_menu = Menu([(None, _("Take Screenshot"), self.key_sort_image),
                                (None, _("Open Screenshot Directory"), self.open_sort_image_dir),
                                (None, _("Set Screenshot Directory"), self.open_sort_image_ini_gui)
                                ])
@@ -2367,9 +2367,9 @@ class PlayerBox(object):
         self.volume_menu = Menu([(None, _("Channels"), self.channel_select_menu),
                                  # (None, "配音选择", None),
                                  (None),
-                                 (self.add_volume_pixbuf, _("Volume Up"),  self.menu_add_volume),
-                                 (self.sub_volume_pixbuf, _("Volume Down"),  self.menu_sub_volume),
-                                 (self.mute_volume_pixbuf, _("Mute/Umute"), self.key_set_mute),
+                                 (self.add_volume_pixbuf, _("Increase Volume"),  self.menu_add_volume),
+                                 (self.sub_volume_pixbuf, _("Decrease Volume"),  self.menu_sub_volume),
+                                 (self.mute_volume_pixbuf, _("Mute/Unmute"), self.key_set_mute),
                                  ])
         # In title root menu.
         pixbuf_normal = None
@@ -2437,11 +2437,11 @@ class PlayerBox(object):
             list_recycle_pixbuf = play_sequence_pixbuf
 
         # In title root menu.
-        self.play_state_menu = Menu([(single_pixbuf, _("Play (single)"), self.sigle_play),
-                                     (order_pixbuf,  _("Play (ordered)"), self.sequence_play),
-                                     (random_pixbuf, _("Shuffle"), self.rand_play),
-                                     (signle_cycle_pixbuf, _("Repeat"), self.sigle_loop_play),
-                                     (list_recycle_pixbuf, _("Repeat List"), self.loop_list_play)]
+        self.play_state_menu = Menu([(single_pixbuf, _("Play (track)"), self.sigle_play),
+                                     (order_pixbuf,  _("Default"), self.sequence_play),
+                                     (random_pixbuf, _("Random"), self.rand_play),
+                                     (signle_cycle_pixbuf, _("Repeat (track)"), self.sigle_loop_play),
+                                     (list_recycle_pixbuf, _("Repeat (playlist)"), self.loop_list_play)]
                                     )
         # In title root menu.
         full_menu_pixbufs = (self.menu_full_normal_pixbuf, self.menu_full_hover_pixbuf, self.menu_full_normal_pixbuf)
@@ -2454,14 +2454,14 @@ class PlayerBox(object):
         menu_play_sequence_pixbufs = (self.menu_play_sequence_normal_pixbuf, self.menu_play_sequence_hover_pixbuf, self.menu_play_sequence_none_pixbuf)
         
         self.play_menu = Menu([(full_menu_pixbufs, _("Full Screen"), self.key_return),
-                               (window_mode_pixbufs, _("Standard Mode"), self.set_menu_common),
-                               (menu_concise_pixbufs, _("Concise Mode"), self.set_menu_concise),
-                               (menu_pre_pixbufs, _("Prev"), self.key_pre),
+                               (window_mode_pixbufs, _("Normal Mode"), self.set_menu_common),
+                               (menu_concise_pixbufs, _("Compact Mode"), self.set_menu_concise),
+                               (menu_pre_pixbufs, _("Previous"), self.key_pre),
                                (menu_next_pixbufs, _("Next"), self.key_next),
                                (None),
-                               (menu_f_seek_5_pixbufs, _("Forward 5s"), self.key_right),
-                               (menu_b_seek_5_pixbufs, _("Rewind 5s"), self.key_left),
-                               (menu_play_sequence_pixbufs, _("Play Order"), self.play_state_menu),
+                               (menu_f_seek_5_pixbufs, _("Jump Forward"), self.key_right),
+                               (menu_b_seek_5_pixbufs, _("Jump Backward"), self.key_left),
+                               (menu_play_sequence_pixbufs, _("Order"), self.play_state_menu),
                                ])
         
         # cdrom service[play DISC menu].
@@ -2497,7 +2497,7 @@ class PlayerBox(object):
         menu_quit_pixbufs = (self.menu_quit_normal_pixbuf, self.menu_quit_hover_pixbuf, self.menu_quit_none_pixbuf)
         
         format_menu = Menu([(None, _("Format conversion"), self.open_conv_dialog_window),
-                            (None, _("Task manager"), self.show_and_hide_task_conv_gui)
+                            (None, _("Task Manager"), self.show_and_hide_task_conv_gui)
                             ])
         self.title_root_menu = Menu([(None, _("File"), self.file_menu),
                                      (None, _("Play"), self.play_menu),
@@ -2506,7 +2506,7 @@ class PlayerBox(object):
                                      # (None, "字幕", self.subtitle_menu),
                                      (None, _("Take Screenshots"), self.sort_menu),
                                      (None, _("Format conversion"), format_menu),
-                                     (None, _("New Features"), init_user_guide),
+                                     (None, _("View New Features"), init_user_guide),
                                      (menu_setting_pixbufs, _("Preferences"), self.config_gui),
                                      # (None, "总在最前", None),
                                      # (None, "自定义换肤", None),
@@ -2560,11 +2560,11 @@ class PlayerBox(object):
             list_recycle_pixbuf = play_sequence_pixbuf
 
         # screen right menu set mplayer play state.
-        play_state_menu = Menu([(single_pixbuf, _("Play (single)"), self.sigle_play),
-                                (order_pixbuf,  _("Play (ordered)"), self.sequence_play),
-                                (random_pixbuf, _("Shuffle"), self.rand_play),
-                                (signle_cycle_pixbuf, _("Repeat"), self.sigle_loop_play),
-                                (list_recycle_pixbuf, _("Repeat List"), self.loop_list_play)]
+        play_state_menu = Menu([(single_pixbuf, _("Play (track)"), self.sigle_play),
+                                (order_pixbuf,  _("Default"), self.sequence_play),
+                                (random_pixbuf, _("Random"), self.rand_play),
+                                (signle_cycle_pixbuf, _("Repeat (track)"), self.sigle_loop_play),
+                                (list_recycle_pixbuf, _("Repeat (playlist)"), self.loop_list_play)]
                                )
         # 这里需要重构.代码可复用.
         menu_pre_pixbufs = (self.menu_pre_normal_pixbuf, self.menu_pre_hover_pixbuf, self.menu_pre_none_pixbuf)
@@ -2572,11 +2572,11 @@ class PlayerBox(object):
         menu_f_seek_5_pixbufs = (self.menu_f_seek_5_normal_pixbuf, self.menu_f_seek_5_hover_pixbuf, self.menu_f_seek_5_none_pixbuf)
         menu_b_seek_5_pixbufs = (self.menu_b_seek_5_normal_pixbuf, self.menu_b_seek_5_hover_pixbuf, self.menu_b_seek_5_none_pixbuf)
         play_menu = Menu([                                                    
-                          (menu_pre_pixbufs, _("Prev"), self.key_pre),
+                          (menu_pre_pixbufs, _("Previous"), self.key_pre),
                           (menu_next_pixbufs, _("Next"), self.key_next),
                           (None),
-                          (menu_f_seek_5_pixbufs, _("Forward 5s"), self.key_right),
-                          (menu_b_seek_5_pixbufs, _("Rewind 5s"), self.key_left),
+                          (menu_f_seek_5_pixbufs, _("Jump Forward"), self.key_right),
+                          (menu_b_seek_5_pixbufs, _("Jump Backward"), self.key_left),
                           ])
 
         # aspect.
@@ -2735,9 +2735,9 @@ class PlayerBox(object):
                 (None, _("Open URL"),   self.open_url_dialog_window),
                 (None),
                 (menu_full_pixbufs, _("Full Screen On/Off"),    self.key_return),
-                (menu_window_mode_pixbufs, _("Standard Mode"), self.set_menu_common),
-                (menu_concise_pixbufs, _("Concise Mode"), self.set_menu_concise),
-                (menu_play_sequence_pixbufs, _("Play Order"), play_state_menu),
+                (menu_window_mode_pixbufs, _("Normal Mode"), self.set_menu_common),
+                (menu_concise_pixbufs, _("Compact Mode"), self.set_menu_concise),
+                (menu_play_sequence_pixbufs, _("Order"), play_state_menu),
                 (None, _("Play"), play_menu),
                 (None, _("Video"), screen_menu),
                 (menu_volume_pixbufs, _("Audio"), channel_select),
@@ -2816,11 +2816,11 @@ class PlayerBox(object):
                 list_recycle_pixbuf = play_sequence_pixbuf
 
             '''play list popup menu'''
-            self.menu = Menu([(single_pixbuf, _("Play (single)"), self.sigle_play),          # 0
-                              (order_pixbuf, _("Play (ordered)"), self.sequence_play),       # 1
-                              (random_pixbuf, _("Shuffle"), self.rand_play),                 # 2
-                              (signle_cycle_pixbuf, _("Repeat"), self.sigle_loop_play),      # 3
-                              (list_recycle_pixbuf, _("Repeat List"), self.loop_list_play)]  # 4
+            self.menu = Menu([(single_pixbuf, _("Play (track)"), self.sigle_play),          # 0
+                              (order_pixbuf, _("Default"), self.sequence_play),       # 1
+                              (random_pixbuf, _("Random"), self.rand_play),                 # 2
+                              (signle_cycle_pixbuf, _("Repeat (track)"), self.sigle_loop_play),      # 3
+                              (list_recycle_pixbuf, _("Repeat (playlist)"), self.loop_list_play)]  # 4
                              )
 
             self.menu2 = Menu([(None, _("By Name"), self.name_sort),
@@ -2847,7 +2847,7 @@ class PlayerBox(object):
                                              (None, _("Remove Unavailable Files"), self.del_error_file),
                                              (None),
                                              (None, _("Recent Played"), self.the_last_new_play_file),
-                                             (None, _("Play Order"), self.menu),
+                                             (None, _("Order"), self.menu),
                                              (None, _("Sort"), self.menu2),
                                              # (None, "视图", None),
                                              (None),
@@ -3181,19 +3181,19 @@ class PlayerBox(object):
                 
     def add_delay_subtitle_event(self, subtitle):
         self.mp.sub_up_delay()
-        self.messagebox(_("Forword by 0.5s")) 
+        self.messagebox(_("Delay-0.5s")) 
     
     def sub_delay_subtitle_event(self, subtitle):
-        self.messagebox(_("Delay by 0.5s")) 
+        self.messagebox(_("Delay+0.5s")) 
         self.mp.sub_down_delay()
         
     def add_scale_subtitle_event(self, subtitle):
         self.mp.sub_up_scale()
-        self.messagebox(_("Increase the Size of Characters"))
+        self.messagebox(_("Increase subtitle scale"))
         
     def sub_scale_subtitle_event(self, subtitle):
         self.mp.sub_down_scale()
-        self.messagebox(_("Decrease the Size of Characters"))
+        self.messagebox(_("Decrease subtitle scale"))
     
     def clear_subtitle_event(self, subtitle, subtitle_len):
         print "clear_subtitle_event"
