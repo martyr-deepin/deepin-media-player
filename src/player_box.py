@@ -174,10 +174,11 @@ class PlayerBox(object):
         
         # Child widget add to vbox.
         self.vbox.pack_start(self.screen_frame_event, True, True)
-        self.vbox.pack_start(self.progressbar.hbox,False, False)
+        # self.vbox.pack_start(self.progressbar.hbox,False, False)
         # Hide playlist and show playlist widget hbox.
         self.hbox.pack_start(self.vbox, True, True)
         self.hbox.pack_start(self.play_list, False, False)
+        # self.vbox.pack_start(self.progressbar.hbox,False, False)
 
         '''Bottom control.'''
         # Hide Bottom and show Bottom.
@@ -207,7 +208,8 @@ class PlayerBox(object):
 
         self.bottom_main_vbox.pack_start(self.bottom_play_control_hbox_vframe_event_box)
         # vbox add to main_hbox
-        self.main_vbox.pack_start(self.hbox, True, True) # screen and progressbar
+        self.main_vbox.pack_start(self.hbox, True, True) # screen.
+        self.main_vbox.pack_start(self.progressbar.hbox, False, False) # add progressbar to main_vbox.
         self.main_vbox.pack_start(self.bottom_main_vbox, False, False)
         
         '''Hide preview window.'''

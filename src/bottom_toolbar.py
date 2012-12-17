@@ -59,7 +59,7 @@ class BottomToolBar(object):
         self.play_control_panel = PlayControlPanel()      
         self.play_control_panel_hframe = self.play_control_panel.hbox_hframe
         self.play_control_panel_hframe.set(0, 0, 0, 0)
-        self.play_control_panel_hframe.set_padding(2, 0, 0, 0)
+        self.play_control_panel_hframe.set_padding(0, 0, 0, 0)
         
         self.volume_hframe = HorizontalFrame()
         self.volume_button = VolumeButton(press_emit_bool = True,
