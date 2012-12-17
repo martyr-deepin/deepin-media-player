@@ -71,7 +71,7 @@ class PlayListControlPanel(gtk.Alignment):
         cr = widget.window.cairo_create()
         x, y , w, h = widget.allocation
         cr.set_source_rgba(0, 0, 0, 0.5)
-        cr.rectangle(x, y - 2, w, h)
+        cr.rectangle(x, y, w, h)
         cr.fill()
         
         propagate_expose(widget, event)

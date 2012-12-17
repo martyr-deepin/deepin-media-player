@@ -33,6 +33,8 @@ from play_list_control_panel import PlayListControlPanel
 import gtk
 import gobject
 
+LIST_VIEW_FONT_SIZE = 9
+
 class PlayList(gtk.VBox):
     
     def __init__(self):
@@ -46,7 +48,7 @@ class PlayList(gtk.VBox):
         self.play_list_vbox.set_size_request(self.play_list_width, -1)
         
         # Init play list view.
-        self.scrolled_window = ScrolledWindow()    
+        self.scrolled_window = ScrolledWindow(0, 0)    
         self.scrolled_window.set_policy(gtk.POLICY_NEVER, gtk.POLICY_AUTOMATIC)
         
         self.list_view = ListView(drag_icon_pixbuf=app_theme.get_pixbuf("playlist/drag_video.png"))
@@ -109,12 +111,12 @@ class MediaItem(gobject.GObject):
         # Calculate item size.
         self.title_padding_x = 10
         self.title_padding_y = 5
-        (self.title_width, self.title_height) = get_content_size(self.title, DEFAULT_FONT_SIZE) #DEFAULT_FONT_SIZE
+        (self.title_width, self.title_height) = get_content_size(self.title, LIST_VIEW_FONT_SIZE) #DEFAULT_FONT_SIZE
         self.title_width = 60
         
         self.length_padding_x = 60
         self.length_padding_y = 5
-        (self.length_width, self.length_height) = get_content_size(self.length, DEFAULT_FONT_SIZE) #DEFAULT_FONT_SIZE
+        (self.length_width, self.length_height) = get_content_size(self.length, LIST_VIEW_FONT_SIZE) #DEFAULT_FONT_SIZE
         self.length_width = 10
         
         
@@ -123,7 +125,7 @@ class MediaItem(gobject.GObject):
         rect.x += self.title_padding_x
         draw_text(cr, self.title, 
                   rect.x, rect.y, rect.width, rect.height, 
-                  DEFAULT_FONT_SIZE, "#FFFFFF", 
+                  LIST_VIEW_FONT_SIZE, "#FFFFFF", 
                   alignment=ALIGN_START)
     
     def render_length(self, cr, rect, in_selection, in_highlight):
@@ -131,7 +133,7 @@ class MediaItem(gobject.GObject):
         rect.width -= self.length_padding_x
         draw_text(cr, self.length, 
                   rect.x, rect.y, rect.width, rect.height, 
-                  DEFAULT_FONT_SIZE, "#FFFFFF", 
+                  LIST_VIEW_FONT_SIZE, "#FFFFFF", 
                   alignment=ALIGN_END)
         
     def get_column_sizes(self):
