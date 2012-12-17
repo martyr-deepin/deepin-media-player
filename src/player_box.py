@@ -978,7 +978,7 @@ class PlayerBox(object):
         
     def key_space(self):
         # print "space key..."
-        self.virtual_set_start_button_clicked()
+        self.virtual_set_start_button_clicked(pause_dvd=False)
 
     def key_return(self):
         # print "return key.."
@@ -1147,9 +1147,9 @@ class PlayerBox(object):
         self.messagebox(_("Stop"))
         self.mp.quit()
 
-    def start_button_clicked(self, widget, start_bit):
+    def start_button_clicked(self, widget, start_bit, pause_dvd=False):
         '''start or pause'''
-        if self.mp.state == STOPING_PLAY and (not self.mp.dvd_menu_bool):
+        if self.mp.state == STOPING_PLAY:
             self.mp.next() # Test pause.
             self.play_control_panel.start_button.set_start_bool(False)
             # self.play_control_panel.start_button.queue_draw()
@@ -1163,25 +1163,25 @@ class PlayerBox(object):
                 self.messagebox(_("No Media Selected"))
                 self.show_open_dialog_window(False)
         else:
-            if not self.mp.dvd_menu_bool:
+            if True:
                 if 1 == start_bit:
                     self.bottom_toolbar.play_control_panel.start_button.set_start_bool(self.play_control_panel.start_button.start_bool)
                     # self.bottom_toolbar.play_control_panel.start_button.queue_draw()
                 elif 2 == start_bit:
-                    self.play_control_panel.start_button.set_start_bool(self.bottom_toolbar.play_control_panel.start_button.start_bool)
+                    self.play_control_panel.start_button.set_start_bool(self.bottom_toolbar.play_control_panel.start_button.start_bool)     
                     # self.play_control_panel.start_button.queue_draw()
 
-                gtk.timeout_add(50, self.start_button_time_pause)
+                gtk.timeout_add(50, self.start_button_time_pause, pause_dvd)
 
-    def start_button_time_pause(self): # start_button_clicked.
+    def start_button_time_pause(self, pause_dvd): # start_button_clicked.
         if self.mp.pause_bool:
-            if (not self.mp.dvd_menu_bool):
+            if (not pause_dvd):
                 self.messagebox(_("Play"))
-            self.mp.start_play()            
+            self.mp.start_play(pause_dvd=pause_dvd)
         else:
-            if (not self.mp.dvd_menu_bool):
+            if not pause_dvd:
                 self.messagebox(_("Pause"))
-            self.mp.pause()
+            self.mp.pause(pause_dvd=pause_dvd)
         return  False
 
     def pre_button_clicked(self, widget):
@@ -1897,18 +1897,19 @@ class PlayerBox(object):
         other_key_bool = self.config.get("OtherKey", "other_key_bool")
         
         if other_key_bool == "True" and  self.pause_bool and STARTING_PLAY == self.mp.state:
-            self.pause_time_id = gtk.timeout_add(250, self.virtual_set_start_button_clicked)
+            self.pause_time_id = gtk.timeout_add(250, self.virtual_set_start_button_clicked, self.mp.dvd_menu_bool)        
             self.pause_bool = False
 
-    def virtual_set_start_button_clicked(self):
+    def virtual_set_start_button_clicked(self, pause_dvd):
         if self.mode_state_bool:
             self.bottom_toolbar.play_control_panel.start_button.set_start_bool(not self.bottom_toolbar.play_control_panel.start_button.start_bool)
             # self.bottom_toolbar.play_control_panel.start_button.queue_draw()
-            self.start_button_clicked(self.bottom_toolbar.play_control_panel.start_button, 2)
-        else:
-            self.play_control_panel.start_button.set_start_bool(not self.play_control_panel.start_button.start_bool)
+            self.start_button_clicked(self.bottom_toolbar.play_control_panel.start_button, 2, pause_dvd)
+        else:            
+            if not self.mp.dvd_menu_bool:
+                self.play_control_panel.start_button.set_start_bool(not self.play_control_panel.start_button.start_bool)
             # self.play_control_panel.start_button.queue_draw()
-            self.start_button_clicked(self.play_control_panel.start_button, 1)
+            self.start_button_clicked(self.play_control_panel.start_button, 1, pause_dvd)
 
         return False
 
@@ -2227,11 +2228,21 @@ class PlayerBox(object):
     def add_dvd_navigation_title_menu(self, mplayer):
         if mplayer.dvd_bool:
             self.dvd_navigation_title_list = get_dvd_title_info(mplayer.path)
-            self.title_index = 1
-            self.play_control_panel.start_button.set_stop_bool(True)
-        else:    
-            self.play_control_panel.start_button.set_stop_bool(False)
+            self.title_index = 1            
+            self.paly_dvd_set_start_button_icon_state()
                     
+    def paly_dvd_set_start_button_icon_state(self):        
+        self.play_control_panel.start_button.set_start_bool(False)
+        self.bottom_toolbar.play_control_panel.start_button.set_start_bool(False)
+        # self.bottom_toolbar.play_control_panel.start_button.queue_draw()
+        if STOPING_PLAY == self.mp.state: # NO player file.
+            self.play_control_panel.start_button.set_start_bool(True) # start_button modify play state.
+            # self.play_control_panel.start_button.queue_draw()
+            self.bottom_toolbar.play_control_panel.start_button.set_start_bool(True)
+            # self.bottom_toolbar.play_control_panel.start_button.queue_draw()
+            self.messagebox(_("No Media Selected"))
+            self.show_open_dialog_window(False)
+        
     def save_mplayer_pid(self, mplayer_pid):        
         self.config.set("MEDIA-PLAYER-PID", "mplayer_pid", mplayer_pid)
         self.config.save()

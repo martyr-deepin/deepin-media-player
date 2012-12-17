@@ -791,13 +791,14 @@ class  Mplayer(gobject.GObject):
             self.cmd('seek -%d\n' % (seek_num))
             self.emit("play-bseek", seek_num)
             
-    def pause(self):
-        if (self.state == STARTING_STATE) and (not self.pause_bool) and (not self.dvd_menu_bool):             
+    def pause(self, pause_dvd=False):
+        # if (self.state == STARTING_STATE) and (not self.pause_bool) and (not self.dvd_menu_bool):             
+        if (self.state == STARTING_STATE) and (not self.pause_bool) and (not pause_dvd):             
             self.pause_bool = True
             self.cmd('pause \n')
 
-    def start_play(self):        
-        if (self.state == STARTING_STATE) and (self.pause_bool):
+    def start_play(self, pause_dvd=False):        
+        if (self.state == STARTING_STATE) and (self.pause_bool) and (not pause_dvd):
             self.pause_bool = False
             self.cmd('pause \n')        
                     
