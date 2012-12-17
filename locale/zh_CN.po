@@ -640,39 +640,39 @@ msgid "Properties"
 msgstr "属性"
 
 #: ../src/player_box.py:2714
-msgid "up"
+msgid "Move Up"
 msgstr "上"
 
 #: ../src/player_box.py:2715
-msgid "down"
+msgid "Move Down"
 msgstr "下"
 
 #: ../src/player_box.py:2716
-msgid "left"
+msgid "Move Left"
 msgstr "左"
 
 #: ../src/player_box.py:2717
-msgid "right"
+msgid "Move Right"
 msgstr "右"
 
 #: ../src/player_box.py:2718
-msgid "select"
+msgid "Select"
 msgstr "选择"
 
 #: ../src/player_box.py:2719
-msgid "Lang Menu"
-msgstr "语言菜单"
+msgid "Return to Title"
+msgstr "标题菜单"
 
 #: ../src/player_box.py:2720
-msgid "Main menu"
+msgid "Return to Root"
 msgstr "主菜单"
 
 #: ../src/player_box.py:2729
-msgid "title"
+msgid "Title"
 msgstr "标题"
 
 #: ../src/player_box.py:2738
-msgid "Prev title"
+msgid "Previous Title"
 msgstr "上一标题"
 
 #: ../src/player_box.py:2739
@@ -684,7 +684,7 @@ msgid "Jump to"
 msgstr "跳至"
 
 #: ../src/player_box.py:2741
-msgid "DVD built-in menu"
+msgid "DVD Menu"
 msgstr "DVD 内置菜单"
 
 #: ../src/player_box.py:2753
@@ -692,7 +692,7 @@ msgid "Full Screen On/Off"
 msgstr "全屏/退出"
 
 #: ../src/player_box.py:2761
-msgid "DVD navigation"
+msgid "DVD Navigation"
 msgstr "DVD 导航"
 
 #: ../src/player_box.py:2842

@@ -2711,13 +2711,13 @@ class PlayerBox(object):
         
         
         dvd_built_in_menu = Menu([
-                (None, _("up"), (lambda : self.mp.dvd_up())), 
-                (None, _("down"), (lambda : self.mp.dvd_down())),
-                (None, _("left"), (lambda : self.mp.dvd_left())),
-                (None, _("right"), (lambda : self.mp.dvd_right())), 
-                (None, _("select"), (lambda : self.mp.dvd_select())),
-                (None, _("Lang Menu"), (lambda : self.mp.dvd_prev())),
-                (None, _("Main menu"), (lambda : self.mp.dvd_menu())), 
+                (None, _("Move Up"), (lambda : self.mp.dvd_up())), 
+                (None, _("Move Down"), (lambda : self.mp.dvd_down())),
+                (None, _("Move Left"), (lambda : self.mp.dvd_left())),
+                (None, _("Move Right"), (lambda : self.mp.dvd_right())), 
+                (None, _("Select"), (lambda : self.mp.dvd_select())),
+                (None, _("Return to Title"), (lambda : self.mp.dvd_prev())),
+                (None, _("Return to Root"), (lambda : self.mp.dvd_menu())), 
                 # (None, _(""), None)
                 ])
         title_list = []
@@ -2726,7 +2726,7 @@ class PlayerBox(object):
             for title in self.dvd_navigation_title_list:
                 # print 'title[2]:', title[2]
                 title_list.append(
-                    (None, str("%s %s %s" % (_("title"), title[0], title[1])), self.jump_to_title_index, title[0])
+                    (None, str("%s %s %s" % (_("Title"), title[0], title[1])), self.jump_to_title_index, title[0])
 		)
         except Exception, e:        
             print "jump_to_menu:[error]-->>", e
@@ -2735,10 +2735,10 @@ class PlayerBox(object):
             jump_to_menu = Menu(title_list)
         
         if self.mp.dvd_bool: # dvd navigation menu.
-            self.dvd_navigation_menu = Menu([(None, _("Prev title"), self.prev_title), 
+            self.dvd_navigation_menu = Menu([(None, _("Previous Title"), self.prev_title), 
                                              (None, _("Next title"), self.next_title), 
                                              (None, _("Jump to"), jump_to_menu),
-                                             (None, _("DVD built-in menu"), dvd_built_in_menu),
+                                             (None, _("DVD Menu"), dvd_built_in_menu),
                                              # (None, _("Dub"), None),
                                              # (None, _("Subitle"), None)
                                              ])        
@@ -2758,7 +2758,7 @@ class PlayerBox(object):
                 (None, _("Video"), screen_menu),
                 (menu_volume_pixbufs, _("Audio"), channel_select),
                 (menu_subtitle_pixbufs, _("Subtitles"), self.subtitles_control_menu),
-                (None, _("DVD navigation"), self.dvd_navigation_menu),
+                (None, _("DVD Navigation"), self.dvd_navigation_menu),
                 (menu_setting_pixbufs, _("Preferences"), self.config_gui),
                 self.right_key_menu_video_info
                 ], True)
