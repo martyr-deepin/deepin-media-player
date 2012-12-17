@@ -55,7 +55,7 @@ class PlayControlPanel(object):
                                    app_theme.get_pixbuf("bottom_buttons/pre_button_press.png"))        
         tooltip_text(self.pre_button, _("Previous"))
         
-        self.start_button = StartButton()
+        self.start_button = StartButton(image_y_padding=1)
         tooltip_text(self.start_button, _("Play"))
         
         self.next_button = StartButton(app_theme.get_pixbuf("bottom_buttons/next_button_normal.png"),
@@ -82,15 +82,17 @@ class PlayControlPanel(object):
             
         
 class StartButton(gtk.Button):
-    def __init__(self,
+    def __init__(self,                 
                  start_button_normal=app_theme.get_pixbuf("bottom_buttons/play_button_normal.png"),
                  start_button_hover=app_theme.get_pixbuf("bottom_buttons/play_button_hover.png"),
                  start_button_press=app_theme.get_pixbuf("bottom_buttons/play_button_press.png"),
                  pause_button_normal=app_theme.get_pixbuf("bottom_buttons/pause_button_normal.png"),
                  pause_button_hover=app_theme.get_pixbuf("bottom_buttons/pause_button_hover.png"),
-                 pause_button_press=app_theme.get_pixbuf("bottom_buttons/pause_button_press.png")):
+                 pause_button_press=app_theme.get_pixbuf("bottom_buttons/pause_button_press.png"),
+                 image_y_padding=-2):
         
         gtk.Button.__init__(self)
+        self.image_y_padding = image_y_padding
         self.start_bool = True
         self.stop_bool = False
         self.start_button_normal = start_button_normal
@@ -140,7 +142,7 @@ class StartButton(gtk.Button):
 
         widget.set_size_request(image.get_width(), image.get_height())
         self.cache_pixbuf.scale(image, image.get_width(), image.get_height())        
-        draw_pixbuf(cr, self.cache_pixbuf.get_cache(), widget.allocation.x, widget.allocation.y)
+        draw_pixbuf(cr, self.cache_pixbuf.get_cache(), widget.allocation.x, widget.allocation.y - self.image_y_padding)
         
         # Set widget size.
         propagate_expose(widget, event)
