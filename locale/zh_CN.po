@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-12 16:40+0800\n"
+"POT-Creation-Date: 2012-12-17 10:19+0800\n"
 "PO-Revision-Date: 2012-07-12 15:53+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -17,19 +17,19 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/togglehoverbutton.py:126 ../src/ini_gui.py:318 ../src/ini_gui.py:643
-#: ../src/ini_gui.py:995 ../src/ini_gui.py:1060 ../src/player_box.py:1723
-#: ../src/player_box.py:2456 ../src/mplayer.py:229
+#: ../src/togglehoverbutton.py:126 ../src/ini_gui.py:643 ../src/ini_gui.py:995
+#: ../src/ini_gui.py:1060 ../src/player_box.py:1739 ../src/player_box.py:2472
+#: ../src/mplayer.py:229
 msgid "Full Screen"
 msgstr "全屏"
 
-#: ../src/togglehoverbutton.py:135 ../src/player_box.py:2457
-#: ../src/player_box.py:2738
+#: ../src/togglehoverbutton.py:135 ../src/player_box.py:2473
+#: ../src/player_box.py:2754
 msgid "Normal Mode"
 msgstr "普通模式"
 
-#: ../src/togglehoverbutton.py:144 ../src/player_box.py:2458
-#: ../src/player_box.py:2739
+#: ../src/togglehoverbutton.py:144 ../src/player_box.py:2474
+#: ../src/player_box.py:2755
 msgid "Compact Mode"
 msgstr "简洁模式"
 
@@ -88,7 +88,7 @@ msgstr "文件夹"
 msgid "Failed to download the subtitle!"
 msgstr "字幕下载失败!"
 
-#: ../src/ini_gui.py:104 ../src/player_box.py:2510 ../src/player_box.py:2746
+#: ../src/ini_gui.py:104 ../src/player_box.py:2526 ../src/player_box.py:2762
 msgid "Preferences"
 msgstr "选项"
 
@@ -122,55 +122,55 @@ msgid "Other"
 msgstr "其它快捷键"
 
 #: ../src/ini_gui.py:139 ../src/ini_gui.py:265 ../src/ini_gui.py:276
-#: ../src/ini_gui.py:1133 ../src/player_box.py:2744
+#: ../src/ini_gui.py:1133 ../src/player_box.py:2760
 msgid "Subtitles"
 msgstr "字幕"
 
 #: ../src/ini_gui.py:140 ../src/ini_gui.py:170 ../src/ini_gui.py:266
-#: ../src/ini_gui.py:277 ../src/ini_gui.py:1210 ../src/player_box.py:3029
+#: ../src/ini_gui.py:277 ../src/ini_gui.py:1210 ../src/player_box.py:3045
 msgid "Screenshot"
 msgstr "截图设置"
 
 #: ../src/ini_gui.py:141 ../src/ini_gui.py:267 ../src/ini_gui.py:278
-#: ../src/player_box.py:2492
+#: ../src/player_box.py:2508
 msgid "About us"
 msgstr "关于我们"
 
 #: ../src/ini_gui.py:310
-msgid "On Opening:"
+msgid "On opening video:"
 msgstr "视频文件打开时: "
 
-#: ../src/ini_gui.py:312
-msgid "Fit to Window Size"
+#: ../src/ini_gui.py:312 ../src/ini_gui.py:314
+msgid "Fit video to player"
 msgstr "视频适应窗口"
 
-#: ../src/ini_gui.py:314
-msgid "Resize Window"
-msgstr "窗口适应视频"
-
 #: ../src/ini_gui.py:316
-msgid "Last Closed Size"
+msgid "Resize interface to last closed size"
 msgstr "上次关闭尺寸"
 
+#: ../src/ini_gui.py:318
+msgid "Enter full screen mode"
+msgstr "全屏"
+
 #: ../src/ini_gui.py:334
-msgid "Clear Playlist On Opening New Media"
+msgid "Clear playlist when opening new file"
 msgstr "打开新文件时清空播放列表"
 
 #: ../src/ini_gui.py:342
-msgid "Resume Playing"
+msgid "Resume playback after restarting player"
 msgstr "自动从上次停止位置播放"
 
 #: ../src/ini_gui.py:350
-msgid "Search for Similar Media and Continue Playing"
+msgid "Continue to next video automatically"
 msgstr "自动查找相似文件连续播放"
 
 #: ../src/ini_gui.py:357
-msgid "Show Preview on Placing Cursor on Progress Bar"
+msgid "Show thumbnail when hovering over progress bar"
 msgstr "鼠标悬停进度条时显示预览图"
 
 #: ../src/ini_gui.py:364
 msgid "allow multiple instance deepin media player"
-msgstr ""
+msgstr "允许同时运行多个深度影音"
 
 #: ../src/ini_gui.py:433
 msgid "Pause When Minimized"
@@ -188,8 +188,8 @@ msgstr "字体"
 msgid "Size"
 msgstr "字号"
 
-#: ../src/ini_gui.py:540 ../src/ini_gui.py:969
-msgid " Enabled hotkeys"
+#: ../src/ini_gui.py:540
+msgid "Enable hotkeys"
 msgstr "开启热键"
 
 #: ../src/ini_gui.py:543
@@ -197,8 +197,8 @@ msgid "Open file"
 msgstr "打开文件"
 
 #: ../src/ini_gui.py:553 ../src/play_control_panel.py:56
-#: ../src/player_box.py:1175 ../src/player_box.py:2459
-#: ../src/player_box.py:2575
+#: ../src/player_box.py:1191 ../src/player_box.py:2475
+#: ../src/player_box.py:2591
 msgid "Previous"
 msgstr "上一首"
 
@@ -207,8 +207,8 @@ msgid "Open directory"
 msgstr "打开目录"
 
 #: ../src/ini_gui.py:573 ../src/play_control_panel.py:67
-#: ../src/player_box.py:1181 ../src/player_box.py:2460
-#: ../src/player_box.py:2576
+#: ../src/player_box.py:1197 ../src/player_box.py:2476
+#: ../src/player_box.py:2592
 msgid "Next"
 msgstr "下一首"
 
@@ -217,19 +217,19 @@ msgstr "下一首"
 msgid "Pause/Play"
 msgstr "暂停/播放"
 
-#: ../src/ini_gui.py:593 ../src/player_box.py:2370
+#: ../src/ini_gui.py:593 ../src/player_box.py:2386
 msgid "Increase Volume"
 msgstr "增大音量"
 
-#: ../src/ini_gui.py:603 ../src/player_box.py:2281
+#: ../src/ini_gui.py:603 ../src/player_box.py:2297
 msgid "Forward"
 msgstr "快进"
 
-#: ../src/ini_gui.py:613 ../src/player_box.py:2371
+#: ../src/ini_gui.py:613 ../src/player_box.py:2387
 msgid "Decrease Volume"
 msgstr "减小音量"
 
-#: ../src/ini_gui.py:623 ../src/player_box.py:2295
+#: ../src/ini_gui.py:623 ../src/player_box.py:2311
 msgid "Rewind"
 msgstr "快退"
 
@@ -243,13 +243,13 @@ msgstr "简洁模式"
 
 #: ../src/ini_gui.py:825
 msgid "Enable Keyboard Shortcuts"
-msgstr "启用热键"
+msgstr "开启热键"
 
-#: ../src/ini_gui.py:831 ../src/player_box.py:3184
+#: ../src/ini_gui.py:831 ../src/player_box.py:3200
 msgid "Delay-0.5s"
 msgstr "字幕提前0.5秒"
 
-#: ../src/ini_gui.py:832 ../src/player_box.py:3187
+#: ../src/ini_gui.py:832 ../src/player_box.py:3203
 msgid "Delay+0.5s"
 msgstr "字幕延时0.5秒"
 
@@ -257,13 +257,17 @@ msgstr "字幕延时0.5秒"
 msgid "Loading subtiles"
 msgstr "自动载入字幕"
 
-#: ../src/ini_gui.py:836 ../src/player_box.py:3192
+#: ../src/ini_gui.py:836 ../src/player_box.py:3208
 msgid "Increase subtitle scale"
 msgstr "增大字幕尺寸"
 
-#: ../src/ini_gui.py:837 ../src/player_box.py:3196
+#: ../src/ini_gui.py:837 ../src/player_box.py:3212
 msgid "Decrease subtitle scale"
 msgstr "减小字幕尺寸"
+
+#: ../src/ini_gui.py:969
+msgid " Enabled hotkeys"
+msgstr "开启热键"
 
 #: ../src/ini_gui.py:975
 msgid "Increse brightness"
@@ -302,14 +306,14 @@ msgid "Scroll"
 msgstr "鼠标滚轮"
 
 #: ../src/ini_gui.py:994 ../src/ini_gui.py:995 ../src/ini_gui.py:996
-#: ../src/ini_gui.py:1049 ../src/player_box.py:703 ../src/player_box.py:1816
-#: ../src/player_box.py:1824 ../src/mplayer.py:224
+#: ../src/ini_gui.py:1049 ../src/player_box.py:719 ../src/player_box.py:1832
+#: ../src/player_box.py:1840 ../src/mplayer.py:224
 msgid "Disabled"
 msgstr "禁用"
 
-#: ../src/ini_gui.py:996 ../src/ini_gui.py:1060 ../src/player_box.py:723
-#: ../src/player_box.py:738 ../src/player_box.py:741 ../src/player_box.py:927
-#: ../src/player_box.py:937 ../src/player_box.py:3149 ../src/mplayer.py:230
+#: ../src/ini_gui.py:996 ../src/ini_gui.py:1060 ../src/player_box.py:739
+#: ../src/player_box.py:754 ../src/player_box.py:757 ../src/player_box.py:943
+#: ../src/player_box.py:953 ../src/player_box.py:3165 ../src/mplayer.py:230
 msgid "Volume"
 msgstr "音量"
 
@@ -326,7 +330,7 @@ msgid "Browse"
 msgstr "浏览"
 
 #: ../src/ini_gui.py:1183 ../src/ini_gui.py:1306 ../src/player_box.py:440
-#: ../src/player_box.py:2483 ../src/player_box.py:2734
+#: ../src/player_box.py:2499 ../src/player_box.py:2750
 msgid "Open Directory"
 msgstr "打开文件夹"
 
@@ -372,370 +376,369 @@ msgstr ""
 "支持多种视频格式，支持多模式切换，具有播放预览、在线字幕、视频截图、视频格式"
 "转化、光盘播放、自定义换肤等几大特点。\n"
 "\n"
-"深度音乐播放器是自由软件，遵循自由软件基金会发布的GNU通用公共许可证第三版。"
+"深度影音播放器是自由软件，遵循自由软件基金会发布的GNU通用公共许可证第三版。"
 
-#: ../src/play_control_panel.py:48 ../src/player_box.py:1131
+#: ../src/play_control_panel.py:48 ../src/player_box.py:1147
 msgid "Stop"
 msgstr "停止"
 
-#: ../src/play_control_panel.py:59 ../src/player_box.py:1163
-#: ../src/player_box.py:2503 ../src/player_box.py:2741
+#: ../src/play_control_panel.py:59 ../src/player_box.py:1179
+#: ../src/player_box.py:2519 ../src/player_box.py:2757
 msgid "Play"
 msgstr "播放"
 
 #: ../src/play_control_panel.py:75 ../src/player_box.py:425
-#: ../src/player_box.py:2482 ../src/player_box.py:2733
+#: ../src/player_box.py:2498 ../src/player_box.py:2749
 msgid "Open File"
 msgstr "打开文件"
 
-#: ../src/player_box.py:442 ../src/player_box.py:2735
+#: ../src/player_box.py:442 ../src/player_box.py:2751
 msgid "Open URL"
 msgstr "打开网址"
 
-#: ../src/player_box.py:732 ../src/player_box.py:945
+#: ../src/player_box.py:748 ../src/player_box.py:961
 msgid "Mute: enabled"
 msgstr "开启静音"
 
-#: ../src/player_box.py:848 ../src/player_box.py:853
+#: ../src/player_box.py:864 ../src/player_box.py:869
 msgid "Screenshot Saved"
 msgstr "截图已保存"
 
-#: ../src/player_box.py:867
+#: ../src/player_box.py:883
 msgid "Screenshot Copied to Clipboard"
 msgstr "截图已保存到剪贴板"
 
-#: ../src/player_box.py:1036
+#: ../src/player_box.py:1052
 msgid "Select a file"
 msgstr "深度影音打开文件对话框"
 
-#: ../src/player_box.py:1147
+#: ../src/player_box.py:1163
 msgid "No Media Selected"
 msgstr "没有可播放文件"
 
-#: ../src/player_box.py:1167 ../src/video_format_conv/conv_task_gui.py:81
+#: ../src/player_box.py:1183 ../src/video_format_conv/conv_task_gui.py:81
 #: ../src/video_format_conv/transmageddon.py:584
 #: ../src/video_format_conv/transmageddon.py:889
 #: ../src/video_format_conv/transmageddon.py:893
 msgid "Pause"
 msgstr "暂停"
 
-#: ../src/player_box.py:1187
+#: ../src/player_box.py:1203
 msgid "Select Directory"
 msgstr "深度影音打开文件夹对话框"
 
-#: ../src/player_box.py:1205 ../src/player_box.py:3245
+#: ../src/player_box.py:1221 ../src/player_box.py:3261
 msgid "Select Files"
 msgstr "深度影音打开文件对话框"
 
-#: ../src/player_box.py:1240
+#: ../src/player_box.py:1256
 msgid "Failed to Open Selected File"
 msgstr "无效的文件"
 
-#: ../src/player_box.py:1719
+#: ../src/player_box.py:1735
 msgid "Quit Full Screen"
 msgstr "退出全屏"
 
-#: ../src/player_box.py:2283 ../src/player_box.py:2297
+#: ../src/player_box.py:2299 ../src/player_box.py:2313
 msgid "s"
 msgstr "秒"
 
-#: ../src/player_box.py:2334
+#: ../src/player_box.py:2350
 msgid "Take Screenshot"
 msgstr "截图"
 
-#: ../src/player_box.py:2335
+#: ../src/player_box.py:2351
 msgid "Open Screenshot Directory"
 msgstr "打开截图目录"
 
-#: ../src/player_box.py:2336
+#: ../src/player_box.py:2352
 msgid "Set Screenshot Directory"
 msgstr "设置截图保存目录"
 
-#: ../src/player_box.py:2339
+#: ../src/player_box.py:2355
 msgid "Import Subtitles"
 msgstr "载入字幕"
 
-#: ../src/player_box.py:2340 ../src/player_box.py:2674
+#: ../src/player_box.py:2356 ../src/player_box.py:2690
 msgid "Select Subtitles"
 msgstr "字幕选择"
 
-#: ../src/player_box.py:2341
+#: ../src/player_box.py:2357
 msgid "Remove Subtitles"
 msgstr "移除字幕"
 
-#: ../src/player_box.py:2361 ../src/player_box.py:2638
+#: ../src/player_box.py:2377 ../src/player_box.py:2654
 msgid "Stereo"
 msgstr "立体声道"
 
-#: ../src/player_box.py:2362 ../src/player_box.py:2639
+#: ../src/player_box.py:2378 ../src/player_box.py:2655
 msgid "Left"
 msgstr "左声道"
 
-#: ../src/player_box.py:2363 ../src/player_box.py:2640
+#: ../src/player_box.py:2379 ../src/player_box.py:2656
 msgid "Right"
 msgstr "右声道"
 
-#: ../src/player_box.py:2367
+#: ../src/player_box.py:2383
 msgid "Channels"
 msgstr "声道选择"
 
-#: ../src/player_box.py:2372
+#: ../src/player_box.py:2388
 msgid "Mute/Unmute"
 msgstr "静音/还原"
 
-#: ../src/player_box.py:2395 ../src/player_box.py:2603
+#: ../src/player_box.py:2411 ../src/player_box.py:2619
 msgid "Original"
 msgstr "默认值"
 
-#: ../src/player_box.py:2402 ../src/player_box.py:2610
+#: ../src/player_box.py:2418 ../src/player_box.py:2626
 msgid "50%"
 msgstr "0.5倍尺寸"
 
-#: ../src/player_box.py:2403 ../src/player_box.py:2611 ../src/toolbar.py:74
+#: ../src/player_box.py:2419 ../src/player_box.py:2627 ../src/toolbar.py:74
 msgid "100%"
 msgstr "1倍尺寸"
 
-#: ../src/player_box.py:2404 ../src/player_box.py:2612
+#: ../src/player_box.py:2420 ../src/player_box.py:2628
 msgid "150%"
 msgstr "1.5倍尺寸"
 
-#: ../src/player_box.py:2405 ../src/player_box.py:2613 ../src/toolbar.py:84
+#: ../src/player_box.py:2421 ../src/player_box.py:2629 ../src/toolbar.py:84
 msgid "200%"
 msgstr "2倍尺寸"
 
-#: ../src/player_box.py:2440 ../src/player_box.py:2563
-#: ../src/player_box.py:2819
+#: ../src/player_box.py:2456 ../src/player_box.py:2579
+#: ../src/player_box.py:2835
 msgid "Play (track)"
 msgstr "单个播放"
 
-#: ../src/player_box.py:2441 ../src/player_box.py:2564
-#: ../src/player_box.py:2820
+#: ../src/player_box.py:2457 ../src/player_box.py:2580
+#: ../src/player_box.py:2836
 msgid "Default"
 msgstr "顺序播放"
 
-#: ../src/player_box.py:2442 ../src/player_box.py:2565
-#: ../src/player_box.py:2821
+#: ../src/player_box.py:2458 ../src/player_box.py:2581
+#: ../src/player_box.py:2837
 msgid "Random"
 msgstr "随机播放"
 
-#: ../src/player_box.py:2443 ../src/player_box.py:2566
-#: ../src/player_box.py:2822
+#: ../src/player_box.py:2459 ../src/player_box.py:2582
+#: ../src/player_box.py:2838
 msgid "Repeat (track)"
 msgstr "单个循环"
 
-#: ../src/player_box.py:2444 ../src/player_box.py:2567
-#: ../src/player_box.py:2823
+#: ../src/player_box.py:2460 ../src/player_box.py:2583
+#: ../src/player_box.py:2839
 msgid "Repeat (playlist)"
 msgstr "列表循环"
 
-#: ../src/player_box.py:2462 ../src/player_box.py:2578
+#: ../src/player_box.py:2478 ../src/player_box.py:2594
 msgid "Jump Forward"
 msgstr "快进5秒"
 
-#: ../src/player_box.py:2463 ../src/player_box.py:2579
+#: ../src/player_box.py:2479 ../src/player_box.py:2595
 msgid "Jump Backward"
 msgstr "快退5秒"
 
-#: ../src/player_box.py:2464 ../src/player_box.py:2740
-#: ../src/player_box.py:2850
+#: ../src/player_box.py:2480 ../src/player_box.py:2756
+#: ../src/player_box.py:2866
 msgid "Order"
 msgstr "播放顺序"
 
-#: ../src/player_box.py:2484
-#, fuzzy
-msgid "Play DISC"
-msgstr "播放"
+#: ../src/player_box.py:2500
+msgid "Play Disc"
+msgstr "播放光盘"
 
-#: ../src/player_box.py:2490
+#: ../src/player_box.py:2506
 msgid "Help"
 msgstr "帮助信息"
 
-#: ../src/player_box.py:2491
+#: ../src/player_box.py:2507
 msgid "Issues"
 msgstr "问题反馈"
 
-#: ../src/player_box.py:2499 ../src/player_box.py:2508
-#: ../src/player_box.py:2854
+#: ../src/player_box.py:2515 ../src/player_box.py:2524
+#: ../src/player_box.py:2870
 msgid "Format conversion"
 msgstr "格式转换"
 
-#: ../src/player_box.py:2500 ../src/video_format_conv/gui.py:129
+#: ../src/player_box.py:2516 ../src/video_format_conv/gui.py:129
 msgid "Task Manager"
 msgstr "任务管理器"
 
-#: ../src/player_box.py:2502
+#: ../src/player_box.py:2518
 msgid "File"
 msgstr "文件"
 
-#: ../src/player_box.py:2504 ../src/player_box.py:2742
+#: ../src/player_box.py:2520 ../src/player_box.py:2758
 msgid "Video"
 msgstr "画面"
 
-#: ../src/player_box.py:2505 ../src/player_box.py:2743
+#: ../src/player_box.py:2521 ../src/player_box.py:2759
 msgid "Audio"
 msgstr "声音"
 
-#: ../src/player_box.py:2507
+#: ../src/player_box.py:2523
 msgid "Take Screenshots"
 msgstr "截图"
 
-#: ../src/player_box.py:2509
+#: ../src/player_box.py:2525
 msgid "View New Features"
 msgstr "查看新特性"
 
-#: ../src/player_box.py:2515
+#: ../src/player_box.py:2531
 msgid "Quit"
 msgstr "退出"
 
-#: ../src/player_box.py:2637
+#: ../src/player_box.py:2653
 msgid "Dubbing selection"
 msgstr "音轨选择"
 
-#: ../src/player_box.py:2643
+#: ../src/player_box.py:2659
 msgid "Audio channels"
 msgstr "声道选择"
 
-#: ../src/player_box.py:2659
+#: ../src/player_box.py:2675
 msgid "Enlarge"
 msgstr "增大尺寸"
 
-#: ../src/player_box.py:2660
+#: ../src/player_box.py:2676
 msgid "Decrease"
 msgstr "减小尺寸"
 
-#: ../src/player_box.py:2664
+#: ../src/player_box.py:2680
 msgid "0.5 seconds forword"
 msgstr "提前0.5秒"
 
-#: ../src/player_box.py:2665
+#: ../src/player_box.py:2681
 msgid "0.5 sceconds delay"
 msgstr "延时0.5秒"
 
-#: ../src/player_box.py:2670
+#: ../src/player_box.py:2686
 msgid "Search subtitles"
 msgstr "手动搜索字幕"
 
-#: ../src/player_box.py:2671
+#: ../src/player_box.py:2687
 msgid "Load a subtitle"
 msgstr "手动载入字幕"
 
-#: ../src/player_box.py:2672 ../src/player_box.py:3180
+#: ../src/player_box.py:2688 ../src/player_box.py:3196
 msgid "Disable Subtitles"
 msgstr "字幕停止"
 
-#: ../src/player_box.py:2675
+#: ../src/player_box.py:2691
 msgid "Size of Subtitles"
 msgstr "字幕尺寸"
 
-#: ../src/player_box.py:2676
+#: ../src/player_box.py:2692
 msgid "Subtitle Synchronization"
 msgstr "字幕同步"
 
-#: ../src/player_box.py:2685 ../src/player_box.py:2839
+#: ../src/player_box.py:2701 ../src/player_box.py:2855
 #: ../src/video_information/gui.py:176
 msgid "Properties"
 msgstr "属性"
 
-#: ../src/player_box.py:2698
+#: ../src/player_box.py:2714
 msgid "up"
 msgstr ""
 
-#: ../src/player_box.py:2699
+#: ../src/player_box.py:2715
 msgid "down"
 msgstr ""
 
-#: ../src/player_box.py:2700
+#: ../src/player_box.py:2716
 msgid "left"
 msgstr ""
 
-#: ../src/player_box.py:2701
+#: ../src/player_box.py:2717
 #, fuzzy
 msgid "right"
 msgstr "右声道"
 
-#: ../src/player_box.py:2702
+#: ../src/player_box.py:2718
 msgid "select"
 msgstr ""
 
-#: ../src/player_box.py:2703
+#: ../src/player_box.py:2719
 msgid "prev"
 msgstr ""
 
-#: ../src/player_box.py:2704
+#: ../src/player_box.py:2720
 msgid "menu"
 msgstr ""
 
-#: ../src/player_box.py:2722
+#: ../src/player_box.py:2738
 #, fuzzy
 msgid "Prev title"
 msgstr "移除字幕"
 
-#: ../src/player_box.py:2723
+#: ../src/player_box.py:2739
 #, fuzzy
 msgid "Next title"
 msgstr "字幕选择"
 
-#: ../src/player_box.py:2724
+#: ../src/player_box.py:2740
 msgid "Jump to"
 msgstr ""
 
-#: ../src/player_box.py:2725
+#: ../src/player_box.py:2741
 msgid "DVD built-in menu"
 msgstr ""
 
-#: ../src/player_box.py:2737
+#: ../src/player_box.py:2753
 msgid "Full Screen On/Off"
 msgstr "全屏/退出"
 
-#: ../src/player_box.py:2745
+#: ../src/player_box.py:2761
 msgid "DVD navigation"
 msgstr ""
 
-#: ../src/player_box.py:2826
+#: ../src/player_box.py:2842
 msgid "By Name"
 msgstr "按名称"
 
-#: ../src/player_box.py:2827
+#: ../src/player_box.py:2843
 msgid "By Type"
 msgstr "按类型"
 
-#: ../src/player_box.py:2841 ../src/play_list_control_panel.py:67
+#: ../src/player_box.py:2857 ../src/play_list_control_panel.py:67
 msgid "Add File"
 msgstr "添加文件"
 
-#: ../src/player_box.py:2842
+#: ../src/player_box.py:2858
 msgid "Add Directory"
 msgstr "添加文件夹"
 
-#: ../src/player_box.py:2843
+#: ../src/player_box.py:2859
 msgid "Add URL"
 msgstr "添加URL"
 
-#: ../src/player_box.py:2845 ../src/play_list_control_panel.py:68
+#: ../src/player_box.py:2861 ../src/play_list_control_panel.py:68
 msgid "Remove Selected"
 msgstr "删除选中项"
 
-#: ../src/player_box.py:2846
+#: ../src/player_box.py:2862
 msgid "Clear Playlist"
 msgstr "清空播放列表"
 
-#: ../src/player_box.py:2847
+#: ../src/player_box.py:2863
 msgid "Remove Unavailable Files"
 msgstr "删除无效文件"
 
-#: ../src/player_box.py:2849
+#: ../src/player_box.py:2865
 msgid "Recent Played"
 msgstr "最近播放文件"
 
-#: ../src/player_box.py:2851
+#: ../src/player_box.py:2867
 msgid "Sort"
 msgstr "排序"
 
-#: ../src/player_box.py:2855
+#: ../src/player_box.py:2871
 msgid "Open Containing Directory"
 msgstr "打开所在文件夹"
 
-#: ../src/player_box.py:3173 ../src/player_box.py:3226
+#: ../src/player_box.py:3189 ../src/player_box.py:3242
 msgid "Subtitle loaded"
 msgstr "已载入字幕"
 
@@ -1220,6 +1223,9 @@ msgstr ". 采 样 数  :"
 #: ../src/video_information/gui.py:317
 msgid "Copy info"
 msgstr "复制信息"
+
+#~ msgid "Fit player to video"
+#~ msgstr "窗口适应视频"
 
 #, fuzzy
 #~ msgid "Enabled hotkeys"
