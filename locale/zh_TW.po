@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-17 10:19+0800\n"
+"POT-Creation-Date: 2012-12-17 10:47+0800\n"
 "PO-Revision-Date: 2012-07-12 15:53+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -641,50 +641,51 @@ msgstr "屬性"
 
 #: ../src/player_box.py:2714
 msgid "up"
-msgstr ""
+msgstr "上"
 
 #: ../src/player_box.py:2715
 msgid "down"
-msgstr ""
+msgstr "下"
 
 #: ../src/player_box.py:2716
 msgid "left"
-msgstr ""
+msgstr "左"
 
 #: ../src/player_box.py:2717
-#, fuzzy
 msgid "right"
-msgstr "右聲道"
+msgstr "右"
 
 #: ../src/player_box.py:2718
 msgid "select"
-msgstr ""
+msgstr "選擇"
 
 #: ../src/player_box.py:2719
-msgid "prev"
-msgstr ""
+msgid "Lang Menu"
+msgstr "語言菜單"
 
 #: ../src/player_box.py:2720
-msgid "menu"
-msgstr ""
+msgid "Main menu"
+msgstr "主菜單"
+
+#: ../src/player_box.py:2729
+msgid "title"
+msgstr "標題"
 
 #: ../src/player_box.py:2738
-#, fuzzy
 msgid "Prev title"
-msgstr "移除字幕"
+msgstr "上一標題"
 
 #: ../src/player_box.py:2739
-#, fuzzy
 msgid "Next title"
-msgstr "字幕選擇"
+msgstr "下一標題"
 
 #: ../src/player_box.py:2740
 msgid "Jump to"
-msgstr ""
+msgstr "跳至"
 
 #: ../src/player_box.py:2741
 msgid "DVD built-in menu"
-msgstr ""
+msgstr "DVD 內置菜單"
 
 #: ../src/player_box.py:2753
 msgid "Full Screen On/Off"
@@ -692,7 +693,7 @@ msgstr "全屏/退出"
 
 #: ../src/player_box.py:2761
 msgid "DVD navigation"
-msgstr ""
+msgstr "DVD 導航"
 
 #: ../src/player_box.py:2842
 msgid "By Name"

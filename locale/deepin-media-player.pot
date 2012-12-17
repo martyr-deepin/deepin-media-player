@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-17 10:41+0800\n"
+"POT-Creation-Date: 2012-12-17 10:58+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -654,11 +654,15 @@ msgid "select"
 msgstr ""
 
 #: ../src/player_box.py:2719
-msgid "prev"
+msgid "Lang Menu"
 msgstr ""
 
 #: ../src/player_box.py:2720
-msgid "menu"
+msgid "Main menu"
+msgstr ""
+
+#: ../src/player_box.py:2729
+msgid "title"
 msgstr ""
 
 #: ../src/player_box.py:2738

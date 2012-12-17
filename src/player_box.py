@@ -2716,8 +2716,8 @@ class PlayerBox(object):
                 (None, _("left"), (lambda : self.mp.dvd_left())),
                 (None, _("right"), (lambda : self.mp.dvd_right())), 
                 (None, _("select"), (lambda : self.mp.dvd_select())),
-                (None, _("prev"), (lambda : self.mp.dvd_prev())),
-                (None, _("menu"), (lambda : self.mp.dvd_menu())), 
+                (None, _("Lang Menu"), (lambda : self.mp.dvd_prev())),
+                (None, _("Main menu"), (lambda : self.mp.dvd_menu())), 
                 # (None, _(""), None)
                 ])
         title_list = []
@@ -2726,7 +2726,7 @@ class PlayerBox(object):
             for title in self.dvd_navigation_title_list:
                 # print 'title[2]:', title[2]
                 title_list.append(
-                    (None, str("title %s %s" % (title[0], title[1])), self.jump_to_title_index, title[0])
+                    (None, str("%s %s %s" % (_("title"), title[0], title[1])), self.jump_to_title_index, title[0])
 		)
         except Exception, e:        
             print "jump_to_menu:[error]-->>", e
@@ -2736,7 +2736,7 @@ class PlayerBox(object):
         
         if self.mp.dvd_bool: # dvd navigation menu.
             self.dvd_navigation_menu = Menu([(None, _("Prev title"), self.prev_title), 
-                                             (None, _("Next title"), self.next_title),
+                                             (None, _("Next title"), self.next_title), 
                                              (None, _("Jump to"), jump_to_menu),
                                              (None, _("DVD built-in menu"), dvd_built_in_menu),
                                              # (None, _("Dub"), None),
