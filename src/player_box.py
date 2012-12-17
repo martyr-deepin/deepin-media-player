@@ -2497,7 +2497,7 @@ class PlayerBox(object):
         # In title root menu.
         self.file_menu = Menu([(None, _("Open File"), self.add_file_clear),
                                (None, _("Open Directory"), self.add_file_dir_clear),
-                               (None, _("Play DISC"), cdrom_menu)
+                               (None, _("Play Disc"), cdrom_menu)
                                ])
         if cdrom_menu_list == []:
             self.file_menu.set_menu_item_sensitive_by_index(2, False)

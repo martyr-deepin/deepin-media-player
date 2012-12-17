@@ -307,15 +307,15 @@ class FilePlay(gtk.VBox):
         self.label.set_size_request(label_width, label_height)
         
         # Video file open.
-        self.video_file_open_label = Label(_("On Opening:"))
+        self.video_file_open_label = Label(_("On opening video:"))
         
-        self.adapt_video_button = RadioButton(_("Fit to Window Size"))
+        self.adapt_video_button = RadioButton(_("Fit video to player"))
 
-        self.ai_set_radio_button = RadioButton(_("Resize Window"))
+        self.ai_set_radio_button = RadioButton(_("Fit video to player"))
         
-        self.close_position_radio_button = RadioButton(_("Last Closed Size"))
+        self.close_position_radio_button = RadioButton(_("Resize interface to last closed size"))
 
-        self.full_window_radio_button = RadioButton(_("Full Screen"))    
+        self.full_window_radio_button = RadioButton(_("Enter full screen mode"))    
         
         set_num = self.ini.get("FilePlay", "video_file_open")
         
@@ -331,7 +331,7 @@ class FilePlay(gtk.VBox):
             self.ai_set_radio_button.set_active(True) # 窗口适应视频.
         ################################################################
         # open new file clear play list.
-        self.clear_play_list_button = CheckButton(_("Clear Playlist On Opening New Media"))        
+        self.clear_play_list_button = CheckButton(_("Clear playlist when opening new file"))        
         ini_bool = self.ini.get("FilePlay", "open_new_file_clear_play_list")
 
         self.clear_play_list_button.set_active(False)
@@ -339,7 +339,7 @@ class FilePlay(gtk.VBox):
             self.clear_play_list_button.set_active(True)
                         
         # memory up close media player -> file play postion.
-        self.file_play_postion_button = CheckButton(_("Resume Playing"))
+        self.file_play_postion_button = CheckButton(_("Resume playback after restarting player"))
         ini_bool = self.ini.get("FilePlay", "memory_up_close_player_file_postion")
         self.file_play_postion_button.set_active(False)
         if ini_bool and "true" == ini_bool.lower():
@@ -347,14 +347,14 @@ class FilePlay(gtk.VBox):
                     
         
         # play media when find file play in dir.
-        self.find_file_play_button = CheckButton(_("Search for Similar Media and Continue Playing")) 
+        self.find_file_play_button = CheckButton(_("Continue to next video automatically")) 
         ini_bool = self.ini.get("FilePlay", "find_play_file_relation_file")
         self.find_file_play_button.set_active(False)
         if ini_bool and "true" == ini_bool.lower():
             self.find_file_play_button.set_active(True)
                 
         # mouse progressbar show preview window.
-        self.show_preview_window_button = CheckButton(_("Show Preview on Placing Cursor on Progress Bar"))
+        self.show_preview_window_button = CheckButton(_("Show thumbnail when hovering over progress bar"))
         ini_bool = self.ini.get("FilePlay", "mouse_progressbar_show_preview")
         self.show_preview_window_button.set_active(False)
         if ini_bool and "true" == ini_bool.lower():
@@ -537,7 +537,7 @@ class PlayControl(gtk.VBox):
         entry_width = 150
         entry_height = 24
         # set PlayControl bool.
-        self.play_control_bool_checkbtn = CheckButton(_(" Enabled hotkeys"))
+        self.play_control_bool_checkbtn = CheckButton(_("Enable hotkeys"))
         self.play_control_bool_checkbtn.connect("button-press-event", self.set_play_control_all_sensitive)                
         # open file key.
         self.open_file_entry_label = Label(_("Open file"))
