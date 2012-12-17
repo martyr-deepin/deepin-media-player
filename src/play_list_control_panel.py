@@ -20,6 +20,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from dtk.ui.utils import color_hex_to_cairo
 from dtk.ui.utils import propagate_expose
 from dtk.ui.button import ImageButton
 from skin import app_theme
@@ -70,7 +71,7 @@ class PlayListControlPanel(gtk.Alignment):
     def draw_background(self, widget, event):
         cr = widget.window.cairo_create()
         x, y , w, h = widget.allocation
-        cr.set_source_rgba(0, 0, 0, 0.5)
+        cr.set_source_rgb(*color_hex_to_cairo("#1b1b1b"))
         cr.rectangle(x, y, w, h)
         cr.fill()
         
