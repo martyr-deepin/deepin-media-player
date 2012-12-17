@@ -112,9 +112,9 @@ class MediaItem(gobject.GObject):
         self.title_padding_x = 10
         self.title_padding_y = 5
         (self.title_width, self.title_height) = get_content_size(self.title, LIST_VIEW_FONT_SIZE) #DEFAULT_FONT_SIZE
-        self.title_width = 60
+        self.title_width = 68
         
-        self.length_padding_x = 60
+        self.length_padding_x = 60 - 5
         self.length_padding_y = 5
         (self.length_width, self.length_height) = get_content_size(self.length, LIST_VIEW_FONT_SIZE) #DEFAULT_FONT_SIZE
         self.length_width = 10
@@ -133,7 +133,7 @@ class MediaItem(gobject.GObject):
         rect.width -= self.length_padding_x
         draw_text(cr, self.length, 
                   rect.x, rect.y, rect.width, rect.height, 
-                  LIST_VIEW_FONT_SIZE, "#FFFFFF", 
+                  LIST_VIEW_FONT_SIZE - 1, "#FFFFFF", 
                   alignment=ALIGN_END)
         
     def get_column_sizes(self):
