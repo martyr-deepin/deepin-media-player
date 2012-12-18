@@ -3085,13 +3085,17 @@ class PlayerBox(object):
                 self.save_hover_item.un_hover()
             self.save_hover_item = list_item        
             list_item.hover()
+        else:    
+            self.save_hover_item.hover()
         #    
         if single or self.save_double_item == list_item:
             list_item.un_hover()
             
-    def leave_notify_event_list_view(self, widget, event):        
+    def leave_notify_event_list_view(self, widget, event):
         if self.save_double_item:
             self.save_hover_item.un_hover()
+        widget.hover_row = None
+        widget.queue_draw()
         
     '''config gui window'''
     def config_gui(self):        
