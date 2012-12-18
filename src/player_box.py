@@ -532,6 +532,7 @@ class PlayerBox(object):
             self.volume_button_get_value_event)
     
     def init_playlist(self):    
+        self.save_hover_item = None
         self.play_list_dict = {} # play list dict type.
         self.play_list = PlayList()
         self.play_list.list_view.connect(
@@ -541,7 +542,7 @@ class PlayerBox(object):
         self.play_list.list_view.connect(
             "button-press-event", self.show_popup_menu)
         self.play_list.list_view.connect(
-            "single-click-item", self.open_current_file_dir_path)
+            "single-click-item", self.open_current_file_dir_path, True)
         self.play_list.list_view.connect(
             "motion-notify-item", self.open_current_file_dir_path)
         self.play_list.play_list_control_panel.add_button.connect(
@@ -3056,7 +3057,7 @@ class PlayerBox(object):
     def open_sort_image_ini_gui(self):  #menu
         ini_gui = IniGui()
         ini_gui.set("%s"%(_("Screenshot")))
-        ini_gui.ini.connect("config-changed", self.restart_load_config_file)        
+        ini_gui.ini.connect("config-changed", self.restart_load_config_file)
         
     def open_current_file_dir(self):
         try:
@@ -3069,9 +3070,18 @@ class PlayerBox(object):
         self.open_file_name = ""
         
         
-    def open_current_file_dir_path(self, list_view, list_item, column, offset_x, offset_y):
+    def open_current_file_dir_path(self, list_view, list_item, column, offset_x, offset_y, single=False):
         self.open_file_name = self.play_list_dict[list_item.title]
-        
+        # hover color modify.        
+        if self.save_hover_item != list_item:
+            if self.save_hover_item != None:
+                self.save_hover_item.un_hover()
+            self.save_hover_item = list_item        
+            list_item.hover()
+        #    
+        if single:
+            list_item.un_hover()
+            
     '''config gui window'''
     def config_gui(self):        
         ini_gui = IniGui()

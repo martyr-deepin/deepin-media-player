@@ -89,6 +89,15 @@ class MediaItem(gobject.GObject):
         gobject.GObject.__init__(self)
         self.update(title, length)
         self.index = None
+        self.hover_flags = False
+        
+    def hover(self):    
+        self.hover_flags = True
+        self.emit_redraw_request()
+        
+    def un_hover(self):    
+        self.hover_flags = False
+        self.emit_redraw_request()
         
     def set_index(self, index):
         '''Update index.'''
@@ -125,17 +134,25 @@ class MediaItem(gobject.GObject):
     def render_title(self, cr, rect, in_selection, in_highlight):
         '''Render title.'''
         rect.x += self.title_padding_x
+        color = "#FFFFFF"
+        if self.hover_flags:
+            color = "#161616"
+        #    
         draw_text(cr, self.title, 
                   rect.x, rect.y, rect.width, rect.height, 
-                  LIST_VIEW_FONT_SIZE - 1, "#FFFFFF", 
+                  LIST_VIEW_FONT_SIZE - 1, color, 
                   alignment=ALIGN_START)
     
     def render_length(self, cr, rect, in_selection, in_highlight):
         '''Render length.'''
         rect.width -= self.length_padding_x
+        color = "#FFFFFF"
+        if self.hover_flags:
+            color = "#161616"
+        #    
         draw_text(cr, self.length, 
                   rect.x, rect.y, rect.width, rect.height, 
-                  LIST_VIEW_FONT_SIZE - 1, "#FFFFFF", 
+                  LIST_VIEW_FONT_SIZE - 1, color, 
                   alignment=ALIGN_END)
         
     def get_column_sizes(self):
