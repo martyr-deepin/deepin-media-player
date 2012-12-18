@@ -546,6 +546,8 @@ class PlayerBox(object):
             "single-click-item", self.open_current_file_dir_path, True)
         self.play_list.list_view.connect(
             "motion-notify-item", self.open_current_file_dir_path)
+        self.play_list.list_view.connect(
+            "leave-notify-event", self.leave_notify_event_list_view)
         self.play_list.play_list_control_panel.add_button.connect(
             "clicked", lambda w: self.add_file())
         self.play_list.play_list_control_panel.delete_button.connect(
@@ -3085,6 +3087,9 @@ class PlayerBox(object):
         if single or self.save_double_item == list_item:
             list_item.un_hover()
             
+    def leave_notify_event_list_view(self, widget, event):        
+        self.save_hover_item.un_hover()
+        
     '''config gui window'''
     def config_gui(self):        
         ini_gui = IniGui()
