@@ -135,8 +135,9 @@ class MediaItem(gobject.GObject):
         '''Render title.'''
         rect.x += self.title_padding_x
         color = "#FFFFFF"
-        if self.hover_flags:
+        if self.hover_flags and (not in_selection):
             color = "#161616"
+            
         #    
         draw_text(cr, self.title, 
                   rect.x, rect.y, rect.width, rect.height, 
@@ -147,7 +148,7 @@ class MediaItem(gobject.GObject):
         '''Render length.'''
         rect.width -= self.length_padding_x
         color = "#FFFFFF"
-        if self.hover_flags:
+        if self.hover_flags and (not in_selection):
             color = "#161616"
         #    
         draw_text(cr, self.length, 

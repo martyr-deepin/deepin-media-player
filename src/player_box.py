@@ -532,6 +532,7 @@ class PlayerBox(object):
             self.volume_button_get_value_event)
     
     def init_playlist(self):    
+        self.save_double_item = None
         self.save_hover_item = None
         self.play_list_dict = {} # play list dict type.
         self.play_list = PlayList()
@@ -1140,7 +1141,9 @@ class PlayerBox(object):
         # self.bottom_toolbar.play_control_panel.start_button.queue_draw()
 
         self.play_list.list_view.set_highlight(list_item)
-
+        #
+        self.save_double_item = list_item
+        
     def hide_preview_function(self, widget, event):
         '''Hide preview window.'''
         self.hide_preview_leave(widget, event)
@@ -3079,7 +3082,7 @@ class PlayerBox(object):
             self.save_hover_item = list_item        
             list_item.hover()
         #    
-        if single:
+        if single or self.save_double_item == list_item:
             list_item.un_hover()
             
     '''config gui window'''
