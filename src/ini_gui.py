@@ -311,7 +311,7 @@ class FilePlay(gtk.VBox):
         
         self.adapt_video_button = RadioButton(_("Fit video to player"))
 
-        self.ai_set_radio_button = RadioButton(_("Fit video to player"))
+        self.ai_set_radio_button = RadioButton(_("Fit player to video")) #Fit video to player
         
         self.close_position_radio_button = RadioButton(_("Resize interface to last closed size"))
 

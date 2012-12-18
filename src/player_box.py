@@ -611,7 +611,8 @@ class PlayerBox(object):
         self.volume_button.set_size_request(volume_button_width, volume_button_height)
         self.volume_button_hframe.add(self.volume_button)
         self.volume_button_hframe.set(1, 0, 0, 0)
-        self.volume_button_hframe.set_padding(0, 0, 0, 0)        
+        # self.volume_button_hframe.set_padding(0, 0, 0, 0)        
+        self.volume_button_hframe.set_padding(2, 0, 0, 0)        
         
     def init_play_list_button(self):            
         self.play_list_button_hframe = HorizontalFrame()
@@ -619,7 +620,8 @@ class PlayerBox(object):
         self.play_list_button.button.connect("toggled", self.play_list_button_clicked)
         self.play_list_button_hframe.add(self.play_list_button.button)
         self.play_list_button_hframe.set(0, 0, 1.0, 1.0)
-        self.play_list_button_hframe.set_padding(9, 9, 0, 20)
+        # self.play_list_button_hframe.set_padding(9, 9, 0, 20)
+        self.play_list_button_hframe.set_padding(11, 9, 0, 20)
         
     ####################################################    
         
@@ -3088,7 +3090,8 @@ class PlayerBox(object):
             list_item.un_hover()
             
     def leave_notify_event_list_view(self, widget, event):        
-        self.save_hover_item.un_hover()
+        if self.save_double_item:
+            self.save_hover_item.un_hover()
         
     '''config gui window'''
     def config_gui(self):        
