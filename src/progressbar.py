@@ -59,8 +59,8 @@ class ProgressBar(object):
         self.hbox = gtk.HBox()
         self.pb = gtk.Button()
         # Set progressbar size.
-        self.pb.set_size_request(-1, 9)
-        self.hbox.pack_start(self.pb)
+        # self.pb.set_size_request(self.po, 9)
+        self.hbox.pack_start(self.pb, True, True)
         
         # Init progressbar signal.
         self.pb.add_events(gtk.gdk.ALL_EVENTS_MASK)
@@ -177,6 +177,9 @@ class ProgressBar(object):
                             drag_pixbuf, 
                             x + DRAW_PROGRESSBAR_WIDTH_PADDING + pos - drag_pixbuf.get_width()/2, 
                             y)                            
+        widget.set_size_request(self.drag_pixbuf.get_pixbuf().get_width(), 
+                                self.drag_pixbuf.get_pixbuf().get_height())
+            # print self.drag_pixbuf.get_pixbuf().get_width()
                 
         return True
        
