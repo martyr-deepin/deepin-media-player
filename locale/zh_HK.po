@@ -1,5 +1,5 @@
 # Chinese translations for PACKAGE package
-# PACKAGE 軟件包的簡體中文翻譯.
+# PACKAGE 软件包的繁體中文翻译.
 # Copyright (C) 2012 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # Automatically generated, 2012.
@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-18 14:38+0800\n"
+"POT-Creation-Date: 2012-12-18 15:21+0800\n"
 "PO-Revision-Date: 2012-07-12 15:53+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -249,11 +249,11 @@ msgstr "簡潔模式"
 msgid "Enable Keyboard Shortcuts"
 msgstr "開啟熱鍵"
 
-#: ../src/ini_gui.py:831 ../src/player_box.py:3234
+#: ../src/ini_gui.py:831 ../src/player_box.py:3238
 msgid "Delay-0.5s"
 msgstr "字幕提前0.5秒"
 
-#: ../src/ini_gui.py:832 ../src/player_box.py:3237
+#: ../src/ini_gui.py:832 ../src/player_box.py:3241
 msgid "Delay+0.5s"
 msgstr "字幕延時0.5秒"
 
@@ -261,11 +261,11 @@ msgstr "字幕延時0.5秒"
 msgid "Loading subtiles"
 msgstr "自動載入字幕"
 
-#: ../src/ini_gui.py:836 ../src/player_box.py:3242
+#: ../src/ini_gui.py:836 ../src/player_box.py:3246
 msgid "Increase subtitle scale"
 msgstr "增大字幕尺寸"
 
-#: ../src/ini_gui.py:837 ../src/player_box.py:3246
+#: ../src/ini_gui.py:837 ../src/player_box.py:3250
 msgid "Decrease subtitle scale"
 msgstr "減小字幕尺寸"
 
@@ -317,7 +317,7 @@ msgstr "禁用"
 
 #: ../src/ini_gui.py:996 ../src/ini_gui.py:1060 ../src/player_box.py:747
 #: ../src/player_box.py:762 ../src/player_box.py:765 ../src/player_box.py:951
-#: ../src/player_box.py:961 ../src/player_box.py:3199 ../src/mplayer.py:230
+#: ../src/player_box.py:961 ../src/player_box.py:3203 ../src/mplayer.py:230
 msgid "Volume"
 msgstr "音量"
 
@@ -368,14 +368,12 @@ msgstr "版本："
 
 #: ../src/ini_gui.py:1387
 msgid ""
-"\t\t\t\t\t\tDeepin Media Player \n"
 "\tDeepin Media Player is a video player designed for Linux users. It support "
 "a variety of video formats, and features mode switching, video preview, "
 "online subtitles, screenshot taking and skin selection. \n"
 "\n"
 "\tDeepin Media Player is free software licensed under GNU GPLv3. "
 msgstr ""
-"\t\t\t\t\t\t深度影音播放器 \n"
 "\t﻿深度影音播放器是Linux Deepin團隊為廣大linux用戶量身開發的一款影音播放軟件。"
 "支持多種視頻格式，支持多模式切換，具有播放預覽、在線字幕、視頻截圖、視頻格式"
 "轉化、光盤播放、自定義換膚等幾大特點。\n"
@@ -431,7 +429,7 @@ msgstr "暫停"
 msgid "Select Directory"
 msgstr "深度影音打開文件夾對話框"
 
-#: ../src/player_box.py:1231 ../src/player_box.py:3295
+#: ../src/player_box.py:1231 ../src/player_box.py:3299
 msgid "Select Files"
 msgstr "深度影音打開文件對話框"
 
@@ -626,7 +624,7 @@ msgstr "手動搜索字幕"
 msgid "Load a subtitle"
 msgstr "手動載入字幕"
 
-#: ../src/player_box.py:2709 ../src/player_box.py:3230
+#: ../src/player_box.py:2709 ../src/player_box.py:3234
 msgid "Disable Subtitles"
 msgstr "字幕停止"
 
@@ -743,7 +741,7 @@ msgstr "排序"
 msgid "Open Containing Directory"
 msgstr "打開所在文件夾"
 
-#: ../src/player_box.py:3223 ../src/player_box.py:3276
+#: ../src/player_box.py:3227 ../src/player_box.py:3280
 msgid "Subtitle loaded"
 msgstr "已載入字幕"
 

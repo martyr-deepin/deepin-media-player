@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-18 14:38+0800\n"
+"POT-Creation-Date: 2012-12-18 15:21+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -249,11 +249,11 @@ msgstr ""
 msgid "Enable Keyboard Shortcuts"
 msgstr ""
 
-#: ../src/ini_gui.py:831 ../src/player_box.py:3234
+#: ../src/ini_gui.py:831 ../src/player_box.py:3238
 msgid "Delay-0.5s"
 msgstr ""
 
-#: ../src/ini_gui.py:832 ../src/player_box.py:3237
+#: ../src/ini_gui.py:832 ../src/player_box.py:3241
 msgid "Delay+0.5s"
 msgstr ""
 
@@ -261,11 +261,11 @@ msgstr ""
 msgid "Loading subtiles"
 msgstr ""
 
-#: ../src/ini_gui.py:836 ../src/player_box.py:3242
+#: ../src/ini_gui.py:836 ../src/player_box.py:3246
 msgid "Increase subtitle scale"
 msgstr ""
 
-#: ../src/ini_gui.py:837 ../src/player_box.py:3246
+#: ../src/ini_gui.py:837 ../src/player_box.py:3250
 msgid "Decrease subtitle scale"
 msgstr ""
 
@@ -317,7 +317,7 @@ msgstr ""
 
 #: ../src/ini_gui.py:996 ../src/ini_gui.py:1060 ../src/player_box.py:747
 #: ../src/player_box.py:762 ../src/player_box.py:765 ../src/player_box.py:951
-#: ../src/player_box.py:961 ../src/player_box.py:3199 ../src/mplayer.py:230
+#: ../src/player_box.py:961 ../src/player_box.py:3203 ../src/mplayer.py:230
 msgid "Volume"
 msgstr ""
 
@@ -368,7 +368,7 @@ msgstr ""
 
 #: ../src/ini_gui.py:1387
 msgid ""
-"\t\t\t\t\t\tDeepin Media Player \n"
+"\n"
 "\tDeepin Media Player is a video player designed for Linux users. It support "
 "a variety of video formats, and features mode switching, video preview, "
 "online subtitles, screenshot taking and skin selection. \n"
@@ -425,7 +425,7 @@ msgstr ""
 msgid "Select Directory"
 msgstr ""
 
-#: ../src/player_box.py:1231 ../src/player_box.py:3295
+#: ../src/player_box.py:1231 ../src/player_box.py:3299
 msgid "Select Files"
 msgstr ""
 
@@ -620,7 +620,7 @@ msgstr ""
 msgid "Load a subtitle"
 msgstr ""
 
-#: ../src/player_box.py:2709 ../src/player_box.py:3230
+#: ../src/player_box.py:2709 ../src/player_box.py:3234
 msgid "Disable Subtitles"
 msgstr ""
 
@@ -737,7 +737,7 @@ msgstr ""
 msgid "Open Containing Directory"
 msgstr ""
 
-#: ../src/player_box.py:3223 ../src/player_box.py:3276
+#: ../src/player_box.py:3227 ../src/player_box.py:3280
 msgid "Subtitle loaded"
 msgstr ""
 

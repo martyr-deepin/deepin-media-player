@@ -1384,9 +1384,8 @@ class About(gtk.VBox):
         title_box.pack_start(logo_box, True, True)
         title_box.pack_start(info_align, True, True)
         
-        describe = _("\t\t\t\t\t\tDeepin Media Player \n\tDeepin Media Player is a video player designed for Linux users. It support a variety of video formats, and features mode switching, video preview, online subtitles, screenshot taking and skin selection. \n\n\tDeepin Media Player is free software licensed under GNU GPLv3. ")
-        
-        describe_label = Label(describe, enable_select=False, wrap_width=457)
+        describe = _("\tDeepin Media Player is a video player designed for Linux users. It support a variety of video formats, and features mode switching, video preview, online subtitles, screenshot taking and skin selection. \n\n\tDeepin Media Player is free software licensed under GNU GPLv3. ")
+        describe_label = Label(describe, enable_select=False, wrap_width=440, text_size=10)
         main_box.pack_start(title_box, False, False)
         main_box.pack_start(create_separator_box(), False, True)
         main_box.pack_start(describe_label, False, False)
