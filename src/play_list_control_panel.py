@@ -34,7 +34,7 @@ class PlayListControlPanel(gtk.Alignment):
         # Init.
         gtk.Alignment.__init__(self)
         self.set(1, 0.5, 0, 0)
-        self.set_padding(10, 10, 0, 0)
+        self.set_padding(7, 7, 0, 0)
         # self.color = "#1b1b1b"
         self.color = "#161616"
         # Init add button.

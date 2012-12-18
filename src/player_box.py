@@ -3092,7 +3092,8 @@ class PlayerBox(object):
             list_item.un_hover()
             
     def leave_notify_event_list_view(self, widget, event):
-        if self.save_double_item:
+        # if self.save_double_item:
+        if self.save_hover_item:
             self.save_hover_item.un_hover()
         widget.hover_row = None
         widget.queue_draw()
