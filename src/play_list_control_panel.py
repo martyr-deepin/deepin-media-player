@@ -35,7 +35,8 @@ class PlayListControlPanel(gtk.Alignment):
         gtk.Alignment.__init__(self)
         self.set(1, 0.5, 0, 0)
         self.set_padding(10, 10, 0, 0)
-        
+        # self.color = "#1b1b1b"
+        self.color = "#161616"
         # Init add button.
         self.add_button = ImageButton(
             app_theme.get_pixbuf("bottom_buttons/play_list_add_file.png"),
@@ -71,7 +72,7 @@ class PlayListControlPanel(gtk.Alignment):
     def draw_background(self, widget, event):
         cr = widget.window.cairo_create()
         x, y , w, h = widget.allocation
-        cr.set_source_rgb(*color_hex_to_cairo("#1b1b1b"))
+        cr.set_source_rgb(*color_hex_to_cairo(self.color))
         cr.rectangle(x, y, w, h)
         cr.fill()
         

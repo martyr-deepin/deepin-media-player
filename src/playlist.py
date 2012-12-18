@@ -44,7 +44,7 @@ class PlayList(gtk.VBox):
         
         # Init play list container.
         self.play_list_vbox = gtk.VBox()
-        self.play_list_width = 160
+        self.play_list_width = 160 + 25
         self.play_list_vbox.set_size_request(self.play_list_width, -1)
         
         # Init play list view.
@@ -111,12 +111,14 @@ class MediaItem(gobject.GObject):
         # Calculate item size.
         self.title_padding_x = 10
         self.title_padding_y = 5
-        (self.title_width, self.title_height) = get_content_size(self.title, LIST_VIEW_FONT_SIZE) #DEFAULT_FONT_SIZE
-        self.title_width = 68
+        (self.title_width , self.title_height) = get_content_size(self.title, LIST_VIEW_FONT_SIZE-1) #DEFAULT_FONT_SIZE
+        # self.title_width = 68
+        self.title_width = 85
         
-        self.length_padding_x = 60 - 5
+        # self.length_padding_x = 60 - 5 + 15
+        self.length_padding_x = 50 + 3
         self.length_padding_y = 5
-        (self.length_width, self.length_height) = get_content_size(self.length, LIST_VIEW_FONT_SIZE) #DEFAULT_FONT_SIZE
+        (self.length_width, self.length_height) = get_content_size(self.length, LIST_VIEW_FONT_SIZE-1) #DEFAULT_FONT_SIZE
         self.length_width = 10
         
         
@@ -125,7 +127,7 @@ class MediaItem(gobject.GObject):
         rect.x += self.title_padding_x
         draw_text(cr, self.title, 
                   rect.x, rect.y, rect.width, rect.height, 
-                  LIST_VIEW_FONT_SIZE, "#FFFFFF", 
+                  LIST_VIEW_FONT_SIZE - 1, "#FFFFFF", 
                   alignment=ALIGN_START)
     
     def render_length(self, cr, rect, in_selection, in_highlight):
@@ -138,7 +140,7 @@ class MediaItem(gobject.GObject):
         
     def get_column_sizes(self):
         '''Get sizes.'''
-        return [(self.title_width + self.title_padding_x * 2, 
+        return [(self.title_width + self.title_padding_x * 2 - 3, 
                  self.title_height + self.title_padding_y * 2),
                 (self.length_width + self.length_padding_x * 2, 
                  self.length_height + self.length_padding_y * 2),
