@@ -552,6 +552,8 @@ class PlayerBox(object):
             "motion-notify-item", self.open_current_file_dir_path)
         self.play_list.list_view.connect(
             "leave-notify-event", self.leave_notify_event_list_view)
+        self.play_list.list_view.connect(
+            "motion-notify-event", self.motion_notify_event_list_view)
         self.play_list.play_list_control_panel.add_button.connect(
             "clicked", lambda w: self.add_file())
         self.play_list.play_list_control_panel.delete_button.connect(
@@ -3102,6 +3104,13 @@ class PlayerBox(object):
         widget.hover_row = None
         widget.queue_draw()
         
+    def motion_notify_event_list_view(self, widget, event):    
+        if self.play_list.list_view.hover_row == None:
+            if self.save_hover_item:
+                self.save_hover_item.un_hover()
+                widget.hover_row = None
+                widget.queue_draw()
+
     '''config gui window'''
     def config_gui(self):        
         ini_gui = IniGui()
