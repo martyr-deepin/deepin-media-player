@@ -2129,10 +2129,17 @@ class PlayerBox(object):
         file_name = self.get_player_file_name(mplayer.path)
 
         self.app.titlebar.title_box.set_text(str(file_name))
+        
         # TabPage.
-        for item in self.play_list.list_view.items:
-            if self.play_list_dict[item.title] == self.mp.path:
-                self.play_list.list_view.set_highlight(item)
+        for list_item in self.play_list.list_view.items:
+            if self.play_list_dict[list_item.title] == self.mp.path:
+                # self.play_list.list_view.set_highlight(item)
+                # listview 反色.
+                if self.save_double_item:
+                    self.save_double_item.double()
+                list_item.list_view = self.play_list.list_view
+                list_item.double()
+                self.save_double_item = list_item                
                 break
 
         self.progressbar.set_pos(0)
