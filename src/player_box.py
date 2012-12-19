@@ -537,6 +537,7 @@ class PlayerBox(object):
     
     def init_playlist(self):    
         self.save_double_item = None
+        self.save_single_item = None
         self.save_hover_item = None
         self.play_list_dict = {} # play list dict type.
         self.play_list = PlayList()
@@ -1152,6 +1153,12 @@ class PlayerBox(object):
 
         self.play_list.list_view.set_highlight(list_item)
         #
+        # self.save_double_item = list_item
+        # listview 反色.
+        if self.save_double_item:
+            self.save_double_item.double()
+        list_item.list_view = list_view
+        list_item.double()
         self.save_double_item = list_item
         
     def hide_preview_function(self, widget, event):
@@ -3096,6 +3103,13 @@ class PlayerBox(object):
         #    
         if single or self.save_double_item == list_item:
             list_item.un_hover()
+        # listview 单击反色.
+        if single:    
+            if self.save_single_item:
+                self.save_single_item.single()
+            list_item.list_view = list_view
+            list_item.single()
+            self.save_single_item = list_item           
             
     def leave_notify_event_list_view(self, widget, event):
         # if self.save_double_item:

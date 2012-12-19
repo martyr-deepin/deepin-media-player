@@ -19,7 +19,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from dtk.ui.draw import draw_text
+from dtk.ui.theme import ui_theme
+from dtk.ui.draw import draw_text, draw_vlinear 
 from dtk.ui.utils import container_remove_all, color_hex_to_cairo
 from dtk.ui.listview import ListView
 from dtk.ui.listview import get_content_size
@@ -90,6 +91,8 @@ class MediaItem(gobject.GObject):
         self.update(title, length)
         self.index = None
         self.hover_flags = False
+        self.double_flags = False
+        self.single_flags = False
         
     def hover(self):    
         self.hover_flags = True
@@ -97,6 +100,14 @@ class MediaItem(gobject.GObject):
         
     def un_hover(self):    
         self.hover_flags = False
+        self.emit_redraw_request()
+        
+    def double(self):    
+        self.double_flags = not self.double_flags
+        self.emit_redraw_request()        
+        
+    def single(self):    
+        self.single_flags = not self.single_flags
         self.emit_redraw_request()
         
     def set_index(self, index):
@@ -137,7 +148,16 @@ class MediaItem(gobject.GObject):
         color = "#FFFFFF"
         if self.hover_flags and (not in_selection):
             color = "#161616"
-            
+        #
+        if self.single_flags:  # 单击
+            draw_vlinear(cr,
+                         0, rect.y, self.list_view.allocation.width, rect.height,
+                         ui_theme.get_shadow_color("listview_highlight").get_color_info())
+                    
+        if self.double_flags: # 双击
+            draw_vlinear(cr, 
+                         0, rect.y, self.list_view.allocation.width + 10000, rect.height, 
+                         ui_theme.get_shadow_color("listview_select").get_color_info())            
         #    
         draw_text(cr, self.title, 
                   rect.x, rect.y, rect.width, rect.height, 
@@ -150,6 +170,16 @@ class MediaItem(gobject.GObject):
         color = "#FFFFFF"
         if self.hover_flags and (not in_selection):
             color = "#161616"
+                    
+        if self.single_flags:  # 单击
+            draw_vlinear(cr,
+                         0, rect.y, self.list_view.allocation.width, rect.height,
+                         ui_theme.get_shadow_color("listview_highlight").get_color_info())
+                    
+        if self.double_flags: # 双击
+            draw_vlinear(cr, 
+                         0, rect.y, self.list_view.allocation.width + 10000, rect.height, 
+                         ui_theme.get_shadow_color("listview_select").get_color_info())            
         #    
         draw_text(cr, self.length, 
                   rect.x, rect.y, rect.width, rect.height, 
