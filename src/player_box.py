@@ -380,6 +380,10 @@ class PlayerBox(object):
         self.app.window.connect("key-press-event", self.get_key_event)
         self.app.window.connect("key-release-event", self.get_release_key_event)
         self.app.window.connect("scroll_event", self.app_scroll_event, 1)
+        self.app.window.connect("check-resize", self.ascept_function_restart)
+        
+    def ascept_function_restart(self, widget):    
+        self.set_ascept_function()
         
     def init_media_player_screen(self):            
         self.screen_frame_event = gtk.EventBox()
