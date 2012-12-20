@@ -465,7 +465,9 @@ class  Mplayer(gobject.GObject):
                     self.time_sec = 0
                     self.time(self.pos_num)  
                     self.emit("get-time-pos", int(self.pos_num))
-                    
+                    if self.pos_num > self.len_num - 3:                        
+                        self.quit()
+                        self.mplayer_eof(1, 2)
         return True
 
     ## Subtitle Control ##
