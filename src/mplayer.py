@@ -341,8 +341,8 @@ class  Mplayer(gobject.GObject):
             self.lenState = 1 
             # -input file.. streme player.
             command = ['mplayer',
-                       '-vo',
-                       'gl,2,x11,xv',
+                       #'-vo',
+                       #'gl,2,x11,xv',
                        '-zoom',
                        '-nokeepaspect',
                        '-osdlevel',

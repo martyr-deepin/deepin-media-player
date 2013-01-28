@@ -1383,9 +1383,10 @@ class PlayerBox(object):
     def draw_ascept_bg(self, widget, event):
         '''draw screen frame bg'''
         cr, x, y, w, h = allocation(widget)
+        cr.set_source_rgb(0, 0, 0)
         cr.rectangle(x, y, w, h)
         cr.fill()
-        return True
+        #return True
 
     def screen_button_press_event(self, widget, event):
         if event.button == 1:
