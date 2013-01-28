@@ -2242,8 +2242,9 @@ class PlayerBox(object):
         
         if not mplayer.dvd_bool:        
             # aspect set.                                    
-            if self.video_aspect_type != ASCEPT_NORMAL_STATE: # "默认"
-                self.set_ascept_function()
+            #if self.video_aspect_type != ASCEPT_NORMAL_STATE: # "默认"
+            self.video_aspect_type = ASCEPT_4X3_STATE #"4:3"   
+            self.set_ascept_function()
             
             # full window.
             if self.playwinmax_bool and (self.video_aspect_type == ASCEPT_NORMAL_STATE): # "默认"
