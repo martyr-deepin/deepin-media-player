@@ -60,7 +60,7 @@ from user_guide import init_user_guide
 from code_to_utf_8 import auto_decode
 from subtitles import SubTitles
 from subtitle.scan_subtitles import ScanGui
-from lrc.osd_lrc import Lrc
+#from lrc.osd_lrc import Lrc
 from video_information.gui import VideoInformGui
 from switch_audio.audio import SwitchAudio
 from video_format_conv.transmageddon import TransmageddonUI
