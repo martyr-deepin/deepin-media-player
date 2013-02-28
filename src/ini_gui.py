@@ -114,35 +114,36 @@ class IniGui(DialogBox):
         self.main_hbox = gtk.HBox()
         self.configure = Configure()
         self.scrolled_window = ScrolledWindow()
-        
-        self.scrolled_window.set_size_request(132, 1)        
-        self.tree_view = TreeView(font_x_padding=15, arrow_x_padding=35)
+        tree_view_width = 132 
+        self.scrolled_window.set_size_request(tree_view_width, 1)        
+        self.tree_view = TreeView(height=36, font_x_padding=35, arrow_x_padding=80)
+        self.tree_view.set_size_request(tree_view_width, 1)
         self.tree_view.draw_mask = self.draw_treeview_mask
         
         # TreeView event.
         self.tree_view.connect("single-click-item", self.set_con_widget)
         
         self.scrolled_window_align = gtk.Alignment()
-        self.scrolled_window_align.set(0, 0, 1, 1)
+        self.scrolled_window_align.set(1, 1, 1, 1)
         self.scrolled_window_align.set_padding(0, 1, 0, 0)
         self.scrolled_window_align.add(self.scrolled_window)
         self.scrolled_window.add_child(self.tree_view)
         
         # TreeView add node.
-        self.tree_view.add_item(None, TreeViewItem(_("Playback")))
-        self.tree_view.add_item(None, TreeViewItem(_("General")))
+        self.tree_view.add_item(None, TreeViewItem(_("Playback"), has_arrow=False))
+        self.tree_view.add_item(None, TreeViewItem(_("General"), has_arrow=False))
         key = self.tree_view.add_item(None, TreeViewItem(_("Keyboard")))
         self.tree_view.add_item(key, TreeViewItem(_("Video Control"), has_arrow=False))
         self.tree_view.add_item(key, TreeViewItem(_("Subtitle"), has_arrow=False)) # new
         self.tree_view.add_item(key, TreeViewItem(_("Other"), has_arrow=False))        
         
-        self.tree_view.add_item(None, TreeViewItem(_("Subtitles")))
-        self.tree_view.add_item(None, TreeViewItem(_("Screenshot")))
-        self.tree_view.add_item(None, TreeViewItem(_("About us")))
+        self.tree_view.add_item(None, TreeViewItem(_("Subtitles"), has_arrow=False))
+        self.tree_view.add_item(None, TreeViewItem(_("Screenshot"), has_arrow=False))
+        self.tree_view.add_item(None, TreeViewItem(_("About us"), has_arrow=False))
 
         category_box = gtk.VBox()
         background_box = BackgroundBox()
-        background_box.set_size_request(144, 11)
+        background_box.set_size_request(tree_view_width, 11)
         background_box.draw_mask = self.draw_treeview_mask
         category_box.pack_start(background_box, False, False)
         
@@ -426,7 +427,10 @@ class SystemSet(gtk.VBox):
         self.label.set_size_request(label_width, label_height)
         self.heparator_hbox = gtk.HBox()
         self.heparator = create_separator_box()
-        self.heparator_hbox.pack_start(self.heparator)
+        self.heparator_ali = gtk.Alignment(1, 1, 1, 1)
+        self.heparator_ali.add(self.heparator)
+        self.heparator_ali.set_padding(0, 0, 20, 0)
+        self.heparator_hbox.pack_start(self.heparator_ali, True, True)
         self.heparator_hbox.set_size_request(heparator_width, heparator_height)
         # System setting.
         # Minimize pause plaing.
@@ -530,8 +534,11 @@ class PlayControl(gtk.VBox):
         self.label.set_size_request(label_width, label_height)
         # heparator.
         self.heparator = create_separator_box()
+        self.heparator_ali = gtk.Alignment(1, 1, 1, 1)
+        self.heparator_ali.add(self.heparator)
+        self.heparator.set_padding(0, 0, 20, 0)
         self.heparator_hbox = gtk.HBox()
-        self.heparator_hbox.pack_start(self.heparator)
+        self.heparator_hbox.pack_start(self.heparator_ali, True, True)
         self.heparator_hbox.set_size_request(heparator_width, heparator_height)
         # setting keys.
         entry_width = 150
@@ -814,6 +821,9 @@ class SubKey(gtk.VBox):
         # heparator.
         self.heparator_hbox = gtk.HBox()
         self.heparator = create_separator_box()
+        self.heparator_ali = gtk.Alignment(1, 1, 1, 1)
+        self.heparator_ali.add(self.heparator)
+        self.heparator.set_padding(0, 0, 20, 0)
         self.heparator_hbox.set_size_request(heparator_width, heparator_height)        
         # add title.        
         title_offset_x = 20
@@ -863,7 +873,7 @@ class SubKey(gtk.VBox):
         start_x, start_y = 30, heparator_offset_y + 30
         offset_x, offset_y = entry_width + 50, 50
         self.fixed.put(self.title_label, title_offset_x, title_offset_y)
-        self.heparator_hbox.pack_start(self.heparator)
+        self.heparator_hbox.pack_start(self.heparator_ali)
         self.fixed.put(self.heparator_hbox, heparator_offset_x, heparator_offset_y)
         self.fixed.put(self.check_btn, check_btn_offset_x, check_btn_offset_y)
         widgets_add_widget(
@@ -963,7 +973,10 @@ class OtherKey(gtk.VBox):
         self.label.set_size_request(label_width, label_height)
         self.heparator_hbox = gtk.HBox()
         self.heparator = create_separator_box()
-        self.heparator_hbox.pack_start(self.heparator)
+        self.heparator_ali = gtk.Alignment(1, 1, 1, 1)
+        self.heparator_ali.add(self.heparator)
+        self.heparator_ali.set_padding(0, 0, 20, 0)
+        self.heparator_hbox.pack_start(self.heparator_ali)
         self.heparator_hbox.set_size_request(heparator_width, heparator_height)        
         # set other_key bool.        
         self.other_key_bool_checkbtn = CheckButton(_(" Enabled hotkeys"))
@@ -1134,7 +1147,10 @@ class SubSet(gtk.VBox):
         self.label.set_size_request(label_width, label_height)
         self.heparator_hbox = gtk.HBox()
         self.heparator = create_separator_box()
-        self.heparator_hbox.pack_start(self.heparator)
+        self.heparator_ali = gtk.Alignment(1, 1, 1, 1)
+        self.heparator_ali.add(self.heparator)
+        self.heparator_ali.set_padding(0, 0, 20, 0)
+        self.heparator_hbox.pack_start(self.heparator_ali)
         self.heparator_hbox.set_size_request(heparator_width, heparator_height)
         # Ai load subtitle.
         self.ai_load_subtitle_checkbtn = CheckButton(_("Load subtitles automatically"))
