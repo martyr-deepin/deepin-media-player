@@ -1668,6 +1668,7 @@ class PlayerBox(object):
         self.screen.set_size_request(int(video_width), int(video_height))
         
     def configure_hide_tool(self, widget, event): # screen: configure-event.
+        self.set_ascept_function()
         self.screen_pop_menu.hide_menu()
         self.open_button.move(-14, 30 + 26)
         self.open_button_right.move(56, 30 + 26)
