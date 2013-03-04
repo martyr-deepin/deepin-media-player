@@ -1578,6 +1578,9 @@ class PlayerBox(object):
             video_aspect = round(float(1.85) / 1, 2)
         elif self.video_aspect_type == ASCEPT_2_35X1_STATE: #"2.35:1"
             video_aspect = round(float(2.35) / 1, 2)
+        elif self.video_aspect_type == ASCEPT_NORMAL_STATE: # 默认.
+            if self.video_width and self.video_height:
+                video_aspect = round(float(int(self.video_width)) / float(int(self.video_height)), 2) 
 
         screen_frame_aspect = round(float(w) / h, 2)
 
@@ -2243,7 +2246,7 @@ class PlayerBox(object):
         if not mplayer.dvd_bool:        
             # aspect set.                                    
             #if self.video_aspect_type != ASCEPT_NORMAL_STATE: # "默认"
-            self.video_aspect_type = ASCEPT_4X3_STATE #"4:3"   
+            #self.video_aspect_type = ASCEPT_4X3_STATE #"4:3"   
             self.set_ascept_function()
             
             # full window.
