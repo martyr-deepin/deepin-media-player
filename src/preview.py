@@ -48,6 +48,7 @@ class PreView(object):
         self.bg.show_all()
         self.bg.set_offset(self.bg.get_offset_mid_value())
         # Hide preview window.
+        self.bg.show_time_label.connect("expose-event", self.draw_background)
         self.bg.connect("motion-notify-event", self.motion_hide_preview)
         self.bg.connect("enter-notify-event", self.motion_hide_preview)
         
@@ -107,7 +108,6 @@ class PreView(object):
         
         return True
     
-    '''
     # Background window.    
     def draw_background(self, widget, event):    
         # Init.
@@ -115,13 +115,8 @@ class PreView(object):
         rect = widget.allocation
         x, y, w, h = rect.x, rect.y, rect.width, rect.height
 
-        # Draw preview background.
-        cr.set_source_rgb(0, 0, 0)
-        cr.rectangle(x, y, w, h)
-        cr.fill()  
-        
         # Draw preview time.
-        font_height_padding = 24
+        font_height_padding = 15
         time_hour, time_min, time_sec = self.mp.time(self.pos)
         draw_text(cr, 
                   "%s:%s:%s" % (self.time_to_string(time_hour), self.time_to_string(time_min), self.time_to_string(time_sec)),
@@ -131,7 +126,6 @@ class PreView(object):
                   )
                 
         return True
-    '''
             
     def move_preview(self, x, y):        
         self.bg.move(int(x), int(y))

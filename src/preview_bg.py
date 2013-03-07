@@ -60,7 +60,9 @@ class PreViewWin(gtk.Window):
         #
         self.draw = gtk.EventBox()
         self.main_ali  = gtk.Alignment(1, 1, 1, 1)
-        self.main_ali.set_padding(2, self.arrow_height + 20, 2, 2)
+        self.main_ali.set_padding(2, self.arrow_height + 2, 2, 2)
+        self.show_time_label = gtk.Label("12:12:12")
+        self.main_ali.add(self.show_time_label)
         self.add(self.draw)
         self.draw.add(self.main_ali)
         self.hide_all()
@@ -150,20 +152,12 @@ def cairo_popover (surface_context,
 #######################################################################
 
 if __name__ == "__main__":
-    import random
-    def timer_tick_event(tick):
-        prev_win.set_offset(random.randint(1, 100))
-    import timer
-    timer = timer.Timer(500)
-    timer.connect("Tick", timer_tick_event)
-    #timer.Enabled = True
     prev_win = PreViewWin()
     screen = gtk.DrawingArea()
     prev_win.main_ali.add(screen)
     prev_win.set_size_request(124, 89)
     prev_win.move(500, 500)
     prev_win.show_all()
-    print "screen id:", screen.window.xid
     prev_win.set_offset(80)
     gtk.main()
 
