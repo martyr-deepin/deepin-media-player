@@ -21,6 +21,7 @@
 
 from dtk.ui.draw import draw_text
 from dtk.ui.constant import DEFAULT_FONT_SIZE
+from preview_bg import PreViewWin
 from mplayer import Mplayer
 from constant import PREVIEW_PV_WIDTH, PREVIEW_PV_HEIGHT, STOPING_PLAY, STARTING_PLAY
 
@@ -39,16 +40,13 @@ class PreView(object):
         self.pos = pos
         
         # Preview background window.
-        self.bg = gtk.Window(gtk.WINDOW_POPUP)
-        self.bg.set_colormap(gtk.gdk.Screen().get_rgba_colormap())
-        self.bg.set_decorated(False)
-        self.bg.set_size_request(124, 60 + 25 + 4)
-        self.bg.set_opacity(0.8)
+        self.bg = PreViewWin()
+        self.bg.set_size_request(124, 89)
         self.bg.set_type_hint(gtk.gdk.WINDOW_TYPE_HINT_MENU)
         # Set background window.
         self.bg.add_events(gtk.gdk.ALL_EVENTS_MASK)
-        self.bg.connect("expose-event", self.draw_background)
-        self.bg.connect("size-allocate", self.draw_shape_mask)        
+        self.bg.show_all()
+        self.bg.set_offset(self.bg.get_offset_mid_value())
         # Hide preview window.
         self.bg.connect("motion-notify-event", self.motion_hide_preview)
         self.bg.connect("enter-notify-event", self.motion_hide_preview)
@@ -57,7 +55,7 @@ class PreView(object):
         self.pv = gtk.Window(gtk.WINDOW_POPUP)
         
         # Set preview window.        
-        self.pv.set_size_request(PREVIEW_PV_WIDTH, PREVIEW_PV_HEIGHT)
+        self.pv.set_size_request(PREVIEW_PV_WIDTH - 4, PREVIEW_PV_HEIGHT)
         self.pv.set_decorated(False)
         self.pv.set_keep_above(True)
         self.pv.set_type_hint(gtk.gdk.WINDOW_TYPE_HINT_MENU) 
@@ -109,6 +107,7 @@ class PreView(object):
         
         return True
     
+    '''
     # Background window.    
     def draw_background(self, widget, event):    
         # Init.
@@ -132,34 +131,11 @@ class PreView(object):
                   )
                 
         return True
-    
-    def draw_shape_mask(self, widget, rect):    
-        # Init.
-        x, y, w, h = rect.x, rect.y, rect.width, rect.height
-        bitmap = gtk.gdk.Pixmap(None, w, h, 1)
-        cr = bitmap.cairo_create()
-        
-        # Clear the bitmap
-        cr.set_source_rgb(1.0, 1.0, 1.0)
-        cr.set_operator(cairo.OPERATOR_CLEAR)
-        cr.paint()
-        
-        cr.set_source_rgb(1.0, 1.0, 1.0)
-        cr.set_operator(cairo.OPERATOR_OVER)
-        cr.rectangle(x, y, w, h-10)
-        cr.fill()
-         
-        cr.move_to(x + w/2 +5-15, y+h-10)
-        cr.line_to(x + w/2 + 5-5, y+h)
-        cr.line_to(x + w/2 + 5+5, y+h-10)
-        cr.fill()
-        
-        # Shape with given mask.
-        widget.shape_combine_mask(bitmap, 0, 0)
+    '''
             
     def move_preview(self, x, y):        
         self.bg.move(int(x), int(y))
-        self.pv.move(int(x + 2), int(y+2))
+        self.pv.move(int(x + 4), int(y+4))
         
     def show_preview(self, pos):        
         self.pos = pos
@@ -212,4 +188,5 @@ class PreView(object):
         if STARTING_PLAY == self.mp.state:
             self.mp.seek(pos)
             
-        
+if __name__ == "__main__": 
+    pass

@@ -2015,9 +2015,23 @@ class PlayerBox(object):
 
         self.preview.show_preview(pos)
         # previwe window show position.
-        self.preview.move_preview(
-            self.x_root - self.preview.bg.get_allocation()[2]/2,
-            preview_y_padding)
+        move_x = self.x_root - self.preview.bg.get_allocation()[2]/2
+        move_y = preview_y_padding
+        min_move_x = self.app.window.get_position()[0] 
+        max_move_x = min_move_x + self.app.window.allocation.width
+        bg_max_move_x = move_x + self.preview.bg.allocation.width 
+        mid_bg_w = self.preview.bg.allocation.width
+        if move_x < (min_move_x): 
+            offset = self.preview.bg.get_offset_mid_value() - (min_move_x - move_x)
+        elif move_x > (max_move_x - self.preview.bg.allocation.width):
+            offset = self.preview.bg.get_offset_mid_value() - ((max_move_x - move_x) - self.preview.bg.allocation.width)  
+        else:
+            offset = self.preview.bg.get_offset_mid_value()
+        # 设置指针.
+        self.preview.bg.set_offset(offset)
+        move_x = max(min(move_x, max_move_x - mid_bg_w), min_move_x)
+        
+        self.preview.move_preview(move_x, move_y)
 
     def show_preview_enter(self, widget, event):
         if STOPING_PLAY == self.mp.state:
