@@ -67,6 +67,7 @@ from video_format_conv.transmageddon import TransmageddonUI
 from video_format_conv.conv_task_gui import ConvTAskGui
 from cdrom.cdrom import (Service, get_dvd_title_info, get_iso_type)
 from find_as import AsFileName
+from type_check import is_valid_video_file
 import threading
 import pynotify
 import sys
@@ -648,13 +649,18 @@ class PlayerBox(object):
         else:
             self.screen_pop_menu.hide_menu()
                             
-    def messagebox(self, text):
-        path = os.path.abspath(os.path.dirname(sys.argv[0]))
-        image_path = os.path.join(path, "logo_48.png")
-        #print "image_path:", image_path
-        self.notify_msgbox(_("deepin-media-player"),
-                           str(text), image_path)
-        #self.window_tool_tip.show(text)
+    def messagebox(self, text, image_path=None):
+        sys_bubble_check = self.config.get("SystemSet", "start_sys_bubble_msg")
+        if sys_bubble_check and "true" == sys_bubble_check.lower():
+            if image_path == None: # 如果没有图标,就设置为默认图标.
+                path = os.path.abspath(os.path.dirname(sys.argv[0]))
+                image_path = os.path.join(path, "logo_48.png")
+            #print "image_path:", image_path
+            self.notify_msgbox(_("deepin-media-player"),
+                               str(text), image_path)
+        play_win_check = self.config.get("SystemSet", "start_play_win_msg")
+        if play_win_check and "true" == play_win_check.lower(): 
+            self.window_tool_tip.show(text)
 
     def notify_msgbox(self, title, msg, icon_path):
         try:
@@ -2183,6 +2189,20 @@ class PlayerBox(object):
         self.progressbar.set_pos(0)
         self.bottom_toolbar.progressbar.set_pos(0)
         self.add_dvd_navigation_title_menu(mplayer)
+        # 提示消息.
+        self.player_messagebox()
+
+    def player_messagebox(self):
+        #
+        if is_valid_video_file(self.mp.path):
+            pos_num = 10 
+            image_path = "/tmp" + "/%s-%s"%(self.get_player_file_name("notify"), pos_num) + ".png"
+            self.mp.preview_scrot(pos_num, image_path)
+        else:
+            image_path = None
+        #
+        self.messagebox(str(self.get_player_file_name(self.mp.path)), image_path=image_path)
+        return False
         
     def media_player_start_scan_subtitle(self, mplayer):
         print self.sub_titles.scan_subtitle(mplayer.path, os.path.split(mplayer.path)[0])
