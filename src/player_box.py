@@ -2195,7 +2195,7 @@ class PlayerBox(object):
     def player_messagebox(self):
         #
         if is_valid_video_file(self.mp.path):
-            pos_num = 10 
+            pos_num = 20 
             image_path = "/tmp" + "/%s-%s"%(self.get_player_file_name("notify"), pos_num) + ".png"
             self.mp.preview_scrot(pos_num, image_path)
         else:
