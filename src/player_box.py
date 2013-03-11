@@ -15,8 +15,7 @@
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
+# GNU General Public License for more details.  #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -2042,8 +2041,8 @@ class PlayerBox(object):
         # previwe window show position.
         move_x = self.x_root - self.preview.bg.get_allocation()[2]/2
         move_y = preview_y_padding
-        min_move_x = self.app.window.get_position()[0] + 3
-        max_move_x = min_move_x + self.app.window.allocation.width - 4
+        min_move_x = self.app.window.get_position()[0] - 6
+        max_move_x = min_move_x + self.app.window.allocation.width + 10
         bg_max_move_x = move_x + self.preview.bg.allocation.width
         mid_bg_w = self.preview.bg.allocation.width
         if move_x < (min_move_x): 
