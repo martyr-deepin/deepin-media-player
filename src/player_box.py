@@ -651,7 +651,7 @@ class PlayerBox(object):
     def messagebox(self, text):
         path = os.path.abspath(os.path.dirname(sys.argv[0]))
         image_path = os.path.join(path, "logo_48.png")
-        print "image_path:", image_path
+        #print "image_path:", image_path
         self.notify_msgbox(_("deepin-media-player"),
                            str(text), image_path)
         #self.window_tool_tip.show(text)
@@ -1467,14 +1467,14 @@ class PlayerBox(object):
         
     def min_window_titlebar_min_button_click(self, widget):
         '''app titlebar min_button'''
-        config_bool = self.config.get("SystemSet", "minimize_pause_play")
+        config_bool = self.config.get("FilePlay", "minimize_pause_play")
         if config_bool and "true" == config_bool.lower():
-            self.virtual_set_start_button_clicked()
-            gtk.timeout_add(500, self.set_min_pause_bool_time)
+            if self.mp and self.mp.state:
+                self.virtual_set_start_button_clicked(pause_dvd=False)
+                gtk.timeout_add(500, self.set_min_pause_bool_time)
 
     def set_min_pause_bool_time(self):
         self.minimize_pause_play_bool = True
-        
         return False
 
     def quit_player_window(self, widget):
@@ -1535,10 +1535,11 @@ class PlayerBox(object):
 
         # Set minimize pause play.
         if self.minimize_pause_play_bool:
-            config_bool = self.config.get("SystemSet", "minimize_pause_play")            
+            config_bool = self.config.get("FilePlay", "minimize_pause_play")            
             if config_bool and "true" == config_bool.lower():
-                self.virtual_set_start_button_clicked()
-                self.minimize_pause_play_bool = False
+                if self.mp and self.mp.state:
+                    self.virtual_set_start_button_clicked(pause_dvd=False)
+                    self.minimize_pause_play_bool = False
 
         if STARTING_PLAY == self.mp.state:            
             self.set_ascept_function()

@@ -45,7 +45,7 @@ class PreView(object):
         self.bg.set_type_hint(gtk.gdk.WINDOW_TYPE_HINT_MENU)
         # Set background window.
         self.bg.add_events(gtk.gdk.ALL_EVENTS_MASK)
-        self.bg.show_all()
+        #self.bg.show_all()
         self.bg.set_offset(self.bg.get_offset_mid_value())
         # Hide preview window.
         self.bg.show_time_label.connect("expose-event", self.draw_background)

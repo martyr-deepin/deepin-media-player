@@ -165,26 +165,29 @@ def init_mplayer_config():
         # Init window.
         config.set("Window", "init_window", "True")
         
-        #[FilePlay]
+        #[FilePlay] # 播放设置.
         for argv, value in ([
                 ("video_file_open",                          2),
                 ("open_new_file_clear_play_list", "True"),
                 ("memory_up_close_player_file_postion", "True"),
                 ("find_play_file_relation_file", "False"),
                 ("mouse_progressbar_show_preview", "False"),
-                ("check_run_a_deepin_media_player", "False")
+                ("check_run_a_deepin_media_player", "False"),
+                ("minimize_pause_play", "True") # 最小化暂停播放.
                 ]):
             config.set("FilePlay", argv, value)
             
-        #[SystemSet]
+        #[SystemSet] # 系统设置.
         for argv, value in ([
-                ("minimize_pause_play", "False"),
-                ("font", "文泉驿微米黑"),
-                ("font_size", "16")
+                ("start_sys_bubble_msg", "True"),
+                ("start_play_win_msg",   "False"),
+                ("font",                 "文泉驿微米黑"),
+                ("font_size",            "16")
                 ]):
             config.set("SystemSet", argv, value)
             
-        #[PlayControl]
+        # 快捷键
+        #[PlayControl] 播放控制.
         for argv, value in ([
                 ("play_control_bool", "True"),
                 ("open_file_key", "Ctrl + o"),
@@ -202,7 +205,7 @@ def init_mplayer_config():
                 ]):
             config.set("PlayControl", argv, value)
             
-        #[SubKey]    
+        #[SubKey] 字幕控制. 
         for argv, value in ([
                 ("subkey_bool", "True"),
                 ("subkey_add_delay_key", "["),
@@ -213,7 +216,7 @@ def init_mplayer_config():
                 ]):
             config.set("SubKey", argv, value)
             
-        #[OtherKey]
+        #[OtherKey] 其它快捷键.
         for argv, value in ([
                 ("other_key_bool", "True"),
                 ("add_brightness_key", "="),
@@ -231,7 +234,7 @@ def init_mplayer_config():
                 ]):
             config.set("OtherKey", argv, value)
 
-        #[SubtitleSet]
+        #[SubtitleSet] 字幕.
         for argv, value in ([
                 ("ai_load_subtitle", "True"),
                 # ("specific_location_search", os.path.join(get_home_path(), ".config/deepin-media-player/subtitle"))
@@ -239,7 +242,7 @@ def init_mplayer_config():
                 ]):
             config.set("SubtitleSet", argv, value)
         
-        #[ScreenshotSet]
+        #[ScreenshotSet] 截图设置.
         for argv, value in ([
                 ("save_clipboard", "False"),
                 ("save_file", "True"),
@@ -250,7 +253,7 @@ def init_mplayer_config():
                 ]):
             config.set("ScreenshotSet", argv, value)
             
-        # save ini config.
+        # save ini config. 保存配置.
         config.save()
         
 VIDEO_TYPE = 0        

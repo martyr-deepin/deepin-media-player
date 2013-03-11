@@ -346,7 +346,6 @@ class FilePlay(gtk.VBox):
         if ini_bool and "true" == ini_bool.lower():
             self.file_play_postion_button.set_active(True)
                     
-        
         # play media when find file play in dir.
         self.find_file_play_button = CheckButton(_("Continue to next video automatically")) 
         ini_bool = self.ini.get("FilePlay", "find_play_file_relation_file")
@@ -367,6 +366,12 @@ class FilePlay(gtk.VBox):
         self.run_a_main_pid_radio_button.set_active(False)
         if ini_bool and "true" == ini_bool.lower():
             self.run_a_main_pid_radio_button.set_active(True)
+        # 最小化暂停
+        self.pause_play_button = CheckButton(_("Pause When Minimized"))
+        ini_bool = self.ini.get("FilePlay", "minimize_pause_play")
+        self.pause_play_button.set_active(False)
+        if ini_bool and "true" == ini_bool.lower():
+            self.pause_play_button.set_active(True)            
         
         title_box = gtk.VBox(spacing=5)
         title_box.pack_start(self.label, False, False)
@@ -389,6 +394,7 @@ class FilePlay(gtk.VBox):
         check_box.pack_start(self.find_file_play_button, False, False)
         check_box.pack_start(self.show_preview_window_button, False, False)
         check_box.pack_start(self.run_a_main_pid_radio_button, False, False)
+        check_box.pack_start(self.pause_play_button, False, False)
         self.set_spacing(15)
         self.pack_start(title_box_align, False, True)
         self.pack_start(radio_table, False, True)
@@ -414,6 +420,8 @@ class FilePlay(gtk.VBox):
         video_file_dict["find_play_file_relation_file"] = self.find_file_play_button.get_active()
         video_file_dict["mouse_progressbar_show_preview"] = self.show_preview_window_button.get_active()
         video_file_dict["check_run_a_deepin_media_player"] = self.run_a_main_pid_radio_button.get_active()
+        video_file_dict["minimize_pause_play"] = self.pause_play_button.get_active()
+
         return video_file_dict
     
 class SystemSet(gtk.VBox):        
@@ -423,7 +431,7 @@ class SystemSet(gtk.VBox):
         self.ini = Config(config_path)
 
         self.fixed = gtk.Fixed()
-        self.label = Label(_("General"))
+        self.label = Label(_("General")) # 提示信息.
         self.label.set_size_request(label_width, label_height)
         self.heparator_hbox = gtk.HBox()
         self.heparator = create_separator_box()
@@ -433,39 +441,48 @@ class SystemSet(gtk.VBox):
         self.heparator_hbox.pack_start(self.heparator_ali, True, True)
         self.heparator_hbox.set_size_request(heparator_width, heparator_height)
         # System setting.
-        # Minimize pause plaing.
-        self.pause_play_button = CheckButton(_("Pause When Minimized"))
-        ini_bool = self.ini.get("SystemSet", "minimize_pause_play")
-        self.pause_play_button.set_active(False)
-        if ini_bool and "true" == ini_bool.lower():
-            self.pause_play_button.set_active(True)            
-            
-        self.pause_play_button_label = Label("")
-        
-        # Screen messagebox.
-        self.screen_msg_button = Label(_("Pop-up Messages"))
+        # 界面布局.
+        # 标题栏.
+        title_box_align = gtk.Alignment()
+        title_box = gtk.VBox(spacing=5)
+        title_box.pack_start(self.label, False, False)
+        title_box.pack_start(create_separator_box(), True, True)
+        title_box_align.set_padding(10, 0, 10, 0)
+        title_box_align.set(0, 0, 1, 1)
+        title_box_align.add(title_box)
+        # 启动系统气泡提示.
+        self.start_sys_bubble_msg = CheckButton(_("启用系统气泡提示")) 
+        self.start_sys_bubble_msg.set_active(False)
+        bubble_check = self.ini.get("SystemSet", "start_sys_bubble_msg")
+        if bubble_check and "true" == bubble_check.lower():
+            self.start_sys_bubble_msg.set_active(True)
+        # 启动播放窗口提示.
+        self.start_play_win_msg = CheckButton(_("启用播放窗口提示")) 
+        self.start_play_win_msg.set_active(False)
+        play_win_check = self.ini.get("SystemSet", "start_play_win_msg")
+        if play_win_check and "true" == play_win_check.lower():
+            self.start_play_win_msg.set_active(True)
+        # 启动播放窗口提示.
         # Font set.        
         self.font_set_button_label = Label(_("Font"))
-        #DEFAULT_FONT
+        # DEFAULT_FONT 默认字体.
         font_set_items = []
-
         fontmap = pangocairo.cairo_font_map_get_default()
-        i = 1
+        font_i = 1
         for font_map in fontmap.list_families():
-            font_set_items.append([font_map.get_name(), i])
-            i += 1
-        
+            font_set_items.append([font_map.get_name(), font_i])
+            font_i += 1
         combo_width = 200
         self.font_set_combo = ComboBox(font_set_items, combo_width)   
-        
         font_string = self.ini.get("SystemSet", "font")
+        # 获取配置文件中的 font类型.
         if font_string:
             self.font_set_combo.label.set_text(font_string)            
         else: # font_string return type None.    
             self.font_set_combo.label.set_text(DEFAULT_FONT) 
-            
+         
         font_set_combo_width = 120
-        # Font size.
+        # Font size. 字体大小.
         self.font_size_button_label = Label(_("Size"))
         font_set_items = []
         font_set_items_num = 1
@@ -475,54 +492,57 @@ class SystemSet(gtk.VBox):
             
         self.font_size_button_combo = ComboBox(font_set_items, 160)
         font_size_string = self.ini.get("SystemSet", "font_size")
+        # 获取配置文件中的字体大小.
         if font_size_string:
             self.font_size_button_combo.label.set_text(font_size_string)            
         else:    
             self.font_size_button_combo.label.set_text("8")
-            
-                
-        system_set_x = 20
-        system_set_y = 40
-        system_set_width = 0
-        self.fixed.put(self.label, system_set_x, TITLE_HEIGHT_PADDING)
-        self.fixed.put(self.heparator_hbox, heparator_x, heparator_y)        
-        self.fixed.put(self.pause_play_button, 
-                       system_set_x, system_set_y)
-        # Minimize pause plaing.
-        system_set_width = self.pause_play_button.get_size_request()[0]
-        self.fixed.put(self.pause_play_button_label, 
-                       system_set_x + system_set_width, system_set_y)
-        # Screen messagebox.
-        system_set_y += 40
-        screen_msg_x_padding = 8
-        self.fixed.put(self.screen_msg_button,
-                       system_set_x + screen_msg_x_padding, system_set_y)
-        # Font set.
-        system_set_y += 25
-        font_set_x_padding = 7
-        self.fixed.put(self.font_set_button_label, 
-                       system_set_x + font_set_x_padding, system_set_y)
-        system_set_y += 20
-        self.fixed.put(self.font_set_combo, 
-                       system_set_x + font_set_x_padding, system_set_y)
-        # Font Size.
-        font_size_x_padding = system_set_x + font_set_x_padding + font_set_combo_width + self.font_set_button_label.get_size_request()[0] + 60
-        system_set_y -= 20
-        self.fixed.put(self.font_size_button_label,
-                       font_size_x_padding, system_set_y)
-        system_set_y += 20
-        self.fixed.put(self.font_size_button_combo,
-                       font_size_x_padding, system_set_y)
-        #        
-        
-        self.pack_start(self.fixed)
+        #
+        self.font_hbox_align = gtk.Alignment(0, 0, 1, 1)
+        self.font_hbox_align.set_padding(5, 0, 32, 0)
+        self.font_hbox = gtk.HBox()
+        self.font_hbox_align.add(self.font_hbox)
+        self.font_type_vbox = gtk.VBox()
+        self.font_size_vbox = gtk.VBox()
+        #
+        self.font_type_vbox.pack_start(self.font_set_button_label, False, False) 
+        self.font_type_vbox.pack_start(self.font_set_combo, False, False, padding=5) 
+        #
+        self.font_size_vbox.pack_start(self.font_size_button_label, False, False)
+        self.font_size_vbox.pack_start(self.font_size_button_combo, False, False, padding=5)
+        #
+        self.font_hbox.pack_start(self.font_type_vbox, False, False)
+        self.font_hbox.pack_start(self.font_size_vbox, False, False, padding=20)
+        #
+        check_box_align = gtk.Alignment(0, 0, 1, 1)
+        check_box_align.set_padding(5, 0, 5, 0)
+        check_box = gtk.VBox(spacing=10)
+        check_box_align.add(check_box)
+        # check_box.
+        check_box.pack_start(self.start_sys_bubble_msg, False, False)
+        check_box.pack_start(self.start_play_win_msg, False, False)
+        self.pack_start(title_box_align, False, False)
+        self.pack_start(check_box_align, False, False)
+        self.pack_start(self.font_hbox_align, False, False)
         
     def get_system_set_state(self):           
         system_set_dict = {}
-        #
-        system_set_dict["minimize_pause_play"] = self.pause_play_button.get_active()
+        # 保存 获取启用系统气泡提示 bool.
+        system_set_dict["start_sys_bubble_msg"] = self.start_sys_bubble_msg.get_active() 
+        # 保存 获取启用播放窗口提示 bool.
+        system_set_dict["start_play_win_msg"] = self.start_play_win_msg.get_active()
+        # 控件布局.
+        play_win_check = self.start_play_win_msg.get_active()
+        # 设置 启动播放窗口提示 的设置.
+        self.font_set_button_label.set_sensitive(play_win_check)
+        self.font_set_combo.set_sensitive(play_win_check)
+        self.font_size_button_label.set_sensitive(play_win_check)
+        self.font_size_button_combo.set_sensitive(play_win_check)
+        # 保存 字体类型. 
         system_set_dict["font"] = self.font_set_combo.label.get_text()
+        # 保存 字体大小.
         system_set_dict["font_size"] = self.font_size_button_combo.label.get_text()
+        #
         return system_set_dict
         
 class PlayControl(gtk.VBox):       
