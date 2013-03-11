@@ -68,6 +68,8 @@ from video_format_conv.conv_task_gui import ConvTAskGui
 from cdrom.cdrom import (Service, get_dvd_title_info, get_iso_type)
 from find_as import AsFileName
 import threading
+import pynotify
+import sys
 import gtk
 import os
 from tooltip import tooltip_text
@@ -647,7 +649,21 @@ class PlayerBox(object):
             self.screen_pop_menu.hide_menu()
                             
     def messagebox(self, text):
-        self.window_tool_tip.show(text)
+        path = os.path.abspath(os.path.dirname(sys.argv[0]))
+        image_path = os.path.join(path, "logo_48.png")
+        print "image_path:", image_path
+        self.notify_msgbox(_("deepin-media-player"),
+                           str(text), image_path)
+        #self.window_tool_tip.show(text)
+
+    def notify_msgbox(self, title, msg, icon_path):
+        try:
+            pynotify.init("deepin-media-player-notify")
+            msg = pynotify.Notification(title, msg, "")
+            msg.set_hint_string("image-path", icon_path)
+            msg.show()
+        except Exception, e:
+            print "messagebox[error]:", e
 
     def toolbar2_panel_expose(self, widget, event):
         cr = widget.window.cairo_create()
@@ -751,7 +767,7 @@ class PlayerBox(object):
             if volume_value != self.mp.volume:
                 self.mp.setvolume(volume_value)
                     
-            self.messagebox("%s:%s%s"%(_("Volume"), str(int(volume_value)), "%"))
+            #self.messagebox("%s:%s%s"%(_("Volume"), str(int(volume_value)), "%"))
             
     def volume_button_get_value_event(self, volume_button, value, volume_state):
         if MUTE_STATE == volume_state: # -1 -> stop play
@@ -760,16 +776,16 @@ class PlayerBox(object):
                     self.mp.nomute()                                       
                 else:    
                     self.mp.volumebool = True # mute: True  no mute: False.
-                self.messagebox(_("Mute: enabled"))    
+                #self.messagebox(_("Mute: enabled"))    
         else:
             if self.mp:
                 if STARTING_PLAY == self.mp.state:
                     self.mp.offmute()                                     
                     self.mp.setvolume(value)                    
-                    self.messagebox(str("%s:%s%s"%(_("Volume"), str(value), "%")))
+                    #self.messagebox(str("%s:%s%s"%(_("Volume"), str(value), "%")))
                 else:    
                     self.mp.volumebool = False
-                    self.messagebox(str("%s:%s%s"%(_("Volume"), str(value), "%")))
+                    #self.messagebox(str("%s:%s%s"%(_("Volume"), str(value), "%")))
                     
         self.bottom_toolbar.volume_button.value = value
         self.volume_button.value = value
@@ -955,7 +971,7 @@ class PlayerBox(object):
             self.volume_button.value = volume_value
             self.bottom_toolbar.volume_button.value = volume_value
             self.mp.setvolume(volume_value)
-            self.messagebox("%s:%s%s"%(_("Volume"), int(volume_value), "%"))
+            #self.messagebox("%s:%s%s"%(_("Volume"), int(volume_value), "%"))
         
     def key_set_mute(self):
         # print "key set mute..."        
@@ -965,7 +981,7 @@ class PlayerBox(object):
                 self.mp.offmute()
             else:    
                 self.mp.volumebool = False
-            self.messagebox("%s:%s%s"%(_("Volume"), str(int(self.mp.volume)), "%"))
+            #self.messagebox("%s:%s%s"%(_("Volume"), str(int(self.mp.volume)), "%"))
         else:
             self.volume_button.set_volume_mute()
             
@@ -973,7 +989,7 @@ class PlayerBox(object):
                 self.mp.nomute()
             else:    
                 self.mp.volumebool = True
-            self.messagebox(_("Mute: enabled"))
+            #self.messagebox(_("Mute: enabled"))
 
     def key_pre(self):
         # print "pre a key..."
@@ -1167,7 +1183,7 @@ class PlayerBox(object):
 
     '''play control panel.'''
     def stop_button_clicked(self, widget):
-        self.messagebox(_("Stop"))
+        #self.messagebox(_("Stop"))
         self.mp.quit()
 
     def start_button_clicked(self, widget, start_bit, pause_dvd=False):
@@ -1199,11 +1215,13 @@ class PlayerBox(object):
     def start_button_time_pause(self, pause_dvd): # start_button_clicked.
         if self.mp.pause_bool:
             if (not pause_dvd):
-                self.messagebox(_("Play"))
+                #self.messagebox(_("Play"))
+                pass
             self.mp.start_play(pause_dvd=pause_dvd)
         else:
             if not pause_dvd:
-                self.messagebox(_("Pause"))
+                #self.messagebox(_("Pause"))
+                pass
             self.mp.pause(pause_dvd=pause_dvd)
         return  False
 
@@ -2017,9 +2035,9 @@ class PlayerBox(object):
         # previwe window show position.
         move_x = self.x_root - self.preview.bg.get_allocation()[2]/2
         move_y = preview_y_padding
-        min_move_x = self.app.window.get_position()[0] 
-        max_move_x = min_move_x + self.app.window.allocation.width
-        bg_max_move_x = move_x + self.preview.bg.allocation.width 
+        min_move_x = self.app.window.get_position()[0] + 3
+        max_move_x = min_move_x + self.app.window.allocation.width - 4
+        bg_max_move_x = move_x + self.preview.bg.allocation.width
         mid_bg_w = self.preview.bg.allocation.width
         if move_x < (min_move_x): 
             offset = self.preview.bg.get_offset_mid_value() - (min_move_x - move_x)
@@ -2031,7 +2049,7 @@ class PlayerBox(object):
         self.preview.bg.set_offset(offset)
         move_x = max(min(move_x, max_move_x - mid_bg_w), min_move_x)
         
-        self.preview.move_preview(move_x, move_y)
+        self.preview.move_preview(move_x, move_y - 1)
 
     def show_preview_enter(self, widget, event):
         if STOPING_PLAY == self.mp.state:
@@ -3255,7 +3273,7 @@ class PlayerBox(object):
             self.volume_button.value = max(self.volume_button.value - volume_value, 0)
             
         self.mp.setvolume(self.volume_button.value)
-        self.messagebox("%s:%s%s"%(_("Volume"), int(self.volume_button.value), "%"))
+        #self.messagebox("%s:%s%s"%(_("Volume"), int(self.volume_button.value), "%"))
 
     # init_subtitles connect events.    
     def add_subtitle_event(self, subtitle, subtitle_path, index):
