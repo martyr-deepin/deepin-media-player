@@ -38,14 +38,14 @@ class PreViewWin(gtk.Window):
 
     def init_values(self):
         ARROW_WIDTH = 12
-        self.radius = 3
+        self.radius = 2
         self.arrow_width = ARROW_WIDTH
         self.arrow_height = ARROW_WIDTH/2 
         self.offset = 3
         self.alpha = 1.0
         # colors.
-        self.border_out_color = ("#ffffff", 0.5)
-        self.in_border_color = ("#232526", 1.0)
+        self.border_out_color = ("#ffffff", 0.3)
+        self.in_border_color = ("#000000", 1.0)
 
     def init_trayicon_settings(self):
         self.set_colormap(gtk.gdk.Screen().get_rgba_colormap())
