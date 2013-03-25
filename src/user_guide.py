@@ -20,7 +20,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from dtk.ui.slider import Wizard
+from dtk.ui.new_slider import Wizard
 from dtk.ui.utils import get_parent_dir
 import gtk
 import locale
@@ -38,15 +38,14 @@ def init_user_guide(callback=None):
         
     # Get image directory.
     image_dir = os.path.join(get_parent_dir(__file__, 1), "user_guide")
+    lang_dir  = os.path.join(image_dir, slide_lang)
 
     # Init user guide.
     user_guide = Wizard(
-        [os.path.join(image_dir, "preview_slide.png"),
-         os.path.join(image_dir, "online_slide.png"),
-         os.path.join(image_dir, "multi-mode_slide.png")],
-        [(os.path.join(image_dir, slide_lang, "preview_hover.png"), os.path.join(image_dir, slide_lang, "preview_normal.png")), 
-         (os.path.join(image_dir, slide_lang, "online_hover.png"), os.path.join(image_dir, slide_lang, "online_normal.png")), 
-         (os.path.join(image_dir, slide_lang, "multi-mode_hover.png"), os.path.join(image_dir, slide_lang, "multi-mode_normal.png"))],
+        [os.path.join(lang_dir, "%d.png" % i) for i in range(3)],
+        (os.path.join(image_dir, "dot_normal.png"),
+         os.path.join(image_dir, "dot_active.png"),             
+         ),
         callback
         )
     

@@ -3156,25 +3156,28 @@ class PlayerBox(object):
         
         
     def open_current_file_dir_path(self, list_view, list_item, column, offset_x, offset_y, single=False):
-        self.open_file_name = self.play_list_dict[list_item.title]
-        # hover color modify.        
-        if self.save_hover_item != list_item:
-            if self.save_hover_item != None:
-                self.save_hover_item.un_hover()
-            self.save_hover_item = list_item        
-            list_item.hover()
-        else:    
-            self.save_hover_item.hover()
-        #    
-        if single or self.save_double_item == list_item:
-            list_item.un_hover()
-        # listview 单击反色.
-        if single:    
-            if self.save_single_item:
-                self.save_single_item.single()
-            list_item.list_view = list_view
-            list_item.single()
-            self.save_single_item = list_item           
+        try:
+            self.open_file_name = self.play_list_dict[list_item.title]
+            # hover color modify.        
+            if self.save_hover_item != list_item:
+                if self.save_hover_item != None:
+                    self.save_hover_item.un_hover()
+                self.save_hover_item = list_item        
+                list_item.hover()
+            else:    
+                self.save_hover_item.hover()
+            #    
+            if single or self.save_double_item == list_item:
+                list_item.un_hover()
+            # listview 单击反色.
+            if single:    
+                if self.save_single_item:
+                    self.save_single_item.single()
+                list_item.list_view = list_view
+                list_item.single()
+                self.save_single_item = list_item           
+        except Exception, e:
+            print "open_current_dir....[error]:", e
             
     def leave_notify_event_list_view(self, widget, event):
         # if self.save_double_item:

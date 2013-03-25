@@ -66,7 +66,11 @@ class PlayList(gtk.VBox):
         self.play_list_vbox.pack_start(self.play_list_control_panel, False, False)
         
     def motion_mouse_move_event(self, listview, list_item, colume, offset_x, offset_y):
-        tooltip_text(listview, list_item.title)
+        try:
+            tooltip_text(listview, list_item.title)
+        except Exception, e:
+            print "motion_mouse_move_event[error]:", e
+            
     
     def draw_mask(self, cr, x, y, w, h):    
         cr.set_source_rgb(*color_hex_to_cairo("#1F1F1F"))# 101112
