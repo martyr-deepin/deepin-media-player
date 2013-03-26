@@ -30,7 +30,7 @@ class NewComboBox(ComboBox):
         "changed" : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_STRING,))
     }
     def __init__(self, fixed_width, droplist_height=80):        # fixed_width=
-        ComboBox.__init__(self, [["", 0]], droplist_height, fixed_width=fixed_width)
+        ComboBox.__init__(self, droplist_height=droplist_height, fixed_width=fixed_width)
         self.connect("item-selected", self.emit_connect_function)
         self.fixed_width = fixed_width
         self.items = []
@@ -52,17 +52,17 @@ class NewComboBox(ComboBox):
         temp_imtes.append([text, text])
         for item in self.items:
             temp_imtes.append([item[0], item[1]])
-        self.set_items(temp_imtes, 0, fixed_width=self.fixed_width)
+        self.add_items(temp_imtes, 0)
         
     def get_active_text(self):
         return self.label.get_text()
     
     def get_active(self):
-        return self.select_index
+        return self.get_select_index()
     
     def append_text(self, text):
         self.items.append([text, text])
-        self.set_items(self.items, 0, fixed_width=self.fixed_width)
+        self.set_items(self.items, 0)
         
     def clear_items(self):    
         self.items = []
