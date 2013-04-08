@@ -27,7 +27,7 @@ from dtk.ui.dialog import DialogBox, DIALOG_MASK_MULTIPLE_PAGE
 from dtk.ui.label  import Label
 from dtk.ui.button import Button
 from dtk.ui.tab_window import TabBox
-from dtk.ui.entry import InputEntry
+from dtk.ui.new_entry import InputEntry
 from dtk.ui.line import HSeparator
 from utils    import get_paly_file_type, length_to_time, get_paly_file_name
 from utils import get_file_size

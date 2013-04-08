@@ -27,7 +27,7 @@ from mplayer import get_home_path
 from dtk.ui.utils import propagate_expose, is_left_button
 from dtk.ui.dialog import DialogBox, DIALOG_MASK_MULTIPLE_PAGE
 from dtk.ui.button import Button
-from dtk.ui.entry import InputEntry, ShortcutKeyEntry
+from dtk.ui.new_entry import InputEntry, ShortcutKeyEntry
 from dtk.ui.combo import ComboBox
 from dtk.ui.draw import draw_vlinear
 from dtk.ui.label import Label
