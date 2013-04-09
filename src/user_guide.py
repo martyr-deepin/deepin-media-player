@@ -20,7 +20,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from dtk.ui.new_slider import Wizard
+from dtk.ui.slider import Wizard
 from dtk.ui.utils import get_parent_dir
 import gtk
 import locale

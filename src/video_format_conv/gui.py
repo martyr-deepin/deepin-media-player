@@ -24,7 +24,7 @@
 from skin import app_theme
 from dtk.ui.draw import draw_vlinear
 from dtk.ui.dialog import DialogBox, DIALOG_MASK_SINGLE_PAGE
-from dtk.ui.new_entry import InputEntry
+from dtk.ui.entry import InputEntry
 from dtk.ui.draw import draw_vlinear
 from file_choose_button import FileChooserButton
 from dtk.ui.button import Button
