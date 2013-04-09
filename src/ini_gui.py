@@ -24,21 +24,21 @@ from skin import app_theme
 from ini import Config
 from mplayer import get_home_path
 
-from dtk.ui.utils import propagate_expose, is_left_button
+from dtk.ui.utils import propagate_expose, is_left_button, color_hex_to_cairo
 from dtk.ui.dialog import DialogBox, DIALOG_MASK_MULTIPLE_PAGE
 from dtk.ui.button import Button
 from dtk.ui.entry import InputEntry, ShortcutKeyEntry
 from dtk.ui.combo import ComboBox
-from dtk.ui.draw import draw_vlinear
+from dtk.ui.draw import draw_vlinear, draw_text, draw_pixbuf
 from dtk.ui.label import Label
 from dtk.ui.box import BackgroundBox, ImageBox
 from dtk.ui.button import CheckButton, RadioButton
 from dtk.ui.line import HSeparator
-from dtk.ui.scrolled_window import ScrolledWindow
-from dtk.ui.treeview import TreeView, TreeViewItem
+from dtk.ui.treeview import TreeView, TreeItem
 
 import gtk
 import pangocairo
+import pango
 from locales import _
 
 font_test_window = gtk.Window(gtk.WINDOW_POPUP)
@@ -70,6 +70,16 @@ WINDOW_ADAPT_VIDEO_STATE = "2"
 UP_CLOSE_VIDEO_STATE = "3"
 AI_FULL_VIDEO_STATE = "4"
 
+def draw_single_mask(cr, x, y, width, height, color_name):
+    if color_name.startswith("#"):
+        color = color_name
+    else:    
+        color = app_theme.get_color(color_name).get_color()
+    cairo_color = color_hex_to_cairo(color)
+    cr.set_source_rgb(*cairo_color)
+    cr.rectangle(x, y, width, height)
+    cr.fill()
+    
 def all_widget_to_widgets(widget_left, widget_right):
     return map(lambda left, right:(left, right), widget_left, widget_right)
 
@@ -95,6 +105,217 @@ def create_separator_box(padding_x=0, padding_y=0):
 
 import gobject
 
+class ExpandItem(TreeItem):
+    
+    def __init__(self, title, allocate_widget=None, column_index=0):
+        TreeItem.__init__(self)
+        self.column_index = column_index
+        self.side_padding = 5
+        self.item_height = 37
+        self.title = title
+        self.item_width = 36
+        self.allocate_widget = allocate_widget
+        self.child_items = []
+        
+        self.title_padding_x = 30
+        self.arrow_padding_x = 10        
+        
+        # Init dpixbufs.
+        self.down_normal_dpixbuf = app_theme.get_pixbuf("arrow/down_normal.png")
+        self.down_press_dpixbuf = app_theme.get_pixbuf("arrow/down_press.png")
+        self.right_normal_dpixbuf = app_theme.get_pixbuf("arrow/right_normal.png")
+        self.right_press_dpixbuf = app_theme.get_pixbuf("arrow/right_press.png")
+        
+        
+    def get_height(self):    
+        return self.item_height
+    
+    def get_column_widths(self):
+        return (self.item_width,)
+    
+    def get_column_renders(self):
+        return (self.render_title,)
+    
+    def unselect(self):
+        self.is_select = False
+        self.emit_redraw_request()
+        
+    def emit_redraw_request(self):    
+        if self.redraw_request_callback:
+            self.redraw_request_callback(self)
+            
+    def select(self):        
+        self.is_select = True
+        self.emit_redraw_request()
+        
+    def render_title(self, cr, rect):        
+        # Draw select background.
+            
+        if self.is_select:    
+            draw_single_mask(cr, rect.x, rect.y, rect.width, rect.height, "globalItemHighlight")
+        elif self.is_hover:
+            draw_single_mask(cr, rect.x, rect.y, rect.width, rect.height, "globalItemHover")
+        
+        if self.is_select:
+            text_color = "#FFFFFF"
+        else:    
+            text_color = app_theme.get_color("labelText").get_color()
+            
+        # draw arrow    
+        if self.is_expand:    
+            if self.is_select:
+                arrow_pixbuf = self.down_press_dpixbuf.get_pixbuf()
+            else:
+                arrow_pixbuf = self.down_normal_dpixbuf.get_pixbuf()
+        else:        
+            if self.is_select:
+                arrow_pixbuf = self.right_press_dpixbuf.get_pixbuf()
+            else:
+                arrow_pixbuf = self.right_normal_dpixbuf.get_pixbuf()
+                
+        arrow_x = rect.x + self.arrow_padding_x
+        arrow_y = rect.y + (rect.height - arrow_pixbuf.get_height()) / 2
+        draw_pixbuf(cr, arrow_pixbuf, arrow_x, arrow_y)
+        draw_text(cr, self.title, rect.x + self.title_padding_x, rect.y, 
+                  rect.width - self.title_padding_x, rect.height, text_size=10, 
+                  text_color = text_color,
+                  alignment=pango.ALIGN_LEFT)    
+        
+    def unhover(self, column, offset_x, offset_y):
+        self.is_hover = False
+        self.emit_redraw_request()
+    
+    def hover(self, column, offset_x, offset_y):
+        self.is_hover = True
+        self.emit_redraw_request()
+        
+    def button_press(self, column, offset_x, offset_y):
+        pass
+    
+    def single_click(self, column, offset_x, offset_y):
+        if self.is_expand:
+            self.unexpand()
+        else:
+            self.expand()
+
+    def double_click(self, column, offset_x, offset_y):
+        # if self.is_expand:
+        #     self.unexpand()
+        # else:
+        #     self.expand()
+        pass
+    
+    def add_child_item(self):        
+        self.add_items_callback(self.child_items, self.row_index + 1)
+    
+    def delete_child_item(self):
+        self.delete_items_callback(self.child_items)
+        
+    def expand(self):
+        self.is_expand = True
+        self.add_child_item()
+        self.emit_redraw_request()
+    
+    def unexpand(self):
+        self.is_expand = False
+        self.delete_child_item()
+        self.emit_redraw_request()
+        
+    def try_to_expand(self):    
+        if not self.is_expand:
+            self.expand()
+        
+    def add_childs(self, child_items, pos=None, expand=False):    
+        items = []
+        for child_item in child_items:
+            items.append(NormalItem(child_item, self.column_index + 1))
+            
+        for item in items:    
+            item.parent_item = self
+            
+        if pos is not None:    
+            for item in items:
+                self.child_items.insert(pos, item)
+                pos += 1
+        else:            
+            self.child_items.extend(items)
+            
+        if expand:    
+            self.expand()
+            
+    def __repr__(self):        
+        return "<ExpandItem %s>" % self.title
+        
+class NormalItem(TreeItem):
+    '''
+    class docs
+    '''
+	
+    def __init__(self, title, column_index=0):
+        '''
+        init docs
+        '''
+        TreeItem.__init__(self)
+        self.column_index = column_index
+        self.side_padding = 5
+        if column_index > 0:
+            self.item_height = 30
+        else:    
+            self.item_height = 37
+            
+        self.title = title
+        self.item_width = 36
+        self.title_padding_x = 30
+        self.column_offset = 15
+        
+    def get_height(self):
+        return self.item_width
+    
+    def get_column_widths(self):
+        return [-1]
+    
+    def get_column_renders(self):
+        return [self.render_title]
+    
+    def unselect(self):
+        self.is_select = False
+        self.emit_redraw_request()
+        
+    def unhover(self, column, offset_x, offset_y):
+        self.is_hover = False
+        self.emit_redraw_request()
+    
+    def hover(self, column, offset_x, offset_y):
+        self.is_hover = True
+        self.emit_redraw_request()
+        
+    def select(self):        
+        self.is_select = True
+        self.emit_redraw_request()
+        
+    def emit_redraw_request(self):    
+        if self.redraw_request_callback:
+            self.redraw_request_callback(self)
+            
+    def render_title(self, cr, rect):
+        if self.is_select:    
+            draw_single_mask(cr, rect.x, rect.y, rect.width, rect.height, "globalItemHighlight")
+        elif self.is_hover:
+            draw_single_mask(cr, rect.x, rect.y, rect.width, rect.height, "globalItemHover")
+        
+        if self.is_select:
+            text_color = "#FFFFFF"
+        else:    
+            text_color = app_theme.get_color("labelText").get_color()
+            
+            
+        column_offset = self.column_offset * self.column_index    
+        draw_text(cr, self.title, rect.x + self.title_padding_x + column_offset,
+                  rect.y, rect.width - self.title_padding_x - column_offset ,
+                  rect.height, text_size=10, 
+                  text_color = text_color,
+                  alignment=pango.ALIGN_LEFT)    
+        
 class IniGui(DialogBox):
     __gsignals__ = {
         "config-changed" : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE,
@@ -113,33 +334,36 @@ class IniGui(DialogBox):
         self.main_vbox = gtk.VBox()
         self.main_hbox = gtk.HBox()
         self.configure = Configure()
-        self.scrolled_window = ScrolledWindow()
         tree_view_width = 132 
-        self.scrolled_window.set_size_request(tree_view_width, 1)        
-        self.tree_view = TreeView(height=36, font_x_padding=35, arrow_x_padding=80)
-        self.tree_view.set_size_request(tree_view_width, 1)
+        
+        self.tree_view = TreeView(enable_drag_drop=False, enable_multiple_select=False)
+        self.tree_view.set_expand_column(0)
+        
+        self.playback_item = NormalItem(_("Playback"))
+        self.screenshot_item = NormalItem(_("Screenshot"))
+        
+        self.keyboard_expand_item = ExpandItem(_("Keyboard"), None)
+        self.keyboard_expand_item.add_childs([_("Video Control"),
+                                              _("Subtitle"),
+                                              _("Other"),
+                                              ])
+        
+        self.tree_view.add_items(
+            [self.playback_item, 
+             NormalItem(_("General")), 
+             self.keyboard_expand_item,
+             NormalItem(_("Subtitles")),
+             self.screenshot_item,
+             NormalItem(_("About us"))]
+            )
         self.tree_view.draw_mask = self.draw_treeview_mask
+        self.tree_view_align = gtk.Alignment()
+        self.tree_view_align.set(0, 0, 1, 1,)
+        self.tree_view_align.set_padding(0, 1, 0, 0)
+        self.tree_view_align.add(self.tree_view)
         
         # TreeView event.
-        self.tree_view.connect("single-click-item", self.set_con_widget)
-        
-        self.scrolled_window_align = gtk.Alignment()
-        self.scrolled_window_align.set(1, 1, 1, 1)
-        self.scrolled_window_align.set_padding(0, 1, 0, 0)
-        self.scrolled_window_align.add(self.scrolled_window)
-        self.scrolled_window.add_child(self.tree_view)
-        
-        # TreeView add node.
-        self.tree_view.add_item(None, TreeViewItem(_("Playback"), has_arrow=False))
-        self.tree_view.add_item(None, TreeViewItem(_("General"), has_arrow=False))
-        key = self.tree_view.add_item(None, TreeViewItem(_("Keyboard")))
-        self.tree_view.add_item(key, TreeViewItem(_("Video Control"), has_arrow=False))
-        self.tree_view.add_item(key, TreeViewItem(_("Subtitle"), has_arrow=False)) # new
-        self.tree_view.add_item(key, TreeViewItem(_("Other"), has_arrow=False))        
-        
-        self.tree_view.add_item(None, TreeViewItem(_("Subtitles"), has_arrow=False))
-        self.tree_view.add_item(None, TreeViewItem(_("Screenshot"), has_arrow=False))
-        self.tree_view.add_item(None, TreeViewItem(_("About us"), has_arrow=False))
+        self.tree_view.connect("button-press-item", self.set_con_widget)
 
         category_box = gtk.VBox()
         background_box = BackgroundBox()
@@ -147,7 +371,7 @@ class IniGui(DialogBox):
         background_box.draw_mask = self.draw_treeview_mask
         category_box.pack_start(background_box, False, False)
         
-        category_box.pack_start(self.scrolled_window_align, True, True)
+        category_box.pack_start(self.tree_view_align, True, True)
         
         self.main_hbox.pack_start(category_box, False, False)
         self.main_hbox.pack_start(self.configure)
@@ -165,12 +389,11 @@ class IniGui(DialogBox):
                 
     def set(self, type_str):    
         self.configure.set(type_str)
-        # if index is not None:
         
-        highlight_dict = {_("Playback"):0,
-                          _("Screenshot"):4}
-        index = highlight_dict[type_str]
-        self.tree_view.set_highlight_index(index)
+        if type_str == _("Playback"):
+            self.tree_view.select_items([self.playback_item])
+        elif type_str == _("Screenshot"):
+            self.tree_view.select_items([self.screenshot_item])
         
     def press_save_ini_file(self, widget, event):    
         gtk.timeout_add(500, self.save_configure_file_ok_clicked)
@@ -249,10 +472,9 @@ class IniGui(DialogBox):
         # quit configure window.
         self.destroy()
         
-    def set_con_widget(self, treeview, item):
+    def set_con_widget(self, treeview, item, column, offset_x, offset_y):
         # Configure class Mode.
-        self.configure.set(item.get_title())
-        
+        self.configure.set(item.title)
         
 class Configure(gtk.VBox):
     def __init__(self):
@@ -481,7 +703,6 @@ class SystemSet(gtk.VBox):
         else: # font_string return type None.    
             self.font_set_combo.label.set_text(DEFAULT_FONT) 
          
-        font_set_combo_width = 120
         # Font size. 字体大小.
         self.font_size_button_label = Label(_("Size"))
         font_set_items = []

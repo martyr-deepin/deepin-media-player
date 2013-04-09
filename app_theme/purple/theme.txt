@@ -15,6 +15,9 @@
  "buttonBorderPrelight" : "#FFFFFF",
  "buttonBorderActive" : "#FFFFFF",
  "buttonFont" : "#000000",
+ "globalItemHover" : "#e6d1ec",
+ "globalItemSelect" : "#e0bbe7",
+ "globalItemHighlight" : "#c398c9",
   "simpleSelectItem" : "#FFFFFF",
  },	
  "alpha_colors" : {
