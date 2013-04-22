@@ -26,7 +26,7 @@ import gtk
 import locale
 import os
 
-def init_user_guide(callback=None):
+def init_user_guide(callback=None, show_button=True):
     # Get language in current environment.
     (lang, _) = locale.getdefaultlocale()
     if lang == "zh_CN":
@@ -44,8 +44,10 @@ def init_user_guide(callback=None):
     user_guide = Wizard(
         [os.path.join(lang_dir, "%d.png" % i) for i in range(3)],
         (os.path.join(image_dir, "dot_normal.png"),
-         os.path.join(image_dir, "dot_active.png"),             
-         ),
+         os.path.join(image_dir, "dot_active.png")),
+        (os.path.join(lang_dir, "start_normal.png"),
+         os.path.join(lang_dir, "start_press.png")),
+        show_button,
         callback
         )
     

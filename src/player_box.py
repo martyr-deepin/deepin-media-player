@@ -2621,7 +2621,7 @@ class PlayerBox(object):
                                      # (None, "字幕", self.subtitle_menu),
                                      (None, _("Take Screenshots"), self.sort_menu),
                                      (None, _("Format conversion"), format_menu),
-                                     (None, _("View New Features"), init_user_guide),
+                                     (None, _("View New Features"), lambda : init_user_guide(show_button=False)),
                                      (menu_setting_pixbufs, _("Preferences"), self.config_gui),
                                      # (None, "总在最前", None),
                                      # (None, "自定义换肤", None),
