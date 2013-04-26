@@ -37,6 +37,25 @@ class PluginYouku(object):
 
     def __init_values(self):
         self.show_check = auto_check
+        self.tree_view = self.this.gui.play_list_view.tree_view
+        self.note_book = self.this.gui.play_list_view.note_book
+        self.note_book.show_title()
+        # test tree view.
+        node1 = self.tree_view.nodes.add("优酷视频")
+        dianshiju = node1.nodes.add("电视剧")
+        node1.nodes.add("电影")
+        node1.nodes.add("综艺")
+        node1.nodes.add("音乐")
+        node1.nodes.add("动漫")
+        # 电视剧?
+        xinshangying = dianshiju.nodes.add("新上映")
+        dianshiju.nodes.add("明星")
+        dianshiju.nodes.add("大陆剧")
+        dianshiju.nodes.add("韩剧")
+        dianshiju.nodes.add("TVB")
+        #
+        xinshangying.nodes.add("桐柏英雄")
+        xinshangying.nodes.add("血雨母子情")
 
     def __init_gui(self):
         self.scan_win = gtk.Window(gtk.WINDOW_TOPLEVEL)

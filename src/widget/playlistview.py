@@ -56,6 +56,7 @@ class PlayListView(object):
         self.list_view.columns[0].width = 100
         self.list_view.columns[1].width = 75
         #
+        self.note_book.hide_title()
         self.tree_view.paint_nodes_event = self.__treeview_paint_nodes_event
         #
         self.list_scroll_win.add_with_viewport(self.list_view)
@@ -64,23 +65,6 @@ class PlayListView(object):
         self.note_book.add_layout2(self.tree_scroll_win)
         #self.play_list_vbox.pack_start(self.scroll_win, True, True)
         self.play_list_vbox.pack_start(self.note_book, True, True)
-
-        # test tree view.
-        node1 = self.tree_view.nodes.add("优酷视频")
-        dianshiju = node1.nodes.add("电视剧")
-        node1.nodes.add("电影")
-        node1.nodes.add("综艺")
-        node1.nodes.add("音乐")
-        node1.nodes.add("动漫")
-        # 电视剧?
-        xinshangying = dianshiju.nodes.add("新上映")
-        dianshiju.nodes.add("明星")
-        dianshiju.nodes.add("大陆剧")
-        dianshiju.nodes.add("韩剧")
-        dianshiju.nodes.add("TVB")
-        #
-        xinshangying.nodes.add("桐柏英雄")
-        xinshangying.nodes.add("血雨母子情")
 
     def __listview_on_draw_sub_item(self, e):
         color = self.listview_color.get_color()

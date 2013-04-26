@@ -41,6 +41,7 @@ class NoteBook(gtk.Container):
         self.title_child2.set_parent(self)
         self.title_w = 120
         self.title_h = 30
+        self.save_title_h = self.title_h
         #
         self.title_child1.connect("clicked", self.__title_child1_clicked)
         self.title_child2.connect("clicked", self.__title_child2_clicked)
@@ -218,6 +219,13 @@ class NoteBook(gtk.Container):
 
     def do_remove(self, widget):
         pass
+
+    def hide_title(self):
+        self.save_title_h = self.title_h
+        self.title_h = 0
+
+    def show_title(self):
+        self.title_h = self.save_title_h
 
 gobject.type_register(NoteBook)
 
