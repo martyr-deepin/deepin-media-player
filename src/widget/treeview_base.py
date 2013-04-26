@@ -43,11 +43,30 @@ class TreeViewChild(object):
     w = 80
     h = 40
 
-class TreeViewBase(gtk.Container):
+#class TreeViewBase(gtk.Container):
+class TreeViewBase(gtk.Button):
     def __init__(self):
-        gtk.Container.__init__(self)
+        #gtk.Container.__init__(self)
+        gtk.Button.__init__(self)
         self.__init_values()
+        self.__init_events()
 
+    def __init_events(self):
+        self.connect("realize",              self.__treeview_realize_event)
+        self.connect("button-press-event",   self.__treeview_button_press_event)
+        self.connect("expose-event",         self.__treeview_expose_event)
+        self.connect("motion-notify-event",  self.__treeview_motion_notify_event)
+
+    def __treeview_realize_event(self, widget):
+        widget.set_realized(True)
+        self.__init_scroll_win()
+
+    def __treeview_button_press_event(self, widget, event):
+        node = self.__nodes_list[int(e.y/self.node_height)]
+        node.is_expanded = not node.is_expanded
+        self.tree_view_queue_draw_area()
+        return False
+    
     def __init_values(self):
         self.add_events(gtk.gdk.ALL_EVENTS_MASK)
         #
@@ -140,102 +159,45 @@ class TreeViewBase(gtk.Container):
     def emit(self, event_name, *arg):
         if self.__function_dict.has_key(event_name):
             self.__function_dict[event_name](*arg)
-        
-    def do_map(self):
-        print "do..map.."
-        gtk.Container.do_map(self)
-        self.set_flags(gtk.MAPPED)
-        #
-        self.window.show()
 
-    def do_umap(self):
-        print "do_map:"
-        gtk.Container.do_umap(self)
-        self.window.hide()
-
-    def do_realize(self):
-        print "do_realize..."
-        self.set_realized(True)
-        #
-        self.__init_window()
-        #
-        self.__init_children()
-        #
+    def __init_scroll_win(self):
         self.scroll_win = get_match_parent(self, ["ScrolledWindow"])
         self.hadjustment = self.scroll_win.get_hadjustment()
         self.vadjustment = self.scroll_win.get_vadjustment()
         self.hadjustment.connect("value-changed", self.__list_view_adjustments_changed)
         self.vadjustment.connect("value-changed", self.__list_view_adjustments_changed)
-        self.queue_resize()
 
     def __list_view_adjustments_changed(self, adjustments):
         self.tree_view_queue_draw_area()
 
-    def __init_window(self):
-        self.window = gdk.Window(
-            self.get_parent_window(),
-            window_type=gdk.WINDOW_CHILD,
-            x=self.allocation.x,
-            y=self.allocation.y,
-            width=self.allocation.width,
-            height=self.allocation.height,
-            colormap=self.get_colormap(),
-            wclass=gdk.INPUT_OUTPUT,
-            visual=self.get_visual(),
-            event_mask=(self.get_events() 
-            | gtk.gdk.VISIBILITY_NOTIFY
-            | gdk.EXPOSURE_MASK
-            | gdk.SCROLL_MASK
-            | gdk.POINTER_MOTION_MASK
-            | gdk.ENTER_NOTIFY_MASK
-            | gdk.LEAVE_NOTIFY_MASK
-            | gdk.BUTTON_PRESS_MASK
-            | gdk.BUTTON_RELEASE_MASK
-            | gdk.KEY_PRESS_MASK
-            | gdk.KEY_RELEASE_MASK
-            ))
-        self.window.set_user_data(self)
-        self.style.set_background(self.window, gtk.STATE_NORMAL)
-
-
-    def __init_children(self):
-        for child in self.children:
-            print "child:", child.widget.set_parent_window(self.window)
-
-    def do_unrealize(self):
+    def __treeview_expose_event(self, w, e):
+        cr = w.window.cairo_create()
+        start_index  = max(int(self.scroll_win.get_vadjustment().get_value() / self.node_height), 0)
+        end_index    = (start_index + (self.scroll_win.allocation.height) / self.node_height) + 1
+        y_padding = 0 + start_index * self.node_height
+        # draw background.
+        x = 0
+        y = 0 + start_index * self.node_height 
+        w = self.scroll_win.allocation.width
+        h = self.scroll_win.allocation.height + self.node_height * 2
+        self.paint_nodes_background(cr, x, y, w, h)
+        # draw node.
+        for node in self.__nodes_list[start_index:end_index]:
+            node_event = NodesEvent()
+            node_event.cr = cr
+            node_event.node = node
+            node_event.x = 0
+            node_event.y = y_padding
+            node_event.w = self.scroll_win.allocation.width
+            node_event.h = self.node_height #self.scroll_win.allocation.height
+            '''
+            node_event.draw_text = draw_text # 写成 set/get , 忽略 cr参数.
+            node_event.draw_pixbuf = draw_pixbuf # 写成 set/get , 忽略 cr参数.
+            '''
+            self.paint_nodes_event(node_event)
+            y_padding += self.node_height
         #
-        pass
-
-    def do_expose_event(self, e):
-        gtk.Container.do_expose_event(self, e)
-        if e.window == self.window:
-            cr = self.window.cairo_create()
-            start_index  = max(int(self.scroll_win.get_vadjustment().get_value() / self.node_height), 0)
-            end_index    = (start_index + (self.scroll_win.allocation.height) / self.node_height) + 1
-            y_padding = 0 + start_index * self.node_height
-            # draw background.
-            x = 0
-            y = 0 + start_index * self.node_height 
-            w = self.scroll_win.allocation.width
-            h = self.scroll_win.allocation.height + self.node_height * 2
-            self.paint_nodes_background(cr, x, y, w, h)
-            # draw node.
-            for node in self.__nodes_list[start_index:end_index]:
-                node_event = NodesEvent()
-                node_event.cr = cr
-                node_event.node = node
-                node_event.x = 0
-                node_event.y = y_padding
-                node_event.w = self.scroll_win.allocation.width
-                node_event.h = self.node_height #self.scroll_win.allocation.height
-                '''
-                node_event.draw_text = draw_text # 写成 set/get , 忽略 cr参数.
-                node_event.draw_pixbuf = draw_pixbuf # 写成 set/get , 忽略 cr参数.
-                '''
-                self.paint_nodes_event(node_event)
-                y_padding += self.node_height
-        #
-        return False
+        return True
 
     def __paint_nodes_background(self, cr, x, y, w, h):
         cr.set_source_rgba(0, 0, 0, 0.85)
@@ -305,14 +267,14 @@ class TreeViewBase(gtk.Container):
                 return True
         return False
 
-    def do_motion_notify_event(self, e):
+    def __treeview_motion_notify_event(self, w, e):
         #print "do--mo--no--ev", e.x
         if e.window == self.window:
             index = int(e.y) / self.node_height
             self.tree_view_queue_draw_area()
         return False
 
-    def do_button_press_event(self, e):
+    def __treeview_button_press_event(self, w, e):
         #node.is_expanded = False #not node.is_expanded
         #node.is_expanded = True
         node = self.__nodes_list[int(e.y/self.node_height)]
@@ -320,77 +282,6 @@ class TreeViewBase(gtk.Container):
         self.tree_view_queue_draw_area()
         return False
 
-
-    def do_button_release_event(self, e):
-        #print "do_button_release_event..."
-        return False
-
-    def do_enter_notify_event(self, e):
-        #print "do_enter_notify_event..."
-        return False
-
-    def do_leave_notify_event(self, e):
-        #print "do_leave_notify_event..."
-        return False
-
-    def do_key_press_event(self, e):
-        print "do_key_press_event..."
-
-    def do_key_release_event(self, e):
-        print "do_key_release_event..."
-
-    def do_size_request(self, req):
-        '''
-        for child in self.children:
-            child.widget.size_request()
-        '''
-
-    def do_size_allocate(self, allocation):
-        print "do_size_allocate..."
-        gtk.Container.do_size_allocate(self, allocation)
-        '''
-        for child in self.children:
-            allocation = gdk.Rectangle()
-            allocation.x  = child.x
-            allocation.y  = child.y
-            allocation.width = child.w 
-            allocation.height = child.h 
-            child.widget.size_allocate(allocation)
-        '''
-        #
-        if self.get_realized():
-            self.window.move_resize(
-                    self.allocation.x,
-                    self.allocation.y,
-                    self.allocation.width,
-                    self.allocation.height)
-
-    def do_show(self):
-        gtk.Container.do_show(self)
-        #self.edit_entry.set_visible(False)
-
-    def do_destroy(self):
-        print "do_destroy..."
-
-    def do_forall(self, include_internals, callback, data):
-        '''
-        for child in self.children:
-            callback(child.widget, data)
-        '''
-        pass
-
-    def add_widget(self, child, x=0, y=0, w=0, h=0):
-        if self.window:
-            child.set_parent_window(self.window)
-        else:
-            child.set_parent(self)
-        tree_view_child = TreeViewChild()
-        tree_view_child.widget = child
-        tree_view_child.x = x
-        tree_view_child.y = y
-        tree_view_child.w = max(w, 80)
-        tree_view_child.h = max(h, self.node_height)
-        self.children.append(tree_view_child)
 
     ############################################################
     def delete(self, node): # 删除数据.
