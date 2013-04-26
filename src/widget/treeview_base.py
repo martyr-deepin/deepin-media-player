@@ -645,7 +645,7 @@ if __name__ == "__main__":
         else:
             pixbuf = gtk.gdk.pixbuf_new_from_file("logo.png")
             pixbuf = pixbuf.scale_simple(e.h, e.h, gtk.gdk.INTERP_BILINEAR)
-            draw_pixbuf(e.cr, pixbuf, e.x + e.w/2 - pixbuf.get_width()/2 + e.node.leave * e.h, e.y)
+            draw_pixbuf(e.cr, pixbuf, e.x + e.w/2 - pixbuf.get_width()/2 + (e.node.leave - 1)* e.h, e.y)
             draw_text(e.cr, 
                       e.node.text, 
                       e.x + e.w/2 - get_text_size(e.node.text)[1]/2 + pixbuf.get_width() + e.node.leave * e.h,
@@ -655,30 +655,24 @@ if __name__ == "__main__":
     win = gtk.Window(gtk.WINDOW_TOPLEVEL)
     win.set_size_request(300, 300)
     treeview_base = TreeViewBase()
-    treeview_base.paint_nodes_event = test_paint_nodes_event
+    #treeview_base.paint_nodes_event = test_paint_nodes_event
     scroll_win = gtk.ScrolledWindow()
     #
-    node1 = treeview_base.nodes.add("小学")
-    node2 = treeview_base.nodes.add("初中")
-    node3 = treeview_base.nodes.add("高中")
-    node4 = treeview_base.nodes.add("大学")
-    node5 = treeview_base.nodes.add("社会")
-    for i in range(1, 10000):
-        treeview_base.nodes.add("test" + str(i))
-    print treeview_base.nodes[9999].text
-    for i in range(1, 7):
-        node1.nodes.add(str(i) + "年级")
-        node1.nodes[0].nodes.add("1年级(" + str(i) + ")班")
-    node1.nodes[0].nodes[0].nodes.add("小明")
-    node1.nodes[0].nodes[0].nodes.add("小王")
-    node1.nodes[0].nodes[0].nodes.add("小张")
-    node1.nodes[0].nodes[0].nodes.add("小红")
-    node1.nodes[0].nodes[0].is_expanded = True
-    for i in range(1, 4):
-        node2.nodes.add("初" + str(i))
-        node3.nodes.add("高" + str(i))
-        node4.nodes.add("大" + str(i))
-        node4.nodes[0].nodes.add("软件班级ZB4890" + str(i))
+    node1 = treeview_base.nodes.add("优酷视频")
+    dianshiju = node1.nodes.add("电视剧")
+    node1.nodes.add("电影")
+    node1.nodes.add("综艺")
+    node1.nodes.add("音乐")
+    node1.nodes.add("动漫")
+    # 电视剧?
+    xinshangying = dianshiju.nodes.add("新上映")
+    dianshiju.nodes.add("明星")
+    dianshiju.nodes.add("大陆剧")
+    dianshiju.nodes.add("韩剧")
+    dianshiju.nodes.add("TVB")
+    #
+    xinshangying.nodes.add("桐柏英雄")
+    xinshangying.nodes.add("血雨母子情")
     #
     scroll_win.add_with_viewport(treeview_base)
     win.add(scroll_win)

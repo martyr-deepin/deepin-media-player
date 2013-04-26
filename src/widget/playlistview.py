@@ -26,6 +26,8 @@ from dtk.ui.scrolled_window import ScrolledWindow
 from dtk.ui.draw import draw_vlinear
 from listview import ListView
 from listview_base import Text
+from treeview_base import TreeViewBase
+from notebook import NoteBook
 from color import alpha_color_hex_to_cairo, color_hex_to_cairo
 from utils import get_text_size
 import gtk
@@ -34,19 +36,42 @@ class PlayListView(object):
     def __init__(self):
         self.listview_color = ui_theme.get_color("scrolledbar")
         self.play_list_vbox = gtk.VBox()
-        self.scroll_win   = ScrolledWindow(0, 0)
-        self.scroll_win.set_policy(gtk.POLICY_NEVER, gtk.POLICY_ALWAYS)
+        self.list_scroll_win   = ScrolledWindow(0, 0)
+        self.list_scroll_win.set_policy(gtk.POLICY_NEVER, gtk.POLICY_ALWAYS)
         self.list_view    = ListView()
+        self.tree_scroll_win   = ScrolledWindow(0, 0)
+        self.tree_scroll_win.set_policy(gtk.POLICY_NEVER, gtk.POLICY_ALWAYS)
+        self.tree_view     = TreeViewBase()
+        self.note_book = NoteBook()
         #
         self.list_view.on_draw_sub_item =  self.__listview_on_draw_sub_item
         self.list_view.columns.add_range(["filename", "time"])
         self.list_view.columns[0].width = 100
         self.list_view.columns[1].width = 75
         #
-        self.scroll_win.add_with_viewport(self.list_view)
-        #self.play_list_vbox.pack_start(gtk.Button("网络列表"), False, False)
-        self.play_list_vbox.pack_start(self.scroll_win, True, True)
+        self.list_scroll_win.add_with_viewport(self.list_view)
+        self.tree_scroll_win.add_with_viewport(self.tree_view)
+        self.note_book.add_layout1(self.list_scroll_win) 
+        self.note_book.add_layout2(self.tree_scroll_win)
+        #self.play_list_vbox.pack_start(self.scroll_win, True, True)
+        self.play_list_vbox.pack_start(self.note_book, True, True)
         #
+        node1 = self.tree_view.nodes.add("优酷视频")
+        dianshiju = node1.nodes.add("电视剧")
+        node1.nodes.add("电影")
+        node1.nodes.add("综艺")
+        node1.nodes.add("音乐")
+        node1.nodes.add("动漫")
+        # 电视剧?
+        xinshangying = dianshiju.nodes.add("新上映")
+        dianshiju.nodes.add("明星")
+        dianshiju.nodes.add("大陆剧")
+        dianshiju.nodes.add("韩剧")
+        dianshiju.nodes.add("TVB")
+        #
+        xinshangying.nodes.add("桐柏英雄")
+        xinshangying.nodes.add("血雨母子情")
+
 
     def __listview_on_draw_sub_item(self, e):
         color = self.listview_color.get_color()

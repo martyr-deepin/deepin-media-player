@@ -644,7 +644,8 @@ class MediaPlayer(object):
         self.files_to_play_list(paths, type_check)
 
     def files_to_play_list(self, paths, type_check=True):
-        run_check = False
+        self.run_check = False
+        run_check = self.run_check
         sub_check = True
         # 判断字幕和播放文件.
         # 修复BUG：字幕和播放文件一起拖进去，没有清空播放列表.

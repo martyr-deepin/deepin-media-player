@@ -29,7 +29,7 @@ def init_media_player_config():
     path = get_config_path()
     print "init_media_player_config...", path
     # 创建保存东西的文件夹.
-    for subdir in ["subtitle", "buffer", "image"]: 
+    for subdir in ["subtitle", "buffer", "image", "plugins"]: 
         subpath = os.path.join(path, subdir)
         if not os.path.exists(subpath):
             print subpath
