@@ -79,7 +79,7 @@ class MediaPlayer(object):
         self.first_run = False
         # 判断是否存在这个配置文件.
         if not os.path.exists(os.path.join(get_config_path(), "deepin_media_config.ini")):
-            init_user_guide(self.start)
+            init_user_guide(self.start, True)
             init_media_player_config()
             self.first_run = True
         # init dubs id.
