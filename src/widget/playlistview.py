@@ -132,6 +132,23 @@ class PlayListView(object):
 
     def __treeview_paint_nodes_event(self, node_event):
         leave_width = 20
+        color = self.listview_color.get_color()
+        text_color = "#FFFFFF"
+        #
+        if node_event.node in node_event.single_items:
+            color_info = [(0, (color, 0.45)), (1, (color, 0.45))] 
+            draw_vlinear(node_event.cr,
+                         node_event.x, node_event.y, node_event.w, node_event.h,
+                         color_info
+                         )
+            text_color = "#000000"
+        elif node_event.node in node_event.motion_items:
+            color_info = [(0, (color, 0.75)), (1, (color, 0.75))] 
+            draw_vlinear(node_event.cr,
+                         node_event.x, node_event.y, node_event.w, node_event.h,
+                         color_info
+                         )
+        #
         if node_event.node.leave == 0: # 根节点.
             x = node_event.x + 20
             # 画root的图标.
@@ -146,21 +163,27 @@ class PlayListView(object):
         else:
             x_padding = node_event.node.leave * leave_width
             x = node_event.x + 10 + x_padding
+            icon_x = node_event.x + x_padding
+            icon_y = node_event.y + get_text_size(">")[1]/2
+            #
             if node_event.node.is_expanded:
-                draw_text(node_event.cr, 
-                          "*", 
-                          node_event.x + x_padding, 
-                          node_event.y + get_text_size("*")[1]/2)
+                text = "*"
             else:
-                if node_event.node.leave < 2:
-                    draw_text(node_event.cr, 
-                              ">", 
-                              node_event.x + x_padding, 
-                              node_event.y + get_text_size(">")[1]/2)
+                text = ">"
+
+            if node_event.node.leave < 2:
+                draw_text(node_event.cr, 
+                          text, 
+                          icon_x,
+                          icon_y
+                          )
+        #
         draw_text(node_event.cr, 
                   node_event.node.text, 
                   x,
-                  node_event.y + get_text_size(node_event.node.text)[1]/2)
+                  node_event.y + get_text_size(node_event.node.text)[1]/2,
+                  text_color=text_color
+                  )
 
 
 

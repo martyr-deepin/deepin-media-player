@@ -24,7 +24,7 @@
 
 from utils import get_match_parent
 #from utils import propagate_expose
-from utils import get_text_size
+from utils import get_text_size, is_left_button # 左键.
 from draw  import draw_text, draw_pixbuf
 from color import alpha_color_hex_to_cairo, color_hex_to_cairo
 import gtk
@@ -36,17 +36,8 @@ import random
 def type_check(type_name, type_str):
     return type(type_name).__name__ == type_str
 
-class TreeViewChild(object):
-    widget = None
-    x = 0
-    y = 0 
-    w = 80
-    h = 40
-
-#class TreeViewBase(gtk.Container):
 class TreeViewBase(gtk.Button):
     def __init__(self):
-        #gtk.Container.__init__(self)
         gtk.Button.__init__(self)
         self.__init_values()
         self.__init_events()
@@ -75,6 +66,8 @@ class TreeViewBase(gtk.Button):
         self.leave_width   = 20
         #
         self.children = []
+        self.motion_items = []
+        self.single_items = []
         #
         self.paint_nodes_event = self.__paint_nodes_event
         self.paint_nodes_background = self.__paint_nodes_background
@@ -86,6 +79,7 @@ class TreeViewBase(gtk.Button):
         self.nodes.connect("added-data",  self.__nodes_added_data_event)
         self.nodes.connect("remove-data", self.__nodes_remove_data_event)
         self.nodes.connect("is-expanded", self.__nodes_is_expanded_event)
+        #
         self.__init_values_columns()
 
     def __nodes_update_data_event(self, node):
@@ -190,6 +184,9 @@ class TreeViewBase(gtk.Button):
             node_event.y = y_padding
             node_event.w = self.scroll_win.allocation.width
             node_event.h = self.node_height #self.scroll_win.allocation.height
+            #
+            node_event.motion_items = self.motion_items
+            node_event.single_items = self.single_items
             '''
             node_event.draw_text = draw_text # 写成 set/get , 忽略 cr参数.
             node_event.draw_pixbuf = draw_pixbuf # 写成 set/get , 忽略 cr参数.
@@ -267,19 +264,25 @@ class TreeViewBase(gtk.Button):
 
     def __treeview_motion_notify_event(self, w, e):
         #print "do--mo--no--ev", e.x
-        if e.window == self.window:
-            index = int(e.y) / self.node_height
+        index = int(e.y) / self.node_height
+        if index < len(self.__nodes_list):
+            node = self.__nodes_list[index]
+            self.motion_items = [node]
+            self.tree_view_queue_draw_area()
+        else:
+            self.motion_items = []
             self.tree_view_queue_draw_area()
         return False
 
     def __treeview_button_press_event(self, w, e):
-        #node.is_expanded = False #not node.is_expanded
-        #node.is_expanded = True
-        node = self.__nodes_list[int(e.y/self.node_height)]
-        node.is_expanded = not node.is_expanded
-        self.tree_view_queue_draw_area()
-        return False
-
+        index = int(e.y / self.node_height)
+        if is_left_button(e):
+            if index < len(self.__nodes_list):
+                node = self.__nodes_list[index]
+                node.is_expanded = not node.is_expanded
+                self.single_items = [node]
+                self.tree_view_queue_draw_area()
+                return False
 
     ############################################################
     def delete(self, node): # 删除数据.
@@ -304,6 +307,8 @@ class NodesEvent(object):
         self.draw_pixbuf
         self.draw_text
         '''
+        self.motion_items = None
+        self.single_items = None
 
 
 class Nodes(list):
