@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<device>
+	<profile>
+		<name>X32</name>
+		<width>240</width>
+		<height>320</height>
+	</profile>
+	<profile>
+		<name>P-05d</name>
+		<width>540</width>
+		<height>960</height>
+	</profile>
+	<profile>
+		<name>F-08d</name>
+		<width>720</width>
+		<height>1280</height>
+	</profile>
+	<profile>
+		<name>Dm010sh</name>
+		<width>540</width>
+		<height>960</height>
+	</profile>
+</device>

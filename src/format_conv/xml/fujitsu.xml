@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<device>
+	<profile>
+		<name>F-07d</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>Arrows z isw13f</name>
+		<width>720</width>
+		<height>1280</height>
+	</profile>
+	<profile>
+		<name>T1981</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>Stylistic m350 ca2</name>
+		<width>1024</width>
+		<height>600</height>
+	</profile>
+	<profile>
+		<name>Arrows es</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>Stylistic m532</name>
+		<width>1280</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>F704i</name>
+		<width>240</width>
+		<height>320</height>
+	</profile>
+	<profile>
+		<name>Arrows kiss</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>Arrows prototype</name>
+		<width>540</width>
+		<height>960</height>
+	</profile>
+</device>

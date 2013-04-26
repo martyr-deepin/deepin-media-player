@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<device>
+	<profile>
+		<name>At200 32g</name>
+		<width>1280</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>At200</name>
+		<width>1280</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>As100-01b</name>
+		<width>1024</width>
+		<height>600</height>
+	</profile>
+	<profile>
+		<name>At330</name>
+		<width>1600</width>
+		<height>900</height>
+	</profile>
+</device>

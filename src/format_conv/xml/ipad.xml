@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<device>
+	<profile>
+		<name>Ipad2</name>
+		<width>768</width>
+		<height>1024</height>
+	</profile>
+	<profile>
+		<name>New ipad</name>
+		<width>1536</width>
+		<height>2048</height>
+	</profile>
+	<profile>
+		<name>Ipad mini</name>
+		<width>768</width>
+		<height>1024</height>
+	</profile>	
+	<profile>
+		<name>Ipad</name>
+		<width>768</width>
+		<height>1024</height>
+	</profile>
+	<profile>
+		<name>Ipad wifi</name>
+		<width>1536</width>
+		<height>2048</height>
+	</profile>  
+</device>

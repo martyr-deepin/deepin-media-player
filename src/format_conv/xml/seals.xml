@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<device>
+	<profile>
+		<name>Vr7</name>
+		<width>240</width>
+		<height>320</height>
+	</profile>
+	<profile>
+		<name>Ts3</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>
+</device>

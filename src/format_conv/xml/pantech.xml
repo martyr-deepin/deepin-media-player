@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<device>
+	<profile>
+		<name>Vega r3</name>
+		<width>720</width>
+		<height>1280</height>
+	</profile>
+	<profile>
+		<name>Flex</name>
+		<width>540</width>
+		<height>960</height>
+	</profile>
+	<profile>
+		<name>A820l</name>
+		<width>800</width>
+		<height>1280</height>
+	</profile>
+	<profile>
+		<name>Ev269</name>
+		<width>240</width>
+		<height>400</height>
+	</profile>
+	<profile>
+		<name>Vega s5</name>
+		<width>720</width>
+		<height>1280</height>
+	</profile>
+	<profile>
+		<name>A810s</name>
+		<width>800</width>
+		<height>1280</height>
+	</profile>
+	<profile>
+		<name>Burst</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>Vega racer 2</name>
+		<width>720</width>
+		<height>1280</height>
+	</profile>
+	<profile>
+		<name>Vega racer</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>P8010</name>
+		<width>540</width>
+		<height>960</height>
+	</profile>
+	<profile>
+		<name>A800s</name>
+		<width>800</width>
+		<height>1280</height>
+	</profile>
+	<profile>
+		<name>Vega im-a650s</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>Breakout</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>Mirach a</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>
+	<profile>
+		<name>Star q 4g lte</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>Laser slider</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>Is06</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>Vega lte</name>
+		<width>800</width>
+		<height>1280</height>
+	</profile>
+	<profile>
+		<name>Vega no 5</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>Marauder</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+</device>

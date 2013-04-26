@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<device>
+	<profile>
+		<name>Xp2</name>
+		<width>240</width>
+		<height>320</height>
+	</profile>
+	<profile>
+		<name>S1</name>
+		<width>128</width>
+		<height>160</height>
+	</profile>
+	<profile>
+		<name>Xp3300</name>
+		<width>240</width>
+		<height>320</height>
+	</profile>
+	<profile>
+		<name>P9521</name>
+		<width>240</width>
+		<height>320</height>
+	</profile>
+	<profile>
+		<name>P9522</name>
+		<width>240</width>
+		<height>320</height>
+	</profile>
+</device>

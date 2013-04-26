@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<device>
+	<profile>
+		<name>Viewphone 4e</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>
+	<profile>
+		<name>Viewpad e70</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>Vtablet 101</name>
+		<width>800</width>
+		<height>1024</height>
+	</profile>
+	<profile>
+		<name>Viewpad 10</name>
+		<width>1024</width>
+		<height>600</height>
+	</profile>
+	<profile>
+		<name>Viewphone 4s</name>
+		<width>640</width>
+		<height>960</height>
+	</profile>
+	<profile>
+		<name>Viewpad 10pi</name>
+		<width>1280</width>
+		<height>800</height>
+	</profile>
+</device>

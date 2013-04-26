@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<device>
+	<profile>
+		<name>N18</name>
+		<width>128</width>
+		<height>160</height>
+	</profile>
+	<profile>
+		<name>I5</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>
+</device>

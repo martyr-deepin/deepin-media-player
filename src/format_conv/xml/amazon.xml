@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<device>
+	<profile>
+		<name>Kindle fire</name>
+		<width>600</width>
+		<height>1024</height>
+	</profile>
+	<profile>
+		<name>Kindle fire hd 8.9</name>
+		<width>1920</width>
+		<height>1200</height>
+	</profile>
+	<profile>
+		<name>Kindle fire hd</name>
+		<width>1280</width>
+		<height>800</height>
+	</profile>
+</device>

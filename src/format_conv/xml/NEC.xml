@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<device>
+	<profile>
+		<name>Medias tab n-06d lte</name>
+		<width>1280</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>Es n-05d</name>
+		<width>720</width>
+		<height>1280</height>
+	</profile>
+	<profile>
+		<name>909e</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+</device>

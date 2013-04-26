@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<device>
+	<profile>
+		<name>A80</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>
+	<profile>
+		<name>A60s_8g</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>
+	<profile>
+		<name>A101</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>A60 8g</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>
+	<profile>
+		<name>A60</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>
+	<profile>
+		<name>A80t</name>
+		<width>540</width>
+		<height>960</height>
+	</profile>
+	<profile>
+		<name>A80s</name>
+		<width>540</width>
+		<height>960</height>
+	</profile>
+	<profile>
+		<name>A60s</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>
+</device>

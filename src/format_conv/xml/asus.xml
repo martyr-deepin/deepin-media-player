@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<device>
+	<profile>
+		<name>Me171</name>
+		<width>800</width>
+		<height>1280</height>
+	</profile>
+	<profile>
+		<name>Tough etbw11aa</name>
+		<width>1280</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>Padfone2</name>
+		<width>720</width>
+		<height>1280</height>
+	</profile>
+	<profile>
+		<name>Eeepad slider</name>
+		<width>1280</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>Eee pad tf201</name>
+		<width>1280</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>Padfone</name>
+		<width>540</width>
+		<height>960</height>
+	</profile>
+	<profile>
+		<name>T20</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>
+	<profile>
+		<name>Eee pad tf101</name>
+		<width>1280</width>
+		<height>800</height>
+	</profile>
+</device>

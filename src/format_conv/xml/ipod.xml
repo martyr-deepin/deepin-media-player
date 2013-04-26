@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<device>
+	<profile>
+		<name>Ipod touch</name>
+		<width>640</width>
+		<height>960</height>
+	</profile>  
+</device>

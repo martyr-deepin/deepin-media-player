@@ -25,8 +25,6 @@ from locales import _
 import gobject    
 import os
 
-def get_home_path():
-    return os.path.expanduser("~")
 
 class Config(gobject.GObject):
     __gsignals__ = {

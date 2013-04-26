@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<device>
+	<profile>
+		<name>Envy x2</name>
+		<width>1366</width>
+		<height>768</height>
+	</profile>
+	<profile>
+		<name>Slate2</name>
+		<width>1024</width>
+		<height>600</height>
+	</profile>
+	<profile>
+		<name>Pre 3</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>Voice messenger</name>
+		<width>240</width>
+		<height>320</height>
+	</profile>
+</device>

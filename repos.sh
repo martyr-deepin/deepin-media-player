@@ -8,7 +8,7 @@ case "$1" in
         git pull origin master
         ;;
     "push" )
-        git push git@github.com:linuxdeepin/deepin-media-player-private.git
+        git push git@github.com:hailongqiu/new-deepin-media-player.git
         ;;
     "changelog" )
         git log --oneline

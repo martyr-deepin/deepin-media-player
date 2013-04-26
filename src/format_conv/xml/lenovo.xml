@@ -1,0 +1,378 @@
+<?xml version="1.0"?>
+<device>
+	<profile>
+		<name>Ma168</name>
+		<width>240</width>
+		<height>320</height>
+	</profile>
+	<profile>
+		<name>Lephone a580</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>Lepad s2005</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>A66t</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>
+	<profile>
+		<name>Lephone s2 td-scdma</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>Lepad a2107 16g</name>
+		<width>600</width>
+		<height>1024</height>
+	</profile>
+	<profile>
+		<name>Lephone s686</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>Lephone s560</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>P800</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>
+	<profile>
+		<name>S800</name>
+		<width>240</width>
+		<height>320</height>
+	</profile>
+	<profile>
+		<name>Lephone k2</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>Lephone a360</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>
+	<profile>
+		<name>Lephone s880i</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>Lephone s880</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>Lephone p700i</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>A668t</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>Lepad k2</name>
+		<width>1920</width>
+		<height>1200</height>
+	</profile>
+	<profile>
+		<name>Ma512</name>
+		<width>240</width>
+		<height>400</height>
+	</profile>
+	<profile>
+		<name>Lephone a800</name>
+		<width>480</width>
+		<height>854</height>
+	</profile>
+	<profile>
+		<name>Lephone s720</name>
+		<width>540</width>
+		<height>960</height>
+	</profile>
+	<profile>
+		<name>Lephone s1</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>Lephone a298t</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>Lephone a780</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>Lephone s2</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>Ma308</name>
+		<width>240</width>
+		<height>320</height>
+	</profile>
+	<profile>
+		<name>Lephone c101</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>I55</name>
+		<width>240</width>
+		<height>400</height>
+	</profile>
+	<profile>
+		<name>Lephone s760</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>Lephone a789</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>Thinkpad tablet 2</name>
+		<width>1366</width>
+		<height>768</height>
+	</profile>
+	<profile>
+		<name>Lephone p700</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>Lephone p70</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>
+	<profile>
+		<name>Lephone a798t</name>
+		<width>480</width>
+		<height>854</height>
+	</profile>
+	<profile>
+		<name>A68e</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>
+	<profile>
+		<name>Lephone a660</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>A65</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>
+	<profile>
+		<name>Lephone</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>I520</name>
+		<width>240</width>
+		<height>320</height>
+	</profile>
+	<profile>
+		<name>O1</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>
+	<profile>
+		<name>Lepad a1 16g</name>
+		<width>600</width>
+		<height>1024</height>
+	</profile>
+	<profile>
+		<name>A60+</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>
+	<profile>
+		<name>Lephone a710e</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>Lephone s850e</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>Lephone 3gc100</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>A390e</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>
+	<profile>
+		<name>A60</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>
+	<profile>
+		<name>Ideapad k1</name>
+		<width>1280</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>Lephone a370</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>Lephone s680</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>A750</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>S899t</name>
+		<width>540</width>
+		<height>960</height>
+	</profile>
+	<profile>
+		<name>Lephone s870e</name>
+		<width>540</width>
+		<height>960</height>
+	</profile>
+	<profile>
+		<name>Lepad k1</name>
+		<width>1280</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>Lephone a690</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>Lepad p1</name>
+		<width>1280</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>A698t</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>A790e</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>A366t</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>
+	<profile>
+		<name>S730</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>Lepad k2110</name>
+		<width>1280</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>A560e</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>
+	<profile>
+		<name>Lephone a520</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>Lephone k800</name>
+		<width>720</width>
+		<height>1280</height>
+	</profile>
+	<profile>
+		<name>Lephone a500</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>
+	<profile>
+		<name>Lepad a1</name>
+		<width>600</width>
+		<height>1024</height>
+	</profile>
+	<profile>
+		<name>Lepad a2107 4g</name>
+		<width>600</width>
+		<height>1024</height>
+	</profile>
+	<profile>
+		<name>S550</name>
+		<width>240</width>
+		<height>320</height>
+	</profile>
+	<profile>
+		<name>Lepad a2109</name>
+		<width>1280</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>A30t</name>
+		<width>240</width>
+		<height>320</height>
+	</profile>
+	<profile>
+		<name>Lephone k860</name>
+		<width>720</width>
+		<height>1280</height>
+	</profile>
+	<profile>
+		<name>Lepad s2007</name>
+		<width>800</width>
+		<height>1280</height>
+	</profile>
+	<profile>
+		<name>Lephone w101</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>Lephone w100</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>Lephone a1</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>
+	<profile>
+		<name>Lephone a300</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>
+</device>

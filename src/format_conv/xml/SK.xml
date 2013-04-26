@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<device>
+	<profile>
+		<name>W-s150</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>W-s170</name>
+		<width>540</width>
+		<height>960</height>
+	</profile>
+</device>

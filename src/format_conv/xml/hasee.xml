@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<device>
+	<profile>
+		<name>T10</name>
+		<width>1280</width>
+		<height>800</height>
+	</profile>
+</device>

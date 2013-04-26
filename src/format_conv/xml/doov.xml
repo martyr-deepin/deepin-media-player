@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<device>
+	<profile>
+		<name>Ieva d720</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>
+	<profile>
+		<name>S920</name>
+		<width>240</width>
+		<height>400</height>
+	</profile>
+	<profile>
+		<name>Ieva d200t</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>
+	<profile>
+		<name>Ieva d3</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>Ieva d2</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>
+	<profile>
+		<name>Ieva d700</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>
+	<profile>
+		<name>Ieva d7</name>
+		<width>480</width>
+		<height>854</height>
+	</profile>
+	<profile>
+		<name>Ieva d5</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>Ieva d600</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>
+	<profile>
+		<name>S728</name>
+		<width>240</width>
+		<height>400</height>
+	</profile>
+	<profile>
+		<name>S630</name>
+		<width>240</width>
+		<height>400</height>
+	</profile>
+	<profile>
+		<name>Ieva d710</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>
+	<profile>
+		<name>Ieva d770</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>Ieva d210t</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>
+</device>

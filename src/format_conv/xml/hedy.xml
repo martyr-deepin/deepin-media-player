@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<device>
+	<profile>
+		<name>H706</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>S802</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>
+</device>

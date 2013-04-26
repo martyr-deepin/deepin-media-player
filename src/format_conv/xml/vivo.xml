@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<device>
+	<profile>
+		<name>Vivo s7</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>Vivo s6</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>Vivo e1</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>
+	<profile>
+		<name>Vivo s1</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>Vivo e3</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>Vivo x1</name>
+		<width>720</width>
+		<height>1280</height>
+	</profile>
+	<profile>
+		<name>Vivo v1</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>
+	<profile>
+		<name>Vivo v2</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>
+	<profile>
+		<name>i710</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>
+	<profile>
+		<name>Vivo s9</name>
+		<width>540</width>
+		<height>960</height>
+	</profile>
+	<profile>
+		<name>i6</name>
+		<width>240</width>
+		<height>400</height>
+	</profile>
+	<profile>
+		<name>Vivo s3</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>
+	<profile>
+		<name>V207</name>
+		<width>240</width>
+		<height>320</height>
+	</profile>
+	<profile>
+		<name>Vivo e1t</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>
+	<profile>
+		<name>i370</name>
+		<width>240</width>
+		<height>400</height>
+	</profile>
+	<profile>
+		<name>Vivo y1</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>
+	<profile>
+		<name>Vivo s12</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>Vivo s6t</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+</device>

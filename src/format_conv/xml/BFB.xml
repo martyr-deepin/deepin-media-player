@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<device>
+	<profile>
+		<name>W9000</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>W9300</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>4s</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>B9500</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>
+</device>

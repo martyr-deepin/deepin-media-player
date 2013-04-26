@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<device>
+	<profile>
+		<name>Zpad t8</name>
+		<width>1024</width>
+		<height>768</height>
+	</profile>
+	<profile>
+		<name>E808</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>
+	<profile>
+		<name>I5</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>
+	<profile>
+		<name>Z100</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>
+	<profile>
+		<name>Z100-a</name>
+		<width>320</width>
+		<height>480</height>
+	</profile>
+</device>

@@ -15,10 +15,13 @@
  "buttonBorderPrelight" : "#FFFFFF",
  "buttonBorderActive" : "#FFFFFF",
  "buttonFont" : "#000000",
- "globalItemHover" : "#e3e2be",
+ "simpleSelectItem" : "#FFFFFF",
+ "listview" : "#0000FF",
+ "progressBarLeft" : "#C1BC19",
+ "progressBarRight" : "#F3FF69",
+  "globalItemHover" : "#e3e2be",
  "globalItemSelect" : "#dcd4a4",
  "globalItemHighlight" : "#cdc184",
-  "simpleSelectItem" : "#FFFFFF",
  },	
  "alpha_colors" : {
      "frame" : ("#000000", 0.5),
@@ -136,6 +139,18 @@
         (0, ("#FFFFFF",1)),
         (1, ("#FFFFFF",1)),
      ],
+     "listview_select" : [
+		(0, ("#2874de", 1.0)),
+		(1, ("#2874de", 1.0)),
+	 ],
+	 "listview_hover" : [
+		(0, ("#99c3ff", 1.0)),
+		(1, ("#99c3ff", 1.0)),
+	 ],
+	 "listview_highlight" : [
+		(0, ("#6295da", 1.0)),
+		(1, ("#6295da", 1.0)),
+	 ]
  },
  "text_styles" : {
      "default" : ("#FFFFFF", "#000000", "#000000", 11, 4, 1),

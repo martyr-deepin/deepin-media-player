@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<device>
+	<profile>
+		<name>Vs3</name>
+		<width>240</width>
+		<height>320</height>
+	</profile>
+	<profile>
+		<name>Eluga power</name>
+		<width>540</width>
+		<height>960</height>
+	</profile>
+	<profile>
+		<name>P-01d</name>
+		<width>480</width>
+		<height>800</height>
+	</profile>
+	<profile>
+		<name>X800</name>
+		<width>176</width>
+		<height>208</height>
+	</profile>
+	<profile>
+		<name>Eluga v</name>
+		<width>720</width>
+		<height>1280</height>
+	</profile>
+	<profile>
+		<name>Eluga</name>
+		<width>540</width>
+		<height>960</height>
+	</profile>
+</device>
