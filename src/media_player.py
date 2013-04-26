@@ -116,7 +116,7 @@ class MediaPlayer(object):
             else:
                 dbus_id += "." + chr(random.randint(65, 90))
         self.dbus_id = dbus_id
-        print "dbus_id:", dbus_id
+        #print "dbus_id:", dbus_id
         #
         self.in_run_check()
 

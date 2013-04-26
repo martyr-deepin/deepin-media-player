@@ -200,23 +200,21 @@ class TreeViewBase(gtk.Button):
         return True
 
     def __paint_nodes_background(self, cr, x, y, w, h):
-        cr.set_source_rgba(0, 0, 0, 0.85)
+        cr.set_source_rgba(*alpha_color_hex_to_cairo(("#1f1f1f",1.0)))
         cr.rectangle(x, y, w, h)
         cr.fill()
 
     def __paint_nodes_event(self, node_event):
         if node_event.node.leave == 0: # 根节点.
-            x = node_event.x + 10 
+            x = node_event.x + 15
             if node_event.node.is_expanded:
-                draw_text(node_event.cr, 
-                          "-", 
-                          node_event.x, 
-                          node_event.y + get_text_size("+")[1]/2)
+                root_text = "-"
             else:
-                draw_text(node_event.cr, 
-                          "+", 
-                          node_event.x, 
-                          node_event.y + get_text_size("+")[1]/2)
+                root_text = "+"
+            draw_text(node_event.cr, 
+                      root_text, 
+                      node_event.x + 5, 
+                      node_event.y + get_text_size("+")[1]/2)
         else:
             x_padding = node_event.node.leave * self.leave_width
             x = node_event.x + 10 + x_padding

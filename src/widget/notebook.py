@@ -25,6 +25,8 @@
 import gtk
 from gtk import gdk
 import gobject
+from draw  import draw_text
+from color import alpha_color_hex_to_cairo
 
 class NoteBook(gtk.Container):
     def __init__(self):
@@ -42,6 +44,8 @@ class NoteBook(gtk.Container):
         #
         self.title_child1.connect("clicked", self.__title_child1_clicked)
         self.title_child2.connect("clicked", self.__title_child2_clicked)
+        self.title_child1.connect("expose-event", self.__title_child1_expose_event)
+        self.title_child2.connect("expose-event", self.__title_child2_expose_event)
         #
         self.layout_show_check = True
         self.layout1 = None
@@ -53,30 +57,43 @@ class NoteBook(gtk.Container):
 
     def __title_child1_clicked(self, widget):
         if self.layout2 and self.layout1:
-            self.set_layout_position(self.layout2, self.layout1)
             self.layout_show_check = True
 
     def __title_child2_clicked(self, widget):
         if self.layout1 and self.layout2:
-            self.set_layout_position(self.layout1, self.layout2)
             self.layout_show_check = False
 
-    def set_layout_position(self, widget1, widget2):
-        '''
-        allocation = gdk.Rectangle()
-        allocation.x  = -self.allocation.width
-        allocation.y  = self.title_h
-        allocation.width  = self.allocation.width
-        allocation.height = self.allocation.height - self.title_h
-        widget1.size_allocate(allocation)
-        #
-        allocation.x  = 0
-        allocation.y  = self.title_h
-        allocation.width  = self.allocation.width
-        allocation.height = self.allocation.height - self.title_h
-        widget2.size_allocate(allocation)
-        '''
-        pass
+    def __title_child1_expose_event(self, widget, event):
+        self.__title_expose_event(widget, event, self.layout_show_check)
+        return True
+
+    def __title_child2_expose_event(self, widget, event):
+        self.__title_expose_event(widget, event, not self.layout_show_check)
+        return True
+
+    def __title_expose_event(self, widget, event, show_check):
+        cr = widget.window.cairo_create()
+        rect = widget.allocation
+        # draw background.   
+        if show_check:
+            bg_color = "#1f1f1f"
+        else:
+            bg_color = "#000000"
+        cr.set_source_rgba(*alpha_color_hex_to_cairo((bg_color,1.0)))
+        cr.rectangle(rect.x, rect.y, rect.width + 1, rect.height)
+        cr.fill()
+        # draw title name.
+        text = widget.get_label()
+        import pango
+        if show_check:
+            text_color = "#FFFFFF"
+        else:
+            text_color = "#A9A9A9"
+        draw_text(cr, 
+                  text, 
+                  rect.x, rect.y, rect.width, rect.height, 
+                  text_color=text_color,
+                  alignment=pango.ALIGN_CENTER)
 
     def add_layout1(self, layout1):
         self.layout1 = layout1

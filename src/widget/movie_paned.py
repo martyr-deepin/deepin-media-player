@@ -248,7 +248,6 @@ class Paned(gtk.Bin):
         cr.rectangle(0, 0, bottom_rect[0], bottom_rect[1])
         cr.fill()
 
-
     def __paint_screen(self, e):
         if self.screen:
             cr = self.window.cairo_create()

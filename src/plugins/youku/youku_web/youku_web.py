@@ -1,4 +1,23 @@
-
+#! /usr/bin/python
+# -*- coding: utf-8 -*-
+# Copyright (C) 2013 XXX, Inc.
+#               2013 红铭曼,王芳
+#
+# Author:     红铭曼,王芳 <hongmingman@sina.com>
+# Maintainer: 红铭曼,王芳 <hongmingman@sina.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 youku_root = {'tv'    : 'http://tv.youku.com/',         # 电视剧
               'movie' : 'http://movie.youku.com/',   # 电影

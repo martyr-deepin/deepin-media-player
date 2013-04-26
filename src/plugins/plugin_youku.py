@@ -1,10 +1,10 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
-# Copyright (C) 2013 Deepin, Inc.
-#               2013 Hailong Qiu
+# Copyright (C) 2013 XXX, Inc.
+#               2013 红铭曼,王芳
 #
-# Author:     Hailong Qiu <356752238@qq.com>
-# Maintainer: Hailong Qiu <356752238@qq.com>
+# Author:     红铭曼,王芳 <hongmingman@sina.com>
+# Maintainer: 红铭曼,王芳 <hongmingman@sina.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
