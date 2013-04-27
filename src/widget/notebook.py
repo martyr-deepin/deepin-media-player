@@ -77,9 +77,9 @@ class NoteBook(gtk.Container):
         rect = widget.allocation
         # draw background.   
         if show_check:
-            bg_color = "#1f1f1f"
+            bg_color = "#1b1b1b"
         else:
-            bg_color = "#000000"
+            bg_color = "#272727"
         cr.set_source_rgba(*alpha_color_hex_to_cairo((bg_color,1.0)))
         cr.rectangle(rect.x, rect.y, rect.width + 1, rect.height)
         cr.fill()
@@ -94,6 +94,7 @@ class NoteBook(gtk.Container):
                   text, 
                   rect.x, rect.y, rect.width, rect.height, 
                   text_color=text_color,
+                  text_font=8,
                   alignment=pango.ALIGN_CENTER)
 
     def add_layout1(self, layout1):

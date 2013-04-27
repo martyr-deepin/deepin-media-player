@@ -197,7 +197,7 @@ class TreeViewBase(gtk.Button):
         return True
 
     def __paint_nodes_background(self, cr, x, y, w, h):
-        cr.set_source_rgba(*alpha_color_hex_to_cairo(("#1f1f1f",1.0)))
+        cr.set_source_rgba(*alpha_color_hex_to_cairo(("#1b1b1b",1.0)))
         cr.rectangle(x, y, w, h)
         cr.fill()
 

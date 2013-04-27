@@ -137,9 +137,9 @@ class PlayListView(object):
             x = node_event.x + 20
             # 画root的图标.
             if node_event.node.is_expanded:
-                pixbuf = self.tree_view_open.get_pixbuf()
-            else:
                 pixbuf = self.tree_view_close.get_pixbuf()
+            else:
+                pixbuf = self.tree_view_open.get_pixbuf()
             draw_pixbuf(node_event.cr,
                         pixbuf,
                         node_event.x + 5,

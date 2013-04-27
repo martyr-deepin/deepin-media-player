@@ -63,7 +63,7 @@ comic_dict = {
         }
 # 动漫按类型的列表.
 v_olist_dict = {
-        "热血" : "http://www.youku.com/v_olist/c_100_a__g_%E7%83%AD%E8%A1%80_r__d_1_fv_0_o_7.html",
+        "热血" : "http://www.youku.com/v_olist/c_100_a__s__g_%E7%83%AD%E8%A1%80_r__lg__im__st__mt__tg__d_1_et_0_fv_0_fl__fc__fe__o_7_p_",
         "格斗" : "http://www.youku.com/v_olist/c_100_a__s__g_%E6%A0%BC%E6%96%97_r__lg__im__st__mt__d_1_et_0_fv_0_fl__fc__fe__o_7.html",
         "恋爱" : "http://www.youku.com/v_olist/c_100_a__s__g_%E6%81%8B%E7%88%B1_r__lg__im__st__mt__d_1_et_0_fv_0_fl__fc__fe__o_7.html",
         "美少女" : "http://www.youku.com/v_olist/c_100_a__s__g_%E7%BE%8E%E5%B0%91%E5%A5%B3_r__lg__im__st__mt__d_1_et_0_fv_0_fl__fc__fe__o_7.html",
