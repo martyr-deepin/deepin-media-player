@@ -36,8 +36,10 @@ import gtk
 
 class PlayListView(object):
     def __init__(self):
-        self.tree_view_open = app_theme.get_pixbuf("treeview/open.png")
+        self.tree_view_open  = app_theme.get_pixbuf("treeview/open.png")
         self.tree_view_close = app_theme.get_pixbuf("treeview/close.png")
+        self.tree_view_right = app_theme.get_pixbuf("treeview/right.png")
+        self.tree_view_bottom = app_theme.get_pixbuf("treeview/bottom.png")
         #
         self.listview_color = ui_theme.get_color("scrolledbar")
         self.play_list_vbox = gtk.VBox()
@@ -140,32 +142,29 @@ class PlayListView(object):
                 pixbuf = self.tree_view_close.get_pixbuf()
             else:
                 pixbuf = self.tree_view_open.get_pixbuf()
+            # node_event.x + 5 是图标与文字之间的宽度.
             draw_pixbuf(node_event.cr,
                         pixbuf,
                         node_event.x + 5,
-                        node_event.y + pixbuf.get_height()/2 + 4)
+                        node_event.y + node_event.h/2 - pixbuf.get_height()/2 )
         else:
             x_padding = node_event.node.leave * leave_width
-            x = node_event.x + 10 + x_padding
-            icon_x = node_event.x + x_padding
-            icon_y = node_event.y + get_text_size(">")[1]/2
+            x = node_event.x + 18 + x_padding
+            icon_x = node_event.x + x_padding + 8
             #
             if node_event.node.is_expanded:
-                text = "*"
+                pixbuf = self.tree_view_bottom.get_pixbuf()
             else:
-                text = ">"
+                pixbuf = self.tree_view_right.get_pixbuf()
+            icon_y = node_event.y + node_event.h/2 - pixbuf.get_height()/2
 
-            if node_event.node.leave < 2:
-                draw_text(node_event.cr, 
-                          text, 
-                          icon_x,
-                          icon_y
-                          )
+            if node_event.node.nodes:
+                draw_pixbuf(node_event.cr, pixbuf, icon_x, icon_y)
         #
         draw_text(node_event.cr, 
                   node_event.node.text, 
-                  x,
-                  node_event.y + get_text_size(node_event.node.text)[1]/2,
+                  x + 5,
+                  node_event.y + node_event.h/2 - get_text_size(node_event.node.text)[1]/2,
                   text_color=text_color
                   )
 

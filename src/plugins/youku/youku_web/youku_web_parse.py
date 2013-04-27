@@ -31,6 +31,9 @@ class YoukuWebParse(object):
                         "Connection":"Keep-Alive"}
     
     def parse_web(self, addr, index=1):
+        page_num = None
+        all_sum  = None
+        info_list = []
         url = addr + "%d.html" % (index)
         print url
         #data = urllib2.urlopen(url).read()
@@ -45,9 +48,14 @@ class YoukuWebParse(object):
             title = a_link.get("title") # 获取标题.
             print "addr:", addr, "title:", title
         
-
-        print "link len:", len(p_title_list)
-        print "总数:", sounp.findAll("div", {"class" : "stat"})
+        if index == 1:
+            page_num = len(p_title_list)
+            print "link len:", page_num
+            all_sum_str = sounp.findAll("div", {"class" : "stat"})
+            all_sum_utf_8 = str(all_sum_str[0].string).replace("条", "")
+            all_sum = int(str(all_sum_utf_8.split("/")[1].strip()))
+            print "总数:", all_sum
+        return page_num, all_sum
 
 
 

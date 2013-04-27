@@ -61,8 +61,8 @@ class TreeViewBase(gtk.Button):
     def __init_values(self):
         self.add_events(gtk.gdk.ALL_EVENTS_MASK)
         #
-        self.header_height = 35
-        self.node_height   = 35
+        self.header_height = 25
+        self.node_height   = 25
         self.leave_width   = 20
         #
         self.children = []
