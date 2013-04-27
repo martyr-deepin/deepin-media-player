@@ -241,7 +241,7 @@ class ListView(ListViewBase):
         self.__save_move_items_x = 0
         self.__save_move_items_index = 0
         #
-        self.__items_padding_height = 30
+        self.__items_padding_height = 25
         # 保存双击items.
         self.__double_items = None
         # 保存移动的items.
@@ -672,7 +672,7 @@ class ListView(ListViewBase):
     ## @ on_draw_item : 连. 当 owner_draw 设置为真的时候发生.
     def __on_draw_item_hd(self, e):
         #print "__on_draw_item_hd...", e.drag_rect
-        e.cr.set_source_rgba(*alpha_color_hex_to_cairo(("#1b1b1b",1.0)))
+        e.cr.set_source_rgba(*alpha_color_hex_to_cairo(("#272727",1.0)))
         e.cr.rectangle(*e.rect)
         e.cr.fill()
         if e.drag_rect[0] != None:

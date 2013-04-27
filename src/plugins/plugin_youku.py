@@ -22,6 +22,8 @@
 
 from youku.youku_scan import scan_page
 from youku.youku_to_flvcd import YouToFlvcd
+from youku.youku_web_parse import YoukuWebParse
+from youku.youku_web import v_olist_dict 
 import gtk
 
 class_name = "PluginYouku"
@@ -36,29 +38,26 @@ class PluginYouku(object):
         self.__init_gui()
 
     def __init_values(self):
+        self.v_olist_keys =  v_olist_dict.keys() 
+        self.youku_web_parse = YoukuWebParse()
+        info_list, page_num, all_sum = self.youku_web_parse.parse_web(v_olist_dict["热血"])
         self.show_check = auto_check
         self.tree_view = self.this.gui.play_list_view.tree_view
         self.tree_view.connect_event("treeview-press-event", self.__treeview_press_event)
         self.note_book = self.this.gui.play_list_view.note_book
         # test tree view.
-        node1 = self.tree_view.nodes.add("优酷视频")
-        dianshiju = node1.nodes.add("电视剧")
-        node1.nodes.add("电影")
-        node1.nodes.add("综艺")
-        node1.nodes.add("音乐")
-        node1.nodes.add("动漫")
-        # 电视剧?
-        xinshangying = dianshiju.nodes.add("新上映")
-        dianshiju.nodes.add("明星")
-        dianshiju.nodes.add("大陆剧")
-        dianshiju.nodes.add("韩剧")
-        dianshiju.nodes.add("TVB")
-        #
-        xinshangying.nodes.add("桐柏英雄")
-        xinshangying.nodes.add("血雨母子情")
+        self.youku_root = self.tree_view.nodes.add("优酷视频")
+        self.comic_node = self.youku_root.nodes.add("动漫")
+        for key in self.v_olist_keys:
+            self.comic_node.nodes.add(key)
+        re_xue_node = self.comic_node.nodes[3]
+        info_list, page_num, all_sum = self.youku_web_parse.parse_web(v_olist_dict["热血"])
+        for info in info_list:
+            node = re_xue_node.nodes.add(info[0])
+            node.addr = info[1]
 
     def __treeview_press_event(self, treeview, node):
-        print treeview, node
+        print node.addr
 
     def __init_gui(self):
         self.scan_win = gtk.Window(gtk.WINDOW_TOPLEVEL)

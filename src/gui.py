@@ -45,7 +45,8 @@ class GUI(object):
         self.__init_values()
         self.app = Application(False)
         # application set.
-        app_w, app_h = 640, 480
+        #app_w, app_h = 640, 480
+        app_w, app_h = 890, 590
         self.app.set_default_size(app_w, app_h)
         # self.app.window.resize
         self.app.set_icon(app_theme.get_pixbuf("icon.ico"))

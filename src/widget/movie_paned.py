@@ -56,7 +56,8 @@ class Paned(gtk.Bin):
         self.__child1 = None
         self.__child2 = None
         self.__child2_move_width = 0 #175
-        self.__child2_min_width  = 175
+        #self.__child2_min_width  = 175
+        self.__child2_min_width  = 215
         self.save_move_width   = 0
         self.move_check = False # 是否移动paned.
         self.show_check = False # 是否显示handle图片.

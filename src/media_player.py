@@ -693,6 +693,8 @@ class MediaPlayer(object):
         self.dirs_to_play_list(paths)
 
     def dirs_to_play_list(self, paths, type_check=True):
+        self.type_check = type_check
+        self.run_check = False
         if type_check and paths:
             self.gui.play_list_view.list_view.clear()
             self.play_list.set_index(-1)
