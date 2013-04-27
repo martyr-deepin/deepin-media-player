@@ -38,8 +38,8 @@ class PluginYouku(object):
     def __init_values(self):
         self.show_check = auto_check
         self.tree_view = self.this.gui.play_list_view.tree_view
+        self.tree_view.connect_event("treeview-press-event", self.__treeview_press_event)
         self.note_book = self.this.gui.play_list_view.note_book
-        self.note_book.show_title()
         # test tree view.
         node1 = self.tree_view.nodes.add("优酷视频")
         dianshiju = node1.nodes.add("电视剧")
@@ -56,6 +56,9 @@ class PluginYouku(object):
         #
         xinshangying.nodes.add("桐柏英雄")
         xinshangying.nodes.add("血雨母子情")
+
+    def __treeview_press_event(self, treeview, node):
+        print treeview, node
 
     def __init_gui(self):
         self.scan_win = gtk.Window(gtk.WINDOW_TOPLEVEL)
@@ -116,11 +119,15 @@ class PluginYouku(object):
         print "start_plugin."
         self.show_check = True
         self.show_scan_win()
+        # 加入网络列表.
+        self.note_book.show_title() # 修复BUG， 当为网络列表的时候 隐藏，就看不到本地列表拉.
 
-        
     def stop_plugin(self):
         print "end_plugin..."
         self.show_check = False
+        # 删除网络列表的node.
+        # 并影藏网络列表.
+        self.note_book.hide_title()
         
         
         

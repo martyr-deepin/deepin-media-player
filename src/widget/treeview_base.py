@@ -269,6 +269,7 @@ class TreeViewBase(gtk.Button):
             node = self.__nodes_list[index]
             self.motion_items = [node]
             self.tree_view_queue_draw_area()
+            self.emit("treeview-motion-event", self, node)
         else:
             self.motion_items = []
             self.tree_view_queue_draw_area()
@@ -282,7 +283,15 @@ class TreeViewBase(gtk.Button):
                 node.is_expanded = not node.is_expanded
                 self.single_items = [node]
                 self.tree_view_queue_draw_area()
+                self.emit("treeview-press-event", self, node)
                 return False
+
+    def connect_event(self, event_name, function_point):
+        self.__function_dict[event_name] = function_point
+
+    def emit(self, event_name, *arg):
+        if self.__function_dict.has_key(event_name):
+            self.__function_dict[event_name](*arg)
 
     ############################################################
     def delete(self, node): # 删除数据.
