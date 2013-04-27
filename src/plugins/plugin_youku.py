@@ -23,7 +23,8 @@
 from youku.youku_scan import scan_page
 from youku.youku_to_flvcd import YouToFlvcd
 from youku.youku_web_parse import YoukuWebParse
-from youku.youku_web import v_olist_dict 
+from youku.youku_web import music_type_dict, comic_type_dict, youku_root
+from youku.youku_web import zy_type_dict, movie_type_dict, tv_type_dict
 import gtk
 
 class_name = "PluginYouku"
@@ -38,23 +39,60 @@ class PluginYouku(object):
         self.__init_gui()
 
     def __init_values(self):
-        self.v_olist_keys =  v_olist_dict.keys() 
+        #
         self.youku_web_parse = YoukuWebParse()
-        info_list, page_num, all_sum = self.youku_web_parse.parse_web(v_olist_dict["热血"])
+        #
         self.show_check = auto_check
         self.tree_view = self.this.gui.play_list_view.tree_view
         self.tree_view.connect_event("treeview-press-event", self.__treeview_press_event)
         self.note_book = self.this.gui.play_list_view.note_book
-        # test tree view.
+        # 初始化网络播放列表.
+        self.__init_tree_view()
+
+    def __init_tree_view(self):
         self.youku_root = self.tree_view.nodes.add("优酷视频")
-        self.comic_node = self.youku_root.nodes.add("动漫")
-        for key in self.v_olist_keys:
-            self.comic_node.nodes.add(key)
-        re_xue_node = self.comic_node.nodes[3]
-        info_list, page_num, all_sum = self.youku_web_parse.parse_web(v_olist_dict["热血"])
+        self.youku_root.addr = "http://www.youku.com"
+        # 初始化根节点的 表单.
+        for key, addr in youku_root.items():
+            print "key:", key
+            node = self.youku_root.nodes.add(key)
+            node.addr = addr
+        self.tv_node    = self.youku_root.nodes[0]
+        self.movie_node = self.youku_root.nodes[1]
+        self.zy_node    = self.youku_root.nodes[2]
+        self.music_node = self.youku_root.nodes[3]
+        self.comic_node = self.youku_root.nodes[4]
+         
+        #
+        self.__init_type_lists()
+
+    def __init_type_lists(self):
+        for key in tv_type_dict.keys():
+            node = self.tv_node.nodes.add(key)
+            node.addr = tv_type_dict[key]
+
+        for key in movie_type_dict.keys():
+            node = self.movie_node.nodes.add(key)
+            node.addr = movie_type_dict[key]
+
+        for key in zy_type_dict.keys():
+            node = self.zy_node.nodes.add(key)
+            node.addr = zy_type_dict[key]
+
+        for key in music_type_dict.keys():
+            node = self.music_node.nodes.add(key)
+            node.addr = music_type_dict[key]
+
+        for key in comic_type_dict.keys():
+            node = self.comic_node.nodes.add(key)
+            node.addr = comic_type_dict[key]
+
+        '''
+        #info_list, page_num, all_sum = self.youku_web_parse.parse_web(v_olist_dict["热血"])
         for info in info_list:
             node = re_xue_node.nodes.add(info[0])
             node.addr = info[1]
+        '''
 
     def __treeview_press_event(self, treeview, node):
         print node.addr

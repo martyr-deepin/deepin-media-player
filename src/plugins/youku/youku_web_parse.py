@@ -20,7 +20,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from BeautifulSoup import BeautifulSoup
-from youku_web import v_olist_dict
 import urllib2
 
 
@@ -80,6 +79,7 @@ def get_sum_page(all_sum, page_num):
     return page_sum
 
 if __name__ == "__main__":
+    from youku_web import v_olist_dict
     v_olist_keys =  v_olist_dict.keys() 
     youku_web_parse = YoukuWebParse()
     #youku_web_parse.parse_web("http://www.youku.com/show_page/id_zcc001eb6962411de83b1.html")
