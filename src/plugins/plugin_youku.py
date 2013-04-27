@@ -36,7 +36,7 @@ class PluginYouku(object):
         self.this = this
         self.this.add_net_to_play_list
         self.__init_values()
-        self.__init_gui()
+        #self.__init_gui()
 
     def __init_values(self):
         #
@@ -54,7 +54,6 @@ class PluginYouku(object):
         self.youku_root.addr = "http://www.youku.com"
         # 初始化根节点的 表单.
         for key, addr in youku_root.items():
-            print "key:", key
             node = self.youku_root.nodes.add(key)
             node.addr = addr
         self.tv_node    = self.youku_root.nodes[0]
@@ -95,7 +94,52 @@ class PluginYouku(object):
         '''
 
     def __treeview_press_event(self, treeview, node):
-        print node.addr
+        if node.leave == 2 and node.nodes == []:
+            info_list, page_num, all_sum = self.youku_web_parse.parse_web(node.addr)
+            for info in info_list:
+                temp_node = node.nodes.add(info[0])
+                temp_node.addr = info[1]
+            if info_list:
+                node.is_expanded = True
+        elif node.leave == 3 and node.nodes == []:
+            if node.parent.this.parent.this.text in ["音乐"]:
+                self.add_to_play_list(node)
+            elif node.parent.this.parent.this.text in ["电影"]:
+                #print node.addr
+                movie_info = self.youku_web_parse.scan_movie_leave(node.addr)
+                flvcd = YouToFlvcd()
+                flvcd_addr_list = flvcd.parse(movie_info[0])
+                index = 0
+                for addr in flvcd_addr_list:
+                    check = False
+                    if not index:
+                        check = True
+                    self.this.add_net_to_play_list(node.text + "-" + str(index),
+                            addr,
+                            "优酷视频", check)
+                    index += 1
+            else:
+                temp_list = self.youku_web_parse.scan_3_leave(node.addr)
+                for addr, name in temp_list:
+                    temp_node = node.nodes.add(name)
+                    temp_node.addr = addr
+                if temp_list:
+                    node.is_expanded = True
+        elif node.leave == 4:
+            self.add_to_play_list(node)
+
+    def add_to_play_list(self, node):
+        flvcd = YouToFlvcd()
+        flvcd_addr_list = flvcd.parse(node.addr)
+        index = 0
+        for addr in flvcd_addr_list:
+            check = False
+            if not index:
+                check = True
+            self.this.add_net_to_play_list(node.text + "-" + str(index),
+                    addr,
+                    "优酷视频", check)
+            index += 1
 
     def __init_gui(self):
         self.scan_win = gtk.Window(gtk.WINDOW_TOPLEVEL)
@@ -129,7 +173,7 @@ class PluginYouku(object):
         page_num  = scan_info[1] # 一页的总页数.
         sum       = scan_info[2] # 全部搜索的数.
         page_sum  = min(sum/page_num, 100)
-        print "总的页数:", page_sum
+        #print "总的页数:", page_sum
 
     def btn_connect_addr_to(self, widget, info):
         flvcd = YouToFlvcd()
@@ -152,15 +196,15 @@ class PluginYouku(object):
         self.scan_win.hide_all()
 
     def start_plugin(self):
-        print "获取dbus_id", self.this.dbus_id
-        print "start_plugin."
+        #print "获取dbus_id", self.this.dbus_id
+        #print "start_plugin."
         self.show_check = True
-        self.show_scan_win()
+        #self.show_scan_win()
         # 加入网络列表.
         self.note_book.show_title() # 修复BUG， 当为网络列表的时候 隐藏，就看不到本地列表拉.
 
     def stop_plugin(self):
-        print "end_plugin..."
+        #print "end_plugin..."
         self.show_check = False
         # 删除网络列表的node.
         # 并影藏网络列表.

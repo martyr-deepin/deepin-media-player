@@ -35,12 +35,53 @@ youku_root = od([
 # 电视剧类型的列表.
 tv_type_dict = od([
 ("古装", "http://www.youku.com/v_olist/c_97_a__s__g_%E5%8F%A4%E8%A3%85_r__lg__im__st__mt__d_1_et_0_fv_0_fl__fc__fe__o_7.html"),
+("武侠", "http://www.youku.com/v_olist/c_97_a__s__g_%E6%AD%A6%E4%BE%A0_r__lg__im__st__mt__d_1_et_0_fv_0_fl__fc__fe__o_7.html"),
+("警匪", "http://www.youku.com/v_olist/c_97_a__s__g_%E8%AD%A6%E5%8C%AA_r__lg__im__st__mt__d_1_et_0_fv_0_fl__fc__fe__o_7.html"),
+("军事", "http://www.youku.com/v_olist/c_97_a__s__g_%E5%86%9B%E4%BA%8B_r__lg__im__st__mt__d_1_et_0_fv_0_fl__fc__fe__o_7.html"),
+("神话", "http://www.youku.com/v_olist/c_97_a__s__g_%E7%A5%9E%E8%AF%9D_r__lg__im__st__mt__d_1_et_0_fv_0_fl__fc__fe__o_7.html"),
+("科幻", "http://www.youku.com/v_olist/c_97_a__s__g_%E7%A7%91%E5%B9%BB_r__lg__im__st__mt__d_1_et_0_fv_0_fl__fc__fe__o_7.html"),
+("悬疑", "http://www.youku.com/v_olist/c_97_a__s__g_%E6%82%AC%E7%96%91_r__lg__im__st__mt__d_1_et_0_fv_0_fl__fc__fe__o_7.html"),
+("历史", "http://www.youku.com/v_olist/c_97_a__s__g_%E5%8E%86%E5%8F%B2_r__lg__im__st__mt__d_1_et_0_fv_0_fl__fc__fe__o_7.html"),
+("儿童", "http://www.youku.com/v_olist/c_97_a__s__g_%E5%84%BF%E7%AB%A5_r__lg__im__st__mt__d_1_et_0_fv_0_fl__fc__fe__o_7.html"),
+("农村", "http://www.youku.com/v_olist/c_97_a__s__g_%E5%86%9C%E6%9D%91_r__lg__im__st__mt__d_1_et_0_fv_0_fl__fc__fe__o_7.html"),
+("都市", "http://www.youku.com/v_olist/c_97_a__s__g_%E9%83%BD%E5%B8%82_r__lg__im__st__mt__d_1_et_0_fv_0_fl__fc__fe__o_7.html"),
+("家庭", "http://www.youku.com/v_olist/c_97_a__s__g_%E5%AE%B6%E5%BA%AD_r__lg__im__st__mt__d_1_et_0_fv_0_fl__fc__fe__o_7.html"),
+("搞笑", "http://www.youku.com/v_olist/c_97_a__s__g_%E6%90%9E%E7%AC%91_r__lg__im__st__mt__d_1_et_0_fv_0_fl__fc__fe__o_7.html"),
+("偶像", "http://www.youku.com/v_olist/c_97_a__s__g_%E5%81%B6%E5%83%8F_r__lg__im__st__mt__d_1_et_0_fv_0_fl__fc__fe__o_7.html"),
+("言情", "http://www.youku.com/v_olist/c_97_a__s__g_%E8%A8%80%E6%83%85_r__lg__im__st__mt__d_1_et_0_fv_0_fl__fc__fe__o_7.html"),
+("时装", "http://www.youku.com/v_olist/c_97_a__s__g_%E6%97%B6%E8%A3%85_r__lg__im__st__mt__d_1_et_0_fv_0_fl__fc__fe__o_7.html"),
+("优酷出品", "http://www.youku.com/v_olist/c_97_a__s__g_%E4%BC%98%E9%85%B7%E5%87%BA%E5%93%81_r__lg__im__st__mt__d_1_et_0_fv_0_fl__fc__fe__o_7.html")
                  ])
 
 # 电影按类型的列表.
 movie_type_dict = od([
 ("武侠", "http://www.youku.com/v_olist/c_96_a__s__g_%E6%AD%A6%E4%BE%A0_r__lg__im__st__mt__d_1_et_0_fv_0_fl__fc__fe__o_7.html"),
+("警匪", "http://www.youku.com/v_olist/c_96_a__s__g_%E8%AD%A6%E5%8C%AA_r__lg__im__st__mt__d_1_et_0_fv_0_fl__fc__fe__o_7.html"),
+("犯罪", "http://www.youku.com/v_olist/c_96_a__s__g_%E7%8A%AF%E7%BD%AA_r__lg__im__st__mt__d_1_et_0_fv_0_fl__fc__fe__o_7.html"),
+("科幻", "http://www.youku.com/v_olist/c_96_a__s__g_%E7%A7%91%E5%B9%BB_r__lg__im__st__mt__d_1_et_0_fv_0_fl__fc__fe__o_7.html"),
+("战争", "http://www.youku.com/v_olist/c_96_a__s__g_%E6%88%98%E4%BA%89_r__lg__im__st__mt__d_1_et_0_fv_0_fl__fc__fe__o_7.html"),
+("恐怖", "http://www.youku.com/v_olist/c_96_a__s__g_%E6%81%90%E6%80%96_r__lg__im__st__mt__d_1_et_0_fv_0_fl__fc__fe__o_7.html"),
+("惊悚", "http://www.youku.com/v_olist/c_96_a__s__g_%E6%83%8A%E6%82%9A_r__lg__im__st__mt__d_1_et_0_fv_0_fl__fc__fe__o_7.html"),
+("纪录片", "http://www.youku.com/v_olist/c_96_a__s__g_%E7%BA%AA%E5%BD%95%E7%89%87_r__lg__im__st__mt__d_1_et_0_fv_0_fl__fc__fe__o_7.html"),
+("西部", "http://www.youku.com/v_olist/c_96_a__s__g_%E8%A5%BF%E9%83%A8_r__lg__im__st__mt__d_1_et_0_fv_0_fl__fc__fe__o_7.html"),
+("戏曲", "http://www.youku.com/v_olist/c_96_a__s__g_%E6%88%8F%E6%9B%B2_r__lg__im__st__mt__d_1_et_0_fv_0_fl__fc__fe__o_7.html"),
+("歌舞", "http://www.youku.com/v_olist/c_96_a__s__g_%E6%AD%8C%E8%88%9E_r__lg__im__st__mt__d_1_et_0_fv_0_fl__fc__fe__o_7.html"),
+("奇幻", "http://www.youku.com/v_olist/c_96_a__s__g_%E5%A5%87%E5%B9%BB_r__lg__im__st__mt__d_1_et_0_fv_0_fl__fc__fe__o_7.html"),
+("冒险", "http://www.youku.com/v_olist/c_96_a__s__g_%E5%86%92%E9%99%A9_r__lg__im__st__mt__d_1_et_0_fv_0_fl__fc__fe__o_7.html"),
+("悬疑", "http://www.youku.com/v_olist/c_96_a__s__g_%E6%82%AC%E7%96%91_r__lg__im__st__mt__d_1_et_0_fv_0_fl__fc__fe__o_7.html"),
+("历史", "http://www.youku.com/v_olist/c_96_a__s__g_%E5%8E%86%E5%8F%B2_r__lg__im__st__mt__d_1_et_0_fv_0_fl__fc__fe__o_7.html"),
+("动作", "http://www.youku.com/v_olist/c_96_a__s__g_%E5%8A%A8%E4%BD%9C_r__lg__im__st__mt__d_1_et_0_fv_0_fl__fc__fe__o_7.html"),
+("传记", "http://www.youku.com/v_olist/c_96_a__s__g_%E4%BC%A0%E8%AE%B0_r__lg__im__st__mt__d_1_et_0_fv_0_fl__fc__fe__o_7.html"),
+("动画", "http://www.youku.com/v_olist/c_96_a__s__g_%E5%8A%A8%E7%94%BB_r__lg__im__st__mt__d_1_et_0_fv_0_fl__fc__fe__o_7.html"),
+("儿童", "http://www.youku.com/v_olist/c_96_a__s__g_%E5%84%BF%E7%AB%A5_r__lg__im__st__mt__d_1_et_0_fv_0_fl__fc__fe__o_7.html"),
+("喜剧", "http://www.youku.com/v_olist/c_96_a__s__g_%E5%96%9C%E5%89%A7_r__lg__im__st__mt__d_1_et_0_fv_0_fl__fc__fe__o_7.html"),
+("爱情", "http://www.youku.com/v_olist/c_96_a__s__g_%E7%88%B1%E6%83%85_r__lg__im__st__mt__d_1_et_0_fv_0_fl__fc__fe__o_7.html"),
+("剧情", "http://www.youku.com/v_olist/c_96_a__s__g_%E5%89%A7%E6%83%85_r__lg__im__st__mt__d_1_et_0_fv_0_fl__fc__fe__o_7.html"),
+("运动", "http://www.youku.com/v_olist/c_96_a__s__g_%E8%BF%90%E5%8A%A8_r__lg__im__st__mt__d_1_et_0_fv_0_fl__fc__fe__o_7.html"),
+("短片", "http://www.youku.com/v_olist/c_96_a__s__g_%E7%9F%AD%E7%89%87_r__lg__im__st__mt__d_1_et_0_fv_0_fl__fc__fe__o_7.html"),
+("优酷出品", "http://www.youku.com/v_olist/c_96_a__s__g_%E4%BC%98%E9%85%B7%E5%87%BA%E5%93%81_r__lg__im__st__mt__d_1_et_0_fv_0_fl__fc__fe__o_7.html")
                     ])
+                    
 # 综艺按类型的列表.
 zy_type_dict = od([
 ('优酷出品', 'http://www.youku.com/v_olist/c_85_a__s__g_%E4%BC%98%E9%85%B7%E5%87%BA%E5%93%81_r__lg__im__st__mt__d_1_et_0_fv_0_fl__fc__fe__o_7.html'),

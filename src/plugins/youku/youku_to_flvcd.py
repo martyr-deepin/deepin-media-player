@@ -56,7 +56,7 @@ class YouToFlvcd(object):
                 fhandle.write(url + "\n")
             fhandle.close()
             '''
-            print("地址解析成功")
+            #print("地址解析成功")
             #print re_res
             return re_res
         else:

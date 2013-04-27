@@ -21,7 +21,7 @@
 
 from BeautifulSoup import BeautifulSoup
 import urllib2
-
+import re
 
 class YoukuWebParse(object):
     def __init__(self):
@@ -30,24 +30,49 @@ class YoukuWebParse(object):
                         #"Accept-Encoding":"gzip, deflate", 
                         "Connection":"Keep-Alive"}
 
-    '''
+    def scan_movie_leave(self, addr):
+        temp_info = None
+        url = addr
+        req = urllib2.Request(url=url, headers=self.headers)
+        data = urllib2.urlopen(url).read()
+        #
+        sounp = BeautifulSoup(data)
+        music_list = sounp.findAll("a", {"class":"btnShow btnplayposi"})
+        for link in music_list:
+            addr = link.get("href") # 获取地址.
+            title = link.get("title") # 获取标题.
+            temp_info = (addr, title)
+        return temp_info
 
-        import re
+    def scan_3_leave(self, addr):
+        url = addr
+        req = urllib2.Request(url=url, headers=self.headers)
+        data = urllib2.urlopen(url).read()
+        #
+        sounp = BeautifulSoup(data)
         p_title_list = sounp.findAll("a", 
                 {"href": re.compile("http://"),
-                 "title" : re.compile("0"),
+                 "title" : re.compile("\d"),
                  "charset" : re.compile("-"),
                  "target" : re.compile('_')
                  })
-        print p_title_list
-    '''
+        temp_list = []
+        #print p_title_list
+        for list_ in p_title_list:
+            addr_ = list_.get("href")
+            name_ = list_.get("title")
+            #print name_, addr_
+            temp_list.append((addr_, name_))
+        return temp_list
+
+
     def parse_web(self, addr, index=1):
         page_num = None
         all_sum  = None
         info_list = []
 
         url = addr + "%d.html" % (index)
-        print url
+        #print url
         #data = urllib2.urlopen(url).read()
         req = urllib2.Request(url=url, headers=self.headers)
         data = urllib2.urlopen(url).read()
@@ -63,11 +88,11 @@ class YoukuWebParse(object):
         
         if index == 1:
             page_num = len(p_title_list)
-            print "link len:", page_num
+            #print "link len:", page_num
             all_sum_str = sounp.findAll("div", {"class" : "stat"})
             all_sum_utf_8 = str(all_sum_str[0].string).replace("条", "")
             all_sum = int(str(all_sum_utf_8.split("/")[1].strip()))
-            print "总数:", all_sum
+            #print "总数:", all_sum
         return info_list, page_num, all_sum
 
 

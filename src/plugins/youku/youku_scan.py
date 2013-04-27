@@ -31,7 +31,7 @@ def keyword_to_gb2312(keyword):
 def scan_page(page_index=1, keyword="linuxdeepin"):
     url_base = "http://www.soku.com/search_video/q_%s_orderby_1_page_%s"
     url = url_base % (keyword_to_gb2312(keyword), page_index)
-    print url
+    #print url
     data = urllib2.urlopen(url).read()
     if data.find("最新资讯") != -1: # 防止出现最新资讯，最新...的垃圾信息.
         data = data.decode("utf-8")
