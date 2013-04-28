@@ -77,19 +77,19 @@ class MediaPlayer(object):
         self.__init_config_file()
         #
         self.first_run = False
-        # 判断是否存在这个配置文件.
-        if not os.path.exists(os.path.join(get_config_path(), "deepin_media_config.ini")):
-            init_user_guide(self.start, True)
-            init_media_player_config()
-            self.first_run = True
-        # init dubs id.
-        self.__init_dbus_id()
         self.__init_values()
         # init double timer.
         self.__init_double_timer()
         self.__init_move_window()
         self.__init_gui_app_events()
         self.__init_gui_screen()
+        # 判断是否存在这个配置文件.
+        if not os.path.exists(os.path.join(get_config_path(), "deepin_media_config.ini")):
+            init_media_player_config(self.config)
+            init_user_guide(self.start, True)
+            self.first_run = True
+        # init dubs id.
+        self.__init_dbus_id()
         # show gui window.
         if not self.first_run:
             self.start()
@@ -205,7 +205,7 @@ class MediaPlayer(object):
         self.gui.app.window.connect("check-resize", self.app_window_check_resize)
         self.gui.app.window.connect("button-press-event", self.app_window_button_press_event)
         self.gui.app.window.connect("motion-notify-event", self.app_window_motion_notify_event)
-        # self.app.window.connect("window-state-event", )
+        self.gui.app.window.connect("window-state-event", self.app_window_state_event)
         # self.app.window.connect("leave-notify-event", )
         # self.app.window.connect("focus-out-event", )
         # self.app.window.connect("focus-in-event", )
@@ -229,6 +229,14 @@ class MediaPlayer(object):
             widget.window.set_cursor(gtk.gdk.Cursor(drag))
         else:
             widget.window.set_cursor(None)
+
+    def app_window_state_event(self, widget, event):
+        print widget.window.get_state()
+
+    def minimize_pause_state(self):
+        min_pause_check = self.config.get("FilePlay", "minimize_pause_play")
+        if "True" == min_pause_check:
+            self.key_pause()
 
     def in_drag_position(self, widget, event):
         # 判断是否在拖动大小的区域内.
@@ -257,6 +265,7 @@ class MediaPlayer(object):
     '''application event conect function.窗口事件连接函数.'''
     def app_window_min_button_clicked(self, widget): # 缩小按钮单击.
         print "app_window_min_button_clicked function", "-->>min window!!"
+        self.minimize_pause_state()
         
     def app_window_quit(self, widget): # 窗口销毁.destroy
         self.play_list_check  = True

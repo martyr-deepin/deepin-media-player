@@ -114,7 +114,12 @@ class PluginYouku(object):
                     check = False
                     if not index:
                         check = True
-                    self.this.add_net_to_play_list(node.text + "-" + str(index),
+                    if len(flvcd_addr_list) > 1:
+                        text = node.text + "-" + str(index)
+                    else:
+                        text = node.text
+                    self.this.add_net_to_play_list(
+                            text,
                             addr,
                             "优酷视频", check)
                     index += 1
@@ -136,7 +141,12 @@ class PluginYouku(object):
             check = False
             if not index:
                 check = True
-            self.this.add_net_to_play_list(node.text + "-" + str(index),
+            if len(flvcd_addr_list) > 1:
+                text = node.text + "-" + str(index)
+            else:
+                text = node.text
+            self.this.add_net_to_play_list(
+                    text,
                     addr,
                     "优酷视频", check)
             index += 1

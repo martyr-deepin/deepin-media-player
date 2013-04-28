@@ -25,7 +25,7 @@ from ini   import Config
 from locales import _
 import os
 
-def init_media_player_config():
+def init_media_player_config(config):
     path = get_config_path()
     print "init_media_player_config...", path
     # 创建保存东西的文件夹.
@@ -53,12 +53,13 @@ def init_media_player_config():
         fp.close()
         
         # Init config.ini            
-        config = Config(media_config_path)
+        #config = Config(media_config_path)
         
         # Init window.
         config.set("Window", "init_window", "True")
         
         #[FilePlay] # 播放设置.
+        # 2 视频适应窗口.
         for argv, value in ([
                 ("video_file_open",                          2),
                 ("open_new_file_clear_play_list", "True"),
@@ -72,8 +73,8 @@ def init_media_player_config():
             
         #[SystemSet] # 系统设置.
         for argv, value in ([
-                ("start_sys_bubble_msg", "True"),
-                ("start_play_win_msg",   "False"),
+                ("start_sys_bubble_msg", "False"),
+                ("start_play_win_msg",   "True"),
                 ("font",                 "文泉驿微米黑"),
                 ("font_size",            "16")
                 ]):

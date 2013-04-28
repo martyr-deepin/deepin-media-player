@@ -1,0 +1,64 @@
+Media Player for Linux Deepin.
+
+[*] sudo apt-get install isoinfo.
+[*] dvdnav.
+[*] wine qvod.exe movie_name. {hide | close}
+
+
+
+
+#################################################
+plugin-in Format | 插件编写规范:
+
+class plugin_class_name(object):
+	  def __init__(self):
+	  	  pass
+		  
+	  def init_values(self, this, gui, ldmp):		  
+	  	  pass
+		  		  
+	  def auto(self): # 是否自动运行插件.
+	  	  return True
+		  
+	  def start(self): # 启用插件.
+	  	  print "start plugin..."
+		  
+      def stop(self): # 卸载插件.
+	  	  print "stop plugin..."
+		  
+      def name(self): # 唯一的名字,你也可以加密过.
+	  	  return "deepin_media_plugin_class_name_hailongqiu" 
+		  
+	  def insert(self): # 优先级
+	  	  return None or int number
+		  
+      def icon(self): # list 列表 或者 None.
+	      return [gtk.gdk.pixbuf..., ..., ...] 
+		  
+	  def version(self): # string or number 字符串或者数字.
+	  	  return 0.12 
+		  
+	  def author(self): # 开发者
+	  	  return "hailongqiu"
+	  
+	  
+def return_plugin(): 
+    return plugin_class_name
+	  
+##############################
+[]ldmp API:	
+****ldmp.player.属性
+****ldmp.pause()
+... ...
+[]gui API:
+****gui.screen
+****gui.screen_frame
+****gui.app
+... ...
+[]this API:
+****this.next()
+****this.prev()
+... ...
+[] call 公共函数接口.
+**** ini.py utils.py
+################################

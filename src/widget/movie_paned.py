@@ -312,18 +312,23 @@ class Paned(gtk.Bin):
         self.queue_draw()
 
     def __paint_handle(self, e):
+        cr = self.window.cairo_create()
+        #
+        if self.__child2_move_width != 0:
+            cr.set_source_rgba(*alpha_color_hex_to_cairo(("#393939", 1.0)))
+            cr.rectangle(self.__handle_pos_x - 1, 0, 1, self.allocation.height)
+            cr.fill()
+        #
         if self.show_check:
-            cr = self.window.cairo_create()
             if self.get_move_width() == 0:
                 pixbuf = self.out_pixbuf
             else:
                 pixbuf = self.in_pixbuf
             self.__handle_pos_h = pixbuf.get_height()
-            #
+            x = self.__handle_pos_x - self.__handle_pos_w - 1
             y = 0 + self.allocation.height/2 - self.__handle_pos_h/2
-            cr.set_source_pixbuf(pixbuf, 
-                                 self.__handle_pos_x - self.__handle_pos_w - 1, 
-                                 y)
+            #
+            cr.set_source_pixbuf(pixbuf, int(x), int(y))
             cr.paint_with_alpha(self.handle_alpha)
 
     def do_motion_notify_event(self, e):
@@ -416,7 +421,7 @@ class Paned(gtk.Bin):
             # top and bottom window move resize.
             if self.flags() & gtk.REALIZED:
                 self.top_window.move_resize(0, 0, 
-                                            child1_allocation.width, 
+                                            child1_allocation.width - 1, 
                                             self.top_win_h)
                 if self.top_child:
                     top_child_allocation = gdk.Rectangle()
