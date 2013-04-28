@@ -208,8 +208,10 @@ def get_user_plugin_path():
 def get_ldmp_plugin_path():
     # 获取系统自带插件目录.
     #path = os.path.abspath(os.path.dirname(sys.argv[0]))
-    path = os.getcwd()
-    return os.path.join(path, "plugins")
+    path = os.path.split(os.path.dirname(os.path.realpath(__file__)))[0]
+    #path = os.getcwd()
+    ldmp_path = os.path.join(path, "plugins")
+    return ldmp_path
 
 def allocation(widget): # 返回 cr, rect.
     cr = widget.window.cairo_create()
