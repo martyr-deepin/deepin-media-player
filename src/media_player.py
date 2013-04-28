@@ -233,10 +233,12 @@ class MediaPlayer(object):
     def app_window_state_event(self, widget, event):
         print widget.window.get_state()
         win_state = widget.window.get_state()
+        ''' bUG: 全屏也暂停.
         if  win_state == gtk.gdk.WINDOW_STATE_ICONIFIED:
             self.minimize_pause_state()
         elif win_state == 0:
             self.minimize_pause_state()
+        '''
 
 
     def minimize_pause_state(self):
