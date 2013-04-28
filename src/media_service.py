@@ -188,7 +188,6 @@ class SomeObject(dbus.service.Object):
     def dbus_ldmp_start_media_player(self, ldmp):    
         from widget.utils import get_play_file_name
         text = self.list_view.items[self.play_list.get_index()].sub_items[0].text
-        print text
         file_name =  text
         #
         self.player_properties["PlaybackStatus"] = "Playing"

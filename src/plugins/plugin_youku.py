@@ -25,6 +25,7 @@ from youku.youku_to_flvcd import YouToFlvcd
 from youku.youku_web_parse import YoukuWebParse
 from youku.youku_web import music_type_dict, comic_type_dict, youku_root
 from youku.youku_web import zy_type_dict, movie_type_dict, tv_type_dict
+from widget.utils import ScanTreeview
 import gtk
 
 class_name = "PluginYouku"
@@ -95,7 +96,6 @@ class PluginYouku(object):
 
     def __treeview_press_event(self, treeview, node):
         if node.leave == 2 and node.nodes == []:
-            from widget.utils import ScanTreeview
             scan_treeview = ScanTreeview(self.youku_web_parse, node.addr, True)
             scan_treeview.connect("scan-end-event", self.scan_treeview_end_event, node)
             scan_treeview.run()
@@ -105,13 +105,14 @@ class PluginYouku(object):
             elif node.parent.this.parent.this.text in ["电影"]:
                 #print node.addr
                 movie_info = self.youku_web_parse.scan_movie_leave(node.addr)
-                flvcd = YouToFlvcd()
-                save_addr = node.addr
-                node.addr = movie_info[0]
-                self.add_to_play_list(node)
-                node.addr = save_addr
+                if movie_info:
+                    save_addr = node.addr
+                    node.addr = movie_info[0]
+                    self.add_to_play_list(node)
+                    node.addr = save_addr
+                else:
+                    self.this.show_messagebox("优酷收费视频，无法播放...")
             else:
-                from widget.utils import ScanTreeview
                 scan_treeview = ScanTreeview(self.youku_web_parse, node.addr, False)
                 scan_treeview.connect("scan-end-event", self.scan_treeview_end_event, node)
                 scan_treeview.run()
@@ -127,7 +128,13 @@ class PluginYouku(object):
 
     def add_to_play_list(self, node):
         flvcd = YouToFlvcd()
-        flvcd_addr_list = flvcd.parse(node.addr)
+        scan_treeview = ScanTreeview(flvcd, node.addr, 2)
+        scan_treeview.connect("scan-end-event", self.scan_end_add_to_list_event, node)
+        scan_treeview.run()
+        #flvcd_addr_list = flvcd.parse(node.addr)
+
+    def scan_end_add_to_list_event(self, scan_tv, temp_list, node):
+        flvcd_addr_list = temp_list
         index = 0
         for addr in flvcd_addr_list:
             check = False

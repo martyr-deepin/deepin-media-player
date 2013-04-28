@@ -215,7 +215,6 @@ def get_system_tooptil_icon(icon_name="logo.png"):
     # 获取气泡提示的图标.
     path = os.path.dirname(os.path.realpath(__file__))
     icon_path = os.path.join(path, icon_name)
-    print icon_path
     return icon_path
 
 def allocation(widget): # 返回 cr, rect.
@@ -264,12 +263,21 @@ class ScanTreeview(gobject.GObject):
         self.check = check
     
     def run(self):
-        if self.check:
+        if self.check == True:
             scan_th = threading.Thread(target=self.__run_parse_web_func)
-        else:
+        elif self.check == 2:
+            scan_th = threading.Thread(target=self.__run_to_addr_func)
+        elif self.check == False:
             scan_th = threading.Thread(target=self.__run_scan_3_leave_func)
         scan_th.setDaemon(True) 
         scan_th.start()
+
+    def __run_to_addr_func(self):
+        flvcd = self.youku_web_parse
+        addrs_list = []
+        flvcd_addr_list = flvcd.parse(self.addr)
+        addrs_list = flvcd_addr_list
+        self.emit("scan-end-event", addrs_list)
 
     def __run_parse_web_func(self):
         info_list, page_num, all_sum = self.youku_web_parse.parse_web(self.addr)

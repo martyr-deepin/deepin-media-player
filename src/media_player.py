@@ -231,7 +231,7 @@ class MediaPlayer(object):
             widget.window.set_cursor(None)
 
     def app_window_state_event(self, widget, event):
-        print widget.window.get_state()
+        #print widget.window.get_state()
         win_state = widget.window.get_state()
         ''' bUG: 全屏也暂停.
         if  win_state == gtk.gdk.WINDOW_STATE_ICONIFIED:
@@ -369,7 +369,7 @@ class MediaPlayer(object):
         pass
     
     def ldmp_end_media_player(self, ldmp):
-        print "===========播放结束!!==========", ldmp.player.type
+        #print "===========播放结束!!==========", ldmp.player.type
         self.player_end_init()
         self.media_play_fun.ldmp_end_media_player(ldmp)
         
