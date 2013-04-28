@@ -43,7 +43,7 @@ class PluginManager(object):
             # 判断插件是否超过 0 个.
             if not self.__plugin_modules_exist():
                 print "没有可用的插件!!"
-                return False
+                #return False
             else:
                 # 初始化插件管理.
                 self.__init_manager()
@@ -92,9 +92,11 @@ class PluginManager(object):
                    self.__user_modules) > 0
 
     def get_plugin_modules(self, path):
-        files = [f[:-3] for f in os.listdir(path) \
-                if self.is_plugin_name_check(f)]
-        plugin_files = files
+        plugin_files = []
+        if os.path.exists(path):
+            files = [f[:-3] for f in os.listdir(path) \
+                    if self.is_plugin_name_check(f)]
+            plugin_files = files
         return plugin_files[:]
 
     def is_plugin_name_check(self, name):

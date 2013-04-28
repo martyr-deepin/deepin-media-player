@@ -207,7 +207,8 @@ def get_user_plugin_path():
 
 def get_ldmp_plugin_path():
     # 获取系统自带插件目录.
-    path = os.path.abspath(os.path.dirname(sys.argv[0]))
+    #path = os.path.abspath(os.path.dirname(sys.argv[0]))
+    path = os.getcwd()
     return os.path.join(path, "plugins")
 
 def allocation(widget): # 返回 cr, rect.

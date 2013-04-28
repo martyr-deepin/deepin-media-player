@@ -1,6 +1,7 @@
 Media Player for Linux Deepin.
 
 [*] sudo apt-get install isoinfo.
+[*] sudo apt-get install BeautifulSoup
 [*] dvdnav.
 [*] wine qvod.exe movie_name. {hide | close}
 
