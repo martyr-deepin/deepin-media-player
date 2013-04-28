@@ -106,21 +106,10 @@ class PluginYouku(object):
                 #print node.addr
                 movie_info = self.youku_web_parse.scan_movie_leave(node.addr)
                 flvcd = YouToFlvcd()
-                flvcd_addr_list = flvcd.parse(movie_info[0])
-                index = 0
-                for addr in flvcd_addr_list:
-                    check = False
-                    if not index:
-                        check = True
-                    if len(flvcd_addr_list) > 1:
-                        text = node.text + "-" + str(index)
-                    else:
-                        text = node.text
-                    self.this.add_net_to_play_list(
-                            text,
-                            addr,
-                            "优酷视频", check)
-                    index += 1
+                save_addr = node.addr
+                node.addr = movie_info[0]
+                self.add_to_play_list(node)
+                node.addr = save_addr
             else:
                 from widget.utils import ScanTreeview
                 scan_treeview = ScanTreeview(self.youku_web_parse, node.addr, False)
