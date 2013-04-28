@@ -95,12 +95,10 @@ class PluginYouku(object):
 
     def __treeview_press_event(self, treeview, node):
         if node.leave == 2 and node.nodes == []:
-            info_list, page_num, all_sum = self.youku_web_parse.parse_web(node.addr)
-            for info in info_list:
-                temp_node = node.nodes.add(info[0])
-                temp_node.addr = info[1]
-            if info_list:
-                node.is_expanded = True
+            from widget.utils import ScanTreeview
+            scan_treeview = ScanTreeview(self.youku_web_parse, node.addr, True)
+            scan_treeview.connect("scan-end-event", self.scan_treeview_end_event, node)
+            scan_treeview.run()
         elif node.leave == 3 and node.nodes == []:
             if node.parent.this.parent.this.text in ["音乐"]:
                 self.add_to_play_list(node)
@@ -124,14 +122,19 @@ class PluginYouku(object):
                             "优酷视频", check)
                     index += 1
             else:
-                temp_list = self.youku_web_parse.scan_3_leave(node.addr)
-                for addr, name in temp_list:
-                    temp_node = node.nodes.add(name)
-                    temp_node.addr = addr
-                if temp_list:
-                    node.is_expanded = True
+                from widget.utils import ScanTreeview
+                scan_treeview = ScanTreeview(self.youku_web_parse, node.addr, False)
+                scan_treeview.connect("scan-end-event", self.scan_treeview_end_event, node)
+                scan_treeview.run()
         elif node.leave == 4:
             self.add_to_play_list(node)
+
+    def scan_treeview_end_event(self, scan_tv, temp_list, node):
+        for addr, name in temp_list:
+            temp_node = node.nodes.add(name)
+            temp_node.addr = addr
+        if temp_list:
+            node.is_expanded = True
 
     def add_to_play_list(self, node):
         flvcd = YouToFlvcd()

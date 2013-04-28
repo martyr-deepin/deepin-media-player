@@ -232,6 +232,12 @@ class MediaPlayer(object):
 
     def app_window_state_event(self, widget, event):
         print widget.window.get_state()
+        win_state = widget.window.get_state()
+        if  win_state == gtk.gdk.WINDOW_STATE_ICONIFIED:
+            self.minimize_pause_state()
+        elif win_state == 0:
+            self.minimize_pause_state()
+
 
     def minimize_pause_state(self):
         min_pause_check = self.config.get("FilePlay", "minimize_pause_play")
@@ -820,11 +826,7 @@ class MediaPlayer(object):
             self.gui.show_tooltip_text(text)
         # 还是使用系统的气泡垃圾提示.
         if "True" == sys_check:
-            print "气泡提示..."
-            if not icon_path:
-                path = os.path.abspath(os.path.dirname(sys.argv[0]))
-                image_path = os.path.join(path, "widget/logo.png")
-            self.gui.notify_msgbox("deepin-media-player", text, icon_path)
+            self.gui.notify_msgbox("deepin-media-player", text)
 
     def start_button_clicked(self):
         # 判断列表是否为空. 空->添加!!

@@ -32,6 +32,7 @@ from widget.color        import alpha_color_hex_to_cairo
 from widget.bottom_toolbar import BottomToolBar
 from widget.play_control_panel import PlayControlPanel
 from widget.play_menus   import PlayMenus
+from widget.utils        import get_system_tooptil_icon
 from locales import _
 import pynotify
 import gtk
@@ -161,7 +162,7 @@ class GUI(object):
     def show_tooltip_text(self, text, sec=1500):
         self.screen_paned.show_tooltip_text(text, sec)
 
-    def notify_msgbox(self, title, msg, icon_path):
+    def notify_msgbox(self, title, msg, icon_path=get_system_tooptil_icon()):
         try:
             pynotify.init("deepi-media-player")
             msg = pynotify.Notification(title, msg, icon_path)

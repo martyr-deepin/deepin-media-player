@@ -84,7 +84,7 @@ class YoukuWebParse(object):
             addr = a_link.get("href") # 获取地址.
             title = a_link.get("title") # 获取标题.
             #print "addr:", addr, "title:", title
-            info_list.append((title, addr))
+            info_list.append((addr, title))
         
         if index == 1:
             page_num = len(p_title_list)
