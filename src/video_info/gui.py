@@ -31,6 +31,7 @@ from dtk.ui.entry import InputEntry
 from dtk.ui.line import HSeparator
 from widget.utils    import get_play_file_type, length_to_time, get_play_file_name
 from widget.utils import get_file_size
+from widget.utils import open_file
 import os
 import gtk
 import gobject
@@ -91,14 +92,13 @@ class VideoInformGui(gobject.GObject):
     def init_video_widgets(self):        
         try:
             # ini vlaue.
-            self.open_path = "/home/long"
             tabs = "   "
             describe = _("File path:") + "%s" % (tabs)
             self.widget_offset_x = 30
             self.widget_offset_y = 20
             #
             self.fixed_video      = gtk.Fixed()
-            pixbuf = get_file_icon_pixbuf("/home/long/", ICON_H)
+            pixbuf = get_file_icon_pixbuf(self.player.uri, ICON_H)
             self.file_icon_image  = gtk.image_new_from_pixbuf(pixbuf)
             self.first_hseparator = HSeparator(app_theme.get_shadow_color("hSeparator").get_color_info(),
        0, 35)
@@ -155,7 +155,7 @@ class VideoInformGui(gobject.GObject):
                 
             
     def open_file_path_btn_clicked(self, widget):
-        os.system("nautilus '%s'" % (str(self.player.uri)))
+        open_file(str(self.player.uri), True)
             
     def init_code_widgets(self):
         try:

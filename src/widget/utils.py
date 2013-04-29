@@ -156,7 +156,7 @@ def is_file_audio(file_name):
     
 def open_file(file_name, type_check=True):
     if type_check:
-        os.system("xdg-open '%s'" % (file_name))
+        os.system("xdg-open '%s'" % (os.path.split(file_name)[0]))
     else:
         os.system("nautilus '%s'" % (file_name))
 
