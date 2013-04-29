@@ -162,6 +162,7 @@ class MediaPlayer(object):
 
     def __init_values(self):
         #
+        self.minimize_check  = False
         self.play_list_check = False
         self.ldmp = LDMP()
         self.gui = GUI()        
@@ -233,13 +234,15 @@ class MediaPlayer(object):
     def app_window_state_event(self, widget, event):
         #print widget.window.get_state()
         win_state = widget.window.get_state()
-        ''' bUG: 全屏也暂停.
+        # bUG: 全屏也暂停.
         if  win_state == gtk.gdk.WINDOW_STATE_ICONIFIED:
-            self.minimize_pause_state()
-        elif win_state == 0:
-            self.minimize_pause_state()
-        '''
-
+            if self.ldmp.player.state == STARTING_STATE:
+                self.minimize_pause_state()
+            self.minimize_check = True
+        elif win_state == 0 and self.minimize_check:
+            if self.ldmp.player.state == PAUSE_STATE:
+                self.minimize_pause_state()
+            self.minimize_check = False
 
     def minimize_pause_state(self):
         min_pause_check = self.config.get("FilePlay", "minimize_pause_play")
@@ -272,8 +275,7 @@ class MediaPlayer(object):
     
     '''application event conect function.窗口事件连接函数.'''
     def app_window_min_button_clicked(self, widget): # 缩小按钮单击.
-        print "app_window_min_button_clicked function", "-->>min window!!"
-        self.minimize_pause_state()
+        pass
         
     def app_window_quit(self, widget): # 窗口销毁.destroy
         self.play_list_check  = True
@@ -482,7 +484,7 @@ class MediaPlayer(object):
 
     def double_clicked_connect_function(self):
         double_check = self.config.get("OtherKey", "mouse_left_double_clicked")
-        if "Full Screen" == double_check:
+        if _("Full Screen") == double_check:
             self.fullscreen_function() # 全屏和退出全屏处理函数.
 
     def fullscreen_function(self):
@@ -523,7 +525,7 @@ class MediaPlayer(object):
         # 应该去连接后端事件,暂停/播放的时候去改变按钮状态.
         pause_play_check = self.config.get("OtherKey", "mouse_left_single_clicked")
         #[OtherKey] 其它快捷键.
-        if "Pause/Play" == pause_play_check:
+        if _("Pause/Play") == pause_play_check:
             self.ldmp.pause()
 
     def set_double_bit_false(self):

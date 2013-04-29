@@ -148,7 +148,7 @@ class PlayListView(object):
                          color_info
                          )
         #
-        if node_event.node.leave == 0: # 根节点.
+        if node_event.node.leave == 1: # 根节点.
             x = node_event.x + 20
             # 画root的图标.
             if node_event.node.is_expanded:
@@ -172,7 +172,7 @@ class PlayListView(object):
             icon_x = node_event.x + pixbuf.get_width()/2
             icon_y = node_event.y + node_event.h/2 - pixbuf.get_height()/2
 
-            if node_event.node.nodes:
+            if node_event.node.nodes or node_event.node.leave == 2:
                 draw_pixbuf(node_event.cr, pixbuf, icon_x, icon_y)
         #
         draw_text(node_event.cr, 
