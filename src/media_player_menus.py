@@ -47,6 +47,8 @@ class MediaPlayMenus(object):
         # ldmp后端连接事件.
         self.ldmp.connect("get-subtitle",   self.ldmp_get_subtitle)
         self.ldmp.connect("get-audio-info", self.ldmp_get_audio_info)
+        self.ldmp.connect("end-media-player",   self.menu_ldmp_end_media_player)
+        self.ldmp.connect("start-media-player", self.menu_ldmp_start_media_player)
         #
         self.menus = self.this.gui.play_menus
         # 初始化连接事件.
@@ -101,6 +103,8 @@ class MediaPlayMenus(object):
         self.menus.format_conversion = self.menu_format_conversion
         self.menus.task_manager      = self.menu_task_manager
         self.menus.screen_format_conversion = self.menu_screen_format_conversion
+        # 屏幕的属性查看.
+        self.menus.properties = self.menu_properties
         ############################
         # 修改图标.
         #self.menus.title_root_menu.menu_items[0].set_item_icons((pixbuf, pixbuf, pixbuf))
@@ -114,6 +118,8 @@ class MediaPlayMenus(object):
         self.menus.clear_playlist  = self.list_view.clear
         self.menus.open_containing_directory = self.menu_open_containing_directory
         #
+        # 属性查看.
+        self.menus.screen_right_root_menu.set_menu_item_sensitive_by_index(15, False)
         self.menus.screen_right_root_menu.set_menu_item_sensitive_by_index(11, False)
         self.menus.channel_select.set_menu_item_sensitive_by_index(1, False)
 
@@ -286,7 +292,17 @@ class MediaPlayMenus(object):
                 self.this.conv_form.form.higt_set_bool = True
                 self.this.conv_form.form.higt_set_btn_clicked(self.this.conv_form.form.start_btn)
                 self.this.conv_form.form.brand_combo.set_active(0)
+    
+    def menu_properties(self):
+        from video_info.gui import VideoInformGui
+        video_info_gui = VideoInformGui(self.ldmp)
+        video_info_gui.app.show_all()
+        
+    def menu_ldmp_end_media_player(self, ldmp):
+        self.menus.screen_right_root_menu.set_menu_item_sensitive_by_index(15, False)
 
+    def menu_ldmp_start_media_player(self, ldmp):
+        self.menus.screen_right_root_menu.set_menu_item_sensitive_by_index(15, True)
 
 
 

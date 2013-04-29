@@ -295,6 +295,8 @@ class PlayMenus(object):
                                          ]) 
         ## 字幕选择:
         self.subtitles_select = Menu(None)
+        # 属性窗口.
+        self.properties = None
         # 屏幕弹出菜单.
         self.screen_right_root_menu = Menu([
                 (None, _("Open File"),      self.__menu_open_file),
@@ -312,6 +314,7 @@ class PlayMenus(object):
                 (None, _("DVD Navigation"), self.dvd_navigation_menu),
                 (None, _("Preferences"),    self.__menu_config_gui),
                 (None),
+                (None, _("Properties"), self.__menu_properties),
                 ], True)
                                      
     def show_theme_menu(self, button): 
@@ -494,9 +497,10 @@ class PlayMenus(object):
     def __menu_screen_format_conversion(self):
         if self.screen_format_conversion:
             self.screen_format_conversion()
-            
-            
-            
+
+    def __menu_properties(self): 
+        if self.properties:
+            self.properties()
             
             
                                         

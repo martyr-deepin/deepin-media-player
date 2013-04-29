@@ -1034,7 +1034,7 @@ class LDMP(gobject.GObject):
                 # print "ID_VIDEO_CODEC:", self.player.video_codec
                 
             if buffer.startswith("ID_VIDEO_FPS"):    
-                self.player.video_fps = buffer.replace("ID_VIDEO_FPS=", "").split("\n")[0]
+                self.player.video_fps = buffer.replace("ID_VIDEO_FPS=", "").split("\n")[0].strip()
                 # print "ID_VIDEO_FPS:", self.player.video_fps
                 
             if buffer.startswith("ID_VIDEO_BITRATE"):    
