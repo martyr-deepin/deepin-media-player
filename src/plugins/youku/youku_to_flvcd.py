@@ -28,9 +28,12 @@ import urllib2
 import datetime
  
 class YouToFlvcd(object):
-    def __init__(self):
+    def __init__(self, type="youku"):
         self.url = ""
-        self.pattern = re.compile(r"<a href *= *\"(http://f\.youku\.com/player/getFlvPath/[^\"]+)")
+        if "youku" == type:
+            self.pattern = re.compile(r"<a href *= *\"(http://f\.youku\.com/player/getFlvPath/[^\"]+)")
+        elif "pps" == type:
+            self.pattern = re.compile(r"<a href *= *\"(http://vurl\.pps[^\"]+)")
         self.headers = {"Accept":"*/*", "Accept-Language":"zh-CN", "":"", 
                         "User-Agent":"Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1)", 
                         #"Accept-Encoding":"gzip, deflate", 
@@ -45,25 +48,14 @@ class YouToFlvcd(object):
         data = res.read()
         #print "data:", data
         re_res = self.pattern.findall(data)
-        #print "re_res:", re_res
         if re_res:
-            '''
-            filename = datetime.datetime.now().strftime("%Y%m%d-%H%M%S.lst")
-            fhandle = open("test.lst", "w")
-            for url in re_res:
-                print "url:", url
-                # 注意是\r\n还是\n
-                fhandle.write(url + "\n")
-            fhandle.close()
-            '''
             #print("地址解析成功")
-            #print re_res
             return re_res
         else:
             print("地址找不到")
             return -1
  
 if __name__ == "__main__":
-    flvcd = YouToFlvcd()
-    flvcd.parse(sys.argv[1])
+    flvcd = YouToFlvcd("youku")
+    print flvcd.parse(sys.argv[1])
 

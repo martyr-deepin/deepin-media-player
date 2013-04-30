@@ -120,6 +120,7 @@ class MediaPlayMenus(object):
         #
         # 属性查看.
         self.menus.screen_right_root_menu.set_menu_item_sensitive_by_index(15, False)
+        self.menus.screen_right_root_menu.set_menu_item_sensitive_by_index(12, False)
         self.menus.screen_right_root_menu.set_menu_item_sensitive_by_index(11, False)
         self.menus.channel_select.set_menu_item_sensitive_by_index(1, False)
 
