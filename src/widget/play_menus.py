@@ -43,84 +43,112 @@ class PlayMenus(object):
         self.select_pixbuf = (self.video_aspect_pixbuf, 
                               self.video_aspect_select_pixbuf,
                               self.video_aspect_none_pixbuf)
-        '''
-        # concie pixbuf.
-        self.menu_concie_normal_pixbuf = app_theme.get_pixbuf("screen/menu_concise_normal.png")
-        self.menu_concie_hover_pixbuf = app_theme.get_pixbuf("screen/menu_concise_hover.png")
-        self.menu_concie_none_pixbuf = app_theme.get_pixbuf("screen/menu_concise_none.png")
-        # window mode.
-        self.menu_window_mode_normal_pixbuf = app_theme.get_pixbuf("screen/menu_window_mode_normal.png")
-        self.menu_window_mode_hover_pixbuf = app_theme.get_pixbuf("screen/menu_window_mode_hover.png")
-        self.menu_window_mode_none_pixbuf = app_theme.get_pixbuf("screen/menu_window_mode_none.png")
-        # play sequence.
-        self.menu_play_sequence_normal_pixbuf = app_theme.get_pixbuf("screen/menu_play_sequence_normal.png")
-        self.menu_play_sequence_hover_pixbuf = app_theme.get_pixbuf("screen/menu_play_sequence_hover.png")
-        self.menu_play_sequence_none_pixbuf = app_theme.get_pixbuf("screen/menu_play_sequence_none.png")
         # full .
         self.menu_full_normal_pixbuf = app_theme.get_pixbuf("screen/menu_full_normal.png") 
         self.menu_full_hover_pixbuf = app_theme.get_pixbuf("screen/menu_full_hover.png")
         self.menu_full_none_pixbuf = app_theme.get_pixbuf("screen/menu_full_none.png")
-        # pre.
+        self.full_pixbufs = (self.menu_full_normal_pixbuf,
+                            self.menu_full_hover_pixbuf,
+                            self.menu_full_normal_pixbuf)
+        # window mode. 正常模式.
+        self.menu_window_mode_normal_pixbuf = app_theme.get_pixbuf("screen/menu_window_mode_normal.png")
+        self.menu_window_mode_hover_pixbuf = app_theme.get_pixbuf("screen/menu_window_mode_hover.png")
+        self.menu_window_mode_none_pixbuf = app_theme.get_pixbuf("screen/menu_window_mode_none.png")
+        self.window_mode_none_pixbus = (self.menu_window_mode_normal_pixbuf,
+                                        self.menu_window_mode_hover_pixbuf,
+                                        self.menu_window_mode_none_pixbuf)
+        # concie pixbuf. 简洁模式.
+        self.menu_concie_normal_pixbuf = app_theme.get_pixbuf("screen/menu_concise_normal.png")
+        self.menu_concie_hover_pixbuf = app_theme.get_pixbuf("screen/menu_concise_hover.png")
+        self.menu_concie_none_pixbuf = app_theme.get_pixbuf("screen/menu_concise_none.png")
+        self.concie_pixbufs = (self.menu_concie_normal_pixbuf,
+                               self.menu_concie_hover_pixbuf,
+                               self.menu_concie_normal_pixbuf)
+        # pre. 上一曲.
         self.menu_pre_normal_pixbuf = app_theme.get_pixbuf("screen/menu_pre_normal.png")
         self.menu_pre_hover_pixbuf = app_theme.get_pixbuf("screen/menu_pre_hover.png")
         self.menu_pre_none_pixbuf = app_theme.get_pixbuf("screen/menu_pre_none.png")
-        # next.
+        self.pre_pixbufs = (self.menu_pre_normal_pixbuf,
+                            self.menu_pre_hover_pixbuf,
+                            self.menu_pre_none_pixbuf)
+        # next. 下一曲.
         self.menu_next_normal_pixbuf = app_theme.get_pixbuf("screen/menu_next_normal.png")
         self.menu_next_hover_pixbuf = app_theme.get_pixbuf("screen/menu_next_hover.png")        
         self.menu_next_none_pixbuf = app_theme.get_pixbuf("screen/menu_next_none.png")        
+        self.next_pixbufs = (self.menu_next_normal_pixbuf,
+                             self.menu_next_hover_pixbuf,
+                             self.menu_next_none_pixbuf)
         # f seek 5.
         self.menu_f_seek_5_normal_pixbuf = app_theme.get_pixbuf("screen/menu_f_seek_5_normal.png")
         self.menu_f_seek_5_hover_pixbuf = app_theme.get_pixbuf("screen/menu_f_seek_5_hover.png")
         self.menu_f_seek_5_none_pixbuf = app_theme.get_pixbuf("screen/menu_f_seek_5_none.png")
+        self.f_seek_5_pixbufs = (self.menu_f_seek_5_normal_pixbuf,
+                                 self.menu_f_seek_5_hover_pixbuf,
+                                 self.menu_f_seek_5_none_pixbuf)
         # b seek 5.
         self.menu_b_seek_5_normal_pixbuf = app_theme.get_pixbuf("screen/menu_b_seek_5_normal.png")
         self.menu_b_seek_5_hover_pixbuf = app_theme.get_pixbuf("screen/menu_b_seek_5_hover.png")
         self.menu_b_seek_5_none_pixbuf = app_theme.get_pixbuf("screen/menu_b_seek_5_none.png")
+        self.b_seek_5_pixbufs = (self.menu_b_seek_5_normal_pixbuf,
+                                 self.menu_b_seek_5_hover_pixbuf,
+                                 self.menu_b_seek_5_none_pixbuf)
+        # play sequence. 播放顺序.
+        self.menu_play_sequence_normal_pixbuf = app_theme.get_pixbuf("screen/menu_play_sequence_normal.png")
+        self.menu_play_sequence_hover_pixbuf = app_theme.get_pixbuf("screen/menu_play_sequence_hover.png")
+        self.menu_play_sequence_none_pixbuf = app_theme.get_pixbuf("screen/menu_play_sequence_none.png")
+        self.play_sequence_pixbufs = (self.menu_play_sequence_normal_pixbuf,
+                                      self.menu_play_sequence_hover_pixbuf,
+                                      self.menu_play_sequence_none_pixbuf)
         # volume.
         self.menu_volume_normal_pixbuf = app_theme.get_pixbuf("screen/menu_volume_normal.png")
         self.menu_volume_hover_pixbuf = app_theme.get_pixbuf("screen/menu_volume_hover.png")
         self.menu_volume_none_pixbuf = app_theme.get_pixbuf("screen/menu_volume_none.png")
-        # settin.
-        self.menu_setting_normal_pixbuf = app_theme.get_pixbuf("screen/menu_setting_normal.png")
-        self.menu_setting_hover_pixbuf = app_theme.get_pixbuf("screen/menu_setting_hover.png")
-        self.menu_setting_none_pixbuf = app_theme.get_pixbuf("screen/menu_setting_none.png")
-        # quit.
-        self.menu_quit_normal_pixbuf = app_theme.get_pixbuf("screen/menu_quit_normal.png")
-        self.menu_quit_hover_pixbuf = app_theme.get_pixbuf("screen/menu_quit_hover.png")
-        self.menu_quit_none_pixbuf = app_theme.get_pixbuf("screen/menu_quit_none.png")
-        # subtitle.
-        self.menu_subtitle_normal_pixbuf = app_theme.get_pixbuf("screen/menu_subtitle_normal.png")
-        self.menu_subtitle_hover_pixbuf = app_theme.get_pixbuf("screen/menu_subtitle_hover.png")
-        self.menu_subtitle_none_pixbuf = app_theme.get_pixbuf("screen/menu_subtitle_none.png")        
-        # play sequence pixbuf.
-        self.play_sequence_select_normal_pixbuf = app_theme.get_pixbuf("screen/check_normal.png")
-        self.play_sequence_select_hover_pixbuf = app_theme.get_pixbuf("screen/check_hover.png")
-        self.play_sequence_select_none_pixbuf = app_theme.get_pixbuf("screen/check_none.png")
-        # channel_select pixbuf.
-        self.select_channel_normal_pixbuf = app_theme.get_pixbuf("screen/check_normal.png")
-        self.select_channel_hover_pixbuf = app_theme.get_pixbuf("screen/check_hover.png")        
-        self.select_channel_none_pixbuf = app_theme.get_pixbuf("screen/check_none.png")                
-        # mute/add/sub volume pixbuf.
+        self.volume_pixbufs = (self.menu_volume_normal_pixbuf,
+                               self.menu_volume_hover_pixbuf,
+                               self.menu_volume_none_pixbuf)
+        # mute/add/sub volume pixbuf. 声音的静音，添加/减少 音量.
         self.mute_normal_pixbuf = app_theme.get_pixbuf("screen/menu_volume_menu_normal.png")
         self.mute_hover_pixbuf = app_theme.get_pixbuf("screen/menu_volume_menu_hover.png")
         self.mute_none_pixbuf = app_theme.get_pixbuf("screen/menu_volume_menu_none.png")                
-        self.mute_volume_pixbuf = (self.mute_normal_pixbuf, self.mute_hover_pixbuf, self.mute_none_pixbuf)
+        self.mute_volume_pixbufs = (self.mute_normal_pixbuf, self.mute_hover_pixbuf, self.mute_none_pixbuf)
         # add volume.
         self.add_volume_normal_pixbuf = app_theme.get_pixbuf("screen/menu_volume_add_normal.png")
         self.add_volume_hover_pixbuf = app_theme.get_pixbuf("screen/menu_volume_add_hover.png")
         self.add_volume_none_pixbuf = app_theme.get_pixbuf("screen/menu_volume_add_none.png")
-        self.add_volume_pixbuf = (self.add_volume_normal_pixbuf, self.add_volume_hover_pixbuf, self.add_volume_none_pixbuf)
+        self.add_volume_pixbufs = (self.add_volume_normal_pixbuf, self.add_volume_hover_pixbuf, self.add_volume_none_pixbuf)
         # sub volume.
         self.sub_volume_normal_pixbuf = app_theme.get_pixbuf("screen/menu_volume_sub_normal.png")
         self.sub_volume_hover_pixbuf = app_theme.get_pixbuf("screen/menu_volume_sub_hover.png")
         self.sub_volume_none_pixbuf = app_theme.get_pixbuf("screen/menu_volume_sub_none.png")
-        self.sub_volume_pixbuf = (self.sub_volume_normal_pixbuf, self.sub_volume_hover_pixbuf, self.sub_volume_none_pixbuf)        
-        # down subtitle pixbuf.
-        self.down_sub_title_bool = False
-        self.down_sub_title_norma_pixbuf = app_theme.get_pixbuf("screen/check_normal.png")
-        self.down_sub_title_hover_pixbuf = app_theme.get_pixbuf("screen/check_hover.png")
-        self.down_sub_title_none_pixbuf = app_theme.get_pixbuf("screen/check_none.png")
-        '''
+        self.sub_volume_pixbufs = (self.sub_volume_normal_pixbuf, self.sub_volume_hover_pixbuf, self.sub_volume_none_pixbuf)        
+        # quit. 退出.
+        self.menu_quit_normal_pixbuf = app_theme.get_pixbuf("screen/menu_quit_normal.png")
+        self.menu_quit_hover_pixbuf = app_theme.get_pixbuf("screen/menu_quit_hover.png")
+        self.menu_quit_none_pixbuf = app_theme.get_pixbuf("screen/menu_quit_none.png")
+        self.quit_pixbufs = (self.menu_quit_normal_pixbuf,
+                             self.menu_quit_hover_pixbuf,
+                             self.menu_quit_none_pixbuf)
+        # settin. 配置界面.
+        self.menu_setting_normal_pixbuf = app_theme.get_pixbuf("screen/menu_setting_normal.png")
+        self.menu_setting_hover_pixbuf = app_theme.get_pixbuf("screen/menu_setting_hover.png")
+        self.menu_setting_none_pixbuf = app_theme.get_pixbuf("screen/menu_setting_none.png")
+        self.settings_pixbufs = (self.menu_setting_normal_pixbuf,
+                                 self.menu_setting_hover_pixbuf,
+                                 self.menu_setting_none_pixbuf)
+        # subtitle. 字幕.
+        self.menu_subtitle_normal_pixbuf = app_theme.get_pixbuf("screen/menu_subtitle_normal.png")
+        self.menu_subtitle_hover_pixbuf = app_theme.get_pixbuf("screen/menu_subtitle_hover.png")
+        self.menu_subtitle_none_pixbuf = app_theme.get_pixbuf("screen/menu_subtitle_none.png")        
+        self.subtitle_pixbus = (self.menu_subtitle_normal_pixbuf,
+                                self.menu_subtitle_hover_pixbuf,
+                                self.menu_subtitle_none_pixbuf)
+        # sort 截图.
+        self.menu_sort_normal_pixbuf = app_theme.get_pixbuf("screen/menu_sort_normal.png")
+        self.menu_sort_hover_pixbuf  = app_theme.get_pixbuf("screen/menu_sort_hover.png")
+        self.menu_sort_none_pixbuf   = app_theme.get_pixbuf("screen/menu_sort_none.png")
+        self.sort_pixbufs = (self.menu_sort_normal_pixbuf,
+                             self.menu_sort_hover_pixbuf,
+                             self.menu_sort_none_pixbuf)
 
     def __init_menus(self):
         self.config_gui      = None
@@ -154,15 +182,15 @@ class PlayMenus(object):
                                      (None, _("Repeat (track)"),    self.__menu_play_repeat_track), # 单曲循环
                                      (None, _("Repeat (playlist)"), self.__menu_play_repeat_play_list)] # 列表循环
                                     )                       
-        self.play_menu = Menu([(None, _("Full Screen"),   self.__menu_full_screen),
-                               (None, _("Normal Mode"),   self.__menu_normal_mode),
-                               (None, _("Compact Mode"),  self.__menu_compact_mode),
-                               (None, _("Previous"),      self.__menu_prev),
-                               (None, _("Next"),          self.__menu_next),
+        self.play_menu = Menu([(self.full_pixbufs, _("Full Screen"),   self.__menu_full_screen),
+                               (self.window_mode_none_pixbus, _("Normal Mode"),   self.__menu_normal_mode),
+                               (self.concie_pixbufs, _("Compact Mode"),  self.__menu_compact_mode),
+                               (self.pre_pixbufs, _("Previous"),      self.__menu_prev),
+                               (self.next_pixbufs, _("Next"),          self.__menu_next),
                                (None),
-                               (None, _("Jump Forward"),  self.__menu_fseek),
-                               (None, _("Jump Backward"), self.__menu_bseek),
-                               (None, _("Order"),         self.play_state_menu),
+                               (self.f_seek_5_pixbufs, _("Jump Forward"),  self.__menu_fseek),
+                               (self.b_seek_5_pixbufs, _("Jump Backward"), self.__menu_bseek),
+                               (self.play_sequence_pixbufs, _("Order"),         self.play_state_menu),
                                ])
                                
         self.normal_ascept     = None
@@ -201,9 +229,9 @@ class PlayMenus(object):
                 ])
         self.audio_menu = Menu([(None, _("Channels"), self.channel_select_menu),
                                  (None),
-                                 (None, _("Increase Volume"),  self.__menu_inc_volume),
-                                 (None, _("Decrease Volume"),  self.__menu_dec_volume),
-                                 (None, _("Mute/Unmute"),      self.__menu_mute_unmute),
+                                 (self.add_volume_pixbufs, _("Increase Volume"),  self.__menu_inc_volume),
+                                 (self.sub_volume_pixbufs, _("Decrease Volume"),  self.__menu_dec_volume),
+                                 (self.mute_volume_pixbufs, _("Mute/Unmute"),      self.__menu_mute_unmute),
                                ])
         self.sort_menu = Menu([(None, _("Take Screenshot"),           None),
                                (None, _("Open Screenshot Directory"), None),
@@ -218,13 +246,13 @@ class PlayMenus(object):
                                     (None, _("File"),  self.file_menu),
                                     (None, _("Play"),  self.play_menu),
                                     (None, _("Video"), self.video_menu),
-                                    (None, _("Audio"), self.audio_menu),
-                                    (None, _("Take Screenshots"),  self.sort_menu),
+                                    (self.volume_pixbufs, _("Audio"), self.audio_menu),
+                                    (self.sort_pixbufs, _("Take Screenshots"),  self.sort_menu),
                                     (None, _("Format conversion"), self.format_menu),
                                     (None, _("View New Features"), self.__menu_init_user_guide),
-                                    (None, _("Preferences"),       self.__menu_config_gui),
+                                    (self.settings_pixbufs, _("Preferences"),       self.__menu_config_gui),
                                     (None),
-                                    (None, _("Quit"), self.__menu_quit)
+                                    (self.quit_pixbufs, _("Quit"), self.__menu_quit)
                                     ],
                                     True)
         ###############################################################
@@ -251,7 +279,7 @@ class PlayMenus(object):
                                          (None, _("Remove Unavailable Files"), self.__menu_remove_unavailable_files),
                                          (None),
                                          (None, _("Recent Played"), None),
-                                         (None, _("Order"), self.play_state_menu),
+                                         (self.play_sequence_pixbufs, _("Order"), self.play_state_menu),
                                          (None, _("Sort"),  self.sort_menu),
                                          (None),
                                          (None, _("Format conversion"), self.__menu_screen_format_conversion),
@@ -262,11 +290,11 @@ class PlayMenus(object):
         #########################################################
         # 播放菜单
         self.screen_play_menu = Menu([            
-                          (None, _("Previous"),      self.__menu_prev),
-                          (None, _("Next"),          self.__menu_next),
+                          (self.pre_pixbufs, _("Previous"),      self.__menu_prev),
+                          (self.next_pixbufs, _("Next"),          self.__menu_next),
                           (None),
-                          (None, _("Jump Forward"),  self.__menu_fseek),
-                          (None, _("Jump Backward"), self.__menu_bseek),
+                          (self.f_seek_5_pixbufs, _("Jump Forward"),  self.__menu_fseek),
+                          (self.b_seek_5_pixbufs, _("Jump Backward"), self.__menu_bseek),
                           ])
         ## 音轨选择
         # Menu([(None, "音轨一", None), (... "音轨二", None)...])
@@ -303,16 +331,16 @@ class PlayMenus(object):
                 (None, _("Open Directory"), self.__menu_open_dir),
                 (None, _("Open URL"),       self.__menu_open_url),
                 (None),
-                (None, _("Full Screen On/Off"), self.__menu_full_screen),
-                (None, _("Normal Mode"),        self.__menu_normal_mode),
-                (None, _("Compact Mode"),       self.__menu_compact_mode),
-                (None, _("Order"), self.play_state_menu),
+                (self.full_pixbufs, _("Full Screen On/Off"), self.__menu_full_screen),
+                (self.window_mode_none_pixbus, _("Normal Mode"),        self.__menu_normal_mode),
+                (self.concie_pixbufs, _("Compact Mode"),       self.__menu_compact_mode),
+                (self.play_sequence_pixbufs, _("Order"), self.play_state_menu),
                 (None, _("Play"),  self.screen_play_menu),
                 (None, _("Video"), self.video_menu),
-                (None, _("Audio"), self.channel_select),
-                (None, _("Subtitles"),      self.subtitles_select),
+                (self.volume_pixbufs, _("Audio"), self.channel_select),
+                (self.subtitle_pixbus, _("Subtitles"),      self.subtitles_select),
                 (None, _("DVD Navigation"), self.dvd_navigation_menu),
-                (None, _("Preferences"),    self.__menu_config_gui),
+                (self.settings_pixbufs, _("Preferences"),    self.__menu_config_gui),
                 (None),
                 (None, _("Properties"), self.__menu_properties),
                 ], True)
