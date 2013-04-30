@@ -46,9 +46,10 @@ class GUI(object):
         self.__init_values()
         self.app = Application(False)
         # application set.
-        #app_w, app_h = 640, 480
         app_w, app_h = 890, 590
-        self.app.set_default_size(app_w, app_h)
+        min_app_w, min_app_h = 480, 300
+        self.app.set_default_size(min_app_w, min_app_h)
+        self.app.window.set_default_size(app_w, app_h)
         # self.app.window.resize
         self.app.set_icon(app_theme.get_pixbuf("icon.ico"))
         self.app.set_skin_preview(app_theme.get_pixbuf("frame.png"))

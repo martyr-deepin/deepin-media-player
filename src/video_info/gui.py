@@ -165,8 +165,14 @@ class VideoInformGui(gobject.GObject):
             self.widget_y = 20
             tabs = "   "
             #
-            scaling = str(round(float(self.player.video_width) / self.player.video_height, 3))
-            bit_rate = str(int(self.player.video_bitrate) / 1000) + " kbps"
+            try:
+                scaling = str(round(float(self.player.video_width) / self.player.video_height, 3))
+            except:
+                scaling = 0
+            try:
+                bit_rate = str(int(self.player.video_bitrate) / 1000) + " kbps"
+            except:
+                bit_rate = 0
             self.fixed_code = gtk.Fixed()
             self.video_strem_info_label = Label(_("Video stream info:"))
             self.code_format_label      = Label(_('.Codec format:') + "%s%s" % (tabs, self.player.video_format))

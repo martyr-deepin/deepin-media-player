@@ -408,6 +408,18 @@ class MediaPlayer(object):
     def ldmp_screen_changed(self, ldmp, video_width, video_height):
         #print "ldmp_screen_changed...", "video_width:", video_width, "video_height:", video_height
         self.set_draw_background(video_width, video_height) # 是否画播放器屏幕显示的背景.
+        # 如果是 窗口适应视频.
+        win_to_video_check = self.config.get("FilePlay", "video_file_open")
+        if "1" == win_to_video_check: # 判断是否为 窗口适应视频.
+            screen = self.gui.app.window.get_screen()
+            screen_h = screen.get_height()
+            screen_w = screen.get_width()
+            video_h = int(self.ldmp.player.video_height)
+            video_w = int(self.ldmp.player.video_width)
+            min_app_w, min_app_h = 480, 300
+            app_h = max(min(video_h, screen_h), min_app_h)
+            app_w = max(min(video_w, screen_w), min_app_w)
+            self.gui.app.window.resize(app_w, app_h)
         
     def set_draw_background(self, video_width, video_height):
         if video_width == 0 or video_height == 0:            
