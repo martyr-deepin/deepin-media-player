@@ -256,7 +256,7 @@ class PlayMenus(object):
                                          (None),
                                          (None, _("Format conversion"), self.__menu_screen_format_conversion),
                                          (None, _("Open Containing Directory"), self.__menu_open_containing_directory),
-                                         (None, _("Properties"), None),
+                                         #(None, _("Properties"), None),
                                          ],
                                          True)
         #########################################################

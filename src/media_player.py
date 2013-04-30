@@ -369,7 +369,7 @@ class MediaPlayer(object):
         
     def player_start_init(self):    
         pass
-    
+
     def ldmp_end_media_player(self, ldmp):
         #print "===========播放结束!!==========", ldmp.player.type
         self.player_end_init()
@@ -388,7 +388,22 @@ class MediaPlayer(object):
         self.media_play_menus.menus.subtitles_select.clear_menus()
         self.media_play_menus.menus.switch_audio_menu.clear_menus()
         self.media_play_menus.menus.channel_select.set_menu_item_sensitive_by_index(1, False)
+        # 保存播放完毕的进度.
+        self.save_play_position()
 
+    def save_play_position(self):
+        uri = '"%s"' % str(self.ldmp.player.uri)
+        pos = self.ldmp.player.position 
+        length = self.ldmp.player.length
+        if pos + 2 < length:
+            self.ini.set("PlayMemory", uri, pos) 
+            self.ini.save()
+        else:
+            # 如果超过length, 则是删除里面保存的选项.
+            if self.ini.get("PlayMemory", uri): # 判断是否存在.
+                # 删除原来保存的东西.
+                del self.ini.section_dict["PlayMemory"][uri] 
+                self.ini.save()
         
     def ldmp_screen_changed(self, ldmp, video_width, video_height):
         #print "ldmp_screen_changed...", "video_width:", video_width, "video_height:", video_height
@@ -575,16 +590,23 @@ class MediaPlayer(object):
     def play(self, play_name):
         play_file = play_name
         if play_file:
-            self.init_ldmp_player()
+            self.init_ldmp_player(play_file)
             self.ldmp_play(play_file)
 
-    def init_ldmp_player(self):
+    def init_ldmp_player(self, play_file=None):
         self.play_list_check = True
         if self.ldmp.player.state: # 判断是否在播放,如果在播放就先退出.
             self.ldmp.quit()
         ####################################
         ## 初始化设置, 比如加载的字幕或者起始时间等等.
-        self.ldmp.player.start_time = 0
+        start_time = 0
+        pos_check = self.config.get("FilePlay", "memory_up_close_player_file_postion") 
+        if "True" == pos_check:
+            uri = '"%s"' % (play_file)
+            pos = self.ini.get("PlayMemory", uri)
+            if pos:
+                start_time = float(pos)
+        self.ldmp.player.start_time = start_time
         self.ldmp.player.subtitle = []
         # 音轨选择初始化.
         self.ldmp.player.audio_index = 0
@@ -596,14 +618,14 @@ class MediaPlayer(object):
     def prev(self):    
         play_file = self.play_list.get_prev_file()
         if play_file:
-            self.init_ldmp_player()
+            self.init_ldmp_player(play_file)
             self.ldmp_play(play_file)
     
     # 下一曲.
     def next(self):    
         play_file = self.play_list.get_next_file()
         if play_file:
-            self.init_ldmp_player()
+            self.init_ldmp_player(play_file)
             self.ldmp_play(play_file)
 
     def ldmp_play(self, play_file):
@@ -746,6 +768,12 @@ class MediaPlayer(object):
     def scan_file_event(self, scan_dir, file_name):
         # 判断文件类型是否可播放..
         # get_play_type(file_name)
+        '''
+        # 保存总长度，避免下次继续读取.
+        length = self.ldmp.player.length 
+        self.ini.set("PlyTime", self.ldmp.player.uri, length)
+        self.save()
+        '''
         if True: #is_file_audio(file_name):
             if is_file_sub_type(file_name):
                 self.ldmp.sub_add(file_name)

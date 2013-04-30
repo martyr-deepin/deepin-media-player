@@ -1357,21 +1357,22 @@ class OtherKey(gtk.VBox):
             
         for key_title, widget in map(lambda key_title, widget:(key_title, widget),
                                      self.key_titles_right, self.widgets_right):
+            widget.get_current_item()
             if key_title in ["mouse_left_single_clicked"]:
                 if widget.get_select_index():
-                    text = "Disabled"
+                    text = _("Disabled")
                 else:    
-                    text = "Pause/Play"
+                    text = _("Pause/Play")
             elif key_title in ["mouse_left_double_clicked"]:
                 if widget.get_select_index():
-                    text = "Disabled"
+                    text = _("Disabled")
                 else:    
-                    text = "Full Screen"
+                    text = _("Full Screen")
             elif key_title in ["mouse_wheel_event"]:
                 if widget.get_select_index():
-                    text = "Disabled"
+                    text = _("Disabled")
                 else:    
-                    text = "Volume"
+                    text = _("Volume")
                     
             other_set_dict[str(key_title)] = text
         return other_set_dict
