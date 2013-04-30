@@ -280,6 +280,14 @@ class MediaPlayer(object):
     def app_window_quit(self, widget): # 窗口销毁.destroy
         self.play_list_check  = True
         self.ldmp.quit()
+        # save media window size.
+        self.save_media_window_size()
+
+    def save_media_window_size(self):
+        rect = self.gui.app.window.allocation
+        self.config.set("Window", "width", rect.width)
+        self.config.set("Window", "height", rect.height)
+        self.config.save()
         
     def app_window_configure_event(self, widget, event): # configure-event
         self.set_ascept_restart() # 设置分辨率.
@@ -410,16 +418,25 @@ class MediaPlayer(object):
         self.set_draw_background(video_width, video_height) # 是否画播放器屏幕显示的背景.
         # 如果是 窗口适应视频.
         win_to_video_check = self.config.get("FilePlay", "video_file_open")
+        screen = self.gui.app.window.get_screen()
+        screen_h = screen.get_height()
+        screen_w = screen.get_width()
+        min_app_w, min_app_h = 480, 300
         if "1" == win_to_video_check: # 判断是否为 窗口适应视频.
-            screen = self.gui.app.window.get_screen()
-            screen_h = screen.get_height()
-            screen_w = screen.get_width()
             video_h = int(self.ldmp.player.video_height)
             video_w = int(self.ldmp.player.video_width)
-            min_app_w, min_app_h = 480, 300
             app_h = max(min(video_h, screen_h), min_app_h)
             app_w = max(min(video_w, screen_w), min_app_w)
             self.gui.app.window.resize(app_w, app_h)
+        elif "3" == win_to_video_check: # 判断是否为 上次关闭尺寸.
+            app_w = self.config.get("Window", "width")
+            app_h = self.config.get("Window", "height")
+            if app_w and app_h: # 第一次没有初始化，不进行.
+                app_w = max(min(int(app_w), screen_w), min_app_w)
+                app_h = max(min(int(app_h), screen_h), min_app_h)
+                self.gui.app.window.resize(app_w, app_h)
+        elif "4" == win_to_video_check: # 全屏.
+            self.fullscreen_function()
         
     def set_draw_background(self, video_width, video_height):
         if video_width == 0 or video_height == 0:            
