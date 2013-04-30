@@ -768,17 +768,18 @@ class MediaPlayer(object):
     def scan_file_event(self, scan_dir, file_name):
         # 判断文件类型是否可播放..
         # get_play_type(file_name)
-        '''
-        # 保存总长度，避免下次继续读取.
-        length = self.ldmp.player.length 
-        self.ini.set("PlyTime", self.ldmp.player.uri, length)
-        self.save()
-        '''
         if True: #is_file_audio(file_name):
             if is_file_sub_type(file_name):
                 self.ldmp.sub_add(file_name)
             else:
-                cmd_str = self.get_length(file_name)
+                uri = '"%s"' % (file_name)
+                ini_len = self.ini.get("PlayTime", uri) 
+                if ini_len:
+                    cmd_str = ini_len
+                else:
+                    cmd_str = self.get_length(file_name)
+                    self.ini.set("PlayTime", uri, cmd_str)
+                    self.ini.save()
                 if cmd_str:
                     self.gui.play_list_view.list_view.items.add([get_play_file_name(file_name), cmd_str, file_name])
 
