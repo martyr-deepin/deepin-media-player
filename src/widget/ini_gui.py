@@ -23,6 +23,7 @@
 from skin import app_theme
 from ini import Config
 from utils import get_home_path, get_text_size
+from color import alpha_color_hex_to_cairo
 from listview import ListView, Text
 from dtk.ui.theme import ui_theme
 from dtk.ui.skin_config import skin_config
@@ -1634,7 +1635,7 @@ class Plugin(gtk.VBox):
         self.list_view_scrol_win.set_size_request(100, 350)
         self.list_view = ListView()
         #
-        #self.list_view.on_draw_column_heade = self.list_view_on_draw_column_heade
+        self.list_view.on_draw_column_heade = self.list_view_on_draw_column_heade
         self.list_view.on_draw_item = self.list_view_on_draw_item
         self.list_view.on_draw_sub_item     =  self.list_view_on_draw_sub_item
         self.list_view.connect_event("single-items",  self.list_view_single_items) 
@@ -1704,7 +1705,40 @@ class Plugin(gtk.VBox):
                 self.this.plugin_man.open_plugin(plugin_name)
 
     def list_view_on_draw_column_heade(self, e):
-        pass
+        #
+        bg_pixbuf = ui_theme.get_pixbuf("listview/header_normal.png").get_pixbuf()
+        bg_pixbuf = bg_pixbuf.scale_simple(e.w, e.h, gtk.gdk.INTERP_BILINEAR)
+        draw_pixbuf(e.cr, bg_pixbuf, e.x, e.y)
+        '''
+        if e.column == e.single_columns:
+            bg_pixbuf = ui_theme.get_pixbuf("listview/header_press.png").get_pixbuf()
+            bg_pixbuf = bg_pixbuf.scale_simple(e.w, e.h, gtk.gdk.INTERP_BILINEAR)
+            draw_pixbuf(e.cr, bg_pixbuf, e.x, e.y)
+        elif e.column ==  e.motion_columns:
+        '''
+        if e.column == e.motion_columns:
+            bg_pixbuf = ui_theme.get_pixbuf("listview/header_hover.png").get_pixbuf()
+            bg_pixbuf = bg_pixbuf.scale_simple(e.w, e.h, gtk.gdk.INTERP_BILINEAR)
+            draw_pixbuf(e.cr, bg_pixbuf, e.x, e.y)
+
+        split_pixbuf = ui_theme.get_pixbuf("listview/split.png").get_pixbuf()
+        draw_pixbuf(e.cr, split_pixbuf,
+                    e.x + e.w - split_pixbuf.get_width(),
+                    e.y + e.h/2 - split_pixbuf.get_height()/2)
+        #
+        '''
+        if self.list_view.columns[len(self.list_view.columns)-1] == e.column:
+            e.cr.set_source_rgba(*alpha_color_hex_to_cairo(("#FF00FF", 0.1)))
+            e.cr.rectangle(e.x + e.w, e.y, self.allocation.width - e.x, e.h)
+            e.cr.stroke()
+        '''
+        # 画标题栏文本.
+        draw_text(e.cr, 
+                  e.text,
+                  e.x, e.y, e.w, e.h,
+                  text_color=e.text_color,
+                  alignment=Text.CENTER)
+        #
 
     def list_view_on_draw_item(self, e):
         e.x, e.y, e.w, e.h = e.rect
