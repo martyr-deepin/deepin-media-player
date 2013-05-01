@@ -52,7 +52,6 @@ class PluginYouku(object):
         self.__init_tree_view()
 
     def __init_tree_view(self):
-        print "__init_tree_view..."
         self.youku_root = self.tree_view.nodes.add("优酷视频")
         self.youku_root.addr = "http://www.youku.com"
         # 初始化根节点的 表单.
