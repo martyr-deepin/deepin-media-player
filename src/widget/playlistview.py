@@ -102,7 +102,8 @@ class PlayListView(object):
         text = e.text.decode("utf-8")
         one_width = self.list_view.columns[0].width
         two_width = self.list_view.columns[1].width
-        if e.w == one_width: # 显示播放名字的第一列.
+        #if e.w == one_width: # 显示播放名字的第一列.
+        if e.column_index == 0:
             #
             t_width = 0
             t_index = 0

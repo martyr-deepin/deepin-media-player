@@ -237,6 +237,7 @@ class ListView(ListViewBase):
         self.__save_press_items_index = 0
         self.__save_press_items_check = False
         #
+        self.__drag_items_check = True
         self.__move_items_check = False
         self.__save_move_items_x = 0
         self.__save_move_items_index = 0
@@ -347,7 +348,7 @@ class ListView(ListViewBase):
             self.__motion_items = None
         #
         # items 滚动移动..
-        if self.__save_press_items_check:
+        if self.__save_press_items_check and self.__drag_items_check:
             index  = self.__save_press_items_index
             if self.items[index] in self.__single_items:
                 save_y = self.__save_press_items_y
@@ -416,7 +417,7 @@ class ListView(ListViewBase):
                 self.__save_press_items_check = press_check
                 self.__save_press_items_y     = int(event.y)
             
-            if move_index != None and move_check:
+            if move_index != None and move_check and self.__drag_items_check:
                 for item in self.__single_items:
                     if item == self.items[move_index]:
                         self.__move_items_check      = move_check
@@ -584,6 +585,7 @@ class ListView(ListViewBase):
         for row, item in enumerate(self.items[start_index:end_index]):
             temp_item_w = 0
             # 行中的列元素.
+            temp_column_index = 0
             for column, sub_item in map(lambda s, c:(s, c), 
                                         self.columns,  
                                         item.sub_items):
@@ -604,8 +606,10 @@ class ListView(ListViewBase):
                     e.h = self.__items_padding_height 
                     e.sub_item_index = row + start_index
                     temp_item_w += column.width
+                    e.column_index = temp_column_index
                     #
                     self.on_draw_sub_item(e)
+                    temp_column_index += 1
             # 保存绘制行的y坐标.
             temp_item_h += self.__items_padding_height
 
@@ -895,6 +899,15 @@ class ListView(ListViewBase):
     def get_single_items(self):
         return self.__single_items 
 
+    def set_columns_height(self, h):
+        self.__columns_padding_height = h
+
+    def set_columns_show(self, check):
+        self.__columns_show_check = check
+
+    def set_drag_items(self, check):
+        self.__drag_items_check = check
+
 class ItemEventArgs(object):
     def __init__(self):
         self.cr = None
@@ -909,6 +922,7 @@ class ItemEventArgs(object):
         # item.
         self.item    = None
         self.drag_rect = None
+        self.column_index = None
         # Bounds
         self.x =  0
         self.y =  0

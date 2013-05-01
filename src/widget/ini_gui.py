@@ -22,9 +22,12 @@
 
 from skin import app_theme
 from ini import Config
-from utils import get_home_path
-
+from utils import get_home_path, get_text_size
+from listview import ListView, Text
+from dtk.ui.theme import ui_theme
+from dtk.ui.skin_config import skin_config
 from dtk.ui.utils import propagate_expose, is_left_button, color_hex_to_cairo
+from dtk.ui.utils import cairo_state
 from dtk.ui.dialog import DialogBox, DIALOG_MASK_MULTIPLE_PAGE
 from dtk.ui.button import Button
 from dtk.ui.entry import InputEntry, ShortcutKeyEntry
@@ -35,6 +38,7 @@ from dtk.ui.box import BackgroundBox, ImageBox
 from dtk.ui.button import CheckButton, RadioButton
 from dtk.ui.line import HSeparator
 from dtk.ui.treeview import TreeView, TreeItem
+from dtk.ui.scrolled_window import ScrolledWindow
 
 import gtk
 import pangocairo
@@ -347,6 +351,7 @@ class IniGui(DialogBox):
                                               _("Subtitle"),
                                               _("Other"),
                                               ])
+        self.plugin_item = NormalItem(_("Plugin"))
         
         self.tree_view.add_items(
             [self.playback_item, 
@@ -354,7 +359,9 @@ class IniGui(DialogBox):
              self.keyboard_expand_item,
              NormalItem(_("Subtitles")),
              self.screenshot_item,
-             NormalItem(_("About us"))]
+             self.plugin_item,
+             NormalItem(_("About us")),
+             ]
             )
         self.tree_view.draw_mask = self.draw_treeview_mask
         self.tree_view_align = gtk.Alignment()
@@ -487,6 +494,7 @@ class Configure(gtk.VBox):
             _("Other"):OtherKey(),
             _("Subtitles"):SubSet(),
             _("Screenshot"):ScreenShot(),
+            _("Plugin"):Plugin(),
             _("About us"):About()
             }
         
@@ -1464,7 +1472,6 @@ class ScreenShot(gtk.VBox):
         entry_height = 24
         self.ini = Config(config_path)
 
-        self.fixed = gtk.Fixed()
         self.label = Label(_("Screenshot"))
         self.label.set_size_request(label_width, label_height)
         self.heparator_hbox = gtk.HBox()
@@ -1599,24 +1606,124 @@ class ScreenShot(gtk.VBox):
         screenshot_dict["current_show_sort"] = self.current_show_sort_check.get_active()
         return screenshot_dict
         
-        
-class OtherSet(gtk.VBox):    
+class Plugin(gtk.VBox):
     def __init__(self):
         gtk.VBox.__init__(self)
-        self.fixed = gtk.Fixed()
-        self.label = Label(_("Other"))
+        self.listview_color = ui_theme.get_color("scrolledbar")
+        self.label = Label(_("Plugin"))
         self.label.set_size_request(label_width, label_height)
+        #
         self.heparator_hbox = gtk.HBox()
         self.heparator = create_separator_box()
         self.heparator_hbox.pack_start(self.heparator)
+        self.heparator_hbox.set_size_request(heparator_width, heparator_height)                
+        #
+        self.list_view_align = gtk.Alignment(0, 0, 1, 1)
+        self.list_view_align.set_padding(0, 0, 0, 5)
+        self.list_view_scrol_win = ScrolledWindow(0, 0)
+        #self.list_view_scrol_win.set_policy(gtk.POLICY_NEVER, gtk.POLICY_ALWAYS)
+        self.list_view_scrol_win.set_size_request(100, 280)
+        self.list_view = ListView()
+        #
+        #self.list_view.on_draw_column_heade = self.list_view_on_draw_column_heade
+        self.list_view.on_draw_item = self.list_view_on_draw_item
+        self.list_view.on_draw_sub_item     =  self.list_view_on_draw_sub_item
+        #
+        self.list_view.set_columns_show(True) # 是否显示标题栏.
+        self.list_view.set_columns_height(30) # 设置标题栏高度.
+        self.list_view.set_drag_items(False) # 禁止拖动.
+        #
+        self.list_view.columns.add_range(["名称", "版本", "启用", ""])
+        self.list_view.columns[0].width = 305
+        self.list_view.columns[3].width = 900
+        #
+        for i in range(1, 10):
+            self.list_view.items.add_range([["超级无敌优酷插件", "1.0", "X", ""], 
+                                            ["超级无敌PPS插件", "3.0", "X", ""]])
+        self.list_view_scrol_win.add_with_viewport(self.list_view)
+        self.list_view_align.add(self.list_view_scrol_win)
+        #
+        title_box = gtk.VBox(spacing=5)
+        title_box.pack_start(self.label, False, False)
+        title_box.pack_start(create_separator_box(), False, True)
+        title_box.pack_start(self.list_view_align, False, False)
+        title_box_align = gtk.Alignment()
+        title_box_align.set_padding(10, 0, 10, 0)
+        title_box_align.set(0, 0, 1, 1)
+        title_box_align.add(title_box)
+
+        self.pack_start(title_box_align, False, True)
+
+    def list_view_on_draw_column_heade(self, e):
+        pass
+
+    def list_view_on_draw_item(self, e):
+        e.x, e.y, e.w, e.h = e.rect
+        #
+        with cairo_state(e.cr):
+            e.cr.rectangle(e.x, e.y, e.w, e.h)
+            e.cr.clip()
+            e.cr.translate(e.x, e.y)
+            skin_config.render_background(e.cr, self.list_view, 0, 0)
+        #
+        draw_vlinear(
+            e.cr, e.x, e.y, e.w, e.h, 
+            [(0, ("#FFFFFF", 0.9)),
+             (1, ("#FFFFFF", 0.9))])
+
+    def list_view_on_draw_sub_item(self, e):
+        color = self.listview_color.get_color()
+        # 画按下和掠过的效果.
+        if e.item in e.single_items:
+            e.text_color = "#FFFFFF"
+            text_size=9
+            color_info = [(0, (color, 0.8)), (1, (color, 0.8))] 
+            draw_vlinear(e.cr,
+                         e.x, e.y, e.w, e.h,
+                         color_info
+                         )
+        elif e.motion_items == e.item:
+            e.text_color  = "#000000"
+            text_size=9
+            color_info = [(0, (color, 0.2)), (1, (color, 0.2))] 
+            draw_vlinear(e.cr,
+                         e.x, e.y, e.w, e.h,
+                         color_info
+                         )
+        else:
+            e.text_color = "#000000"
+            text_size=9
         
-        otherset_x = 20
-        #################################
-        self.fixed.put(self.label, otherset_x, TITLE_HEIGHT_PADDING)
-        self.fixed.put(self.heparator_hbox, heparator_x, heparator_y)
-        
-        self.pack_start(self.fixed)
-        
+        # 画文本.
+        text = e.text.decode("utf-8")
+        if e.column_index != 2:
+            # 省略文本.
+            t_width = 0
+            t_index = 0
+            add_point = False
+            for t in text:
+                t_width += get_text_size(t, text_size=text_size)[0]
+                if t_width > e.w - 30:
+                    add_point = True
+                    break
+                t_index += 1
+            if add_point:
+                text = text[:t_index] + "..."
+            # 画文本.
+            e.draw_text(e.cr, 
+                    str(text), 
+                      e.x, e.y, e.w, e.h,
+                      text_color=e.text_color, 
+                      text_size=text_size,
+                      alignment=Text.CENTER) #alignment)
+        else:
+            # 画图片.
+            e.draw_text(e.cr, 
+                    str(text), 
+                      e.x, e.y, e.w, e.h,
+                      text_color=e.text_color, 
+                      text_size=text_size,
+                      alignment=Text.CENTER)
 
 class About(gtk.VBox):    
     def __init__(self):
