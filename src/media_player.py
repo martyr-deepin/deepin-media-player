@@ -127,7 +127,6 @@ class MediaPlayer(object):
             # 判断是否已经在运行了.
             if is_exists(APP_DBUS_NAME, APP_OBJECT_NAME):
                 # DBUS控制深度影音 的服务初始化.
-                import sys
                 bus = dbus.SessionBus()
                 # 获取保存下来的单实例ID.
                 dbus_id = self.config.get("DBUS", "id")
@@ -143,7 +142,7 @@ class MediaPlayer(object):
                 iface = dbus.Interface(remote_object,
                                        "org.mpris.MediaPlayer2.Player")
                 # iface 加入播放文件或者播放文件夹.
-                iface.Next()
+                iface.argv_to_play_list(sys.argv[1:])
                 #
                 sys.exit()
             self.save_dbus_id()
@@ -354,6 +353,19 @@ class MediaPlayer(object):
         self.media_play_drag  = MediaPlayDrag(self)
         # 初始化插件系统.
         self.init_plugin_manage()
+        # 初始化命令行进入的时候.
+        # import getopt .
+        # 不需要用这个东西.如果需要命令行解析，那就用mplayer命令行吧.
+        # 没必须要再去把mplayer命令行实现一遍, python抄袭C的东西，恶心.
+        self.argv_add_to_play_list(self.argv_path_list[1:])
+
+    def argv_add_to_play_list(self, argv):
+        for path in argv:
+            if os.path.exists(path):
+                if os.path.isfile(path):
+                    self.scan_file_event(None, path)
+                elif os.path.isdir(path):
+                    self.dirs_to_play_list([path], type_check=False)
 
     def init_plugin_manage(self):
         # 插件初始化.

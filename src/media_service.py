@@ -310,6 +310,12 @@ class SomeObject(dbus.service.Object):
         #
         if check:
             self.this.next()
+    
+    @dbus.service.method(DEEPIN_MEDIA_PLAYER_DBUS_NAME,
+                         in_signature='as', out_signature='')
+    def argv_to_play_list(self, argv):
+        self.this.argv_add_to_play_list(argv)
+
 
     
 
