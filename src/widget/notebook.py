@@ -174,6 +174,16 @@ class NoteBook(gtk.Container):
         gtk.Container.do_size_allocate(self, allocation)
         self.allocation = allocation
         #
+        self.set_child_size()
+        #
+        if self.get_realized():
+            self.window.move_resize(
+                    self.allocation.x,
+                    self.allocation.y,
+                    self.allocation.width,
+                    self.allocation.height)
+
+    def set_child_size(self):
         title_w_padding = self.allocation.width/len(self.children)
         allocation = gdk.Rectangle()
         allocation.x  = 0
@@ -201,13 +211,6 @@ class NoteBook(gtk.Container):
         allocation.x = layout1_x
         allocation.y = 0 + self.title_h #self.layout1.allocation.y
         self.layout1.size_allocate(allocation)
-        #
-        if self.get_realized():
-            self.window.move_resize(
-                    self.allocation.x,
-                    self.allocation.y,
-                    self.allocation.width,
-                    self.allocation.height)
 
     def do_show(self):
         gtk.Container.do_show(self)
@@ -224,9 +227,11 @@ class NoteBook(gtk.Container):
     def hide_title(self):
         self.save_title_h = self.title_h
         self.title_h = 0
+        self.queue_draw()
 
     def show_title(self):
         self.title_h = self.save_title_h
+        self.queue_draw()
 
 gobject.type_register(NoteBook)
 

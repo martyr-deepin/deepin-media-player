@@ -325,11 +325,12 @@ class IniGui(DialogBox):
         "config-changed" : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE,
                             (gobject.TYPE_STRING, ))
         }
-    def __init__(self):
+    def __init__(self, this):
         DialogBox.__init__(self, _("Preferences"), INI_WIDTH, INI_HEIGHT,
                            mask_type=DIALOG_MASK_MULTIPLE_PAGE,
                            window_pos=gtk.WIN_POS_CENTER)
         # Set event.
+        self.this = this
         self.ini = Config(config_path)        
         # Set event.
         self.connect("motion-notify-event", self.press_save_ini_file)
@@ -337,7 +338,7 @@ class IniGui(DialogBox):
         
         self.main_vbox = gtk.VBox()
         self.main_hbox = gtk.HBox()
-        self.configure = Configure()
+        self.configure = Configure(self.this)
         tree_view_width = 132 
         
         self.tree_view = TreeView(enable_drag_drop=False, enable_multiple_select=False)
@@ -484,8 +485,9 @@ class IniGui(DialogBox):
         self.configure.set(item.title)
         
 class Configure(gtk.VBox):
-    def __init__(self):
+    def __init__(self, this):
         gtk.VBox.__init__(self)
+        self.this = this
         self.class_dict = {
             _("Playback"):FilePlay(),
             _("General"):SystemSet(),
@@ -494,7 +496,7 @@ class Configure(gtk.VBox):
             _("Other"):OtherKey(),
             _("Subtitles"):SubSet(),
             _("Screenshot"):ScreenShot(),
-            _("Plugin"):Plugin(),
+            _("Plugin"):Plugin(self.this),
             _("About us"):About()
             }
         
@@ -1607,8 +1609,11 @@ class ScreenShot(gtk.VBox):
         return screenshot_dict
         
 class Plugin(gtk.VBox):
-    def __init__(self):
+    def __init__(self, this):
         gtk.VBox.__init__(self)
+        self.this = this
+        self.note_book = self.this.gui.play_list_view.note_book
+        #
         self.listview_color = ui_theme.get_color("scrolledbar")
         self.label = Label(_("Plugin"))
         self.label.set_size_request(label_width, label_height)
@@ -1628,18 +1633,39 @@ class Plugin(gtk.VBox):
         #self.list_view.on_draw_column_heade = self.list_view_on_draw_column_heade
         self.list_view.on_draw_item = self.list_view_on_draw_item
         self.list_view.on_draw_sub_item     =  self.list_view_on_draw_sub_item
+        self.list_view.connect_event("single-items",  self.list_view_single_items) 
         #
         self.list_view.set_columns_show(True) # 是否显示标题栏.
         self.list_view.set_columns_height(30) # 设置标题栏高度.
         self.list_view.set_drag_items(False) # 禁止拖动.
         #
-        self.list_view.columns.add_range(["名称", "版本", "启用", ""])
+        self.list_view.columns.add_range([_("name"), _("version"), _("auto"), ""])
         self.list_view.columns[0].width = 305
         self.list_view.columns[3].width = 900
-        #
-        for i in range(1, 10):
-            self.list_view.items.add_range([["超级无敌优酷插件", "1.0", "X", ""], 
-                                            ["超级无敌PPS插件", "3.0", "X", ""]])
+        #get_plugin_infos( 获取插件信息.
+        plugin_names = self.this.plugin_man.get_modules_name()
+        
+        for name in plugin_names:
+            infos = self.this.plugin_man.get_plugin_info(name)
+            '''
+            print infos
+            print infos["title"]
+            print infos["version"]
+            print infos["auto"], infos["module_name"]
+            '''
+            auto_check = -1
+            if infos["auto"] == 1:
+                auto_check = "True"
+            elif infos["auto"] == 0:
+                auto_check = "False"
+            if -1 != auto_check:
+                self.list_view.items.add([str(infos["title"]), 
+                                           str(infos["version"]), 
+                                           str(auto_check), 
+                                           "",
+                                           str(infos["module_name"]),
+                                           str(infos["author"]),
+                                         ])
         self.list_view_scrol_win.add_with_viewport(self.list_view)
         self.list_view_align.add(self.list_view_scrol_win)
         #
@@ -1653,6 +1679,22 @@ class Plugin(gtk.VBox):
         title_box_align.add(title_box)
 
         self.pack_start(title_box_align, False, True)
+
+    def list_view_single_items(self, listview, single_items, row, col, item_x, item_y):
+        if col == 2:
+            check_item = single_items[0].sub_items[2]
+            plugin_name = single_items[0].sub_items[4].text
+            check = False
+            if "True" == check_item.text:
+                check = True
+            if check:
+                check_item.text = "False"
+                # 关闭插件.
+                self.this.plugin_man.close_plugin(plugin_name)
+            else:
+                check_item.text = "True"
+                # 开启插件.
+                self.this.plugin_man.open_plugin(plugin_name)
 
     def list_view_on_draw_column_heade(self, e):
         pass
@@ -1695,8 +1737,9 @@ class Plugin(gtk.VBox):
             text_size=9
         
         # 画文本.
-        text = e.text.decode("utf-8")
         if e.column_index != 2:
+            e.text = str(e.text)
+            text = e.text.decode("utf-8")
             # 省略文本.
             t_width = 0
             t_index = 0
@@ -1719,7 +1762,7 @@ class Plugin(gtk.VBox):
         else:
             # 画图片.
             e.draw_text(e.cr, 
-                    str(text), 
+                      str(e.text), 
                       e.x, e.y, e.w, e.h,
                       text_color=e.text_color, 
                       text_size=text_size,

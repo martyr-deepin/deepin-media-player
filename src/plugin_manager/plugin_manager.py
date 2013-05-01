@@ -80,7 +80,7 @@ class PluginManager(object):
         self.__auto_plugin_plugins = {}
         #
         self.__auto_flase_modules = {}
-        self.__auto_flase_plugins = {}
+        #self.__auto_flase_plugins = {}
 
     def __plugin_modules_exist(self):
         ldmp_path = self.plugin_dirs["ldmp"]
@@ -185,7 +185,8 @@ class PluginManager(object):
             plugin_object = self.__auto_plugin_plugins[name]
         else:
             # 无则创建.
-            plugin_object = plugin_class(self.__this)
+            if auto:
+                plugin_object = plugin_class(self.__this)
         #
         try:
             if auto:
@@ -193,9 +194,10 @@ class PluginManager(object):
         except Exception, err:
             print "模块:%s中的类:%s调用start_plugin函数错误:%s" % (name, class_name, err)
         #
-        plugin_object.ldmp_module = module
-        plugin_object.ldmp_name   = class_name
-        plugin_object.ldmp_version = version
+        if auto:
+            plugin_object.ldmp_module = module
+            plugin_object.ldmp_name   = class_name
+            plugin_object.ldmp_version = version
         # 删除.
         self.__plugin_modules.pop(name)
         if auto:
@@ -203,7 +205,7 @@ class PluginManager(object):
             self.__auto_plugin_plugins[name] = plugin_object
             self.__auto_plugin_modules[name] = module
         else:
-            self.__auto_flase_plugins[name] = plugin_object
+            #self.__auto_flase_plugins[name] = plugin_object
             self.__auto_flase_modules[name] = module
 
     def __can_auto_plugin(self, module):
@@ -242,6 +244,7 @@ class PluginManager(object):
             return False
         plugin_object = self.__auto_plugin_plugins[name]
         module = self.__auto_plugin_modules[name]
+        module.auto_check = False
         plugin_object.stop_plugin()
         self.__plugin_modules[name] = module
         self.auto_plugin(name, auto=False, open=True)
@@ -253,14 +256,15 @@ class PluginManager(object):
 
     def open_plugin(self, name):
         # 开启插件.
-        if not self.__auto_flase_plugins.has_key(name):
+        if not self.__auto_flase_modules.has_key(name):
             return False
         #
         module = self.__auto_flase_modules[name] 
+        module.auto_check = True
         self.__plugin_modules[name] = module
         self.auto_plugin(name)
         #
-        del self.__auto_flase_plugins[name] 
+        #del self.__auto_flase_plugins[name] 
         del self.__auto_flase_modules[name] 
         #
         self.__modules_count += 1
@@ -285,6 +289,9 @@ class PluginManager(object):
             plugin_object    = plugin_class(self.__this)
             class_.__dict__  = plugin_object.__dict__
     
+    def get_modules_name(self):
+        return self.__auto_plugin_modules.keys() + self.__auto_flase_modules.keys()
+
     def get_plugin_info(self, name):
         # 获取插件信息.
         infos = {}

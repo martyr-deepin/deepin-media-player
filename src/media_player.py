@@ -832,7 +832,7 @@ class MediaPlayer(object):
             self.run_check = False
 
     def config_gui(self):
-        ini_gui = IniGui()
+        ini_gui = IniGui(self)
         ini_gui.ini.connect("config-changed", self.restart_load_config_file)
 
     def restart_load_config_file(self, ini_gui, sec_root, sec_argv, sec_value):

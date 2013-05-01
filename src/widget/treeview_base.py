@@ -300,6 +300,9 @@ class TreeViewBase(gtk.Button):
     def expanded_all(self): # 展开所有节点.
         pass
 
+    def clear(self):
+        self.__nodes_list = []
+
 
 gobject.type_register(TreeViewBase)
 

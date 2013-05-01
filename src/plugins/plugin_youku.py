@@ -30,7 +30,8 @@ import gtk
 
 class_name = "PluginYouku"
 version = "1.0"
-auto_check = True
+auto_check = False
+
 
 class PluginYouku(object):
     def __init__(self, this):
@@ -51,6 +52,7 @@ class PluginYouku(object):
         self.__init_tree_view()
 
     def __init_tree_view(self):
+        print "__init_tree_view..."
         self.youku_root = self.tree_view.nodes.add("优酷视频")
         self.youku_root.addr = "http://www.youku.com"
         # 初始化根节点的 表单.
@@ -205,12 +207,12 @@ class PluginYouku(object):
         self.scan_win.hide_all()
 
     def start_plugin(self):
-        #print "获取dbus_id", self.this.dbus_id
         #print "start_plugin."
         self.show_check = True
         #self.show_scan_win()
-        # 加入网络列表.
         self.note_book.show_title() # 修复BUG， 当为网络列表的时候 隐藏，就看不到本地列表拉.
+        self.note_book.layout_show_check = False
+        self.note_book.set_child_size()
 
     def stop_plugin(self):
         #print "end_plugin..."
@@ -218,6 +220,9 @@ class PluginYouku(object):
         # 删除网络列表的node.
         # 并影藏网络列表.
         self.note_book.hide_title()
+        self.tree_view.clear()
+        self.note_book.layout_show_check = True
+        self.note_book.set_child_size()
         
         
         
