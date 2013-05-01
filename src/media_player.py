@@ -142,7 +142,8 @@ class MediaPlayer(object):
                 iface = dbus.Interface(remote_object,
                                        "org.mpris.MediaPlayer2.Player")
                 # iface 加入播放文件或者播放文件夹.
-                iface.argv_to_play_list(sys.argv[1:])
+                if len(sys.argv) > 1:
+                    iface.argv_to_play_list(sys.argv[1:])
                 #
                 sys.exit()
             self.save_dbus_id()
@@ -361,11 +362,12 @@ class MediaPlayer(object):
 
     def argv_add_to_play_list(self, argv):
         for path in argv:
+            path = str(path)
             if os.path.exists(path):
                 if os.path.isfile(path):
-                    self.scan_file_event(None, path)
+                    self.files_to_play_list([path])
                 elif os.path.isdir(path):
-                    self.dirs_to_play_list([path], type_check=False)
+                    self.dirs_to_play_list([path])
 
     def init_plugin_manage(self):
         # 插件初始化.
