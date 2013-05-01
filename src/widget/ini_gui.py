@@ -1612,6 +1612,10 @@ class Plugin(gtk.VBox):
     def __init__(self, this):
         gtk.VBox.__init__(self)
         self.this = this
+        self.plugin_check_hover = app_theme.get_pixbuf("plugin/check_hover.png")
+        self.plugin_check_none  = app_theme.get_pixbuf("plugin/check_none.png")
+        self.plugin_check_normal = app_theme.get_pixbuf("plugin/check_normal.png")
+        #
         self.note_book = self.this.gui.play_list_view.note_book
         #
         self.listview_color = ui_theme.get_color("scrolledbar")
@@ -1627,7 +1631,7 @@ class Plugin(gtk.VBox):
         self.list_view_align.set_padding(0, 0, 0, 5)
         self.list_view_scrol_win = ScrolledWindow(0, 0)
         #self.list_view_scrol_win.set_policy(gtk.POLICY_NEVER, gtk.POLICY_ALWAYS)
-        self.list_view_scrol_win.set_size_request(100, 280)
+        self.list_view_scrol_win.set_size_request(100, 350)
         self.list_view = ListView()
         #
         #self.list_view.on_draw_column_heade = self.list_view_on_draw_column_heade
@@ -1639,9 +1643,11 @@ class Plugin(gtk.VBox):
         self.list_view.set_columns_height(30) # 设置标题栏高度.
         self.list_view.set_drag_items(False) # 禁止拖动.
         #
-        self.list_view.columns.add_range([_("name"), _("version"), _("auto"), ""])
+        self.list_view.columns.add_range([_("name"), _("version"), _("auto"), _("author"), _("about"), ""])
         self.list_view.columns[0].width = 305
-        self.list_view.columns[3].width = 900
+        self.list_view.columns[3].width = 250
+        self.list_view.columns[4].width = 100
+        self.list_view.columns[5].width = 600
         #get_plugin_infos( 获取插件信息.
         plugin_names = self.this.plugin_man.get_modules_name()
         
@@ -1659,12 +1665,13 @@ class Plugin(gtk.VBox):
             elif infos["auto"] == 0:
                 auto_check = "False"
             if -1 != auto_check:
-                self.list_view.items.add([str(infos["title"]), 
-                                           str(infos["version"]), 
-                                           str(auto_check), 
+                self.list_view.items.add([str(infos["title"]),  # 名称.
+                                           str(infos["version"]),  # 版本.
+                                           str(auto_check),     # 运行状态.
+                                           str(infos["author"]), # 作者.
+                                           str(infos["about"]), # 关于.
                                            "",
                                            str(infos["module_name"]),
-                                           str(infos["author"]),
                                          ])
         self.list_view_scrol_win.add_with_viewport(self.list_view)
         self.list_view_align.add(self.list_view_scrol_win)
@@ -1683,7 +1690,7 @@ class Plugin(gtk.VBox):
     def list_view_single_items(self, listview, single_items, row, col, item_x, item_y):
         if col == 2:
             check_item = single_items[0].sub_items[2]
-            plugin_name = single_items[0].sub_items[4].text
+            plugin_name = single_items[0].sub_items[6].text
             check = False
             if "True" == check_item.text:
                 check = True
@@ -1761,12 +1768,13 @@ class Plugin(gtk.VBox):
                       alignment=Text.CENTER) #alignment)
         else:
             # 画图片.
-            e.draw_text(e.cr, 
-                      str(e.text), 
-                      e.x, e.y, e.w, e.h,
-                      text_color=e.text_color, 
-                      text_size=text_size,
-                      alignment=Text.CENTER)
+            if e.text == "True":
+                pixbuf = self.plugin_check_normal.get_pixbuf()
+            else:
+                pixbuf = self.plugin_check_none.get_pixbuf()
+            draw_pixbuf(e.cr, pixbuf, 
+                        e.x + e.w/2 - pixbuf.get_width()/2, 
+                        e.y + e.h/2 - pixbuf.get_height()/2)
 
 class About(gtk.VBox):    
     def __init__(self):

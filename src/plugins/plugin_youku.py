@@ -28,9 +28,12 @@ from youku.youku_web import zy_type_dict, movie_type_dict, tv_type_dict
 from widget.utils import ScanTreeview
 import gtk
 
+title = "优酷插件"
 class_name = "PluginYouku"
 version = "1.0"
 auto_check = False
+author = "hongmingman 372687266@qq.com"
+about = "这是一个播放优酷网络视频的插件"
 
 
 class PluginYouku(object):

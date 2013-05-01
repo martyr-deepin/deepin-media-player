@@ -314,6 +314,7 @@ class PluginManager(object):
         infos["version"] = getattr(module, "version", "") # 获取插件版本.
         infos["author"]  = getattr(module, "author", "hailongqiu 356752238@qq.com") # 获取插件作者.
         infos["auto"]  = auto_check
+        infos["about"] = getattr(module, "about", "this is plugin!!") # 关于.
         infos["error"] = getattr(module, "error_msg", "")
         return infos
 
