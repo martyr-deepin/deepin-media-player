@@ -36,14 +36,19 @@ class MenuWindow(gtk.Window):
         self.__init_events()
 
     def __init_values(self):
+        self.on_paint_expose_event = None
+        self.alpha = 1.0
         # 阴影.
         self.__sahow_check = True
         self.__sahow_value = 2
-        self.__sahow_color = ("#000000", 0.5)
+        self.__sahow_color = ("#FFFFFF", 0.5)
         #
         self.__surface = None
         #
         self.__old_w, self.__old_h = 0, 0
+
+    def get_sahow_value(self):
+        return self.__sahow_value
 
     def __init_settings(self):
         self.set_colormap(gtk.gdk.Screen().get_rgba_colormap())
@@ -53,49 +58,14 @@ class MenuWindow(gtk.Window):
         self.set_skip_taskbar_hint(True)
         self.set_position(gtk.WIN_POS_NONE)
         self.set_type_hint(gtk.gdk.WINDOW_TYPE_HINT_MENU)
+        self.set_opacity(self.alpha)
 
     def __init_events(self):
         self.add_events(gtk.gdk.ALL_EVENTS_MASK)
-        #self.connect("button-press-event", self.__menu_window_button_press_event)
-        #self.connect("show", self.__menu_window_show_event)
         self.connect("size-allocate", self.__on_size_allocate)
         self.connect("expose-event", self.__expose_event)
         self.connect("destroy", lambda w : gtk.main_quit())
     
-    '''
-    def __menu_window_button_press_event(self, widget, event):        
-        if self.in_window_check(widget, event):
-            self.hide_all()
-            self.grab_remove()
-
-    def in_window_check(self, widget, event):
-        toplevel = widget.get_toplevel()
-        window_x, window_y = toplevel.get_position()
-        x_root = event.x_root
-        y_root = event.y_root
-        if not ((x_root >= window_x and x_root < window_x + widget.allocation.width) 
-            and (y_root >= window_y and y_root < window_y + widget.allocation.height)):
-            return True
-                
-    def __menu_window_show_event(self, widget):
-        gtk.gdk.pointer_grab(
-            self.window,
-            True,
-            gtk.gdk.POINTER_MOTION_MASK
-            | gtk.gdk.BUTTON_PRESS_MASK
-            | gtk.gdk.BUTTON_RELEASE_MASK
-            | gtk.gdk.ENTER_NOTIFY_MASK
-            | gtk.gdk.LEAVE_NOTIFY_MASK,
-            None,
-            None,
-            gtk.gdk.CURRENT_TIME)
-        gtk.gdk.keyboard_grab(
-                self.window, 
-                owner_events=False, 
-                time=gtk.gdk.CURRENT_TIME)
-        self.grab_add()
-    '''
-               
     def __on_size_allocate(self, widget, alloc):
         x, y, w, h = self.allocation
         # 防止重复的加载.
@@ -112,6 +82,7 @@ class MenuWindow(gtk.Window):
     def __compute_shadow(self, w, h):
         cr = self.__surface_context
         x, y = 0, 0
+        '''
         self.on_draw_rectangle(x, y, w, h)
         cr.set_source_rgba(*alpha_color_hex_to_cairo((self.__sahow_color)))
         cr.fill_preserve()
@@ -125,9 +96,10 @@ class MenuWindow(gtk.Window):
         # 画内边框.
         cr.clip()
         self.on_draw_rectangle(x + 0.5, y + 0.5, w, h)
-        self.__border_out_color = ("#FFFFFF", 1.0)
+        self.__border_out_color = ("#FFFFFF", 0.9)
         cr.set_source_rgba(*alpha_color_hex_to_cairo((self.__border_out_color)))
         cr.fill_preserve()
+        '''
 
     def on_draw_rectangle(self, x, y, w, h):
         cr = self.__surface_context
@@ -159,21 +131,24 @@ class MenuWindow(gtk.Window):
         #
         cr = widget.window.cairo_create()
         #
+        '''
         if self.__sahow_check: # 是否显示阴影.
-            self.draw_expose_event(cr)
+            self.draw_surface_expose_event(cr)
         else: # 如果不开启阴影.
             cr.set_source_rgba(1, 1, 1, 1.0)
             cr.paint()
         #
+        '''
+        if self.on_paint_expose_event:
+            self.on_paint_expose_event(widget, event)
+        #
         propagate_expose(widget, event)
         return True
 
-    def draw_expose_event(self, cr):
+    def draw_surface_expose_event(self, cr):
         if self.__surface:
             cr.set_source_surface(self.__surface, 0, 0)
             cr.paint()
-
-
 
 if __name__ == "__main__":
     win = MenuWindow()
