@@ -22,6 +22,7 @@
 
 
 from skin import app_theme
+from locales import _
 from draw import draw_pixbuf, draw_text
 from utils import get_text_size
 from window import MenuWindow
@@ -40,6 +41,7 @@ class Menu(MenuWindow):
         self.__menu_height = 25
         self.__save_show_menu = None
         self.child_check = False
+        self.menu_parent = None
         #
         self.bg = app_theme.get_pixbuf("screen_mid/menu_bg_normal.png")
         self.open_cdrom = app_theme.get_pixbuf("screen_mid/screen_menu_open_cdrom.png")
@@ -48,9 +50,9 @@ class Menu(MenuWindow):
         self.menu_items = []
         if self.menu_items == []:
             items = []
-            for pixbuf, text in [(self.open_cdrom.get_pixbuf(), "打开CDROM"),
-                                 (self.open_dir.get_pixbuf(), "打开文件夹"),
-                                 (self.open_url.get_pixbuf(), "打开网址"),]:
+            for pixbuf, text in [(self.open_cdrom.get_pixbuf(), _("打开CDROM")),
+                                 (self.open_dir.get_pixbuf(), _("打开文件夹")),
+                                 (self.open_url.get_pixbuf(), _("打开网址")),]:
                 menu_item = MenuItem()
                 menu_item.pixbuf = pixbuf
                 menu_item.text  = text
@@ -69,7 +71,8 @@ class Menu(MenuWindow):
         #
         self.connect("show", self.__show_event)
         self.connect("motion-notify-event",  self.__motion_notify_event)
-        self.connect("button-release-event", self.__button_press_event)
+        self.connect("button-release-event", self.__button_release_event)
+        self.connect('button-press-event', self.__button_press_event)
         #
         self.on_paint_expose_event = self.__expose_event
 
@@ -95,8 +98,9 @@ class Menu(MenuWindow):
         index = 0
         for item in self.menu_items:
             pixbuf, text = item.pixbuf, item.text
-            draw_pixbuf(cr, pixbuf, 
-                        x + 8, y + index * self.__menu_height + self.__menu_height/2 - pixbuf.get_height()/2)
+            if pixbuf:
+                draw_pixbuf(cr, pixbuf, 
+                            x + 8, y + index * self.__menu_height + self.__menu_height/2 - pixbuf.get_height()/2)
             draw_text(cr, text, 
                       x + 35, y + index * self.__menu_height + self.__menu_height/2 - get_text_size(text)[1]/2)
             if item.child_menus:
@@ -109,44 +113,55 @@ class Menu(MenuWindow):
     def __show_event(self, widget):
         if not self.child_check:
             self.popup_grab_on_window()
-        else:
-            print "我是子菜单..."
 
-    def __motion_notify_event(self, widget, event):
-        if not self.in_window_check(widget, event):
-            y = event.y
-            self.__index = int(y / self.__menu_height)
-            self.queue_draw()
-            index = int(event.y / self.__menu_height)
-            if index < len(self.menu_items):
-                if self.menu_items[index].child_menus:
-                    x, y = self.get_position()
-                    if self.__save_show_menu != None and self.__save_show_menu != self.menu_items[index].child_menus:
-                        self.__save_show_menu.hide_all()
-                    self.__save_show_menu = self.menu_items[index].child_menus
-                    self.__save_show_menu.popup(x + self.allocation.width + 2, y + index * self.__menu_height)
-                else:
-                    if self.__save_show_menu:
-                        self.__save_show_menu.hide_all()
+    def __button_release_event(self, widget, event):
+        app = event.window.get_user_data()
+        if  app != widget:
+            app.event(event)
+            #app.grab_add()
+
+        if not self.in_window_check(widget, event.x_root, event.y_root):
+            self.hide_all()
+            self.grab_remove()
 
     def __button_press_event(self, widget, event):
-        if self.in_window_check(widget, event):
-            self.grab_remove()
-            self.hide_all()
-            for item in self.menu_items:
-                if item.child_menus:
-                    item.child_menus.hide_all()
-        else:
-            pass
+        if self.in_window_check(widget, event.x_root, event.y_root):
+            index = int(event.y / self.__menu_height)
+            if not self.menu_items[index].child_menus:
+                self.hide_all()
+                self.grab_remove()
 
-    def in_window_check(self, widget, event):
+    def __motion_notify_event(self, widget, event):
+        app = event.window.get_user_data()
+        if app != widget:
+            app.event(event)
+        # 判断在移动的范围内.
+        if self.in_window_check(widget, event.x_root, event.y_root):
+            self.__index = int(event.y) / self.__menu_height
+            self.queue_draw()
+            child_menu = self.menu_items[self.__index]
+            #
+            if self.__save_show_menu != None and self.__save_show_menu != child_menu:
+                print self.__save_show_menu.child_menus.hide_all()
+                print self.__save_show_menu.child_menus.grab_remove()
+
+            if child_menu.child_menus: # 判断是否有子菜单.
+                position = self.get_position()
+                child_menu.child_menus.popup(int(position[0] + self.allocation.width + 5), 
+                                             int(position[1] + self.__index * self.__menu_height))
+                child_menu.child_menus.grab_add()
+                self.__save_show_menu = child_menu 
+        #
+
+    def in_window_check(self, widget, x_root, y_root):
         toplevel = widget.get_toplevel()
-        window_x, window_y = toplevel.get_position()
-        x_root = event.x_root
-        y_root = event.y_root
-        if not ((x_root >= window_x and x_root < window_x + widget.allocation.width) 
-            and (y_root >= window_y and y_root < window_y + widget.allocation.height)):
-            return True
+        if toplevel.get_mapped():
+            window_x, window_y = toplevel.get_position()
+            if ((x_root >= window_x and x_root < window_x + widget.allocation.width) 
+                and (y_root >= window_y and y_root < window_y + widget.allocation.height)):
+                return True
+        #
+        return False
 
     def popup(self, x, y):
         self.move(x, y)
