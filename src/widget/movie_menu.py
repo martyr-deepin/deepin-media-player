@@ -100,7 +100,7 @@ class Menu(MenuWindow):
             draw_text(cr, text, 
                       x + 35, y + index * self.__menu_height + self.__menu_height/2 - get_text_size(text)[1]/2)
             if item.child_menus:
-                pixbuf = gtk.gdk.pixbuf_new_from_file("/home/long/menu_child.png")
+                pixbuf = app_theme.get_pixbuf("screen_mid/menu_child.png").get_pixbuf()
                 draw_pixbuf(cr, pixbuf,
                             x + rect.width - 10, y + index * self.__menu_height + self.__menu_height/2 - pixbuf.get_height()/2)
             index += 1
