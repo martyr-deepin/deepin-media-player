@@ -70,6 +70,7 @@ class Menu(MenuWindow):
     def __init_events(self):
         #
         self.connect("show", self.__show_event)
+	self.connect("hide", self.__hide_event)
         self.connect("motion-notify-event",  self.__motion_notify_event)
         self.connect("button-release-event", self.__button_release_event)
         self.connect('button-press-event', self.__button_press_event)
@@ -116,21 +117,24 @@ class Menu(MenuWindow):
         else:
             self.grab_add()
 
+    def __hide_event(self, widget):
+	menu = self.__save_show_menu
+	if menu:
+	    menu.child_menus.hide_all()
+	    menu.child_menus.grab_remove()
+
     def __button_release_event(self, widget, event):
         print "__button_release_event..."
-        app = event.window.get_user_data()
-        '''
-        if  app != widget:
-            app.event(event)
-            #app.grab_add()
-        '''
-        if self.menu_parent:
-            print self.menu_parent.event(event)
-
-
+	index = int(event.y / self.__menu_height)
         if not self.in_window_check(widget, event.x_root, event.y_root):
             self.hide_all()
             self.grab_remove()
+	else:
+	    if 0 <= index < len(self.menu_items) and self.menu_items[index].child_menus:
+	    	return True
+
+        if self.menu_parent:
+            self.menu_parent.event(event)
 
     def __button_press_event(self, widget, event):
         if self.in_window_check(widget, event.x_root, event.y_root):
@@ -150,8 +154,8 @@ class Menu(MenuWindow):
             child_menu = self.menu_items[self.__index]
             #
             if self.__save_show_menu != None and self.__save_show_menu != child_menu:
-                print self.__save_show_menu.child_menus.hide_all()
-                print self.__save_show_menu.child_menus.grab_remove()
+                self.__save_show_menu.child_menus.hide_all()
+                self.__save_show_menu.child_menus.grab_remove()
 
             if child_menu.child_menus: # 判断是否有子菜单.
                 position = self.get_position()
