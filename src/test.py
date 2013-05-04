@@ -31,6 +31,8 @@ if __name__ == "__main__":
     c_menu.child_check = True
     menu.menu_items[2].child_menus = c_menu
     cc_menu = Menu()
-    #c_menu.menu_items[0].child_menus = cc_menu
+    cc_menu.child_check = True
+    cc_menu.menu_parent = c_menu
+    c_menu.menu_items[0].child_menus = cc_menu
     win.show_all()
     gtk.main()

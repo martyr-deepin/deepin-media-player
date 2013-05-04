@@ -113,12 +113,20 @@ class Menu(MenuWindow):
     def __show_event(self, widget):
         if not self.child_check:
             self.popup_grab_on_window()
+        else:
+            self.grab_add()
 
     def __button_release_event(self, widget, event):
+        print "__button_release_event..."
         app = event.window.get_user_data()
+        '''
         if  app != widget:
             app.event(event)
             #app.grab_add()
+        '''
+        if self.menu_parent:
+            print self.menu_parent.event(event)
+
 
         if not self.in_window_check(widget, event.x_root, event.y_root):
             self.hide_all()
@@ -149,7 +157,7 @@ class Menu(MenuWindow):
                 position = self.get_position()
                 child_menu.child_menus.popup(int(position[0] + self.allocation.width + 5), 
                                              int(position[1] + self.__index * self.__menu_height))
-                child_menu.child_menus.grab_add()
+                #child_menu.child_menus.grab_add()
                 self.__save_show_menu = child_menu 
         #
 
@@ -184,7 +192,7 @@ class Menu(MenuWindow):
                     self.window, 
                     owner_events=True, 
                     time=gtk.gdk.CURRENT_TIME)
-        self.grab_add()
+        #self.grab_add()
 
 
 class MenuItem(object):
