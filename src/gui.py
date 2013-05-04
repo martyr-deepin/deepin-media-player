@@ -37,6 +37,7 @@ from locales import _
 import pynotify
 import gtk
 import sys
+from deepin_utils.file import get_parent_dir
 import os
 
 class GUI(object):
@@ -51,11 +52,12 @@ class GUI(object):
         self.app.set_default_size(min_app_w, min_app_h)
         self.app.window.set_default_size(app_w, app_h)
         # self.app.window.resize
-        self.app.set_icon(app_theme.get_pixbuf("icon.ico"))
-        self.app.set_skin_preview(app_theme.get_pixbuf("frame.png"))
+        image_dir = os.path.join(get_parent_dir(__file__, 2), "image")
+        self.app.set_icon(os.path.join(image_dir, "icon.ico"))
+        self.app.set_skin_preview(os.path.join(os.path.join(image_dir, "frame.png")))
         # set titlebar.
         self.app.add_titlebar(["theme", "menu", "max", "min", "close"],
-                              app_theme.get_pixbuf("logo.png"),
+                              os.path.join(os.path.join(image_dir, "logo.png")),
                               _("Deepin Media Player"), " ", 
                               add_separator = False)
         #
