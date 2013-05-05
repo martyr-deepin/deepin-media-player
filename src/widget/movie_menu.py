@@ -118,23 +118,22 @@ class Menu(MenuWindow):
             self.grab_add()
 
     def __hide_event(self, widget):
-	menu = self.__save_show_menu
-	if menu:
-	    menu.child_menus.hide_all()
-	    menu.child_menus.grab_remove()
+        menu = self.__save_show_menu
+        if menu:
+            menu.child_menus.hide_all()
+            menu.child_menus.grab_remove()
 
     def __button_release_event(self, widget, event):
-        print "__button_release_event..."
-	index = int(event.y / self.__menu_height)
+        index = int(event.y / self.__menu_height)
         if not self.in_window_check(widget, event.x_root, event.y_root):
             self.hide_all()
             self.grab_remove()
-	else:
-	    if 0 <= index < len(self.menu_items) and self.menu_items[index].child_menus:
-	    	return True
+        else:
+            if 0 <= index < len(self.menu_items) and self.menu_items[index].child_menus:
+                return True
 
-        if self.menu_parent:
-            self.menu_parent.event(event)
+            if self.menu_parent:
+                self.menu_parent.event(event)
 
     def __button_press_event(self, widget, event):
         if self.in_window_check(widget, event.x_root, event.y_root):
@@ -196,7 +195,7 @@ class Menu(MenuWindow):
                     self.window, 
                     owner_events=True, 
                     time=gtk.gdk.CURRENT_TIME)
-        #self.grab_add()
+        self.grab_add()
 
 
 class MenuItem(object):
@@ -204,6 +203,90 @@ class MenuItem(object):
         self.pixbuf =  None
         self.text   =  ""
         self.child_menus = None
+
+from skin import app_theme
+from locales import _
+from draw import draw_pixbuf, draw_text
+
+class ScreenMidCombo(gtk.HBox):
+    def __init__(self):
+        gtk.HBox.__init__(self)
+        #
+        self.__init_menu()
+        #
+        self.left_hover_pixbuf = app_theme.get_pixbuf("screen_mid/hover_button_left.png")
+        self.left_press_pixbuf = app_theme.get_pixbuf("screen_mid/press_button_left.png")
+        self.left_normal_pixbuf = app_theme.get_pixbuf("screen_mid/normal_button_left.png")
+        #
+        self.right_hover_pixbuf = app_theme.get_pixbuf("screen_mid/hover_button_right.png")
+        self.right_press_pixbuf = app_theme.get_pixbuf("screen_mid/press_button_right.png")
+        self.right_normal_pixbuf = app_theme.get_pixbuf("screen_mid/normal_button_right.png")
+        #
+        self.select_btn = gtk.Button(_("Open file"))
+        self.popup_btn  = gtk.Button("Open Menu")
+        pixbuf = self.left_normal_pixbuf.get_pixbuf()
+        self.select_btn.set_size_request(pixbuf.get_width(), pixbuf.get_height())
+        pixbuf = self.right_normal_pixbuf.get_pixbuf()
+        self.popup_btn.set_size_request(pixbuf.get_width(), pixbuf.get_height())
+        #
+        self.select_btn.connect("expose-event", self.__select_btn_expose_event)
+        self.popup_btn.connect("clicked", self.__popup_btn_clicked)
+        self.popup_btn.connect("expose-event",  self.__popup_btn_expose_event)
+        #
+        self.pack_start(self.select_btn, True, True)
+        self.pack_start(self.popup_btn, True, True)
+
+    def __init_menu(self):
+        self.menu = Menu()
+        self.menu = Menu()
+        self.menu.set_title("deepin media player combobox")
+        '''
+        c_menu = Menu()
+        c_menu.set_title("测试1-1")
+        c_menu.menu_parent = self.menu
+        c_menu.child_check = True
+        self.menu.menu_items[0].child_menus = c_menu
+        c_menu = Menu()
+        c_menu.menu_parent = self.menu
+        c_menu.set_title("测试1-2")
+        c_menu.child_check = True
+        self.menu.menu_items[2].child_menus = c_menu
+        cc_menu = Menu()
+        cc_menu.child_check = True
+        cc_menu.menu_parent = c_menu
+        c_menu.menu_items[0].child_menus = cc_menu
+        '''
+
+    def __popup_btn_clicked(self, widget):
+        toplevel = widget.get_toplevel()
+        pos = toplevel.get_position()
+        self.menu.popup(pos[0], pos[1] + toplevel.allocation.height + 30)
+
+    def __select_btn_expose_event(self, widget, event):
+        cr = widget.window.cairo_create()
+        rect = widget.allocation
+        if widget.state == gtk.STATE_NORMAL:
+            pixbuf = self.left_normal_pixbuf.get_pixbuf()
+        elif widget.state == gtk.STATE_PRELIGHT:
+            pixbuf = self.left_hover_pixbuf.get_pixbuf()
+        elif widget.state == gtk.STATE_ACTIVE:
+            pixbuf = self.left_press_pixbuf.get_pixbuf()
+        draw_pixbuf(cr, pixbuf, rect.x, rect.y)
+        draw_text(cr, widget.get_label(), rect.x, rect.y, text_size=9)
+        #
+        return True
+
+    def __popup_btn_expose_event(self, widget, event):
+        cr = widget.window.cairo_create()
+        rect = widget.allocation
+        if widget.state == gtk.STATE_NORMAL:
+            pixbuf = self.right_normal_pixbuf.get_pixbuf()
+        elif widget.state == gtk.STATE_PRELIGHT:
+            pixbuf = self.right_hover_pixbuf.get_pixbuf()
+        elif widget.state == gtk.STATE_ACTIVE:
+            pixbuf = self.right_press_pixbuf.get_pixbuf()
+        draw_pixbuf(cr, pixbuf, rect.x, rect.y)
+        return True
 
 if __name__ == "__main__":
     def btn_clicked_event(widget):
