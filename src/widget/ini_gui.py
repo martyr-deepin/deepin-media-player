@@ -1632,7 +1632,7 @@ class Plugin(gtk.VBox):
         self.list_view_align.set_padding(0, 0, 0, 5)
         self.list_view_scrol_win = ScrolledWindow(0, 0)
         #self.list_view_scrol_win.set_policy(gtk.POLICY_NEVER, gtk.POLICY_ALWAYS)
-        self.list_view_scrol_win.set_size_request(100, 350)
+        self.list_view_scrol_win.set_size_request(100, 390)
         self.list_view = ListView()
         #
         self.list_view.on_draw_column_heade = self.list_view_on_draw_column_heade
@@ -1678,8 +1678,8 @@ class Plugin(gtk.VBox):
         self.list_view_align.add(self.list_view_scrol_win)
         #
         title_box = gtk.VBox(spacing=5)
-        title_box.pack_start(self.label, False, False)
-        title_box.pack_start(create_separator_box(), False, True)
+        #title_box.pack_start(self.label, False, False)
+        #title_box.pack_start(create_separator_box(), False, True)
         title_box.pack_start(self.list_view_align, False, False)
         title_box_align = gtk.Alignment()
         title_box_align.set_padding(10, 0, 10, 0)
@@ -1814,7 +1814,7 @@ class About(gtk.VBox):
     def __init__(self):
         gtk.VBox.__init__(self)
         main_box = gtk.VBox(spacing=15)
-        logo_image = ImageBox(app_theme.get_pixbuf("logo.png"))
+        logo_image = ImageBox(app_theme.get_pixbuf("logo_48.png"))
         light_color = app_theme.get_color("labelText")
         logo_name = Label(_("Deepin Media Player"), text_size=10)
         logo_box = gtk.HBox(spacing=2)
