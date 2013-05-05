@@ -164,6 +164,7 @@ class MediaPlayer(object):
         #
         self.minimize_check  = False
         self.play_list_check = False
+        self.run_check = False
         self.ldmp = LDMP()
         self.gui = GUI()        
         #
@@ -728,7 +729,7 @@ class MediaPlayer(object):
         self.files_to_play_list(paths, type_check)
 
     def files_to_play_list(self, paths, type_check=True):
-        self.run_check = False
+        print type_check
         run_check = self.run_check
         sub_check = True
         # 判断字幕和播放文件.
@@ -773,12 +774,9 @@ class MediaPlayer(object):
 
     def open_dirs_to_play_list(self, type_check=True):
         paths = self.open_dir_dialog()
-        self.run_check = False
-        self.dirs_to_play_list(paths)
+        self.dirs_to_play_list(paths, type_check)
 
     def dirs_to_play_list(self, paths, type_check=True):
-        self.type_check = type_check
-        self.run_check = False
         if type_check and paths:
             self.gui.play_list_view.list_view.clear()
             self.play_list.set_index(-1)
