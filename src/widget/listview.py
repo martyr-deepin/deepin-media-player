@@ -870,22 +870,37 @@ class ListView(ListViewBase):
         del self.__columns_padding_height
 
     def set_double_items(self, item):
+        # 设置双击items.
         self.__double_items = item
-        #
+        #print "__listview_down_event..."
         vadjustment = get_match_parent(self, ["ScrolledWindow"]).get_vadjustment()
         if vadjustment:
             value = vadjustment.get_value()
+            # 获取 start, end index.
             start_index, end_index = self.__get_start_end_index()
-            # 滚动窗口.
-            max_value  = vadjustment.get_upper() - vadjustment.get_page_size()
-            move_value = self.__items_padding_height * self.items.index(item) #abs(end_index - start_index - 1)
-            #value = value + move_value
-            value = move_value
-            # 如果滚动的页超出了,直接到末尾.
-            if value > max_value:
-                vadjustment.set_value(max_value)
-            else:
-                vadjustment.set_value(value)
+            row_index = self.items.index(self.__double_items) 
+            #
+            if start_index <= row_index <= end_index:
+                #row_index += 1
+                if row_index <= len(self.items) - 1:
+                    # 滚动窗口.
+                    if row_index + 1 == end_index:
+                        if row_index == len(self.items) - 1:
+                            self.__listview_end_event()
+                        else:
+                            vadjustment.set_value(value + self.__items_padding_height)
+            else: # 超出范围，需要处理. 比如随机播放...
+                #value = vadjustment.get_value()
+                #start_index, end_index = self.__get_start_end_index()
+                # 滚动窗口.
+                max_value  = vadjustment.get_upper() - vadjustment.get_page_size()
+                move_value = self.__items_padding_height * self.items.index(item) #abs(end_index - start_index - 1)
+                value = move_value
+                # 如果滚动的页超出了,直接到末尾.
+                if value > max_value:
+                    vadjustment.set_value(max_value)
+                else:
+                    vadjustment.set_value(value)
         #
         self.on_queue_draw_area()
 

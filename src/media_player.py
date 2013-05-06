@@ -950,24 +950,29 @@ class MediaPlayer(object):
             text = widget.get_text()
             if url.startswith(("http:", "mms:")): # 判断是否为http连接.
                 if url.startswith("http://v.youku.com"): # 添加优酷转换.
-                    flvcd = YouToFlvcd()
-                    url_addr = flvcd.parse(text)
-                    if url_addr:
-                        if clear:
-                            self.list_view.items.clear()
-                        index = 0
-                        for addr in url_addr:
-                            temp_check = False
-                            if not index:
-                                temp_check = check
-                            self.add_net_to_play_list(
-                                    text,
-                                    addr,
-                                    "优酷视频", temp_check)
-                            index += 1
+                    self.__url_add_to_playlist(text=text, type="youku", bit="优酷视频", check=check, clear=clear)
+                elif url.find("pps") != -1:
+                    self.__url_add_to_playlist(text=text, type="pps", bit="pps视频", check=check, clear=clear)
                 else:
                     self.add_net_to_play_list(
                             text,
                             url,
                             "网络视频", check=check)
             #
+    def __url_add_to_playlist(self, text, type, bit, check, clear):
+        flvcd = YouToFlvcd(type)
+        url_addr = flvcd.parse(text)
+        if url_addr or url_addr != -1:
+            if clear:
+                self.list_view.items.clear()
+            index = 0
+            for addr in url_addr:
+                temp_check = False
+                if not index:
+                    temp_check = check
+                self.add_net_to_play_list(
+                        text,
+                        addr,
+                        bit, temp_check)
+                index += 1
+

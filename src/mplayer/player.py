@@ -1015,7 +1015,8 @@ class LDMP(gobject.GObject):
                         self.emit("get-audio-info", text, self.player.audio_index)
 
             if  buffer.startswith("ID_CHAPTERS="):   
-                print "ID_CHAPTERS:", buffer.replace("ID_CHAPTERS=", "")
+                #print "ID_CHAPTERS:", buffer.replace("ID_CHAPTERS=", "")
+                pass
                 
             if (buffer.startswith("ID_SEEKABLE=")
                 and buffer.startswith("ID_SEEKABLE=0")):    
