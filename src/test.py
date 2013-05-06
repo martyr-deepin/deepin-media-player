@@ -13,7 +13,6 @@ from screen_mid.open_url import OpenUrlDialog
 
 if __name__ == "__main__":
     #TransmageddonUI(["/home/long/视频/test.mp4"])
-    '''
     win = gtk.Window(gtk.WINDOW_TOPLEVEL)
     combo = ScreenMidCombo()
     win.add(combo)
@@ -23,6 +22,7 @@ if __name__ == "__main__":
     open_url_win = OpenUrlDialog()
     open_url_win.show_all()
     gtk.main()
+    '''
 
 
 

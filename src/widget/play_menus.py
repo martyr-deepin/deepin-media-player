@@ -261,10 +261,10 @@ class PlayMenus(object):
                            (None, _("By Type"), None)])
         #
         ###############################################################
-        self.remove_selected = self.__menu_remove_selected
-        self.clear_playlist  = self.__menu_clear_playlist
-        self.remove_unavailable_files  = self.__menu_remove_unavailable_files
-        self.open_containing_directory = self.__menu_open_containing_directory
+        self.remove_selected = None #self.__menu_remove_selected
+        self.clear_playlist  = None #self.__menu_clear_playlist
+        self.remove_unavailable_files  = None #self.__menu_remove_unavailable_files
+        self.open_containing_directory = None #self.__menu_open_containing_directory
         self.add_open_file = None
         self.add_open_dir  = None
         self.add_open_url  = None
@@ -481,7 +481,8 @@ class PlayMenus(object):
     def __menu_remove_unavailable_files(self): 
         # 删除无效文件.
         if self.remove_unavailable_files:
-            self.remove_unavailable_files()
+            #self.remove_unavailable_files()
+            pass
     
     def __menu_open_containing_directory(self):
         # 开打文件的所在路径.
