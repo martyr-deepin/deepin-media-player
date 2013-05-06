@@ -948,7 +948,7 @@ class MediaPlayer(object):
             open_url_win.hide_all()
             url = widget.get_text()
             text = widget.get_text()
-            if url.startswith("http:"): # 判断是否为http连接.
+            if url.startswith(("http:", "mms:")): # 判断是否为http连接.
                 if url.startswith("http://v.youku.com"): # 添加优酷转换.
                     flvcd = YouToFlvcd()
                     url_addr = flvcd.parse(text)
