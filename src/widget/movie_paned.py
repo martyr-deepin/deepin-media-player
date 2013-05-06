@@ -453,18 +453,30 @@ class Paned(gtk.Bin):
             child2_allocation.x = self.allocation.width - self.__child2_move_width 
             child2_allocation.y = 0
             self.__child2.size_allocate(child2_allocation)
+        # 中间的子控件.
         if self.mid_child:
             mid_allocation = gdk.Rectangle()
             mid_allocation.width = 140 
             mid_allocation.height = 40 
-            mid_allocation.x = self.allocation.x + self.allocation.width/2 - self.mid_child.allocation.width/2
+            mid_allocation.x = self.allocation.x + self.allocation.width/2 - self.mid_child.allocation.width/2 - self.__child2_move_width/2
+            # 判断是否全屏.
             if self.this and (self.this.fullscreen_check or self.this.concise_check): 
                 mid_allocation.y = self.allocation.y + self.allocation.height/2 - self.mid_child.allocation.height/2 + 56
             else:
                 mid_allocation.y = self.allocation.y + self.allocation.height/2 - self.mid_child.allocation.height/2 + 30
+            #
+            if self.this:
+                # 判断播放状态，是否显示中间的按钮.
+                #if self.this.ldmp.player.state:
+                if not self.this.draw_check:
+                    mid_allocation.x = -500
+                    mid_allocation.y = -500
+                    self.mid_child.size_allocate(mid_allocation)
+            # 设置 mid_child size.
             self.mid_child.size_allocate(mid_allocation)
         self.__handle_pos_x = child2_allocation.x
         self.__handle_pos_y = child2_allocation.y
+        #
         if self.__handle:
             self.__handle.move_resize(
                     self.__handle_pos_x - self.__handle_pos_w,
