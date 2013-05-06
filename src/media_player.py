@@ -36,6 +36,7 @@ from widget.utils   import get_home_path, get_home_video, get_play_file_name
 from widget.utils   import is_file_audio
 from widget.utils   import ScanDir
 from widget.utils import is_file_sub_type
+from widget.keymap  import get_keyevent_name
 from widget.ini_gui import IniGui
 from widget.init_ldmp import init_media_player_config
 from gui import GUI # 播放器界面布局.
@@ -61,6 +62,8 @@ from mplayer.playlist import PlayList, SINGLA_PLAY, ORDER_PLAY, RANDOM_PLAY, SIN
 from unique_service import UniqueService, is_exists
 from format_conv.conv_task_gui import ConvTAskGui
 from plugin_manager.plugin_manager import PluginManager
+from plugins.youku.youku_to_flvcd import YouToFlvcd
+from screen_mid.open_url import OpenUrlDialog
 import random
 import time
 import gtk
@@ -926,3 +929,45 @@ class MediaPlayer(object):
         if check:
             self.next()
 
+    def open_url_dialog(self, check, clear=True):
+        open_url_win = OpenUrlDialog()
+        open_url_win.ok_btn.connect("clicked", 
+                        self.__url_text_key_press_event, None, open_url_win, check, clear, open_url_win.url_text)
+        open_url_win.url_text.connect('key-press-event', 
+                        self.__url_text_key_press_event, open_url_win, check, clear)
+        open_url_win.show_all()
+
+    def __url_text_key_press_event(self, widget, event, open_url_win, check, clear=True, text_widget=None):
+        if event:
+            value = get_keyevent_name(event)
+        else:
+            value = "Return"
+            widget = text_widget
+        #######################
+        if value == "Return":
+            open_url_win.hide_all()
+            url = widget.get_text()
+            text = widget.get_text()
+            if url.startswith("http:"): # 判断是否为http连接.
+                if url.startswith("http://v.youku.com"): # 添加优酷转换.
+                    flvcd = YouToFlvcd()
+                    url_addr = flvcd.parse(text)
+                    if url_addr:
+                        if clear:
+                            self.list_view.items.clear()
+                        index = 0
+                        for addr in url_addr:
+                            temp_check = False
+                            if not index:
+                                temp_check = check
+                            self.add_net_to_play_list(
+                                    text,
+                                    addr,
+                                    "优酷视频", temp_check)
+                            index += 1
+                else:
+                    self.add_net_to_play_list(
+                            text,
+                            url,
+                            "网络视频", check=check)
+            #

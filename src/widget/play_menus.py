@@ -500,11 +500,11 @@ class PlayMenus(object):
     
     def __menu_open_url(self):
         if self.open_url:
-            self.open_url()
+            self.open_url(True)
             
     def __menu_add_open_url(self):
         if self.add_open_url:
-            self.add_open_url()
+            self.add_open_url(False, False)
             
     def __menu_add_open_file(self):
         if self.add_open_file:

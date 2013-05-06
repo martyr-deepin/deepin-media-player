@@ -62,6 +62,8 @@ class MediaPlayMenus(object):
         self.menus.bseek        = self.menu_bseek
         self.menus.open_file    = self.this.open_files_to_play_list
         self.menus.open_dir     = self.this.open_dirs_to_play_list
+        self.menus.open_url     = self.this.open_url_dialog
+        self.menus.add_open_url = self.this.open_url_dialog
         #self.menus.open_url     = 
         self.menus.add_open_file = self.menu_add_open_file #self.this.open_files_to_play_list
         self.menus.add_open_dir  = self.menu_add_open_dir #self.this.open_dirs_to_play_list

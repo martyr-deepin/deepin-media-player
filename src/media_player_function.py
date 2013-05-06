@@ -56,7 +56,7 @@ class MediaPlayFun(object):
         if index == _("打开文件夹"): # 打开文件夹对话框.
             self.this.open_dirs_to_play_list()
         elif index == _("打开网址"): # 打开地址对话框.
-            print "打开网络地址..."
+            self.this.open_url_dialog(True)
 
     def __mid_combo_menu_clicked_event(self, widget):
         self.this.open_files_to_play_list()
