@@ -5,8 +5,7 @@
 #               2013 Hailong Qiu
 #
 # Author:     Hailong Qiu <356752238@qq.com>
-# Maintainer: Hailong Qiu <356752238@qq.com>
-#
+# Maintainer: Hailong Qiu <356752238@qq.com> #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -43,6 +42,7 @@ class Paned(gtk.Bin):
         self.__init_values()
 
     def __init_values(self):
+        self.this = None
         self.screen = None
         self.alpha = 1.0
         self.handle_alpha = 1.0
@@ -458,7 +458,10 @@ class Paned(gtk.Bin):
             mid_allocation.width = 140 
             mid_allocation.height = 40 
             mid_allocation.x = self.allocation.x + self.allocation.width/2 - self.mid_child.allocation.width/2
-            mid_allocation.y = self.allocation.y + self.allocation.height/2 - self.mid_child.allocation.height/2
+            if self.this and (self.this.fullscreen_check or self.this.concise_check): 
+                mid_allocation.y = self.allocation.y + self.allocation.height/2 - self.mid_child.allocation.height/2 + 56
+            else:
+                mid_allocation.y = self.allocation.y + self.allocation.height/2 - self.mid_child.allocation.height/2 + 30
             self.mid_child.size_allocate(mid_allocation)
         self.__handle_pos_x = child2_allocation.x
         self.__handle_pos_y = child2_allocation.y

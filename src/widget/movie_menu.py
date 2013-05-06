@@ -101,9 +101,11 @@ class Menu(MenuWindow):
             pixbuf, text = item.pixbuf, item.text
             if pixbuf:
                 draw_pixbuf(cr, pixbuf, 
-                            x + 8, y + index * self.__menu_height + self.__menu_height/2 - pixbuf.get_height()/2)
+                            x + 8, 
+                            y + index * self.__menu_height + self.__menu_height/2 - pixbuf.get_height()/2)
             draw_text(cr, text, 
-                      x + 35, y + index * self.__menu_height + self.__menu_height/2 - get_text_size(text)[1]/2)
+                      x + 35, 
+                      y + index * self.__menu_height + self.__menu_height/2 - get_text_size(text)[1]/2)
             if item.child_menus:
                 pixbuf = app_theme.get_pixbuf("screen_mid/menu_child.png").get_pixbuf()
                 draw_pixbuf(cr, pixbuf,

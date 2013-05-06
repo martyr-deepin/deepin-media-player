@@ -337,6 +337,7 @@ class MediaPlayer(object):
         
     def init_media_player(self, widget): # screen realize.        
         '''初始化mplayer后端'''
+        self.gui.screen_paned.this = self
         self.ldmp.xid = widget.window.xid
         self.ldmp.connect("get-time-pos",       self.ldmp_get_time_pos)
         self.ldmp.connect("get-time-length",    self.ldmp_get_time_length)
@@ -875,6 +876,7 @@ class MediaPlayer(object):
     def start(self):
         self.gui.app.window.show_all()
         self.gui.screen.window.set_composited(True)
+        #self.gui.screen_mid_combo.window.set_composited(True)
 
     def modify_config_section_value(self, config, section, argv, value):
         if section == "SystemSet" and (argv in ["font", "font_size"]):

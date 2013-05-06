@@ -23,6 +23,7 @@
 from skin import app_theme
 from dtk.ui.skin_config  import skin_config
 from dtk.ui.application  import Application
+from dtk.ui.utils import propagate_expose
 from widget.movie_paned  import Paned
 from widget.movie_window import MovieWindow
 from widget.playlistview import PlayListView
@@ -36,6 +37,7 @@ from widget.utils        import get_system_tooptil_icon
 from widget.movie_menu   import ScreenMidCombo
 from locales import _
 import pynotify
+import cairo
 import gtk
 import sys
 from deepin_utils.file import get_parent_dir
@@ -71,6 +73,12 @@ class GUI(object):
         self.main_ali.add(self.main_vbox)
         self.main_ali.set(0, 0, 1.0, 1.0)
         self.main_ali.set_padding(0, 2, 2, 2)
+        #
+        self.mid_combo_event = gtk.EventBox()
+        self.mid_combo_event.connect("expose-event", self.mid_combo_event_expose_event)
+        self.screen_mid_combo = ScreenMidCombo()
+        self.mid_combo_event.set_visible_window(True)
+        self.mid_combo_event.add(self.screen_mid_combo)
         '''movie screen. 电影播放屏幕.'''
         # 播放屏幕和播放列表的HBOX.
         self.play_list_view = PlayListView()
@@ -84,7 +92,8 @@ class GUI(object):
         # BUG: 当显示上部工具条的时候,画面抖动.
         self.screen_paned.add_top_widget(self.top_toolbar.hbox_hframe)
         self.screen_paned.add_bottom_widget(self.bottom_toolbar.vbox)
-        self.screen_paned.add_mid_widget(ScreenMidCombo())
+        #self.screen_paned.add_mid_widget(self.screen_mid_combo)
+        self.screen_paned.add_mid_widget(self.mid_combo_event)
         #
         self.screen_frame_event = self.screen_paned
         self.screen_paned.screen = self.screen
@@ -180,6 +189,16 @@ class GUI(object):
     def tooltip_change_style(self, font, font_size):
         self.screen_paned.change_style(font, font_size)
 
+    def mid_combo_event_expose_event(self, widget, event):
+        cr = widget.window.cairo_create()
+        rect = widget.allocation
+        cr.rectangle(*rect)
+        cr.set_source_rgba(0, 0, 0, 0.7)
+        #cr.set_operator(cairo.OPERATOR_SOURCE)
+        cr.paint()
+        #
+        propagate_expose(widget, event)
+        return True
 
 
 
