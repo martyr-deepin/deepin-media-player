@@ -1632,7 +1632,7 @@ class Plugin(gtk.VBox):
         self.list_view_align = gtk.Alignment(0, 0, 1, 1)
         self.list_view_align.set_padding(0, 0, 0, 5)
         self.list_view_scrol_win = ScrolledWindow(0, 0)
-        #self.list_view_scrol_win.set_policy(gtk.POLICY_NEVER, gtk.POLICY_ALWAYS)
+        self.list_view_scrol_win.set_policy(gtk.POLICY_NEVER, gtk.POLICY_ALWAYS)
         self.list_view_scrol_win.set_size_request(100, 390)
         self.list_view = ListView()
         #
@@ -1644,6 +1644,7 @@ class Plugin(gtk.VBox):
         self.list_view.set_columns_show(True) # 是否显示标题栏.
         self.list_view.set_columns_height(30) # 设置标题栏高度.
         self.list_view.set_drag_items(False) # 禁止拖动.
+        self.list_view.set_drag_columns(False) # 禁止拖动标题栏.
         #
         self.list_view.columns.add_range([_("name"), _("version"), _("auto"), _("author"), _("about"), ""])
         self.list_view.columns[0].width = 305

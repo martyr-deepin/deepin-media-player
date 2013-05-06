@@ -238,6 +238,7 @@ class ListView(ListViewBase):
         self.__save_press_items_check = False
         #
         self.__drag_items_check = True
+        self.__drag_columns_check = True
         self.__move_items_check = False
         self.__save_move_items_x = 0
         self.__save_move_items_index = 0
@@ -320,7 +321,7 @@ class ListView(ListViewBase):
         # 标题头移动事件处理.
         if self.view == View.DETAILS:  # 判断是否为试图.
             # 判断是否移动标题头.
-            if self.__move_column_check:
+            if self.__move_column_check and self.__drag_columns_check:
                 width = self.columns[self.__save_move_column_index].width
                 min_width   = self.columns[self.__save_move_column_index].min_width
                 value_width = int(event.x) - self.__save_move_column_x
@@ -919,6 +920,9 @@ class ListView(ListViewBase):
 
     def set_columns_show(self, check):
         self.__columns_show_check = check
+
+    def set_drag_columns(self, check):
+        self.__drag_columns_check = check
 
     def set_drag_items(self, check):
         self.__drag_items_check = check
