@@ -1612,6 +1612,7 @@ class ScreenShot(gtk.VBox):
 class Plugin(gtk.VBox):
     def __init__(self, this):
         gtk.VBox.__init__(self)
+        self.ini = Config(config_path)        
         self.this = this
         self.plugin_check_hover = app_theme.get_pixbuf("plugin/check_hover.png")
         self.plugin_check_none  = app_theme.get_pixbuf("plugin/check_none.png")
@@ -1665,6 +1666,11 @@ class Plugin(gtk.VBox):
                 auto_check = "True"
             elif infos["auto"] == 0:
                 auto_check = "False"
+            run_chek = self.ini.get("Plugins", name)
+            if run_chek == "True": # 读取配置文件的信息. 看插件启动了吗?
+                self.this.plugin_man.open_plugin(name)
+                auto_check = "True"
+
             if -1 != auto_check:
                 self.list_view.items.add([str(infos["title"]),  # 名称.
                                            str(infos["version"]),  # 版本.
@@ -1699,10 +1705,14 @@ class Plugin(gtk.VBox):
                 check_item.text = "False"
                 # 关闭插件.
                 self.this.plugin_man.close_plugin(plugin_name)
+                self.ini.set("Plugins", plugin_name, check_item.text)
+                self.ini.save()
             else:
                 check_item.text = "True"
                 # 开启插件.
                 self.this.plugin_man.open_plugin(plugin_name)
+                self.ini.set("Plugins", plugin_name, check_item.text)
+                self.ini.save()
 
     def list_view_on_draw_column_heade(self, e):
         #
