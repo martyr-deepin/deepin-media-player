@@ -26,10 +26,14 @@ from locales import _
 from draw import draw_pixbuf, draw_text
 from utils import get_text_size
 from window import MenuWindow
+import gobject
 import gtk
 
 
 class Menu(MenuWindow):
+    __gsignals__ = {
+        "menu-active" : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE,(int,)),
+        }  
     def __init__(self):
         MenuWindow.__init__(self)
         self.__init_values()
@@ -49,19 +53,20 @@ class Menu(MenuWindow):
         self.open_url = app_theme.get_pixbuf("screen_mid/screen_menu_open_url.png")
         self.menu_items = []
         if self.menu_items == []:
-            items = []
-            for pixbuf, text in [(self.open_cdrom.get_pixbuf(), _("打开CDROM")),
-                                 (self.open_dir.get_pixbuf(), _("打开文件夹")),
-                                 (self.open_url.get_pixbuf(), _("打开网址")),]:
-                menu_item = MenuItem()
-                menu_item.pixbuf = pixbuf
-                menu_item.text  = text
-                items.append(menu_item)
-            #
-            self.set_menu_items(items)
+            temp_items = [(self.open_cdrom.get_pixbuf(), _("打开CDROM")),
+                          (self.open_dir.get_pixbuf(), _("打开文件夹")),
+                          (self.open_url.get_pixbuf(), _("打开网址")),]
+            self.set_menu_items(temp_items)
 
     def set_menu_items(self, items):
-        self.menu_items = items
+        menu_items = []
+        for pixbuf, text in items:
+            menu_item = MenuItem()
+            menu_item.pixbuf = pixbuf
+            menu_item.text  = text
+            menu_items.append(menu_item)
+        #
+        self.menu_items = menu_items
         self.set_size_request(140, len(self.menu_items) * self.__menu_height)
 
     def __init_settings(self):
@@ -90,10 +95,10 @@ class Menu(MenuWindow):
         #
         if None != self.__index:
             cr.set_source_rgba(1, 1, 1, 0.1)
-            cr.rectangle(x, 
-                         y + self.__index * self.__menu_height, 
-                         rect.width, 
-                         self.__menu_height)
+            cr.rectangle(x + 2, 
+                         y + self.__index * self.__menu_height + 2, 
+                         rect.width - 4, 
+                         self.__menu_height - 4)
             cr.fill()
         #
         index = 0
@@ -144,6 +149,8 @@ class Menu(MenuWindow):
             if not self.menu_items[index].child_menus:
                 self.hide_all()
                 self.grab_remove()
+                # 发送信号, @ index : 序列.
+                self.emit("menu-active", index)
 
     def __motion_notify_event(self, widget, event):
         app = event.window.get_user_data()
@@ -152,20 +159,21 @@ class Menu(MenuWindow):
         # 判断在移动的范围内.
         if self.in_window_check(widget, event.x_root, event.y_root):
             self.__index = int(event.y) / self.__menu_height
-            self.queue_draw()
-            child_menu = self.menu_items[self.__index]
-            #
-            if self.__save_show_menu != None and self.__save_show_menu != child_menu:
-                self.__save_show_menu.child_menus.hide_all()
-                self.__save_show_menu.child_menus.grab_remove()
+            if self.__index < len(self.menu_items):
+                self.queue_draw()
+                child_menu = self.menu_items[self.__index]
+                #
+                if self.__save_show_menu != None and self.__save_show_menu != child_menu:
+                    self.__save_show_menu.child_menus.hide_all()
+                    self.__save_show_menu.child_menus.grab_remove()
 
-            if child_menu.child_menus: # 判断是否有子菜单.
-                position = self.get_position()
-                child_menu.child_menus.popup(int(position[0] + self.allocation.width + 3), 
-                                             int(position[1] + self.__index * self.__menu_height))
-                #child_menu.child_menus.grab_add()
-                self.__save_show_menu = child_menu 
-        #
+                if child_menu.child_menus: # 判断是否有子菜单.
+                    position = self.get_position()
+                    child_menu.child_menus.popup(int(position[0] + self.allocation.width + 3), 
+                                                 int(position[1] + self.__index * self.__menu_height))
+                    #child_menu.child_menus.grab_add()
+                    self.__save_show_menu = child_menu 
+            #
 
     def in_window_check(self, widget, x_root, y_root):
         toplevel = widget.get_toplevel()
@@ -199,6 +207,13 @@ class Menu(MenuWindow):
                     owner_events=True, 
                     time=gtk.gdk.CURRENT_TIME)
         self.grab_add()
+
+    ######################### api.
+    def add_index_child_menu(self, index, c_menu):
+        c_menu.set_title("deepin-media-player-menu")
+        c_menu.menu_parent = self
+        c_menu.child_check = True
+        self.menu_items[index].child_menus = c_menu
 
 
 class MenuItem(object):
@@ -241,22 +256,16 @@ class ScreenMidCombo(gtk.HBox):
 
     def __init_menu(self):
         self.menu = Menu()
-        self.menu = Menu()
         self.menu.set_title("deepin media player combobox")
         c_menu = Menu()
-        c_menu.set_title("测试1-1")
-        c_menu.menu_parent = self.menu
-        c_menu.child_check = True
-        self.menu.menu_items[0].child_menus = c_menu
-        c_menu = Menu()
-        c_menu.menu_parent = self.menu
-        c_menu.set_title("测试1-2")
-        c_menu.child_check = True
-        self.menu.menu_items[2].child_menus = c_menu
+        c_menu.set_menu_items([(None, "打开文件"), (None, "保存文件")])
+        self.menu.add_index_child_menu(0, c_menu)
         cc_menu = Menu()
-        cc_menu.child_check = True
-        cc_menu.menu_parent = c_menu
-        c_menu.menu_items[0].child_menus = cc_menu
+        cc1_menu = Menu()
+        c_menu.add_index_child_menu(0, cc_menu)
+        c_menu.add_index_child_menu(1, cc1_menu)
+        ccc_menu = Menu()
+        cc_menu.add_index_child_menu(1, ccc_menu)
 
     def __popup_btn_clicked(self, widget):
         parent_win = widget.get_parent_window()

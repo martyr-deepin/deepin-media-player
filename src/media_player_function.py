@@ -47,8 +47,15 @@ class MediaPlayFun(object):
         self.list_view = self.this.gui.play_list_view.list_view
         self.list_view.connect_event("double-items",  self.list_view_double_items) 
         self.list_view.connect_event("motion-notify-items", self.list_view_motion_notify_items)
-        #
+        # 屏幕中间的那个按钮.
+        self.gui.screen_mid_combo.menu.connect("menu-active", self.__mid_combo_menu_actiav_event)
 
+    def __mid_combo_menu_actiav_event(self, menu, index):
+        if index == 1: # 打开文件夹对话框.
+            self.this.open_dirs_to_play_list()
+        elif index == 2: # 打开地址对话框.
+            print "打开网络地址..."
+        
     def list_view_motion_notify_items(self, listview, motion_items, row, col, item_x, item_y):
         text = motion_items.sub_items[0].text
         text = str(text).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
