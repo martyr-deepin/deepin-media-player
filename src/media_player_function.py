@@ -24,6 +24,7 @@
 from widget.tooltip  import tooltip_text
 from widget.preview  import PreView
 from widget.utils import is_file_audio
+from locales import _
 
 
 
@@ -49,12 +50,16 @@ class MediaPlayFun(object):
         self.list_view.connect_event("motion-notify-items", self.list_view_motion_notify_items)
         # 屏幕中间的那个按钮.
         self.gui.screen_mid_combo.menu.connect("menu-active", self.__mid_combo_menu_actiav_event)
+        self.gui.screen_mid_combo.select_btn.connect("clicked", self.__mid_combo_menu_clicked_event)
 
     def __mid_combo_menu_actiav_event(self, menu, index):
-        if index == 1: # 打开文件夹对话框.
+        if index == _("打开文件夹"): # 打开文件夹对话框.
             self.this.open_dirs_to_play_list()
-        elif index == 2: # 打开地址对话框.
+        elif index == _("打开网址"): # 打开地址对话框.
             print "打开网络地址..."
+
+    def __mid_combo_menu_clicked_event(self, widget):
+        self.this.open_files_to_play_list()
         
     def list_view_motion_notify_items(self, listview, motion_items, row, col, item_x, item_y):
         text = motion_items.sub_items[0].text

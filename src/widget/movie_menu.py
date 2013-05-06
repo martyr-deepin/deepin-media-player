@@ -32,7 +32,7 @@ import gtk
 
 class Menu(MenuWindow):
     __gsignals__ = {
-        "menu-active" : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE,(int,)),
+        "menu-active" : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE,(gobject.TYPE_STRING,)),
         }  
     def __init__(self):
         MenuWindow.__init__(self)
@@ -53,7 +53,7 @@ class Menu(MenuWindow):
         self.open_url = app_theme.get_pixbuf("screen_mid/screen_menu_open_url.png")
         self.menu_items = []
         if self.menu_items == []:
-            temp_items = [(self.open_cdrom.get_pixbuf(), _("打开CDROM")),
+            temp_items = [#(self.open_cdrom.get_pixbuf(), _("打开CDROM")),
                           (self.open_dir.get_pixbuf(), _("打开文件夹")),
                           (self.open_url.get_pixbuf(), _("打开网址")),]
             self.set_menu_items(temp_items)
@@ -67,6 +67,13 @@ class Menu(MenuWindow):
             menu_items.append(menu_item)
         #
         self.menu_items = menu_items
+        self.set_size_request(140, len(self.menu_items) * self.__menu_height)
+
+    def add_menu_index_items(self, index, item):
+        menu_item = MenuItem()
+        menu_item.pixbuf = item[0]
+        menu_item.text   = item[1]
+        self.menu_items.insert(index, menu_item)
         self.set_size_request(140, len(self.menu_items) * self.__menu_height)
 
     def __init_settings(self):
@@ -150,7 +157,7 @@ class Menu(MenuWindow):
                 self.hide_all()
                 self.grab_remove()
                 # 发送信号, @ index : 序列.
-                self.emit("menu-active", index)
+                self.emit("menu-active", self.menu_items[index].text)
 
     def __motion_notify_event(self, widget, event):
         app = event.window.get_user_data()
@@ -257,15 +264,19 @@ class ScreenMidCombo(gtk.HBox):
     def __init_menu(self):
         self.menu = Menu()
         self.menu.set_title("deepin media player combobox")
-        c_menu = Menu()
-        c_menu.set_menu_items([(None, "打开文件"), (None, "保存文件")])
-        self.menu.add_index_child_menu(0, c_menu)
-        cc_menu = Menu()
-        cc1_menu = Menu()
-        c_menu.add_index_child_menu(0, cc_menu)
-        c_menu.add_index_child_menu(1, cc1_menu)
-        ccc_menu = Menu()
-        cc_menu.add_index_child_menu(1, ccc_menu)
+        self.open_cdrom = app_theme.get_pixbuf("screen_mid/screen_menu_open_cdrom.png")
+        #
+        ''' 添加子菜单的cdrom.
+        item = (self.open_cdrom.get_pixbuf(), _("打开CDROM"))
+        self.menu.add_menu_index_items(0, item)
+        cdrom_child_menu = Menu()
+        cdrom_child_menu.connect("menu-active", self.__cdrom_child_menu_active)
+        cdrom_child_menu.set_menu_items([(None, "/dev/cr0"), (None, "/dev/cr0")])
+        self.menu.add_index_child_menu(0, cdrom_child_menu)
+
+    def __cdrom_child_menu_active(self, menu, text):
+        print menu, text
+        '''
 
     def __popup_btn_clicked(self, widget):
         parent_win = widget.get_parent_window()
