@@ -25,7 +25,7 @@ from skin import app_theme
 from dtk.ui.menu import Menu
 import dtk.ui.tooltip as Tooltip
 from dtk.ui.draw import draw_pixbuf
-from dtk.ui.utils import color_hex_to_cairo
+from dtk.ui.utils import color_hex_to_cairo, propagate_expose
 from locales import _ # 国际化翻译.
 from ini     import Config
 from user_guide import init_user_guide
@@ -486,6 +486,7 @@ class MediaPlayer(object):
                         self.background, 
                         rect.x + rect.width/2 - self.background.get_width()/2, 
                         rect.y + rect.height/2 - self.background.get_height()/2)
+        propagate_expose(widget, event)
 
     def screen_configure_event(self, widget, event):
         self.set_ascept_restart() # 设置分辨率.

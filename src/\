@@ -226,8 +226,8 @@ class Paned(gtk.Bin):
         self.__handle.hide()
         
     def do_expose_event(self, e):
-        #
         gtk.Bin.do_expose_event(self, e)
+        #
         self.__paint_top_window(e)
         if e.window == self.bottom_window:
             self.paint_bottom_window(e)
@@ -455,10 +455,10 @@ class Paned(gtk.Bin):
             self.__child2.size_allocate(child2_allocation)
         if self.mid_child:
             mid_allocation = gdk.Rectangle()
-            mid_allocation.width = 140 
-            mid_allocation.height = 40 
-            mid_allocation.x = self.allocation.x + self.allocation.width/2 - self.mid_child.allocation.width/2
-            mid_allocation.y = self.allocation.y + self.allocation.height/2 - self.mid_child.allocation.height/2
+            mid_allocation.width = self.mid_child.allocation.width
+            mid_allocation.height = self.mid_child.allocation.height
+            mid_allocation.x = 0
+            mid_allocation.y = 0
             self.mid_child.size_allocate(mid_allocation)
         self.__handle_pos_x = child2_allocation.x
         self.__handle_pos_y = child2_allocation.y
@@ -496,7 +496,6 @@ class Paned(gtk.Bin):
         if self.__child2:
             self.__child2.size_request()
         if self.mid_child:
-            self.mid_child.size_request()
 
     def do_add(self, widget):
         gtk.Bin.do_add(self, widget)
@@ -520,10 +519,6 @@ class Paned(gtk.Bin):
     def add_bottom_widget(self, widget):
         self.bottom_child = widget
         self.bottom_child.set_parent(self)
-
-    def add_mid_widget(self, widget):
-        self.mid_child = widget
-        self.mid_child.set_parent(self)
     
     def set_min_width(self, width=150):
         self.__child2_min_width = width

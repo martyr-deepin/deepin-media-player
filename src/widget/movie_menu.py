@@ -70,7 +70,7 @@ class Menu(MenuWindow):
     def __init_events(self):
         #
         self.connect("show", self.__show_event)
-	self.connect("hide", self.__hide_event)
+        self.connect("hide", self.__hide_event)
         self.connect("motion-notify-event",  self.__motion_notify_event)
         self.connect("button-release-event", self.__button_release_event)
         self.connect('button-press-event', self.__button_press_event)
@@ -107,7 +107,8 @@ class Menu(MenuWindow):
             if item.child_menus:
                 pixbuf = app_theme.get_pixbuf("screen_mid/menu_child.png").get_pixbuf()
                 draw_pixbuf(cr, pixbuf,
-                            x + rect.width - 10, y + index * self.__menu_height + self.__menu_height/2 - pixbuf.get_height()/2)
+                            x + rect.width - 10, 
+                            y + index * self.__menu_height + self.__menu_height/2 - pixbuf.get_height()/2)
             index += 1
         
 
@@ -132,8 +133,8 @@ class Menu(MenuWindow):
             if 0 <= index < len(self.menu_items) and self.menu_items[index].child_menus:
                 return True
 
-            if self.menu_parent:
-                self.menu_parent.event(event)
+        if self.menu_parent:
+            self.menu_parent.event(event)
 
     def __button_press_event(self, widget, event):
         if self.in_window_check(widget, event.x_root, event.y_root):
@@ -158,7 +159,7 @@ class Menu(MenuWindow):
 
             if child_menu.child_menus: # 判断是否有子菜单.
                 position = self.get_position()
-                child_menu.child_menus.popup(int(position[0] + self.allocation.width + 5), 
+                child_menu.child_menus.popup(int(position[0] + self.allocation.width + 3), 
                                              int(position[1] + self.__index * self.__menu_height))
                 #child_menu.child_menus.grab_add()
                 self.__save_show_menu = child_menu 
@@ -240,7 +241,6 @@ class ScreenMidCombo(gtk.HBox):
         self.menu = Menu()
         self.menu = Menu()
         self.menu.set_title("deepin media player combobox")
-        '''
         c_menu = Menu()
         c_menu.set_title("测试1-1")
         c_menu.menu_parent = self.menu
@@ -255,12 +255,14 @@ class ScreenMidCombo(gtk.HBox):
         cc_menu.child_check = True
         cc_menu.menu_parent = c_menu
         c_menu.menu_items[0].child_menus = cc_menu
-        '''
 
     def __popup_btn_clicked(self, widget):
-        toplevel = widget.get_toplevel()
-        pos = toplevel.get_position()
-        self.menu.popup(pos[0], pos[1] + toplevel.allocation.height + 30)
+        parent_win = widget.get_parent_window()
+        parent_origin = parent_win.get_origin()
+        pos = widget.get_window().get_position()
+        rect = widget.allocation
+        self.menu.popup(parent_origin[0] + rect.x - 108, 
+                        2 + parent_origin[1] + rect.y + rect.height)
 
     def __select_btn_expose_event(self, widget, event):
         cr = widget.window.cairo_create()
@@ -272,7 +274,11 @@ class ScreenMidCombo(gtk.HBox):
         elif widget.state == gtk.STATE_ACTIVE:
             pixbuf = self.left_press_pixbuf.get_pixbuf()
         draw_pixbuf(cr, pixbuf, rect.x, rect.y)
-        draw_text(cr, widget.get_label(), rect.x, rect.y, text_size=9)
+        text_size = get_text_size(widget.get_label(), text_size=9)
+        draw_text(cr, widget.get_label(), 
+                  rect.x + rect.width/2 - text_size[0]/2 + 10, 
+                  rect.y + rect.height/2 - text_size[1]/2, 
+                  text_size=9)
         #
         return True
 

@@ -33,6 +33,7 @@ from widget.bottom_toolbar import BottomToolBar
 from widget.play_control_panel import PlayControlPanel
 from widget.play_menus   import PlayMenus
 from widget.utils        import get_system_tooptil_icon
+from widget.movie_menu   import ScreenMidCombo
 from locales import _
 import pynotify
 import gtk
@@ -83,6 +84,7 @@ class GUI(object):
         # BUG: 当显示上部工具条的时候,画面抖动.
         self.screen_paned.add_top_widget(self.top_toolbar.hbox_hframe)
         self.screen_paned.add_bottom_widget(self.bottom_toolbar.vbox)
+        self.screen_paned.add_mid_widget(ScreenMidCombo())
         #
         self.screen_frame_event = self.screen_paned
         self.screen_paned.screen = self.screen
