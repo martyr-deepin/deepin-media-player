@@ -110,7 +110,7 @@ class PlayListView(object):
             add_point = False
             for t in text:
                 t_width += get_text_size(t, text_size=text_size)[0]
-                if t_width > one_width:
+                if t_width > one_width - 20:
                     add_point = True
                     break
                 t_index += 1
