@@ -271,6 +271,7 @@ class MediaPlayer(object):
         self.gui.screen.connect("realize",            self.init_media_player)
         self.gui.screen.connect("expose-event",       self.screen_expose_event)
         self.gui.screen.connect("configure-event",    self.screen_configure_event)
+        #
         self.gui.screen_frame.connect("expose-event", self.screen_frame_expose_event)
         self.gui.screen_frame_event.connect("button-press-event",   self.screen_frame_event_button_press_event)
         self.gui.screen_frame_event.connect("button-release-event", self.screen_frame_event_button_release_event)
@@ -351,10 +352,6 @@ class MediaPlayer(object):
         self.ldmp.connect("mute-play",          self.ldmp_mute_play)
         self.ldmp.connect("volume-play",        self.ldmp_volume_play)
         self.ldmp.connect("error-msg",          self.ldmp_error_msg)
-        # 测试dvd. 
-        self.ldmp.player.uri = "dvdnav"
-        self.ldmp.player.media_device = "/dev/sr0"
-        self.ldmp.play()
         #
         # 全部的执行函数方法.
         self.media_play_fun   = MediaPlayFun(self)
@@ -368,6 +365,9 @@ class MediaPlayer(object):
         # 不需要用这个东西.如果需要命令行解析，那就用mplayer命令行吧.
         # 没必须要再去把mplayer命令行实现一遍, python抄袭C的东西，恶心.
         self.argv_add_to_play_list(self.argv_path_list[1:])
+        # 测试dvd.  判断来设置第三个参数.
+        item = ["/dev/sr0", "dvd-play", "dvdnav"]
+        self.gui.play_list_view.list_view.items.add(item)
 
     def argv_add_to_play_list(self, argv):
         for path in argv:
@@ -397,8 +397,6 @@ class MediaPlayer(object):
         #print "开始播放了..."
         self.player_start_init()
         self.media_play_fun.ldmp_start_media_player(ldmp)
-        # 测试DVD.
-        self.ldmp.dvd_prev()
         
     def player_start_init(self):    
         pass
@@ -529,6 +527,8 @@ class MediaPlayer(object):
             self.gui.set_paned_handle(event)
             # move app window.
             self.run_double_and_click(event)
+            # dvd 单击设置.
+            self.ldmp.dvd_mouse()
 
     def run_double_and_click(self, event):
         self.move_win_check = False # 取消移动窗口.
@@ -607,6 +607,13 @@ class MediaPlayer(object):
         self.timer.Enabled = False
 
     def screen_frame_event_button_motoin_notify_event(self, widget, event):
+        # dvd 菜单移动设置.
+        s_a = self.gui.screen.allocation
+        f_a = self.gui.screen_frame.allocation
+        x = int(event.x) - (f_a.width - s_a.width) + s_a.x
+        y = int(event.y) - (f_a.height - s_a.height) + s_a.y
+        self.ldmp.dvd_mouse_pos(x, y)
+        #
         if self.move_win_check:
             self.move_window_function(event)
         # 显示下部工具条.
@@ -668,7 +675,7 @@ class MediaPlayer(object):
         self.ldmp.player.start_time = start_time
         self.ldmp.player.subtitle = []
         # 音轨选择初始化.
-        self.ldmp.player.audio_index = 0
+        self.ldmp.player.audio_index = -1
         self.ldmp.player.audio_list = []
         self.ldmp.player.sub_index = -1
         self.ldmp.player.subtitle = []
@@ -689,10 +696,20 @@ class MediaPlayer(object):
 
     def ldmp_play(self, play_file):
         self.ldmp.player.uri = "%s" % play_file
+        # 提示.
         if self.play_list.get_index() != -1:
             list_view = self.gui.play_list_view.list_view
             name = list_view.items[self.play_list.get_index()].sub_items[0].text
+        # 设置 dvd, vcd... media device.
+        if self.ldmp.player.uri.startswith("dvd"):
+            device_name = list_view.items[self.play_list.get_index()].sub_items[0].text
+            self.ldmp.player.media_device = device_name
+        #
         self.ldmp.play()
+        #
+        if self.ldmp.player.type == TYPE_DVD:
+            # 测试DVD.
+            self.ldmp.dvd_prev()
         self.show_messagebox(name)
 
     def mute_umute(self):

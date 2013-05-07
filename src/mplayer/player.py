@@ -62,7 +62,7 @@ class Player(object):
         self.sub_index = -1
         self.subtitle  = []
         # 音轨选择.
-        self.audio_index = 0
+        self.audio_index = -1
         self.audio_list = []
         #
         self.audio_select_index = None
@@ -806,14 +806,15 @@ class LDMP(gobject.GObject):
             self.cmd('seek -%d\n' % (seek_num))
             
     def pause(self):
-        if (self.player.state == STARTING_STATE or self.player.state == PAUSE_STATE):
-            if self.player.state == PAUSE_STATE:
-                self.player.state = STARTING_STATE
-                self.emit("pause-play", True)
-            else:    
-                self.player.state = PAUSE_STATE
-                self.emit("pause-play", False)
-            self.cmd('pause \n')
+        if not self.player.title_is_menu: # 判断是否在DVD菜单.
+            if (self.player.state == STARTING_STATE or self.player.state == PAUSE_STATE):
+                if self.player.state == PAUSE_STATE:
+                    self.player.state = STARTING_STATE
+                    self.emit("pause-play", True)
+                else:    
+                    self.player.state = PAUSE_STATE
+                    self.emit("pause-play", False)
+                self.cmd('pause \n')
             
     def stop(self):    
         if self.player.state in [STARTING_STATE, PAUSE_STATE]:
@@ -953,15 +954,19 @@ class LDMP(gobject.GObject):
                 
             if buffer.startswith("DVDNAV_TITLE_IS_MENU"):
                 self.player.title_is_menu = True
-                self.get_time_length()
+                #self.get_time_length()
+                length = self.player.length
+                self.emit("get-time-length", length, length_to_time(length))
                 
             if buffer.startswith("DVDNAV_TITLE_IS_MOVIE"):
                 self.player.title_is_menu = False
-                self.get_time_length()
+                #self.get_time_length()
+                length = self.player.length
+                self.emit("get-time-length", length, length_to_time(length))
                 
             if buffer.startswith("ID_SUBTITLE_ID="): 
                 id = buffer.replace("ID_SUBTITLE_ID=", "").split("\n")[0]
-                self.player.sub_index = int(id)
+                self.player.sub_index += 1 #int(id)
                 self.player.subtitle.append(id)                
                 
             if buffer.startswith("ID_SID_"):
@@ -976,7 +981,11 @@ class LDMP(gobject.GObject):
                     text = self.player.subtitle[self.player.sub_index]
                     text_list = text.split(":")
                     id = text_list[0]
-                    name = text_list[1]
+                    try:
+                        name = text_list[1]
+                    except:
+                        print "player.py ==>> id_sid 有bug,读取dvd的字幕, 音频 有问题...要修.."
+                        name = ""
                     text = name + "（" + lang + "）" + "-" + id
                     self.player.subtitle[self.player.sub_index] = text
                     # 发送字幕字符串.
@@ -989,7 +998,7 @@ class LDMP(gobject.GObject):
             if buffer.startswith("ID_AUDIO_ID="):
                 self.emit("start-media-player")
                 id = buffer.replace("ID_AUDIO_ID=", "").split("\n")[0]
-                self.player.audio_index = int(id)
+                self.player.audio_index +=  1 #int(id)
                 self.player.audio_list.append(id)
 
             if buffer.startswith("ID_AID_"):    
