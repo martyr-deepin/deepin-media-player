@@ -1,5 +1,6 @@
 Media Player for Linux Deepin.
 
+[*] sudo apt-get install libdvdread-dev
 [*] sudo apt-get install isoinfo.
 [*] sudo apt-get install BeautifulSoup
 [*] dvdnav.
