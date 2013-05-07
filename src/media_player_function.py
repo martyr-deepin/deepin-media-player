@@ -307,6 +307,14 @@ class MediaPlayFun(object):
         if "True" == pre_view_check:
             if (not is_file_audio(self.ldmp.player.uri)):
                 self.pre_view.set_preview_path(ldmp.player.uri)
+        ############ 保存最近播放文件.
+        '''
+        argvs = self.this.ini.get_argvs("RecentPlayed")
+        if len(argvs) > 10:
+            del self.this.ini.section_dict["RecentPlayed"][argvs.keys()[0]]
+        '''
+        self.this.ini.set("RecentPlayed", '"%s"' % (ldmp.player.uri), ldmp.player.length)
+        self.this.ini.save()
 
     def ldmp_end_media_player(self, ldmp):
         # 退出预览.
