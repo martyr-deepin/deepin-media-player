@@ -69,6 +69,7 @@ class PluginManager(object):
                 "user" : self.__user_path,
                 }
         self.__this = this
+        self.__config = self.__this.config
         self.__modules_count = 0 # 统计模块总数.
         #
         self.__reload_modules = {}
@@ -168,6 +169,9 @@ class PluginManager(object):
 
     def auto_plugin(self, name, auto=True, open=None):
         module = self.__plugin_modules[name]
+        auto_check = self.__config.get("Plugins", name)
+        if "True" == auto_check:
+            module.auto_check = True
         if not (getattr(module, "auto_check") == auto) and open==None: # 不加载的过滤.
             return False
         # 判断是否满足加载的条件.

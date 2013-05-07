@@ -474,6 +474,11 @@ class IniGui(DialogBox):
         for key in screenshot_dict.keys():
             if self.ini.get("ScreenshotSet", key) != str(screenshot_dict[key]):
                 self.ini.set("ScreenshotSet", key, screenshot_dict[key])
+
+        plugins_dict = self.configure.plugins.get_plugins_state()
+        for key in plugins_dict.keys():
+            if self.ini.get("Plugins", key) != str(plugins_dict[key]):
+                self.ini.set("Plugins", key, plugins_dict[key])
                 
         return False
                     
@@ -509,6 +514,7 @@ class Configure(gtk.VBox):
         self.other_key = self.class_dict[_("Other")]
         self.sub_set = self.class_dict[_("Subtitles")]
         self.screen_shot = self.class_dict[_("Screenshot")]
+        self.plugins = self.class_dict[_("Plugin")]
         self.about = self.class_dict[_("About us")]
         self.show_all()
         
@@ -1669,7 +1675,7 @@ class Plugin(gtk.VBox):
                 auto_check = "False"
             run_chek = self.ini.get("Plugins", name)
             if run_chek == "True": # 读取配置文件的信息. 看插件启动了吗?
-                self.this.plugin_man.open_plugin(name)
+                #self.this.plugin_man.open_plugin(name)
                 auto_check = "True"
 
             if -1 != auto_check:
@@ -1694,6 +1700,16 @@ class Plugin(gtk.VBox):
         title_box_align.add(title_box)
 
         self.pack_start(title_box_align, False, True)
+
+    def get_plugins_state(self):
+        plugins_dict = {}
+        plugin_names = self.this.plugin_man.get_modules_name()
+        for key in plugin_names:
+            check = self.ini.get("Plugins", key)
+            if check:
+                plugins_dict[key] = check
+
+        return plugins_dict
 
     def list_view_single_items(self, listview, single_items, row, col, item_x, item_y):
         if col == 2:
