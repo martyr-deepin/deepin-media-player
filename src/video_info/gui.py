@@ -98,8 +98,11 @@ class VideoInformGui(gobject.GObject):
             self.widget_offset_y = 20
             #
             self.fixed_video      = gtk.Fixed()
-            pixbuf = get_file_icon_pixbuf(self.player.uri, ICON_H)
-            self.file_icon_image  = gtk.image_new_from_pixbuf(pixbuf)
+            try:
+                pixbuf = get_file_icon_pixbuf(self.player.uri, ICON_H)
+                self.file_icon_image  = gtk.image_new_from_pixbuf(pixbuf)
+            except:
+                self.file_icon_image  = gtk.Image() #image_new_from_pixbuf(pixbuf)
             self.first_hseparator = HSeparator(app_theme.get_shadow_color("hSeparator").get_color_info(),
        0, 35)
             self.first_hseparator_hbox = gtk.HBox()

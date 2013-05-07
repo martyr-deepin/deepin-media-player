@@ -738,6 +738,7 @@ class LDMP(gobject.GObject):
         '''Add hue'''
         if self.player.state == STARTING_STATE:
             self.cmd('hue +%s\n' % (hue_num))        
+
     def dechue(self, hue_num):
         '''Decrease hue'''
         if self.player.state == STARTING_STATE:
@@ -746,32 +747,40 @@ class LDMP(gobject.GObject):
     '''dvd控制''' #dvd123456
     # cdrom [dvd, vcd, cd].        
     def dvd_mouse_pos(self, x, y):        
-        if self.player.state == STARTING_STATE:
+        if self.player.state and self.player.type == TYPE_DVD:
             self.cmd('set_mouse_pos %d %d\n' % (int(x), int(y)))
         
     def dvd_up(self):
-        self.cmd('dvdnav up\n')
+        if self.player.type == TYPE_DVD:
+            self.cmd('dvdnav up\n')
         
     def dvd_down(self):    
-        self.cmd('dvdnav down\n')
+        if self.player.type == TYPE_DVD:
+            self.cmd('dvdnav down\n')
             
     def dvd_left(self):        
-        self.cmd('dvdnav left\n')
+        if self.player.type == TYPE_DVD:
+            self.cmd('dvdnav left\n')
         
     def dvd_right(self):
-        self.cmd('dvdnav right\n')
+        if self.player.type == TYPE_DVD:
+            self.cmd('dvdnav right\n')
         
-    def dvd_menu(self):    
-        self.cmd('dvdnav menu\n')
+    def dvd_menu(self): 
+        if self.player.type == TYPE_DVD:
+            self.cmd('dvdnav menu\n')
         
     def dvd_select(self):
-        self.cmd("dvdnav select\n")
+        if self.player.type == TYPE_DVD:
+            self.cmd("dvdnav select\n")
     
     def dvd_prev(self):    
-        self.cmd("dvdnav prev\n")
+        if self.player.type == TYPE_DVD:
+            self.cmd("dvdnav prev\n")
         
     def dvd_mouse(self):    
-        if self.player.state == STARTING_STATE:
+        if (self.player.state and 
+            self.player.type == TYPE_DVD):
             self.cmd('dvdnav mouse\n')
         
     def switch_angle(self, value):    
@@ -954,13 +963,13 @@ class LDMP(gobject.GObject):
                 
             if buffer.startswith("DVDNAV_TITLE_IS_MENU"):
                 self.player.title_is_menu = True
-                #self.get_time_length()
+                self.get_time_length()
                 length = self.player.length
                 self.emit("get-time-length", length, length_to_time(length))
                 
             if buffer.startswith("DVDNAV_TITLE_IS_MOVIE"):
                 self.player.title_is_menu = False
-                #self.get_time_length()
+                self.get_time_length()
                 length = self.player.length
                 self.emit("get-time-length", length, length_to_time(length))
                 
@@ -996,7 +1005,6 @@ class LDMP(gobject.GObject):
                 print "ID_FILE_SUB_ID:", id
                 
             if buffer.startswith("ID_AUDIO_ID="):
-                self.emit("start-media-player")
                 id = buffer.replace("ID_AUDIO_ID=", "").split("\n")[0]
                 self.player.audio_index +=  1 #int(id)
                 self.player.audio_list.append(id)
@@ -1024,13 +1032,13 @@ class LDMP(gobject.GObject):
                         self.emit("get-audio-info", text, self.player.audio_index)
 
             if  buffer.startswith("ID_CHAPTERS="):   
-                #print "ID_CHAPTERS:", buffer.replace("ID_CHAPTERS=", "")
+                print "ID_CHAPTERS:", buffer.replace("ID_CHAPTERS=", "")
                 pass
                 
             if (buffer.startswith("ID_SEEKABLE=")
                 and buffer.startswith("ID_SEEKABLE=0")):    
                 print "ID_SEEKABLE and ID_SEEKABLE=0:", buffer
-                print "True"
+                pass
                 
             if buffer.startswith("ID_VIDEO_FORMAT"): 
                 self.player.video_format = buffer.replace("ID_VIDEO_FORMAT=", "").split("\n")[0]
@@ -1097,6 +1105,8 @@ class LDMP(gobject.GObject):
             if buffer.startswith("ID_FILENAME"):   
                 file_name = buffer.replace("ID_FILENAME=", "").split("\n")[0] + "\0"
                 self.player.title = os.path.split(file_name)[1]
+                #print "start-media-plaeyr..."
+                self.emit("start-media-player")
                 
         return True
     

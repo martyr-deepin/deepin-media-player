@@ -135,8 +135,11 @@ class MediaPlayMenus(object):
         #
         # 属性查看.
         self.menus.screen_right_root_menu.set_menu_item_sensitive_by_index(15, False)
+        # dvd 菜单.
         self.menus.screen_right_root_menu.set_menu_item_sensitive_by_index(12, False)
+        # 字幕禁用.
         self.menus.screen_right_root_menu.set_menu_item_sensitive_by_index(11, False)
+        #
         self.menus.channel_select.set_menu_item_sensitive_by_index(1, False)
         # 最近播放.
         self.init_recent_play_list()
@@ -362,6 +365,8 @@ class MediaPlayMenus(object):
         
     def menu_ldmp_end_media_player(self, ldmp):
         self.menus.screen_right_root_menu.set_menu_item_sensitive_by_index(15, False)
+        # 设置 dvd菜单禁用.
+        self.menus.screen_right_root_menu.set_menu_item_sensitive_by_index(12, False)
 
     def menu_ldmp_start_media_player(self, ldmp):
         self.menus.screen_right_root_menu.set_menu_item_sensitive_by_index(15, True)
@@ -374,6 +379,9 @@ class MediaPlayMenus(object):
             # 添加到最近播放列表.
             self.menus.recent_played_menu.clear_menus()
             self.init_recent_play_list()
+        # dvd 设置.
+        ###########
+        self.menus.screen_right_root_menu.set_menu_item_sensitive_by_index(12, True)
 
     ##################
     # 排序: 名称，类型.

@@ -672,13 +672,20 @@ class MediaPlayer(object):
             pos = self.ini.get("PlayMemory", uri)
             if pos:
                 start_time = float(pos)
+        # 保存音量值.
+        volume = self.ldmp.player.volume
+        self.ldmp.player = Player()
         self.ldmp.player.start_time = start_time
+        self.ldmp.player.volume = volume
+        '''
+        self.ldmp.player.title_is_menu = False
         self.ldmp.player.subtitle = []
         # 音轨选择初始化.
         self.ldmp.player.audio_index = -1
         self.ldmp.player.audio_list = []
         self.ldmp.player.sub_index = -1
         self.ldmp.player.subtitle = []
+        '''
 
     # 上一曲.
     def prev(self):    
@@ -948,13 +955,17 @@ class MediaPlayer(object):
 
     def add_net_to_play_list(self, name, play_uri, length, check): 
         # 添加网络地址到播放列表，再的判断是否播放.
+        self.list_view.items.add([str(name), str(length), str(play_uri)])
         if check:
             self.play_list.set_index(len(self.list_view.items) - 1)
         #
-        self.list_view.items.add([str(name), str(length), str(play_uri)])
         #
         if check:
-            self.next()
+            gtk.timeout_add(100, self.test_next)
+
+    def test_next(self):
+        self.next()
+        return False
 
     def open_url_dialog(self, check, clear=True):
         open_url_win = OpenUrlDialog()
