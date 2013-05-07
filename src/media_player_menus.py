@@ -93,6 +93,11 @@ class MediaPlayMenus(object):
         self.menus._16X10_ascept   = self.menu_16X10_ascept
         self.menus._1_85X1_ascept  = self.menu_1_85X1_ascept
         self.menus._2_35X1_ascept  = self.menu_2_35X1_ascept
+        # 设置播放尺寸.
+        self.menus._50_ascept   = self.this.video_0x5_set_ascept
+        self.menus._100_ascept  = self.this.video_1x0_set_ascept
+        self.menus._150_ascept  = self.this.video_1x5_set_ascept
+        self.menus._200_ascept  = self.this.video_2x0_set_ascept
         # 初始化为默认.
         self.set_menu_ascept(0, ASCEPT_DEFULAT)
         # 设置播放状态.

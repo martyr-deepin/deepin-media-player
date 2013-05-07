@@ -199,6 +199,10 @@ class PlayMenus(object):
         self._16X10_ascept     = None
         self._1_85X1_ascept    = None
         self._2_35X1_ascept    = None
+        self._50_ascept  = None
+        self._100_ascept = None
+        self._150_ascept = None
+        self._200_ascept = None
         
         self.video_menu = Menu([(None, _("Original"), self.__menu_normal_ascept),
                                  (None,    "4:3",     self.__menu_4X3_ascept),
@@ -207,10 +211,10 @@ class PlayMenus(object):
                                  (None, "1.85:1",     self.__menu_1_85X1_ascept),
                                  (None, "2.35:1",     self.__menu_2_35X1_ascept),
                                  (None),
-                                 (None,  _("50%"),  None),
-                                 (None,  _("100%"), None),
-                                 (None,  _("150%"), None),
-                                 (None,  _("200%"), None),
+                                 (None,  _("50%"),  self.__menu_50_ascept),
+                                 (None,  _("100%"), self.__menu_100_ascept),
+                                 (None,  _("150%"), self.__menu_150_ascept),
+                                 (None,  _("200%"), self.__menu_200_ascept),
                                  ])  
         self.stereo_channel = None
         self.left_channel   = None
@@ -453,6 +457,22 @@ class PlayMenus(object):
     def __menu_2_35X1_ascept(self):
         if self._2_35X1_ascept:
             self._2_35X1_ascept()
+
+    def __menu_50_ascept(self):
+        if self._50_ascept:
+            self._50_ascept()
+
+    def __menu_100_ascept(self):
+        if self._100_ascept:
+            self._100_ascept()
+
+    def __menu_150_ascept(self):
+        if self._150_ascept:
+            self._150_ascept()
+
+    def __menu_200_ascept(self):
+        if self._200_ascept:
+            self._200_ascept()
     
     def __menu_play_track(self):
         if self.play_track:

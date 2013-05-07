@@ -209,10 +209,10 @@ class MediaPlayFun(object):
             self.ldmp.setvolume(value)
 
     def __top_toolbar_1X_button_clicked(self, widget):
-        print "__top_toolbar_1X_button_clicked..."
+        self.this.video_1x0_set_ascept()
 
     def __top_toolbar_2X_button_clicked(self, widget):   
-        print "__top_toolbar_2X_button_clicked..."
+        self.this.video_2x0_set_ascept()
 
     def __top_toolbar_concise_button_clicked(self, widget):
         self.this.top_toolbar_concise_button_clicked()

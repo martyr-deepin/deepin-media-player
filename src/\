@@ -302,6 +302,8 @@ class MediaPlayer(object):
     def set_ascept_restart(self):    
         try:            
             unset_flags(self.gui.screen)
+            #self.gui.screen_frame.get_padding(0, 0, 0, 0)
+            print "***********8"
             if self.ldmp.player.video_width == 0 or self.ldmp.player.video_height == 0:
                 set_flags(self.gui.screen)
                 ascept_num = None
@@ -401,9 +403,6 @@ class MediaPlayer(object):
         #print "===========播放结束!!==========", ldmp.player.type
         self.player_end_init()
         self.media_play_fun.ldmp_end_media_player(ldmp)
-        # BUG：因为全屏播放的时候，如果播放完毕，
-        #不设置这个，中间的图就变样了.
-        self.gui.screen_frame.set_padding(0, 0, 0, 0)
         
     def player_end_init(self):        
         # 播放完毕，重置播放设置.
@@ -563,7 +562,6 @@ class MediaPlayer(object):
         else:
             self.gui.top_toolbar.toolbar_radio_button.set_full_state(False)
             self.gui.app.window.unfullscreen()
-            self.gui.screen_frame.set_padding(0, 0, 0, 0)
             if not self.concise_check: # 如果是简洁模式,不普通模式.
                 self.normal_mode() # 普通模式.
             self.fullscreen_check = False
@@ -982,18 +980,22 @@ class MediaPlayer(object):
 
     # 尺寸.
     def video_0x5_set_ascept(self):
+        print "0.5倍大小..."
         video_w, video_h = self.get_video_size()
         self.video_set_size_ascept(video_w / 2.0, video_h / 2.0)
     
     def video_1x0_set_ascept(self):
+        print "1.0倍大小..."
         video_w, video_h = self.get_video_size()
         self.video_set_size_ascept(video_w, video_h)
 
     def video_1x5_set_ascept(self):
+        print "1.5倍大小..."
         video_w, video_h = self.get_video_size()
         self.video_set_size_ascept(video_w * 1.5, video_h * 1.5)
 
     def video_2x0_set_ascept(self):
+        print "2.0倍大小..."
         video_w, video_h = self.get_video_size()
         self.video_set_size_ascept(video_w * 2.0, video_h * 2.0)
 
@@ -1016,16 +1018,9 @@ class MediaPlayer(object):
                 h = min(h, screen_h)
                 self.gui.app.window.resize(int(w), int(h))
             else:
-                app_w, app_h = self.gui.app.window.allocation.width, self.gui.app.window.allocation.height
-                set_w, set_h = int(app_w - w), int(app_h - h)
-                if set_w < 0 or set_h < 0:
-                    self.gui.screen_frame.set_padding(0, 0, 0, 0)
-                else:
-                    self.gui.screen_frame.set_padding(set_h/2, 
-                                                      set_h/2, 
-                                                      set_w/2,
-                                                      set_w/2)
+                self.gui.screen_frame.set_padding(100, 100, 100, 100)
                 self.gui.screen_frame.set(0.5, 0.5, 0, 0)
+                #self.gui.screen.set_size_request(int(w), int(h))
 
 
 
