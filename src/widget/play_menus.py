@@ -314,14 +314,21 @@ class PlayMenus(object):
                 self.audio_lang_menu,
                 ])
         ### DVD内置菜单.
+        self.return_to_root  = None
+        self.return_to_title = None
+        self.dvd_select = None
+        self.dvd_right = None
+        self.dvd_left  = None
+        self.dvd_down  = None
+        self.dvd_up    = None
         self.dvd_built_in_menu = Menu([
-                    (None, _("Move Up"),         None), 
-                    (None, _("Move Down"),       None),
-                    (None, _("Move Left"),       None),
-                    (None, _("Move Right"),      None), 
-                    (None, _("Select"),          None),
-                    (None, _("Return to Title"), None),
-                    (None, _("Return to Root"),  None),
+                    (None, _("Move Up"),         self.__menu_dvd_up), 
+                    (None, _("Move Down"),       self.__menu_dvd_down),
+                    (None, _("Move Left"),       self.__menu_dvd_left),
+                    (None, _("Move Right"),      self.__menu_dvd_right), 
+                    (None, _("Select"),          self.__menu_dvd_select),
+                    (None, _("Return to Title"), self.__menu_return_to_title),
+                    (None, _("Return to Root"),  self.__menu_return_to_root),
                     ])
         ## DVD控制菜单. 有DVD的时候才显示出来.
         self.dvd_navigation_menu = Menu([(None, _("Previous Title"), None), 
@@ -564,5 +571,37 @@ class PlayMenus(object):
         if self.sort_by_type:
             self.sort_by_type()
             
+    # dvd 菜单.
+    def __menu_return_to_root(self):
+        # 主菜单.
+        if self.return_to_root:
+            self.return_to_root()
+
+    def __menu_return_to_title(self):
+        # 标题菜单.
+        if self.return_to_title:
+            self.return_to_title()
+
+    def __menu_dvd_select(self):
+        # 选择
+        if self.dvd_select:
+            self.dvd_select()
+
+    def __menu_dvd_right(self):
+        if self.dvd_right:
+            self.dvd_right()
+
+    def __menu_dvd_left(self):
+        if self.dvd_left:
+            self.dvd_left()
+
+    def __menu_dvd_down(self):
+        if self.dvd_down:
+            self.dvd_down()
+
+    def __menu_dvd_up(self):
+        if self.dvd_up:
+            self.dvd_up()
+
             
                                         

@@ -120,6 +120,14 @@ class MediaPlayMenus(object):
         # 排序: 按类型，按名称.
         self.menus.sort_by_name = self.menu_sort_by_name
         self.menus.sort_by_type = self.menu_sort_by_type
+        # dvd 菜单.
+        self.menus.return_to_root = self.ldmp.dvd_menu
+        self.menus.return_to_title = self.ldmp.dvd_prev
+        self.menus.dvd_select = self.ldmp.dvd_select
+        self.menus.dvd_right = self.ldmp.dvd_right
+        self.menus.dvd_left  = self.ldmp.dvd_left
+        self.menus.dvd_down = self.ldmp.dvd_down
+        self.menus.dvd_up = self.ldmp.dvd_up
         ############################
         # 修改图标.
         #self.menus.title_root_menu.menu_items[0].set_item_icons((pixbuf, pixbuf, pixbuf))
@@ -381,7 +389,8 @@ class MediaPlayMenus(object):
             self.init_recent_play_list()
         # dvd 设置.
         ###########
-        self.menus.screen_right_root_menu.set_menu_item_sensitive_by_index(12, True)
+        if ldmp.player.uri.startswith("dvd"):
+            self.menus.screen_right_root_menu.set_menu_item_sensitive_by_index(12, True)
 
     ##################
     # 排序: 名称，类型.
