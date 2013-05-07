@@ -351,7 +351,11 @@ class MediaPlayer(object):
         self.ldmp.connect("mute-play",          self.ldmp_mute_play)
         self.ldmp.connect("volume-play",        self.ldmp_volume_play)
         self.ldmp.connect("error-msg",          self.ldmp_error_msg)
-        
+        # 测试dvd. 
+        self.ldmp.player.uri = "dvdnav"
+        self.ldmp.player.media_device = "/dev/sr0"
+        self.ldmp.play()
+        #
         # 全部的执行函数方法.
         self.media_play_fun   = MediaPlayFun(self)
         self.media_play_menus = MediaPlayMenus(self)
@@ -393,6 +397,8 @@ class MediaPlayer(object):
         #print "开始播放了..."
         self.player_start_init()
         self.media_play_fun.ldmp_start_media_player(ldmp)
+        # 测试DVD.
+        self.ldmp.dvd_prev()
         
     def player_start_init(self):    
         pass
