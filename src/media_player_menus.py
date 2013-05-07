@@ -29,6 +29,7 @@ from mplayer.player import ASCEPT_FULL_STATE, ASCEPT_DEFULAT
 from mplayer.playlist import SINGLA_PLAY, ORDER_PLAY, RANDOM_PLAY, SINGLE_LOOP, LIST_LOOP 
 from format_conv.transmageddon import TransmageddonUI
 from include.string_sort import cmp_string
+from widget.utils import get_play_file_name, get_play_file_type
 
 import os
 
@@ -37,6 +38,7 @@ import os
 class MediaPlayMenus(object):
     def __init__(self, this):
         self.this = this
+        self.ini  = self.this.ini
         self.gui  = self.this.gui
         self.ldmp = self.this.ldmp
         self.play_list = self.this.play_list
@@ -129,6 +131,34 @@ class MediaPlayMenus(object):
         self.menus.screen_right_root_menu.set_menu_item_sensitive_by_index(12, False)
         self.menus.screen_right_root_menu.set_menu_item_sensitive_by_index(11, False)
         self.menus.channel_select.set_menu_item_sensitive_by_index(1, False)
+        # 最近播放.
+        argvs = self.ini.get_argvs("RecentPlayed")
+        if argvs == None or len(argvs) == 0:
+            self.menus.play_list_root_menu.set_menu_item_sensitive_by_index(8, False)
+        else:
+            # 获取所有的kes.
+            for argv in argvs:
+                time = self.ini.get("RecentPlayed", argv)
+                path = argv.replace('"', "")
+                argv = argv.decode("utf-8").replace('"', "")
+                text = argv
+                if len(argv) > 30:
+                    text = text[0:30]
+                    text += "..."
+                self.menus.recent_played_menu.add_menu_items([ 
+                    (None, text, lambda : self.__recent_played_play(path, time)), 
+                            ])
+
+    def __recent_played_play(self, play_path, time):
+        # 点击播放最近文件.
+        name = get_play_file_name(play_path)
+        path = play_path
+        item = [name, time, path]
+        self.list_view.items.add(item)
+        double_item = self.list_view.items[len(self.list_view.items)-1]
+        self.play_list.set_items_index(double_item)
+        self.list_view.set_double_items(double_item)
+        self.this.play(path)
 
     def ldmp_get_subtitle(self, ldmp, sub_info, index):
         self.menus.screen_right_root_menu.set_menu_item_sensitive_by_index(11, True)
@@ -330,7 +360,6 @@ class MediaPlayMenus(object):
 
     def menu_sort_by_type(self):
         '''按类型排序'''
-        from widget.utils import get_play_file_name, get_play_file_type
         sum = len(self.list_view.items)
         if sum:
             for l in range(0, sum):

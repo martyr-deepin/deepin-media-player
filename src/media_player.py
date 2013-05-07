@@ -682,8 +682,8 @@ class MediaPlayer(object):
         if self.play_list.get_index() != -1:
             list_view = self.gui.play_list_view.list_view
             name = list_view.items[self.play_list.get_index()].sub_items[0].text
-        self.show_messagebox(name)
         self.ldmp.play()
+        self.show_messagebox(name)
 
     def mute_umute(self):
         if self.ldmp.player.volumebool:

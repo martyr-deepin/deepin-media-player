@@ -271,6 +271,8 @@ class PlayMenus(object):
         self.add_open_dir  = None
         self.add_open_url  = None
         self.screen_format_conversion = None
+        # 最近播放.
+        self.recent_played_menu = Menu(None)
         ## 播放列表弹出菜单.
         self.play_list_root_menu = Menu([(None, _("Add File"),      self.__menu_add_open_file),
                                          (None, _("Add Directory"), self.__menu_add_open_dir),
@@ -280,7 +282,7 @@ class PlayMenus(object):
                                          (None, _("Clear Playlist"),  self.__menu_clear_playlist),
                                          (None, _("Remove Unavailable Files"), self.__menu_remove_unavailable_files),
                                          (None),
-                                         (None, _("Recent Played"), None),
+                                         (None, _("Recent Played"), self.recent_played_menu),
                                          (self.play_sequence_pixbufs, _("Order"), self.play_state_menu),
                                          (None, _("Sort"),  self.sort_menu),
                                          (None),

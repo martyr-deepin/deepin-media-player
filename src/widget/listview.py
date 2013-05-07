@@ -875,11 +875,11 @@ class ListView(ListViewBase):
         self.__double_items = item
         #print "__listview_down_event..."
         vadjustment = get_match_parent(self, ["ScrolledWindow"]).get_vadjustment()
+        # 获取 start, end index.
+        start_index, end_index = self.__get_start_end_index()
+        row_index = self.items.index(self.__double_items) 
         if vadjustment:
             value = vadjustment.get_value()
-            # 获取 start, end index.
-            start_index, end_index = self.__get_start_end_index()
-            row_index = self.items.index(self.__double_items) 
             #
             if start_index <= row_index <= end_index:
                 #row_index += 1
@@ -899,8 +899,9 @@ class ListView(ListViewBase):
                 value = move_value
                 # 如果滚动的页超出了,直接到末尾.
                 if value > max_value:
-                    vadjustment.set_value(max_value)
+                    vadjustment.set_value(max_value + self.__items_padding_height)
                 else:
+                    print value
                     vadjustment.set_value(value)
         #
         self.on_queue_draw_area()
