@@ -257,8 +257,10 @@ class PlayMenus(object):
                                     True)
         ###############################################################
         # 排序.
-        self.sort_menu = Menu([(None, _("By Name"), None),
-                           (None, _("By Type"), None)])
+        self.sort_by_name = None
+        self.sort_by_type = None
+        self.sort_menu = Menu([(None, _("By Name"), self.__menu_sort_by_name),
+                               (None, _("By Type"), self.__menu_sort_by_type)])
         #
         ###############################################################
         self.remove_selected = None #self.__menu_remove_selected
@@ -530,6 +532,15 @@ class PlayMenus(object):
     def __menu_properties(self): 
         if self.properties:
             self.properties()
+
+    # 排序.
+    def __menu_sort_by_name(self):
+        if self.sort_by_name:
+            self.sort_by_name()
+
+    def __menu_sort_by_type(self):
+        if self.sort_by_type:
+            self.sort_by_type()
             
             
                                         

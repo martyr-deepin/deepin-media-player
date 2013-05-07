@@ -28,6 +28,7 @@ from mplayer.player import ASCEPT_16X10_STATE, ASCEPT_1_85X1_STATE, ASCEPT_2_35X
 from mplayer.player import ASCEPT_FULL_STATE, ASCEPT_DEFULAT
 from mplayer.playlist import SINGLA_PLAY, ORDER_PLAY, RANDOM_PLAY, SINGLE_LOOP, LIST_LOOP 
 from format_conv.transmageddon import TransmageddonUI
+from include.string_sort import cmp_string
 
 import os
 
@@ -107,6 +108,9 @@ class MediaPlayMenus(object):
         self.menus.screen_format_conversion = self.menu_screen_format_conversion
         # 屏幕的属性查看.
         self.menus.properties = self.menu_properties
+        # 排序: 按类型，按名称.
+        self.menus.sort_by_name = self.menu_sort_by_name
+        self.menus.sort_by_type = self.menu_sort_by_type
         ############################
         # 修改图标.
         #self.menus.title_root_menu.menu_items[0].set_item_icons((pixbuf, pixbuf, pixbuf))
@@ -306,6 +310,44 @@ class MediaPlayMenus(object):
 
     def menu_ldmp_start_media_player(self, ldmp):
         self.menus.screen_right_root_menu.set_menu_item_sensitive_by_index(15, True)
+
+    ##################
+    # 排序: 名称，类型.
+    def menu_sort_by_name(self):
+        '''按名称排序'''
+        sum = len(self.list_view.items)
+        if sum:
+            for l in range(0, sum):
+                for w in range(l, sum):
+                    str1 = self.list_view.items[l].sub_items[0].text
+                    str2 = self.list_view.items[w].sub_items[0].text
+                    if cmp_string(str1, str2):
+                        temp_list = self.list_view.items[l]
+                        self.list_view.items[l] = self.list_view.items[w]
+                        self.list_view.items[w] = temp_list
+            # 重...
+            self.list_view.on_queue_draw_area()
+
+    def menu_sort_by_type(self):
+        '''按类型排序'''
+        from widget.utils import get_play_file_name, get_play_file_type
+        sum = len(self.list_view.items)
+        if sum:
+            for l in range(0, sum):
+                for w in range(l, sum):
+                    str1 = self.list_view.items[l].sub_items[2].text
+                    str2 = self.list_view.items[w].sub_items[2].text
+                    type1 = get_play_file_type(str1) 
+                    type2 = get_play_file_type(str2)
+                    if type1 == type2:
+                        pos = self.list_view.items.index(self.list_view.items[l])
+                        temp_list = self.list_view.items[w]
+                        self.list_view.items.remove(temp_list)
+                        self.list_view.items.insert(pos, temp_list)
+            #
+            self.list_view.on_queue_draw_area()
+
+
 
 
 
