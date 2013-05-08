@@ -170,6 +170,7 @@ class MediaPlayer(object):
         self.run_check = False
         self.ldmp = LDMP()
         self.gui = GUI()        
+        self.mid_combo_menu = self.gui.screen_mid_combo.menu
         #
         self.list_view = self.gui.play_list_view.list_view
         #
@@ -265,6 +266,9 @@ class MediaPlayer(object):
 
     def __init_gui_screen(self):
         '''screen events init.'''
+        self.mid_combo_menu.connect("show", self.mid_combo_menu_show_event)
+        self.mid_combo_menu.connect("hide", self.mid_combo_menu_hide_event)
+        #
         self.draw_check = True
         self.background = app_theme.get_pixbuf("player.png").get_pixbuf()        
         self.gui.screen_frame_event.add_events(gtk.gdk.ALL_EVENTS_MASK)
@@ -365,9 +369,6 @@ class MediaPlayer(object):
         # 不需要用这个东西.如果需要命令行解析，那就用mplayer命令行吧.
         # 没必须要再去把mplayer命令行实现一遍, python抄袭C的东西，恶心.
         self.argv_add_to_play_list(self.argv_path_list[1:])
-        # 测试dvd.  判断来设置第三个参数.
-        item = ["/dev/sr0", "dvd-play", "dvdnav"]
-        self.gui.play_list_view.list_view.items.add(item)
 
     def argv_add_to_play_list(self, argv):
         for path in argv:
@@ -768,7 +769,7 @@ class MediaPlayer(object):
         self.files_to_play_list(paths, type_check)
 
     def files_to_play_list(self, paths, type_check=True):
-        print type_check
+        #print type_check
         run_check = self.run_check
         sub_check = True
         # 判断字幕和播放文件.
@@ -1061,5 +1062,50 @@ class MediaPlayer(object):
                                                       set_w/2)
                 self.gui.screen_frame.set(0.5, 0.5, 0, 0)
 
+    def mid_combo_menu_show_event(self, widget):
+        # 添加cdrom东东.
+        from plugins.cdrom.cdrom import scan_cdrom
+        from widget.movie_menu import Menu
+        self.open_cdrom = app_theme.get_pixbuf("screen_mid/screen_menu_open_cdrom.png")
+        cdroms = scan_cdrom() 
+        # 如果有光盘.
+        if len(cdroms):
+            item = (self.open_cdrom.get_pixbuf(), _("打开CDROM"))
+            self.mid_combo_menu.add_menu_index_items(0, item)
+        for cdrom in cdroms:
+            print cdrom
+            cdrom_child_menu = Menu()
+            cdrom_child_menu.set_menu_items([(None, cdrom)])
+            cdrom_child_menu.connect("menu-active", self.__cdrom_child_menu_play_cdrom)
+            self.mid_combo_menu.add_index_child_menu(0, cdrom_child_menu)
 
+    def __cdrom_child_menu_play_cdrom(self, child_menu, cdrom):
+        #print "要播放:", cdrom
+        DVD, VCD, ERROR = 0, 1, -1
+        from plugins.cdrom.cdrom import get_iso_type
+        if DVD == get_iso_type(cdrom): # 播放DVD.
+            #print "播放dvd.."
+            # 测试dvd.  判断来设置第三个参数.
+            item = [str(cdrom), "dvd-play", "dvdnav"]
+            list_view = self.gui.play_list_view.list_view
+            list_view.items.add(item)
+            self.play_list.set_index(len(list_view.items) - 1)
+            self.next()
+        elif VCD == get_iso_type(cdrom): # 播放VCD.
+            #print "播放vcd.."
+            item = [str(cdrom), "dvd-play", "vcd"]
+            list_view = self.gui.play_list_view.list_view
+            list_view.items.add(item)
+            self.play_list.set_index(len(list_view.items) - 1)
+            self.next()
+        else:
+            pass
+
+
+    def mid_combo_menu_hide_event(self, widget):
+        # 复位中间按钮的菜单.
+        from widget.movie_menu import Menu
+        remove_items = self.mid_combo_menu.menu_items[-2:]
+        self.mid_combo_menu.clear_menu_items(remove_items)
+        
 

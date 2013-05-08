@@ -1,6 +1,6 @@
 Media Player for Linux Deepin.
 
-[*] totem-video-thumbnailer 视频路径 输出图片路径 # 获取视频图像
+[*] totem-video-thumbnailer 视频途径  输出图片途径 # 获取视频图像
 [*] sudo apt-get install libdvdread-dev
 [*] sudo apt-get install isoinfo.
 [*] sudo apt-get install BeautifulSoup

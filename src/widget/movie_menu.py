@@ -69,6 +69,11 @@ class Menu(MenuWindow):
         self.menu_items = menu_items
         self.set_size_request(140, len(self.menu_items) * self.__menu_height)
 
+    def clear_menu_items(self, items):
+        self.menu_items = items
+        self.resize(140, len(self.menu_items) * self.__menu_height)
+        self.set_size_request(140, len(self.menu_items) * self.__menu_height)
+
     def add_menu_index_items(self, index, item):
         menu_item = MenuItem()
         menu_item.pixbuf = item[0]
