@@ -54,6 +54,9 @@ class MediaPlayMenus(object):
         self.ldmp.connect("get-audio-info", self.ldmp_get_audio_info)
         self.ldmp.connect("end-media-player",   self.menu_ldmp_end_media_player)
         self.ldmp.connect("start-media-player", self.menu_ldmp_start_media_player)
+        self.ldmp.connect("get-dvd-title-info", self.menu_ldmp_get_dvd_title_info)
+        self.ldmp.connect("dvd-is-menu", self.menu_ldmp_dvd_is_menu)
+        self.ldmp.connect("dvd-is-movie", self.menu_ldmp_dvd_is_movie)
         #
         self.menus = self.this.gui.play_menus
         # 初始化连接事件.
@@ -128,6 +131,8 @@ class MediaPlayMenus(object):
         self.menus.dvd_left  = self.ldmp.dvd_left
         self.menus.dvd_down = self.ldmp.dvd_down
         self.menus.dvd_up = self.ldmp.dvd_up
+        self.menus.dvd_prev_title = self.menu_dvd_prev_title
+        self.menus.dvd_next_title = self.menu_dvd_next_title
         ############################
         # 修改图标.
         #self.menus.title_root_menu.menu_items[0].set_item_icons((pixbuf, pixbuf, pixbuf))
@@ -200,7 +205,7 @@ class MediaPlayMenus(object):
         self.menus.screen_right_root_menu.set_menu_item_sensitive_by_index(11, True)
         # 添加字幕信息.
         self.menus.subtitles_select.add_menu_items([
-                            (None, sub_info, lambda : self.menu_switch_subtitle(index)),
+            (None, sub_info, self.menu_switch_subtitle, index),
                             ])
         if index == 0: # 设置默认项.
             self.menu_switch_subtitle(0)
@@ -213,7 +218,7 @@ class MediaPlayMenus(object):
         self.menus.channel_select.set_menu_item_sensitive_by_index(1, True)
         # 添加音频语言信息.
         self.menus.switch_audio_menu.add_menu_items([
-                            (None, audio_info, lambda : self.menu_switch_audio(index)),
+                            (None, audio_info, self.menu_switch_audio, index)
                             ])
         if index == 0: # 设置默认项.
             self.menu_switch_audio(0)
@@ -375,6 +380,8 @@ class MediaPlayMenus(object):
         self.menus.screen_right_root_menu.set_menu_item_sensitive_by_index(15, False)
         # 设置 dvd菜单禁用.
         self.menus.screen_right_root_menu.set_menu_item_sensitive_by_index(12, False)
+        # 清空DVD jump to菜单中的子菜单.
+        self.menus.jump_to.clear_menus()
 
     def menu_ldmp_start_media_player(self, ldmp):
         self.menus.screen_right_root_menu.set_menu_item_sensitive_by_index(15, True)
@@ -426,6 +433,28 @@ class MediaPlayMenus(object):
                         self.list_view.items.insert(pos, temp_list)
             #
             self.list_view.on_queue_draw_area()
+
+    # dvd.
+    def menu_ldmp_get_dvd_title_info(self, ldmp, title_index, title_time):
+        title_str = "%s-%s" % (title_index, title_time)
+        self.menus.jump_to.add_menu_items([(None, title_str, ldmp.switch_title, title_index)])
+        # 结束播放的时候要清空掉跳至菜单中的子菜单.
+
+    def menu_ldmp_dvd_is_menu(self, ldmp):
+        self.clear_sub_and_audio_child_menus()
+
+    def menu_ldmp_dvd_is_movie(self, ldmp):
+        self.clear_sub_and_audio_child_menus()
+
+    def clear_sub_and_audio_child_menus(self):
+        self.menus.subtitles_select.clear_menus()
+        self.menus.switch_audio_menu.clear_menus()
+
+    def menu_dvd_prev_title(self):
+        self.ldmp.prev_title(self.ldmp.player.title_index - 1)
+
+    def menu_dvd_next_title(self):
+        self.ldmp.next_title(self.ldmp.player.title_index + 1)
 
 
 

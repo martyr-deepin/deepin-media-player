@@ -58,6 +58,9 @@ class Player(object):
         self.vo = None # -vo
         self.ao = None # -ao
         self.cache_size = 0 # 缓冲大小
+        # dvd 控制.
+        self.dvd_title_list = []
+        self.title_index = -1
         # 字幕添加.
         self.sub_index = -1
         self.subtitle  = []
@@ -174,6 +177,12 @@ class LDMP(gobject.GObject):
                      gobject.TYPE_NONE,(gobject.TYPE_INT,)),
         "volume-play":(gobject.SIGNAL_RUN_LAST,
                      gobject.TYPE_NONE,(gobject.TYPE_INT,)),
+        "get-dvd-title-info":(gobject.SIGNAL_RUN_LAST,
+                     gobject.TYPE_NONE,(gobject.TYPE_INT, gobject.TYPE_STRING)),
+        "dvd-is-menu":(gobject.SIGNAL_RUN_LAST,
+                     gobject.TYPE_NONE,()),
+        "dvd-is-movie":(gobject.SIGNAL_RUN_LAST,
+                     gobject.TYPE_NONE,()),
         "error-msg":(gobject.SIGNAL_RUN_LAST,
                      gobject.TYPE_NONE,(gobject.TYPE_INT,)),
         }
@@ -940,7 +949,6 @@ class LDMP(gobject.GObject):
                 switch_audio_index = buffer.replace("ANS_switch_audio=", "").split("\n")[0]
                 self.player.audio_select_index = switch_audio_index
                 
-               
             if buffer.startswith("ANS_sub_source"):                    
                 self.player.subtitle_source = buffer.replace("ANS_sub_source=", "").split("\n")[0]
                 if self.player.subtitle_source == 0:
@@ -966,13 +974,17 @@ class LDMP(gobject.GObject):
                 self.get_time_length()
                 length = self.player.length
                 self.emit("get-time-length", length, length_to_time(length))
+                # !! 发送这个信号，主要用于清空字幕和音轨的子菜单.
+                self.emit("dvd-is-menu") 
                 
             if buffer.startswith("DVDNAV_TITLE_IS_MOVIE"):
                 self.player.title_is_menu = False
                 self.get_time_length()
                 length = self.player.length
                 self.emit("get-time-length", length, length_to_time(length))
-                
+                # !! 发送这个信号，主要用于清空字幕和音轨的子菜单.
+                self.emit("dvd-is-movie")
+
             if buffer.startswith("ID_SUBTITLE_ID="): 
                 id = buffer.replace("ID_SUBTITLE_ID=", "").split("\n")[0]
                 self.player.sub_index += 1 #int(id)
@@ -1078,6 +1090,36 @@ class LDMP(gobject.GObject):
             if buffer.startswith("ID_AUDIO_NCH"):                    
                 self.player.audio_nch = buffer.replace("ID_AUDIO_NCH=", "").split("\n")[0]
                 # print "ID_AUDIO_NCH:", self.player.audio_nch
+
+            #DVD获取信息.
+            if buffer.startswith("ID_DVD_TITLE_"):
+                ID_DVD_TITLE = "ID_DVD_TITLE_"
+                LENGTH = "_LENGTH="
+                CHAPTERS = "_CHAPTERS="
+                #
+                import re
+                compile_str = re.compile(r"\d+")
+                index_str = buffer.replace(ID_DVD_TITLE, "").split("\n")[0]
+                title_index = compile_str.findall(index_str)[0]
+                title_length = buffer.replace("%s%s%s" % (ID_DVD_TITLE, title_index, LENGTH), "")
+                title_time = length_to_time(title_length)
+                # 读取下一段. chapters.
+                buffer2 = source.readline()
+                ID_DVD_TITLE_INDEX_CHAPTERS = "%s%s%s" % (ID_DVD_TITLE, title_index, CHAPTERS)
+                title_chapters_number = buffer2.replace(ID_DVD_TITLE_INDEX_CHAPTERS, "")
+                #title_chapters_number = compile_str.findall(buffer
+                # 再读取下一段. title. 时间列表(time list)
+                buffer3 = source.readline()
+                TITLE_INDEX_CHAPTERS = "TITLE %s, CHAPTERS:" % (title_index)
+                title_chapters_str = buffer3.replace(TITLE_INDEX_CHAPTERS, "").strip()
+                title_chapters_time_list = title_chapters_str.split(",")[:-1]
+                #
+                self.player.dvd_title_list.append((title_index, title_time))
+                # 发送信息.
+                self.emit("get-dvd-title-info", int(title_index), title_time)
+
+            if buffer.startswith("DVDNAV, switched to title: "):
+                self.player.title_index = int(buffer.replace("DVDNAV, switched to title: ", "").strip())
                 
             if buffer.startswith("*** screenshot"):    
                 #... ...

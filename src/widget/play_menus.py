@@ -331,9 +331,12 @@ class PlayMenus(object):
                     (None, _("Return to Root"),  self.__menu_return_to_root),
                     ])
         ## DVD控制菜单. 有DVD的时候才显示出来.
-        self.dvd_navigation_menu = Menu([(None, _("Previous Title"), None), 
-                                         (None, _("Next title"),     None), 
-                                         (None, _("Jump to"),        None),
+        self.jump_to = Menu(None)
+        self.dvd_prev_title = None
+        self.dvd_next_title = None
+        self.dvd_navigation_menu = Menu([(None, _("Previous Title"), self.__menu_dvd_prev_title), 
+                                         (None, _("Next title"),     self.__menu_dvd_next_title), 
+                                         (None, _("Jump to"),        self.jump_to),
                                          (None, _("DVD Menu"),       self.dvd_built_in_menu),
                                          ]) 
         ## 字幕选择:
@@ -602,6 +605,19 @@ class PlayMenus(object):
     def __menu_dvd_up(self):
         if self.dvd_up:
             self.dvd_up()
+
+    def __menu_dvd_prev_title(self):
+        # dvd 上一标题.
+        if self.dvd_prev_title:
+            self.dvd_prev_title()
+
+    def __menu_dvd_next_title(self):
+        # dvd 下一标题.
+        if self.dvd_next_title:
+            self.dvd_next_title()
+
+
+
 
             
                                         
