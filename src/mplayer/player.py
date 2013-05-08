@@ -485,7 +485,7 @@ class LDMP(gobject.GObject):
             self.command.append("-nocache")
             self.command.append("%s" % (self.player.uri))
             if self.player.media_device:
-                self.command.append("-dvd-device")
+                self.command.append("-cdrom-device")
                 self.command.append("%s" % (self.player.media_device))
         elif self.player.type == TYPE_NETWORK: # 网络媒体播放.
             if self.player.uri.startswith("apple.com"):

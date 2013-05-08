@@ -716,6 +716,7 @@ class MediaPlayer(object):
             device_name = list_view.items[self.play_list.get_index()].sub_items[0].text
             self.ldmp.player.media_device = device_name
         #
+        print self.ldmp.player.uri, self.ldmp.player.media_device
         self.ldmp.play()
         #
         if self.ldmp.player.type == TYPE_DVD:
@@ -1076,7 +1077,6 @@ class MediaPlayer(object):
             item = (self.open_cdrom.get_pixbuf(), _("打开CDROM"))
             self.mid_combo_menu.add_menu_index_items(0, item)
         for cdrom in cdroms:
-            print cdrom
             cdrom_child_menu = Menu()
             cdrom_child_menu.set_menu_items([(None, cdrom)])
             cdrom_child_menu.connect("menu-active", self.__cdrom_child_menu_play_cdrom)
@@ -1087,21 +1087,17 @@ class MediaPlayer(object):
         DVD, VCD, ERROR = 0, 1, -1
         from plugins.cdrom.cdrom import get_iso_type
         type = get_iso_type(cdrom)
-        print "type:", type
         if DVD == type: # 播放DVD.
-            #print "播放dvd.."
-            # 测试dvd.  判断来设置第三个参数.
-            item = [str(cdrom), "dvd-play", "dvdnav"]
             list_view = self.gui.play_list_view.list_view
-            list_view.items.add(item)
             self.play_list.set_index(len(list_view.items) - 1)
+            item = [str(cdrom), "dvd-play", "dvdnav"]
+            list_view.items.add(item)
             self.next()
         elif VCD == type: # 播放VCD.
-            print "播放vcd.."
-            item = [str(cdrom), "vcd-play", "vcd://2"]
             list_view = self.gui.play_list_view.list_view
-            list_view.items.add(item)
             self.play_list.set_index(len(list_view.items) - 1)
+            item = [str(cdrom), "vcd-play", "vcd://2"]
+            list_view.items.add(item)
             self.next()
         else:
             pass
