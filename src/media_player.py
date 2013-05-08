@@ -1079,10 +1079,10 @@ class MediaPlayer(object):
         for cdrom in cdroms:
             cdrom_child_menu = Menu()
             cdrom_child_menu.set_menu_items([(None, cdrom)])
-            cdrom_child_menu.connect("menu-active", self.__cdrom_child_menu_play_cdrom)
+            cdrom_child_menu.connect("menu-active", self.cdrom_child_menu_play_cdrom)
             self.mid_combo_menu.add_index_child_menu(0, cdrom_child_menu)
 
-    def __cdrom_child_menu_play_cdrom(self, child_menu, cdrom):
+    def cdrom_child_menu_play_cdrom(self, child_menu=None, cdrom=""):
         #print "要播放:", cdrom
         DVD, VCD, ERROR = 0, 1, -1
         from plugins.cdrom.cdrom import get_iso_type

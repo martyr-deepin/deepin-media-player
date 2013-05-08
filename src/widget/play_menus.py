@@ -164,10 +164,11 @@ class PlayMenus(object):
         self.open_file       = None
         self.open_dir        = None
         self.open_url        = None
+        self.menu_play_disc = Menu(None)
         ##############################################################
         self.file_menu = Menu([(None, _("Open File"), self.__menu_open_file),
                                (None, _("Open Directory"), self.__menu_open_dir),
-                               (None, _("Play Disc"), None)
+                               (None, _("Play Disc"), self.menu_play_disc)
                               ])
         self.play_track            = None
         self.play_default          = None

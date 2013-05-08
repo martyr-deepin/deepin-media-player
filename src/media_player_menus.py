@@ -156,6 +156,31 @@ class MediaPlayMenus(object):
         self.menus.channel_select.set_menu_item_sensitive_by_index(1, False)
         # 最近播放.
         self.init_recent_play_list()
+        self.menus.file_menu.set_menu_item_sensitive_by_index(2, False)
+        self.menus.file_menu.connect("show", self.file_menu_show_event)
+        self.menus.file_menu.connect("hide", self.file_menu_hide_event)
+
+    def file_menu_show_event(self, widget):
+        # 添加cdrom东东.
+        from plugins.cdrom.cdrom import scan_cdrom
+        from widget.movie_menu import Menu
+        cdroms = scan_cdrom() 
+        # 如果有光盘.
+        if len(cdroms):
+            self.menus.file_menu.set_menu_item_sensitive_by_index(2, True)
+            # 添加cdrom菜单.
+            for cdrom in cdroms:
+                self.menus.menu_play_disc.add_menu_items([ 
+                    (None, str(cdrom), self.__play_disc_cdrom, cdrom)
+                            ])
+
+    def file_menu_hide_event(self, widget):
+        self.menus.file_menu.set_menu_item_sensitive_by_index(2, False)
+        # 清空CDROM播放菜单.
+        self.menus.menu_play_disc.clear_menus()
+
+    def __play_disc_cdrom(self, cdrom):
+        self.this.cdrom_child_menu_play_cdrom(cdrom=cdrom)
 
     def init_recent_play_list(self):
         argvs = self.ini.get_argvs("RecentPlayed")
