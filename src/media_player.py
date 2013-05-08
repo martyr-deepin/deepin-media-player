@@ -712,6 +712,9 @@ class MediaPlayer(object):
         if self.ldmp.player.uri.startswith("dvd"):
             device_name = list_view.items[self.play_list.get_index()].sub_items[0].text
             self.ldmp.player.media_device = device_name
+        if self.ldmp.player.uri.startswith('vcd'):
+            device_name = list_view.items[self.play_list.get_index()].sub_items[0].text
+            self.ldmp.player.media_device = device_name
         #
         self.ldmp.play()
         #
@@ -1083,7 +1086,9 @@ class MediaPlayer(object):
         #print "要播放:", cdrom
         DVD, VCD, ERROR = 0, 1, -1
         from plugins.cdrom.cdrom import get_iso_type
-        if DVD == get_iso_type(cdrom): # 播放DVD.
+        type = get_iso_type(cdrom)
+        print "type:", type
+        if DVD == type: # 播放DVD.
             #print "播放dvd.."
             # 测试dvd.  判断来设置第三个参数.
             item = [str(cdrom), "dvd-play", "dvdnav"]
@@ -1091,16 +1096,15 @@ class MediaPlayer(object):
             list_view.items.add(item)
             self.play_list.set_index(len(list_view.items) - 1)
             self.next()
-        elif VCD == get_iso_type(cdrom): # 播放VCD.
-            #print "播放vcd.."
-            item = [str(cdrom), "dvd-play", "vcd"]
+        elif VCD == type: # 播放VCD.
+            print "播放vcd.."
+            item = [str(cdrom), "vcd-play", "vcd://2"]
             list_view = self.gui.play_list_view.list_view
             list_view.items.add(item)
             self.play_list.set_index(len(list_view.items) - 1)
             self.next()
         else:
             pass
-
 
     def mid_combo_menu_hide_event(self, widget):
         # 复位中间按钮的菜单.
