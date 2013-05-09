@@ -75,6 +75,13 @@ import dbus
 APP_DBUS_NAME   = "com.deepin.mediaplayer"
 APP_OBJECT_NAME = "/com/deepin/mediaplayer"
 
+drag_dict = {gtk.gdk.WINDOW_EDGE_SOUTH_EAST : gtk.gdk.BOTTOM_RIGHT_CORNER, # 右下.
+             gtk.gdk.WINDOW_EDGE_SOUTH_WEST : gtk.gdk.BOTTOM_LEFT_CORNER, # 左下.
+             gtk.gdk.WINDOW_EDGE_SOUTH  : gtk.gdk.BOTTOM_SIDE, # 下.
+             gtk.gdk.WINDOW_EDGE_WEST : gtk.gdk.LEFT_SIDE, # 左.
+             gtk.gdk.WINDOW_EDGE_EAST : gtk.gdk.RIGHT_SIDE# 右.
+            }
+
 
 class MediaPlayer(object):
     def __init__(self):
@@ -234,8 +241,8 @@ class MediaPlayer(object):
 
     def app_window_button_press_event(self, widget, event):
         # 判断是否可拖动大小.
-        if self.in_drag_position(widget, event):
-            drag = gtk.gdk.WINDOW_EDGE_SOUTH_EAST
+        drag = self.in_drag_position(widget, event)
+        if drag:
             self.gui.app.window.begin_resize_drag(drag, 
                                 event.button,
                                 int(event.x_root),
@@ -244,9 +251,10 @@ class MediaPlayer(object):
 
     def app_window_motion_notify_event(self, widget, event):
         # 更改鼠标样式.
-        if self.in_drag_position(widget, event):
-            drag = gtk.gdk.BOTTOM_RIGHT_CORNER
-            widget.window.set_cursor(gtk.gdk.Cursor(drag))
+        drag = self.in_drag_position(widget, event)
+        if drag:
+            mouse_drag = drag_dict[drag]
+            widget.window.set_cursor(gtk.gdk.Cursor(mouse_drag))
         else:
             widget.window.set_cursor(None)
 
@@ -275,8 +283,27 @@ class MediaPlayer(object):
         y_padding = int(event.y_root)
         w, h = widget.allocation.width, widget.allocation.height
         w_padding = h_padding = 5
-        return ((x + w - w_padding) <=  x_padding <= x + w and 
-                (y + h - h_padding) <= y_padding <= y+ h)
+
+        if ((x + w - w_padding) <=  x_padding <= x + w and 
+            (y + h - h_padding) <= y_padding <= y+ h):
+            # 右下拖动角度.
+            return gtk.gdk.WINDOW_EDGE_SOUTH_EAST
+        elif ((x <= x_padding <= x + w_padding) and 
+              (y + h - h_padding <= y_padding <= y + h)):
+            # 左下拖动角度.
+            return gtk.gdk.WINDOW_EDGE_SOUTH_WEST
+        elif (x + w_padding <= x_padding <= x + w - w_padding) and ((y + h - h_padding <= y_padding <= y + h)):
+            # 下方拖动角度.
+            return gtk.gdk.WINDOW_EDGE_SOUTH 
+        elif ((x <= x_padding <= x + w_padding)) and (y_padding < y + h - h_padding): 
+            # 左方向拖动角度.
+            return gtk.gdk.WINDOW_EDGE_WEST
+        elif (x + w - w_padding <= x_padding <= x + w) and (y_padding < y + h - h_padding):
+            # 右方向拖动角度.
+            return gtk.gdk.WINDOW_EDGE_EAST 
+        else:
+            return False
+            
 
     def __init_gui_screen(self):
         '''screen events init.'''
