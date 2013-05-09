@@ -46,7 +46,7 @@ from media_player_keys     import MediaPlayKeys
 from media_player_drag     import MediaPlayDrag
 from mplayer.timer import Timer
 # mplayer后端.
-from mplayer.player import LDMP, set_ascept_function, unset_flags, set_flags, Player
+from mplayer.player import LDMP, set_ascept_function, unset_flags, set_flags, Player, length_to_time
 from mplayer.player import STARTING_STATE, PAUSE_STATE
 from mplayer.player import ASCEPT_4X3_STATE, ASCEPT_16X9_STATE, ASCEPT_5X4_STATE
 from mplayer.player import ASCEPT_16X10_STATE, ASCEPT_1_85X1_STATE, ASCEPT_2_35X1_STATE, ASCEPT_FULL_STATE, ASCEPT_DEFULAT
@@ -307,7 +307,9 @@ class MediaPlayer(object):
     def set_ascept_restart(self):    
         try:            
             unset_flags(self.gui.screen)
-            if self.ldmp.player.video_width == 0 or self.ldmp.player.video_height == 0:
+            video_w = self.ldmp.player.video_width
+            video_h = self.ldmp.player.video_height
+            if video_w == 0 or video_h == 0:
                 set_flags(self.gui.screen)
                 ascept_num = None
             elif self.ldmp.player.ascept_state == ASCEPT_4X3_STATE:
@@ -356,6 +358,10 @@ class MediaPlayer(object):
         self.ldmp.connect("mute-play",          self.ldmp_mute_play)
         self.ldmp.connect("volume-play",        self.ldmp_volume_play)
         self.ldmp.connect("error-msg",          self.ldmp_error_msg)
+        # 发送屏幕提示.
+        self.ldmp.connect("seek",  self.ldmp_seek_event)
+        self.ldmp.connect("fseek", self.ldmp_fseek_event)
+        self.ldmp.connect("bseek", self.ldmp_bseek_event)
         #
         # 全部的执行函数方法.
         self.media_play_fun   = MediaPlayFun(self)
@@ -474,6 +480,12 @@ class MediaPlayer(object):
         
     def ldmp_pause_play(self, ldmp, pause_check): # 暂停状态.
         self.media_play_fun.ldmp_pause_play(pause_check)
+        # 提示.
+        if not pause_check: # 暂停.
+            text = _("Pause")
+        else: # 播放.
+            text = _("Play")
+        self.show_messagebox(text, screen=True)
 
     def ldmp_mute_play(self, ldmp, mute_check): # 静音状态.
         self.media_play_fun.ldmp_mute_play(mute_check)
@@ -484,6 +496,15 @@ class MediaPlayer(object):
     def ldmp_error_msg(self, ldmp, error_code): # 接收后端错误信息.
         #print "ldmp_error_msg->error_code:", error_code
         pass 
+    
+    def ldmp_seek_event(self, ldmp, pos):
+        self.show_messagebox(_("seek : ") + str(length_to_time(pos)), screen=True)
+    
+    def ldmp_fseek_event(self, ldmp, pos):
+        self.show_messagebox(_("fseek : ") + str(length_to_time(pos)), screen=True)
+
+    def ldmp_bseek_event(self, ldmp, pos):
+        self.show_messagebox(_("bseek : ") + str(length_to_time(pos)), screen=True)
         
     def screen_expose_event(self, widget, event):    
         cr = widget.window.cairo_create()
@@ -716,7 +737,6 @@ class MediaPlayer(object):
             device_name = list_view.items[self.play_list.get_index()].sub_items[0].text
             self.ldmp.player.media_device = device_name
         #
-        print self.ldmp.player.uri, self.ldmp.player.media_device
         self.ldmp.play()
         #
         if self.ldmp.player.type == TYPE_DVD:
@@ -936,7 +956,7 @@ class MediaPlayer(object):
                     self.signal_run_ldmp()
                     self.is_exists_check = True
 
-    def show_messagebox(self, text, icon_path=None):
+    def show_messagebox(self, text, icon_path=None, screen=False):
         # 判断是使用影音自带提示还是使用气泡.[读取ini文件]
         sys_check  = self.config.get("SystemSet", "start_sys_bubble_msg")
         play_check = self.config.get("SystemSet", "start_play_win_msg")
@@ -944,7 +964,7 @@ class MediaPlayer(object):
         if "True" == play_check:
             self.gui.show_tooltip_text(text)
         # 还是使用系统的气泡垃圾提示.
-        if "True" == sys_check:
+        if "True" == sys_check and not screen:
             self.gui.notify_msgbox("deepin-media-player", text)
 
     def start_button_clicked(self):

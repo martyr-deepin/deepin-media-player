@@ -169,6 +169,14 @@ class LDMP(gobject.GObject):
                             gobject.TYPE_NONE,()),
         "start-media-player":(gobject.SIGNAL_RUN_LAST,
                             gobject.TYPE_NONE,()),    
+        # 快进，...等信号.
+        "seek":(gobject.SIGNAL_RUN_LAST,
+                            gobject.TYPE_NONE,(gobject.TYPE_INT,)),    
+        "fseek":(gobject.SIGNAL_RUN_LAST,
+                            gobject.TYPE_NONE,(gobject.TYPE_INT,)),    
+        "bseek":(gobject.SIGNAL_RUN_LAST,
+                            gobject.TYPE_NONE,(gobject.TYPE_INT,)),    
+        #
         "screen-changed":(gobject.SIGNAL_RUN_LAST,
                             gobject.TYPE_NONE,(gobject.TYPE_INT, gobject.TYPE_INT)),        
         "pause-play":(gobject.SIGNAL_RUN_LAST,
@@ -812,16 +820,19 @@ class LDMP(gobject.GObject):
         '''Set rate of progress'''
         if self.player.state == STARTING_STATE or self.player.state == PAUSE_STATE:
             self.cmd('seek %d 2\n' % (seek_num))               
+            self.emit("seek", seek_num)
             
     def fseek(self, seek_num):
         '''Fast forward'''
         if self.player.state == STARTING_STATE or self.player.state == PAUSE_STATE:
             self.cmd('seek +%d\n' % (seek_num))   
+            self.emit("fseek", self.player.position + seek_num)
             
     def bseek(self, seek_num):
         '''backward'''
         if self.player.state == STARTING_STATE or self.player.state == PAUSE_STATE:
             self.cmd('seek -%d\n' % (seek_num))
+            self.emit("bseek", self.player.position - seek_num)
             
     def pause(self):
         if not self.player.title_is_menu: # 判断是否在DVD菜单.
