@@ -86,6 +86,7 @@ class MediaPlayer(object):
         self.__init_move_window()
         self.__init_gui_app_events()
         self.__init_gui_screen()
+        self.__init_screen_tooltip()
         # 判断是否存在这个配置文件.
         if not os.path.exists(os.path.join(get_config_path(), "deepin_media_config.ini")):
             init_media_player_config(self.config)
@@ -212,6 +213,7 @@ class MediaPlayer(object):
         self.gui.app.window.connect("button-press-event", self.app_window_button_press_event)
         self.gui.app.window.connect("motion-notify-event", self.app_window_motion_notify_event)
         self.gui.app.window.connect("window-state-event", self.app_window_state_event)
+        # 改变播放区域，提示与原始视频的百分比.
         self.gui.screen.connect("size-request", self.app_window_size_request)
         # self.app.window.connect("leave-notify-event", )
         # self.app.window.connect("focus-out-event", )
@@ -227,7 +229,7 @@ class MediaPlayer(object):
                 percent_num = int((float(screen_w * screen_h) / (video_w * video_h)) * 100)
                 self.show_messagebox("%sx%s(%s%s)" % (screen_w, screen_h, percent_num, "%"), screen=True)
         except Exception, e:
-            print "app_window_size_request[error]:", e
+            print "media_player.py=>app_window_size_request[error]:", e
 
     def app_window_button_press_event(self, widget, event):
         # 判断是否可拖动大小.
@@ -506,6 +508,8 @@ class MediaPlayer(object):
 
     def ldmp_error_msg(self, ldmp, error_code): # 接收后端错误信息.
         #print "ldmp_error_msg->error_code:", error_code
+        # 错误提示.
+        #self.show_messagebox(error_code, screen=True)
         pass 
     
     def ldmp_seek_event(self, ldmp, pos):
@@ -1138,5 +1142,16 @@ class MediaPlayer(object):
         from widget.movie_menu import Menu
         remove_items = self.mid_combo_menu.menu_items[-2:]
         self.mid_combo_menu.clear_menu_items(remove_items)
+
+    # 初始化屏幕提示的字体样式和大小.
+    def __init_screen_tooltip(self):
+        try:
+            font = self.config.get("SystemSet", "font")
+            font_size = self.config.get("SystemSet", "font_size")
+            self.gui.tooltip_change_style(font, font_size)
+        except Exception, e:
+            print "media_player.py=>__init_screen_tooltip[error]:", e
+
+
         
 
