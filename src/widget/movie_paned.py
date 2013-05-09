@@ -270,14 +270,14 @@ class Paned(gtk.Bin):
                           self.tooltip_y,
                           text_size=self.tooltip_size,
                           text_font=self.tooltip_font,
-                          out_text_color=self.text_color.get_color(),
+                          #out_text_color=self.text_color.get_color(),
                           #in_text_color=self.border_color.get_color(),
                           alpha = self.tooltip_alpha
                           )
 
     def draw_tooltip_text(self, cr, text, x, y, 
                       out_text_color="#000000",
-                      in_text_color="#FFFFFF",
+                      in_text_color="#8ad6ff",
                       line_width=3,
                       text_font=DEFAULT_FONT,
                       text_size=DEFAULT_FONT_SIZE,
