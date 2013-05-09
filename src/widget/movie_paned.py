@@ -96,6 +96,8 @@ class Paned(gtk.Bin):
         #
         # 启动隐藏的时间.
         self.tooltip_hide_hd = gtk.timeout_add(sec, self.hide_tooltip_text)
+        # BUG: 没有实时的显示出来，加入这行代码.
+        self.queue_draw_area(0, 0, self.allocation.width, 200)
 
     def hide_tooltip_text(self):
         self.tooltip_show_check = False

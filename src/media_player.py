@@ -212,11 +212,22 @@ class MediaPlayer(object):
         self.gui.app.window.connect("button-press-event", self.app_window_button_press_event)
         self.gui.app.window.connect("motion-notify-event", self.app_window_motion_notify_event)
         self.gui.app.window.connect("window-state-event", self.app_window_state_event)
+        self.gui.screen.connect("size-request", self.app_window_size_request)
         # self.app.window.connect("leave-notify-event", )
         # self.app.window.connect("focus-out-event", )
         # self.app.window.connect("focus-in-event", )
         # self.app.window.connect("scroll_event", )
         # self.app.window.connect("check-resize",)         
+
+    def app_window_size_request(self, widget, request):
+        try:
+            video_w, video_h = self.ldmp.player.video_width, self.ldmp.player.video_height
+            screen_w, screen_h = self.gui.screen.allocation.width, self.gui.screen.allocation.height
+            if self.ldmp.player.state:
+                percent_num = int((float(screen_w * screen_h) / (video_w * video_h)) * 100)
+                self.show_messagebox("%sx%s(%s%s)" % (screen_w, screen_h, percent_num, "%"), screen=True)
+        except Exception, e:
+            print "app_window_size_request[error]:", e
 
     def app_window_button_press_event(self, widget, event):
         # 判断是否可拖动大小.
