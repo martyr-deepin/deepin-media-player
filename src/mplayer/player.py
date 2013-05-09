@@ -997,7 +997,7 @@ class LDMP(gobject.GObject):
                 self.emit("get-time-length", length, length_to_time(length))
                 # !! 发送这个信号，主要用于清空字幕和音轨的子菜单.
                 self.emit("dvd-is-movie")
-            print buffer
+
             if buffer.startswith("ID_SUBTITLE_ID="): 
                 id = buffer.replace("ID_SUBTITLE_ID=", "").split("\n")[0]
                 self.player.sub_index += 1 #int(id)
