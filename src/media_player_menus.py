@@ -156,6 +156,7 @@ class MediaPlayMenus(object):
         self.menus.channel_select.set_menu_item_sensitive_by_index(1, False)
         # 最近播放.
         self.init_recent_play_list()
+        #
         self.menus.file_menu.set_menu_item_sensitive_by_index(2, False)
         self.menus.file_menu.connect("show", self.file_menu_show_event)
         self.menus.file_menu.connect("hide", self.file_menu_hide_event)
@@ -184,20 +185,21 @@ class MediaPlayMenus(object):
 
     def init_recent_play_list(self):
         argvs = self.ini.get_argvs("RecentPlayed")
-        # 获取所有的kes.
-        for argv in argvs.keys():
-            time = self.ini.get("RecentPlayed", argv)
-            path = argv.replace('"', "")
-            argv = argv.decode("utf-8").replace('"', "")
-            text = argv
-            if len(argv) > 30:
-                text = text[0:30]
-                text += "..."
-            self.menus.recent_played_menu.add_menu_items([ 
-                (None, text, self.__recent_played_play, path, time), 
-                        ])
-        # 添加清空最近播放列表.
-        self.__create_clear_recent_play()
+        if argvs:
+            # 获取所有的kes.
+            for argv in argvs.keys():
+                time = self.ini.get("RecentPlayed", argv)
+                path = argv.replace('"', "")
+                argv = argv.decode("utf-8").replace('"', "")
+                text = argv
+                if len(argv) > 30:
+                    text = text[0:30]
+                    text += "..."
+                self.menus.recent_played_menu.add_menu_items([ 
+                    (None, text, self.__recent_played_play, path, time), 
+                            ])
+            # 添加清空最近播放列表.
+            self.__create_clear_recent_play()
 
     def __create_clear_recent_play(self):
         self.menus.recent_played_menu.add_menu_items([ 
