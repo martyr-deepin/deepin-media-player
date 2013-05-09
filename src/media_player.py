@@ -620,6 +620,8 @@ class MediaPlayer(object):
         self.gui.hide_play_control_paned()
         self.gui.main_ali.set_padding(0, 0, 0, 0) # 设置下,左右的距离.
         self.gui.app.hide_titlebar() # 隐藏标题栏.
+        # 简洁模式四个角被扣过，需要处理掉.
+        self.gui.app.window.set_window_shape(False)
 
     def normal_mode(self): # 普通模式调用.
         self.gui.main_ali.set_padding(0, 2, 2, 2)
@@ -630,6 +632,8 @@ class MediaPlayer(object):
         if self.gui.child2_show_check:
             self.gui.open_right_child2() 
             self.gui.screen_paned.set_all_size()
+        # 简洁模式四个角被扣过，需要处理掉.(恢复)
+        self.gui.app.window.set_window_shape(True)
 
     def click_connect_function(self):
         # 暂停/继续. 
@@ -760,6 +764,7 @@ class MediaPlayer(object):
         self.show_messagebox(name)
 
     def mute_umute(self):
+        # 静音.
         if self.ldmp.player.volumebool:
             self.ldmp.offmute()
         else:
