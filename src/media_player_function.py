@@ -227,9 +227,13 @@ class MediaPlayFun(object):
         if not self.keep_above_check:
             self.app.window.set_keep_above(True)
             self.keep_above_check = True
+            # 提示.
+            tooltip_text(widget, _("Disable always-on-top"))
         else:
             self.app.window.set_keep_above(False)
             self.keep_above_check = False
+            # 提示.
+            tooltip_text(widget, _("Always on Top"))
 
     def __app_play_control_panel_play_list_btn_clicked(self, widget):
         # 设置右部的child2的 播放列表.

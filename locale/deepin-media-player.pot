@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-09 11:39+0800\n"
+"POT-Creation-Date: 2013-05-09 15:06+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,52 +25,57 @@ msgstr ""
 msgid "Deepin Media Player"
 msgstr ""
 
-#: ../src/media_player.py:498 ../src/format_conv/conv_task_gui.py:81
+#: ../src/media_player.py:499 ../src/format_conv/conv_task_gui.py:81
 #: ../src/format_conv/transmageddon.py:584
 #: ../src/format_conv/transmageddon.py:889
 #: ../src/format_conv/transmageddon.py:893
 msgid "Pause"
 msgstr ""
 
-#: ../src/media_player.py:500 ../src/widget/play_control_panel.py:59
+#: ../src/media_player.py:501 ../src/widget/play_control_panel.py:59
 #: ../src/widget/play_menus.py:252 ../src/widget/play_menus.py:357
 msgid "Play"
 msgstr ""
 
-#: ../src/media_player.py:516
+#: ../src/media_player.py:517
 msgid "seek : "
 msgstr ""
 
-#: ../src/media_player.py:519
+#: ../src/media_player.py:520
 msgid "fseek : "
 msgstr ""
 
-#: ../src/media_player.py:522
+#: ../src/media_player.py:523
 msgid "bseek : "
 msgstr ""
 
-#: ../src/media_player.py:597 ../src/widget/init_ldmp.py:126
-#: ../src/widget/togglehoverbutton.py:126 ../src/widget/play_menus.py:186
-#: ../src/widget/ini_gui.py:908 ../src/widget/ini_gui.py:1266
-#: ../src/widget/ini_gui.py:1331 ../src/widget/ini_gui.py:1387
+#: ../src/media_player.py:598 ../src/media_player.py:617
+#: ../src/widget/init_ldmp.py:126 ../src/widget/togglehoverbutton.py:126
+#: ../src/widget/play_menus.py:186 ../src/widget/ini_gui.py:908
+#: ../src/widget/ini_gui.py:1266 ../src/widget/ini_gui.py:1331
+#: ../src/widget/ini_gui.py:1387
 msgid "Full Screen"
 msgstr ""
 
-#: ../src/media_player.py:639 ../src/widget/init_ldmp.py:125
+#: ../src/media_player.py:608
+msgid "Quit Full Screen"
+msgstr ""
+
+#: ../src/media_player.py:648 ../src/widget/init_ldmp.py:125
 #: ../src/widget/ini_gui.py:848 ../src/widget/ini_gui.py:1265
 #: ../src/widget/ini_gui.py:1331 ../src/widget/ini_gui.py:1382
 msgid "Pause/Play"
 msgstr ""
 
-#: ../src/media_player.py:790
+#: ../src/media_player.py:800
 msgid "Select Files"
 msgstr ""
 
-#: ../src/media_player.py:838
+#: ../src/media_player.py:848
 msgid "Select Directory"
 msgstr ""
 
-#: ../src/media_player.py:1112
+#: ../src/media_player.py:1122
 msgid "打开CDROM"
 msgstr ""
 
@@ -80,6 +85,14 @@ msgstr ""
 
 #: ../src/media_player_function.py:58 ../src/widget/movie_menu.py:58
 msgid "打开网址"
+msgstr ""
+
+#: ../src/media_player_function.py:231
+msgid "Disable always-on-top"
+msgstr ""
+
+#: ../src/media_player_function.py:236 ../src/widget/toolbar.py:79
+msgid "Always on Top"
 msgstr ""
 
 #: ../src/media_service.py:159
@@ -480,10 +493,6 @@ msgstr ""
 
 #: ../src/widget/play_menus.py:361
 msgid "DVD Navigation"
-msgstr ""
-
-#: ../src/widget/toolbar.py:79
-msgid "Always on Top"
 msgstr ""
 
 #: ../src/widget/ini_gui.py:348 ../src/widget/ini_gui.py:396

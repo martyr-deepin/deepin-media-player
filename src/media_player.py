@@ -64,6 +64,7 @@ from format_conv.conv_task_gui import ConvTAskGui
 from plugin_manager.plugin_manager import PluginManager
 from plugins.youku.youku_to_flvcd import YouToFlvcd
 from screen_mid.open_url import OpenUrlDialog
+from widget.tooltip import tooltip_text 
 import random
 import time
 import gtk
@@ -603,6 +604,8 @@ class MediaPlayer(object):
             self.gui.app.window.fullscreen() # 全屏.
             self.fullscreen_check = True
             self.gui.top_toolbar.toolbar_radio_button.set_full_state(True)
+            # 设置提示信息.
+            tooltip_text(self.gui.top_toolbar.toolbar_full_button, _("Quit Full Screen"))
         else:
             self.gui.top_toolbar.toolbar_radio_button.set_full_state(False)
             self.gui.app.window.unfullscreen()
@@ -610,6 +613,8 @@ class MediaPlayer(object):
             if not self.concise_check: # 如果是简洁模式,不普通模式.
                 self.normal_mode() # 普通模式.
             self.fullscreen_check = False
+            # 设置提示信息.
+            tooltip_text(self.gui.top_toolbar.toolbar_full_button, _("Full Screen"))
 
     def concise_mode(self): # 简洁模式调用.
         # 左边部件child2操作.
