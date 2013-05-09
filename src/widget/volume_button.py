@@ -27,7 +27,7 @@ from dtk.ui.utils import set_clickable_cursor
 from draw import draw_pixbuf, draw_text
 from color import alpha_color_hex_to_cairo
 from utils import get_text_size
-from tooltip import tooltip_text
+#from tooltip import tooltip_text
 from skin import app_theme
 import gobject
 import gtk
