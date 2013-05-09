@@ -24,7 +24,9 @@ from dtk.ui.cache_pixbuf import CachePixbuf
 from dtk.ui.theme import ui_theme
 from dtk.ui.utils import set_clickable_cursor
 #import dtk.ui.tooltip as Tooltip
-from draw import draw_pixbuf
+from draw import draw_pixbuf, draw_text
+from color import alpha_color_hex_to_cairo
+from utils import get_text_size
 from tooltip import tooltip_text
 from skin import app_theme
 import gobject
@@ -58,12 +60,43 @@ class VolumeButton(gtk.HBox):
         gtk.HBox.__init__(self) 
         self.mute_btn = gtk.Button()
         self.volume_btn = gtk.Button()
+        self.tooltip_win = gtk.Window(gtk.WINDOW_POPUP)
+        self.show_tooltext = gtk.Button("volume")
+        self.show_tooltext.set_size_request(25, 20)
+        self.tooltip_win.add(self.show_tooltext)
+        self.show_tooltext.connect('expose-event', self.tooltip_btn_expose_event)
+        self.show_tooltext.connect('enter-notify-event', self.tooltip_btn_enter_notify_event)
 
         self.__init_values()
         self.__init_events()
 
         self.pack_start(self.mute_btn, False, False)
         self.pack_start(self.volume_btn, False, False, 4)
+
+    def tooltip_btn_expose_event(self, widget, event):
+        cr = widget.window.cairo_create()
+        rect = widget.allocation
+        #
+        cr.set_source_rgba(*alpha_color_hex_to_cairo(("#fffacc", 1.0)))
+        cr.rectangle(*rect)
+        cr.fill()
+        #
+        text = widget.get_label()
+        size = get_text_size(text)
+        import pango
+        draw_text(cr, 
+                  text, 
+                  rect.x - 1, rect.y, rect.width, rect.height,
+                  text_color="#000000",
+                  alignment=pango.ALIGN_CENTER)
+        cr.set_source_rgba(*alpha_color_hex_to_cairo(("#e7e77c", 1.0)))
+        cr.rectangle(*rect)
+        cr.stroke()
+        return True
+    
+    def tooltip_btn_enter_notify_event(self, widget, event):
+        if not self.move_check:
+            self.tooltip_win.hide_all()
 
     def __init_values(self):
         self.max_value = 100
@@ -113,6 +146,17 @@ class VolumeButton(gtk.HBox):
         self.volume_btn.connect("button-press-event",   self.volume_btn_button_press_event)
         self.volume_btn.connect("button-release-event", self.volume_btn_button_release_event)
         self.volume_btn.connect("motion-notify-event",  self.volume_btn_motion_notify_event)
+        self.volume_btn.connect("enter-notify-event", self.volume_btn_enter_notify_event)
+        self.volume_btn.connect("leave-notify-event", self.volume_btn_leave_notify_event)
+
+    def volume_btn_enter_notify_event(self, widget, event):
+        self.__volume_init_value(widget, event)
+        # 设置提示.
+        self.show_tooltext.set_label(str(int(self.value)))
+
+    def volume_btn_leave_notify_event(self, widget, event):
+        if not self.move_check:
+            self.tooltip_win.hide_all()
 
     def volume_btn_button_press_event(self, widget, event):
         self.move_check = True
@@ -120,17 +164,35 @@ class VolumeButton(gtk.HBox):
 
     def volume_btn_button_release_event(self, widget, event):
         self.move_check = False
+        self.tooltip_win.hide_all()
 
     def volume_btn_motion_notify_event(self, widget, event):
         if self.move_check:
+            self.__volume_init_value(widget, event)
+            # 获取音量的值.
             self.set_event_value(widget, event)
+            # 设置提示.
+            self.show_tooltext.set_label(str(int(self.value)))
+
+    def __volume_init_value(self, widget, event):
+        # 设置 tooltip_win 位置.
+        parent_win = widget.get_parent_window()
+        pos = parent_win.get_position()
+        move_x = widget.allocation.x
+        move_y = widget.allocation.y
+        tool_all = self.tooltip_win.allocation
+        rect = widget.allocation
+        if 0 <= event.x <= rect.width:
+            self.tooltip_win.move(int(pos[0] + move_x + event.x), 
+                                  int(pos[1] + move_y + tool_all.height + 5))
+        self.tooltip_win.show_all()
 
     def set_event_value(self, widget, event):
         rect = widget.allocation
         value = event.x / (float(rect.width) / self.max_value)
         self.value = max(min(value, self.max_value), self.min_value)
         # 添加提示信息.
-        tooltip_text(widget, str(int(self.value)))
+        #tooltip_text(widget, str(int(self.value)))
         self.mute_check = False
         self.queue_draw()
 
