@@ -389,8 +389,10 @@ class MediaPlayMenus(object):
         if format_files:
             if self.this.conv_form == None:
                 self.this.conv_form = TransmageddonUI(format_files)
+                # BUG: 修复... 需要将内部的conv_form.conv_task_gui替换self.this.conv....
                 if self.this.conv_task_gui:
-                    self.this.conv_form.conv_task_gui = self.this.conv_task_gui
+                    self.this.conv_form.conv_task_gui
+                    self.this.conv_task_gui = self.this.conv_form.conv_task_gui
             else:
                 self.this.conv_form.conv_list = format_files
                 self.this.conv_form.form.show_all_new()
