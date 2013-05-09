@@ -186,11 +186,13 @@ class LDMP(gobject.GObject):
         "volume-play":(gobject.SIGNAL_RUN_LAST,
                      gobject.TYPE_NONE,(gobject.TYPE_INT,)),
         "get-dvd-title-info":(gobject.SIGNAL_RUN_LAST,
-                     gobject.TYPE_NONE,(gobject.TYPE_INT, gobject.TYPE_STRING)),
+                              gobject.TYPE_NONE,(gobject.TYPE_INT, gobject.TYPE_STRING)),
         "dvd-is-menu":(gobject.SIGNAL_RUN_LAST,
-                     gobject.TYPE_NONE,()),
+                       gobject.TYPE_NONE,()),
         "dvd-is-movie":(gobject.SIGNAL_RUN_LAST,
-                     gobject.TYPE_NONE,()),
+                         gobject.TYPE_NONE,()),
+        "dvd-switch-title":(gobject.SIGNAL_RUN_LAST,
+                             gobject.TYPE_NONE,()),
         "error-msg":(gobject.SIGNAL_RUN_LAST,
                      gobject.TYPE_NONE,(gobject.TYPE_INT,)),
         }
@@ -995,7 +997,7 @@ class LDMP(gobject.GObject):
                 self.emit("get-time-length", length, length_to_time(length))
                 # !! 发送这个信号，主要用于清空字幕和音轨的子菜单.
                 self.emit("dvd-is-movie")
-
+            print buffer
             if buffer.startswith("ID_SUBTITLE_ID="): 
                 id = buffer.replace("ID_SUBTITLE_ID=", "").split("\n")[0]
                 self.player.sub_index += 1 #int(id)
@@ -1131,6 +1133,7 @@ class LDMP(gobject.GObject):
 
             if buffer.startswith("DVDNAV, switched to title: "):
                 self.player.title_index = int(buffer.replace("DVDNAV, switched to title: ", "").strip())
+                self.emit("dvd-switch-title")
                 
             if buffer.startswith("*** screenshot"):    
                 #... ...

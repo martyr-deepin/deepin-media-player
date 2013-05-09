@@ -57,6 +57,7 @@ class MediaPlayMenus(object):
         self.ldmp.connect("get-dvd-title-info", self.menu_ldmp_get_dvd_title_info)
         self.ldmp.connect("dvd-is-menu", self.menu_ldmp_dvd_is_menu)
         self.ldmp.connect("dvd-is-movie", self.menu_ldmp_dvd_is_movie)
+        self.ldmp.connect("dvd-switch-title", self.menu_ldmp_dvd_switch_title)
         #
         self.menus = self.this.gui.play_menus
         # 初始化连接事件.
@@ -470,9 +471,15 @@ class MediaPlayMenus(object):
         # 结束播放的时候要清空掉跳至菜单中的子菜单.
 
     def menu_ldmp_dvd_is_menu(self, ldmp):
-        self.clear_sub_and_audio_child_menus()
+        #self.clear_sub_and_audio_child_menus()
+        pass
 
     def menu_ldmp_dvd_is_movie(self, ldmp):
+        #self.clear_sub_and_audio_child_menus()
+        pass
+
+    def menu_ldmp_dvd_switch_title(self, ldmp):
+        # 切换标题的时候的时候清空上一个标题的菜单.
         self.clear_sub_and_audio_child_menus()
 
     def clear_sub_and_audio_child_menus(self):
