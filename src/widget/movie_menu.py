@@ -160,10 +160,11 @@ class Menu(MenuWindow):
             index = int(event.y / self.__menu_height)
             if not self.menu_items[index].child_menus:
                 # 发送信号, @ index : 序列.
-                self.emit("menu-active", self.menu_items[index].text)
-                # hide... 会在 media player 中移除菜单.
-                self.hide_all()
+                text = self.menu_items[index].text
                 self.grab_remove()
+                self.hide_all()
+                # hide... 会在 media player 中移除菜单.
+                self.emit("menu-active", text)
 
     def __motion_notify_event(self, widget, event):
         app = event.window.get_user_data()
