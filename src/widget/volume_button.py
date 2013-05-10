@@ -178,14 +178,16 @@ class VolumeButton(gtk.HBox):
         # 设置 tooltip_win 位置.
         parent_win = widget.get_parent_window()
         pos = parent_win.get_position()
-        move_x = widget.allocation.x
-        move_y = widget.allocation.y
-        tool_all = self.tooltip_win.allocation
-        rect = widget.allocation
-        if 0 <= event.x <= rect.width:
-            self.tooltip_win.move(int(pos[0] + move_x + event.x), 
-                                  int(pos[1] + move_y + tool_all.height + 5))
-        self.tooltip_win.show_all()
+        # bug: 简洁模式的提示有问题，所以不得不暂时关闭.
+        if pos[0]:
+            move_x = widget.allocation.x
+            move_y = widget.allocation.y
+            tool_all = self.tooltip_win.allocation
+            rect = widget.allocation
+            if 0 <= event.x <= rect.width:
+                self.tooltip_win.move(int(pos[0] + move_x + event.x), 
+                                      int(pos[1] + move_y + tool_all.height + 5))
+            self.tooltip_win.show_all()
 
     def set_event_value(self, widget, event):
         rect = widget.allocation
