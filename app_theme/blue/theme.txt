@@ -1,4 +1,6 @@
 {"colors" : {
+ "searchNone" : "#434343",
+ "searchInput" : "#FFFFFF",
  "labelText" : "#4D5154",
  "recommend" : "#FF0000",
  "windowMask" : "#FFFFFF",
