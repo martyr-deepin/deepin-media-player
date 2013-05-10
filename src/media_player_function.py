@@ -158,7 +158,7 @@ class MediaPlayFun(object):
         open_button.connect("clicked",               self.__open_button_clicked)
 
         volume_button.mute_btn.connect("clicked",               self.__mute_btn_state_changed)
-        volume_button.volume_btn.connect("button-press-event",  self.__volume_btn_button_press_event)
+        volume_button.volume_btn.connect("button-press-event",  self.__volume_btn_button_press_event, volume_button)
         volume_button.volume_btn.connect('motion-notify-event', self.__volume_btn_motion_notify_event)
         '''
             # 这里需要读 ini文件, 是否显示初始化的时候显示播放列表. 默认不显示播放列表.
@@ -185,7 +185,7 @@ class MediaPlayFun(object):
         pre_button.connect("clicked", self.__pre_button_clicked)
         next_button.connect("clicked", self.__next_button_clicked)
         volume_button.mute_btn.connect("clicked", self.__mute_btn_state_changed)
-        volume_button.volume_btn.connect("button-press-event", self.__volume_btn_button_press_event)
+        volume_button.volume_btn.connect("button-press-event", self.__volume_btn_button_press_event, volume_button)
         volume_button.volume_btn.connect('motion-notify-event', self.__volume_btn_motion_notify_event)
 
     def __mute_btn_state_changed(self, widget):
@@ -194,8 +194,9 @@ class MediaPlayFun(object):
         else:
             self.ldmp.nomute()
 
-    def __volume_btn_button_press_event(self, widget, event):
-        value = self.app_play_control_panel.volume_button.value
+    def __volume_btn_button_press_event(self, widget, event, volume_button):
+        # bug 简洁模式无法调整音量控件的值.(第三个参数解决这个问题)
+        value = volume_button.value
         self.ldmp.setvolume(value)
 
     def __volume_btn_motion_notify_event(self, widget, event):
