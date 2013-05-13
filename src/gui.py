@@ -50,8 +50,8 @@ class GUI(object):
         self.__init_values()
         self.app = Application(False)
         # application set.
-        app_w, app_h = 890, 590
-        min_app_w, min_app_h = 480, 300
+        app_w, app_h = 800, 570 # 初始化宽,高.
+        min_app_w, min_app_h = 480, 300 # 防止超过,界面布局被破坏.
         self.app.set_default_size(min_app_w, min_app_h)
         self.app.window.set_default_size(app_w, app_h)
         # self.app.window.resize
