@@ -299,7 +299,10 @@ class MediaPlayer(object):
         elif ((x <= x_padding <= x + w_padding)) and (y_padding < y + h - h_padding): 
             # 左方向拖动角度.
             return gtk.gdk.WINDOW_EDGE_WEST
-        elif (x + w - w_padding <= x_padding <= x + w) and (y_padding < y + h - h_padding):
+        elif ((x + w - w_padding <= x_padding <= x + w) and 
+             ((y + h/2  + 128 <= y_padding < y + h - h_padding) or
+              (y <= y_padding <= y + h/2 - 128))):
+            #  - 128 是为了防止点击弹出弹进的那个控件.[中间区域已经无法点击]
             # 右方向拖动角度.
             return gtk.gdk.WINDOW_EDGE_EAST 
         else:
