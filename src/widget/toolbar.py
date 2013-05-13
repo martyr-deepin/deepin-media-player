@@ -63,7 +63,7 @@ class ToolBar(object):
             )
         tooltip_text(self.toolbar_1X_button, _("100%"))
         self.toolbar_1X_hframe.add(self.toolbar_1X_button)        
-        # 2X conect-> self.set_2x_video_play
+        # 2X conect-> self.set_2x_video_play 显示是 1.5倍.
         self.toolbar_2X_hframe = HorizontalFrame(5) 
         self.toolbar_2X_button = ToggleHoverButton(None, [None, None],
             app_theme.get_pixbuf("top_toolbar/2_window_normal.png"),
@@ -71,7 +71,7 @@ class ToolBar(object):
             app_theme.get_pixbuf("top_toolbar/2_window_normal.png"),
             app_theme.get_pixbuf("top_toolbar/2_window_hover.png"),
             )
-        tooltip_text(self.toolbar_2X_button, _("200%"))
+        tooltip_text(self.toolbar_2X_button, _("150%"))
         self.toolbar_2X_hframe.add(self.toolbar_2X_button)
                        
         self.toolbar_above_hframe = HorizontalFrame(5) 

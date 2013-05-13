@@ -1184,7 +1184,7 @@ class MediaPlayer(object):
                         bit, temp_check)
                 index += 1
 
-    # 尺寸.
+    # 画面尺寸.
     def video_0x5_set_ascept(self):
         video_w, video_h = self.get_video_size()
         self.video_set_size_ascept(video_w / 2.0, video_h / 2.0)

@@ -77,7 +77,7 @@ class MediaPlayFun(object):
         self.top_toolbar.toolbar_radio_button.set_full_state(False) # 初始化.
         self.top_toolbar.toolbar_above_button.connect("clicked", self.__top_toolbar_above_button_clicked)
         self.top_toolbar.toolbar_1X_button.connect("clicked",    self.__top_toolbar_1X_button_clicked)
-        self.top_toolbar.toolbar_2X_button.connect("clicked",    self.__top_toolbar_2X_button_clicked)    
+        self.top_toolbar.toolbar_2X_button.connect("clicked",    self.__top_toolbar_1X5_button_clicked)    
         self.top_toolbar.toolbar_concise_button.connect("clicked", self.__top_toolbar_concise_button_clicked)
         self.top_toolbar.toolbar_common_button.connect("clicked",  self.__top_toolbar_common_button_clicked) 
         self.top_toolbar.toolbar_full_button.connect("clicked", self.__top_toolbar_full_button_clicked) 
@@ -212,8 +212,9 @@ class MediaPlayFun(object):
     def __top_toolbar_1X_button_clicked(self, widget):
         self.this.video_1x0_set_ascept()
 
-    def __top_toolbar_2X_button_clicked(self, widget):   
-        self.this.video_2x0_set_ascept()
+    def __top_toolbar_1X5_button_clicked(self, widget):   
+        # 修复. 原来工具条显示的是 2倍大小的，现在改为 1.5倍!!
+        self.this.video_1x5_set_ascept()
 
     def __top_toolbar_concise_button_clicked(self, widget):
         self.this.top_toolbar_concise_button_clicked()
