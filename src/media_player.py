@@ -1212,6 +1212,9 @@ class MediaPlayer(object):
     def video_set_size_ascept(self, w, h):
         # 播放状态才处理.
         if self.ldmp.player.state:
+            # 播放窗口至中间.
+            self.gui.app.window.move(0, 0)
+            self.gui.app.window.set_position(gtk.WIN_POS_CENTER_ALWAYS)
             # 获取屏幕的 大小(w, h)
             if not self.fullscreen_check:
                 screen = self.gui.app.window.get_screen()
