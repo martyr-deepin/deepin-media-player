@@ -92,7 +92,7 @@ class MediaPlayKeys(object):
                 ("SubKey", "subkey_sub_scale_key", None),                
                 ]:
                 config_key = self.config.get(section, argv)
-                self.keymap[config_key] = self.temp_sub_print#connect_fun
+                self.keymap[config_key.lower()] = self.temp_sub_print#connect_fun
                 
         # [OtherKey].
         if other_key_bool == "True":  
@@ -101,13 +101,13 @@ class MediaPlayKeys(object):
                 ("OtherKey", "sub_brightness_key", None),
                 ("OtherKey", "inverse_rotation_key", None),
                 ("OtherKey", "clockwise_key",   None),
-                ("OtherKey", "sort_image_key",  None),
+                ("OtherKey", "sort_image_key",  self.this.key_sort_image),
                 ("OtherKey", "switch_audio_track_key",  None),
                 # ("OtherKey", "load_subtitle_key",  self.key_load_subtitle),
                 # ("OtherKey", "subtitle_delay_key", self.key_subtitle_delay),
                 # ("OtherKey", "subtitle_advance_key", self.key_subtitle_advance),
                 ]:
                 config_key = self.config.get(section, argv)
-                self.keymap[config_key] = connect_fun 
+                self.keymap[config_key.lower()] = connect_fun 
 
 
