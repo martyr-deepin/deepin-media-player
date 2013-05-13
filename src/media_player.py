@@ -307,7 +307,6 @@ class MediaPlayer(object):
             return gtk.gdk.WINDOW_EDGE_EAST 
         else:
             return False
-            
 
     def __init_gui_screen(self):
         '''screen events init.'''
