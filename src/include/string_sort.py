@@ -19,11 +19,23 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+number = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+
+# 连续文件查找的API.
+def get_as_num_index(str1):
+    ''' 获取数字的位置 '''
+    index = 0
+    for ch1 in str1:
+        if ch1 in number:
+            return index
+        index += 1
+    return None
+
 def cmp_as_string(str1, str2):
     '''比较相似字符串'''
-    
     return True
     
+# 名字排序的API.
 def cmp_char(c1, c2):
     '''比较字符'''
     if c1 == c2:
