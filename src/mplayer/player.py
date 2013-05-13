@@ -828,13 +828,13 @@ class LDMP(gobject.GObject):
         '''Fast forward'''
         if self.player.state == STARTING_STATE or self.player.state == PAUSE_STATE:
             self.cmd('seek +%d\n' % (seek_num))   
-            self.emit("fseek", self.player.position + seek_num)
+            self.emit("fseek", int(self.player.position + seek_num))
             
     def bseek(self, seek_num):
         '''backward'''
         if self.player.state == STARTING_STATE or self.player.state == PAUSE_STATE:
             self.cmd('seek -%d\n' % (seek_num))
-            self.emit("bseek", self.player.position - seek_num)
+            self.emit("bseek", (self.player.position - seek_num))
             
     def pause(self):
         if not self.player.title_is_menu: # 判断是否在DVD菜单.

@@ -225,6 +225,9 @@ def allocation(widget): # 返回 cr, rect.
 def get_play_file_name(path): # 获取播放文件名.
     return os.path.splitext(os.path.split(path)[1])[0]
 
+def get_play_file_path(path): # 获取播放文件的路径.
+    return os.path.split(path)[0]
+
 def get_play_file_type(path): # 获取播放后缀名.
     return os.path.splitext(os.path.split(path)[1])[1][1:]
 

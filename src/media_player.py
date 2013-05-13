@@ -36,6 +36,7 @@ from widget.utils   import get_home_path, get_home_video, get_home_image, get_pl
 from widget.utils   import is_file_audio
 from widget.utils   import ScanDir
 from widget.utils import is_file_sub_type
+from widget.utils import get_play_file_path, get_play_file_type
 from widget.keymap  import get_keyevent_name
 from widget.ini_gui import IniGui
 from widget.init_ldmp import init_media_player_config
@@ -445,6 +446,25 @@ class MediaPlayer(object):
         #print "开始播放了..."
         self.player_start_init()
         self.media_play_fun.ldmp_start_media_player(ldmp)
+        # 加载同名的字幕.
+        self.init_play_file_sub()
+
+    def init_play_file_sub(self):
+        uri = self.ldmp.player.uri
+        video_name = get_play_file_name(uri)
+        scan_sub_path = get_play_file_path(uri)
+        scan_type = get_play_file_type(uri)
+        #
+        sub_paths = []
+        for path in os.listdir(scan_sub_path):
+            if get_play_file_name(path) == video_name:
+                if get_play_file_type(path) != scan_type:
+                    sub_path = os.path.join(scan_sub_path, path)
+                    if is_file_sub_type(sub_path):
+                        # 加载字幕.
+                        sub_paths.append(sub_path)
+        # 加载字幕到菜单上.
+        self.files_to_play_list(sub_paths, False)
         
     def player_start_init(self):    
         pass
