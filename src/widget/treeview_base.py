@@ -25,6 +25,7 @@
 from utils import get_match_parent
 #from utils import propagate_expose
 from utils import get_text_size, is_left_button # 左键.
+from utils import is_double_click
 from draw  import draw_text, draw_pixbuf
 from color import alpha_color_hex_to_cairo, color_hex_to_cairo
 import gtk
@@ -68,6 +69,7 @@ class TreeViewBase(gtk.Button):
         self.children = []
         self.motion_items = []
         self.single_items = []
+        self.double_items = []
         #
         self.paint_nodes_event = self.__paint_nodes_event
         self.paint_nodes_background = self.__paint_nodes_background
@@ -137,7 +139,7 @@ class TreeViewBase(gtk.Button):
 
     def __nodes_remove_data_event(self, node):
         # 当有数据删除时,更新映射列表.
-        print "remove............", node.text
+        #print "remove............", node.text
         if node in self.__nodes_list:
             self.__nodes_list.remove(node)
         # 判断删除的数据是否在重绘区域,如果不是,不进行重绘.
@@ -187,6 +189,7 @@ class TreeViewBase(gtk.Button):
             #
             node_event.motion_items = self.motion_items
             node_event.single_items = self.single_items
+            node_event.double_items = self.double_items
             '''
             node_event.draw_text = draw_text # 写成 set/get , 忽略 cr参数.
             node_event.draw_pixbuf = draw_pixbuf # 写成 set/get , 忽略 cr参数.
@@ -284,6 +287,9 @@ class TreeViewBase(gtk.Button):
                 self.single_items = [node]
                 self.tree_view_queue_draw_area()
                 self.emit("treeview-press-event", self, node)
+                if is_double_click(e):
+                    self.double_items = [node]
+                    self.emit("treeview-double-event", self, node)
                 return False
 
     def connect_event(self, event_name, function_point):
@@ -321,6 +327,7 @@ class NodesEvent(object):
         '''
         self.motion_items = None
         self.single_items = None
+        self.double_items = None
 
 
 class Nodes(list):

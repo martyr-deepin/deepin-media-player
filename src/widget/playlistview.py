@@ -23,11 +23,13 @@
 
 from dtk.ui.theme import ui_theme
 from dtk.ui.scrolled_window import ScrolledWindow
+from dtk.ui.utils import propagate_expose
 from dtk.ui.draw import draw_vlinear
 from skin import app_theme
 from listview import ListView
 from listview_base import Text
 from treeview_base import TreeViewBase
+from net_search import Search
 from notebook import NoteBook
 from color import alpha_color_hex_to_cairo, color_hex_to_cairo
 from utils import get_text_size
@@ -36,6 +38,13 @@ import gtk
 
 class PlayListView(object):
     def __init__(self):
+        self.one_close = app_theme.get_pixbuf("treeview/1-close.png")
+        self.one_open  = app_theme.get_pixbuf("treeview/1-open.png")
+        self.two_close = app_theme.get_pixbuf("treeview/2-close.png")
+        self.two_open  = app_theme.get_pixbuf("treeview/2-open.png")
+        self.three_close = app_theme.get_pixbuf("treeview/3-close.png")
+        self.three_open  = app_theme.get_pixbuf("treeview/3-open.png")
+        #
         self.tree_view_open  = app_theme.get_pixbuf("treeview/open.png")
         self.tree_view_close = app_theme.get_pixbuf("treeview/close.png")
         self.tree_view_right = app_theme.get_pixbuf("treeview/right.png")
@@ -47,10 +56,20 @@ class PlayListView(object):
         self.list_scroll_win   = ScrolledWindow(0, 0)
         self.list_scroll_win.set_policy(gtk.POLICY_NEVER, gtk.POLICY_ALWAYS)
         self.list_view    = ListView()
-        #
+        # 网络列表，搜索框.
         self.tree_scroll_win   = ScrolledWindow(0, 0)
         self.tree_scroll_win.set_policy(gtk.POLICY_NEVER, gtk.POLICY_ALWAYS)
+        self.tree_view_vbox = gtk.VBox()
         self.tree_view     = TreeViewBase()
+        self.search_ali    = gtk.Alignment(0, 0, 1, 1)
+        self.search        = Search()
+        self.search_ali.add(self.search)
+        #
+        self.search_ali.set_padding(5, 5, 12, 12)
+        self.tree_view_vbox.pack_start(self.search_ali, False, False)
+        self.tree_view_vbox.pack_start(self.tree_scroll_win, True, True)
+        self.search_ali.connect("expose-event", self.search_ali_expose_event)
+        #
         self.note_book = NoteBook()
         #
         self.list_view.on_draw_sub_item =  self.__listview_on_draw_sub_item
@@ -64,7 +83,7 @@ class PlayListView(object):
         self.list_scroll_win.add_with_viewport(self.list_view)
         self.tree_scroll_win.add_with_viewport(self.tree_view)
         self.note_book.add_layout1(self.list_scroll_win) 
-        self.note_book.add_layout2(self.tree_scroll_win)
+        self.note_book.add_layout2(self.tree_view_vbox)
         #self.play_list_vbox.pack_start(self.scroll_win, True, True)
         self.play_list_vbox.pack_start(self.note_book, True, True)
 
@@ -97,8 +116,7 @@ class PlayListView(object):
         else:
             e.text_color = "#FFFFFF"
             text_size=9
-
-
+        #
         text = e.text.decode("utf-8")
         one_width = self.list_view.columns[0].width
         two_width = self.list_view.columns[1].width
@@ -131,17 +149,16 @@ class PlayListView(object):
                   alignment=alignment)
 
     def __treeview_paint_nodes_event(self, node_event):
-        leave_width = 20
         color = self.listview_color.get_color()
         text_color = "#FFFFFF"
-        #
+        # 单击和移动, 双击.
         if node_event.node in node_event.single_items:
             color_info = [(0, (color, 0.45)), (1, (color, 0.45))] 
             draw_vlinear(node_event.cr,
                          node_event.x, node_event.y, node_event.w, node_event.h,
                          color_info
                          )
-            text_color = "#000000"
+            #text_color = "#000000"
         elif node_event.node in node_event.motion_items:
             color_info = [(0, (color, 0.75)), (1, (color, 0.75))] 
             draw_vlinear(node_event.cr,
@@ -149,40 +166,57 @@ class PlayListView(object):
                          color_info
                          )
         #
-        if node_event.node.leave == 1: # 根节点.
-            x = node_event.x + 20
-            # 画root的图标.
+        x_padding = 12 # 因为要和搜索框对齐.
+        if 0 == node_event.node.leave: # 根节点. :比如->> >我看过的. >优酷视频. >pps.
             if node_event.node.is_expanded:
-                pixbuf = self.tree_view_close.get_pixbuf()
+                pixbuf = self.one_open.get_pixbuf()
             else:
-                pixbuf = self.tree_view_open.get_pixbuf()
-            # node_event.x + 5 是图标与文字之间的宽度.
-            draw_pixbuf(node_event.cr,
-                        pixbuf,
-                        node_event.x + 5,
-                        node_event.y + node_event.h/2 - pixbuf.get_height()/2 )
+                pixbuf = self.one_close.get_pixbuf()
+        elif 1 == node_event.node.leave: # 
+            if node_event.node.is_expanded:
+                pixbuf = self.two_open.get_pixbuf()
+            else:
+                pixbuf = self.two_close.get_pixbuf()
         else:
-            #x_padding = node_event.node.leave * leave_width
-            #x = node_event.x + 18 + x_padding
-            x = node_event.x + 20
-            #
             if node_event.node.is_expanded:
-                pixbuf = self.tree_view_bottom.get_pixbuf()
+                pixbuf = self.three_open.get_pixbuf()
             else:
-                pixbuf = self.tree_view_right.get_pixbuf()
-            icon_x = node_event.x + pixbuf.get_width()/2
-            icon_y = node_event.y + node_event.h/2 - pixbuf.get_height()/2
-
-            if node_event.node.nodes or node_event.node.leave == 2:
-                draw_pixbuf(node_event.cr, pixbuf, icon_x, icon_y)
+                pixbuf = self.three_close.get_pixbuf()
         #
+        icon_x = node_event.x + x_padding
+        icon_y = node_event.y + node_event.h/2 - pixbuf.get_height()/2 + 1
+        if node_event.node.leave > 1:
+            icon_x += pixbuf.get_width()
+        if node_event.node.leave > 0:
+            text_color = "#a8a8a8"
+        ##########
+        # 画图标.
+        draw_pixbuf(node_event.cr,
+                    pixbuf,
+                    icon_x,
+                    icon_y) 
+        # 画文本.
+        text_x_padding = 15
+        text_size = 9
         draw_text(node_event.cr, 
                   node_event.node.text, 
-                  x + 5,
+                  icon_x + text_x_padding,
                   node_event.y + node_event.h/2 - get_text_size(node_event.node.text, text_size=9)[1]/2,
                   text_color=text_color,
-                  text_size=9
+                  text_size=text_size
                   )
+
+    def search_ali_expose_event(self, widget, event):
+        cr = widget.window.cairo_create()
+        rect = widget.allocation
+        #
+        bg_color = "#272727"
+        cr.set_source_rgba(*alpha_color_hex_to_cairo((bg_color,1.0)))
+        cr.rectangle(rect.x, rect.y, rect.width + 1, rect.height)
+        cr.fill()
+        #
+        propagate_expose(widget, event)
+        return True
 
 
 
