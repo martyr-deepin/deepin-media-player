@@ -19,7 +19,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
+def cmp_as_string(str1, str2):
+    '''比较相似字符串'''
+    
+    return True
+    
 def cmp_char(c1, c2):
     '''比较字符'''
     if c1 == c2:
@@ -71,7 +75,7 @@ if __name__ == "__main__":
             "三国演绎-第22集",
             ]
     sum_index = len(list)
-    # 冒泡排序.
+    # 冒泡排序. 升序!
     for l in range(0, sum_index):
         #print "========================="
         for w in range(l, sum_index):

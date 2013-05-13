@@ -881,6 +881,27 @@ class MediaPlayer(object):
             self.gui.play_list_view.list_view.clear()
             self.play_list.set_index(-1)
             run_check = True
+        # 查找连续文件.
+        from include.string_sort import cmp_as_string
+        # 查找连续文件.
+        if len(paths) == 1:
+            find_check = self.config.get("FilePlay", "find_play_file_relation_file")
+            if "True" == find_check and True == run_check:
+                # 获取目录.
+                find_path = get_play_file_path(paths[0])
+                # 获取类型.
+                find_type = get_play_file_type(paths[0])
+                # 获取目录下的所有文件.
+                find_paths = os.listdir(find_path)
+                for name in find_paths:
+                    cmp_path = os.path.join(find_path, name)
+                    # 防止浪费时间.!!
+                    # 过滤掉多余的类型和相同的名字.
+                    if (get_play_file_type(cmp_path) == find_type and 
+                        cmp_path not in paths):
+                        if cmp_as_string(paths[0], cmp_path):
+                            paths.append(cmp_path)
+
         gtk.timeout_add(1, self.timeout_add_paths, paths, run_check)
 
     def timeout_add_paths(self, paths, run_check):
