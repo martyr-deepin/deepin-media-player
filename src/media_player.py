@@ -32,7 +32,7 @@ from user_guide import init_user_guide
 from widget.constant import SEEK_VALUE
 from widget.constant import VOLUME_VALUE
 from widget.utils   import get_config_path
-from widget.utils   import get_home_path, get_home_video, get_play_file_name
+from widget.utils   import get_home_path, get_home_video, get_home_image, get_play_file_name, open_file
 from widget.utils   import is_file_audio
 from widget.utils   import ScanDir
 from widget.utils import is_file_sub_type
@@ -46,7 +46,7 @@ from media_player_keys     import MediaPlayKeys
 from media_player_drag     import MediaPlayDrag
 from mplayer.timer import Timer
 # mplayer后端.
-from mplayer.player import LDMP, set_ascept_function, unset_flags, set_flags, Player, length_to_time
+from mplayer.player import LDMP, set_ascept_function, unset_flags, set_flags, Player, length_to_time, preview_scrot
 from mplayer.player import STARTING_STATE, PAUSE_STATE
 from mplayer.player import ASCEPT_4X3_STATE, ASCEPT_16X9_STATE, ASCEPT_5X4_STATE
 from mplayer.player import ASCEPT_16X10_STATE, ASCEPT_1_85X1_STATE, ASCEPT_2_35X1_STATE, ASCEPT_FULL_STATE, ASCEPT_DEFULAT
@@ -949,10 +949,83 @@ class MediaPlayer(object):
         ini_gui = IniGui(self)
         ini_gui.ini.connect("config-changed", self.restart_load_config_file)
 
+    def open_sort_ini_gui(self):
+        ini_gui = IniGui(self)
+        ini_gui.set("%s" % (_("Screenshot")))
+        ini_gui.ini.connect("config-changed", self.restart_load_config_file)
+
     def restart_load_config_file(self, ini_gui, sec_root, sec_argv, sec_value):
         #print "ini_gui", ini_gui, "sec_root:", sec_root, "sec_argv:", sec_argv, "sec_value:", sec_value
         self.config.set(sec_root, sec_argv, sec_value)
         self.config.save()
+
+    def open_sort_image_dir(self):
+        file_path = self.config.get("ScreenshotSet", "save_path")
+        #
+        if file_path[0] == "~":
+            file_path = get_home_path() + file_path[1:]
+        file_path += "/"
+        #
+        if file_path:
+            open_file(file_path)
+        else:
+            open_file(get_home_image())
+
+    def key_sort_image(self):
+        if self.ldmp and self.ldmp.player.state:
+            scrot_bool = self.config.get("ScreenshotSet", "current_show_sort")
+            save_path = self.config.get("ScreenshotSet", "save_path")
+            save_type = self.config.get("ScreenshotSet", "save_type")
+            save_clipboard_bool = self.config.get("ScreenshotSet", "save_clipboard")
+            #
+            if save_path[0] == "~":
+                save_path = get_home_path() + save_path[1:]
+            # 设置保存的路径.
+            save_path += "/%s-%s" % (get_play_file_name(self.ldmp.player.uri),
+                                    self.ldmp.player.position)
+            # 判断是否为 保存到剪切板.
+            if "True" == save_clipboard_bool:
+                # 设置剪切板的路径.
+                clip_path = "/tmp" + "/%s-%s" % (get_play_file_name(self.ldmp.player.uri),
+                                                self.ldmp.player.position)
+                #
+                if "True" == scrot_bool:
+                    self.scrot_current_screen_pixbuf(clip_path, save_type)
+                else:
+                    preview_scrot(self.ldmp.player.position, 
+                                  clip_path + save_type,
+                                  self.ldmp.player.uri)
+                #
+                clip_path += save_type
+                pixbuf_clip = gtk.gdk.pixbuf_new_from_file(clip_path)
+                clipboard = gtk.Clipboard()
+                clipboard.set_image(pixbuf_clip)
+                # 提示.
+            else: 
+                save_file_bool = self.config.get("ScreenshotSet", "save_file")
+                # 判断是否为 保存到文件路径.
+                if "True" == save_file_bool:
+                    if "True" == scrot_bool: # 判断是否按当前尺寸截图.
+                        self.scrot_current_screen_pixbuf(save_path, save_type)
+                    else:
+                        preview_scrot(self.ldmp.player.position, 
+                                      save_path, 
+                                      self.ldmp.player.uri)
+                # 提示.
+
+    def scrot_current_screen_pixbuf(self, save_path_name, save_file_type=".png"):
+        x, y, w, h = self.gui.screen_frame.get_allocation()
+        #
+        screen_pixbuf = gtk.gdk.Pixbuf(
+                            gtk.gdk.COLORSPACE_RGB, 
+                            False, 8, w, h)
+        save_pixbuf = screen_pixbuf.get_from_drawable(
+                            self.gui.screen_frame.window, 
+                            self.gui.screen_frame.get_colormap(),
+                            0, 0, 0, 0, w, h)
+        # 保存当前尺寸的图片.
+        save_path = save_path_name.strip() + ".png" 
+        save_pixbuf.save(save_path, save_file_type[1:])
 
     def top_toolbar_concise_button_clicked(self):
         if self.concise_check == False or self.fullscreen_check:

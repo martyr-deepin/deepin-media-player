@@ -1386,4 +1386,25 @@ def set_flags(screen):
     '''Set double buffer.'''
     screen.set_flags(gtk.DOUBLE_BUFFERED)
     
-    
+def preview_scrot(scrot_pos, scrot_save_path = "/tmp/preview/preview.jpeg", play_path=""):                      
+    # 判断目录是否存在，不存在则创建.
+    if not os.path.exists(os.path.split(scrot_save_path)[0]):
+        os.mkdir(os.path.split(scrot_save_path)[0])
+        
+    # scrot image.
+    os.system("cd /tmp/buffer/ && mplayer -ss %s -noframedrop -nosound -vo png -frames 1 '%s' >/dev/null 2>&1" % (int(scrot_pos), play_path))
+    # modify image name or get image file.
+    save_image_path = "/tmp/buffer/"        # save preview image buffer dir.    
+    if not os.path.exists(save_image_path):
+        os.mkdir(save_image_path)
+    image_list = os.listdir(save_image_path) # get dir all image.
+    # print image_list
+    for image_name in image_list:
+        if "png" == image_name[-3:]:
+            # preview window show image.
+            try:
+                pixbuf = gtk.gdk.pixbuf_new_from_file(save_image_path + "00000001.png")
+                pixbuf.save(scrot_save_path, "png")
+            except:    
+                break
+            break

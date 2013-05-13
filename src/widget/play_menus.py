@@ -223,6 +223,10 @@ class PlayMenus(object):
         self.mute_unmute    = None
         self.inc_volume     = None
         self.dec_volume     = None
+        ## 截图.
+        self.take_scrot     = None
+        self.open_scrot_dir = None
+        self.set_scrot_dir  = None
         ## 格式转换.
         self.format_conversion = None
         self.task_manager      = None
@@ -238,9 +242,9 @@ class PlayMenus(object):
                                  (self.sub_volume_pixbufs, _("Decrease Volume"),  self.__menu_dec_volume),
                                  (self.mute_volume_pixbufs, _("Mute/Unmute"),      self.__menu_mute_unmute),
                                ])
-        self.sort_menu = Menu([(None, _("Take Screenshot"),           None),
-                               (None, _("Open Screenshot Directory"), None),
-                               (None, _("Set Screenshot Directory"),  None)
+        self.sort_menu = Menu([(None, _("Take Screenshot"),           self.__menu_take_scrot),
+                               (None, _("Open Screenshot Directory"), self.__menu_open_scrot_dir),
+                               (None, _("Set Screenshot Directory"),  self.__menu_set_scrot_dir)
                               ])
         self.format_menu = Menu([(None, _("Format conversion"), self.__menu_format_conversion),
                                 (None, _("Task Manager"),       self.__menu_task_manager)
@@ -616,9 +620,19 @@ class PlayMenus(object):
         # dvd 下一标题.
         if self.dvd_next_title:
             self.dvd_next_title()
+    
+    # 截图设置.
+    def __menu_take_scrot(self):
+        if self.take_scrot:
+            self.take_scrot()
 
+    def __menu_open_scrot_dir(self):
+        if self.open_scrot_dir:
+            self.open_scrot_dir()
 
-
+    def __menu_set_scrot_dir(self):
+        if self.set_scrot_dir:
+            self.set_scrot_dir()
 
             
                                         

@@ -73,9 +73,11 @@ class Search(gtk.HBox):
         if self.text.enable_clear_button and not (event.x < self.text.clear_button_x):
             self.text.set_text("搜视频...")
             self.text.enable_clear_button = False
+            self.text.set_editable(False)
             self.text.entry_buffer.text_color = self.search_none_color
         else:
             # 清空掉上面的搜索视频的文本.
+            self.text.set_editable(True)
             if self.text.get_text() == "搜视频...":
                 self.text.set_text("")
             self.text.entry_buffer.text_color = self.search_input_color
@@ -103,7 +105,7 @@ class Search(gtk.HBox):
         self.clear_check = False
         self.search_none_color = app_theme.get_color("searchNone").get_color()
         self.search_input_color = app_theme.get_color("searchInput").get_color()
-        print self.search_input_color
+        #
         self.search_bg_pixbuf = app_theme.get_pixbuf("net_search/search_bg.png").get_pixbuf()
         self.clear_normal_pixbuf = app_theme.get_pixbuf("net_search/clean_normal.png").get_pixbuf()
         self.clear_hover_pixbuf  = app_theme.get_pixbuf("net_search/clean_hover.png").get_pixbuf()

@@ -161,6 +161,10 @@ class MediaPlayMenus(object):
         self.menus.file_menu.set_menu_item_sensitive_by_index(2, False)
         self.menus.file_menu.connect("show", self.file_menu_show_event)
         self.menus.file_menu.connect("hide", self.file_menu_hide_event)
+        # 截图设置.
+        self.menus.take_scrot     = self.__menu_take_scrot
+        self.menus.open_scrot_dir = self.__menu_open_scrot_dir
+        self.menus.set_scrot_dir  = self.__menu_set_scrot_dir
 
     def file_menu_show_event(self, widget):
         # 添加cdrom东东.
@@ -492,7 +496,15 @@ class MediaPlayMenus(object):
     def menu_dvd_next_title(self):
         self.ldmp.next_title(self.ldmp.player.title_index + 1)
 
+    # 截图设置.
 
+    def __menu_take_scrot(self):
+        self.this.key_sort_image()
 
+    def __menu_open_scrot_dir(self):
+        self.this.open_sort_image_dir()
+
+    def __menu_set_scrot_dir(self):
+        self.this.open_sort_ini_gui()
 
 

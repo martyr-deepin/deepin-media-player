@@ -1,5 +1,5 @@
 {"colors" : {
- "searchNone" : "#434343",
+ "searchNone" : "#353535",
  "searchInput" : "#FFFFFF",
  "labelText" : "#4D5154",
  "recommend" : "#FF0000",
