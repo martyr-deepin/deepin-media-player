@@ -307,7 +307,7 @@ class ScreenMidCombo(gtk.HBox):
         draw_text(cr, widget.get_label(), 
                   rect.x + rect.width/2 - text_size[0]/2 + 10, 
                   rect.y + rect.height/2 - text_size[1]/2, 
-                  text_size=9)
+                  text_size=10)
         #
         return True
 
