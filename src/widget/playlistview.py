@@ -232,25 +232,57 @@ class PlayListControl(gtk.HBox):
         gtk.HBox.__init__(self)
         self.del_btn = gtk.Button("del")
         self.add_btn = gtk.Button("add")
+        self.empty_btn = gtk.Button('')
+        height = 22
+        self.del_btn.set_size_request(-1, height)
+        self.add_btn.set_size_request(-1, height)
+        self.empty_btn.set_size_request(-1, height)
         # init pixbuf.        
         self.del_pixbuf = app_theme.get_pixbuf("bottom_buttons/play_list_del_file.png").get_pixbuf()
         self.add_pixbuf = app_theme.get_pixbuf("bottom_buttons/play_list_add_file.png").get_pixbuf()
         #
         self.del_btn.connect("expose-event", self.del_btn_expose_event)
         self.add_btn.connect("expose-event", self.add_btn_expose_event)
+        self.empty_btn.connect("expose-event", self.empty_btn_expose_event)
         #
-        self.pack_start(self.del_btn, False, False)
+        self.pack_start(self.empty_btn, True, True)
         self.pack_start(self.add_btn, False, False)
+        self.pack_start(self.del_btn, False, False)
 
     def del_btn_expose_event(self, widget, event):
         cr = widget.window.cairo_create()
         rect = widget.allocation
+        self.paint_bg(cr, rect)
+        x = rect.x + rect.width/2 - self.del_pixbuf.get_width()/2
+        y = rect.y + rect.height/2  - self.del_pixbuf.get_height()/2
+        if widget.state == gtk.STATE_ACTIVE:
+            x += 1
+            y += 1
+        draw_pixbuf(cr, self.del_pixbuf, x, y)
         return True
 
     def add_btn_expose_event(self, widget, event):
         cr = widget.window.cairo_create()
         rect = widget.allocation
+        self.paint_bg(cr, rect)
+        x = rect.x + rect.width/2 - self.add_pixbuf.get_width()/2
+        y = rect.y + rect.height/2  - self.add_pixbuf.get_height()/2
+        if widget.state == gtk.STATE_ACTIVE:
+            x += 1
+            y += 1
+        draw_pixbuf(cr, self.add_pixbuf, x, y)
         return True
+    
+    def empty_btn_expose_event(self, widget, event):
+        cr = widget.window.cairo_create()
+        rect = widget.allocation
+        self.paint_bg(cr, rect)
+        return True
+    
+    def paint_bg(self, cr, rect):
+        cr.set_source_rgba(*alpha_color_hex_to_cairo(("#202020", 1.0)))
+        cr.rectangle(*rect)
+        cr.fill()
 
 
 
