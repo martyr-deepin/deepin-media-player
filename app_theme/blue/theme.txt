@@ -1,9 +1,9 @@
 {"colors" : {
- "searchNone" : "#353535",
- "searchInput" : "#FFFFFF",
  "labelText" : "#4D5154",
  "recommend" : "#FF0000",
  "windowMask" : "#FFFFFF",
+ "searchNone" : "#353535",
+ "searchInput" : "#FFFFFF",
  "menuFont" : "#000000",
  "menuSelectFont" : "#FFFFFF",
  "navigateItem" : "#FFFFFF",
