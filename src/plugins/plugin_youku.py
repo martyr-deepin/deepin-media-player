@@ -112,7 +112,6 @@ class PluginYouku(object):
                 scan_treeview.run()
 
     def __treeview_double_event(self, tree_view, node):
-        
         if node.leave == 4:
             self.add_to_play_list(node)
         elif node.leave == 3:

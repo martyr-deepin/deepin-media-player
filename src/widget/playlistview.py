@@ -53,9 +53,15 @@ class PlayListView(object):
         self.listview_color = ui_theme.get_color("scrolledbar")
         self.play_list_vbox = gtk.VBox()
         #
+        self.list_view_vbox = gtk.VBox()
         self.list_scroll_win   = ScrolledWindow(0, 0)
         self.list_scroll_win.set_policy(gtk.POLICY_NEVER, gtk.POLICY_ALWAYS)
         self.list_view    = ListView()
+        #
+        self.play_list_con = PlayListControl()
+        #
+        self.list_view_vbox.pack_start(self.list_scroll_win, True, True)
+        self.list_view_vbox.pack_start(self.play_list_con, False, False)
         # 网络列表，搜索框.
         self.tree_scroll_win   = ScrolledWindow(0, 0)
         self.tree_scroll_win.set_policy(gtk.POLICY_NEVER, gtk.POLICY_ALWAYS)
@@ -82,7 +88,8 @@ class PlayListView(object):
         #
         self.list_scroll_win.add_with_viewport(self.list_view)
         self.tree_scroll_win.add_with_viewport(self.tree_view)
-        self.note_book.add_layout1(self.list_scroll_win) 
+        #self.note_book.add_layout1(self.list_scroll_win) 
+        self.note_book.add_layout1(self.list_view_vbox) 
         self.note_book.add_layout2(self.tree_view_vbox)
         #self.play_list_vbox.pack_start(self.scroll_win, True, True)
         self.play_list_vbox.pack_start(self.note_book, True, True)
@@ -216,6 +223,33 @@ class PlayListView(object):
         cr.fill()
         #
         propagate_expose(widget, event)
+        return True
+
+
+
+class PlayListControl(gtk.HBox):
+    def __init__(self):
+        gtk.HBox.__init__(self)
+        self.del_btn = gtk.Button("del")
+        self.add_btn = gtk.Button("add")
+        # init pixbuf.        
+        self.del_pixbuf = app_theme.get_pixbuf("bottom_buttons/play_list_del_file.png").get_pixbuf()
+        self.add_pixbuf = app_theme.get_pixbuf("bottom_buttons/play_list_add_file.png").get_pixbuf()
+        #
+        self.del_btn.connect("expose-event", self.del_btn_expose_event)
+        self.add_btn.connect("expose-event", self.add_btn_expose_event)
+        #
+        self.pack_start(self.del_btn, False, False)
+        self.pack_start(self.add_btn, False, False)
+
+    def del_btn_expose_event(self, widget, event):
+        cr = widget.window.cairo_create()
+        rect = widget.allocation
+        return True
+
+    def add_btn_expose_event(self, widget, event):
+        cr = widget.window.cairo_create()
+        rect = widget.allocation
         return True
 
 
