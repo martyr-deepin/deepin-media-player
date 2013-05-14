@@ -133,7 +133,7 @@ class VolumeButton(gtk.HBox):
 
         mute_w = self.mute_volume_normal_pixbuf.get_pixbuf().get_width()
         mute_h = self.mute_volume_normal_pixbuf.get_pixbuf().get_height()
-        volume_w = 54
+        volume_w = 54 +  12 #self.point_volume_pixbuf.get_width()
         volume_h = mute_h
         
         self.mute_btn.set_size_request(mute_w, mute_h)
@@ -191,7 +191,7 @@ class VolumeButton(gtk.HBox):
 
     def set_event_value(self, widget, event):
         rect = widget.allocation
-        value = event.x / (float(rect.width) / self.max_value)
+        value = (event.x - 6) / (float(rect.width - 12) / self.max_value)
         self.value = max(min(value, self.max_value), self.min_value)
         # 添加提示信息.
         #tooltip_text(widget, str(int(self.value)))
@@ -289,14 +289,14 @@ class VolumeButton(gtk.HBox):
     def __paint_volume_btn(self, cr, rect, state):
         # 画背景.
         bg_pixbuf = self.bg_pixbuf.get_pixbuf()
-        bg_pixbuf = bg_pixbuf.scale_simple(rect.width,
+        bg_pixbuf = bg_pixbuf.scale_simple(rect.width - 12,
                                            bg_pixbuf.get_height(),
                                            gtk.gdk.INTERP_BILINEAR)
         draw_pixbuf(cr, 
                     bg_pixbuf, 
-                    rect.x, 
+                    rect.x + 6, 
                     rect.y + rect.height/2 - bg_pixbuf.get_height()/2)
-        point_x_padding = float(rect.width) / self.max_value * self.value
+        point_x_padding = float(rect.width - 12) / self.max_value * self.value
         # 画前景.
         fg_pixbuf = self.fg_pixbuf.get_pixbuf()
         if self.value > 1:
@@ -306,7 +306,7 @@ class VolumeButton(gtk.HBox):
             if fg_pixbuf:
                 draw_pixbuf(cr, 
                             fg_pixbuf, 
-                            rect.x, 
+                            rect.x + 6, 
                             rect.y + rect.height/2 - bg_pixbuf.get_height()/2)
         # 画拖动的点.
         point_pixbuf = self.point_volume_pixbuf.get_pixbuf()
@@ -314,7 +314,7 @@ class VolumeButton(gtk.HBox):
         x = rect.x + point_x_padding - point_w/2
         draw_pixbuf(cr, 
                     point_pixbuf, 
-                    x,
+                    x + 6,
                     rect.y + rect.height/2 - point_h/2)
             
 
