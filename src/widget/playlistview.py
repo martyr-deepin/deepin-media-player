@@ -186,7 +186,7 @@ class PlayListView(object):
         icon_x = node_event.x + x_padding
         icon_y = node_event.y + node_event.h/2 - pixbuf.get_height()/2 + 1
         if node_event.node.leave > 1:
-            icon_x += pixbuf.get_width()
+            icon_x += (node_event.node.leave - 1) * pixbuf.get_width()
         if node_event.node.leave > 0:
             text_color = "#a8a8a8"
         ##########

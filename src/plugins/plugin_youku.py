@@ -50,6 +50,7 @@ class PluginYouku(object):
         self.show_check = auto_check
         self.tree_view = self.this.gui.play_list_view.tree_view
         self.tree_view.connect_event("treeview-press-event", self.__treeview_press_event)
+        self.tree_view.connect_event("treeview-double-event", self.__treeview_double_event)
         self.note_book = self.this.gui.play_list_view.note_book
         # 初始化网络播放列表.
         self.__init_tree_view()
@@ -104,6 +105,20 @@ class PluginYouku(object):
             scan_treeview.connect("scan-end-event", self.scan_treeview_end_event, node)
             scan_treeview.run()
         elif node.leave == 3 and node.nodes == []:
+            if node.parent.this.parent.this.text not in ["音乐", "电影"]:
+                scan_treeview = ScanTreeview(self.youku_web_parse, node.addr, False)
+                scan_treeview.connect("scan-end-event", self.scan_treeview_end_event, node)
+                scan_treeview.run()
+        '''
+        elif node.leave == 4:
+            self.add_to_play_list(node)
+        '''
+
+    def __treeview_double_event(self, tree_view, node):
+        
+        if node.leave == 4:
+            self.add_to_play_list(node)
+        elif node.leave == 3:
             if node.parent.this.parent.this.text in ["音乐"]:
                 self.add_to_play_list(node)
             elif node.parent.this.parent.this.text in ["电影"]:
@@ -116,12 +131,6 @@ class PluginYouku(object):
                     node.addr = save_addr
                 else:
                     self.this.show_messagebox("优酷收费视频，无法播放...")
-            else:
-                scan_treeview = ScanTreeview(self.youku_web_parse, node.addr, False)
-                scan_treeview.connect("scan-end-event", self.scan_treeview_end_event, node)
-                scan_treeview.run()
-        elif node.leave == 4:
-            self.add_to_play_list(node)
 
     def scan_treeview_end_event(self, scan_tv, temp_list, node):
         for addr, name in temp_list:
@@ -215,6 +224,8 @@ class PluginYouku(object):
         self.note_book.show_title() # 修复BUG， 当为网络列表的时候 隐藏，就看不到本地列表拉.
         self.note_book.layout_show_check = False
         self.note_book.set_child_size()
+        # 展开节点.
+        self.youku_root.is_expanded = True
 
     def stop_plugin(self):
         #print "end_plugin..."
