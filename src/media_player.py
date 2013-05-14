@@ -452,21 +452,24 @@ class MediaPlayer(object):
         self.init_play_file_sub()
 
     def init_play_file_sub(self):
-        uri = self.ldmp.player.uri
-        video_name = get_play_file_name(uri)
-        scan_sub_path = get_play_file_path(uri)
-        scan_type = get_play_file_type(uri)
-        #
-        sub_paths = []
-        for path in os.listdir(scan_sub_path):
-            if get_play_file_name(path) == video_name:
-                if get_play_file_type(path) != scan_type:
-                    sub_path = os.path.join(scan_sub_path, path)
-                    if is_file_sub_type(sub_path):
-                        # 加载字幕.
-                        sub_paths.append(sub_path)
-        # 加载字幕到菜单上.
-        self.files_to_play_list(sub_paths, False)
+        try:
+            uri = self.ldmp.player.uri
+            video_name = get_play_file_name(uri)
+            scan_sub_path = get_play_file_path(uri)
+            scan_type = get_play_file_type(uri)
+            #
+            sub_paths = []
+            for path in os.listdir(scan_sub_path):
+                if get_play_file_name(path) == video_name:
+                    if get_play_file_type(path) != scan_type:
+                        sub_path = os.path.join(scan_sub_path, path)
+                        if is_file_sub_type(sub_path):
+                            # 加载字幕.
+                            sub_paths.append(sub_path)
+            # 加载字幕到菜单上.
+            self.files_to_play_list(sub_paths, False)
+        except Exception, e:
+            print "media_player.py ==> init_play_file_sub[error]:", e
         
     def player_start_init(self):    
         pass
@@ -1152,8 +1155,7 @@ class MediaPlayer(object):
         # 添加网络地址到播放列表，再的判断是否播放.
         self.list_view.items.add([str(name), str(length), str(play_uri)])
         if check:
-            self.play_list.set_index(len(self.list_view.items) - 1)
-        #
+            self.play_list.set_index(len(self.list_view.items) - 2)
         #
         if check:
             gtk.timeout_add(100, self.test_next)

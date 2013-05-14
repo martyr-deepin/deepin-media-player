@@ -104,25 +104,22 @@ class PluginYouku(object):
             scan_treeview = ScanTreeview(self.youku_web_parse, node.addr, True)
             scan_treeview.connect("scan-end-event", self.scan_treeview_end_event, node)
             scan_treeview.run()
-        elif node.leave == 3 and node.nodes == []:
-            if node.parent.this.parent.this.text not in ["音乐", "电影"]:
+        elif (node.leave == 3 and 
+              node.nodes == [] and 
+              node.parent.this.parent.this.text not in ["音乐", "电影"]):
                 scan_treeview = ScanTreeview(self.youku_web_parse, node.addr, False)
                 scan_treeview.connect("scan-end-event", self.scan_treeview_end_event, node)
                 scan_treeview.run()
-        '''
-        elif node.leave == 4:
-            self.add_to_play_list(node)
-        '''
 
     def __treeview_double_event(self, tree_view, node):
         
         if node.leave == 4:
             self.add_to_play_list(node)
         elif node.leave == 3:
+            # 判断是否为音乐，电影，因为电影，音乐不在这个范围内(层级).
             if node.parent.this.parent.this.text in ["音乐"]:
                 self.add_to_play_list(node)
             elif node.parent.this.parent.this.text in ["电影"]:
-                #print node.addr
                 movie_info = self.youku_web_parse.scan_movie_leave(node.addr)
                 if movie_info:
                     save_addr = node.addr
