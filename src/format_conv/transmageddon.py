@@ -945,6 +945,7 @@ class TransmageddonUI:
          
       # delete select.   
       self.conv_task_gui.list_view.delete_select_items()
+      self.conv_task_gui.show_time_label.set_text("")
       
    def delete_task_list(self, list_view, list_item):      
       # clear items.
