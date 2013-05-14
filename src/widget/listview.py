@@ -566,61 +566,16 @@ class ListView(ListViewBase):
         self.__on_draw_item_fg(cr, rect)
 
     def __on_draw_item_fg(self, cr, rect):
-        from dtk.ui.utils import cairo_state
-        import math
+        top_pixbuf = app_theme.get_pixbuf("playlist/list_top.png").get_pixbuf()
+        bottom_pixbuf = app_theme.get_pixbuf("playlist/list_bottom.png").get_pixbuf()
+        #
         scroll_win = get_match_parent(self, "ScrolledWindow")
         vadjust = scroll_win.get_vadjustment()
         if vadjust.get_value() != vadjust.get_lower():
-            # top_surface.
-            top_surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, rect.width, 25)
-            top_surface_cr = gtk.gdk.CairoContext(cairo.Context(top_surface))
-        else:
-            top_surface = top_surface_cr = None
-        #
+            draw_pixbuf(cr, top_pixbuf, 0, vadjust.get_value()-1)
         if vadjust.get_value() + vadjust.get_page_size() != vadjust.get_upper():
-            # bottom_surface.
-            bottom_surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, rect.width, 25)
-            bottom_surface_cr = gtk.gdk.CairoContext(cairo.Context(bottom_surface))
-        else:
-            bottom_surface = bottom_surface_cr = None
-        #
-        if top_surface_cr:
-            mask_bound_height = 24
-            top_surface_cr.rectangle(rect.x, 0, rect.width, mask_bound_height/2) 
-            top_surface_cr.clip()
-            #
-            top_surface_cr.set_source_rgba(*alpha_color_hex_to_cairo(("#272727", 1.0)))
-            top_surface_cr.rectangle(rect.x, 0, rect.width, mask_bound_height/2)
-            top_surface_cr.fill()
-            #
-            i = 0
-            # 透明是从 1.0, 0.9....0.0
-            while (i <= mask_bound_height/2):
-                with cairo_state(cr):
-                    cr.rectangle(rect.x, vadjust.get_value() + i - 1, rect.width, 1)
-                    cr.clip()
-                    cr.set_source_surface(top_surface, 0, vadjust.get_value() - 1)
-                    alpha = 1.0 - math.sin(i *  math.pi/ 2 / (mask_bound_height/2))
-                    cr.paint_with_alpha(alpha)
-                i += 1
-        
-        if bottom_surface_cr:
-            mask_bound_height = 24
-            bottom_surface_cr.rectangle(rect.x, 0, rect.width, mask_bound_height/2) 
-            bottom_surface_cr.clip()
-            #
-            bottom_surface_cr.set_source_rgba(*alpha_color_hex_to_cairo(("#272727", 1.0)))
-            bottom_surface_cr.rectangle(rect.x, 0, rect.width, mask_bound_height/2)
-            bottom_surface_cr.fill()
-            # 透明是从 0.0, 0.1....1.0.
-            i = 0
-            while (i <= mask_bound_height/2):
-                with cairo_state(cr):
-                    cr.rectangle(rect.x, vadjust.get_value() + vadjust.get_page_size() - mask_bound_height/2 + i, rect.width, 1)
-                    cr.clip()
-                    cr.set_source_surface(bottom_surface, 0, vadjust.get_value() + vadjust.get_page_size() - mask_bound_height/2)
-                    cr.paint_with_alpha(math.sin(i *  math.pi/2/(mask_bound_height/2)))
-                i += 1
+            y = vadjust.get_value() + vadjust.get_page_size() - bottom_pixbuf.get_height()
+            draw_pixbuf(cr, bottom_pixbuf, 0, y)
 
     def __draw_view_details_column(self, offset_y, cr, rect):
         temp_column_w = 0
