@@ -472,7 +472,40 @@ class MediaPlayer(object):
             print "media_player.py ==> init_play_file_sub[error]:", e
         
     def player_start_init(self):    
-        pass
+        self.set_power_play_movie()
+
+    def set_power_play_movie(self):
+        # 设置电源.
+        try:
+            import deepin_gsettings
+            POWER_SETTINGS_GSET = "org.gnome.settings-daemon.plugins.power"
+            self.power_set = deepin_gsettings.new(POWER_SETTINGS_GSET)
+            self.power_set.connect("changed", self.__power_set_changed)
+            self.save_power_key = self.__get_current_plan()
+            self.start_check = True
+            self.power_set.set_string("current-plan", "high-performance")
+        except ImportError:
+            print "media_player.py=>player_start_init[error]: Please install deepin Gsettings.."
+    
+    def __power_set_changed(self, key):
+        if key == "current-plan":
+            # 如果用户自行改变了，不作还原.
+            if not self.start_check:
+                self.save_power_key = self.__get_current_plan()
+                self.start_check = False
+
+    def __get_current_plan(self):
+        current_plan = self.power_set.get_string("current-plan")
+        if current_plan == "balance":
+            return current_plan
+        elif current_plan == "saving":
+            return current_plan
+        elif current_plan == "high-performance":
+            return current_plan
+        elif current_plan == "customized":
+            return current_plan
+        else:
+            pass
 
     def ldmp_end_media_player(self, ldmp):
         #print "===========播放结束!!==========", ldmp.player.type
@@ -481,6 +514,11 @@ class MediaPlayer(object):
         # BUG：因为全屏播放的时候，如果播放完毕，
         #不设置这个，中间的图就变样了.
         self.gui.screen_frame.set_padding(0, 0, 0, 0)
+        # 播放完毕后设置电源.(还原)
+        try:
+            self.power_set.set_string("current-plan", self.save_power_key)
+        except Exception, e:
+            print "media_player.py=>ldmp_end_media_player[error]:", e
         
     def player_end_init(self):        
         # 播放完毕，重置播放设置.
