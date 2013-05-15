@@ -110,17 +110,23 @@ class PlayMenus(object):
         self.mute_normal_pixbuf = app_theme.get_pixbuf("screen/menu_volume_menu_normal.png")
         self.mute_hover_pixbuf = app_theme.get_pixbuf("screen/menu_volume_menu_hover.png")
         self.mute_none_pixbuf = app_theme.get_pixbuf("screen/menu_volume_menu_none.png")                
-        self.mute_volume_pixbufs = (self.mute_normal_pixbuf, self.mute_hover_pixbuf, self.mute_none_pixbuf)
+        self.mute_volume_pixbufs = (self.mute_normal_pixbuf, 
+                                    self.mute_hover_pixbuf, 
+                                    self.mute_none_pixbuf)
         # add volume.
         self.add_volume_normal_pixbuf = app_theme.get_pixbuf("screen/menu_volume_add_normal.png")
         self.add_volume_hover_pixbuf = app_theme.get_pixbuf("screen/menu_volume_add_hover.png")
         self.add_volume_none_pixbuf = app_theme.get_pixbuf("screen/menu_volume_add_none.png")
-        self.add_volume_pixbufs = (self.add_volume_normal_pixbuf, self.add_volume_hover_pixbuf, self.add_volume_none_pixbuf)
+        self.add_volume_pixbufs = (self.add_volume_normal_pixbuf, 
+                                   self.add_volume_hover_pixbuf, 
+                                   self.add_volume_none_pixbuf)
         # sub volume.
         self.sub_volume_normal_pixbuf = app_theme.get_pixbuf("screen/menu_volume_sub_normal.png")
         self.sub_volume_hover_pixbuf = app_theme.get_pixbuf("screen/menu_volume_sub_hover.png")
         self.sub_volume_none_pixbuf = app_theme.get_pixbuf("screen/menu_volume_sub_none.png")
-        self.sub_volume_pixbufs = (self.sub_volume_normal_pixbuf, self.sub_volume_hover_pixbuf, self.sub_volume_none_pixbuf)        
+        self.sub_volume_pixbufs = (self.sub_volume_normal_pixbuf, 
+                                   self.sub_volume_hover_pixbuf, 
+                                   self.sub_volume_none_pixbuf)        
         # quit. 退出.
         self.menu_quit_normal_pixbuf = app_theme.get_pixbuf("screen/menu_quit_normal.png")
         self.menu_quit_hover_pixbuf = app_theme.get_pixbuf("screen/menu_quit_hover.png")
@@ -273,6 +279,7 @@ class PlayMenus(object):
         #
         ###############################################################
         self.remove_selected = None #self.__menu_remove_selected
+        self.save_playlist = None # 保存播放列表
         self.clear_playlist  = None #self.__menu_clear_playlist
         self.remove_unavailable_files  = None #self.__menu_remove_unavailable_files
         self.open_containing_directory = None #self.__menu_open_containing_directory
@@ -288,6 +295,7 @@ class PlayMenus(object):
                                          (None, _("Add URL"),       self.__menu_add_open_url),
                                          (None),
                                          (None, _("Remove Selected"), self.__menu_remove_selected),
+                                         (None, _("Save Playlist"), self.__menu_save_playlist),
                                          (None, _("Clear Playlist"),  self.__menu_clear_playlist),
                                          (None, _("Remove Unavailable Files"), self.__menu_remove_unavailable_files),
                                          (None),
@@ -633,5 +641,8 @@ class PlayMenus(object):
         if self.set_scrot_dir:
             self.set_scrot_dir()
 
-            
-                                        
+    # 保存播放列表.
+    def __menu_save_playlist(self):        
+        if self.save_playlist:
+            self.save_playlist()
+                                         

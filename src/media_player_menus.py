@@ -167,7 +167,9 @@ class MediaPlayMenus(object):
         self.menus.take_scrot     = self.__menu_take_scrot
         self.menus.open_scrot_dir = self.__menu_open_scrot_dir
         self.menus.set_scrot_dir  = self.__menu_set_scrot_dir
-
+        # 保存播放列表.
+        self.menus.save_playlist  = self.__menu_save_playlist
+        
     def file_menu_show_event(self, widget):
         # 添加cdrom东东.
         from plugins.cdrom.cdrom import scan_cdrom
@@ -511,10 +513,58 @@ class MediaPlayMenus(object):
     
     #　删除无效文件.
     def menu_remove_unavailable_files(self):
-        print "删除无效文件..."
         for item in self.list_view.items[:]:
             if "00:00:00" == item.sub_items[1].text:
                 self.list_view.items.remove(item)
-
-
-
+    
+    # 保存播放列表.
+    def __menu_save_playlist(self):
+        file_path = self.this.save_dir_dialog()
+        if file_path:
+            # 初始化写入xml的准备.
+            self.__write_xml_init()
+            
+            from xml.etree.ElementTree import ElementTree
+            fp = open(file_path[0] + ".ldmp", "w")
+            # xml version.
+            self.write_text += self.version
+            #
+            self.write_text += self.start_playlist
+            #
+            for item in self.list_view.items[:]:
+                if ("00:00:00" != item.sub_items[1].text):
+                    path = item.sub_items[2].text
+                    time = item.sub_items[1].text
+                    self.write_text += self.start_play
+                    # 写入路径.
+                    self.write_text += self.start_path
+                    self.write_text += path
+                    self.write_text += self.end_path
+                    # 写入时间.
+                    self.write_text += self.start_time
+                    self.write_text += time
+                    self.write_text += self.end_time
+                    #
+                    self.write_text += self.end_play
+            #
+            self.write_text += self.end_playlist
+            #
+            fp.write(self.write_text)
+            fp.close()
+    
+    def __write_xml_init(self):
+        self.write_text = ""
+        self.version = '<?xml version="1.0"?>\n'
+        #
+        self.start_playlist = "<playlist>\n"
+        self.end_playlist = "</playlist>\n"
+        #
+        self.start_play = "\t<play>\n"
+        self.end_play = "\t</play>\n"
+        #
+        self.start_path = "\t\t<path>"
+        self.end_path = "</path>\n"
+        #
+        self.start_time = "\t\t<time>"
+        self.end_time = "</time>\n"
+        

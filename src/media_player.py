@@ -1349,7 +1349,23 @@ class MediaPlayer(object):
             self.gui.tooltip_change_style(font, font_size)
         except Exception, e:
             print "media_player.py=>__init_screen_tooltip[error]:", e
+            
+    def save_dir_dialog(self):
+        #　保存目录对话框.
+        open_dialog = gtk.FileChooserDialog(_("Save Directory"),
+                                            None,
+                                            gtk.FILE_CHOOSER_ACTION_SAVE,
+                                            (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
+                                             gtk.STOCK_SAVE, gtk.RESPONSE_OK))
 
+        open_dialog.set_current_folder(get_home_video())
+        res = open_dialog.run()
+        paths = []
+        if res == gtk.RESPONSE_OK:
+            paths = open_dialog.get_filenames()
+
+        open_dialog.destroy()
+        return paths
 
         
 
