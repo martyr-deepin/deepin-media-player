@@ -993,7 +993,6 @@ class MediaPlayer(object):
     def ldmp_to_play_list(self, paths, type_check=True):
         #
         for path in paths:
-            print path
             self.read_xml(path)
 
     def load_profile(self, root):
@@ -1040,6 +1039,8 @@ class MediaPlayer(object):
         if True: #is_file_audio(file_name):
             if is_file_sub_type(file_name):
                 self.ldmp.sub_add(file_name)
+            elif file_name.endswith("ldmp"):
+                self.ldmp_to_play_list([file_name])
             else:
                 uri = '"%s"' % (file_name)
                 ini_len = self.ini.get("PlayTime", uri) 
