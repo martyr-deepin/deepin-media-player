@@ -84,6 +84,7 @@ class MediaPlayDrag(object):
                 files = str(data.data).split("\n")[:-1]
             files_list = []
             paths_list = []
+            ldmp_list  = []
             for file in files:
                 if len(file) > 0:
                     file = urllib.unquote(file)
@@ -103,10 +104,15 @@ class MediaPlayDrag(object):
                             # 判断是字幕文件还是播放文件.
                             file = urllib.unquote(file)
                             files_list.append(str(file))
+                    if file.endswith("ldmp"):
+                        ldmp_list.append(file)
+            # type: 是屏幕窗口还是播放列表.
             if files_list:
                 self.this.files_to_play_list(files_list, type_check)
             if paths_list:
                 self.this.dirs_to_play_list(paths_list, type_check)
+            if ldmp_list:
+                self.this.ldmp_to_play_list(ldmp_list, type_check)
 
         return True
 

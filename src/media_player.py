@@ -990,6 +990,32 @@ class MediaPlayer(object):
             scan_dir.connect("scan-end-event",  self.scan_end_event)
             scan_dir.start()
 
+    def ldmp_to_play_list(self, paths, type_check=True):
+        #
+        for path in paths:
+            print path
+            self.read_xml(path)
+
+    def load_profile(self, root):
+        path = ""
+        time = ""
+        for child in root.getchildren():
+            if child.tag == "path":
+                path = child.text.strip()
+            elif child.tag == "time":
+                time = child.text.strip()
+        return (path, time)
+
+    def read_xml(self, path):
+        import xml.etree.ElementTree
+        tree = xml.etree.ElementTree.parse(path)
+        for child in tree.getroot().getchildren():
+            if child.tag == "play":
+                path, time = self.load_profile(child)
+                name = get_play_file_name(path)
+                path = str(path)
+                time = str(time)
+                self.gui.play_list_view.list_view.items.add([str(name), str(time), str(path)])
 
     def get_length(self, file_path):
         import subprocess
