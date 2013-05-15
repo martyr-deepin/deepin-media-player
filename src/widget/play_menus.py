@@ -520,8 +520,7 @@ class PlayMenus(object):
     def __menu_remove_unavailable_files(self): 
         # 删除无效文件.
         if self.remove_unavailable_files:
-            #self.remove_unavailable_files()
-            pass
+            self.remove_unavailable_files()
     
     def __menu_open_containing_directory(self):
         # 开打文件的所在路径.

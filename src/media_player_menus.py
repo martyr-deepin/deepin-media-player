@@ -145,6 +145,8 @@ class MediaPlayMenus(object):
         # 播放列表.
         self.menus.remove_selected = self.list_view.listview_delete_event
         self.menus.clear_playlist  = self.list_view.clear
+        # 删除无效文件.
+        self.menus.remove_unavailable_files =  self.menu_remove_unavailable_files
         self.menus.open_containing_directory = self.menu_open_containing_directory
         #
         # 属性查看.
@@ -506,5 +508,13 @@ class MediaPlayMenus(object):
 
     def __menu_set_scrot_dir(self):
         self.this.open_sort_ini_gui()
+    
+    #　删除无效文件.
+    def menu_remove_unavailable_files(self):
+        print "删除无效文件..."
+        for item in self.list_view.items[:]:
+            if "00:00:00" == item.sub_items[1].text:
+                self.list_view.items.remove(item)
+
 
 
