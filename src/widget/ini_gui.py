@@ -1639,21 +1639,22 @@ class Plugin(gtk.VBox):
         self.list_view_align.set_padding(0, 0, 0, 5)
         self.list_view_scrol_win = ScrolledWindow(0, 0)
         self.list_view_scrol_win.set_policy(gtk.POLICY_NEVER, gtk.POLICY_ALWAYS)
-        self.list_view_scrol_win.set_size_request(100, 390)
+        self.list_view_scrol_win.set_size_request(100, 300)
         self.list_view = ListView()
         #
         self.list_view.on_draw_column_heade = self.list_view_on_draw_column_heade
         self.list_view.on_draw_item = self.list_view_on_draw_item
         self.list_view.on_draw_sub_item     =  self.list_view_on_draw_sub_item
+        self.list_view.on_draw_item_fg = self.list_view_on_draw_item_fg
         self.list_view.connect_event("single-items",  self.list_view_single_items) 
         #
         self.list_view.set_columns_show(True) # 是否显示标题栏.
-        self.list_view.set_columns_height(30) # 设置标题栏高度.
+        self.list_view.set_columns_height(25) # 设置标题栏高度.
         self.list_view.set_drag_items(False) # 禁止拖动.
         self.list_view.set_drag_columns(False) # 禁止拖动标题栏.
         #
         self.list_view.columns.add_range([_("name"), _("version"), _("auto"), _("author"), _("about"), ""])
-        self.list_view.columns[0].width = 305
+        self.list_view.columns[0].width = 320
         self.list_view.columns[3].width = 250
         self.list_view.columns[4].width = 100
         self.list_view.columns[5].width = 600
@@ -1679,11 +1680,11 @@ class Plugin(gtk.VBox):
                 auto_check = "True"
 
             if -1 != auto_check:
-                self.list_view.items.add([str(infos["title"]),  # 名称.
+                self.list_view.items.add([str(infos["title"]),     # 名称.
                                            str(infos["version"]),  # 版本.
-                                           str(auto_check),     # 运行状态.
-                                           str(infos["author"]), # 作者.
-                                           str(infos["about"]), # 关于.
+                                           str(auto_check),        # 运行状态.
+                                           str(infos["author"]),   # 作者.
+                                           str(infos["about"]),    # 关于.
                                            "",
                                            str(infos["module_name"]),
                                          ])
@@ -1694,6 +1695,20 @@ class Plugin(gtk.VBox):
         #title_box.pack_start(self.label, False, False)
         #title_box.pack_start(create_separator_box(), False, True)
         title_box.pack_start(self.list_view_align, False, False)
+        title_box.pack_start(Label(""), False, False)
+        title_box.pack_start(Label("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -", 
+                                  text_color=app_theme.get_color("labelText")), 
+                                  False, False)
+        # 显示title信息.
+        self.title_label = Label("", text_size=8)
+        title_box.pack_start(self.title_label, False, False) 
+        # 显示作者信息.
+        self.author_label = Label("", text_size=8)
+        title_box.pack_start(self.author_label, False, False) 
+        # 显示关于信息.
+        self.about_label = Label("", text_size=8)
+        title_box.pack_start(self.about_label, False, False) 
+        #
         title_box_align = gtk.Alignment()
         title_box_align.set_padding(10, 0, 10, 0)
         title_box_align.set(0, 0, 1, 1)
@@ -1730,6 +1745,11 @@ class Plugin(gtk.VBox):
                 self.this.plugin_man.open_plugin(plugin_name)
                 self.ini.set("Plugins", plugin_name, check_item.text)
                 self.ini.save()
+        # 获取信息以及显示信息.
+        info_item = single_items[0]
+        self.title_label.set_text(_("Plugin") + " : %s" % (info_item.sub_items[0].text))
+        self.author_label.set_text(_("author") + " : %s" % (info_item.sub_items[3].text))
+        self.about_label.set_text("%s" % (info_item.sub_items[4].text))
 
     def list_view_on_draw_column_heade(self, e):
         #
@@ -1769,7 +1789,7 @@ class Plugin(gtk.VBox):
 
     def list_view_on_draw_item(self, e):
         e.x, e.y, e.w, e.h = e.rect
-        #
+        # 画背景.
         with cairo_state(e.cr):
             e.cr.rectangle(e.x, e.y, e.w, e.h)
             e.cr.clip()
@@ -1778,8 +1798,8 @@ class Plugin(gtk.VBox):
         #
         draw_vlinear(
             e.cr, e.x, e.y, e.w, e.h, 
-            [(0, ("#FFFFFF", 0.9)),
-             (1, ("#FFFFFF", 0.9))])
+            [(0, ("#FFFFFF", 0.95)),
+             (1, ("#FFFFFF", 0.95))])
 
     def list_view_on_draw_sub_item(self, e):
         color = self.listview_color.get_color()
@@ -1836,6 +1856,9 @@ class Plugin(gtk.VBox):
             draw_pixbuf(e.cr, pixbuf, 
                         e.x + e.w/2 - pixbuf.get_width()/2, 
                         e.y + e.h/2 - pixbuf.get_height()/2)
+
+    def list_view_on_draw_item_fg(self, cr, rect):
+        pass
 
 class About(gtk.VBox):    
     def __init__(self):

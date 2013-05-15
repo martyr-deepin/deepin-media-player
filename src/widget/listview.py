@@ -563,7 +563,7 @@ class ListView(ListViewBase):
         cr.restore()
         #
         #　画上面和下面的效果.
-        self.__on_draw_item_fg(cr, rect)
+        self.on_draw_item_fg(cr, rect)
 
     def __on_draw_item_fg(self, cr, rect):
         top_pixbuf = app_theme.get_pixbuf("playlist/list_top.png").get_pixbuf()

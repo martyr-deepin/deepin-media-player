@@ -160,6 +160,10 @@ class MediaPlayFun(object):
         volume_button.mute_btn.connect("clicked",               self.__mute_btn_state_changed)
         volume_button.volume_btn.connect("button-press-event",  self.__volume_btn_button_press_event, volume_button)
         volume_button.volume_btn.connect('motion-notify-event', self.__volume_btn_motion_notify_event)
+        # 播放列表控制按钮. '+' , '-'
+        play_list_con = self.this.gui.play_list_view.play_list_con 
+        play_list_con.del_btn.connect("clicked", self.__play_list_con_del_btn_clicked)
+        play_list_con.add_btn.connect("clicked", self.__play_list_con_add_btn_clicked)
         '''
             # 这里需要读 ini文件, 是否显示初始化的时候显示播放列表. 默认不显示播放列表.
             self.app_play_control_panel.play_list_btn.button.set_active(True)
@@ -383,4 +387,13 @@ class MediaPlayFun(object):
         self.__length = str(time)
         self.bottom_toolbar.show_time.set_time_font(self.__pos, self.__length)
         self.app_play_control_panel.show_time.set_time_font(self.__pos, self.__length)
+
+    # 本地播放列表控制按钮=>>'+', '-'
+    def __play_list_con_del_btn_clicked(self, w):
+        # 删除文件.
+        self.list_view.listview_delete_event()
+
+    def __play_list_con_add_btn_clicked(self, w):
+        # 添加文件.
+        self.this.open_files_to_play_list(type_check=False)
 
