@@ -27,11 +27,9 @@ from utils import get_match_parent
 from utils import get_text_size, is_left_button # 左键.
 from utils import is_double_click
 from draw  import draw_text, draw_pixbuf
-from color import alpha_color_hex_to_cairo, color_hex_to_cairo
+from color import alpha_color_hex_to_cairo
 import gtk
-from gtk import gdk
 import gobject
-import random
 
 
 def type_check(type_name, type_str):
@@ -53,12 +51,6 @@ class TreeViewBase(gtk.Button):
         widget.set_realized(True)
         self.__init_scroll_win()
 
-    def __treeview_button_press_event(self, widget, event):
-        node = self.__nodes_list[int(e.y/self.node_height)]
-        node.is_expanded = not node.is_expanded
-        self.tree_view_queue_draw_area()
-        return False
-    
     def __init_values(self):
         self.add_events(gtk.gdk.ALL_EVENTS_MASK)
         #
@@ -149,13 +141,6 @@ class TreeViewBase(gtk.Button):
     def __init_values_columns(self):
         self.columns = []
 
-    def connect_event(self, event_name, function_potion):
-        self.__function_dict[event_name] = function_point
-
-    def emit(self, event_name, *arg):
-        if self.__function_dict.has_key(event_name):
-            self.__function_dict[event_name](*arg)
-
     def __init_scroll_win(self):
         self.scroll_win = get_match_parent(self, ["ScrolledWindow"])
         self.hadjustment = self.scroll_win.get_hadjustment()
@@ -238,12 +223,12 @@ class TreeViewBase(gtk.Button):
         self.scroll_win = get_match_parent(self, ["ScrolledWindow"])
         if self.scroll_win:
             start_index  = max(int(self.scroll_win.get_vadjustment().get_value() / self.node_height), 0)
-            end_index    = (start_index + (self.scroll_win.allocation.height) / self.node_height) + 1
+            #end_index    = (start_index + (self.scroll_win.allocation.height) / self.node_height) + 1
             w = self.scroll_win.allocation.width
             h = self.scroll_win.allocation.height
         else:
             start_index = 0
-            end_index = self.allocation.height / self.allocation.height
+            #end_index = self.allocation.height / self.allocation.height
             w = self.allocation.width
             h = self.allocation.height
         x = 0

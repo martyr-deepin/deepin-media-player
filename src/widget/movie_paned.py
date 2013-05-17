@@ -25,9 +25,7 @@ from gtk import gdk
 import gobject
 from color import alpha_color_hex_to_cairo, color_hex_to_cairo
 from skin import app_theme
-from utils import get_text_size
 from dtk.ui.skin import ui_theme
-from dtk.ui.draw import draw_text
 import cairo
 import pangocairo, pango
 from constant import DEFAULT_FONT, DEFAULT_FONT_SIZE

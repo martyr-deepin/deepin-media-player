@@ -23,7 +23,6 @@
 from skin import app_theme
 from ini import Config
 from utils import get_home_path, get_text_size
-from color import alpha_color_hex_to_cairo
 from listview import ListView, Text
 from dtk.ui.theme import ui_theme
 from dtk.ui.skin_config import skin_config

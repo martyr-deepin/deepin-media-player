@@ -105,7 +105,7 @@ class MediaPlayFun(object):
                                  self.app.titlebar.allocation.height - self.pre_view.bg.get_allocation()[3])
                 ###############################################33
                 move_x = self.x_root - self.pre_view.bg.get_allocation()[2]/2
-                move_y = preview_y
+                #move_y = preview_y
                 min_move_x = self.app.window.get_position()[0] + 8
                 max_move_x = min_move_x + self.app.window.allocation.width  - 16
                 mid_bg_w = self.pre_view.bg.allocation.width
@@ -118,7 +118,7 @@ class MediaPlayFun(object):
                 else:
                     offset = self.pre_view.bg.get_offset_mid_value()
                 #
-                offset_x = offset
+                #offset_x = offset
                 move_x = max(min(move_x, max_move_x - mid_bg_w), min_move_x)
                 self.pre_view.bg.set_offset(offset)
                 value = event.x / widget.allocation.width * widget.max_value

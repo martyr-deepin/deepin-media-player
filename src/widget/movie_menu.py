@@ -236,9 +236,6 @@ class MenuItem(object):
         self.text   =  ""
         self.child_menus = None
 
-from skin import app_theme
-from locales import _
-from draw import draw_pixbuf, draw_text
 
 class ScreenMidCombo(gtk.HBox):
     def __init__(self):
@@ -288,7 +285,6 @@ class ScreenMidCombo(gtk.HBox):
     def __popup_btn_clicked(self, widget):
         parent_win = widget.get_parent_window()
         parent_origin = parent_win.get_origin()
-        pos = widget.get_window().get_position()
         rect = widget.allocation
         self.menu.popup(parent_origin[0] + rect.x - 108, 
                         2 + parent_origin[1] + rect.y + rect.height)

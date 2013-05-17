@@ -19,13 +19,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from skin import app_theme
 from user_guide import init_user_guide
 from widget.utils import is_right_button
 from widget.utils import open_file
-from mplayer.player import ASCEPT_4X3_STATE, ASCEPT_16X9_STATE, ASCEPT_5X4_STATE
+from mplayer.player import ASCEPT_4X3_STATE, ASCEPT_16X9_STATE
 from mplayer.player import ASCEPT_16X10_STATE, ASCEPT_1_85X1_STATE, ASCEPT_2_35X1_STATE
-from mplayer.player import ASCEPT_FULL_STATE, ASCEPT_DEFULAT
+from mplayer.player import ASCEPT_DEFULAT
 from mplayer.playlist import SINGLA_PLAY, ORDER_PLAY, RANDOM_PLAY, SINGLE_LOOP, LIST_LOOP 
 from format_conv.transmageddon import TransmageddonUI
 from include.string_sort import cmp_string
@@ -173,7 +172,6 @@ class MediaPlayMenus(object):
     def file_menu_show_event(self, widget):
         # 添加cdrom东东.
         from plugins.cdrom.cdrom import scan_cdrom
-        from widget.movie_menu import Menu
         cdroms = scan_cdrom() 
         # 如果有光盘.
         if len(cdroms):
@@ -360,7 +358,6 @@ class MediaPlayMenus(object):
 
     # 播放列表.
     def menu_open_containing_directory(self):
-        import os
         if self.open_file_name:
             path = os.path.split(self.open_file_name)[0]
             if os.path.exists(path):
@@ -524,7 +521,6 @@ class MediaPlayMenus(object):
             # 初始化写入xml的准备.
             self.__write_xml_init()
             
-            from xml.etree.ElementTree import ElementTree
             fp = open(file_path[0] + ".ldmp", "w")
             # xml version.
             self.write_text += self.version

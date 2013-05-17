@@ -20,9 +20,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from color import alpha_color_hex_to_cairo
 from utils import propagate_expose
-from dtk_cairo_blur import gaussian_blur
 import math
 import cairo
 import gtk
@@ -80,7 +78,7 @@ class MenuWindow(gtk.Window):
         self.__old_h = h
 
     def __compute_shadow(self, w, h):
-        cr = self.__surface_context
+        #cr = self.__surface_context
         x, y = 0, 0
         '''
         self.on_draw_rectangle(x, y, w, h)
