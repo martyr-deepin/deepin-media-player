@@ -915,6 +915,7 @@ class MediaPlayer(object):
         # 修复BUG：字幕和播放文件一起拖进去，没有清空播放列表.
         # 修复BUG：字幕拖进去，清空了播放列表.
         for path in paths:
+            print "path............"
             if not is_file_sub_type(path):
                 sub_check = True
             else:

@@ -828,7 +828,10 @@ class LDMP(gobject.GObject):
         '''Fast forward'''
         if self.player.state == STARTING_STATE or self.player.state == PAUSE_STATE:
             self.cmd('seek +%d\n' % (seek_num))   
-            self.emit("fseek", int(self.player.position + seek_num))
+            try:
+                self.emit("fseek", int(self.player.position + seek_num))
+            except Exception, e:
+                print "player.py=>fseek[error]:", e
             
     def bseek(self, seek_num):
         '''backward'''
@@ -930,7 +933,10 @@ class LDMP(gobject.GObject):
                 if old_position != self.player.position:
                     #print "postion:", self.player.position
                     if pos:
-                        self.emit("get-time-pos", pos, length_to_time(pos))
+                        try:
+                            self.emit("get-time-pos", pos, length_to_time(pos))
+                        except Exception, e:
+                            print "mplayer.py=>player_thread_reader[error]:", e
                 '''
                 if pos >= int(self.player.length): # 结束播放.
                     self.quit()
