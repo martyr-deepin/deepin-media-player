@@ -354,6 +354,11 @@ class PlayMenus(object):
                                          ]) 
         ## 字幕选择:
         self.subtitles_select = Menu(None)
+        self.load_subtitles = None # 手动载入字幕.
+        self.subtitles_child_menu = Menu([
+                (None, _("Load subtitles"), self.__menu_load_subtitles), # 手动载入字幕.
+                (None, _("Select a subtitle"), self.subtitles_select), # 字幕选择
+                ])
         # 属性窗口.
         self.properties = None
         # 屏幕弹出菜单.
@@ -369,7 +374,8 @@ class PlayMenus(object):
                 (None, _("Play"),  self.screen_play_menu),
                 (None, _("Video"), self.video_menu),
                 (self.volume_pixbufs, _("Audio"), self.channel_select),
-                (self.subtitle_pixbus, _("Subtitles"),      self.subtitles_select),
+                #(self.subtitle_pixbus, _("Subtitles"),      self.subtitles_select),
+                (self.subtitle_pixbus, _("Subtitles"), self.subtitles_child_menu),
                 (None, _("DVD Navigation"), self.dvd_navigation_menu),
                 (self.settings_pixbufs, _("Preferences"),    self.__menu_config_gui),
                 (None),
@@ -645,4 +651,9 @@ class PlayMenus(object):
     def __menu_save_playlist(self):        
         if self.save_playlist:
             self.save_playlist()
+    
+    # 手动载入字幕.
+    def __menu_load_subtitles(self):
+        if self.load_subtitles:
+            self.load_subtitles()
                                          

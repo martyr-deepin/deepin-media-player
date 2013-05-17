@@ -29,6 +29,7 @@ from mplayer.playlist import SINGLA_PLAY, ORDER_PLAY, RANDOM_PLAY, SINGLE_LOOP, 
 from format_conv.transmageddon import TransmageddonUI
 from include.string_sort import cmp_string
 from widget.utils import get_play_file_name, get_play_file_type
+from widget.utils import is_file_sub_type
 from mplayer.player import length_to_time
 from locales import _
 
@@ -152,8 +153,10 @@ class MediaPlayMenus(object):
         self.menus.screen_right_root_menu.set_menu_item_sensitive_by_index(15, False)
         # dvd 菜单.
         self.menus.screen_right_root_menu.set_menu_item_sensitive_by_index(12, False)
-        # 字幕禁用.
+        # 字幕菜单禁用.
         self.menus.screen_right_root_menu.set_menu_item_sensitive_by_index(11, False)
+        # 字幕选择禁用.
+        self.menus.subtitles_child_menu.set_menu_item_sensitive_by_index(1, False)
         #
         self.menus.channel_select.set_menu_item_sensitive_by_index(1, False)
         # 最近播放.
@@ -168,6 +171,8 @@ class MediaPlayMenus(object):
         self.menus.set_scrot_dir  = self.__menu_set_scrot_dir
         # 保存播放列表.
         self.menus.save_playlist  = self.__menu_save_playlist
+        # 手动载入字幕.
+        self.menus.load_subtitles = self.__menu_load_subtitles
         
     def file_menu_show_event(self, widget):
         # 添加cdrom东东.
@@ -236,7 +241,9 @@ class MediaPlayMenus(object):
         self.this.play(path)
 
     def ldmp_get_subtitle(self, ldmp, sub_info, index):
-        self.menus.screen_right_root_menu.set_menu_item_sensitive_by_index(11, True)
+        #self.menus.screen_right_root_menu.set_menu_item_sensitive_by_index(11, True)
+        # 字幕选择禁用.
+        self.menus.subtitles_child_menu.set_menu_item_sensitive_by_index(1, True)
         # 添加字幕信息.
         self.menus.subtitles_select.add_menu_items([
             (None, sub_info, self.menu_switch_subtitle, index),
@@ -412,6 +419,14 @@ class MediaPlayMenus(object):
         video_info_gui.app.show_all()
         
     def menu_ldmp_end_media_player(self, ldmp):
+        # 禁用菜单选择.
+        self.menus.subtitles_child_menu.set_menu_item_sensitive_by_index(1, False)
+        # 设置菜单禁用(字幕/音频语言).
+        self.menus.screen_right_root_menu.set_menu_item_sensitive_by_index(11, False)
+        self.menus.subtitles_select.clear_menus()
+        self.menus.switch_audio_menu.clear_menus()
+        self.menus.channel_select.set_menu_item_sensitive_by_index(1, False)
+        #
         self.menus.screen_right_root_menu.set_menu_item_sensitive_by_index(15, False)
         # 设置 dvd菜单禁用.
         self.menus.screen_right_root_menu.set_menu_item_sensitive_by_index(12, False)
@@ -419,6 +434,9 @@ class MediaPlayMenus(object):
         self.menus.jump_to.clear_menus()
 
     def menu_ldmp_start_media_player(self, ldmp):
+        # 字幕菜单开启.
+        self.menus.screen_right_root_menu.set_menu_item_sensitive_by_index(11, True)
+        #
         self.menus.screen_right_root_menu.set_menu_item_sensitive_by_index(15, True)
         ############ 保存最近播放文件.
         text = '"%s"' % ldmp.player.uri
@@ -564,3 +582,15 @@ class MediaPlayMenus(object):
         self.start_time = "\t\t<time>"
         self.end_time = "</time>\n"
         
+    # 手动载入字幕.
+    def __menu_load_subtitles(self):
+        subs = self.this.open_file_dialog(title="手动载入字幕")
+        sub_paths = []
+        for sub in subs:
+            print sub
+            if is_file_sub_type(sub):
+                # 加载字幕.
+                sub_paths.append(sub)
+        # 加载字幕到菜单上.
+        self.this.files_to_play_list(sub_paths, False)
+

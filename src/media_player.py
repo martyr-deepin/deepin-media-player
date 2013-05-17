@@ -528,11 +528,6 @@ class MediaPlayer(object):
         # 防止出现白屏幕的BUG,进行重绘!!
         self.gui.screen.queue_draw()
         self.gui.screen_frame.queue_draw()
-        # 设置菜单禁用(字幕/音频语言).
-        self.media_play_menus.menus.screen_right_root_menu.set_menu_item_sensitive_by_index(11, False)
-        self.media_play_menus.menus.subtitles_select.clear_menus()
-        self.media_play_menus.menus.switch_audio_menu.clear_menus()
-        self.media_play_menus.menus.channel_select.set_menu_item_sensitive_by_index(1, False)
         # 保存播放完毕的进度.
         self.save_play_position()
 
@@ -885,9 +880,9 @@ class MediaPlayer(object):
         self.ldmp.setvolume(volume)
 
     ########################################
-    def open_file_dialog(self):
+    def open_file_dialog(self, title=_("Select Files")):
         # 多选文件对话框.
-        open_dialog = gtk.FileChooserDialog(_("Select Files"),
+        open_dialog = gtk.FileChooserDialog(title,
                                             None,
                                             gtk.FILE_CHOOSER_ACTION_OPEN,
                                             (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
