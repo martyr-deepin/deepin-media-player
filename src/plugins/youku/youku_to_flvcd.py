@@ -23,9 +23,7 @@
 
 import re
 import sys
-import urllib
 import urllib2
-import datetime
  
 class YouToFlvcd(object):
     def __init__(self, type="youku"):

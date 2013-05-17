@@ -22,8 +22,6 @@
 
 
 from skin import app_theme
-from dtk.ui.menu import Menu
-import dtk.ui.tooltip as Tooltip
 from dtk.ui.draw import draw_pixbuf
 from dtk.ui.utils import color_hex_to_cairo, propagate_expose
 from locales import _ # 国际化翻译.
@@ -33,7 +31,6 @@ from widget.constant import SEEK_VALUE
 from widget.constant import VOLUME_VALUE
 from widget.utils   import get_config_path
 from widget.utils   import get_home_path, get_home_video, get_home_image, get_play_file_name, open_file
-from widget.utils   import is_file_audio
 from widget.utils   import ScanDir
 from widget.utils import is_file_sub_type
 from widget.utils import get_play_file_path, get_play_file_type
@@ -51,12 +48,15 @@ from mplayer.player import LDMP, set_ascept_function, unset_flags, set_flags, Pl
 from mplayer.player import STARTING_STATE, PAUSE_STATE
 from mplayer.player import ASCEPT_4X3_STATE, ASCEPT_16X9_STATE, ASCEPT_5X4_STATE
 from mplayer.player import ASCEPT_16X10_STATE, ASCEPT_1_85X1_STATE, ASCEPT_2_35X1_STATE, ASCEPT_FULL_STATE, ASCEPT_DEFULAT
+'''
 from mplayer.player import (ERROR_RETRY_WITH_MMSHTTP, ERROR_RESOLVE_AF_INET, ERROR_SOCKET_CONNECT,
                             ERROR_FILE_FORMAT, ERROR_DVD_DEVICE, ERROR_RETRY_ALSA_BUSY,
                             ERROR_RETRY_WITH_HTTP, ERROR_RETRY_WITH_HTTP_AND_PLAYLIST,
                             ERROR_RETRY_WITH_PLAYLIST)
-from mplayer.player import TYPE_FILE, TYPE_CD, TYPE_DVD, TYPE_VCD, TYPE_NETWORK, TYPE_DVB, TYPE_TV
-from mplayer.playlist import PlayList, SINGLA_PLAY, ORDER_PLAY, RANDOM_PLAY, SINGLE_LOOP, LIST_LOOP 
+'''
+#from mplayer.player import TYPE_FILE, TYPE_CD, TYPE_DVD, TYPE_VCD, TYPE_NETWORK, TYPE_DVB, TYPE_TV
+from mplayer.player import TYPE_DVD
+from mplayer.playlist import PlayList#, SINGLA_PLAY, ORDER_PLAY, RANDOM_PLAY, SINGLE_LOOP, LIST_LOOP 
 # 播放列表 .       0        1       2         3          4
 #           { 单曲播放、顺序播放、随机播放、单曲循环播放、列表循环播放、}
 #            SINGLA_PLAY ... ...                ...LIST_LOOP
@@ -194,7 +194,7 @@ class MediaPlayer(object):
         self.concise_check    = False # 简洁模式 # True 简洁模式 False 普通模式
         #
         #SINGLA_PLAY, ORDER_PLAY, RANDOM_PLAY, SINGLE_LOOP, LIST_LOOP 
-        self.play_list.set_state(LIST_LOOP)
+        #self.play_list.set_state(LIST_LOOP)
         self.argv_path_list = sys.argv # save command argv.        
 
     def __init_double_timer(self):
@@ -1364,7 +1364,6 @@ class MediaPlayer(object):
 
     def mid_combo_menu_hide_event(self, widget):
         # 复位中间按钮的菜单.
-        from widget.movie_menu import Menu
         remove_items = self.mid_combo_menu.menu_items[-2:]
         self.mid_combo_menu.clear_menu_items(remove_items)
 

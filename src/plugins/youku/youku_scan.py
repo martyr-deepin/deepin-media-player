@@ -120,7 +120,6 @@ if __name__ == "__main__":
     print "测试地址解析"
     flvcd_addr_list = flvcd.parse(info_list[int(sys.argv[2])][1])
     print flvcd_addr_list
-    import os
     
     #os.system("mplayer %s" % flvcd_addr_list[0])
     bus = dbus.SessionBus()

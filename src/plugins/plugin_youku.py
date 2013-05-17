@@ -188,9 +188,9 @@ class PluginYouku(object):
             self.vbox.pack_start(btn, False, False)
             self.vbox.show_all()
         #######################################
-        page_num  = scan_info[1] # 一页的总页数.
-        sum       = scan_info[2] # 全部搜索的数.
-        page_sum  = min(sum/page_num, 100)
+        #page_num  = scan_info[1] # 一页的总页数.
+        #sum       = scan_info[2] # 全部搜索的数.
+        #page_sum  = min(sum/page_num, 100)
         #print "总的页数:", page_sum
 
     def btn_connect_addr_to(self, widget, info):

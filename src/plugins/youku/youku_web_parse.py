@@ -33,7 +33,7 @@ class YoukuWebParse(object):
     def scan_movie_leave(self, addr):
         temp_info = None
         url = addr
-        req = urllib2.Request(url=url, headers=self.headers)
+        #req = urllib2.Request(url=url, headers=self.headers)
         data = urllib2.urlopen(url).read()
         #
         sounp = BeautifulSoup(data)
@@ -46,7 +46,7 @@ class YoukuWebParse(object):
 
     def scan_3_leave(self, addr):
         url = addr
-        req = urllib2.Request(url=url, headers=self.headers)
+        #req = urllib2.Request(url=url, headers=self.headers)
         data = urllib2.urlopen(url).read()
         #
         sounp = BeautifulSoup(data)
@@ -74,7 +74,7 @@ class YoukuWebParse(object):
         url = addr + "%d.html" % (index)
         #print url
         #data = urllib2.urlopen(url).read()
-        req = urllib2.Request(url=url, headers=self.headers)
+        #req = urllib2.Request(url=url, headers=self.headers)
         data = urllib2.urlopen(url).read()
         #
         sounp = BeautifulSoup(data)

@@ -20,26 +20,21 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from skin import app_theme
 from dtk.ui.skin_config  import skin_config
 from dtk.ui.application  import Application
 from dtk.ui.utils import propagate_expose
 from widget.movie_paned  import Paned
-from widget.movie_window import MovieWindow
 from widget.playlistview import PlayListView
 from widget.toolbar      import ToolBar
 from widget.draw         import draw_pixbuf
 from widget.color        import alpha_color_hex_to_cairo
 from widget.bottom_toolbar import BottomToolBar
-from widget.play_control_panel import PlayControlPanel
 from widget.play_menus   import PlayMenus
 from widget.utils        import get_system_tooptil_icon
 from widget.movie_menu   import ScreenMidCombo
 from locales import _
 import pynotify
-import cairo
 import gtk
-import sys
 from deepin_utils.file import get_parent_dir
 import os
 
