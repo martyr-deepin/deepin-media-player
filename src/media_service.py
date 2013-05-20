@@ -90,6 +90,11 @@ DATA_FORMAT = \
         <method name="PlayPause"/>
         <method name="Stop"/>
         <method name="Play"/>
+        <method name="Forward"/>
+        <method name="FallBack"/>
+        <method name="AddVolume"/>
+        <method name="DecreaseVolume"/>
+        <method name="Slience"/>
         <method name="Seek">
             <arg direction="in" name="Offset" type="x"/>
         </method>
@@ -241,6 +246,27 @@ class SomeObject(dbus.service.Object):
     @dbus.service.method(DEEPIN_MEDIA_DBUS_NAME)
     def Raise(self): # prev play file.
         pass
+
+    # 语音API.
+    @dbus.service.method(DEEPIN_MEDIA_PLAYER_DBUS_NAME)
+    def AddVolume(self): # 增大音量.
+        self.this.key_inc_volume()
+
+    @dbus.service.method(DEEPIN_MEDIA_PLAYER_DBUS_NAME)
+    def DecreaseVolume(self): # 减少音量.
+        self.this.key_dec_volume()
+
+    @dbus.service.method(DEEPIN_MEDIA_PLAYER_DBUS_NAME)
+    def Slience(self): #  静音.
+        self.this.mute_umute()
+
+    @dbus.service.method(DEEPIN_MEDIA_PLAYER_DBUS_NAME)
+    def Forward(self): #  快进.
+        self.this.key_fseek()
+
+    @dbus.service.method(DEEPIN_MEDIA_PLAYER_DBUS_NAME)
+    def FallBack(self): #  后退.
+        self.this.key_bseek()
 
     @dbus.service.method(dbus.PROPERTIES_IFACE, #DEEPIN_MEDIA_DBUS_NAME_PROPERTY,
                          in_signature='ss', out_signature='v')
