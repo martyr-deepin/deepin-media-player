@@ -389,10 +389,18 @@ class MediaPlayer(object):
         cr.rectangle(rect.x, rect.y, rect.width, rect.height)
         cr.fill()
         
+    def set_event_focus_timeout(self):
+        # bug: 当点击菜单的时候，空格菜单也弹出来，影响用户体验.
+        # 暂时性解决办法.
+        self.gui.screen.set_can_focus(True)
+        self.gui.screen.grab_focus()
+        return True
+
     def init_media_player(self, widget): # screen realize.        
         '''初始化mplayer后端'''
         self.gui.screen_paned.this = self
         self.ldmp.xid = widget.window.xid
+        gtk.timeout_add(1500, self.set_event_focus_timeout)
         self.ldmp.connect("get-time-pos",       self.ldmp_get_time_pos)
         self.ldmp.connect("get-time-length",    self.ldmp_get_time_length)
         self.ldmp.connect("end-media-player",   self.ldmp_end_media_player)
