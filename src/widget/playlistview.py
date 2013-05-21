@@ -31,7 +31,7 @@ from listview_base import Text
 from treeview_base import TreeViewBase
 from net_search import Search
 from notebook import NoteBook
-from color import alpha_color_hex_to_cairo, color_hex_to_cairo
+from color import alpha_color_hex_to_cairo
 from utils import get_text_size
 from draw  import draw_text, draw_pixbuf
 import gtk
