@@ -71,7 +71,7 @@ class PlayListView(object):
         self.search        = Search()
         self.search_ali.add(self.search)
         #
-        self.search_ali.set_padding(5, 5, 12, 12)
+        self.search_ali.set_padding(7, 5, 12, 12)
         self.tree_view_vbox.pack_start(self.search_ali, False, False)
         self.tree_view_vbox.pack_start(self.tree_scroll_win, True, True)
         self.search_ali.connect("expose-event", self.search_ali_expose_event)
@@ -198,10 +198,11 @@ class PlayListView(object):
             text_color = "#a8a8a8"
         ##########
         # 画图标.
-        draw_pixbuf(node_event.cr,
-                    pixbuf,
-                    icon_x,
-                    icon_y) 
+        if node_event.node.nodes != []:
+            draw_pixbuf(node_event.cr,
+                        pixbuf,
+                        icon_x,
+                        icon_y) 
         # 画文本.
         text_x_padding = 15
         text_size = 9
