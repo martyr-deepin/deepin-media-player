@@ -341,6 +341,8 @@ class SomeObject(dbus.service.Object):
                          in_signature='as', out_signature='')
     def argv_to_play_list(self, argv):
         self.this.argv_add_to_play_list(argv)
+        # 当用户播放的时候弹到最上面.
+        self.this.gui.app.window.present()
 
 
     
