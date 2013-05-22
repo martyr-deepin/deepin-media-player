@@ -33,7 +33,7 @@ class_name = "PluginYouku"
 version = "1.0"
 auto_check = False
 author = "hongmingman 372687266@qq.com"
-about = "这是一个播放优酷网络视频的插件"
+about = '''优酷视频的插件，由社区爱好者开发。我们不对使用该插件造成的任何结果负责。如有问题，请联系插件原作者。'''
 
 
 class PluginYouku(object):

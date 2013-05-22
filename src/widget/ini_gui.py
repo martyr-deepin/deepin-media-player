@@ -1695,7 +1695,7 @@ class Plugin(gtk.VBox):
         #title_box.pack_start(create_separator_box(), False, True)
         title_box.pack_start(self.list_view_align, False, False)
         title_box.pack_start(Label(""), False, False)
-        title_box.pack_start(Label("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -", 
+        title_box.pack_start(Label("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -", 
                                   text_color=app_theme.get_color("labelText")), 
                                   False, False)
         # 显示title信息.
@@ -1863,7 +1863,7 @@ class About(gtk.VBox):
     def __init__(self):
         gtk.VBox.__init__(self)
         main_box = gtk.VBox(spacing=15)
-        logo_image = ImageBox(app_theme.get_pixbuf("logo_48.png"))
+        logo_image = ImageBox(app_theme.get_pixbuf("logo.png"))
         light_color = app_theme.get_color("labelText")
         logo_name = Label(_("Deepin Media Player"), text_size=10)
         logo_box = gtk.HBox(spacing=2)
@@ -1871,7 +1871,7 @@ class About(gtk.VBox):
         logo_box.pack_start(logo_name, False, False)
         
         version_label = Label(_("Version:"))
-        version_content = Label("V2.0", light_color)
+        version_content = Label("V3.0", light_color)
         info_box = gtk.HBox(spacing=5)
         info_align = gtk.Alignment()
         info_align.set(0.5, 1, 1, 1)
