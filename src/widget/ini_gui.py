@@ -1705,7 +1705,7 @@ class Plugin(gtk.VBox):
         self.author_label = Label("", text_size=8)
         title_box.pack_start(self.author_label, False, False) 
         # 显示关于信息.
-        self.about_label = Label("", text_size=8)
+        self.about_label = Label("", text_size=8, wrap_width=480)
         title_box.pack_start(self.about_label, False, False) 
         #
         title_box_align = gtk.Alignment()
@@ -1877,7 +1877,7 @@ class About(gtk.VBox):
         info_align.set(0.5, 1, 1, 1)
         info_align.add(info_box)
         info_box.pack_start(version_label, False, False)
-        info_box.pack_start(version_content, False, False)
+        info_box.pack_start(version_content, True, True)
         
         title_box = gtk.HBox(spacing=140)
         title_box.pack_start(logo_box, True, True)
