@@ -689,13 +689,13 @@ class SystemSet(gtk.VBox):
         title_box_align.set(0, 0, 1, 1)
         title_box_align.add(title_box)
         # 启动系统气泡提示.
-        self.start_sys_bubble_msg = CheckButton(_("启用系统气泡提示")) 
+        self.start_sys_bubble_msg = CheckButton(_("Enable system popup notification")) 
         self.start_sys_bubble_msg.set_active(False)
         bubble_check = self.ini.get("SystemSet", "start_sys_bubble_msg")
         if bubble_check and "true" == bubble_check.lower():
             self.start_sys_bubble_msg.set_active(True)
         # 启动播放窗口提示.
-        self.start_play_win_msg = CheckButton(_("启用播放窗口提示")) 
+        self.start_play_win_msg = CheckButton(_("Enable play popup notification")) 
         self.start_play_win_msg.set_active(False)
         play_win_check = self.ini.get("SystemSet", "start_play_win_msg")
         if play_win_check and "true" == play_win_check.lower():
