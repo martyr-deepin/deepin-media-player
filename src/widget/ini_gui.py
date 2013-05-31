@@ -348,7 +348,7 @@ class IniGui(DialogBox):
         self.screenshot_item = NormalItem(_("Screenshot"))
         
         self.keyboard_expand_item = ExpandItem(_("Keyboard"), None)
-        self.keyboard_expand_item.add_childs([_("Video Control"),
+        self.keyboard_expand_item.add_childs([_("Video"),
                                               _("Subtitle"),
                                               _("Other"),
                                               ])
@@ -496,7 +496,7 @@ class Configure(gtk.VBox):
         self.class_dict = {
             _("Playback"):FilePlay(),
             _("General"):SystemSet(),
-            _("Video Control"):PlayControl(),
+            _("Video"):PlayControl(),
             _("Subtitle"):SubKey(),
             _("Other"):OtherKey(),
             _("Subtitles"):SubSet(),
@@ -508,7 +508,7 @@ class Configure(gtk.VBox):
         # Init all configure gui class.
         self.file_play = self.class_dict[_("Playback")]
         self.system_set = self.class_dict[_("General")]
-        self.play_control = self.class_dict[_("Video Control")]
+        self.play_control = self.class_dict[_("Video")]
         self.sub_key = self.class_dict[_("Subtitle")] 
         self.other_key = self.class_dict[_("Other")]
         self.sub_set = self.class_dict[_("Subtitles")]
@@ -787,7 +787,7 @@ class PlayControl(gtk.VBox):
         gtk.VBox.__init__(self)
         self.ini = Config(config_path)
         self.fixed = gtk.Fixed()
-        self.label = Label(_("Video Control"))
+        self.label = Label(_("Video"))
         self.label.set_size_request(label_width, label_height)
         # heparator.
         self.heparator = create_separator_box()
