@@ -97,12 +97,10 @@ msgid "Screenshot"
 msgstr "截圖設定"
 
 #: ../src/media_player.py:1340
-#, fuzzy
 msgid "Open CDROM"
 msgstr "打開網址"
 
 #: ../src/media_player.py:1384
-#, fuzzy
 msgid "Save Directory"
 msgstr "深度影音打開資料夾對話框"
 
@@ -799,7 +797,6 @@ msgid "Remove Selected"
 msgstr "刪除選中項目"
 
 #: ../src/widget/play_menus.py:298
-#, fuzzy
 msgid "Save Playlist"
 msgstr "播放清單"
 
@@ -880,7 +877,6 @@ msgid "Load subtitles"
 msgstr "手動載入字幕"
 
 #: ../src/widget/play_menus.py:360
-#, fuzzy
 msgid "Select a subtitle"
 msgstr "字幕選擇"
 
@@ -1115,7 +1111,6 @@ msgid "name"
 msgstr ""
 
 #: ../src/widget/ini_gui.py:1655
-#, fuzzy
 msgid "version"
 msgstr "版本："
 
@@ -1128,7 +1123,6 @@ msgid "author"
 msgstr ""
 
 #: ../src/widget/ini_gui.py:1655
-#, fuzzy
 msgid "about"
 msgstr "關於軟體"
 
@@ -1151,7 +1145,6 @@ msgstr ""
 "深度影音播放器是自由軟體，遵循自由軟體基金會發布的GNU通用公共許可證第三版。"
 
 #: ../src/screen_mid/open_url.py:32
-#, fuzzy
 msgid "Open Url"
 msgstr "打開網址"
 
