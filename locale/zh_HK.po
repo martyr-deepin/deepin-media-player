@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-31 13:08+0800\n"
+"POT-Creation-Date: 2013-05-31 13:14+0800\n"
 "PO-Revision-Date: 2012-07-12 15:53+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -17,11 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/media_service.py:164
-msgid "深度影音"
-msgstr ""
-
-#: ../src/gui.py:59 ../src/widget/ini_gui.py:1868
+#: ../src/media_service.py:164 ../src/gui.py:59 ../src/widget/ini_gui.py:1868
 msgid "Deepin Media Player"
 msgstr "深度影音"
 
