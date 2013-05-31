@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-31 13:14+0800\n"
+"POT-Creation-Date: 2013-05-31 13:19+0800\n"
 "PO-Revision-Date: 2012-07-12 15:53+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -22,12 +22,15 @@ msgid "Deepin Media Player"
 msgstr "深度影音"
 
 #: ../src/media_player_function.py:56 ../src/widget/movie_menu.py:57
-msgid "打开文件夹"
-msgstr ""
+#: ../src/widget/play_menus.py:176 ../src/widget/play_menus.py:367
+#: ../src/widget/ini_gui.py:1457 ../src/widget/ini_gui.py:1579
+msgid "Open Directory"
+msgstr "打开文件夹"
 
 #: ../src/media_player_function.py:58 ../src/widget/movie_menu.py:58
-msgid "打开网址"
-msgstr ""
+#: ../src/widget/play_menus.py:368
+msgid "Open URL"
+msgstr "打开网址"
 
 #: ../src/media_player_function.py:237
 msgid "Disable always-on-top"
@@ -94,8 +97,9 @@ msgid "Screenshot"
 msgstr "截图设置"
 
 #: ../src/media_player.py:1340
-msgid "打开CDROM"
-msgstr ""
+#, fuzzy
+msgid "Open CDROM"
+msgstr "打开网址"
 
 #: ../src/media_player.py:1384
 #, fuzzy
@@ -645,11 +649,6 @@ msgstr "禁用"
 msgid "Volume"
 msgstr "音量"
 
-#: ../src/widget/play_menus.py:176 ../src/widget/play_menus.py:367
-#: ../src/widget/ini_gui.py:1457 ../src/widget/ini_gui.py:1579
-msgid "Open Directory"
-msgstr "打开文件夹"
-
 #: ../src/widget/play_menus.py:177
 msgid "Play Disc"
 msgstr "播放光盘"
@@ -883,10 +882,6 @@ msgstr "手动载入字幕"
 #: ../src/widget/play_menus.py:360
 msgid "Select a subtitle"
 msgstr "字幕选择"
-
-#: ../src/widget/play_menus.py:368
-msgid "Open URL"
-msgstr "打开网址"
 
 #: ../src/widget/play_menus.py:370
 msgid "Full Screen On/Off"

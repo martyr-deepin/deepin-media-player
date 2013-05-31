@@ -1337,7 +1337,7 @@ class MediaPlayer(object):
         cdroms = scan_cdrom() 
         # 如果有光盘.
         if len(cdroms):
-            item = (self.open_cdrom.get_pixbuf(), _("打开CDROM"))
+            item = (self.open_cdrom.get_pixbuf(), _("Open CDROM"))
             self.mid_combo_menu.add_menu_index_items(0, item)
         for cdrom in cdroms:
             cdrom_child_menu = Menu()

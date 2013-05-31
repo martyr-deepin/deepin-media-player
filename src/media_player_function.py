@@ -53,9 +53,9 @@ class MediaPlayFun(object):
         self.gui.screen_mid_combo.select_btn.connect("clicked", self.__mid_combo_menu_clicked_event)
 
     def __mid_combo_menu_actiav_event(self, menu, index):
-        if index == _("打开文件夹"): # 打开文件夹对话框.
+        if index == _("Open Directory"): # 打开文件夹对话框.
             self.this.open_dirs_to_play_list()
-        elif index == _("打开网址"): # 打开地址对话框.
+        elif index == _("Open URL"): # 打开地址对话框.
             self.this.open_url_dialog(True)
 
     def __mid_combo_menu_clicked_event(self, widget):

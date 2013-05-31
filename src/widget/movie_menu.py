@@ -53,9 +53,9 @@ class Menu(MenuWindow):
         self.open_url = app_theme.get_pixbuf("screen_mid/screen_menu_open_url.png")
         self.menu_items = []
         if self.menu_items == []:
-            temp_items = [#(self.open_cdrom.get_pixbuf(), _("打开CDROM")),
-                          (self.open_dir.get_pixbuf(), _("打开文件夹")),
-                          (self.open_url.get_pixbuf(), _("打开网址")),]
+            temp_items = [#(self.open_cdrom.get_pixbuf(), _("Open CDROM")),
+                          (self.open_dir.get_pixbuf(), _("Open Directory")),
+                          (self.open_url.get_pixbuf(), _("Open URL")),]
             self.set_menu_items(temp_items)
 
     def set_menu_items(self, items):
@@ -271,7 +271,7 @@ class ScreenMidCombo(gtk.HBox):
         self.open_cdrom = app_theme.get_pixbuf("screen_mid/screen_menu_open_cdrom.png")
         #
         ''' 添加子菜单的cdrom.
-        item = (self.open_cdrom.get_pixbuf(), _("打开CDROM"))
+        item = (self.open_cdrom.get_pixbuf(), _("Open CDROM"))
         self.menu.add_menu_index_items(0, item)
         cdrom_child_menu = Menu()
         cdrom_child_menu.connect("menu-active", self.__cdrom_child_menu_active)

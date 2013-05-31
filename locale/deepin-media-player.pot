@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-31 13:14+0800\n"
+"POT-Creation-Date: 2013-05-31 13:19+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,11 +22,14 @@ msgid "Deepin Media Player"
 msgstr ""
 
 #: ../src/media_player_function.py:56 ../src/widget/movie_menu.py:57
-msgid "打开文件夹"
+#: ../src/widget/play_menus.py:176 ../src/widget/play_menus.py:367
+#: ../src/widget/ini_gui.py:1457 ../src/widget/ini_gui.py:1579
+msgid "Open Directory"
 msgstr ""
 
 #: ../src/media_player_function.py:58 ../src/widget/movie_menu.py:58
-msgid "打开网址"
+#: ../src/widget/play_menus.py:368
+msgid "Open URL"
 msgstr ""
 
 #: ../src/media_player_function.py:237
@@ -94,7 +97,7 @@ msgid "Screenshot"
 msgstr ""
 
 #: ../src/media_player.py:1340
-msgid "打开CDROM"
+msgid "Open CDROM"
 msgstr ""
 
 #: ../src/media_player.py:1384
@@ -644,11 +647,6 @@ msgstr ""
 msgid "Volume"
 msgstr ""
 
-#: ../src/widget/play_menus.py:176 ../src/widget/play_menus.py:367
-#: ../src/widget/ini_gui.py:1457 ../src/widget/ini_gui.py:1579
-msgid "Open Directory"
-msgstr ""
-
 #: ../src/widget/play_menus.py:177
 msgid "Play Disc"
 msgstr ""
@@ -880,10 +878,6 @@ msgstr ""
 
 #: ../src/widget/play_menus.py:360
 msgid "Select a subtitle"
-msgstr ""
-
-#: ../src/widget/play_menus.py:368
-msgid "Open URL"
 msgstr ""
 
 #: ../src/widget/play_menus.py:370
