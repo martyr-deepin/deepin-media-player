@@ -1871,7 +1871,7 @@ class About(gtk.VBox):
         logo_box.pack_start(logo_name, False, False)
         
         version_label = Label(_("Version:"))
-        version_content = Label("V3.0", light_color)
+        version_content = Label("V2.0", light_color)
         info_box = gtk.HBox(spacing=5)
         info_align = gtk.Alignment()
         info_align.set(0.5, 1, 1, 1)
