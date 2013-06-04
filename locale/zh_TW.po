@@ -2,7 +2,7 @@
 # PACKAGE 软件包的正體中文翻译.
 # Copyright (C) 2012 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# Automatically generated, 2012.
+# Wang Dianjin <wangdianjin@linuxdeepin.com>, 2013.
 #
 msgid ""
 msgstr ""
@@ -12,7 +12,7 @@ msgstr ""
 "PO-Revision-Date: 2012-07-12 15:53+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
-"Language: zh_CN\n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -25,7 +25,7 @@ msgstr "深度影音"
 #: ../src/widget/play_menus.py:367 ../src/widget/ini_gui.py:1457
 #: ../src/widget/ini_gui.py:1579 ../src/widget/movie_menu.py:57
 msgid "Open Directory"
-msgstr "打開資料夾"
+msgstr "開啟目錄"
 
 #: ../src/media_player_function.py:58 ../src/widget/play_menus.py:368
 #: ../src/widget/movie_menu.py:58
@@ -34,11 +34,11 @@ msgstr "打開網址"
 
 #: ../src/media_player_function.py:237
 msgid "Disable always-on-top"
-msgstr ""
+msgstr "停用「永遠在最上層」"
 
 #: ../src/media_player_function.py:242 ../src/widget/toolbar.py:79
 msgid "Always on Top"
-msgstr "置頂"
+msgstr "永遠在最上層"
 
 #: ../src/media_player.py:592 ../src/format_conv/transmageddon.py:584
 #: ../src/format_conv/transmageddon.py:889
@@ -54,15 +54,15 @@ msgstr "播放"
 
 #: ../src/media_player.py:610
 msgid "seek : "
-msgstr ""
+msgstr "跳轉"
 
 #: ../src/media_player.py:613
 msgid "fseek : "
-msgstr ""
+msgstr "往前"
 
 #: ../src/media_player.py:616
 msgid "bseek : "
-msgstr ""
+msgstr "往後"
 
 #: ../src/media_player.py:691 ../src/media_player.py:710
 #: ../src/widget/play_menus.py:192 ../src/widget/ini_gui.py:907
@@ -74,7 +74,7 @@ msgstr "全螢幕"
 
 #: ../src/media_player.py:701
 msgid "Quit Full Screen"
-msgstr "退出全螢幕"
+msgstr "離開全螢幕"
 
 #: ../src/media_player.py:741 ../src/widget/ini_gui.py:847
 #: ../src/widget/ini_gui.py:1264 ../src/widget/ini_gui.py:1330
