@@ -84,11 +84,11 @@ msgstr "暫停/播放"
 
 #: ../src/media_player.py:891
 msgid "Select Files"
-msgstr "深度影音打開文件對話框"
+msgstr "深度影音開啟檔案對話框"
 
 #: ../src/media_player.py:964
 msgid "Select Directory"
-msgstr "深度影音打開資料夾對話框"
+msgstr "深度影音開啟資料夾對話框"
 
 #: ../src/media_player.py:1070 ../src/widget/ini_gui.py:348
 #: ../src/widget/ini_gui.py:403 ../src/widget/ini_gui.py:503
@@ -98,7 +98,7 @@ msgstr "截圖設定"
 
 #: ../src/media_player.py:1340
 msgid "Open CDROM"
-msgstr "打開網址"
+msgstr "打開光碟 CD"
 
 #: ../src/media_player.py:1384
 msgid "Save Directory"
@@ -402,7 +402,7 @@ msgstr "指定位置 : "
 
 #: ../src/format_conv/gui.py:109
 msgid "Phone model : "
-msgstr "設備型號 : "
+msgstr "裝置型號 : "
 
 #: ../src/format_conv/gui.py:110
 msgid "Resolution : "
@@ -427,7 +427,7 @@ msgstr "任務管理器"
 
 #: ../src/format_conv/gui.py:165 ../src/format_conv/gui.py:306
 msgid "No Presets"
-msgstr "自定義"
+msgstr "自訂"
 
 #: ../src/format_conv/gui.py:170 ../src/format_conv/gui.py:318
 #: ../src/format_conv/transmageddon.py:1020
@@ -505,7 +505,7 @@ msgstr "任務管理器"
 #: ../src/widget/play_menus.py:175 ../src/widget/play_menus.py:366
 #: ../src/widget/play_control_panel.py:75
 msgid "Open File"
-msgstr "打開文件"
+msgstr "打開檔案"
 
 #: ../src/widget/play_menus.py:177
 msgid "Play Disc"
@@ -1020,7 +1020,7 @@ msgstr "按當前顯示的畫面尺寸截圖"
 
 #: ../src/widget/ini_gui.py:1655
 msgid "name"
-msgstr ""
+msgstr "名稱"
 
 #: ../src/widget/ini_gui.py:1655
 msgid "version"
@@ -1028,15 +1028,15 @@ msgstr "版本："
 
 #: ../src/widget/ini_gui.py:1655
 msgid "auto"
-msgstr ""
+msgstr "自動"
 
 #: ../src/widget/ini_gui.py:1655 ../src/widget/ini_gui.py:1750
 msgid "author"
-msgstr ""
+msgstr "作者"
 
 #: ../src/widget/ini_gui.py:1655
 msgid "about"
-msgstr "關於軟體"
+msgstr "關於"
 
 #: ../src/widget/ini_gui.py:1873
 msgid "Version:"
@@ -1050,7 +1050,7 @@ msgid ""
 "\n"
 "\tDeepin Media Player is free software licensed under GNU GPLv3. "
 msgstr ""
-"\t﻿深度影音播放器是Linux Deepin團隊為廣大linux用戶量身開發的一款影音播放軟體。"
+"深度影音播放器是Linux Deepin團隊為廣大linux用戶量身開發的一款影音播放軟體。"
 "支持多種影片格式，支援多模式切換，具有播放預覽、在線字幕、影片截圖、影片格式"
 "轉換、光碟播放、界面更換等幾大特點。\n"
 "\n"
@@ -1070,31 +1070,31 @@ msgstr "視頻信息"
 
 #: ../src/video_info/gui.py:74
 msgid "decoding information"
-msgstr "編碼信息"
+msgstr "編碼訊息"
 
 #: ../src/video_info/gui.py:96
 msgid "File path:"
-msgstr "文件路徑:"
+msgstr "檔案路徑:"
 
 #: ../src/video_info/gui.py:110
 msgid "File type:"
-msgstr "文件類型:"
+msgstr "檔案類型:"
 
 #: ../src/video_info/gui.py:111
 msgid "Resolution:"
-msgstr "解 晰 度  : "
+msgstr "解析度: "
 
 #: ../src/video_info/gui.py:112
 msgid "File size:"
-msgstr "文件大小:"
+msgstr "檔案大小:"
 
 #: ../src/video_info/gui.py:113
 msgid "Duration:"
-msgstr "媒體時間:"
+msgstr "時間長度:"
 
 #: ../src/video_info/gui.py:180
 msgid "Video stream info:"
-msgstr "影片信息"
+msgstr "影片串流信息"
 
 #: ../src/video_info/gui.py:181
 msgid ".Codec format:"
@@ -1114,11 +1114,11 @@ msgstr ". 影片碼率:"
 
 #: ../src/video_info/gui.py:185
 msgid ".Resolution:"
-msgstr ". 解 晰 度  : "
+msgstr ". 解析度: "
 
 #: ../src/video_info/gui.py:188
 msgid "Audio stream info:"
-msgstr "音訊信息"
+msgstr "音訊串流訊息"
 
 #: ../src/video_info/gui.py:189
 msgid ".codec format:"
@@ -1138,11 +1138,11 @@ msgstr ". 音訊碼率:"
 
 #: ../src/video_info/gui.py:193
 msgid ".Sampling:"
-msgstr ". 采 樣 數  :"
+msgstr ". 采樣數:"
 
 #: ../src/video_info/gui.py:194
 msgid "Copy info"
-msgstr "複製信息"
+msgstr "複製訊息"
 
 #: ../src/screen_mid/open_url.py:32
 msgid "Open Url"
@@ -1150,11 +1150,11 @@ msgstr "打開網址"
 
 #: ../src/screen_mid/open_url.py:41
 msgid "Ok"
-msgstr ""
+msgstr "確認"
 
 #: ../src/screen_mid/open_url.py:42
 msgid "Cancel"
-msgstr ""
+msgstr "取消"
 
 #~ msgid "Video Control"
 #~ msgstr "播放控製"
