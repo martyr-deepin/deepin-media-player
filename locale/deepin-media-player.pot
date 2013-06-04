@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-31 15:41+0800\n"
+"POT-Creation-Date: 2013-06-04 11:16+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,18 +17,18 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/media_service.py:164 ../src/gui.py:59 ../src/widget/ini_gui.py:1868
+#: ../src/gui.py:59 ../src/media_service.py:164 ../src/widget/ini_gui.py:1868
 msgid "Deepin Media Player"
 msgstr ""
 
-#: ../src/media_player_function.py:56 ../src/widget/movie_menu.py:57
-#: ../src/widget/play_menus.py:176 ../src/widget/play_menus.py:367
-#: ../src/widget/ini_gui.py:1457 ../src/widget/ini_gui.py:1579
+#: ../src/media_player_function.py:56 ../src/widget/play_menus.py:176
+#: ../src/widget/play_menus.py:367 ../src/widget/ini_gui.py:1457
+#: ../src/widget/ini_gui.py:1579 ../src/widget/movie_menu.py:57
 msgid "Open Directory"
 msgstr ""
 
-#: ../src/media_player_function.py:58 ../src/widget/movie_menu.py:58
-#: ../src/widget/play_menus.py:368
+#: ../src/media_player_function.py:58 ../src/widget/play_menus.py:368
+#: ../src/widget/movie_menu.py:58
 msgid "Open URL"
 msgstr ""
 
@@ -47,8 +47,8 @@ msgstr ""
 msgid "Pause"
 msgstr ""
 
-#: ../src/media_player.py:594 ../src/widget/play_control_panel.py:59
-#: ../src/widget/play_menus.py:262 ../src/widget/play_menus.py:374
+#: ../src/media_player.py:594 ../src/widget/play_menus.py:262
+#: ../src/widget/play_menus.py:374 ../src/widget/play_control_panel.py:59
 msgid "Play"
 msgstr ""
 
@@ -65,10 +65,10 @@ msgid "bseek : "
 msgstr ""
 
 #: ../src/media_player.py:691 ../src/media_player.py:710
-#: ../src/widget/togglehoverbutton.py:126 ../src/widget/init_ldmp.py:165
 #: ../src/widget/play_menus.py:192 ../src/widget/ini_gui.py:907
 #: ../src/widget/ini_gui.py:1265 ../src/widget/ini_gui.py:1330
-#: ../src/widget/ini_gui.py:1386
+#: ../src/widget/ini_gui.py:1386 ../src/widget/init_ldmp.py:165
+#: ../src/widget/togglehoverbutton.py:126
 msgid "Full Screen"
 msgstr ""
 
@@ -76,9 +76,9 @@ msgstr ""
 msgid "Quit Full Screen"
 msgstr ""
 
-#: ../src/media_player.py:741 ../src/widget/init_ldmp.py:163
-#: ../src/widget/ini_gui.py:847 ../src/widget/ini_gui.py:1264
-#: ../src/widget/ini_gui.py:1330 ../src/widget/ini_gui.py:1381
+#: ../src/media_player.py:741 ../src/widget/ini_gui.py:847
+#: ../src/widget/ini_gui.py:1264 ../src/widget/ini_gui.py:1330
+#: ../src/widget/ini_gui.py:1381 ../src/widget/init_ldmp.py:163
 msgid "Pause/Play"
 msgstr ""
 
@@ -108,54 +108,12 @@ msgstr ""
 msgid "清空最近播放列表"
 msgstr ""
 
-#: ../src/format_conv/transmageddon.py:92
-#: ../src/format_conv/transmageddon.py:434
-msgid "Audio-only"
+#: ../src/format_conv/new_button.py:32 ../src/format_conv/new_button.py:59
+msgid "Advanced settings"
 msgstr ""
 
-#: ../src/format_conv/transmageddon.py:585
-msgid "Time remaining : "
-msgstr ""
-
-#: ../src/format_conv/transmageddon.py:673
-#: ../src/format_conv/transmageddon.py:734
-#: ../src/format_conv/transmageddon.py:1311
-#: ../src/format_conv/transmageddon.py:1328
-msgid "No Video"
-msgstr ""
-
-#: ../src/format_conv/transmageddon.py:874
-msgid "Converting"
-msgstr ""
-
-#: ../src/format_conv/transmageddon.py:890
-msgid "continue"
-msgstr ""
-
-#: ../src/format_conv/transmageddon.py:900
-msgid "Open a directory"
-msgstr ""
-
-#: ../src/format_conv/transmageddon.py:902
-msgid "Delete"
-msgstr ""
-
-#: ../src/format_conv/transmageddon.py:903
-msgid "Remove complete tasks"
-msgstr ""
-
-#: ../src/format_conv/transmageddon.py:1020 ../src/format_conv/gui.py:170
-#: ../src/format_conv/gui.py:318
-msgid "No Model"
-msgstr ""
-
-#: ../src/format_conv/conv_task_gui.py:57
-msgid "Task Manager for format conversion"
-msgstr ""
-
-#: ../src/format_conv/conv_task_gui.py:82 ../src/format_conv/gui.py:125
-#: ../src/video_info/gui.py:66 ../src/widget/ini_gui.py:388
-msgid "Close"
+#: ../src/format_conv/new_button.py:33
+msgid "('button_size', 100)"
 msgstr ""
 
 #: ../src/format_conv/gui.py:43
@@ -458,12 +416,22 @@ msgstr ""
 msgid "Start"
 msgstr ""
 
+#: ../src/format_conv/gui.py:125 ../src/format_conv/conv_task_gui.py:82
+#: ../src/widget/ini_gui.py:388 ../src/video_info/gui.py:66
+msgid "Close"
+msgstr ""
+
 #: ../src/format_conv/gui.py:129 ../src/widget/play_menus.py:256
 msgid "Task Manager"
 msgstr ""
 
 #: ../src/format_conv/gui.py:165 ../src/format_conv/gui.py:306
 msgid "No Presets"
+msgstr ""
+
+#: ../src/format_conv/gui.py:170 ../src/format_conv/gui.py:318
+#: ../src/format_conv/transmageddon.py:1020
+msgid "No Model"
 msgstr ""
 
 #: ../src/format_conv/gui.py:194
@@ -494,157 +462,49 @@ msgstr ""
 msgid "Choose a directory"
 msgstr ""
 
-#: ../src/format_conv/new_button.py:32 ../src/format_conv/new_button.py:59
-msgid "Advanced settings"
+#: ../src/format_conv/transmageddon.py:92
+#: ../src/format_conv/transmageddon.py:434
+msgid "Audio-only"
 msgstr ""
 
-#: ../src/format_conv/new_button.py:33
-msgid "('button_size', 100)"
+#: ../src/format_conv/transmageddon.py:585
+msgid "Time remaining : "
 msgstr ""
 
-#: ../src/video_info/gui.py:41 ../src/widget/play_menus.py:382
-msgid "Properties"
+#: ../src/format_conv/transmageddon.py:673
+#: ../src/format_conv/transmageddon.py:734
+#: ../src/format_conv/transmageddon.py:1311
+#: ../src/format_conv/transmageddon.py:1328
+msgid "No Video"
 msgstr ""
 
-#: ../src/video_info/gui.py:74
-msgid "video information"
+#: ../src/format_conv/transmageddon.py:874
+msgid "Converting"
 msgstr ""
 
-#: ../src/video_info/gui.py:74
-msgid "decoding information"
+#: ../src/format_conv/transmageddon.py:890
+msgid "continue"
 msgstr ""
 
-#: ../src/video_info/gui.py:96
-msgid "File path:"
+#: ../src/format_conv/transmageddon.py:900
+msgid "Open a directory"
 msgstr ""
 
-#: ../src/video_info/gui.py:110
-msgid "File type:"
+#: ../src/format_conv/transmageddon.py:902
+msgid "Delete"
 msgstr ""
 
-#: ../src/video_info/gui.py:111
-msgid "Resolution:"
+#: ../src/format_conv/transmageddon.py:903
+msgid "Remove complete tasks"
 msgstr ""
 
-#: ../src/video_info/gui.py:112
-msgid "File size:"
+#: ../src/format_conv/conv_task_gui.py:57
+msgid "Task Manager for format conversion"
 msgstr ""
 
-#: ../src/video_info/gui.py:113
-msgid "Duration:"
-msgstr ""
-
-#: ../src/video_info/gui.py:118 ../src/widget/ini_gui.py:827
-msgid "Open directory"
-msgstr ""
-
-#: ../src/video_info/gui.py:180
-msgid "Video stream info:"
-msgstr ""
-
-#: ../src/video_info/gui.py:181
-msgid ".Codec format:"
-msgstr ""
-
-#: ../src/video_info/gui.py:182
-msgid ".Frame rate:"
-msgstr ""
-
-#: ../src/video_info/gui.py:183
-msgid ".Scaling:"
-msgstr ""
-
-#: ../src/video_info/gui.py:184
-msgid ".Video bit rate:"
-msgstr ""
-
-#: ../src/video_info/gui.py:185
-msgid ".Resolution:"
-msgstr ""
-
-#: ../src/video_info/gui.py:188
-msgid "Audio stream info:"
-msgstr ""
-
-#: ../src/video_info/gui.py:189
-msgid ".codec format:"
-msgstr ""
-
-#: ../src/video_info/gui.py:190
-msgid ".track number:"
-msgstr ""
-
-#: ../src/video_info/gui.py:191
-msgid ".Audio digit:"
-msgstr ""
-
-#: ../src/video_info/gui.py:192
-msgid ".Audio bit rate:"
-msgstr ""
-
-#: ../src/video_info/gui.py:193
-msgid ".Sampling:"
-msgstr ""
-
-#: ../src/video_info/gui.py:194
-msgid "Copy info"
-msgstr ""
-
-#: ../src/widget/togglehoverbutton.py:135 ../src/widget/play_menus.py:193
-#: ../src/widget/play_menus.py:371
-msgid "Normal Mode"
-msgstr ""
-
-#: ../src/widget/togglehoverbutton.py:144 ../src/widget/play_menus.py:194
-#: ../src/widget/play_menus.py:372
-msgid "Compact Mode"
-msgstr ""
-
-#: ../src/widget/movie_menu.py:254 ../src/widget/ini_gui.py:807
-msgid "Open file"
-msgstr ""
-
-#: ../src/widget/play_control_panel.py:48
-msgid "Stop"
-msgstr ""
-
-#: ../src/widget/play_control_panel.py:56 ../src/widget/play_menus.py:195
-#: ../src/widget/play_menus.py:314 ../src/widget/ini_gui.py:817
-msgid "Previous"
-msgstr ""
-
-#: ../src/widget/play_control_panel.py:67 ../src/widget/play_menus.py:196
-#: ../src/widget/play_menus.py:315 ../src/widget/ini_gui.py:837
-msgid "Next"
-msgstr ""
-
-#: ../src/widget/play_control_panel.py:75 ../src/widget/play_menus.py:175
-#: ../src/widget/play_menus.py:366
+#: ../src/widget/play_menus.py:175 ../src/widget/play_menus.py:366
+#: ../src/widget/play_control_panel.py:75
 msgid "Open File"
-msgstr ""
-
-#: ../src/widget/toolbar.py:64 ../src/widget/play_menus.py:222
-msgid "100%"
-msgstr ""
-
-#: ../src/widget/toolbar.py:74 ../src/widget/play_menus.py:223
-msgid "150%"
-msgstr ""
-
-#: ../src/widget/play_list_button.py:35
-msgid "Playlist"
-msgstr ""
-
-#: ../src/widget/init_ldmp.py:158 ../src/widget/ini_gui.py:1264
-#: ../src/widget/ini_gui.py:1265 ../src/widget/ini_gui.py:1266
-#: ../src/widget/ini_gui.py:1319 ../src/widget/ini_gui.py:1379
-#: ../src/widget/ini_gui.py:1384 ../src/widget/ini_gui.py:1389
-msgid "Disabled"
-msgstr ""
-
-#: ../src/widget/init_ldmp.py:167 ../src/widget/ini_gui.py:1266
-#: ../src/widget/ini_gui.py:1330 ../src/widget/ini_gui.py:1391
-msgid "Volume"
 msgstr ""
 
 #: ../src/widget/play_menus.py:177
@@ -671,6 +531,26 @@ msgstr ""
 msgid "Repeat (playlist)"
 msgstr ""
 
+#: ../src/widget/play_menus.py:193 ../src/widget/play_menus.py:371
+#: ../src/widget/togglehoverbutton.py:135
+msgid "Normal Mode"
+msgstr ""
+
+#: ../src/widget/play_menus.py:194 ../src/widget/play_menus.py:372
+#: ../src/widget/togglehoverbutton.py:144
+msgid "Compact Mode"
+msgstr ""
+
+#: ../src/widget/play_menus.py:195 ../src/widget/play_menus.py:314
+#: ../src/widget/ini_gui.py:817 ../src/widget/play_control_panel.py:56
+msgid "Previous"
+msgstr ""
+
+#: ../src/widget/play_menus.py:196 ../src/widget/play_menus.py:315
+#: ../src/widget/ini_gui.py:837 ../src/widget/play_control_panel.py:67
+msgid "Next"
+msgstr ""
+
 #: ../src/widget/play_menus.py:198 ../src/widget/play_menus.py:317
 msgid "Jump Forward"
 msgstr ""
@@ -690,6 +570,14 @@ msgstr ""
 
 #: ../src/widget/play_menus.py:221
 msgid "50%"
+msgstr ""
+
+#: ../src/widget/play_menus.py:222 ../src/widget/toolbar.py:64
+msgid "100%"
+msgstr ""
+
+#: ../src/widget/play_menus.py:223 ../src/widget/toolbar.py:74
+msgid "150%"
 msgstr ""
 
 #: ../src/widget/play_menus.py:224
@@ -894,6 +782,10 @@ msgstr ""
 msgid "DVD Navigation"
 msgstr ""
 
+#: ../src/widget/play_menus.py:382 ../src/video_info/gui.py:41
+msgid "Properties"
+msgstr ""
+
 #: ../src/widget/ini_gui.py:347 ../src/widget/ini_gui.py:395
 #: ../src/widget/ini_gui.py:401 ../src/widget/ini_gui.py:497
 #: ../src/widget/ini_gui.py:509 ../src/widget/ini_gui.py:545
@@ -994,6 +886,14 @@ msgstr ""
 msgid "Enable hotkeys"
 msgstr ""
 
+#: ../src/widget/ini_gui.py:807 ../src/widget/movie_menu.py:254
+msgid "Open file"
+msgstr ""
+
+#: ../src/widget/ini_gui.py:827 ../src/video_info/gui.py:118
+msgid "Open directory"
+msgstr ""
+
 #: ../src/widget/ini_gui.py:867
 msgid "Forward"
 msgstr ""
@@ -1074,6 +974,18 @@ msgstr ""
 msgid "Scroll"
 msgstr ""
 
+#: ../src/widget/ini_gui.py:1264 ../src/widget/ini_gui.py:1265
+#: ../src/widget/ini_gui.py:1266 ../src/widget/ini_gui.py:1319
+#: ../src/widget/ini_gui.py:1379 ../src/widget/ini_gui.py:1384
+#: ../src/widget/ini_gui.py:1389 ../src/widget/init_ldmp.py:158
+msgid "Disabled"
+msgstr ""
+
+#: ../src/widget/ini_gui.py:1266 ../src/widget/ini_gui.py:1330
+#: ../src/widget/ini_gui.py:1391 ../src/widget/init_ldmp.py:167
+msgid "Volume"
+msgstr ""
+
 #: ../src/widget/ini_gui.py:1414
 msgid "Load subtitles automatically"
 msgstr ""
@@ -1137,6 +1049,94 @@ msgid ""
 "online subtitles, screenshot taking and skin selection. \n"
 "\n"
 "\tDeepin Media Player is free software licensed under GNU GPLv3. "
+msgstr ""
+
+#: ../src/widget/play_control_panel.py:48
+msgid "Stop"
+msgstr ""
+
+#: ../src/widget/play_list_button.py:35
+msgid "Playlist"
+msgstr ""
+
+#: ../src/video_info/gui.py:74
+msgid "video information"
+msgstr ""
+
+#: ../src/video_info/gui.py:74
+msgid "decoding information"
+msgstr ""
+
+#: ../src/video_info/gui.py:96
+msgid "File path:"
+msgstr ""
+
+#: ../src/video_info/gui.py:110
+msgid "File type:"
+msgstr ""
+
+#: ../src/video_info/gui.py:111
+msgid "Resolution:"
+msgstr ""
+
+#: ../src/video_info/gui.py:112
+msgid "File size:"
+msgstr ""
+
+#: ../src/video_info/gui.py:113
+msgid "Duration:"
+msgstr ""
+
+#: ../src/video_info/gui.py:180
+msgid "Video stream info:"
+msgstr ""
+
+#: ../src/video_info/gui.py:181
+msgid ".Codec format:"
+msgstr ""
+
+#: ../src/video_info/gui.py:182
+msgid ".Frame rate:"
+msgstr ""
+
+#: ../src/video_info/gui.py:183
+msgid ".Scaling:"
+msgstr ""
+
+#: ../src/video_info/gui.py:184
+msgid ".Video bit rate:"
+msgstr ""
+
+#: ../src/video_info/gui.py:185
+msgid ".Resolution:"
+msgstr ""
+
+#: ../src/video_info/gui.py:188
+msgid "Audio stream info:"
+msgstr ""
+
+#: ../src/video_info/gui.py:189
+msgid ".codec format:"
+msgstr ""
+
+#: ../src/video_info/gui.py:190
+msgid ".track number:"
+msgstr ""
+
+#: ../src/video_info/gui.py:191
+msgid ".Audio digit:"
+msgstr ""
+
+#: ../src/video_info/gui.py:192
+msgid ".Audio bit rate:"
+msgstr ""
+
+#: ../src/video_info/gui.py:193
+msgid ".Sampling:"
+msgstr ""
+
+#: ../src/video_info/gui.py:194
+msgid "Copy info"
 msgstr ""
 
 #: ../src/screen_mid/open_url.py:32

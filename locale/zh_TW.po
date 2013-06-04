@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-31 13:19+0800\n"
+"POT-Creation-Date: 2013-06-04 11:16+0800\n"
 "PO-Revision-Date: 2012-07-12 15:53+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -17,18 +17,18 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/media_service.py:164 ../src/gui.py:59 ../src/widget/ini_gui.py:1868
+#: ../src/gui.py:59 ../src/media_service.py:164 ../src/widget/ini_gui.py:1868
 msgid "Deepin Media Player"
 msgstr "深度影音"
 
-#: ../src/media_player_function.py:56 ../src/widget/movie_menu.py:57
-#: ../src/widget/play_menus.py:176 ../src/widget/play_menus.py:367
-#: ../src/widget/ini_gui.py:1457 ../src/widget/ini_gui.py:1579
+#: ../src/media_player_function.py:56 ../src/widget/play_menus.py:176
+#: ../src/widget/play_menus.py:367 ../src/widget/ini_gui.py:1457
+#: ../src/widget/ini_gui.py:1579 ../src/widget/movie_menu.py:57
 msgid "Open Directory"
 msgstr "打開資料夾"
 
-#: ../src/media_player_function.py:58 ../src/widget/movie_menu.py:58
-#: ../src/widget/play_menus.py:368
+#: ../src/media_player_function.py:58 ../src/widget/play_menus.py:368
+#: ../src/widget/movie_menu.py:58
 msgid "Open URL"
 msgstr "打開網址"
 
@@ -47,8 +47,8 @@ msgstr "置頂"
 msgid "Pause"
 msgstr "暫停"
 
-#: ../src/media_player.py:594 ../src/widget/play_control_panel.py:59
-#: ../src/widget/play_menus.py:262 ../src/widget/play_menus.py:374
+#: ../src/media_player.py:594 ../src/widget/play_menus.py:262
+#: ../src/widget/play_menus.py:374 ../src/widget/play_control_panel.py:59
 msgid "Play"
 msgstr "播放"
 
@@ -65,10 +65,10 @@ msgid "bseek : "
 msgstr ""
 
 #: ../src/media_player.py:691 ../src/media_player.py:710
-#: ../src/widget/togglehoverbutton.py:126 ../src/widget/init_ldmp.py:165
 #: ../src/widget/play_menus.py:192 ../src/widget/ini_gui.py:907
 #: ../src/widget/ini_gui.py:1265 ../src/widget/ini_gui.py:1330
-#: ../src/widget/ini_gui.py:1386
+#: ../src/widget/ini_gui.py:1386 ../src/widget/init_ldmp.py:165
+#: ../src/widget/togglehoverbutton.py:126
 msgid "Full Screen"
 msgstr "全螢幕"
 
@@ -76,9 +76,9 @@ msgstr "全螢幕"
 msgid "Quit Full Screen"
 msgstr "退出全螢幕"
 
-#: ../src/media_player.py:741 ../src/widget/init_ldmp.py:163
-#: ../src/widget/ini_gui.py:847 ../src/widget/ini_gui.py:1264
-#: ../src/widget/ini_gui.py:1330 ../src/widget/ini_gui.py:1381
+#: ../src/media_player.py:741 ../src/widget/ini_gui.py:847
+#: ../src/widget/ini_gui.py:1264 ../src/widget/ini_gui.py:1330
+#: ../src/widget/ini_gui.py:1381 ../src/widget/init_ldmp.py:163
 msgid "Pause/Play"
 msgstr "暫停/播放"
 
@@ -108,55 +108,13 @@ msgstr "深度影音打開資料夾對話框"
 msgid "清空最近播放列表"
 msgstr ""
 
-#: ../src/format_conv/transmageddon.py:92
-#: ../src/format_conv/transmageddon.py:434
-msgid "Audio-only"
-msgstr "僅有音訊"
+#: ../src/format_conv/new_button.py:32 ../src/format_conv/new_button.py:59
+msgid "Advanced settings"
+msgstr "進階設定"
 
-#: ../src/format_conv/transmageddon.py:585
-msgid "Time remaining : "
-msgstr "剩餘時間 : "
-
-#: ../src/format_conv/transmageddon.py:673
-#: ../src/format_conv/transmageddon.py:734
-#: ../src/format_conv/transmageddon.py:1311
-#: ../src/format_conv/transmageddon.py:1328
-msgid "No Video"
-msgstr "無影片"
-
-#: ../src/format_conv/transmageddon.py:874
-msgid "Converting"
-msgstr "正在轉換中"
-
-#: ../src/format_conv/transmageddon.py:890
-msgid "continue"
-msgstr "繼續"
-
-#: ../src/format_conv/transmageddon.py:900
-msgid "Open a directory"
-msgstr "打開資料夾"
-
-#: ../src/format_conv/transmageddon.py:902
-msgid "Delete"
-msgstr "刪除"
-
-#: ../src/format_conv/transmageddon.py:903
-msgid "Remove complete tasks"
-msgstr "清除已完成任務"
-
-#: ../src/format_conv/transmageddon.py:1020 ../src/format_conv/gui.py:170
-#: ../src/format_conv/gui.py:318
-msgid "No Model"
-msgstr "自定"
-
-#: ../src/format_conv/conv_task_gui.py:57
-msgid "Task Manager for format conversion"
-msgstr "任務管理器"
-
-#: ../src/format_conv/conv_task_gui.py:82 ../src/format_conv/gui.py:125
-#: ../src/video_info/gui.py:66 ../src/widget/ini_gui.py:388
-msgid "Close"
-msgstr "關閉"
+#: ../src/format_conv/new_button.py:33
+msgid "('button_size', 100)"
+msgstr "('button_size', 50)"
 
 #: ../src/format_conv/gui.py:43
 msgid "('form_size', 500, 180)"
@@ -458,6 +416,11 @@ msgstr "更改"
 msgid "Start"
 msgstr "開始"
 
+#: ../src/format_conv/gui.py:125 ../src/format_conv/conv_task_gui.py:82
+#: ../src/widget/ini_gui.py:388 ../src/video_info/gui.py:66
+msgid "Close"
+msgstr "關閉"
+
 #: ../src/format_conv/gui.py:129 ../src/widget/play_menus.py:256
 msgid "Task Manager"
 msgstr "任務管理器"
@@ -465,6 +428,11 @@ msgstr "任務管理器"
 #: ../src/format_conv/gui.py:165 ../src/format_conv/gui.py:306
 msgid "No Presets"
 msgstr "自定義"
+
+#: ../src/format_conv/gui.py:170 ../src/format_conv/gui.py:318
+#: ../src/format_conv/transmageddon.py:1020
+msgid "No Model"
+msgstr "自定"
 
 #: ../src/format_conv/gui.py:194
 msgid "('brand_position', 20)"
@@ -494,158 +462,50 @@ msgstr "('bit_rate_position', 0)"
 msgid "Choose a directory"
 msgstr "打開資料夾"
 
-#: ../src/format_conv/new_button.py:32 ../src/format_conv/new_button.py:59
-msgid "Advanced settings"
-msgstr "進階設定"
+#: ../src/format_conv/transmageddon.py:92
+#: ../src/format_conv/transmageddon.py:434
+msgid "Audio-only"
+msgstr "僅有音訊"
 
-#: ../src/format_conv/new_button.py:33
-msgid "('button_size', 100)"
-msgstr "('button_size', 50)"
+#: ../src/format_conv/transmageddon.py:585
+msgid "Time remaining : "
+msgstr "剩餘時間 : "
 
-#: ../src/video_info/gui.py:41 ../src/widget/play_menus.py:382
-msgid "Properties"
-msgstr "內容"
+#: ../src/format_conv/transmageddon.py:673
+#: ../src/format_conv/transmageddon.py:734
+#: ../src/format_conv/transmageddon.py:1311
+#: ../src/format_conv/transmageddon.py:1328
+msgid "No Video"
+msgstr "無影片"
 
-#: ../src/video_info/gui.py:74
-msgid "video information"
-msgstr "視頻信息"
+#: ../src/format_conv/transmageddon.py:874
+msgid "Converting"
+msgstr "正在轉換中"
 
-#: ../src/video_info/gui.py:74
-msgid "decoding information"
-msgstr "編碼信息"
+#: ../src/format_conv/transmageddon.py:890
+msgid "continue"
+msgstr "繼續"
 
-#: ../src/video_info/gui.py:96
-msgid "File path:"
-msgstr "文件路徑:"
+#: ../src/format_conv/transmageddon.py:900
+msgid "Open a directory"
+msgstr "打開資料夾"
 
-#: ../src/video_info/gui.py:110
-msgid "File type:"
-msgstr "文件類型:"
+#: ../src/format_conv/transmageddon.py:902
+msgid "Delete"
+msgstr "刪除"
 
-#: ../src/video_info/gui.py:111
-msgid "Resolution:"
-msgstr "解 晰 度  : "
+#: ../src/format_conv/transmageddon.py:903
+msgid "Remove complete tasks"
+msgstr "清除已完成任務"
 
-#: ../src/video_info/gui.py:112
-msgid "File size:"
-msgstr "文件大小:"
+#: ../src/format_conv/conv_task_gui.py:57
+msgid "Task Manager for format conversion"
+msgstr "任務管理器"
 
-#: ../src/video_info/gui.py:113
-msgid "Duration:"
-msgstr "媒體時間:"
-
-#: ../src/video_info/gui.py:118 ../src/widget/ini_gui.py:827
-msgid "Open directory"
-msgstr "打開目錄"
-
-#: ../src/video_info/gui.py:180
-msgid "Video stream info:"
-msgstr "影片信息"
-
-#: ../src/video_info/gui.py:181
-msgid ".Codec format:"
-msgstr ". 編碼格式:"
-
-#: ../src/video_info/gui.py:182
-msgid ".Frame rate:"
-msgstr ". 影片幀率:"
-
-#: ../src/video_info/gui.py:183
-msgid ".Scaling:"
-msgstr ". 顯示比率:"
-
-#: ../src/video_info/gui.py:184
-msgid ".Video bit rate:"
-msgstr ". 影片碼率:"
-
-#: ../src/video_info/gui.py:185
-msgid ".Resolution:"
-msgstr ". 解 晰 度  : "
-
-#: ../src/video_info/gui.py:188
-msgid "Audio stream info:"
-msgstr "音訊信息"
-
-#: ../src/video_info/gui.py:189
-msgid ".codec format:"
-msgstr ". 編碼格式:"
-
-#: ../src/video_info/gui.py:190
-msgid ".track number:"
-msgstr ". 聲 道 數  :"
-
-#: ../src/video_info/gui.py:191
-msgid ".Audio digit:"
-msgstr ". 音訊位數:"
-
-#: ../src/video_info/gui.py:192
-msgid ".Audio bit rate:"
-msgstr ". 音訊碼率:"
-
-#: ../src/video_info/gui.py:193
-msgid ".Sampling:"
-msgstr ". 采 樣 數  :"
-
-#: ../src/video_info/gui.py:194
-msgid "Copy info"
-msgstr "複製信息"
-
-#: ../src/widget/togglehoverbutton.py:135 ../src/widget/play_menus.py:193
-#: ../src/widget/play_menus.py:371
-msgid "Normal Mode"
-msgstr "普通模式"
-
-#: ../src/widget/togglehoverbutton.py:144 ../src/widget/play_menus.py:194
-#: ../src/widget/play_menus.py:372
-msgid "Compact Mode"
-msgstr "簡潔模式"
-
-#: ../src/widget/movie_menu.py:254 ../src/widget/ini_gui.py:807
-msgid "Open file"
-msgstr "打開文件"
-
-#: ../src/widget/play_control_panel.py:48
-msgid "Stop"
-msgstr "停止"
-
-#: ../src/widget/play_control_panel.py:56 ../src/widget/play_menus.py:195
-#: ../src/widget/play_menus.py:314 ../src/widget/ini_gui.py:817
-msgid "Previous"
-msgstr "上一首"
-
-#: ../src/widget/play_control_panel.py:67 ../src/widget/play_menus.py:196
-#: ../src/widget/play_menus.py:315 ../src/widget/ini_gui.py:837
-msgid "Next"
-msgstr "下一首"
-
-#: ../src/widget/play_control_panel.py:75 ../src/widget/play_menus.py:175
-#: ../src/widget/play_menus.py:366
+#: ../src/widget/play_menus.py:175 ../src/widget/play_menus.py:366
+#: ../src/widget/play_control_panel.py:75
 msgid "Open File"
 msgstr "打開文件"
-
-#: ../src/widget/toolbar.py:64 ../src/widget/play_menus.py:222
-msgid "100%"
-msgstr "1倍尺寸"
-
-#: ../src/widget/toolbar.py:74 ../src/widget/play_menus.py:223
-msgid "150%"
-msgstr "1.5倍尺寸"
-
-#: ../src/widget/play_list_button.py:35
-msgid "Playlist"
-msgstr "播放清單"
-
-#: ../src/widget/init_ldmp.py:158 ../src/widget/ini_gui.py:1264
-#: ../src/widget/ini_gui.py:1265 ../src/widget/ini_gui.py:1266
-#: ../src/widget/ini_gui.py:1319 ../src/widget/ini_gui.py:1379
-#: ../src/widget/ini_gui.py:1384 ../src/widget/ini_gui.py:1389
-msgid "Disabled"
-msgstr "禁用"
-
-#: ../src/widget/init_ldmp.py:167 ../src/widget/ini_gui.py:1266
-#: ../src/widget/ini_gui.py:1330 ../src/widget/ini_gui.py:1391
-msgid "Volume"
-msgstr "音量"
 
 #: ../src/widget/play_menus.py:177
 msgid "Play Disc"
@@ -671,6 +531,26 @@ msgstr "單個循環"
 msgid "Repeat (playlist)"
 msgstr "列表循環"
 
+#: ../src/widget/play_menus.py:193 ../src/widget/play_menus.py:371
+#: ../src/widget/togglehoverbutton.py:135
+msgid "Normal Mode"
+msgstr "普通模式"
+
+#: ../src/widget/play_menus.py:194 ../src/widget/play_menus.py:372
+#: ../src/widget/togglehoverbutton.py:144
+msgid "Compact Mode"
+msgstr "簡潔模式"
+
+#: ../src/widget/play_menus.py:195 ../src/widget/play_menus.py:314
+#: ../src/widget/ini_gui.py:817 ../src/widget/play_control_panel.py:56
+msgid "Previous"
+msgstr "上一首"
+
+#: ../src/widget/play_menus.py:196 ../src/widget/play_menus.py:315
+#: ../src/widget/ini_gui.py:837 ../src/widget/play_control_panel.py:67
+msgid "Next"
+msgstr "下一首"
+
 #: ../src/widget/play_menus.py:198 ../src/widget/play_menus.py:317
 msgid "Jump Forward"
 msgstr "快進5秒"
@@ -691,6 +571,14 @@ msgstr "預設值"
 #: ../src/widget/play_menus.py:221
 msgid "50%"
 msgstr "0.5倍尺寸"
+
+#: ../src/widget/play_menus.py:222 ../src/widget/toolbar.py:64
+msgid "100%"
+msgstr "1倍尺寸"
+
+#: ../src/widget/play_menus.py:223 ../src/widget/toolbar.py:74
+msgid "150%"
+msgstr "1.5倍尺寸"
 
 #: ../src/widget/play_menus.py:224
 msgid "200%"
@@ -894,6 +782,10 @@ msgstr "字幕"
 msgid "DVD Navigation"
 msgstr "DVD 導航"
 
+#: ../src/widget/play_menus.py:382 ../src/video_info/gui.py:41
+msgid "Properties"
+msgstr "內容"
+
 #: ../src/widget/ini_gui.py:347 ../src/widget/ini_gui.py:395
 #: ../src/widget/ini_gui.py:401 ../src/widget/ini_gui.py:497
 #: ../src/widget/ini_gui.py:509 ../src/widget/ini_gui.py:545
@@ -994,6 +886,14 @@ msgstr "大小"
 msgid "Enable hotkeys"
 msgstr "開啟熱鍵"
 
+#: ../src/widget/ini_gui.py:807 ../src/widget/movie_menu.py:254
+msgid "Open file"
+msgstr "打開文件"
+
+#: ../src/widget/ini_gui.py:827 ../src/video_info/gui.py:118
+msgid "Open directory"
+msgstr "打開目錄"
+
 #: ../src/widget/ini_gui.py:867
 msgid "Forward"
 msgstr "快速前進"
@@ -1074,6 +974,18 @@ msgstr "雙擊滑鼠左鍵"
 msgid "Scroll"
 msgstr "滑鼠滾輪"
 
+#: ../src/widget/ini_gui.py:1264 ../src/widget/ini_gui.py:1265
+#: ../src/widget/ini_gui.py:1266 ../src/widget/ini_gui.py:1319
+#: ../src/widget/ini_gui.py:1379 ../src/widget/ini_gui.py:1384
+#: ../src/widget/ini_gui.py:1389 ../src/widget/init_ldmp.py:158
+msgid "Disabled"
+msgstr "禁用"
+
+#: ../src/widget/ini_gui.py:1266 ../src/widget/ini_gui.py:1330
+#: ../src/widget/ini_gui.py:1391 ../src/widget/init_ldmp.py:167
+msgid "Volume"
+msgstr "音量"
+
 #: ../src/widget/ini_gui.py:1414
 msgid "Load subtitles automatically"
 msgstr "自動載入字幕"
@@ -1143,6 +1055,94 @@ msgstr ""
 "轉換、光碟播放、界面更換等幾大特點。\n"
 "\n"
 "深度影音播放器是自由軟體，遵循自由軟體基金會發布的GNU通用公共許可證第三版。"
+
+#: ../src/widget/play_control_panel.py:48
+msgid "Stop"
+msgstr "停止"
+
+#: ../src/widget/play_list_button.py:35
+msgid "Playlist"
+msgstr "播放清單"
+
+#: ../src/video_info/gui.py:74
+msgid "video information"
+msgstr "視頻信息"
+
+#: ../src/video_info/gui.py:74
+msgid "decoding information"
+msgstr "編碼信息"
+
+#: ../src/video_info/gui.py:96
+msgid "File path:"
+msgstr "文件路徑:"
+
+#: ../src/video_info/gui.py:110
+msgid "File type:"
+msgstr "文件類型:"
+
+#: ../src/video_info/gui.py:111
+msgid "Resolution:"
+msgstr "解 晰 度  : "
+
+#: ../src/video_info/gui.py:112
+msgid "File size:"
+msgstr "文件大小:"
+
+#: ../src/video_info/gui.py:113
+msgid "Duration:"
+msgstr "媒體時間:"
+
+#: ../src/video_info/gui.py:180
+msgid "Video stream info:"
+msgstr "影片信息"
+
+#: ../src/video_info/gui.py:181
+msgid ".Codec format:"
+msgstr ". 編碼格式:"
+
+#: ../src/video_info/gui.py:182
+msgid ".Frame rate:"
+msgstr ". 影片幀率:"
+
+#: ../src/video_info/gui.py:183
+msgid ".Scaling:"
+msgstr ". 顯示比率:"
+
+#: ../src/video_info/gui.py:184
+msgid ".Video bit rate:"
+msgstr ". 影片碼率:"
+
+#: ../src/video_info/gui.py:185
+msgid ".Resolution:"
+msgstr ". 解 晰 度  : "
+
+#: ../src/video_info/gui.py:188
+msgid "Audio stream info:"
+msgstr "音訊信息"
+
+#: ../src/video_info/gui.py:189
+msgid ".codec format:"
+msgstr ". 編碼格式:"
+
+#: ../src/video_info/gui.py:190
+msgid ".track number:"
+msgstr ". 聲 道 數  :"
+
+#: ../src/video_info/gui.py:191
+msgid ".Audio digit:"
+msgstr ". 音訊位數:"
+
+#: ../src/video_info/gui.py:192
+msgid ".Audio bit rate:"
+msgstr ". 音訊碼率:"
+
+#: ../src/video_info/gui.py:193
+msgid ".Sampling:"
+msgstr ". 采 樣 數  :"
+
+#: ../src/video_info/gui.py:194
+msgid "Copy info"
+msgstr "複製信息"
 
 #: ../src/screen_mid/open_url.py:32
 msgid "Open Url"
