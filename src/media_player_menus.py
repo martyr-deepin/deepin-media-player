@@ -218,7 +218,7 @@ class MediaPlayMenus(object):
             (None)
                     ])
         self.menus.recent_played_menu.add_menu_items([ 
-            (None, _("清空最近播放列表"), self.__clear_recent_play_list), 
+            (None, _("Clear Playlist"), self.__clear_recent_play_list), 
                     ])
 
     def __clear_recent_play_list(self):

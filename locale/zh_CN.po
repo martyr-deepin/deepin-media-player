@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-04 11:16+0800\n"
+"POT-Creation-Date: 2013-06-06 10:35+0800\n"
 "PO-Revision-Date: 2012-07-12 15:53+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -104,9 +104,9 @@ msgstr "打开网址"
 msgid "Save Directory"
 msgstr "深度影音打开文件夹对话框"
 
-#: ../src/media_player_menus.py:221
-msgid "清空最近播放列表"
-msgstr ""
+#: ../src/media_player_menus.py:221 ../src/widget/play_menus.py:299
+msgid "Clear Playlist"
+msgstr "清空播放列表"
 
 #: ../src/format_conv/new_button.py:32 ../src/format_conv/new_button.py:59
 msgid "Advanced settings"
@@ -688,10 +688,6 @@ msgstr "删除选中项"
 msgid "Save Playlist"
 msgstr "播放列表"
 
-#: ../src/widget/play_menus.py:299
-msgid "Clear Playlist"
-msgstr "清空播放列表"
-
 #: ../src/widget/play_menus.py:300
 msgid "Remove Unavailable Files"
 msgstr "清除无效文件"
@@ -1155,183 +1151,3 @@ msgstr ""
 #: ../src/screen_mid/open_url.py:42
 msgid "Cancel"
 msgstr ""
-
-#~ msgid "Video Control"
-#~ msgstr "播放控制"
-
-#~ msgid "Search Subtitles"
-#~ msgstr "字幕选择"
-
-#~ msgid "Subtiles"
-#~ msgstr "字幕"
-
-#~ msgid "Movie Name: "
-#~ msgstr "影片名:"
-
-#~ msgid "Search"
-#~ msgstr "搜索"
-
-#~ msgid "Searching for subtitles"
-#~ msgstr "正在搜索字幕......"
-
-#~ msgid "No network connection established"
-#~ msgstr "您的网络暂无链接"
-
-#~ msgid "Total search results"
-#~ msgstr "搜索到字幕"
-
-#~ msgid "Sorry, we couln't find any subtitle"
-#~ msgstr "抱歉,没有搜索到相关字幕"
-
-#~ msgid "Download"
-#~ msgstr "下载"
-
-#~ msgid "Subtile has been saved to the"
-#~ msgstr "字幕保存到"
-
-#~ msgid "director"
-#~ msgstr "文件夹"
-
-#~ msgid "Failed to download the subtitle!"
-#~ msgstr "字幕下载失败!"
-
-#~ msgid "Pop-up Messages"
-#~ msgstr "屏幕提示效果"
-
-#~ msgid "Mute: enabled"
-#~ msgstr "开启静音"
-
-#~ msgid "Screenshot Saved"
-#~ msgstr "截图已保存"
-
-#~ msgid "Screenshot Copied to Clipboard"
-#~ msgstr "截图已保存到剪贴板"
-
-#~ msgid "Select a file"
-#~ msgstr "深度影音打开文件对话框"
-
-#~ msgid "No Media Selected"
-#~ msgstr "没有可播放文件"
-
-#~ msgid "Failed to Open Selected File"
-#~ msgstr "无效的文件"
-
-#~ msgid "s"
-#~ msgstr "秒"
-
-#~ msgid "Import Subtitles"
-#~ msgstr "载入字幕"
-
-#~ msgid "Remove Subtitles"
-#~ msgstr "移除字幕"
-
-#~ msgid "Help"
-#~ msgstr "帮助信息"
-
-#~ msgid "Issues"
-#~ msgstr "问题反馈"
-
-#~ msgid "Enlarge"
-#~ msgstr "增大尺寸"
-
-#~ msgid "Decrease"
-#~ msgstr "减小尺寸"
-
-#~ msgid "0.5 seconds forword"
-#~ msgstr "提前0.5秒"
-
-#~ msgid "0.5 sceconds delay"
-#~ msgstr "延时0.5秒"
-
-#~ msgid "Search subtitles"
-#~ msgstr "手动搜索字幕"
-
-#~ msgid "Load a subtitle"
-#~ msgstr "手动载入字幕"
-
-#~ msgid "Disable Subtitles"
-#~ msgstr "字幕停止"
-
-#~ msgid "Size of Subtitles"
-#~ msgstr "字幕尺寸"
-
-#~ msgid "Subtitle Synchronization"
-#~ msgstr "字幕同步"
-
-#~ msgid "Title"
-#~ msgstr "标题"
-
-#~ msgid "Subtitle loaded"
-#~ msgstr "已载入字幕"
-
-#~ msgid "Enter URL"
-#~ msgstr "输入网址"
-
-#~ msgid "Please Enter a Valid URL"
-#~ msgstr "请输入有效的网址"
-
-#, fuzzy
-#~ msgid "Enabled hotkeys"
-#~ msgstr "开启热键"
-
-#, fuzzy
-#~ msgid "Hotkeys Enabled"
-#~ msgstr "开启静音"
-
-#, fuzzy
-#~ msgid "Concise mode"
-#~ msgstr "简洁模式"
-
-#, fuzzy
-#~ msgid "Format converter"
-#~ msgstr "格式"
-
-#, fuzzy
-#~ msgid "Prev"
-#~ msgstr "上一首"
-
-#, fuzzy
-#~ msgid "Volumn"
-#~ msgstr "音量"
-
-#~ msgid "format conversion"
-#~ msgstr "格式转换"
-
-#~ msgid "task manager"
-#~ msgstr "任务管理器"
-
-#~ msgid "Advanced"
-#~ msgstr "高级"
-
-#~ msgid "ZTE"
-#~ msgstr "中兴"
-
-#~ msgid "HASEE"
-#~ msgstr "神舟"
-
-#, fuzzy
-#~ msgid "Counterclockwise 90 degrees"
-#~ msgstr "逆时针旋转"
-
-#, fuzzy
-#~ msgid "No Audio"
-#~ msgstr "声音"
-
-#, fuzzy
-#~ msgid "Video passthrough"
-#~ msgstr "播放控制"
-
-#~ msgid "Language"
-#~ msgstr "语言"
-
-#~ msgid "Total search results: 0"
-#~ msgstr "搜索的字幕总数: 0"
-
-#~ msgid "Subtitle Advance 0.5s"
-#~ msgstr "字幕提前0.5秒"
-
-#~ msgid "Release Date: "
-#~ msgstr " 发布时间："
-
-#~ msgid "华彩"
-#~ msgstr "华彩"

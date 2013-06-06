@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-04 11:16+0800\n"
+"POT-Creation-Date: 2013-06-06 10:35+0800\n"
 "PO-Revision-Date: 2012-07-12 15:53+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -104,9 +104,9 @@ msgstr "打開光碟 CD"
 msgid "Save Directory"
 msgstr "深度影音打開資料夾對話框"
 
-#: ../src/media_player_menus.py:221
-msgid "清空最近播放列表"
-msgstr ""
+#: ../src/media_player_menus.py:221 ../src/widget/play_menus.py:299
+msgid "Clear Playlist"
+msgstr "清空播放清單"
 
 #: ../src/format_conv/new_button.py:32 ../src/format_conv/new_button.py:59
 msgid "Advanced settings"
@@ -688,10 +688,6 @@ msgstr "刪除選中項目"
 msgid "Save Playlist"
 msgstr "播放清單"
 
-#: ../src/widget/play_menus.py:299
-msgid "Clear Playlist"
-msgstr "清空播放清單"
-
 #: ../src/widget/play_menus.py:300
 msgid "Remove Unavailable Files"
 msgstr "刪除無效文件"
@@ -1050,9 +1046,9 @@ msgid ""
 "\n"
 "\tDeepin Media Player is free software licensed under GNU GPLv3. "
 msgstr ""
-"深度影音播放器是Linux Deepin團隊為廣大linux用戶量身開發的一款影音播放軟體。"
-"支持多種影片格式，支援多模式切換，具有播放預覽、在線字幕、影片截圖、影片格式"
-"轉換、光碟播放、界面更換等幾大特點。\n"
+"深度影音播放器是Linux Deepin團隊為廣大linux用戶量身開發的一款影音播放軟體。支"
+"持多種影片格式，支援多模式切換，具有播放預覽、在線字幕、影片截圖、影片格式轉"
+"換、光碟播放、界面更換等幾大特點。\n"
 "\n"
 "深度影音播放器是自由軟體，遵循自由軟體基金會發布的GNU通用公共許可證第三版。"
 
@@ -1155,183 +1151,3 @@ msgstr "確認"
 #: ../src/screen_mid/open_url.py:42
 msgid "Cancel"
 msgstr "取消"
-
-#~ msgid "Video Control"
-#~ msgstr "播放控製"
-
-#~ msgid "Search Subtitles"
-#~ msgstr "字幕選擇"
-
-#~ msgid "Subtiles"
-#~ msgstr "字幕"
-
-#~ msgid "Movie Name: "
-#~ msgstr "影片名:"
-
-#~ msgid "Search"
-#~ msgstr "搜尋"
-
-#~ msgid "Searching for subtitles"
-#~ msgstr "正在搜尋字幕......"
-
-#~ msgid "No network connection established"
-#~ msgstr "您尚未連接網路"
-
-#~ msgid "Total search results"
-#~ msgstr "搜尋到字幕"
-
-#~ msgid "Sorry, we couln't find any subtitle"
-#~ msgstr "抱歉,沒有有搜尋到相關字幕"
-
-#~ msgid "Download"
-#~ msgstr "下載"
-
-#~ msgid "Subtile has been saved to the"
-#~ msgstr "字幕保存到"
-
-#~ msgid "director"
-#~ msgstr "資料夾"
-
-#~ msgid "Failed to download the subtitle!"
-#~ msgstr "字幕下載失敗!"
-
-#~ msgid "Pop-up Messages"
-#~ msgstr "螢幕提示效果"
-
-#~ msgid "Mute: enabled"
-#~ msgstr "開啟靜音"
-
-#~ msgid "Screenshot Saved"
-#~ msgstr "截圖已保存"
-
-#~ msgid "Screenshot Copied to Clipboard"
-#~ msgstr "截圖已保存到剪貼板"
-
-#~ msgid "Select a file"
-#~ msgstr "深度影音打開文件對話框"
-
-#~ msgid "No Media Selected"
-#~ msgstr "沒有可播放文件"
-
-#~ msgid "Failed to Open Selected File"
-#~ msgstr "無效的文件"
-
-#~ msgid "s"
-#~ msgstr "秒"
-
-#~ msgid "Import Subtitles"
-#~ msgstr "載入字幕"
-
-#~ msgid "Remove Subtitles"
-#~ msgstr "移除字幕"
-
-#~ msgid "Help"
-#~ msgstr "幫助信息"
-
-#~ msgid "Issues"
-#~ msgstr "問題反饋"
-
-#~ msgid "Enlarge"
-#~ msgstr "增大尺寸"
-
-#~ msgid "Decrease"
-#~ msgstr "減小尺寸"
-
-#~ msgid "0.5 seconds forword"
-#~ msgstr "提前0.5秒"
-
-#~ msgid "0.5 sceconds delay"
-#~ msgstr "延時0.5秒"
-
-#~ msgid "Search subtitles"
-#~ msgstr "手動搜尋字幕"
-
-#~ msgid "Load a subtitle"
-#~ msgstr "手動載入字幕"
-
-#~ msgid "Disable Subtitles"
-#~ msgstr "字幕停止"
-
-#~ msgid "Size of Subtitles"
-#~ msgstr "字幕尺寸"
-
-#~ msgid "Subtitle Synchronization"
-#~ msgstr "字幕同步"
-
-#~ msgid "Title"
-#~ msgstr "標題"
-
-#~ msgid "Subtitle loaded"
-#~ msgstr "已載入字幕"
-
-#~ msgid "Enter URL"
-#~ msgstr "輸入網址"
-
-#~ msgid "Please Enter a Valid URL"
-#~ msgstr "請輸入有效的網址"
-
-#, fuzzy
-#~ msgid "Enabled hotkeys"
-#~ msgstr "開啟熱鍵"
-
-#, fuzzy
-#~ msgid "Hotkeys Enabled"
-#~ msgstr "開啟靜音"
-
-#, fuzzy
-#~ msgid "Concise mode"
-#~ msgstr "簡潔模式"
-
-#, fuzzy
-#~ msgid "Format converter"
-#~ msgstr "格式"
-
-#, fuzzy
-#~ msgid "Prev"
-#~ msgstr "上一首"
-
-#, fuzzy
-#~ msgid "Volumn"
-#~ msgstr "音量"
-
-#~ msgid "format conversion"
-#~ msgstr "格式轉換"
-
-#~ msgid "task manager"
-#~ msgstr "任務管理器"
-
-#~ msgid "Advanced"
-#~ msgstr "高級"
-
-#~ msgid "ZTE"
-#~ msgstr "中興"
-
-#~ msgid "HASEE"
-#~ msgstr "神舟"
-
-#, fuzzy
-#~ msgid "Counterclockwise 90 degrees"
-#~ msgstr "逆時針旋轉"
-
-#, fuzzy
-#~ msgid "No Audio"
-#~ msgstr "聲音"
-
-#, fuzzy
-#~ msgid "Video passthrough"
-#~ msgstr "播放控製"
-
-#~ msgid "Language"
-#~ msgstr "語言"
-
-#~ msgid "Total search results: 0"
-#~ msgstr "搜尋的字幕總數: 0"
-
-#~ msgid "Subtitle Advance 0.5s"
-#~ msgstr "字幕提前0.5秒"
-
-#~ msgid "Release Date: "
-#~ msgstr " 發布時間："
-
-#~ msgid "華彩"
-#~ msgstr "華彩"

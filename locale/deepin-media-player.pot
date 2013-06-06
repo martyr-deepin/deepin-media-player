@@ -8,13 +8,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-04 11:16+0800\n"
+"POT-Creation-Date: 2013-06-06 10:35+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../src/gui.py:59 ../src/media_service.py:164 ../src/widget/ini_gui.py:1868
@@ -104,8 +104,8 @@ msgstr ""
 msgid "Save Directory"
 msgstr ""
 
-#: ../src/media_player_menus.py:221
-msgid "清空最近播放列表"
+#: ../src/media_player_menus.py:221 ../src/widget/play_menus.py:299
+msgid "Clear Playlist"
 msgstr ""
 
 #: ../src/format_conv/new_button.py:32 ../src/format_conv/new_button.py:59
@@ -686,10 +686,6 @@ msgstr ""
 
 #: ../src/widget/play_menus.py:298
 msgid "Save Playlist"
-msgstr ""
-
-#: ../src/widget/play_menus.py:299
-msgid "Clear Playlist"
 msgstr ""
 
 #: ../src/widget/play_menus.py:300
