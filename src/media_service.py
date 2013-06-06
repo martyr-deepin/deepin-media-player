@@ -161,7 +161,7 @@ class DemoException(dbus.DBusException):
     _dbus_error_name = 'com.deepin_media_player.DemoException'
 
 class SomeObject(dbus.service.Object):
-    properties = {'Identity': _('Deepin Media Player'), 'DesktopEntry': 'deepin-media-player'}
+    properties = {'Identity': _('DPlayer'), 'DesktopEntry': 'deepin-media-player'}
     player_properties = {'PlaybackStatus': 'Stopped', 'Volume': 1.0, 'Metadata': {'xesam:title': ""}}
     def __init__(self, bus, path):
         dbus.service.Object.__init__(self, bus, path)

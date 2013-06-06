@@ -599,7 +599,7 @@ class FilePlay(gtk.VBox):
             self.show_preview_window_button.set_active(True)
             
         # check run a deepin-media-player.
-        self.run_a_main_pid_radio_button = CheckButton(_("allow multiple instance deepin media player"))  
+        self.run_a_main_pid_radio_button = CheckButton(_("allow multiple instance DPlayer"))  
         ini_bool = self.ini.get("FilePlay", "check_run_a_deepin_media_player")
         self.run_a_main_pid_radio_button.set_active(False)
         if ini_bool and "true" == ini_bool.lower():
@@ -1865,7 +1865,7 @@ class About(gtk.VBox):
         main_box = gtk.VBox(spacing=15)
         logo_image = ImageBox(app_theme.get_pixbuf("logo.png"))
         light_color = app_theme.get_color("labelText")
-        logo_name = Label(_("Deepin Media Player"), text_size=10)
+        logo_name = Label(_("DPlayer"), text_size=10)
         logo_box = gtk.HBox(spacing=2)
         logo_box.pack_start(logo_image, False, False)
         logo_box.pack_start(logo_name, False, False)
@@ -1883,7 +1883,7 @@ class About(gtk.VBox):
         title_box.pack_start(logo_box, True, True)
         title_box.pack_start(info_align, True, True)
         
-        describe = _("\tDeepin Media Player is a video player designed for Linux users. It support a variety of video formats, and features mode switching, video preview, online subtitles, screenshot taking and skin selection. \n\n\tDeepin Media Player is free software licensed under GNU GPLv3. ")
+        describe = _("\tDPlayer is a video player designed for Linux users. It support a variety of video formats, and features mode switching, video preview, online subtitles, screenshot taking and skin selection. \n\n\tDPlayer is free software licensed under GNU GPLv3. ")
         describe_label = Label(describe, enable_select=False, wrap_width=440, text_size=10)
         main_box.pack_start(title_box, False, False)
         main_box.pack_start(create_separator_box(), False, True)

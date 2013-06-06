@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-06 10:35+0800\n"
+"POT-Creation-Date: 2013-06-06 10:41+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../src/gui.py:59 ../src/media_service.py:164 ../src/widget/ini_gui.py:1868
-msgid "Deepin Media Player"
+msgid "DPlayer"
 msgstr ""
 
 #: ../src/media_player_function.py:56 ../src/widget/play_menus.py:176
@@ -855,7 +855,7 @@ msgid "Show thumbnail when hovering over progress bar"
 msgstr ""
 
 #: ../src/widget/ini_gui.py:602
-msgid "allow multiple instance deepin media player"
+msgid "allow multiple instance DPlayer"
 msgstr ""
 
 #: ../src/widget/ini_gui.py:608
@@ -1040,11 +1040,11 @@ msgstr ""
 
 #: ../src/widget/ini_gui.py:1886
 msgid ""
-"\tDeepin Media Player is a video player designed for Linux users. It support "
-"a variety of video formats, and features mode switching, video preview, "
-"online subtitles, screenshot taking and skin selection. \n"
+"\tDPlayer is a video player designed for Linux users. It support a variety "
+"of video formats, and features mode switching, video preview, online "
+"subtitles, screenshot taking and skin selection. \n"
 "\n"
-"\tDeepin Media Player is free software licensed under GNU GPLv3. "
+"\tDPlayer is free software licensed under GNU GPLv3. "
 msgstr ""
 
 #: ../src/widget/play_control_panel.py:48

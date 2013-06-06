@@ -267,7 +267,7 @@ class ScreenMidCombo(gtk.HBox):
 
     def __init_menu(self):
         self.menu = Menu()
-        self.menu.set_title("deepin media player combobox")
+        self.menu.set_title("DPlayer combobox")
         self.open_cdrom = app_theme.get_pixbuf("screen_mid/screen_menu_open_cdrom.png")
         #
         ''' 添加子菜单的cdrom.

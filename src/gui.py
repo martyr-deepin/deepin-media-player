@@ -56,7 +56,7 @@ class GUI(object):
         # set titlebar.
         self.app.add_titlebar(["theme", "menu", "max", "min", "close"],
                               os.path.join(os.path.join(image_dir, "logo.png")),
-                              _("Deepin Media Player"), " ", 
+                              _("DPlayer"), " ", 
                               add_separator = False)
         #
         self.play_menus = PlayMenus()

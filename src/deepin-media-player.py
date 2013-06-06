@@ -26,7 +26,7 @@ import dbus.service                        #
 import dbus.mainloop.glib                  #
 from media_service import SomeObject       #
 ############################################
-# Linux Deepin Media Player version v 3.0  #
+# DPlayer version v 3.0  #
 ############################################
 gtk.gdk.threads_init()#         线程初始化.#
 app = MediaPlayer()                        #

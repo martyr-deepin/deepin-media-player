@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-06 10:35+0800\n"
+"POT-Creation-Date: 2013-06-06 10:41+0800\n"
 "PO-Revision-Date: 2012-07-12 15:53+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -18,8 +18,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../src/gui.py:59 ../src/media_service.py:164 ../src/widget/ini_gui.py:1868
-msgid "Deepin Media Player"
-msgstr "深度影音"
+#, fuzzy
+msgid "DPlayer"
+msgstr "播放"
 
 #: ../src/media_player_function.py:56 ../src/widget/play_menus.py:176
 #: ../src/widget/play_menus.py:367 ../src/widget/ini_gui.py:1457
@@ -855,7 +856,8 @@ msgid "Show thumbnail when hovering over progress bar"
 msgstr "鼠标悬停进度条时显示预览图"
 
 #: ../src/widget/ini_gui.py:602
-msgid "allow multiple instance deepin media player"
+#, fuzzy
+msgid "allow multiple instance DPlayer"
 msgstr "允许同时运行多个深度影音"
 
 #: ../src/widget/ini_gui.py:608
@@ -1039,12 +1041,13 @@ msgid "Version:"
 msgstr "版本："
 
 #: ../src/widget/ini_gui.py:1886
+#, fuzzy
 msgid ""
-"\tDeepin Media Player is a video player designed for Linux users. It support "
-"a variety of video formats, and features mode switching, video preview, "
-"online subtitles, screenshot taking and skin selection. \n"
+"\tDPlayer is a video player designed for Linux users. It support a variety "
+"of video formats, and features mode switching, video preview, online "
+"subtitles, screenshot taking and skin selection. \n"
 "\n"
-"\tDeepin Media Player is free software licensed under GNU GPLv3. "
+"\tDPlayer is free software licensed under GNU GPLv3. "
 msgstr ""
 "\t﻿深度影音播放器是Linux Deepin团队为广大linux用户量身开发的一款影音播放软件。"
 "支持多种视频格式，支持多模式切换，具有播放预览、在线字幕、视频截图、视频格式"
@@ -1151,3 +1154,6 @@ msgstr ""
 #: ../src/screen_mid/open_url.py:42
 msgid "Cancel"
 msgstr ""
+
+#~ msgid "Deepin Media Player"
+#~ msgstr "深度影音"

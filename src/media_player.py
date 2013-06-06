@@ -623,7 +623,7 @@ class MediaPlayer(object):
             cr.set_source_rgb(*color_hex_to_cairo("#0D0D0D")) # 1f1f1f
             cr.rectangle(rect.x, rect.y, rect.width, rect.height)
             cr.fill()
-            # draw deepin media player logo.
+            # draw DPlayer logo.
             draw_pixbuf(cr,
                         self.background, 
                         rect.x + rect.width/2 - self.background.get_width()/2, 
