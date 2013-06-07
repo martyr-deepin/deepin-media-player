@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-07 10:07+0800\n"
+"POT-Creation-Date: 2013-06-07 13:40+0800\n"
 "PO-Revision-Date: 2012-07-12 15:53+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -808,13 +808,13 @@ msgid "General"
 msgstr "一般"
 
 #: ../src/widget/ini_gui.py:364 ../src/widget/ini_gui.py:505
-#: ../src/widget/ini_gui.py:517
+#: ../src/widget/ini_gui.py:517 ../src/widget/ini_gui.py:1655
 msgid "About"
 msgstr "關於"
 
 #: ../src/widget/ini_gui.py:549
-msgid "On opening video:"
-msgstr "影片打開時: "
+msgid "On opening video"
+msgstr "影片打開時"
 
 #: ../src/widget/ini_gui.py:551
 msgid "Fit video to player"
@@ -1009,28 +1009,20 @@ msgid "Keep current aspect ratio"
 msgstr "保持目前長寬比"
 
 #: ../src/widget/ini_gui.py:1655
-msgid "name"
+msgid "Name"
 msgstr "名稱"
 
-#: ../src/widget/ini_gui.py:1655
-msgid "version"
-msgstr "版本"
-
-#: ../src/widget/ini_gui.py:1655
-msgid "auto"
-msgstr "自動"
-
-#: ../src/widget/ini_gui.py:1655 ../src/widget/ini_gui.py:1750
-msgid "author"
-msgstr "作者"
-
-#: ../src/widget/ini_gui.py:1655
-msgid "about"
-msgstr "關於"
-
-#: ../src/widget/ini_gui.py:1873
+#: ../src/widget/ini_gui.py:1655 ../src/widget/ini_gui.py:1873
 msgid "Version"
 msgstr "版本"
+
+#: ../src/widget/ini_gui.py:1655
+msgid "Enable"
+msgstr "開啟"
+
+#: ../src/widget/ini_gui.py:1655 ../src/widget/ini_gui.py:1750
+msgid "Author"
+msgstr "作者"
 
 #: ../src/widget/ini_gui.py:1886
 msgid ""
@@ -1044,7 +1036,8 @@ msgstr ""
 "持多種影片格式，支援多模式切換，具有播放預覽、在線字幕、影片截圖、影片格式轉"
 "換、光碟播放、界面更換等幾大特點。\n"
 "\n"
-"深度影音播放器是自由軟體，遵照自由軟體基金會發布的 GNU 通用公共許可證條款第三版。"
+"深度影音播放器是自由軟體，遵照自由軟體基金會發布的 GNU 通用公共許可證條款第三"
+"版。"
 
 #: ../src/widget/play_control_panel.py:48
 msgid "Stop"
@@ -1133,30 +1126,3 @@ msgstr "確認"
 #: ../src/screen_mid/open_url.py:42
 msgid "Cancel"
 msgstr "取消"
-
-#~ msgid "seek : "
-#~ msgstr "跳轉"
-
-#~ msgid "fseek : "
-#~ msgstr "往前"
-
-#~ msgid "bseek : "
-#~ msgstr "往後"
-
-#~ msgid "Open CDROM"
-#~ msgstr "打開光碟 CD"
-
-#~ msgid "Resolution : "
-#~ msgstr "解析度 : "
-
-#~ msgid "About us"
-#~ msgstr "關於我們"
-
-#~ msgid ".Resolution:"
-#~ msgstr ". 解析度: "
-
-#~ msgid ".codec format:"
-#~ msgstr ". 編碼格式:"
-
-#~ msgid "Deepin Media Player"
-#~ msgstr "深度影音"
