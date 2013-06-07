@@ -1652,7 +1652,7 @@ class Plugin(gtk.VBox):
         self.list_view.set_drag_items(False) # 禁止拖动.
         self.list_view.set_drag_columns(False) # 禁止拖动标题栏.
         #
-        self.list_view.columns.add_range([_("name"), _("version"), _("auto"), _("author"), _("about"), ""])
+        self.list_view.columns.add_range([_("Name"), _("Version"), _("Enable"), _("Author"), _("About"), ""])
         self.list_view.columns[0].width = 320
         self.list_view.columns[3].width = 250
         self.list_view.columns[4].width = 100
@@ -1747,7 +1747,7 @@ class Plugin(gtk.VBox):
         # 获取信息以及显示信息.
         info_item = single_items[0]
         self.title_label.set_text(_("Plugin") + " : %s" % (info_item.sub_items[0].text))
-        self.author_label.set_text(_("author") + " : %s" % (info_item.sub_items[3].text))
+        self.author_label.set_text(_("Author") + " : %s" % (info_item.sub_items[3].text))
         self.about_label.set_text("%s" % (info_item.sub_items[4].text))
 
     def list_view_on_draw_column_heade(self, e):

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-07 10:07+0800\n"
+"POT-Creation-Date: 2013-06-07 13:34+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -808,12 +808,12 @@ msgid "General"
 msgstr ""
 
 #: ../src/widget/ini_gui.py:364 ../src/widget/ini_gui.py:505
-#: ../src/widget/ini_gui.py:517
+#: ../src/widget/ini_gui.py:517 ../src/widget/ini_gui.py:1655
 msgid "About"
 msgstr ""
 
 #: ../src/widget/ini_gui.py:549
-msgid "On opening video:"
+msgid "On opening video"
 msgstr ""
 
 #: ../src/widget/ini_gui.py:551
@@ -1009,27 +1009,19 @@ msgid "Keep current aspect ratio"
 msgstr ""
 
 #: ../src/widget/ini_gui.py:1655
-msgid "name"
+msgid "Name"
+msgstr ""
+
+#: ../src/widget/ini_gui.py:1655 ../src/widget/ini_gui.py:1873
+msgid "Version"
 msgstr ""
 
 #: ../src/widget/ini_gui.py:1655
-msgid "version"
-msgstr ""
-
-#: ../src/widget/ini_gui.py:1655
-msgid "auto"
+msgid "Enable"
 msgstr ""
 
 #: ../src/widget/ini_gui.py:1655 ../src/widget/ini_gui.py:1750
-msgid "author"
-msgstr ""
-
-#: ../src/widget/ini_gui.py:1655
-msgid "about"
-msgstr ""
-
-#: ../src/widget/ini_gui.py:1873
-msgid "Version"
+msgid "Author"
 msgstr ""
 
 #: ../src/widget/ini_gui.py:1886
