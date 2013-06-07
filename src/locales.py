@@ -37,3 +37,9 @@ try:
     _ = gettext.translation(APP_NAME, LOCALE_DIR).gettext
 except Exception, e:
     _ = lambda i : i
+
+def get_locale_code():
+    try:
+        return gettext.find(APP_NAME, LOCALE_DIR).split(LOCALE_DIR)[1].split('/')[1]
+    except:
+        return "en_US"

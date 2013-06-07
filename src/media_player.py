@@ -24,7 +24,8 @@
 from skin import app_theme
 from dtk.ui.draw import draw_pixbuf
 from dtk.ui.utils import color_hex_to_cairo, propagate_expose
-from locales import _ # 国际化翻译.
+from deepin_utils.file import get_parent_dir
+from locales import _, get_locale_code
 from ini     import Config
 from user_guide import init_user_guide
 from widget.constant import SEEK_VALUE
@@ -72,6 +73,8 @@ import gtk
 import sys
 import os
 import dbus
+
+IMAGE_DIR = os.path.join(get_parent_dir(__file__, 2), 'image')
 
 APP_DBUS_NAME   = "com.deepin.mediaplayer"
 APP_OBJECT_NAME = "/com/deepin/mediaplayer"
@@ -314,7 +317,12 @@ class MediaPlayer(object):
         self.mid_combo_menu.connect("hide", self.mid_combo_menu_hide_event)
         #
         self.draw_check = True
-        self.background = app_theme.get_pixbuf("player.png").get_pixbuf()        
+        #self.background = app_theme.get_pixbuf("player.png").get_pixbuf()        
+        player_image_path = os.path.join(IMAGE_DIR, 'player', 'player-%s.png' % get_locale_code())
+        if not os.path.exists(player_image_path):
+            player_image_path = os.path.join(IMAGE_DIR, 'player', 'player-en_US.png')
+        self.background = gtk.gdk.pixbuf_new_from_file(player_image_path)
+
         self.gui.screen_frame_event.add_events(gtk.gdk.ALL_EVENTS_MASK)
         self.gui.screen.connect("realize",            self.init_media_player)
         self.gui.screen.connect("expose-event",       self.screen_expose_event)
