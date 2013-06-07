@@ -607,13 +607,13 @@ class MediaPlayer(object):
         pass 
     
     def ldmp_seek_event(self, ldmp, pos):
-        self.show_messagebox(_("seek : ") + str(length_to_time(pos)), screen=True)
+        self.show_messagebox("%s %s" % (_("Seek to"), str(length_to_time(pos))), screen=True)
     
     def ldmp_fseek_event(self, ldmp, pos):
-        self.show_messagebox(_("fseek : ") + str(length_to_time(pos)), screen=True)
+        self.show_messagebox("%s %s" % (_("Seek to"), str(length_to_time(pos))), screen=True)
 
     def ldmp_bseek_event(self, ldmp, pos):
-        self.show_messagebox(_("bseek : ") + str(length_to_time(pos)), screen=True)
+        self.show_messagebox("%s %s" % (_("Seek to"), str(length_to_time(pos))), screen=True)
         
     def screen_expose_event(self, widget, event):    
         cr = widget.window.cairo_create()
@@ -1337,7 +1337,7 @@ class MediaPlayer(object):
         cdroms = scan_cdrom() 
         # 如果有光盘.
         if len(cdroms):
-            item = (self.open_cdrom.get_pixbuf(), _("Open CDROM"))
+            item = (self.open_cdrom.get_pixbuf(), _("Open Disc"))
             self.mid_combo_menu.add_menu_index_items(0, item)
         for cdrom in cdroms:
             cdrom_child_menu = Menu()

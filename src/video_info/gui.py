@@ -93,7 +93,7 @@ class VideoInformGui(gobject.GObject):
         try:
             # ini vlaue.
             tabs = "   "
-            describe = _("File path:") + "%s" % (tabs)
+            describe = "%s:%s"  % (_("File path"), tabs)
             self.widget_offset_x = 30
             self.widget_offset_y = 20
             #
@@ -107,10 +107,10 @@ class VideoInformGui(gobject.GObject):
        0, 35)
             self.first_hseparator_hbox = gtk.HBox()
             self.file_name_label  = Label("   ", label_width = 350)
-            self.file_type_label  = Label(_("File type:") + "%s%s" % (tabs, get_play_file_type(self.player.uri)))
-            self.resolution_label = Label(_("Resolution:") + "%s%sx%s" % (tabs, self.player.video_width, self.player.video_height))
-            self.file_size_label  = Label(_("File size:") + "%s%s" % (tabs, get_file_size(self.player.uri)))
-            self.length_label     = Label(_("Duration:") + "%s%s" % (tabs, self.player.length))
+            self.file_type_label  = Label("%s:%s%s" % (_("File type"), tabs, get_play_file_type(self.player.uri)))
+            self.resolution_label = Label("%s:%s%sx%s" % (_("Resolution"), tabs, self.player.video_width, self.player.video_height))
+            self.file_size_label  = Label("%s:%s%s" % (_("File size"), tabs, get_file_size(self.player.uri)))
+            self.length_label     = Label("%s:%s%s" % (_("Duration"), tabs, self.player.length))
             self.second_hseparator = HSeparator(app_theme.get_shadow_color("hSeparator").get_color_info(), 0, 35)
             self.second_hseparator_hbox = gtk.HBox()            
             self.file_path_label  = Label(describe, enable_select=False, wrap_width=420)
@@ -177,20 +177,20 @@ class VideoInformGui(gobject.GObject):
             except:
                 bit_rate = 0
             self.fixed_code = gtk.Fixed()
-            self.video_strem_info_label = Label(_("Video stream info:"))
-            self.code_format_label      = Label(_('.Codec format:') + "%s%s" % (tabs, self.player.video_format))
-            self.video_fps_label        = Label(_(".Frame rate:") + "%s%s" % (tabs, self.player.video_fps))
-            self.video_display_asscept_label = Label(_(".Scaling:") + "%s%s" % (tabs, scaling))
-            self.video_malv_label = Label(_(".Video bit rate:") + "%s%s " % (tabs, bit_rate))
-            self.video_resolution_label = Label(_(".Resolution:") + "%s%s" % (tabs, str(self.player.video_width) + "x" + str(self.player.video_height)))
+            self.video_strem_info_label = Label("%s:" % _("Video stream info"))
+            self.code_format_label      = Label("%s:%s%s" % (_('Codec format'), tabs, self.player.video_format))
+            self.video_fps_label        = Label("%s:%s%s" % (_("Frame rate"), tabs, self.player.video_fps))
+            self.video_display_asscept_label = Label("%s:%s%s" % (_("Scaling"), tabs, scaling))
+            self.video_malv_label = Label("%s:%s%s" % (_("Video bit rate"), tabs, bit_rate))
+            self.video_resolution_label = Label("%s:%s%s" % (_("Resolution"), tabs, str(self.player.video_width) + "x" + str(self.player.video_height)))
             self.hseparator = HSeparator(app_theme.get_shadow_color("hSeparator").get_color_info(), 0, 35)
             self.hseparator_hbox = gtk.HBox()
-            self.audio_strem_info_label = Label(_("Audio stream info:"))
-            self.audio_format_label     = Label(_(".codec format:") + "%s%s" % (tabs, self.player.audio_format))
-            self.audio_channels_number_label = Label(_(".track number:") + "%s%s " % (tabs, self.player.audio_nch + " channels"))
-            self.audio_weishu_label = Label(_(".Audio digit:") + "%s%s " % (tabs, str(int(self.player.audio_nch) * 8) + " bits"))
-            self.audio_malv_label = Label(_(".Audio bit rate:") + "%s%s" % (tabs, str(int(self.player.audio_bitrate) / 1000) + " kbps"))
-            self.audio_sampling_label = Label(_(".Sampling:") + "%s%s " % (tabs, self.player.audio_rate + " Hz"))
+            self.audio_strem_info_label = Label("%s: " % _("Audio stream info"))
+            self.audio_format_label     = Label("%s:%s%s" % (_("Codec format"), tabs, self.player.audio_format))
+            self.audio_channels_number_label = Label("%s:%s%s" % (_("Track number"), tabs, self.player.audio_nch + " channels"))
+            self.audio_weishu_label = Label("%s:%s%s " % (_("Audio digit"), tabs, str(int(self.player.audio_nch) * 8) + " bits"))
+            self.audio_malv_label = Label("%s:%s%s" % (_("Audio bit rate:"), tabs, str(int(self.player.audio_bitrate) / 1000) + " kbps"))
+            self.audio_sampling_label = Label("%s:%s%s " % (_("Sampling"), tabs, self.player.audio_rate + " Hz"))
             self.copy_info_btn = Button(_("Copy info"))
             # Init widgets top left.
             self.widgets_top_left = [

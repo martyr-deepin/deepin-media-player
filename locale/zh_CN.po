@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-06 10:41+0800\n"
+"POT-Creation-Date: 2013-06-07 10:07+0800\n"
 "PO-Revision-Date: 2012-07-12 15:53+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -18,9 +18,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../src/gui.py:59 ../src/media_service.py:164 ../src/widget/ini_gui.py:1868
-#, fuzzy
 msgid "DPlayer"
-msgstr "播放"
+msgstr "深度影音"
 
 #: ../src/media_player_function.py:56 ../src/widget/play_menus.py:176
 #: ../src/widget/play_menus.py:367 ../src/widget/ini_gui.py:1457
@@ -53,17 +52,10 @@ msgstr "暂停"
 msgid "Play"
 msgstr "播放"
 
-#: ../src/media_player.py:610
-msgid "seek : "
-msgstr "跳转 : "
-
-#: ../src/media_player.py:613
-msgid "fseek : "
-msgstr "快进 : "
-
+#: ../src/media_player.py:610 ../src/media_player.py:613
 #: ../src/media_player.py:616
-msgid "bseek : "
-msgstr "倒退 : "
+msgid "Seek to"
+msgstr "跳转至"
 
 #: ../src/media_player.py:691 ../src/media_player.py:710
 #: ../src/widget/play_menus.py:192 ../src/widget/ini_gui.py:907
@@ -98,12 +90,12 @@ msgid "Screenshot"
 msgstr "截图设置"
 
 #: ../src/media_player.py:1340
-msgid "Open CDROM"
-msgstr "打开网址"
+msgid "Open Disc"
+msgstr "打开光盘"
 
 #: ../src/media_player.py:1384
 msgid "Save Directory"
-msgstr "深度影音打开文件夹对话框"
+msgstr "保存目录"
 
 #: ../src/media_player_menus.py:221 ../src/widget/play_menus.py:299
 msgid "Clear Playlist"
@@ -382,32 +374,33 @@ msgid "mastone"
 msgstr "万事通"
 
 #: ../src/format_conv/gui.py:104
-msgid "phone brand : "
-msgstr "设备品牌 : "
+msgid "Phone brand"
+msgstr "设备品牌"
 
 #: ../src/format_conv/gui.py:105
-msgid "Output format : "
-msgstr "输出格式 : "
+msgid "Output format"
+msgstr "输出格式"
 
 #: ../src/format_conv/gui.py:106
-msgid "Audio encoder : "
-msgstr "音频编码 : "
+msgid "Audio encoder"
+msgstr "音频编码"
 
 #: ../src/format_conv/gui.py:107
-msgid "Video encoder : "
-msgstr "视频编码 : "
+msgid "Video encoder"
+msgstr "视频编码"
 
 #: ../src/format_conv/gui.py:108
-msgid "Output directory : "
-msgstr "指定位置 : "
+msgid "Output directory"
+msgstr "指定位置"
 
 #: ../src/format_conv/gui.py:109
-msgid "Phone model : "
-msgstr "设备型号 : "
+msgid "Phone model"
+msgstr "设备型号"
 
-#: ../src/format_conv/gui.py:110
-msgid "Resolution : "
-msgstr "分辨率 : "
+#: ../src/format_conv/gui.py:110 ../src/video_info/gui.py:111
+#: ../src/video_info/gui.py:185
+msgid "Resolution"
+msgstr "分 辨 率"
 
 #: ../src/format_conv/gui.py:123
 msgid "Change"
@@ -469,8 +462,8 @@ msgid "Audio-only"
 msgstr "仅有音频"
 
 #: ../src/format_conv/transmageddon.py:585
-msgid "Time remaining : "
-msgstr "剩余时间 : "
+msgid "Time remaining"
+msgstr "剩余时间"
 
 #: ../src/format_conv/transmageddon.py:673
 #: ../src/format_conv/transmageddon.py:734
@@ -816,12 +809,12 @@ msgstr "系统设置"
 
 #: ../src/widget/ini_gui.py:364 ../src/widget/ini_gui.py:505
 #: ../src/widget/ini_gui.py:517
-msgid "About us"
-msgstr "关于我们"
+msgid "About"
+msgstr "关于"
 
 #: ../src/widget/ini_gui.py:549
-msgid "On opening video:"
-msgstr "视频文件打开时: "
+msgid "On opening video"
+msgstr "视频文件打开时"
 
 #: ../src/widget/ini_gui.py:551
 msgid "Fit video to player"
@@ -856,7 +849,6 @@ msgid "Show thumbnail when hovering over progress bar"
 msgstr "鼠标悬停进度条时显示预览图"
 
 #: ../src/widget/ini_gui.py:602
-#, fuzzy
 msgid "allow multiple instance DPlayer"
 msgstr "允许同时运行多个深度影音"
 
@@ -989,8 +981,8 @@ msgid "Load subtitles automatically"
 msgstr "自动载入字幕"
 
 #: ../src/widget/ini_gui.py:1422
-msgid "Subtitle Directory:"
-msgstr "指定位置： "
+msgid "Subtitle Directory"
+msgstr "字幕位置"
 
 #: ../src/widget/ini_gui.py:1431 ../src/widget/ini_gui.py:1506
 msgid "Browse"
@@ -1005,12 +997,12 @@ msgid "Folder"
 msgstr "保存成文件"
 
 #: ../src/widget/ini_gui.py:1502
-msgid "Screenshot directory:"
-msgstr "保存路径： "
+msgid "Screenshot directory"
+msgstr "保存路径"
 
 #: ../src/widget/ini_gui.py:1509
-msgid "File Type:"
-msgstr "保存类型： "
+msgid "File Type"
+msgstr "保存类型"
 
 #: ../src/widget/ini_gui.py:1540
 msgid "Keep current aspect ratio"
@@ -1037,11 +1029,10 @@ msgid "about"
 msgstr "关于"
 
 #: ../src/widget/ini_gui.py:1873
-msgid "Version:"
-msgstr "版本："
+msgid "Version"
+msgstr "版本"
 
 #: ../src/widget/ini_gui.py:1886
-#, fuzzy
 msgid ""
 "\tDPlayer is a video player designed for Linux users. It support a variety "
 "of video formats, and features mode switching, video preview, online "
@@ -1072,72 +1063,60 @@ msgid "decoding information"
 msgstr "编码信息"
 
 #: ../src/video_info/gui.py:96
-msgid "File path:"
-msgstr "文件路径:"
+msgid "File path"
+msgstr "文件路径"
 
 #: ../src/video_info/gui.py:110
-msgid "File type:"
-msgstr "文件类型:"
-
-#: ../src/video_info/gui.py:111
-msgid "Resolution:"
-msgstr "分 辨 率  : "
+msgid "File type"
+msgstr "文件类型"
 
 #: ../src/video_info/gui.py:112
-msgid "File size:"
-msgstr "文件大小:"
+msgid "File size"
+msgstr "文件大小"
 
 #: ../src/video_info/gui.py:113
-msgid "Duration:"
-msgstr "媒体时长:"
+msgid "Duration"
+msgstr "媒体时长"
 
 #: ../src/video_info/gui.py:180
-msgid "Video stream info:"
+msgid "Video stream info"
 msgstr "视频流信息"
 
-#: ../src/video_info/gui.py:181
-msgid ".Codec format:"
-msgstr ". 编码格式:"
+#: ../src/video_info/gui.py:181 ../src/video_info/gui.py:189
+msgid "Codec format"
+msgstr "编码格式"
 
 #: ../src/video_info/gui.py:182
-msgid ".Frame rate:"
-msgstr ". 视频帧率:"
+msgid "Frame rate"
+msgstr "视频帧率"
 
 #: ../src/video_info/gui.py:183
-msgid ".Scaling:"
-msgstr ". 显示比率:"
+msgid "Scaling"
+msgstr "显示比率"
 
 #: ../src/video_info/gui.py:184
-msgid ".Video bit rate:"
-msgstr ". 视频码率:"
-
-#: ../src/video_info/gui.py:185
-msgid ".Resolution:"
-msgstr ". 分 辨 率  : "
+msgid "Video bit rate"
+msgstr "视频码率"
 
 #: ../src/video_info/gui.py:188
-msgid "Audio stream info:"
+msgid "Audio stream info"
 msgstr "音频流信息"
 
-#: ../src/video_info/gui.py:189
-msgid ".codec format:"
-msgstr ". 编码格式:"
-
 #: ../src/video_info/gui.py:190
-msgid ".track number:"
-msgstr ". 声 道 数  :"
+msgid "Track number"
+msgstr "声 道 数"
 
 #: ../src/video_info/gui.py:191
-msgid ".Audio digit:"
-msgstr ". 音频位数:"
+msgid "Audio digit"
+msgstr "音频位数"
 
 #: ../src/video_info/gui.py:192
-msgid ".Audio bit rate:"
-msgstr ". 音频码率:"
+msgid "Audio bit rate:"
+msgstr "音频码率"
 
 #: ../src/video_info/gui.py:193
-msgid ".Sampling:"
-msgstr ". 采 样 数  :"
+msgid "Sampling"
+msgstr "采 样 数"
 
 #: ../src/video_info/gui.py:194
 msgid "Copy info"
@@ -1149,11 +1128,8 @@ msgstr "打开网址"
 
 #: ../src/screen_mid/open_url.py:41
 msgid "Ok"
-msgstr ""
+msgstr "确定"
 
 #: ../src/screen_mid/open_url.py:42
 msgid "Cancel"
-msgstr ""
-
-#~ msgid "Deepin Media Player"
-#~ msgstr "深度影音"
+msgstr "取消"

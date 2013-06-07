@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-06 10:41+0800\n"
+"POT-Creation-Date: 2013-06-07 10:07+0800\n"
 "PO-Revision-Date: 2012-07-12 15:53+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -53,17 +53,10 @@ msgstr "暫停"
 msgid "Play"
 msgstr "播放"
 
-#: ../src/media_player.py:610
-msgid "seek : "
-msgstr "跳轉"
-
-#: ../src/media_player.py:613
-msgid "fseek : "
-msgstr "往前"
-
+#: ../src/media_player.py:610 ../src/media_player.py:613
 #: ../src/media_player.py:616
-msgid "bseek : "
-msgstr "往後"
+msgid "Seek to"
+msgstr ""
 
 #: ../src/media_player.py:691 ../src/media_player.py:710
 #: ../src/widget/play_menus.py:192 ../src/widget/ini_gui.py:907
@@ -98,8 +91,9 @@ msgid "Screenshot"
 msgstr "截圖設定"
 
 #: ../src/media_player.py:1340
-msgid "Open CDROM"
-msgstr "打開光碟 CD"
+#, fuzzy
+msgid "Open Disc"
+msgstr "開啟目錄"
 
 #: ../src/media_player.py:1384
 msgid "Save Directory"
@@ -382,32 +376,40 @@ msgid "mastone"
 msgstr "萬事通"
 
 #: ../src/format_conv/gui.py:104
-msgid "phone brand : "
+#, fuzzy
+msgid "Phone brand"
 msgstr "設備品牌 : "
 
 #: ../src/format_conv/gui.py:105
-msgid "Output format : "
+#, fuzzy
+msgid "Output format"
 msgstr "輸出格式 : "
 
 #: ../src/format_conv/gui.py:106
-msgid "Audio encoder : "
+#, fuzzy
+msgid "Audio encoder"
 msgstr "音訊編碼 : "
 
 #: ../src/format_conv/gui.py:107
-msgid "Video encoder : "
+#, fuzzy
+msgid "Video encoder"
 msgstr "影片編碼 : "
 
 #: ../src/format_conv/gui.py:108
-msgid "Output directory : "
+#, fuzzy
+msgid "Output directory"
 msgstr "指定位置 : "
 
 #: ../src/format_conv/gui.py:109
-msgid "Phone model : "
+#, fuzzy
+msgid "Phone model"
 msgstr "裝置型號 : "
 
-#: ../src/format_conv/gui.py:110
-msgid "Resolution : "
-msgstr "解析度 : "
+#: ../src/format_conv/gui.py:110 ../src/video_info/gui.py:111
+#: ../src/video_info/gui.py:185
+#, fuzzy
+msgid "Resolution"
+msgstr "解析度: "
 
 #: ../src/format_conv/gui.py:123
 msgid "Change"
@@ -469,7 +471,8 @@ msgid "Audio-only"
 msgstr "僅有音訊"
 
 #: ../src/format_conv/transmageddon.py:585
-msgid "Time remaining : "
+#, fuzzy
+msgid "Time remaining"
 msgstr "剩餘時間 : "
 
 #: ../src/format_conv/transmageddon.py:673
@@ -816,8 +819,9 @@ msgstr "系統設定"
 
 #: ../src/widget/ini_gui.py:364 ../src/widget/ini_gui.py:505
 #: ../src/widget/ini_gui.py:517
-msgid "About us"
-msgstr "關於我們"
+#, fuzzy
+msgid "About"
+msgstr "關於"
 
 #: ../src/widget/ini_gui.py:549
 msgid "On opening video:"
@@ -989,7 +993,8 @@ msgid "Load subtitles automatically"
 msgstr "自動載入字幕"
 
 #: ../src/widget/ini_gui.py:1422
-msgid "Subtitle Directory:"
+#, fuzzy
+msgid "Subtitle Directory"
 msgstr "指定位置： "
 
 #: ../src/widget/ini_gui.py:1431 ../src/widget/ini_gui.py:1506
@@ -1005,11 +1010,13 @@ msgid "Folder"
 msgstr "保存成文件"
 
 #: ../src/widget/ini_gui.py:1502
-msgid "Screenshot directory:"
+#, fuzzy
+msgid "Screenshot directory"
 msgstr "保存路徑： "
 
 #: ../src/widget/ini_gui.py:1509
-msgid "File Type:"
+#, fuzzy
+msgid "File Type"
 msgstr "保存類型： "
 
 #: ../src/widget/ini_gui.py:1540
@@ -1037,7 +1044,8 @@ msgid "about"
 msgstr "關於"
 
 #: ../src/widget/ini_gui.py:1873
-msgid "Version:"
+#, fuzzy
+msgid "Version"
 msgstr "版本："
 
 #: ../src/widget/ini_gui.py:1886
@@ -1072,71 +1080,73 @@ msgid "decoding information"
 msgstr "編碼訊息"
 
 #: ../src/video_info/gui.py:96
-msgid "File path:"
+#, fuzzy
+msgid "File path"
 msgstr "檔案路徑:"
 
 #: ../src/video_info/gui.py:110
-msgid "File type:"
+#, fuzzy
+msgid "File type"
 msgstr "檔案類型:"
 
-#: ../src/video_info/gui.py:111
-msgid "Resolution:"
-msgstr "解析度: "
-
 #: ../src/video_info/gui.py:112
-msgid "File size:"
+#, fuzzy
+msgid "File size"
 msgstr "檔案大小:"
 
 #: ../src/video_info/gui.py:113
-msgid "Duration:"
+#, fuzzy
+msgid "Duration"
 msgstr "時間長度:"
 
 #: ../src/video_info/gui.py:180
-msgid "Video stream info:"
+#, fuzzy
+msgid "Video stream info"
 msgstr "影片串流信息"
 
-#: ../src/video_info/gui.py:181
-msgid ".Codec format:"
+#: ../src/video_info/gui.py:181 ../src/video_info/gui.py:189
+#, fuzzy
+msgid "Codec format"
 msgstr ". 編碼格式:"
 
 #: ../src/video_info/gui.py:182
-msgid ".Frame rate:"
+#, fuzzy
+msgid "Frame rate"
 msgstr ". 影片幀率:"
 
 #: ../src/video_info/gui.py:183
-msgid ".Scaling:"
+#, fuzzy
+msgid "Scaling"
 msgstr ". 顯示比率:"
 
 #: ../src/video_info/gui.py:184
-msgid ".Video bit rate:"
+#, fuzzy
+msgid "Video bit rate"
 msgstr ". 影片碼率:"
 
-#: ../src/video_info/gui.py:185
-msgid ".Resolution:"
-msgstr ". 解析度: "
-
 #: ../src/video_info/gui.py:188
-msgid "Audio stream info:"
+#, fuzzy
+msgid "Audio stream info"
 msgstr "音訊串流訊息"
 
-#: ../src/video_info/gui.py:189
-msgid ".codec format:"
-msgstr ". 編碼格式:"
-
 #: ../src/video_info/gui.py:190
-msgid ".track number:"
+#, fuzzy
+msgid "Track number"
 msgstr ". 聲 道 數  :"
 
 #: ../src/video_info/gui.py:191
-msgid ".Audio digit:"
+#, fuzzy
+msgid "Audio digit"
 msgstr ". 音訊位數:"
 
 #: ../src/video_info/gui.py:192
-msgid ".Audio bit rate:"
+#, fuzzy
+msgid "Audio bit rate:"
 msgstr ". 音訊碼率:"
 
 #: ../src/video_info/gui.py:193
-msgid ".Sampling:"
+#, fuzzy
+msgid "Sampling"
 msgstr ". 采樣數:"
 
 #: ../src/video_info/gui.py:194
@@ -1154,6 +1164,30 @@ msgstr "確認"
 #: ../src/screen_mid/open_url.py:42
 msgid "Cancel"
 msgstr "取消"
+
+#~ msgid "seek : "
+#~ msgstr "跳轉"
+
+#~ msgid "fseek : "
+#~ msgstr "往前"
+
+#~ msgid "bseek : "
+#~ msgstr "往後"
+
+#~ msgid "Open CDROM"
+#~ msgstr "打開光碟 CD"
+
+#~ msgid "Resolution : "
+#~ msgstr "解析度 : "
+
+#~ msgid "About us"
+#~ msgstr "關於我們"
+
+#~ msgid ".Resolution:"
+#~ msgstr ". 解析度: "
+
+#~ msgid ".codec format:"
+#~ msgstr ". 編碼格式:"
 
 #~ msgid "Deepin Media Player"
 #~ msgstr "深度影音"

@@ -361,7 +361,7 @@ class IniGui(DialogBox):
              NormalItem(_("Subtitles")),
              self.screenshot_item,
              self.plugin_item,
-             NormalItem(_("About us")),
+             NormalItem(_("About")),
              ]
             )
         self.tree_view.draw_mask = self.draw_treeview_mask
@@ -502,7 +502,7 @@ class Configure(gtk.VBox):
             _("Subtitles"):SubSet(),
             _("Screenshot"):ScreenShot(),
             _("Plugin"):Plugin(self.this),
-            _("About us"):About()
+            _("About"):About()
             }
         
         # Init all configure gui class.
@@ -514,7 +514,7 @@ class Configure(gtk.VBox):
         self.sub_set = self.class_dict[_("Subtitles")]
         self.screen_shot = self.class_dict[_("Screenshot")]
         self.plugins = self.class_dict[_("Plugin")]
-        self.about = self.class_dict[_("About us")]
+        self.about = self.class_dict[_("About")]
         self.show_all()
         
     def set(self, class_name):
@@ -546,7 +546,7 @@ class FilePlay(gtk.VBox):
         self.label.set_size_request(label_width, label_height)
         
         # Video file open.
-        self.video_file_open_label = Label(_("On opening video:"))
+        self.video_file_open_label = Label("%s: " % _("On opening video"))
         
         self.adapt_video_button = RadioButton(_("Fit video to player"))
 
@@ -1419,7 +1419,7 @@ class SubSet(gtk.VBox):
                 
         self.ai_load_subtitle_checkbtn_label = Label("")
         # Specified Location Search.
-        self.specific_location_search_label = Label(_("Subtitle Directory:"))
+        self.specific_location_search_label = Label("%s:" % _("Subtitle Directory"))
         self.specific_location_search_entry = InputEntry()
         text_string = self.ini.get("SubtitleSet", "specific_location_search")
         if text_string:
@@ -1499,14 +1499,14 @@ class ScreenShot(gtk.VBox):
         self.save_file_radio_label = Label("")
         
         # Save path.
-        self.save_path_label = Label(_("Screenshot directory:"))
+        self.save_path_label = Label("%s: " % _("Screenshot directory"))
         self.save_path_entry = InputEntry()
             
         self.save_path_entry.set_size(entry_width, entry_height)                
         self.save_path_button = Button(_("Browse"))
         self.save_path_button.connect("clicked", self.save_path_to_save_path_entry_clicked)
         # Save type.
-        self.save_type_label = Label(_("File Type:"))
+        self.save_type_label = Label("%s: " % _("File Type"))
         self.save_type_combo = ComboBox([(".png", 1),
                                           (".jpeg", 2)])
         
@@ -1870,7 +1870,7 @@ class About(gtk.VBox):
         logo_box.pack_start(logo_image, False, False)
         logo_box.pack_start(logo_name, False, False)
         
-        version_label = Label(_("Version:"))
+        version_label = Label("%s: " % _("Version"))
         version_content = Label("V2.0", light_color)
         info_box = gtk.HBox(spacing=5)
         info_align = gtk.Alignment()

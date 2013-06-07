@@ -582,7 +582,7 @@ class TransmageddonUI:
                #
                # print "time_rem:", time_rem # add progress info to task gui.
                if self.conv_task_gui.pause_btn.label == _("Pause"):
-                  self.conv_task_gui.show_time_label.set_text(_("Time remaining : ") + time_rem)
+                  self.conv_task_gui.show_time_label.set_text( "%s : %s" % (_("Time remaining"), time_rem))
                else:   
                   self.conv_task_gui.show_time_label.set_text("")
                #               

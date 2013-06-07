@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-06 10:41+0800\n"
+"POT-Creation-Date: 2013-06-07 10:07+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -52,16 +52,9 @@ msgstr ""
 msgid "Play"
 msgstr ""
 
-#: ../src/media_player.py:610
-msgid "seek : "
-msgstr ""
-
-#: ../src/media_player.py:613
-msgid "fseek : "
-msgstr ""
-
+#: ../src/media_player.py:610 ../src/media_player.py:613
 #: ../src/media_player.py:616
-msgid "bseek : "
+msgid "Seek to"
 msgstr ""
 
 #: ../src/media_player.py:691 ../src/media_player.py:710
@@ -97,7 +90,7 @@ msgid "Screenshot"
 msgstr ""
 
 #: ../src/media_player.py:1340
-msgid "Open CDROM"
+msgid "Open Disc"
 msgstr ""
 
 #: ../src/media_player.py:1384
@@ -381,31 +374,32 @@ msgid "mastone"
 msgstr ""
 
 #: ../src/format_conv/gui.py:104
-msgid "phone brand : "
+msgid "Phone brand"
 msgstr ""
 
 #: ../src/format_conv/gui.py:105
-msgid "Output format : "
+msgid "Output format"
 msgstr ""
 
 #: ../src/format_conv/gui.py:106
-msgid "Audio encoder : "
+msgid "Audio encoder"
 msgstr ""
 
 #: ../src/format_conv/gui.py:107
-msgid "Video encoder : "
+msgid "Video encoder"
 msgstr ""
 
 #: ../src/format_conv/gui.py:108
-msgid "Output directory : "
+msgid "Output directory"
 msgstr ""
 
 #: ../src/format_conv/gui.py:109
-msgid "Phone model : "
+msgid "Phone model"
 msgstr ""
 
-#: ../src/format_conv/gui.py:110
-msgid "Resolution : "
+#: ../src/format_conv/gui.py:110 ../src/video_info/gui.py:111
+#: ../src/video_info/gui.py:185
+msgid "Resolution"
 msgstr ""
 
 #: ../src/format_conv/gui.py:123
@@ -468,7 +462,7 @@ msgid "Audio-only"
 msgstr ""
 
 #: ../src/format_conv/transmageddon.py:585
-msgid "Time remaining : "
+msgid "Time remaining"
 msgstr ""
 
 #: ../src/format_conv/transmageddon.py:673
@@ -815,7 +809,7 @@ msgstr ""
 
 #: ../src/widget/ini_gui.py:364 ../src/widget/ini_gui.py:505
 #: ../src/widget/ini_gui.py:517
-msgid "About us"
+msgid "About"
 msgstr ""
 
 #: ../src/widget/ini_gui.py:549
@@ -987,7 +981,7 @@ msgid "Load subtitles automatically"
 msgstr ""
 
 #: ../src/widget/ini_gui.py:1422
-msgid "Subtitle Directory:"
+msgid "Subtitle Directory"
 msgstr ""
 
 #: ../src/widget/ini_gui.py:1431 ../src/widget/ini_gui.py:1506
@@ -1003,11 +997,11 @@ msgid "Folder"
 msgstr ""
 
 #: ../src/widget/ini_gui.py:1502
-msgid "Screenshot directory:"
+msgid "Screenshot directory"
 msgstr ""
 
 #: ../src/widget/ini_gui.py:1509
-msgid "File Type:"
+msgid "File Type"
 msgstr ""
 
 #: ../src/widget/ini_gui.py:1540
@@ -1035,7 +1029,7 @@ msgid "about"
 msgstr ""
 
 #: ../src/widget/ini_gui.py:1873
-msgid "Version:"
+msgid "Version"
 msgstr ""
 
 #: ../src/widget/ini_gui.py:1886
@@ -1064,71 +1058,59 @@ msgid "decoding information"
 msgstr ""
 
 #: ../src/video_info/gui.py:96
-msgid "File path:"
+msgid "File path"
 msgstr ""
 
 #: ../src/video_info/gui.py:110
-msgid "File type:"
-msgstr ""
-
-#: ../src/video_info/gui.py:111
-msgid "Resolution:"
+msgid "File type"
 msgstr ""
 
 #: ../src/video_info/gui.py:112
-msgid "File size:"
+msgid "File size"
 msgstr ""
 
 #: ../src/video_info/gui.py:113
-msgid "Duration:"
+msgid "Duration"
 msgstr ""
 
 #: ../src/video_info/gui.py:180
-msgid "Video stream info:"
+msgid "Video stream info"
 msgstr ""
 
-#: ../src/video_info/gui.py:181
-msgid ".Codec format:"
+#: ../src/video_info/gui.py:181 ../src/video_info/gui.py:189
+msgid "Codec format"
 msgstr ""
 
 #: ../src/video_info/gui.py:182
-msgid ".Frame rate:"
+msgid "Frame rate"
 msgstr ""
 
 #: ../src/video_info/gui.py:183
-msgid ".Scaling:"
+msgid "Scaling"
 msgstr ""
 
 #: ../src/video_info/gui.py:184
-msgid ".Video bit rate:"
-msgstr ""
-
-#: ../src/video_info/gui.py:185
-msgid ".Resolution:"
+msgid "Video bit rate"
 msgstr ""
 
 #: ../src/video_info/gui.py:188
-msgid "Audio stream info:"
-msgstr ""
-
-#: ../src/video_info/gui.py:189
-msgid ".codec format:"
+msgid "Audio stream info"
 msgstr ""
 
 #: ../src/video_info/gui.py:190
-msgid ".track number:"
+msgid "Track number"
 msgstr ""
 
 #: ../src/video_info/gui.py:191
-msgid ".Audio digit:"
+msgid "Audio digit"
 msgstr ""
 
 #: ../src/video_info/gui.py:192
-msgid ".Audio bit rate:"
+msgid "Audio bit rate:"
 msgstr ""
 
 #: ../src/video_info/gui.py:193
-msgid ".Sampling:"
+msgid "Sampling"
 msgstr ""
 
 #: ../src/video_info/gui.py:194
