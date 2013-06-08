@@ -60,11 +60,11 @@ INI_HEIGHT = 480
 label_width = 100 
 label_height = 30
 TITLE_WIDTH_PADDING = 10    
-TITLE_HEIGHT_PADDING = 2
+TITLE_HEIGHT_PADDING = 20
 
 # Heparator.
 heparator_x = 0
-heparator_y = 35
+heparator_y = 48
 heparator_width = INI_WIDTH - 143
 heparator_height = 5
 
@@ -616,14 +616,14 @@ class FilePlay(gtk.VBox):
         title_box.pack_start(create_separator_box(), False, True)
         title_box.pack_start(self.video_file_open_label, False, False)
         title_box_align = gtk.Alignment()
-        title_box_align.set_padding(10, 0, 10, 0)
+        title_box_align.set_padding(20, 0, 16, 0)
         title_box_align.set(0, 0, 1, 1)
         title_box_align.add(title_box)
         
         radio_table.set_row_spacings(15)        
-        radio_table.attach(self.adapt_video_button, 0, 1, 0, 1, yoptions=gtk.FILL)
+        radio_table.attach(self.adapt_video_button, 0, 1, 0, 1, yoptions=gtk.FILL, xpadding=9)
         radio_table.attach(self.ai_set_radio_button, 1, 2, 0, 1, yoptions=gtk.FILL)
-        radio_table.attach(self.close_position_radio_button, 0, 1, 1, 2, yoptions=gtk.FILL)
+        radio_table.attach(self.close_position_radio_button, 0, 1, 1, 2, yoptions=gtk.FILL, xpadding=9)
         radio_table.attach(self.full_window_radio_button, 1, 2, 1, 2, yoptions=gtk.FILL)
         
         check_box = gtk.VBox(spacing=15)
@@ -633,10 +633,16 @@ class FilePlay(gtk.VBox):
         check_box.pack_start(self.show_preview_window_button, False, False)
         check_box.pack_start(self.run_a_main_pid_radio_button, False, False)
         check_box.pack_start(self.pause_play_button, False, False)
+
+        check_box_align = gtk.Alignment()
+        check_box_align.set_padding(0, 0, 10, 0)
+        check_box_align.set(0, 0, 1, 1)
+        check_box_align.add(check_box)
+
         self.set_spacing(15)
         self.pack_start(title_box_align, False, True)
         self.pack_start(radio_table, False, True)
-        self.pack_start(check_box, False, False)
+        self.pack_start(check_box_align, False, False)
         
     def get_file_play_state(self):           
         video_file_dict = {}
@@ -675,7 +681,7 @@ class SystemSet(gtk.VBox):
         self.heparator = create_separator_box()
         self.heparator_ali = gtk.Alignment(1, 1, 1, 1)
         self.heparator_ali.add(self.heparator)
-        self.heparator_ali.set_padding(0, 0, 20, 0)
+        self.heparator_ali.set_padding(0, 0, 16, 0)
         self.heparator_hbox.pack_start(self.heparator_ali, True, True)
         self.heparator_hbox.set_size_request(heparator_width, heparator_height)
         # System setting.
@@ -685,7 +691,7 @@ class SystemSet(gtk.VBox):
         title_box = gtk.VBox(spacing=5)
         title_box.pack_start(self.label, False, False)
         title_box.pack_start(create_separator_box(), True, True)
-        title_box_align.set_padding(10, 0, 10, 0)
+        title_box_align.set_padding(20, 0, 16, 0)
         title_box_align.set(0, 0, 1, 1)
         title_box_align.add(title_box)
         # 启动系统气泡提示.
@@ -736,7 +742,7 @@ class SystemSet(gtk.VBox):
             self.font_size_button_combo.label.set_text("8")
         #
         self.font_hbox_align = gtk.Alignment(0, 0, 1, 1)
-        self.font_hbox_align.set_padding(5, 0, 32, 0)
+        self.font_hbox_align.set_padding(8, 0, 16, 0)
         self.font_hbox = gtk.HBox()
         self.font_hbox_align.add(self.font_hbox)
         self.font_type_vbox = gtk.VBox()
@@ -752,7 +758,7 @@ class SystemSet(gtk.VBox):
         self.font_hbox.pack_start(self.font_size_vbox, False, False, padding=20)
         #
         check_box_align = gtk.Alignment(0, 0, 1, 1)
-        check_box_align.set_padding(5, 0, 5, 0)
+        check_box_align.set_padding(5, 0, 12, 0)
         check_box = gtk.VBox(spacing=10)
         check_box_align.add(check_box)
         # check_box.
@@ -793,7 +799,7 @@ class PlayControl(gtk.VBox):
         self.heparator = create_separator_box()
         self.heparator_ali = gtk.Alignment(1, 1, 1, 1)
         self.heparator_ali.add(self.heparator)
-        self.heparator.set_padding(0, 0, 20, 0)
+        self.heparator.set_padding(0, 0, 16, 0)
         self.heparator_hbox = gtk.HBox()
         self.heparator_hbox.pack_start(self.heparator_ali, True, True)
         self.heparator_hbox.set_size_request(heparator_width, heparator_height)
@@ -935,16 +941,16 @@ class PlayControl(gtk.VBox):
             self.play_control_bool_checkbtn.set_active(False)
             self.set_play_control_false()                
 
-        play_control_x = 20
-        play_control_y = 40
+        play_control_x = 8
+        play_control_y = 56
         # label.
-        self.fixed.put(self.label, play_control_x, TITLE_HEIGHT_PADDING)
+        self.fixed.put(self.label, play_control_x + 8, TITLE_HEIGHT_PADDING)
         # heparator.
         self.fixed.put(self.heparator_hbox, 0, heparator_y)
         # open file key.
         # play_control_bool_checkbtn.
         
-        self.fixed.put(self.play_control_bool_checkbtn, play_control_x, play_control_y)
+        self.fixed.put(self.play_control_bool_checkbtn, play_control_x + 2, play_control_y)
         
         play_control_x += 10
         play_control_y += self.play_control_bool_checkbtn.get_size_request()[1] + 10
@@ -1080,19 +1086,19 @@ class SubKey(gtk.VBox):
         self.heparator = create_separator_box()
         self.heparator_ali = gtk.Alignment(1, 1, 1, 1)
         self.heparator_ali.add(self.heparator)
-        self.heparator.set_padding(0, 0, 20, 0)
+        self.heparator.set_padding(0, 0, 16, 0)
         self.heparator_hbox.set_size_request(heparator_width, heparator_height)        
         # add title.        
-        title_offset_x = 20
-        title_offset_y = 10
+        title_offset_x = 16
+        title_offset_y = 28
         self.title_label = Label(_("Subtitle"))
         # add check_btn.
-        check_btn_offset_x = 20
-        check_btn_offset_y = 40
+        check_btn_offset_x = 10
+        check_btn_offset_y = 56
         self.check_btn = CheckButton(_("Enable Keyboard Shortcuts"))        
         # add widgets.
         heparator_offset_x = 0
-        heparator_offset_y = title_offset_y + 25        
+        heparator_offset_y = title_offset_y + 20
         # create widgets left, right label.
         widgets_label_left = [
             Label(_("Delay-0.5s")),
@@ -1127,7 +1133,7 @@ class SubKey(gtk.VBox):
             if widget_right:
                 widget_right.set_size(entry_width, entry_height)
         # add widgets.
-        start_x, start_y = 30, heparator_offset_y + 30
+        start_x, start_y = 18, heparator_offset_y + 40
         offset_x, offset_y = entry_width + 50, 50
         self.fixed.put(self.title_label, title_offset_x, title_offset_y)
         self.heparator_hbox.pack_start(self.heparator_ali)
@@ -1232,7 +1238,7 @@ class OtherKey(gtk.VBox):
         self.heparator = create_separator_box()
         self.heparator_ali = gtk.Alignment(1, 1, 1, 1)
         self.heparator_ali.add(self.heparator)
-        self.heparator_ali.set_padding(0, 0, 20, 0)
+        self.heparator_ali.set_padding(0, 0, 16, 0)
         self.heparator_hbox.pack_start(self.heparator_ali)
         self.heparator_hbox.set_size_request(heparator_width, heparator_height)        
         # set other_key bool.        
