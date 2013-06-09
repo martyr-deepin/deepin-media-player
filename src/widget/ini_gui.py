@@ -1413,7 +1413,7 @@ class SubSet(gtk.VBox):
         self.heparator = create_separator_box()
         self.heparator_ali = gtk.Alignment(1, 1, 1, 1)
         self.heparator_ali.add(self.heparator)
-        self.heparator_ali.set_padding(0, 0, 20, 0)
+        self.heparator_ali.set_padding(0, 0, 16, 0)
         self.heparator_hbox.pack_start(self.heparator_ali)
         self.heparator_hbox.set_size_request(heparator_width, heparator_height)
         # Ai load subtitle.
@@ -1436,11 +1436,12 @@ class SubSet(gtk.VBox):
         self.specific_location_search_entry.set_size(entry_width, entry_height)
         self.specific_location_search_button = Button(_("Browse"))
         self.specific_location_search_button.connect("clicked", self.load_path_to_sls_entry)
-        sub_set_x = 20
-        sub_set_y = 40
+        sub_set_x = 16
+        sub_set_y = 62
         self.fixed.put(self.label, sub_set_x, TITLE_HEIGHT_PADDING)
-        self.fixed.put(self.heparator_hbox, heparator_x, heparator_y)
-        sub_set_x += 10
+        self.fixed.put(self.heparator_hbox, heparator_x, heparator_y + 7)
+        #sub_set_x += 10
+        sub_set_x -= 4
         # Ai load subtitle.
         self.fixed.put(self.ai_load_subtitle_checkbtn,
                        sub_set_x, sub_set_y)
@@ -1553,7 +1554,7 @@ class ScreenShot(gtk.VBox):
         title_box.pack_start(self.label, False, False)
         title_box.pack_start(create_separator_box(), False, True)
         title_box_align = gtk.Alignment()
-        title_box_align.set_padding(10, 0, 10, 0)
+        title_box_align.set_padding(20, 0, 16, 0)
         title_box_align.set(0, 0, 1, 1)
         title_box_align.add(title_box)
         
@@ -1571,15 +1572,28 @@ class ScreenShot(gtk.VBox):
         save_box.pack_start(path_box, False, True)
         save_box.pack_start(type_box, False, True)
         save_box_align = gtk.Alignment()
-        save_box_align.set_padding(0, 0, 40, 0)
+        save_box_align.set_padding(0, 0, 36, 0)
         save_box_align.add(save_box)
         
-        self.set_spacing(10)
+        self.set_spacing(5)
         self.pack_start(title_box_align, False, True)
-        self.pack_start(self.save_clipboard_radio, False, False)
-        self.pack_start(self.save_file_radio, False, False)
+
+        self.radio_align = gtk.Alignment(0, 0, 1, 1)
+        self.radio_align.set_padding(0, 5, 10, 0)
+        self.radio_box = gtk.VBox()
+        self.radio_box.set_spacing(10)
+        self.radio_box.pack_start(self.save_clipboard_radio, False, False)
+        self.radio_box.pack_start(self.save_file_radio, False, False)
+        self.radio_align.add(self.radio_box)
+
+        self.pack_start(self.radio_align, False, False)
         self.pack_start(save_box_align, False, True)
-        self.pack_start(self.current_show_sort_check, False, False)
+
+        sort_check_align = gtk.Alignment()
+        sort_check_align.set_padding(5, 0, 14, 0)
+        sort_check_align.add(self.current_show_sort_check)
+
+        self.pack_start(sort_check_align, False, False)
         
     def save_path_to_save_path_entry_clicked(self, widget):
         open_dialog = gtk.FileChooserDialog(_("Open Directory"),
@@ -1715,7 +1729,7 @@ class Plugin(gtk.VBox):
         title_box.pack_start(self.about_label, False, False) 
         #
         title_box_align = gtk.Alignment()
-        title_box_align.set_padding(10, 0, 10, 0)
+        title_box_align.set_padding(10, 0, 16, 0)
         title_box_align.set(0, 0, 1, 1)
         title_box_align.add(title_box)
 
@@ -1877,7 +1891,7 @@ class About(gtk.VBox):
         logo_box.pack_start(logo_name, False, False)
         
         version_label = Label("%s: " % _("Version"))
-        version_content = Label("V2.0", light_color)
+        version_content = Label("2.0", light_color)
         info_box = gtk.HBox(spacing=5)
         info_align = gtk.Alignment()
         info_align.set(0.5, 1, 1, 1)
@@ -1889,14 +1903,14 @@ class About(gtk.VBox):
         title_box.pack_start(logo_box, True, True)
         title_box.pack_start(info_align, True, True)
         
-        describe = _("\tDPlayer is a video player designed for Linux users. It support a variety of video formats, and features mode switching, video preview, online subtitles, screenshot taking and skin selection. \n\n\tDPlayer is free software licensed under GNU GPLv3. ")
+        describe = _("DPlayer is a video player designed for Linux users. It support a variety of video formats, and features mode switching, video preview, online subtitles, screenshot taking and skin selection. \n\nDPlayer is free software licensed under GNU GPLv3. ")
         describe_label = Label(describe, enable_select=False, wrap_width=440, text_size=10)
         main_box.pack_start(title_box, False, False)
         main_box.pack_start(create_separator_box(), False, True)
         main_box.pack_start(describe_label, False, False)
         
         main_align = gtk.Alignment()
-        main_align.set_padding(25, 0, 20, 0)
+        main_align.set_padding(22, 0, 16, 0)
         main_align.set(0, 0, 1, 1)
         main_align.add(main_box)
         

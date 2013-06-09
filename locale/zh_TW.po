@@ -1026,11 +1026,11 @@ msgstr "作者"
 
 #: ../src/widget/ini_gui.py:1886
 msgid ""
-"\tDPlayer is a video player designed for Linux users. It support a variety "
+"DPlayer is a video player designed for Linux users. It support a variety "
 "of video formats, and features mode switching, video preview, online "
 "subtitles, screenshot taking and skin selection. \n"
 "\n"
-"\tDPlayer is free software licensed under GNU GPLv3. "
+"DPlayer is free software licensed under GNU GPLv3. "
 msgstr ""
 "深度影音播放器是Linux Deepin團隊為廣大linux用戶量身開發的一款影音播放軟體。支"
 "持多種影片格式，支援多模式切換，具有播放預覽、在線字幕、影片截圖、影片格式轉"
