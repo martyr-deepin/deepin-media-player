@@ -1280,11 +1280,11 @@ class OtherKey(gtk.VBox):
             if widget_left:
                 widget_left.set_size(entry_width, entry_height)
         # set widgets position and add widgets.
-        title_offset_x, title_offset_y = 20, 10
-        heparator_offset_x, heparator_offset_y = 0, title_offset_y + 25
-        other_Key_offset_x = 20
-        other_Key_offset_y = 40
-        start_x, start_y = 30, heparator_offset_y + 30
+        title_offset_x, title_offset_y = 16, 28
+        heparator_offset_x, heparator_offset_y = 0, title_offset_y + 20
+        other_Key_offset_x = 10
+        other_Key_offset_y = 56
+        start_x, start_y = 16, heparator_offset_y + 34
         offset_x, offset_y = entry_width + 50, 50        
         self.fixed.put(self.label, title_offset_x, title_offset_y - 8)
         self.fixed.put(self.heparator_hbox, heparator_offset_x, heparator_offset_y)
