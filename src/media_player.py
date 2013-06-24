@@ -500,7 +500,8 @@ class MediaPlayer(object):
             self.save_power_key = self.__get_current_plan()
             self.start_check = True
             self.power_set.set_string("current-plan", "high-performance")
-        except ImportError:
+        except Exception, e:
+            print e
             print "media_player.py=>player_start_init[error]: Please install deepin Gsettings.."
     
     def __power_set_changed(self, key):
