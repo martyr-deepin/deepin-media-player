@@ -499,7 +499,8 @@ class MediaPlayer(object):
             self.power_set.connect("changed", self.__power_set_changed)
             self.save_power_key = self.__get_current_plan()
             self.start_check = True
-            self.power_set.set_string("current-plan", "high-performance")
+            if "current-plan" in self.power_set.list_keys():
+                self.power_set.set_string("current-plan", "high-performance")
         except Exception, e:
             print e
             print "media_player.py=>player_start_init[error]: Please install deepin Gsettings.."
@@ -512,6 +513,8 @@ class MediaPlayer(object):
                 self.start_check = False
 
     def __get_current_plan(self):
+        if "current-plan" not in self.power_set.list_keys():
+            return None
         current_plan = self.power_set.get_string("current-plan")
         if current_plan == "balance":
             return current_plan
@@ -533,7 +536,8 @@ class MediaPlayer(object):
         self.gui.screen_frame.set_padding(0, 0, 0, 0)
         # 播放完毕后设置电源.(还原)
         try:
-            self.power_set.set_string("current-plan", self.save_power_key)
+            if "current-plan" in self.power_set.list_keys():
+                self.power_set.set_string("current-plan", self.save_power_key)
         except Exception, e:
             print "media_player.py=>ldmp_end_media_player[error]:", e
         
