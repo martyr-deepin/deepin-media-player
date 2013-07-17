@@ -23,7 +23,7 @@
 
 from skin import app_theme
 from dtk.ui.draw import draw_pixbuf
-from dtk.ui.utils import color_hex_to_cairo, propagate_expose
+from dtk.ui.utils import color_hex_to_cairo, propagate_expose, remove_timeout_id, set_cursor, is_in_rect
 from deepin_utils.file import get_parent_dir
 from locales import _, get_locale_code
 from ini     import Config
@@ -109,6 +109,9 @@ class MediaPlayer(object):
         # show gui window.
         if not self.first_run:
             self.start()
+            
+        self.hide_cursor_delay = 2000
+        self.hide_cursor_timeout_id = None    
 
     def __init_config_file(self):
         # 配置文件.
@@ -132,8 +135,6 @@ class MediaPlayer(object):
             else:
                 dbus_id += "." + chr(random.randint(65, 90))
         self.dbus_id = dbus_id
-        #print "dbus_id:", dbus_id
-        #
         self.in_run_check()
 
     def in_run_check(self):
@@ -199,7 +200,7 @@ class MediaPlayer(object):
         #SINGLA_PLAY, ORDER_PLAY, RANDOM_PLAY, SINGLE_LOOP, LIST_LOOP 
         #self.play_list.set_state(LIST_LOOP)
         self.argv_path_list = sys.argv # save command argv.        
-
+        
     def __init_double_timer(self):
         self.interval = 300
         self.timer = Timer(self.interval)
@@ -260,8 +261,11 @@ class MediaPlayer(object):
             mouse_drag = drag_dict[drag]
             widget.window.set_cursor(gtk.gdk.Cursor(mouse_drag))
         else:
-            widget.window.set_cursor(None)
-
+            if not self.is_in_screen_area():
+                self.show_cursor()
+            else:
+                self.start_hide_cursor()
+            
     def app_window_state_event(self, widget, event):
         #print widget.window.get_state()
         win_state = widget.window.get_state()
@@ -324,15 +328,41 @@ class MediaPlayer(object):
         self.background = gtk.gdk.pixbuf_new_from_file(player_image_path)
 
         self.gui.screen_frame_event.add_events(gtk.gdk.ALL_EVENTS_MASK)
+        self.gui.screen.add_events(gtk.gdk.ALL_EVENTS_MASK)
         self.gui.screen.connect("realize",            self.init_media_player)
         self.gui.screen.connect("expose-event",       self.screen_expose_event)
         self.gui.screen.connect("configure-event",    self.screen_configure_event)
+        self.gui.screen.connect("motion-notify-event", self.screen_motion_notify_event)
+        self.gui.screen.connect("leave-notify-event", self.screen_leave_notify_event)
+        self.gui.screen.connect("enter-notify-event", self.screen_enter_notify_event)
+        self.gui.screen.connect("button-press-event", self.screen_button_press_event)
+        self.gui.screen.connect("button-release-event", self.screen_button_release_event)
+        
         #
         self.gui.screen_frame.connect("expose-event", self.screen_frame_expose_event)
         self.gui.screen_frame_event.connect("button-press-event",   self.screen_frame_event_button_press_event)
         self.gui.screen_frame_event.connect("button-release-event", self.screen_frame_event_button_release_event)
         self.gui.screen_frame_event.connect("motion-notify-event",  self.screen_frame_event_button_motoin_notify_event)
         self.gui.screen_frame_event.connect("leave-notify-event", self.screen_frame_event_leave_notify_event)
+        
+    def screen_button_press_event(self, widget, event):
+        self.show_cursor()
+        
+    def screen_button_release_event(self, widget, event):
+        self.start_hide_cursor()
+        
+    def screen_motion_notify_event(self, widget, event):
+        self.start_hide_cursor()
+
+    def screen_leave_notify_event(self, widget, event):
+        self.start_hide_cursor()
+        
+    def screen_enter_notify_event(self, widget, event):
+        self.start_hide_cursor()
+        
+    def is_in_screen_area(self):
+        (px, py, _) = self.gui.screen.window.get_pointer()
+        return is_in_rect((px, py), self.gui.screen.allocation)
     
     '''application event conect function.窗口事件连接函数.'''
     def app_window_min_button_clicked(self, widget): # 缩小按钮单击.
@@ -466,6 +496,9 @@ class MediaPlayer(object):
         self.media_play_fun.ldmp_start_media_player(ldmp)
         # 加载同名的字幕.
         self.init_play_file_sub()
+        
+        if self.is_in_screen_area():
+            self.start_hide_cursor()
 
     def init_play_file_sub(self):
         try:
@@ -703,6 +736,22 @@ class MediaPlayer(object):
         double_check = self.config.get("OtherKey", "mouse_left_double_clicked")
         if _("Full Screen") == double_check:
             self.fullscreen_function() # 全屏和退出全屏处理函数.
+            
+    def start_hide_cursor(self):
+        remove_timeout_id(self.hide_cursor_timeout_id)
+        set_cursor(self.gui.app.window, None)
+        self.hide_cursor_timeout_id = gtk.timeout_add(self.hide_cursor_delay, self.hide_cursor)
+            
+    def hide_cursor(self):
+        set_cursor(self.gui.app.window, gtk.gdk.BLANK_CURSOR)
+        
+        return False
+        
+    def show_cursor(self):
+        remove_timeout_id(self.hide_cursor_timeout_id)
+        set_cursor(self.gui.app.window, None)
+        
+        return False
 
     def fullscreen_function(self):
         if not self.fullscreen_check: # 判断是否全屏.
@@ -710,6 +759,9 @@ class MediaPlayer(object):
             self.gui.app.window.fullscreen() # 全屏.
             self.fullscreen_check = True
             self.gui.top_toolbar.toolbar_radio_button.set_full_state(True)
+            
+            self.start_hide_cursor()
+            
             # 设置提示信息.
             tooltip_text(self.gui.top_toolbar.toolbar_full_button, _("Quit Full Screen"))
         else:
@@ -719,6 +771,9 @@ class MediaPlayer(object):
             if not self.concise_check: # 如果是简洁模式,不普通模式.
                 self.normal_mode() # 普通模式.
             self.fullscreen_check = False
+            
+            self.start_hide_cursor()
+            
             # 设置提示信息.
             tooltip_text(self.gui.top_toolbar.toolbar_full_button, _("Full Screen"))
 
@@ -810,7 +865,7 @@ class MediaPlayer(object):
         if play_file:
             self.init_ldmp_player(play_file)
             self.ldmp_play(play_file)
-
+        
     def init_ldmp_player(self, play_file=None):
         self.play_list_check = True
         if self.ldmp.player.state: # 判断是否在播放,如果在播放就先退出.

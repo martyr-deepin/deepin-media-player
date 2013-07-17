@@ -911,10 +911,6 @@ class LDMP(gobject.GObject):
             if buffer.startswith("VO:"):
                 # VO: [xv] 1280x720 => 1280x720 Planar YV12
                 split_text = buffer.split(" ")
-                # 获取
-                size = split_text[2].split('x')
-                width = int(size[0].strip())
-                height = int(size[1].strip())
                 # 获取视频的宽和高.
                 video_size = split_text[4].split("x")
                 self.player.video_width = int(video_size[0].strip())
@@ -1167,7 +1163,6 @@ class LDMP(gobject.GObject):
             if buffer.startswith("ID_FILENAME"):   
                 file_name = buffer.replace("ID_FILENAME=", "").split("\n")[0] + "\0"
                 self.player.title = os.path.split(file_name)[1]
-                #print "start-media-plaeyr..."
                 self.emit("start-media-player")
                 
         return True
@@ -1310,11 +1305,6 @@ class LDMP(gobject.GObject):
         except:
             pass
                 
-def remove_timeout_id(callback_id):
-    if callback_id:
-        gobject.source_remove(callback_id)
-        callback_id = None
-                                               
 ########################################################                
 ## 转换时间的函数.                
 def length_to_time(length):  
