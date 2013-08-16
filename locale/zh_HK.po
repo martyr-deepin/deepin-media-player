@@ -131,7 +131,7 @@ msgstr "神舟"
 
 #: ../src/format_conv/gui.py:76
 msgid "apple"
-msgstr "蘋果"
+msgstr "Apple"
 
 #: ../src/format_conv/gui.py:76
 msgid "nokia"
@@ -143,7 +143,7 @@ msgstr "阿爾卡特"
 
 #: ../src/format_conv/gui.py:77
 msgid "google"
-msgstr "谷歌"
+msgstr "Google"
 
 #: ../src/format_conv/gui.py:77
 msgid "asus"
@@ -155,7 +155,7 @@ msgstr "惠普"
 
 #: ../src/format_conv/gui.py:78
 msgid "sony"
-msgstr "索尼"
+msgstr "新力"
 
 #: ../src/format_conv/gui.py:78
 msgid "hedy"
@@ -263,7 +263,7 @@ msgstr "明基"
 
 #: ../src/format_conv/gui.py:87
 msgid "panasonic"
-msgstr "松下"
+msgstr "樂聲"
 
 #: ../src/format_conv/gui.py:87
 msgid "sony ericsson"
@@ -1049,11 +1049,11 @@ msgstr "播放清單"
 
 #: ../src/video_info/gui.py:74
 msgid "video information"
-msgstr "視頻訊息"
+msgstr "視頻資訊"
 
 #: ../src/video_info/gui.py:74
 msgid "decoding information"
-msgstr "編碼訊息"
+msgstr "編碼資訊"
 
 #: ../src/video_info/gui.py:96
 msgid "File path"
@@ -1073,7 +1073,7 @@ msgstr "時間長度"
 
 #: ../src/video_info/gui.py:180
 msgid "Video stream info"
-msgstr "影片串流訊息"
+msgstr "影片串流資訊"
 
 #: ../src/video_info/gui.py:181 ../src/video_info/gui.py:189
 msgid "Codec format"
@@ -1093,7 +1093,7 @@ msgstr "影片位元率"
 
 #: ../src/video_info/gui.py:188
 msgid "Audio stream info"
-msgstr "音訊串流訊息"
+msgstr "音訊串流資訊"
 
 #: ../src/video_info/gui.py:190
 msgid "Track number"
