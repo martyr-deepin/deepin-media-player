@@ -270,7 +270,7 @@ class MediaPlayer(object):
         #print widget.window.get_state()
         win_state = widget.window.get_state()
         # bUG: 全屏也暂停.
-        if  win_state == gtk.gdk.WINDOW_STATE_ICONIFIED:
+        if  win_state & gtk.gdk.WINDOW_STATE_ICONIFIED == gtk.gdk.WINDOW_STATE_ICONIFIED:
             if self.ldmp.player.state == STARTING_STATE:
                 self.minimize_pause_state()
             self.minimize_check = True
