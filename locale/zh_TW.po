@@ -1,5 +1,5 @@
 # Chinese translations for PACKAGE package
-# PACKAGE 软件包的正體中文翻译.
+# PACKAGE 套件的繁體中文翻譯.
 # Copyright (C) 2012 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # Wang Dianjin <wangdianjin@linuxdeepin.com>, 2013.
@@ -77,11 +77,11 @@ msgstr "暫停/播放"
 
 #: ../src/media_player.py:891
 msgid "Select Files"
-msgstr "深度影音檔案選擇對話盒"
+msgstr "深度影音檔案選擇對話框"
 
 #: ../src/media_player.py:964
 msgid "Select Directory"
-msgstr "深度影音資料夾選擇對話盒"
+msgstr "深度影音資料夾選擇對話框"
 
 #: ../src/media_player.py:1070 ../src/widget/ini_gui.py:348
 #: ../src/widget/ini_gui.py:403 ../src/widget/ini_gui.py:503
@@ -643,7 +643,7 @@ msgstr "截圖"
 
 #: ../src/widget/play_menus.py:267
 msgid "View New Features"
-msgstr "檢視新功能"
+msgstr "檢視新特點"
 
 #: ../src/widget/play_menus.py:268 ../src/widget/play_menus.py:380
 #: ../src/widget/ini_gui.py:329
@@ -818,7 +818,7 @@ msgstr "影片打開時"
 
 #: ../src/widget/ini_gui.py:551
 msgid "Fit video to player"
-msgstr "影片適應窗口"
+msgstr "影片適應視窗"
 
 #: ../src/widget/ini_gui.py:553
 msgid "Fit player to video"
@@ -850,7 +850,7 @@ msgstr "滑鼠放在進度條時顯示預覽圖"
 
 #: ../src/widget/ini_gui.py:602
 msgid "allow multiple instance DPlayer"
-msgstr "允許同時運行多個深度影音例程"
+msgstr "允許同時執行多個深度影音例程"
 
 #: ../src/widget/ini_gui.py:608
 msgid "Pause When Minimized"
@@ -990,15 +990,15 @@ msgstr "瀏覽"
 
 #: ../src/widget/ini_gui.py:1490
 msgid "Copy to clipboard"
-msgstr "保存到剪貼簿"
+msgstr "儲存到剪貼簿"
 
 #: ../src/widget/ini_gui.py:1496
 msgid "Folder"
-msgstr "保存為檔案"
+msgstr "儲存為檔案"
 
 #: ../src/widget/ini_gui.py:1502
 msgid "Screenshot directory"
-msgstr "截圖保存資料夾"
+msgstr "截圖儲存資料夾"
 
 #: ../src/widget/ini_gui.py:1509
 msgid "File Type"
@@ -1033,8 +1033,8 @@ msgid ""
 "DPlayer is free software licensed under GNU GPLv3. "
 msgstr ""
 "深度影音播放器是Linux Deepin團隊為廣大linux用戶量身開發的一款影音播放軟體。支"
-"持多種影片格式，支援多模式切換，具有播放預覽、在線字幕、影片截圖、影片格式轉"
-"換、光碟播放、界面更換等幾大特點。\n"
+"援多種影片格式，支援多模式切換，具有播放預覽、在線字幕、影片截圖、影片格式轉"
+"換、光碟播放、主題更換等幾大特點。\n"
 "\n"
 "深度影音播放器是自由軟體，遵照自由軟體基金會發布的 GNU 通用公共許可證條款第三"
 "版。"
@@ -1049,7 +1049,7 @@ msgstr "播放清單"
 
 #: ../src/video_info/gui.py:74
 msgid "video information"
-msgstr "視頻訊息"
+msgstr "視訊訊息"
 
 #: ../src/video_info/gui.py:74
 msgid "decoding information"
