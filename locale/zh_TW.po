@@ -119,7 +119,7 @@ msgstr "格式轉換工具"
 
 #: ../src/format_conv/gui.py:75
 msgid "intel"
-msgstr "英特爾"
+msgstr "Intel"
 
 #: ../src/format_conv/gui.py:75
 msgid "zte"
@@ -131,11 +131,11 @@ msgstr "神舟"
 
 #: ../src/format_conv/gui.py:76
 msgid "apple"
-msgstr "蘋果"
+msgstr "Apple"
 
 #: ../src/format_conv/gui.py:76
 msgid "nokia"
-msgstr "諾基亞"
+msgstr "Nokia"
 
 #: ../src/format_conv/gui.py:76
 msgid "alcatel"
@@ -143,7 +143,7 @@ msgstr "阿爾卡特"
 
 #: ../src/format_conv/gui.py:77
 msgid "google"
-msgstr "谷歌"
+msgstr "Google"
 
 #: ../src/format_conv/gui.py:77
 msgid "asus"
@@ -151,11 +151,11 @@ msgstr "華碩"
 
 #: ../src/format_conv/gui.py:77
 msgid "hp"
-msgstr "惠普"
+msgstr "HP"
 
 #: ../src/format_conv/gui.py:78
 msgid "sony"
-msgstr "索尼"
+msgstr "SONY"
 
 #: ../src/format_conv/gui.py:78
 msgid "hedy"
@@ -247,7 +247,7 @@ msgstr "黑莓"
 
 #: ../src/format_conv/gui.py:86
 msgid "motorola"
-msgstr "摩托羅拉"
+msgstr "Motorola"
 
 #: ../src/format_conv/gui.py:86
 msgid "sangsung"
@@ -259,15 +259,15 @@ msgstr "魅族"
 
 #: ../src/format_conv/gui.py:87
 msgid "benq"
-msgstr "明基"
+msgstr "BENQ"
 
 #: ../src/format_conv/gui.py:87
 msgid "panasonic"
-msgstr "松下"
+msgstr "Panasonic"
 
 #: ../src/format_conv/gui.py:87
 msgid "sony ericsson"
-msgstr "索愛"
+msgstr "Sony Ericsson"
 
 #: ../src/format_conv/gui.py:88
 msgid "pioneer"
@@ -643,7 +643,7 @@ msgstr "截圖"
 
 #: ../src/widget/play_menus.py:267
 msgid "View New Features"
-msgstr "檢視新功能"
+msgstr "檢視新特點"
 
 #: ../src/widget/play_menus.py:268 ../src/widget/play_menus.py:380
 #: ../src/widget/ini_gui.py:329
