@@ -60,7 +60,7 @@ class GUI(object):
             _("DPlayer"), " ", 
             add_separator = False,
             )
-        self.app.titlebar.set_size_request(-1, 34)
+        self.app.titlebar.set_size_request(-1, 30)
         
         #
         self.play_menus = PlayMenus()
