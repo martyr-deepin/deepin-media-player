@@ -54,10 +54,14 @@ class GUI(object):
         self.app.set_icon(os.path.join(image_dir, "icon.ico"))
         self.app.set_skin_preview(os.path.join(os.path.join(image_dir, "frame.png")))
         # set titlebar.
-        self.app.add_titlebar(["theme", "menu", "max", "min", "close"],
-                              os.path.join(os.path.join(image_dir, "logo.png")),
-                              _("DPlayer"), " ", 
-                              add_separator = False)
+        self.app.add_titlebar(
+            ["theme", "menu", "max", "min", "close"],
+            os.path.join(os.path.join(image_dir, "logo.png")),
+            _("DPlayer"), " ", 
+            add_separator = False,
+            )
+        self.app.titlebar.set_size_request(-1, 34)
+        
         #
         self.play_menus = PlayMenus()
         # 设置主题菜单.
