@@ -1,21 +1,22 @@
-# Chinese translations for PACKAGE package
-# PACKAGE 软件包的正體中文翻译.
-# Copyright (C) 2012 THE PACKAGE'S COPYRIGHT HOLDER
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# Wang Dianjin <wangdianjin@linuxdeepin.com>, 2013.
-#
+# 
+# Translators:
+# Wang Dianjin <wangdianjin@linuxdeepin.com>, 2013
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: DPlayer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-06-07 13:40+0800\n"
-"PO-Revision-Date: 2012-07-12 15:53+0800\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
-"Language: zh_HK\n"
+"PO-Revision-Date: 2013-12-06 04:06+0000\n"
+"Last-Translator: lihongwu <lihongwu1987@gmail.com>\n"
+"Language-Team: Chinese (Hong Kong) (http://www.transifex.com/projects/p/dplayer/language/zh_HK/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: zh_HK\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: ../src/gui.py:59 ../src/media_service.py:164 ../src/widget/ini_gui.py:1868
 msgid "DPlayer"
@@ -1026,18 +1027,10 @@ msgstr "作者"
 
 #: ../src/widget/ini_gui.py:1886
 msgid ""
-"DPlayer is a video player designed for Linux users. It support a variety "
-"of video formats, and features mode switching, video preview, online "
-"subtitles, screenshot taking and skin selection. \n"
+"\tDPlayer is a video player designed for Linux users. It support a variety of video formats, and features mode switching, video preview, online subtitles, screenshot taking and skin selection. \n"
 "\n"
-"DPlayer is free software licensed under GNU GPLv3. "
+"\tDPlayer is free software licensed under GNU GPLv3. "
 msgstr ""
-"深度影音播放器是Linux Deepin團隊為廣大linux用戶量身開發的一款影音播放軟體。支"
-"持多種影片格式，支援多模式切換，具有播放預覽、在線字幕、影片截圖、影片格式轉"
-"換、光碟播放、界面更換等幾大特點。\n"
-"\n"
-"深度影音播放器是自由軟體，遵照自由軟體基金會發布的 GNU 通用公共許可證條款第三"
-"版。"
 
 #: ../src/widget/play_control_panel.py:48
 msgid "Stop"

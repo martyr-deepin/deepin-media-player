@@ -1,21 +1,23 @@
-# Chinese translations for PACKAGE package
-# PACKAGE 软件包的简体中文翻译.
-# Copyright (C) 2012 THE PACKAGE'S COPYRIGHT HOLDER
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# Automatically generated, 2012.
-#
+# 
+# Translators:
+# Automatically generated, 2012
+# 吴善俊 <sjwuny@126.com>, 2013
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: DPlayer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-07 13:34+0800\n"
-"PO-Revision-Date: 2012-07-12 15:53+0800\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
-"Language: zh_CN\n"
+"POT-Creation-Date: 2013-06-07 13:40+0800\n"
+"PO-Revision-Date: 2013-12-13 03:40+0000\n"
+"Last-Translator: 吴善俊 <sjwuny@126.com>\n"
+"Language-Team: Chinese (China) (http://www.transifex.com/projects/p/dplayer/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: zh_CN\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: ../src/gui.py:59 ../src/media_service.py:164 ../src/widget/ini_gui.py:1868
 msgid "DPlayer"
@@ -1026,17 +1028,10 @@ msgstr "作者"
 
 #: ../src/widget/ini_gui.py:1886
 msgid ""
-"DPlayer is a video player designed for Linux users. It support a variety "
-"of video formats, and features mode switching, video preview, online "
-"subtitles, screenshot taking and skin selection. \n"
+"\tDPlayer is a video player designed for Linux users. It support a variety of video formats, and features mode switching, video preview, online subtitles, screenshot taking and skin selection. \n"
 "\n"
-"DPlayer is free software licensed under GNU GPLv3. "
-msgstr ""
-"深度影音播放器是Linux Deepin团队为广大linux用户量身开发的一款影音播放软件。"
-"支持多种视频格式，支持多模式切换，具有播放预览、在线字幕、视频截图、视频格式"
-"转换、光盘播放、自定义换肤等几大特点。\n"
-"\n"
-"深度影音播放器是自由软件，遵循自由软件基金会发布的GNU通用公共许可证第三版。"
+"\tDPlayer is free software licensed under GNU GPLv3. "
+msgstr "DPlayer（深度播放器）是一款专为linux用户设计的播放器。它支持多种视频格式，多种播放模式切换，视频预览，在线字幕，屏幕截图，皮肤切换。\nDPlayer（深度播放器）是一款遵循GNU GPLv3（GUN通用公共许可协议）的免费软件。"
 
 #: ../src/widget/play_control_panel.py:48
 msgid "Stop"
