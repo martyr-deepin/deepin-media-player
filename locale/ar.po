@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DPlayer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-10 16:57+0800\n"
-"PO-Revision-Date: 2014-02-09 21:55+0000\n"
+"POT-Creation-Date: 2014-02-25 11:04+0800\n"
+"PO-Revision-Date: 2014-02-11 16:53+0000\n"
 "Last-Translator: Mohd <mo-hd@windowslive.com>\n"
 "Language-Team: Arabic (http://www.transifex.com/projects/p/dplayer/language/"
 "ar/)\n"
@@ -26,7 +26,7 @@ msgstr "مسح قائمة التشغيل"
 
 #: ../src/media_service.py:164 ../src/gui.py:60 ../src/widget/ini_gui.py:1888
 msgid "DPlayer"
-msgstr "دي مشغل"
+msgstr "دي مشغل وسائط"
 
 #: ../src/media_player_function.py:56 ../src/widget/play_menus.py:176
 #: ../src/widget/play_menus.py:367 ../src/widget/ini_gui.py:1464
@@ -180,7 +180,7 @@ msgstr "عدد الصوت"
 
 #: ../src/video_info/gui.py:192
 msgid "Audio bit rate:"
-msgstr "معدل بت الصوت"
+msgstr ": معدل بت الصوت"
 
 #: ../src/video_info/gui.py:193
 msgid "Sampling"
@@ -448,7 +448,7 @@ msgstr "hosin"
 
 #: ../src/format_conv/gui.py:96
 msgid "apanda"
-msgstr "hosin"
+msgstr "apanda"
 
 #: ../src/format_conv/gui.py:96
 msgid "iocean"
@@ -542,7 +542,7 @@ msgstr "('الزر_حجم', 100)"
 #: ../src/format_conv/transmageddon.py:92
 #: ../src/format_conv/transmageddon.py:434
 msgid "Audio-only"
-msgstr "صوت-فقط"
+msgstr "صوت فقط"
 
 #: ../src/format_conv/transmageddon.py:585
 msgid "Time remaining"
@@ -561,11 +561,11 @@ msgstr "التحويل"
 
 #: ../src/format_conv/transmageddon.py:890
 msgid "continue"
-msgstr "أستمر"
+msgstr "أكمل"
 
 #: ../src/format_conv/transmageddon.py:900
 msgid "Open a directory"
-msgstr "فتح الدليل"
+msgstr "فتح دليل"
 
 #: ../src/format_conv/transmageddon.py:902
 msgid "Delete"
@@ -624,7 +624,7 @@ msgstr "الوضع العادي"
 #: ../src/widget/play_menus.py:194 ../src/widget/play_menus.py:372
 #: ../src/widget/togglehoverbutton.py:144
 msgid "Compact Mode"
-msgstr "الوضع المضغوط"
+msgstr "الوضع المحكم"
 
 #: ../src/widget/play_menus.py:195 ../src/widget/play_menus.py:314
 #: ../src/widget/play_control_panel.py:56 ../src/widget/ini_gui.py:823
@@ -695,7 +695,7 @@ msgstr "خفض الصوت"
 
 #: ../src/widget/play_menus.py:249
 msgid "Mute/Unmute"
-msgstr "كتم"
+msgstr "كتم / عدم كتم"
 
 #: ../src/widget/play_menus.py:251
 msgid "Take Screenshot"
@@ -851,13 +851,13 @@ msgstr "اختر ترجمة"
 
 #: ../src/widget/play_menus.py:370
 msgid "Full Screen On/Off"
-msgstr "ملء الشاشة تشغيل / إيقاف"
+msgstr "ملء الشاشة  تشغيل / إيقاف"
 
 #: ../src/widget/play_menus.py:378 ../src/widget/ini_gui.py:361
 #: ../src/widget/ini_gui.py:502 ../src/widget/ini_gui.py:514
 #: ../src/widget/ini_gui.py:1410
 msgid "Subtitles"
-msgstr "ملفات الترجمة"
+msgstr "الترجمات"
 
 #: ../src/widget/play_menus.py:379
 msgid "DVD Navigation"
@@ -877,7 +877,7 @@ msgstr "حجم"
 
 #: ../src/widget/play_control_panel.py:48
 msgid "Stop"
-msgstr "sd"
+msgstr "إيقاف"
 
 #: ../src/widget/play_list_button.py:35
 msgid "Playlist"
@@ -896,7 +896,7 @@ msgstr "لوحة المفاتيح"
 #: ../src/widget/ini_gui.py:352 ../src/widget/ini_gui.py:500
 #: ../src/widget/ini_gui.py:512 ../src/widget/ini_gui.py:1094
 msgid "Subtitle"
-msgstr "ترجمة"
+msgstr "الترجمة"
 
 #: ../src/widget/ini_gui.py:353 ../src/widget/ini_gui.py:501
 #: ../src/widget/ini_gui.py:513 ../src/widget/ini_gui.py:1235
@@ -933,7 +933,7 @@ msgstr "جهز المشغل للفيديو"
 
 #: ../src/widget/ini_gui.py:555
 msgid "Resize interface to last closed size"
-msgstr "أعد تغيير حجم الواجهة إلى الحجم المغلق السابق"
+msgstr "أعد تغيير حجم الواجهة إلى الحجم المغلق سابقاً"
 
 #: ../src/widget/ini_gui.py:557
 msgid "Enter full screen mode"
@@ -945,7 +945,7 @@ msgstr "أمسح قائمة التشغيل حينما افتح ملف جديد"
 
 #: ../src/widget/ini_gui.py:581
 msgid "Resume playback after restarting player"
-msgstr "أكمل تشغيل بعد إعادة تشغيل المشغل"
+msgstr "أكمل التشغيل بعد إعادة تشغيل المشغل"
 
 #: ../src/widget/ini_gui.py:588
 msgid "Continue to next video automatically"
@@ -957,7 +957,7 @@ msgstr "أظهر المصغرات حينما تحلق فوق شريط التقد
 
 #: ../src/widget/ini_gui.py:602
 msgid "allow multiple instance DPlayer"
-msgstr "السماح بأمثلة متعددة د مشغل"
+msgstr "السماح بطلبات متعددة دي مشغل وسائط"
 
 #: ../src/widget/ini_gui.py:608
 msgid "Pause When Minimized"
@@ -1001,7 +1001,7 @@ msgstr "كتم"
 
 #: ../src/widget/ini_gui.py:923
 msgid "Compact mode"
-msgstr "وضع الضغط"
+msgstr "الوضع المحكم"
 
 #: ../src/widget/ini_gui.py:1098
 msgid "Enable Keyboard Shortcuts"
@@ -1025,7 +1025,7 @@ msgstr "زيادة تدرج الترجمة"
 
 #: ../src/widget/ini_gui.py:1110
 msgid "Decrease subtitle scale"
-msgstr "تقليص تدرج الترجمة"
+msgstr "خفض تدرج الترجمة"
 
 #: ../src/widget/ini_gui.py:1245
 msgid " Enabled hotkeys"
@@ -1037,7 +1037,7 @@ msgstr "زيادة السطوع"
 
 #: ../src/widget/ini_gui.py:1252
 msgid "Decrease brightness"
-msgstr "تقليص السطوع"
+msgstr "خفض السطوع"
 
 #: ../src/widget/ini_gui.py:1253
 msgid "Rotate conterclockwise"
@@ -1124,8 +1124,8 @@ msgid ""
 "\n"
 "DPlayer is free software licensed under GNU GPLv3. "
 msgstr ""
-"د مشغل هو مشغل لملفات الفيديو مصمم لمستخدمي لينكس. يدعم نوعية من صيغ "
+"دي مشغل وسائط هو مشغل ملفات الفيديو مصمم لمستخدمي لينكس. يدعم نوعية من صيغ "
 "الفيديو ، ومزايا في طريقة التحويل ومعيانة الفيديو وترجمات الأون لاين وأخذ "
-"لقطة للشاشة مع خيارات تحكم.\n"
+"لقطة للشاشة مع خيارات تحكم متنوعة.\n"
 "\n"
-"  د مشغل هو برنامج مرخص مجاني خاص بجنو GPLv3."
+"دي مشغل وسائط هو برنامج مرخص مجاني خاص بجنوم GPLv3."
