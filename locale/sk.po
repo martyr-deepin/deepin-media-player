@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Translators:
+# fasier <matus.ravas@outlook.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: DPlayer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-10 16:57+0800\n"
-"PO-Revision-Date: 2013-12-31 13:27+0000\n"
-"Last-Translator: cxbii <mycxbii@gmail.com>\n"
+"POT-Creation-Date: 2014-02-25 11:04+0800\n"
+"PO-Revision-Date: 2014-02-23 16:06+0000\n"
+"Last-Translator: ballmet <emkohencel@gmail.com>\n"
 "Language-Team: Slovak (http://www.transifex.com/projects/p/dplayer/language/"
 "sk/)\n"
 "Language: sk\n"
@@ -20,47 +21,47 @@ msgstr ""
 
 #: ../src/media_player_menus.py:221 ../src/widget/play_menus.py:299
 msgid "Clear Playlist"
-msgstr ""
+msgstr "Vyprázdniť zoznam skladieb"
 
 #: ../src/media_service.py:164 ../src/gui.py:60 ../src/widget/ini_gui.py:1888
 msgid "DPlayer"
-msgstr ""
+msgstr "DPlayer"
 
 #: ../src/media_player_function.py:56 ../src/widget/play_menus.py:176
 #: ../src/widget/play_menus.py:367 ../src/widget/ini_gui.py:1464
 #: ../src/widget/ini_gui.py:1599 ../src/widget/movie_menu.py:57
 msgid "Open Directory"
-msgstr ""
+msgstr "Otvoriť adresár"
 
 #: ../src/media_player_function.py:58 ../src/widget/play_menus.py:368
 #: ../src/widget/movie_menu.py:58
 msgid "Open URL"
-msgstr ""
+msgstr "Otvoriť URL"
 
 #: ../src/media_player_function.py:237
 msgid "Disable always-on-top"
-msgstr ""
+msgstr "Zakázať vždy nahore"
 
 #: ../src/media_player_function.py:242 ../src/widget/toolbar.py:79
 msgid "Always on Top"
-msgstr ""
+msgstr "Vždy nahore"
 
 #: ../src/media_player.py:638 ../src/format_conv/conv_task_gui.py:81
 #: ../src/format_conv/transmageddon.py:584
 #: ../src/format_conv/transmageddon.py:889
 #: ../src/format_conv/transmageddon.py:893
 msgid "Pause"
-msgstr ""
+msgstr "Pozastaviť"
 
 #: ../src/media_player.py:640 ../src/widget/play_menus.py:262
 #: ../src/widget/play_menus.py:374 ../src/widget/play_control_panel.py:59
 msgid "Play"
-msgstr ""
+msgstr "Spustiť"
 
 #: ../src/media_player.py:656 ../src/media_player.py:659
 #: ../src/media_player.py:662
 msgid "Seek to"
-msgstr ""
+msgstr "Posunúť na"
 
 #: ../src/media_player.py:737 ../src/media_player.py:778
 #: ../src/widget/play_menus.py:192 ../src/widget/init_ldmp.py:165
@@ -68,39 +69,39 @@ msgstr ""
 #: ../src/widget/ini_gui.py:1336 ../src/widget/ini_gui.py:1392
 #: ../src/widget/togglehoverbutton.py:126
 msgid "Full Screen"
-msgstr ""
+msgstr "Celá obrazovka"
 
 #: ../src/media_player.py:766
 msgid "Quit Full Screen"
-msgstr ""
+msgstr "Zrušiť režim celej obrazovky"
 
 #: ../src/media_player.py:809 ../src/widget/init_ldmp.py:163
 #: ../src/widget/ini_gui.py:853 ../src/widget/ini_gui.py:1270
 #: ../src/widget/ini_gui.py:1336 ../src/widget/ini_gui.py:1387
 msgid "Pause/Play"
-msgstr ""
+msgstr "Pozastaviť/Spustiť"
 
 #: ../src/media_player.py:959
 msgid "Select Files"
-msgstr ""
+msgstr "Vybrať súbory"
 
 #: ../src/media_player.py:1032
 msgid "Select Directory"
-msgstr ""
+msgstr "Vybrať adresár"
 
 #: ../src/media_player.py:1138 ../src/widget/ini_gui.py:348
 #: ../src/widget/ini_gui.py:403 ../src/widget/ini_gui.py:503
 #: ../src/widget/ini_gui.py:515 ../src/widget/ini_gui.py:1490
 msgid "Screenshot"
-msgstr ""
+msgstr "Snímok obrazovky"
 
 #: ../src/media_player.py:1408
 msgid "Open Disc"
-msgstr ""
+msgstr "Otvoriť disk"
 
 #: ../src/media_player.py:1452
 msgid "Save Directory"
-msgstr ""
+msgstr "Adresár pre ukladanie"
 
 #: ../src/video_info/gui.py:41 ../src/widget/play_menus.py:382
 msgid "Properties"
@@ -109,7 +110,7 @@ msgstr ""
 #: ../src/video_info/gui.py:66 ../src/format_conv/conv_task_gui.py:82
 #: ../src/format_conv/gui.py:125 ../src/widget/ini_gui.py:388
 msgid "Close"
-msgstr ""
+msgstr "Zavrieť"
 
 #: ../src/video_info/gui.py:74
 msgid "video information"
@@ -130,7 +131,7 @@ msgstr ""
 #: ../src/video_info/gui.py:111 ../src/video_info/gui.py:185
 #: ../src/format_conv/gui.py:110
 msgid "Resolution"
-msgstr ""
+msgstr "Rozlíšenie"
 
 #: ../src/video_info/gui.py:112
 msgid "File size"
@@ -194,312 +195,312 @@ msgstr ""
 
 #: ../src/format_conv/gui.py:43
 msgid "('form_size', 500, 180)"
-msgstr ""
+msgstr "('veľkosť_formátu, 500, 180)"
 
 #: ../src/format_conv/gui.py:53
 msgid "Convert"
-msgstr ""
+msgstr "Previesť"
 
 #: ../src/format_conv/gui.py:75
 msgid "intel"
-msgstr ""
+msgstr "Intel"
 
 #: ../src/format_conv/gui.py:75
 msgid "zte"
-msgstr ""
+msgstr "ZTE"
 
 #: ../src/format_conv/gui.py:75
 msgid "hasee"
-msgstr ""
+msgstr "Hasee"
 
 #: ../src/format_conv/gui.py:76
 msgid "apple"
-msgstr ""
+msgstr "Apple"
 
 #: ../src/format_conv/gui.py:76
 msgid "nokia"
-msgstr ""
+msgstr "Nokia"
 
 #: ../src/format_conv/gui.py:76
 msgid "alcatel"
-msgstr ""
+msgstr "Alcatel"
 
 #: ../src/format_conv/gui.py:77
 msgid "google"
-msgstr ""
+msgstr "Google"
 
 #: ../src/format_conv/gui.py:77
 msgid "asus"
-msgstr ""
+msgstr "Asus"
 
 #: ../src/format_conv/gui.py:77
 msgid "hp"
-msgstr ""
+msgstr "HP"
 
 #: ../src/format_conv/gui.py:78
 msgid "sony"
-msgstr ""
+msgstr "Sony"
 
 #: ../src/format_conv/gui.py:78
 msgid "hedy"
-msgstr ""
+msgstr "Hedy"
 
 #: ../src/format_conv/gui.py:79
 msgid "archos"
-msgstr ""
+msgstr "Archos"
 
 #: ../src/format_conv/gui.py:79
 msgid "boway"
-msgstr ""
+msgstr "Boway"
 
 #: ../src/format_conv/gui.py:79
 msgid "bird"
-msgstr ""
+msgstr "Bird"
 
 #: ../src/format_conv/gui.py:80
 msgid "vivo"
-msgstr ""
+msgstr "Vivo"
 
 #: ../src/format_conv/gui.py:80
 msgid "great wall"
-msgstr ""
+msgstr "Great wall"
 
 #: ../src/format_conv/gui.py:80
 msgid "changhong"
-msgstr ""
+msgstr "Changhong"
 
 #: ../src/format_conv/gui.py:81
 msgid "skyworth"
-msgstr ""
+msgstr "Skyworth"
 
 #: ../src/format_conv/gui.py:81
 msgid "dell"
-msgstr ""
+msgstr "Dell"
 
 #: ../src/format_conv/gui.py:81
 msgid "philips"
-msgstr ""
+msgstr "Philips"
 
 #: ../src/format_conv/gui.py:82
 msgid "toshiba"
-msgstr ""
+msgstr "Toshiba"
 
 #: ../src/format_conv/gui.py:82
 msgid "amazon"
-msgstr ""
+msgstr "Amazon"
 
 #: ../src/format_conv/gui.py:82
 msgid "sdo"
-msgstr ""
+msgstr "Sdo"
 
 #: ../src/format_conv/gui.py:83
 msgid "disney"
-msgstr ""
+msgstr "Disney"
 
 #: ../src/format_conv/gui.py:83
 msgid "haier"
-msgstr ""
+msgstr "Haier"
 
 #: ../src/format_conv/gui.py:83
 msgid "fujitsu"
-msgstr ""
+msgstr "Fujitsu"
 
 #: ../src/format_conv/gui.py:84
 msgid "acer"
-msgstr ""
+msgstr "Acer"
 
 #: ../src/format_conv/gui.py:84
 msgid "lenovo"
-msgstr ""
+msgstr "Lenovo"
 
 #: ../src/format_conv/gui.py:84
 msgid "gigabyte"
-msgstr ""
+msgstr "Gigabyte"
 
 #: ../src/format_conv/gui.py:85
 msgid "xiaomi"
-msgstr ""
+msgstr "Xiaomi"
 
 #: ../src/format_conv/gui.py:85
 msgid "huawei"
-msgstr ""
+msgstr "Huawei"
 
 #: ../src/format_conv/gui.py:85
 msgid "blackberry"
-msgstr ""
+msgstr "Blackberry"
 
 #: ../src/format_conv/gui.py:86
 msgid "motorola"
-msgstr ""
+msgstr "Motorola"
 
 #: ../src/format_conv/gui.py:86
 msgid "sangsung"
-msgstr ""
+msgstr "Samsung"
 
 #: ../src/format_conv/gui.py:86
 msgid "meizu "
-msgstr ""
+msgstr "Meizu"
 
 #: ../src/format_conv/gui.py:87
 msgid "benq"
-msgstr ""
+msgstr "Benq"
 
 #: ../src/format_conv/gui.py:87
 msgid "panasonic"
-msgstr ""
+msgstr "Panasonic"
 
 #: ../src/format_conv/gui.py:87
 msgid "sony ericsson"
-msgstr ""
+msgstr "Sony Ericsson"
 
 #: ../src/format_conv/gui.py:88
 msgid "pioneer"
-msgstr ""
+msgstr "Pioneer"
 
 #: ../src/format_conv/gui.py:88
 msgid "hyundai"
-msgstr ""
+msgstr "Hyundai"
 
 #: ../src/format_conv/gui.py:88
 msgid "newman"
-msgstr ""
+msgstr "Newman"
 
 #: ../src/format_conv/gui.py:89
 msgid "coolpad"
-msgstr ""
+msgstr "Coolpad"
 
 #: ../src/format_conv/gui.py:89
 msgid "malata"
-msgstr ""
+msgstr "Malata"
 
 #: ../src/format_conv/gui.py:90
 msgid "sharp"
-msgstr ""
+msgstr "Sharp"
 
 #: ../src/format_conv/gui.py:90
 msgid "gionee"
-msgstr ""
+msgstr "Gionee"
 
 #: ../src/format_conv/gui.py:90
 msgid "k-touch"
-msgstr ""
+msgstr "K-touch"
 
 #: ../src/format_conv/gui.py:91
 msgid "Pantech"
-msgstr ""
+msgstr "Pantech"
 
 #: ../src/format_conv/gui.py:91
 msgid "hisense"
-msgstr ""
+msgstr "Hisense"
 
 #: ../src/format_conv/gui.py:91
 msgid "teclast"
-msgstr ""
+msgstr "Teclast"
 
 #: ../src/format_conv/gui.py:92
 msgid "cube"
-msgstr ""
+msgstr "Cube"
 
 #: ../src/format_conv/gui.py:92
 msgid "amoi"
-msgstr ""
+msgstr "Amoi"
 
 #: ../src/format_conv/gui.py:92
 msgid "doov"
-msgstr ""
+msgstr "Doov"
 
 #: ../src/format_conv/gui.py:93
 msgid "minte"
-msgstr ""
+msgstr "Minte"
 
 #: ../src/format_conv/gui.py:93
 msgid "dopod"
-msgstr ""
+msgstr "Dopod"
 
 #: ../src/format_conv/gui.py:93
 msgid "eton"
-msgstr ""
+msgstr "Eton"
 
 #: ../src/format_conv/gui.py:94
 msgid "cherr"
-msgstr ""
+msgstr "Cherr"
 
 #: ../src/format_conv/gui.py:94
 msgid "gaoxinqi"
-msgstr ""
+msgstr "Gaoxinqi"
 
 #: ../src/format_conv/gui.py:94
 msgid "konka"
-msgstr ""
+msgstr "Konka"
 
 #: ../src/format_conv/gui.py:95
 msgid "viewsonic"
-msgstr ""
+msgstr "Viewsonic"
 
 #: ../src/format_conv/gui.py:95
 msgid "xibo"
-msgstr ""
+msgstr "Xibo"
 
 #: ../src/format_conv/gui.py:95
 msgid "hosin"
-msgstr ""
+msgstr "Hosin"
 
 #: ../src/format_conv/gui.py:96
 msgid "apanda"
-msgstr ""
+msgstr "Apadna"
 
 #: ../src/format_conv/gui.py:96
 msgid "iocean"
-msgstr ""
+msgstr "Iocean"
 
 #: ../src/format_conv/gui.py:96
 msgid "mastone"
-msgstr ""
+msgstr "Mastone"
 
 #: ../src/format_conv/gui.py:104
 msgid "Phone brand"
-msgstr ""
+msgstr "Značka telefónu"
 
 #: ../src/format_conv/gui.py:105
 msgid "Output format"
-msgstr ""
+msgstr "Výstupný formát"
 
 #: ../src/format_conv/gui.py:106
 msgid "Audio encoder"
-msgstr ""
+msgstr "Audio kóder"
 
 #: ../src/format_conv/gui.py:107
 msgid "Video encoder"
-msgstr ""
+msgstr "Obrazový kóder"
 
 #: ../src/format_conv/gui.py:108
 msgid "Output directory"
-msgstr ""
+msgstr "Výstupný adresár"
 
 #: ../src/format_conv/gui.py:109
 msgid "Phone model"
-msgstr ""
+msgstr "Model telefónu"
 
 #: ../src/format_conv/gui.py:123
 msgid "Change"
-msgstr ""
+msgstr "Zmeniť"
 
 #: ../src/format_conv/gui.py:124
 msgid "Start"
-msgstr ""
+msgstr "Spustiť"
 
 #: ../src/format_conv/gui.py:129 ../src/widget/play_menus.py:256
 msgid "Task Manager"
-msgstr ""
+msgstr "Správca úloh"
 
 #: ../src/format_conv/gui.py:165 ../src/format_conv/gui.py:306
 msgid "No Presets"
-msgstr ""
+msgstr "Žiadne prednastavenie"
 
 #: ../src/format_conv/gui.py:170 ../src/format_conv/gui.py:318
 #: ../src/format_conv/transmageddon.py:1020
 msgid "No Model"
-msgstr ""
+msgstr "Žiadny model"
 
 #: ../src/format_conv/gui.py:194
 msgid "('brand_position', 20)"
@@ -527,63 +528,63 @@ msgstr ""
 
 #: ../src/format_conv/gui.py:278
 msgid "Choose a directory"
-msgstr ""
+msgstr "Vybrať adresár"
 
 #: ../src/format_conv/new_button.py:32 ../src/format_conv/new_button.py:59
 msgid "Advanced settings"
-msgstr ""
+msgstr "Pokročilé nastavenia"
 
 #: ../src/format_conv/new_button.py:33
 msgid "('button_size', 100)"
-msgstr ""
+msgstr "('veľkosť_tlačidla',100)"
 
 #: ../src/format_conv/transmageddon.py:92
 #: ../src/format_conv/transmageddon.py:434
 msgid "Audio-only"
-msgstr ""
+msgstr "Iba zvuk"
 
 #: ../src/format_conv/transmageddon.py:585
 msgid "Time remaining"
-msgstr ""
+msgstr "Zostávajúci čas"
 
 #: ../src/format_conv/transmageddon.py:673
 #: ../src/format_conv/transmageddon.py:734
 #: ../src/format_conv/transmageddon.py:1311
 #: ../src/format_conv/transmageddon.py:1328
 msgid "No Video"
-msgstr ""
+msgstr "Žiadne video"
 
 #: ../src/format_conv/transmageddon.py:874
 msgid "Converting"
-msgstr ""
+msgstr "Prevádza sa"
 
 #: ../src/format_conv/transmageddon.py:890
 msgid "continue"
-msgstr ""
+msgstr "pokračovanie"
 
 #: ../src/format_conv/transmageddon.py:900
 msgid "Open a directory"
-msgstr ""
+msgstr "Otvoriť adresár"
 
 #: ../src/format_conv/transmageddon.py:902
 msgid "Delete"
-msgstr ""
+msgstr "Vymazať"
 
 #: ../src/format_conv/transmageddon.py:903
 msgid "Remove complete tasks"
-msgstr ""
+msgstr "Odstrániť hotové úlohy"
 
 #: ../src/screen_mid/open_url.py:32
 msgid "Open Url"
-msgstr ""
+msgstr "Otvoriť URL"
 
 #: ../src/screen_mid/open_url.py:41
 msgid "Ok"
-msgstr ""
+msgstr "Ok"
 
 #: ../src/screen_mid/open_url.py:42
 msgid "Cancel"
-msgstr ""
+msgstr "Zrušiť"
 
 #: ../src/widget/play_menus.py:175 ../src/widget/play_menus.py:366
 #: ../src/widget/play_control_panel.py:75

@@ -3,64 +3,66 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Translators:
+# kloki <klokimass@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: DPlayer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-02-25 11:04+0800\n"
-"PO-Revision-Date: 2014-01-06 10:42+0000\n"
-"Last-Translator: cxbii <mycxbii@gmail.com>\n"
-"Language-Team: Armenian (http://www.transifex.com/projects/p/dplayer/"
-"language/hy/)\n"
-"Language: hy\n"
+"PO-Revision-Date: 2014-02-24 13:39+0000\n"
+"Last-Translator: kloki <klokimass@gmail.com>\n"
+"Language-Team: Slovenian (http://www.transifex.com/projects/p/dplayer/"
+"language/sl/)\n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
+"%100==4 ? 2 : 3);\n"
 
 #: ../src/media_player_menus.py:221 ../src/widget/play_menus.py:299
 msgid "Clear Playlist"
-msgstr ""
+msgstr "Počisti predvajalni seznam"
 
 #: ../src/media_service.py:164 ../src/gui.py:60 ../src/widget/ini_gui.py:1888
 msgid "DPlayer"
-msgstr ""
+msgstr "DPredvajalnik"
 
 #: ../src/media_player_function.py:56 ../src/widget/play_menus.py:176
 #: ../src/widget/play_menus.py:367 ../src/widget/ini_gui.py:1464
 #: ../src/widget/ini_gui.py:1599 ../src/widget/movie_menu.py:57
 msgid "Open Directory"
-msgstr ""
+msgstr "Odpri Imenik"
 
 #: ../src/media_player_function.py:58 ../src/widget/play_menus.py:368
 #: ../src/widget/movie_menu.py:58
 msgid "Open URL"
-msgstr ""
+msgstr "Odpri URL naslov"
 
 #: ../src/media_player_function.py:237
 msgid "Disable always-on-top"
-msgstr ""
+msgstr "Onemogoči vedno na vrhu"
 
 #: ../src/media_player_function.py:242 ../src/widget/toolbar.py:79
 msgid "Always on Top"
-msgstr ""
+msgstr "Vedno na vrhu"
 
 #: ../src/media_player.py:638 ../src/format_conv/conv_task_gui.py:81
 #: ../src/format_conv/transmageddon.py:584
 #: ../src/format_conv/transmageddon.py:889
 #: ../src/format_conv/transmageddon.py:893
 msgid "Pause"
-msgstr ""
+msgstr "Premor"
 
 #: ../src/media_player.py:640 ../src/widget/play_menus.py:262
 #: ../src/widget/play_menus.py:374 ../src/widget/play_control_panel.py:59
 msgid "Play"
-msgstr ""
+msgstr "Predvajaj"
 
 #: ../src/media_player.py:656 ../src/media_player.py:659
 #: ../src/media_player.py:662
 msgid "Seek to"
-msgstr ""
+msgstr "Išči do"
 
 #: ../src/media_player.py:737 ../src/media_player.py:778
 #: ../src/widget/play_menus.py:192 ../src/widget/init_ldmp.py:165
@@ -68,1052 +70,1053 @@ msgstr ""
 #: ../src/widget/ini_gui.py:1336 ../src/widget/ini_gui.py:1392
 #: ../src/widget/togglehoverbutton.py:126
 msgid "Full Screen"
-msgstr ""
+msgstr "Celozaslonski način"
 
 #: ../src/media_player.py:766
 msgid "Quit Full Screen"
-msgstr ""
+msgstr "Zapri celozaslonski način"
 
 #: ../src/media_player.py:809 ../src/widget/init_ldmp.py:163
 #: ../src/widget/ini_gui.py:853 ../src/widget/ini_gui.py:1270
 #: ../src/widget/ini_gui.py:1336 ../src/widget/ini_gui.py:1387
 msgid "Pause/Play"
-msgstr ""
+msgstr "Premor/Predvajaj"
 
 #: ../src/media_player.py:959
 msgid "Select Files"
-msgstr ""
+msgstr "Izberi datoteke"
 
 #: ../src/media_player.py:1032
 msgid "Select Directory"
-msgstr ""
+msgstr "Izberi imenik"
 
 #: ../src/media_player.py:1138 ../src/widget/ini_gui.py:348
 #: ../src/widget/ini_gui.py:403 ../src/widget/ini_gui.py:503
 #: ../src/widget/ini_gui.py:515 ../src/widget/ini_gui.py:1490
 msgid "Screenshot"
-msgstr ""
+msgstr "Zajem zaslona"
 
 #: ../src/media_player.py:1408
 msgid "Open Disc"
-msgstr ""
+msgstr "Odpri CD/DVD pogon"
 
 #: ../src/media_player.py:1452
 msgid "Save Directory"
-msgstr ""
+msgstr "Shrani imenik"
 
 #: ../src/video_info/gui.py:41 ../src/widget/play_menus.py:382
 msgid "Properties"
-msgstr ""
+msgstr "Lastnosti"
 
 #: ../src/video_info/gui.py:66 ../src/format_conv/conv_task_gui.py:82
 #: ../src/format_conv/gui.py:125 ../src/widget/ini_gui.py:388
 msgid "Close"
-msgstr ""
+msgstr "Zapri"
 
 #: ../src/video_info/gui.py:74
 msgid "video information"
-msgstr ""
+msgstr "informacija o video posnetku"
 
 #: ../src/video_info/gui.py:74
 msgid "decoding information"
-msgstr ""
+msgstr "informacija o dekodiranju"
 
 #: ../src/video_info/gui.py:96
 msgid "File path"
-msgstr ""
+msgstr "Datotečna pot"
 
 #: ../src/video_info/gui.py:110
 msgid "File type"
-msgstr ""
+msgstr "Vrsta datoteke"
 
 #: ../src/video_info/gui.py:111 ../src/video_info/gui.py:185
 #: ../src/format_conv/gui.py:110
 msgid "Resolution"
-msgstr ""
+msgstr "Ločljivost"
 
 #: ../src/video_info/gui.py:112
 msgid "File size"
-msgstr ""
+msgstr "Velikost datoteke"
 
 #: ../src/video_info/gui.py:113
 msgid "Duration"
-msgstr ""
+msgstr "Trajanje"
 
 #: ../src/video_info/gui.py:118 ../src/widget/ini_gui.py:833
 msgid "Open directory"
-msgstr ""
+msgstr "Odpri imenik"
 
 #: ../src/video_info/gui.py:180
 msgid "Video stream info"
-msgstr ""
+msgstr "Informacija o video pretoku"
 
 #: ../src/video_info/gui.py:181 ../src/video_info/gui.py:189
 msgid "Codec format"
-msgstr ""
+msgstr "Format kodeka"
 
 #: ../src/video_info/gui.py:182
 msgid "Frame rate"
-msgstr ""
+msgstr "Sličice na sekundo"
 
 #: ../src/video_info/gui.py:183
 msgid "Scaling"
-msgstr ""
+msgstr "Spreminjanje velikosti"
 
 #: ../src/video_info/gui.py:184
 msgid "Video bit rate"
-msgstr ""
+msgstr "Bitna hitrost video posnetka"
 
 #: ../src/video_info/gui.py:188
 msgid "Audio stream info"
-msgstr ""
+msgstr "Informacija o zvokovnem pretoku"
 
 #: ../src/video_info/gui.py:190
 msgid "Track number"
-msgstr ""
+msgstr "Številka posnetka"
 
 #: ../src/video_info/gui.py:191
 msgid "Audio digit"
-msgstr ""
+msgstr "Zvokovna številka"
 
 #: ../src/video_info/gui.py:192
 msgid "Audio bit rate:"
-msgstr ""
+msgstr "Bitna hitrost zvoka"
 
 #: ../src/video_info/gui.py:193
 msgid "Sampling"
-msgstr ""
+msgstr "Vzorčenje"
 
 #: ../src/video_info/gui.py:194
 msgid "Copy info"
-msgstr ""
+msgstr "Kopiraj informacije"
 
 #: ../src/format_conv/conv_task_gui.py:57
 msgid "Task Manager for format conversion"
-msgstr ""
+msgstr "Upravitelj opravil za pretvorbo formatov"
 
 #: ../src/format_conv/gui.py:43
 msgid "('form_size', 500, 180)"
-msgstr ""
+msgstr "('velikost_formata', 500, 180)"
 
 #: ../src/format_conv/gui.py:53
 msgid "Convert"
-msgstr ""
+msgstr "Pretvori"
 
 #: ../src/format_conv/gui.py:75
 msgid "intel"
-msgstr ""
+msgstr "intel"
 
 #: ../src/format_conv/gui.py:75
 msgid "zte"
-msgstr ""
+msgstr "zte"
 
 #: ../src/format_conv/gui.py:75
 msgid "hasee"
-msgstr ""
+msgstr "hasee"
 
 #: ../src/format_conv/gui.py:76
 msgid "apple"
-msgstr ""
+msgstr "apple"
 
 #: ../src/format_conv/gui.py:76
 msgid "nokia"
-msgstr ""
+msgstr "nokia"
 
 #: ../src/format_conv/gui.py:76
 msgid "alcatel"
-msgstr ""
+msgstr "alcatel"
 
 #: ../src/format_conv/gui.py:77
 msgid "google"
-msgstr ""
+msgstr "google"
 
 #: ../src/format_conv/gui.py:77
 msgid "asus"
-msgstr ""
+msgstr "asus"
 
 #: ../src/format_conv/gui.py:77
 msgid "hp"
-msgstr ""
+msgstr "hp"
 
 #: ../src/format_conv/gui.py:78
 msgid "sony"
-msgstr ""
+msgstr "sony"
 
 #: ../src/format_conv/gui.py:78
 msgid "hedy"
-msgstr ""
+msgstr "hedy"
 
 #: ../src/format_conv/gui.py:79
 msgid "archos"
-msgstr ""
+msgstr "archos"
 
 #: ../src/format_conv/gui.py:79
 msgid "boway"
-msgstr ""
+msgstr "boway"
 
 #: ../src/format_conv/gui.py:79
 msgid "bird"
-msgstr ""
+msgstr "bird"
 
 #: ../src/format_conv/gui.py:80
 msgid "vivo"
-msgstr ""
+msgstr "vivo"
 
 #: ../src/format_conv/gui.py:80
 msgid "great wall"
-msgstr ""
+msgstr "great wall"
 
 #: ../src/format_conv/gui.py:80
 msgid "changhong"
-msgstr ""
+msgstr "changhong"
 
 #: ../src/format_conv/gui.py:81
 msgid "skyworth"
-msgstr ""
+msgstr "skyworth"
 
 #: ../src/format_conv/gui.py:81
 msgid "dell"
-msgstr ""
+msgstr "dell"
 
 #: ../src/format_conv/gui.py:81
 msgid "philips"
-msgstr ""
+msgstr "philips"
 
 #: ../src/format_conv/gui.py:82
 msgid "toshiba"
-msgstr ""
+msgstr "thosiba"
 
 #: ../src/format_conv/gui.py:82
 msgid "amazon"
-msgstr ""
+msgstr "amazon"
 
 #: ../src/format_conv/gui.py:82
 msgid "sdo"
-msgstr ""
+msgstr "sdo"
 
 #: ../src/format_conv/gui.py:83
 msgid "disney"
-msgstr ""
+msgstr "disney"
 
 #: ../src/format_conv/gui.py:83
 msgid "haier"
-msgstr ""
+msgstr "haier"
 
 #: ../src/format_conv/gui.py:83
 msgid "fujitsu"
-msgstr ""
+msgstr "fujitsu"
 
 #: ../src/format_conv/gui.py:84
 msgid "acer"
-msgstr ""
+msgstr "acer"
 
 #: ../src/format_conv/gui.py:84
 msgid "lenovo"
-msgstr ""
+msgstr "lenovo"
 
 #: ../src/format_conv/gui.py:84
 msgid "gigabyte"
-msgstr ""
+msgstr "gigabyte"
 
 #: ../src/format_conv/gui.py:85
 msgid "xiaomi"
-msgstr ""
+msgstr "xiaomi"
 
 #: ../src/format_conv/gui.py:85
 msgid "huawei"
-msgstr ""
+msgstr "huawei"
 
 #: ../src/format_conv/gui.py:85
 msgid "blackberry"
-msgstr ""
+msgstr "blackberry"
 
 #: ../src/format_conv/gui.py:86
 msgid "motorola"
-msgstr ""
+msgstr "motorola"
 
 #: ../src/format_conv/gui.py:86
 msgid "sangsung"
-msgstr ""
+msgstr "sangsung"
 
 #: ../src/format_conv/gui.py:86
 msgid "meizu "
-msgstr ""
+msgstr "meizu"
 
 #: ../src/format_conv/gui.py:87
 msgid "benq"
-msgstr ""
+msgstr "benq"
 
 #: ../src/format_conv/gui.py:87
 msgid "panasonic"
-msgstr ""
+msgstr "panasonic"
 
 #: ../src/format_conv/gui.py:87
 msgid "sony ericsson"
-msgstr ""
+msgstr "sony ericsson"
 
 #: ../src/format_conv/gui.py:88
 msgid "pioneer"
-msgstr ""
+msgstr "pioneer"
 
 #: ../src/format_conv/gui.py:88
 msgid "hyundai"
-msgstr ""
+msgstr "hyundai"
 
 #: ../src/format_conv/gui.py:88
 msgid "newman"
-msgstr ""
+msgstr "newman"
 
 #: ../src/format_conv/gui.py:89
 msgid "coolpad"
-msgstr ""
+msgstr "coolpad"
 
 #: ../src/format_conv/gui.py:89
 msgid "malata"
-msgstr ""
+msgstr "malata"
 
 #: ../src/format_conv/gui.py:90
 msgid "sharp"
-msgstr ""
+msgstr "sharp"
 
 #: ../src/format_conv/gui.py:90
 msgid "gionee"
-msgstr ""
+msgstr "gionee"
 
 #: ../src/format_conv/gui.py:90
 msgid "k-touch"
-msgstr ""
+msgstr "k-touch"
 
 #: ../src/format_conv/gui.py:91
 msgid "Pantech"
-msgstr ""
+msgstr "Pantech"
 
 #: ../src/format_conv/gui.py:91
 msgid "hisense"
-msgstr ""
+msgstr "hisense"
 
 #: ../src/format_conv/gui.py:91
 msgid "teclast"
-msgstr ""
+msgstr "teclast"
 
 #: ../src/format_conv/gui.py:92
 msgid "cube"
-msgstr ""
+msgstr "cube"
 
 #: ../src/format_conv/gui.py:92
 msgid "amoi"
-msgstr ""
+msgstr "amoi"
 
 #: ../src/format_conv/gui.py:92
 msgid "doov"
-msgstr ""
+msgstr "doov"
 
 #: ../src/format_conv/gui.py:93
 msgid "minte"
-msgstr ""
+msgstr "minte"
 
 #: ../src/format_conv/gui.py:93
 msgid "dopod"
-msgstr ""
+msgstr "dopod"
 
 #: ../src/format_conv/gui.py:93
 msgid "eton"
-msgstr ""
+msgstr "eton"
 
 #: ../src/format_conv/gui.py:94
 msgid "cherr"
-msgstr ""
+msgstr "cherr"
 
 #: ../src/format_conv/gui.py:94
 msgid "gaoxinqi"
-msgstr ""
+msgstr "gaoxinqi"
 
 #: ../src/format_conv/gui.py:94
 msgid "konka"
-msgstr ""
+msgstr "konka"
 
 #: ../src/format_conv/gui.py:95
 msgid "viewsonic"
-msgstr ""
+msgstr "viewsonic"
 
 #: ../src/format_conv/gui.py:95
 msgid "xibo"
-msgstr ""
+msgstr "xibo"
 
 #: ../src/format_conv/gui.py:95
 msgid "hosin"
-msgstr ""
+msgstr "hosin"
 
 #: ../src/format_conv/gui.py:96
 msgid "apanda"
-msgstr ""
+msgstr "apanda"
 
 #: ../src/format_conv/gui.py:96
 msgid "iocean"
-msgstr ""
+msgstr "iocean"
 
 #: ../src/format_conv/gui.py:96
 msgid "mastone"
-msgstr ""
+msgstr "mastone"
 
 #: ../src/format_conv/gui.py:104
 msgid "Phone brand"
-msgstr ""
+msgstr "Znamka telefona"
 
 #: ../src/format_conv/gui.py:105
 msgid "Output format"
-msgstr ""
+msgstr "Izhodni format"
 
 #: ../src/format_conv/gui.py:106
 msgid "Audio encoder"
-msgstr ""
+msgstr "Zvočni kodirnik"
 
 #: ../src/format_conv/gui.py:107
 msgid "Video encoder"
-msgstr ""
+msgstr "Video kodirnik"
 
 #: ../src/format_conv/gui.py:108
 msgid "Output directory"
-msgstr ""
+msgstr "Izhodni imenik"
 
 #: ../src/format_conv/gui.py:109
 msgid "Phone model"
-msgstr ""
+msgstr "Model telefona"
 
 #: ../src/format_conv/gui.py:123
 msgid "Change"
-msgstr ""
+msgstr "Spremeni"
 
 #: ../src/format_conv/gui.py:124
 msgid "Start"
-msgstr ""
+msgstr "Začni"
 
 #: ../src/format_conv/gui.py:129 ../src/widget/play_menus.py:256
 msgid "Task Manager"
-msgstr ""
+msgstr "Upravitelj opravil"
 
 #: ../src/format_conv/gui.py:165 ../src/format_conv/gui.py:306
 msgid "No Presets"
-msgstr ""
+msgstr "Ni prednastavitev"
 
 #: ../src/format_conv/gui.py:170 ../src/format_conv/gui.py:318
 #: ../src/format_conv/transmageddon.py:1020
 msgid "No Model"
-msgstr ""
+msgstr "Ni modela"
 
 #: ../src/format_conv/gui.py:194
 msgid "('brand_position', 20)"
-msgstr ""
+msgstr "('lokacija_znamke', 20)"
 
 #: ../src/format_conv/gui.py:195
 msgid "('model_position', 20)"
-msgstr ""
+msgstr "('lokacija_modela', 20)"
 
 #: ../src/format_conv/gui.py:201
 msgid "('format_position', 12)"
-msgstr ""
+msgstr "('lokacija_formata', 12)"
 
 #: ../src/format_conv/gui.py:202
 msgid "('ratio_position', 18)"
-msgstr ""
+msgstr "('lokacija_formata', 18)"
 
 #: ../src/format_conv/gui.py:210
 msgid "('frame_position', 13)"
-msgstr ""
+msgstr "('lokacija_sličice', 13)"
 
 #: ../src/format_conv/gui.py:211
 msgid "('bit_rate_position', 28)"
-msgstr ""
+msgstr "('lokacija_bitne_hitrosti', 28)"
 
 #: ../src/format_conv/gui.py:278
 msgid "Choose a directory"
-msgstr ""
+msgstr "Izberi imenik"
 
 #: ../src/format_conv/new_button.py:32 ../src/format_conv/new_button.py:59
 msgid "Advanced settings"
-msgstr ""
+msgstr "Napredne nastavitve"
 
 #: ../src/format_conv/new_button.py:33
 msgid "('button_size', 100)"
-msgstr ""
+msgstr "('velikost_gumba', 100)"
 
 #: ../src/format_conv/transmageddon.py:92
 #: ../src/format_conv/transmageddon.py:434
 msgid "Audio-only"
-msgstr ""
+msgstr "Samo zvok"
 
 #: ../src/format_conv/transmageddon.py:585
 msgid "Time remaining"
-msgstr ""
+msgstr "Preostali čas"
 
 #: ../src/format_conv/transmageddon.py:673
 #: ../src/format_conv/transmageddon.py:734
 #: ../src/format_conv/transmageddon.py:1311
 #: ../src/format_conv/transmageddon.py:1328
 msgid "No Video"
-msgstr ""
+msgstr "Ni slike"
 
 #: ../src/format_conv/transmageddon.py:874
 msgid "Converting"
-msgstr ""
+msgstr "Pretvarjam"
 
 #: ../src/format_conv/transmageddon.py:890
 msgid "continue"
-msgstr ""
+msgstr "nadaljuj"
 
 #: ../src/format_conv/transmageddon.py:900
 msgid "Open a directory"
-msgstr ""
+msgstr "Odpri imenik"
 
 #: ../src/format_conv/transmageddon.py:902
 msgid "Delete"
-msgstr ""
+msgstr "Izbriši"
 
 #: ../src/format_conv/transmageddon.py:903
 msgid "Remove complete tasks"
-msgstr ""
+msgstr "Odstrani dokončane naloge"
 
 #: ../src/screen_mid/open_url.py:32
 msgid "Open Url"
-msgstr ""
+msgstr "Odpri URL naslov"
 
 #: ../src/screen_mid/open_url.py:41
 msgid "Ok"
-msgstr ""
+msgstr "Vredu"
 
 #: ../src/screen_mid/open_url.py:42
 msgid "Cancel"
-msgstr ""
+msgstr "Prekliči"
 
 #: ../src/widget/play_menus.py:175 ../src/widget/play_menus.py:366
 #: ../src/widget/play_control_panel.py:75
 msgid "Open File"
-msgstr ""
+msgstr "Odpri datoteko"
 
 #: ../src/widget/play_menus.py:177
 msgid "Play Disc"
-msgstr ""
+msgstr "Predvajaj zgoščenko"
 
 #: ../src/widget/play_menus.py:186
 msgid "Play (track)"
-msgstr ""
+msgstr "Predvajaj (skladbo)"
 
 #: ../src/widget/play_menus.py:187
 msgid "Default"
-msgstr ""
+msgstr "Privzeto"
 
 #: ../src/widget/play_menus.py:188
 msgid "Random"
-msgstr ""
+msgstr "Naključno"
 
 #: ../src/widget/play_menus.py:189
 msgid "Repeat (track)"
-msgstr ""
+msgstr "Ponavljaj (skladbo)"
 
 #: ../src/widget/play_menus.py:190
 msgid "Repeat (playlist)"
-msgstr ""
+msgstr "Ponavljaj (predvajalni seznam)"
 
 #: ../src/widget/play_menus.py:193 ../src/widget/play_menus.py:371
 #: ../src/widget/togglehoverbutton.py:135
 msgid "Normal Mode"
-msgstr ""
+msgstr "Normalni način"
 
 #: ../src/widget/play_menus.py:194 ../src/widget/play_menus.py:372
 #: ../src/widget/togglehoverbutton.py:144
 msgid "Compact Mode"
-msgstr ""
+msgstr "Kompaktni način"
 
 #: ../src/widget/play_menus.py:195 ../src/widget/play_menus.py:314
 #: ../src/widget/play_control_panel.py:56 ../src/widget/ini_gui.py:823
 msgid "Previous"
-msgstr ""
+msgstr "Predhodnji"
 
 #: ../src/widget/play_menus.py:196 ../src/widget/play_menus.py:315
 #: ../src/widget/play_control_panel.py:67 ../src/widget/ini_gui.py:843
 msgid "Next"
-msgstr ""
+msgstr "Naslednji"
 
 #: ../src/widget/play_menus.py:198 ../src/widget/play_menus.py:317
 msgid "Jump Forward"
-msgstr ""
+msgstr "Skok naprej"
 
 #: ../src/widget/play_menus.py:199 ../src/widget/play_menus.py:318
 msgid "Jump Backward"
-msgstr ""
+msgstr "Skok nazaj"
 
 #: ../src/widget/play_menus.py:200 ../src/widget/play_menus.py:303
 #: ../src/widget/play_menus.py:373
 msgid "Order"
-msgstr ""
+msgstr "Ukaz"
 
 #: ../src/widget/play_menus.py:214
 msgid "Original"
-msgstr ""
+msgstr "Originalno"
 
 #: ../src/widget/play_menus.py:221
 msgid "50%"
-msgstr ""
+msgstr "50%"
 
 #: ../src/widget/play_menus.py:222 ../src/widget/toolbar.py:64
 msgid "100%"
-msgstr ""
+msgstr "100%"
 
 #: ../src/widget/play_menus.py:223 ../src/widget/toolbar.py:74
 msgid "150%"
-msgstr ""
+msgstr "150%"
 
 #: ../src/widget/play_menus.py:224
 msgid "200%"
-msgstr ""
+msgstr "200%"
 
 #: ../src/widget/play_menus.py:241
 msgid "Stereo"
-msgstr ""
+msgstr "Stereo"
 
 #: ../src/widget/play_menus.py:242
 msgid "Left"
-msgstr ""
+msgstr "Levi"
 
 #: ../src/widget/play_menus.py:243
 msgid "Right"
-msgstr ""
+msgstr "Desni"
 
 #: ../src/widget/play_menus.py:245
 msgid "Channels"
-msgstr ""
+msgstr "Kanali"
 
 #: ../src/widget/play_menus.py:247 ../src/widget/ini_gui.py:863
 msgid "Increase Volume"
-msgstr ""
+msgstr "Povečaj glasnost"
 
 #: ../src/widget/play_menus.py:248 ../src/widget/ini_gui.py:883
 msgid "Decrease Volume"
-msgstr ""
+msgstr "Zmanjšaj glasnost"
 
 #: ../src/widget/play_menus.py:249
 msgid "Mute/Unmute"
-msgstr ""
+msgstr "Utišaj/Povrni glasnost"
 
 #: ../src/widget/play_menus.py:251
 msgid "Take Screenshot"
-msgstr ""
+msgstr "Zajemi sliko zaslona"
 
 #: ../src/widget/play_menus.py:252
 msgid "Open Screenshot Directory"
-msgstr ""
+msgstr "Odpri imenik z zaslonskimi slikami"
 
 #: ../src/widget/play_menus.py:253
 msgid "Set Screenshot Directory"
-msgstr ""
+msgstr "Določi imenik z zaslonskimi slikami"
 
 #: ../src/widget/play_menus.py:255 ../src/widget/play_menus.py:266
 #: ../src/widget/play_menus.py:306
 msgid "Format conversion"
-msgstr ""
+msgstr "Pretvorba formata"
 
 #: ../src/widget/play_menus.py:261
 msgid "File"
-msgstr ""
+msgstr "Datoteka"
 
 #: ../src/widget/play_menus.py:263 ../src/widget/play_menus.py:375
 #: ../src/widget/ini_gui.py:351 ../src/widget/ini_gui.py:499
 #: ../src/widget/ini_gui.py:511 ../src/widget/ini_gui.py:796
 msgid "Video"
-msgstr ""
+msgstr "Slika"
 
 #: ../src/widget/play_menus.py:264 ../src/widget/play_menus.py:376
 msgid "Audio"
-msgstr ""
+msgstr "Zvok"
 
 #: ../src/widget/play_menus.py:265
 msgid "Take Screenshots"
-msgstr ""
+msgstr "Zajemi sliko zaslona"
 
 #: ../src/widget/play_menus.py:267
 msgid "View New Features"
-msgstr ""
+msgstr "Poglej nove zmožnosti"
 
 #: ../src/widget/play_menus.py:268 ../src/widget/play_menus.py:380
 #: ../src/widget/ini_gui.py:329
 msgid "Preferences"
-msgstr ""
+msgstr "Lastnosti"
 
 #: ../src/widget/play_menus.py:270
 msgid "Quit"
-msgstr ""
+msgstr "Končaj"
 
 #: ../src/widget/play_menus.py:277
 msgid "By Name"
-msgstr ""
+msgstr "Po imenu"
 
 #: ../src/widget/play_menus.py:278
 msgid "By Type"
-msgstr ""
+msgstr "Po vrsti"
 
 #: ../src/widget/play_menus.py:293
 msgid "Add File"
-msgstr ""
+msgstr "Dodaj datoteko"
 
 #: ../src/widget/play_menus.py:294
 msgid "Add Directory"
-msgstr ""
+msgstr "Dodaj imenik"
 
 #: ../src/widget/play_menus.py:295
 msgid "Add URL"
-msgstr ""
+msgstr "Dodaj URL naslov"
 
 #: ../src/widget/play_menus.py:297
 msgid "Remove Selected"
-msgstr ""
+msgstr "Odstrani izbrano"
 
 #: ../src/widget/play_menus.py:298
 msgid "Save Playlist"
-msgstr ""
+msgstr "Shrani predvajalni seznam"
 
 #: ../src/widget/play_menus.py:300
 msgid "Remove Unavailable Files"
-msgstr ""
+msgstr "Odstrani nedostopne datoteke"
 
 #: ../src/widget/play_menus.py:302
 msgid "Recent Played"
-msgstr ""
+msgstr "Nedavno predvajano"
 
 #: ../src/widget/play_menus.py:304
 msgid "Sort"
-msgstr ""
+msgstr "Razvrsti"
 
 #: ../src/widget/play_menus.py:307
 msgid "Open Containing Directory"
-msgstr ""
+msgstr "Odpri vsebujoč imenik"
 
 #: ../src/widget/play_menus.py:323
 msgid "Dubbing selection"
-msgstr ""
+msgstr "Presnemi izbor"
 
 #: ../src/widget/play_menus.py:326
 msgid "Audio channels"
-msgstr ""
+msgstr "Zvokovni kanali"
 
 #: ../src/widget/play_menus.py:338
 msgid "Move Up"
-msgstr ""
+msgstr "Premik navzgor"
 
 #: ../src/widget/play_menus.py:339
 msgid "Move Down"
-msgstr ""
+msgstr "Premik navzdol"
 
 #: ../src/widget/play_menus.py:340
 msgid "Move Left"
-msgstr ""
+msgstr "Premik na levo"
 
 #: ../src/widget/play_menus.py:341
 msgid "Move Right"
-msgstr ""
+msgstr "Premik na desno"
 
 #: ../src/widget/play_menus.py:342
 msgid "Select"
-msgstr ""
+msgstr "Izberi"
 
 #: ../src/widget/play_menus.py:343
 msgid "Return to Title"
-msgstr ""
+msgstr "Vrni se na naslov"
 
 #: ../src/widget/play_menus.py:344
 msgid "Return to Root"
-msgstr ""
+msgstr "Vrni se na koren"
 
 #: ../src/widget/play_menus.py:350
 msgid "Previous Title"
-msgstr ""
+msgstr "Prejšnji naslov"
 
 #: ../src/widget/play_menus.py:351
 msgid "Next title"
-msgstr ""
+msgstr "Naslednji naslov"
 
 #: ../src/widget/play_menus.py:352
 msgid "Jump to"
-msgstr ""
+msgstr "Skoči na"
 
 #: ../src/widget/play_menus.py:353
 msgid "DVD Menu"
-msgstr ""
+msgstr "DVD meni"
 
 #: ../src/widget/play_menus.py:359
 msgid "Load subtitles"
-msgstr ""
+msgstr "Naloži podnapise"
 
 #: ../src/widget/play_menus.py:360
 msgid "Select a subtitle"
-msgstr ""
+msgstr "Izberi podnapis"
 
 #: ../src/widget/play_menus.py:370
 msgid "Full Screen On/Off"
-msgstr ""
+msgstr "Celozaslonski način Vklop/Izklop"
 
 #: ../src/widget/play_menus.py:378 ../src/widget/ini_gui.py:361
 #: ../src/widget/ini_gui.py:502 ../src/widget/ini_gui.py:514
 #: ../src/widget/ini_gui.py:1410
 msgid "Subtitles"
-msgstr ""
+msgstr "Podnapisi"
 
 #: ../src/widget/play_menus.py:379
 msgid "DVD Navigation"
-msgstr ""
+msgstr "DVD krmarjenje"
 
 #: ../src/widget/init_ldmp.py:158 ../src/widget/ini_gui.py:1270
 #: ../src/widget/ini_gui.py:1271 ../src/widget/ini_gui.py:1272
 #: ../src/widget/ini_gui.py:1325 ../src/widget/ini_gui.py:1385
 #: ../src/widget/ini_gui.py:1390 ../src/widget/ini_gui.py:1395
 msgid "Disabled"
-msgstr ""
+msgstr "Onemogočen"
 
 #: ../src/widget/init_ldmp.py:167 ../src/widget/ini_gui.py:1272
 #: ../src/widget/ini_gui.py:1336 ../src/widget/ini_gui.py:1397
 msgid "Volume"
-msgstr ""
+msgstr "Glasnost"
 
 #: ../src/widget/play_control_panel.py:48
 msgid "Stop"
-msgstr ""
+msgstr "Zaustavi"
 
 #: ../src/widget/play_list_button.py:35
 msgid "Playlist"
-msgstr ""
+msgstr "Predvajalni seznam"
 
 #: ../src/widget/ini_gui.py:347 ../src/widget/ini_gui.py:395
 #: ../src/widget/ini_gui.py:401 ../src/widget/ini_gui.py:497
 #: ../src/widget/ini_gui.py:509 ../src/widget/ini_gui.py:545
 msgid "Playback"
-msgstr ""
+msgstr "Ponovno predvajaj"
 
 #: ../src/widget/ini_gui.py:350
 msgid "Keyboard"
-msgstr ""
+msgstr "Tipkovnica"
 
 #: ../src/widget/ini_gui.py:352 ../src/widget/ini_gui.py:500
 #: ../src/widget/ini_gui.py:512 ../src/widget/ini_gui.py:1094
 msgid "Subtitle"
-msgstr ""
+msgstr "Podnapis"
 
 #: ../src/widget/ini_gui.py:353 ../src/widget/ini_gui.py:501
 #: ../src/widget/ini_gui.py:513 ../src/widget/ini_gui.py:1235
 msgid "Other"
-msgstr ""
+msgstr "Ostalo"
 
 #: ../src/widget/ini_gui.py:355 ../src/widget/ini_gui.py:504
 #: ../src/widget/ini_gui.py:516 ../src/widget/ini_gui.py:1649
 #: ../src/widget/ini_gui.py:1769
 msgid "Plugin"
-msgstr ""
+msgstr "Vključek"
 
 #: ../src/widget/ini_gui.py:359 ../src/widget/ini_gui.py:498
 #: ../src/widget/ini_gui.py:510 ../src/widget/ini_gui.py:678
 msgid "General"
-msgstr ""
+msgstr "Splošno"
 
 #: ../src/widget/ini_gui.py:364 ../src/widget/ini_gui.py:505
 #: ../src/widget/ini_gui.py:517 ../src/widget/ini_gui.py:1675
 msgid "About"
-msgstr ""
+msgstr "O programu"
 
 #: ../src/widget/ini_gui.py:549
 msgid "On opening video"
-msgstr ""
+msgstr "Ob odprtju posnetka"
 
 #: ../src/widget/ini_gui.py:551
 msgid "Fit video to player"
-msgstr ""
+msgstr "Videoposnetek prilagodi predvajalniku"
 
 #: ../src/widget/ini_gui.py:553
 msgid "Fit player to video"
-msgstr ""
+msgstr "Predvajalnik prilagodi videoposnetku"
 
 #: ../src/widget/ini_gui.py:555
 msgid "Resize interface to last closed size"
-msgstr ""
+msgstr "Velikost predvajalnika nastavi na nazadnje uporabljeno"
 
 #: ../src/widget/ini_gui.py:557
 msgid "Enter full screen mode"
-msgstr ""
+msgstr "Vklopi celozaslonski način"
 
 #: ../src/widget/ini_gui.py:573
 msgid "Clear playlist when opening new file"
-msgstr ""
+msgstr "Izprazni predvajalni seznam ob odprtju nove datoteke"
 
 #: ../src/widget/ini_gui.py:581
 msgid "Resume playback after restarting player"
-msgstr ""
+msgstr "Nadaljuj predvajanje po vnovičnem zagonu predvajalnika"
 
 #: ../src/widget/ini_gui.py:588
 msgid "Continue to next video automatically"
-msgstr ""
+msgstr "Samodejno nadaljuj na naslednji posnetek"
 
 #: ../src/widget/ini_gui.py:595
 msgid "Show thumbnail when hovering over progress bar"
-msgstr ""
+msgstr "Pokaži ikone, ko se pomakneš preko vrstice napredka"
 
 #: ../src/widget/ini_gui.py:602
 msgid "allow multiple instance DPlayer"
-msgstr ""
+msgstr "dovoli večkratno odprtje DPredvajalnika"
 
 #: ../src/widget/ini_gui.py:608
 msgid "Pause When Minimized"
-msgstr ""
+msgstr "Zaustavi ob minimiranju"
 
 #: ../src/widget/ini_gui.py:698
 msgid "Enable system popup notification"
-msgstr ""
+msgstr "Omogoči zaslonska obvestila o sistemu"
 
 #: ../src/widget/ini_gui.py:704
 msgid "Enable play popup notification"
-msgstr ""
+msgstr "Omogoči zaslonska obvestila o predvajanju"
 
 #: ../src/widget/ini_gui.py:711
 msgid "Font"
-msgstr ""
+msgstr "Pisava"
 
 #: ../src/widget/ini_gui.py:729
 msgid "Size"
-msgstr ""
+msgstr "Velikost"
 
 #: ../src/widget/ini_gui.py:810
 msgid "Enable hotkeys"
-msgstr ""
+msgstr "Omogoči tipkovnične bližnjice"
 
 #: ../src/widget/ini_gui.py:813 ../src/widget/movie_menu.py:254
 msgid "Open file"
-msgstr ""
+msgstr "Odpri datoteko"
 
 #: ../src/widget/ini_gui.py:873
 msgid "Forward"
-msgstr ""
+msgstr "Prevrti naprej"
 
 #: ../src/widget/ini_gui.py:893
 msgid "Rewind"
-msgstr ""
+msgstr "Prevrti nazaj"
 
 #: ../src/widget/ini_gui.py:903
 msgid "Mute"
-msgstr ""
+msgstr "Utišaj"
 
 #: ../src/widget/ini_gui.py:923
 msgid "Compact mode"
-msgstr ""
+msgstr "Kompakten način"
 
 #: ../src/widget/ini_gui.py:1098
 msgid "Enable Keyboard Shortcuts"
-msgstr ""
+msgstr "Omogoči tipkovnične bližnjice"
 
 #: ../src/widget/ini_gui.py:1104
 msgid "Delay-0.5s"
-msgstr ""
+msgstr "Zakasni-0.5s"
 
 #: ../src/widget/ini_gui.py:1105
 msgid "Delay+0.5s"
-msgstr ""
+msgstr "Zakasni+0.5s"
 
 #: ../src/widget/ini_gui.py:1106
 msgid "Loading subtiles"
-msgstr ""
+msgstr "Nalaganje podnapisov"
 
 #: ../src/widget/ini_gui.py:1109
 msgid "Increase subtitle scale"
-msgstr ""
+msgstr "Povečaj podnapise"
 
 #: ../src/widget/ini_gui.py:1110
 msgid "Decrease subtitle scale"
-msgstr ""
+msgstr "Zmanjšaj podnapise"
 
 #: ../src/widget/ini_gui.py:1245
 msgid " Enabled hotkeys"
-msgstr ""
+msgstr "Tipkovnične bližnjice omogočene"
 
 #: ../src/widget/ini_gui.py:1251
 msgid "Increse brightness"
-msgstr ""
+msgstr "Povečaj svetlost"
 
 #: ../src/widget/ini_gui.py:1252
 msgid "Decrease brightness"
-msgstr ""
+msgstr "Zmanjšaj svetlost"
 
 #: ../src/widget/ini_gui.py:1253
 msgid "Rotate conterclockwise"
-msgstr ""
+msgstr "Zavrti v nasprotno smer urinega kazalca"
 
 #: ../src/widget/ini_gui.py:1254
 msgid "Rotate clockwise"
-msgstr ""
+msgstr "Zavrti v smer urinega kazalca"
 
 #: ../src/widget/ini_gui.py:1255
 msgid "Take screenshot"
-msgstr ""
+msgstr "Zajemi sliko zaslona"
 
 #: ../src/widget/ini_gui.py:1256
 msgid "Switch audio tracks"
-msgstr ""
+msgstr "Preklopi zvočne posnetke"
 
 #: ../src/widget/ini_gui.py:1258
 msgid "Left click"
-msgstr ""
+msgstr "Levi klik"
 
 #: ../src/widget/ini_gui.py:1259
 msgid "Double click"
-msgstr ""
+msgstr "Dvojni klik"
 
 #: ../src/widget/ini_gui.py:1260
 msgid "Scroll"
-msgstr ""
+msgstr "Zavrti miškin kolešček"
 
 #: ../src/widget/ini_gui.py:1420
 msgid "Load subtitles automatically"
-msgstr ""
+msgstr "Samodejno naloži podnapise"
 
 #: ../src/widget/ini_gui.py:1428
 msgid "Subtitle Directory"
-msgstr ""
+msgstr "Imenik s podnapisi"
 
 #: ../src/widget/ini_gui.py:1437 ../src/widget/ini_gui.py:1513
 msgid "Browse"
-msgstr ""
+msgstr "Brskaj"
 
 #: ../src/widget/ini_gui.py:1497
 msgid "Copy to clipboard"
-msgstr ""
+msgstr "Kopiraj v odložišče"
 
 #: ../src/widget/ini_gui.py:1503
 msgid "Folder"
-msgstr ""
+msgstr "Mapa"
 
 #: ../src/widget/ini_gui.py:1509
 msgid "Screenshot directory"
-msgstr ""
+msgstr "Imenik z zaslonskimi slikami"
 
 #: ../src/widget/ini_gui.py:1516
 msgid "File Type"
-msgstr ""
+msgstr "Vrsta datoteke"
 
 #: ../src/widget/ini_gui.py:1547
 msgid "Keep current aspect ratio"
-msgstr ""
+msgstr "Ohrani trenutno razmerje"
 
 #: ../src/widget/ini_gui.py:1675
 msgid "Name"
-msgstr ""
+msgstr "Ime"
 
 #: ../src/widget/ini_gui.py:1675 ../src/widget/ini_gui.py:1893
 msgid "Version"
-msgstr ""
+msgstr "Različica"
 
 #: ../src/widget/ini_gui.py:1675
 msgid "Enable"
-msgstr ""
+msgstr "Omogoči"
 
 #: ../src/widget/ini_gui.py:1675 ../src/widget/ini_gui.py:1770
 msgid "Author"
-msgstr ""
+msgstr "Avtor"
 
 #: ../src/widget/ini_gui.py:1906
+#, fuzzy
 msgid ""
 "DPlayer is a video player designed for Linux users. It support a variety of "
 "video formats, and features mode switching, video preview, online subtitles, "
@@ -1121,3 +1124,9 @@ msgid ""
 "\n"
 "DPlayer is free software licensed under GNU GPLv3. "
 msgstr ""
+"DPredvajalnik je video predvajalnik namenjen uporabnikom Linuxa. Ta podpira "
+"različne video formate in ponuja funkcije, kot so: preklapljanje med načini, "
+"predogled videoposnetkov, spletne podnapise, zajem zaslonske slike in izbor "
+"preoblek.\n"
+"\n"
+"DPredvajalnik je brezplačna programska oprema pod licenco GNU GPLv3."
