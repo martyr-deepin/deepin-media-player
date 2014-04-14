@@ -47,11 +47,9 @@ class PluginTv(object):
     def __init_tree_view(self):
         self.tv_root = self.tree_view.nodes.add("网络电视")
     
-    '''
     def start_plugin(self):
         pass
     
     def stop_plugin(self):
         pass
-    '''
 

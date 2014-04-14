@@ -492,7 +492,6 @@ class MediaPlayer(object):
 
     def ldmp_start_media_player(self, ldmp):    
         #print "开始播放了..."
-        self.player_start_init()
         self.media_play_fun.ldmp_start_media_player(ldmp)
         # 加载同名的字幕.
         self.init_play_file_sub()
@@ -523,21 +522,6 @@ class MediaPlayer(object):
     def player_start_init(self):    
         self.set_power_play_movie()
 
-    def set_power_play_movie(self):
-        # 设置电源.
-        try:
-            import deepin_gsettings
-            POWER_SETTINGS_GSET = "org.gnome.settings-daemon.plugins.power"
-            self.power_set = deepin_gsettings.new(POWER_SETTINGS_GSET)
-            self.power_set.connect("changed", self.__power_set_changed)
-            self.save_power_key = self.__get_current_plan()
-            self.start_check = True
-            if "current-plan" in self.power_set.list_keys():
-                self.power_set.set_string("current-plan", "high-performance")
-        except Exception, e:
-            print e
-            print "media_player.py=>player_start_init[error]: Please install deepin Gsettings.."
-    
     def __power_set_changed(self, key):
         if key == "current-plan":
             # 如果用户自行改变了，不作还原.

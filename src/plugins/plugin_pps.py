@@ -43,11 +43,9 @@ class PluginPPS(object):
         # 初始化网络播放列表.
         self.__init_tree_view()
 
-    '''
     def start_plugin(self):
         pass
     
     def stop_plugin(self):
         pass
-    '''
 
