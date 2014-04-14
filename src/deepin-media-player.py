@@ -18,24 +18,23 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-############################################
-from media_player import MediaPlayer       #
-import gtk                                 #
-import dbus                                #
-import dbus.service                        #
-import dbus.mainloop.glib                  #
-from media_service import SomeObject       #
+
+from media_player import MediaPlayer
+import gtk
+import dbus
+import dbus.service
+import dbus.mainloop.glib
+from media_service import SomeObject
+
 ############################################
 # DPlayer version v 3.0  #
 ############################################
-gtk.gdk.threads_init()#         线程初始化.#
-app = MediaPlayer()                        #
+
+gtk.gdk.threads_init()
+app = MediaPlayer()
 dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
-session_bus = dbus.SessionBus()            #
+session_bus = dbus.SessionBus()
 name = dbus.service.BusName("org.mpris.MediaPlayer2.SampleService" + app.dbus_id, session_bus)
 app_ser = SomeObject(session_bus, "/org/mpris/MediaPlayer2")
-app_ser.set_dmp(app)                  #
-gtk.main()                                 #
-############################################
-# The core code reference Gmtk code.       #
-############################################
+app_ser.set_dmp(app)
+gtk.main()

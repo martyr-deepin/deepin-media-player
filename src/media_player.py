@@ -19,8 +19,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
-
 from skin import app_theme
 from dtk.ui.draw import draw_pixbuf
 from dtk.ui.utils import color_hex_to_cairo, propagate_expose, remove_timeout_id, set_cursor, is_in_rect
@@ -49,6 +47,7 @@ from mplayer.player import LDMP, set_ascept_function, unset_flags, set_flags, Pl
 from mplayer.player import STARTING_STATE, PAUSE_STATE
 from mplayer.player import ASCEPT_4X3_STATE, ASCEPT_16X9_STATE, ASCEPT_5X4_STATE
 from mplayer.player import ASCEPT_16X10_STATE, ASCEPT_1_85X1_STATE, ASCEPT_2_35X1_STATE, ASCEPT_FULL_STATE, ASCEPT_DEFULAT
+import parse_media_info
 '''
 from mplayer.player import (ERROR_RETRY_WITH_MMSHTTP, ERROR_RESOLVE_AF_INET, ERROR_SOCKET_CONNECT,
                             ERROR_FILE_FORMAT, ERROR_DVD_DEVICE, ERROR_RETRY_ALSA_BUSY,
@@ -963,12 +962,13 @@ class MediaPlayer(object):
         self.files_to_play_list(paths, type_check)
 
     def files_to_play_list(self, paths, type_check=True):
-        #print type_check
         run_check = self.run_check
         sub_check = True
+
         # 判断字幕和播放文件.
         # 修复BUG：字幕和播放文件一起拖进去，没有清空播放列表.
         # 修复BUG：字幕拖进去，清空了播放列表.
+
         for path in paths:
             if not is_file_sub_type(path):
                 sub_check = True
@@ -979,6 +979,7 @@ class MediaPlayer(object):
             self.gui.play_list_view.list_view.clear()
             self.play_list.set_index(-1)
             run_check = True
+
         # 查找连续文件.
         from include.string_sort import get_as_num_index
         # 查找连续文件.
@@ -1073,20 +1074,36 @@ class MediaPlayer(object):
 
     def get_length(self, file_path):
         import subprocess
-        cmd = "ffmpeg -i '%s' 2>&1 | grep 'Duration' | cut -d ' ' -f 4 | sed s/,//" % (file_path)
-        fp = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
-        cmd_str = fp.communicate()[0]
-        if cmd_str:
-            try:
-                cmd_str = cmd_str.replace("\n", "")
-                time = cmd_str.split(":")
-                hour = time[0]
-                min  = time[1]
-                sec  = time[2].split(".")[0]
-                cmd_str = hour + ":" + min + ":" + sec
-            except:
-                cmd_str = None
+        info = parse_media_info.parse_info(file_path)
+        length = int(info["general_duration"])
+
+        hour = 0
+        min = 0
+        sec = 0
+        all_seconds = length/1000.0
+        if all_seconds >= 60:
+            sec = int(all_seconds % 60)
+            all_mins = all_seconds/60.0
+            if all_mins >= 60:
+                min = int(all_mins % 60)
+                hour = int(all_mins/60.0)
+        cmd_str = "%s:%s:%s" % (hour, min, sec)
         return cmd_str
+
+        #cmd = "ffmpeg -i '%s' 2>&1 | grep 'Duration' | cut -d ' ' -f 4 | sed s/,//" % (file_path)
+        #fp = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
+        #cmd_str = fp.communicate()[0]
+        #if cmd_str:
+            #try:
+                #cmd_str = cmd_str.replace("\n", "")
+                #time = cmd_str.split(":")
+                #hour = time[0]
+                #min  = time[1]
+                #sec  = time[2].split(".")[0]
+                #cmd_str = hour + ":" + min + ":" + sec
+            #except:
+                #cmd_str = None
+        #return cmd_str
 
     def scan_file_event(self, scan_dir, file_name):
         # 判断文件类型是否可播放..
