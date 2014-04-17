@@ -360,7 +360,7 @@ class IniGui(DialogBox):
              self.keyboard_expand_item,
              NormalItem(_("Subtitles")),
              self.screenshot_item,
-             self.plugin_item,
+             #self.plugin_item,
              NormalItem(_("About")),
              ]
             )
